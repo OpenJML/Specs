@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JMLspecs
-Bundle-SymbolicName: org.jmlspecs.JMLspecs;singleton:=true
+Bundle-SymbolicName: org.jmlspecs.Specs;singleton:=true
 Bundle-Version: 0.1.4
 Bundle-Vendor: David R. Cok
