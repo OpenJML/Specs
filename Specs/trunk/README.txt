@@ -26,9 +26,9 @@ subdirectory, we can readily do that.  You can make a single consolidated
 directory easily with something like these commands, where 'consolidatedspecs'
 is a new (non SVN!) directory:
     mkdir consolidatedspecs
-	cp -r C:/home/projects/JMLspecs/trunk/java4/* consolidatedspecs
-	cp -r C:/home/projects/JMLspecs/trunk/java5/* consolidatedspecs
-	cp -r C:/home/projects/JMLspecs/trunk/java6/* consolidatedspecs
+	cp -r C:/home/projects/Specs/trunk/java4/* consolidatedspecs
+	cp -r C:/home/projects/Specs/trunk/java5/* consolidatedspecs
+	cp -r C:/home/projects/Specs/trunk/java6/* consolidatedspecs
     find consolidatedspecs -name ".svn" -exec rm -rf  '{}' \;
 
 [ I considered making each version subdirectory a separate branch, but 
