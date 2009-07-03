@@ -1,0 +1,977 @@
+<project name="runtime Ant Build File" default="models">
+
+    <property name="modelsDir" value="src/org/jmlspecs/models"/>
+
+    <target name="clean">
+       <delete>
+        	<fileset refid="valueset"/>
+        	<fileset refid="valueseq"/>
+        	<fileset refid="valuebag"/>
+        	<fileset refid="equalsset"/>
+        	<fileset refid="equalsseq"/>
+        	<fileset refid="equalsbag"/>
+        	<fileset refid="objectset"/>
+        	<fileset refid="objectseq"/>
+        	<fileset refid="objectbag"/>
+        	<fileset refid="valuevaluefiles"/>
+        	<fileset refid="valueequalsfiles"/>
+        	<fileset refid="valueobjectfiles"/>
+        	<fileset refid="equalsvaluefiles"/>
+        	<fileset refid="equalsequalsfiles"/>
+        	<fileset refid="equalsobjectfiles"/>
+        	<fileset refid="objectvaluefiles"/>
+        	<fileset refid="objectequalsfiles"/>
+        	<fileset refid="objectobjectfiles"/>
+          	<fileset dir="${modelsDir}">
+        		<include name="JMLListObjectNode.java"/>
+        		<include name="JMLListEqualsNode.java"/>
+	            <include name="JMLListValueNode.java"/>
+       	</fileset>
+        </delete>
+    </target>
+	
+	<target name="listvaluenode">
+		<copy file="${modelsDir}/JMLListNode.java-generic" tofile="${modelsDir}/JMLListValueNode.java" overwrite="true"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_Elem_" replace="Value"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_ElemsAreObjects_" replace="false"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_ElemType_English_" replace="value"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_ElemType_" replace="JMLType"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_NormParameter_" replace="E"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_StaticParameter_" replace="F"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_StaticMethodParameter_" replace="F extends JMLType"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_ClassParameter_" replace="E extends JMLType"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_CastType_" replace="(E)"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_StaticCastType_" replace="(F)"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_SuperType_" replace="JMLValueType"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match=" _elem_equality_ " replace=".equals"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_elem_equality_" replace=".equals"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match=" _elem_clone_" replace=".clone()"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_weClone_" replace="clones"/>
+		<replaceregexp file="${modelsDir}/JMLListValueNode.java" flags="g" match="_Clone_Body_" replace="// Recall that cons() handles cloning.&#10;
+	      JMLListValueNode ret = cons(val,&#10;
+	                                  (next == null ? null&#10;
+	                                   : (JMLListValueNode) next.clone()));&#10;
+	      return ret;"/>
+    </target>
+	
+	<target name="listequalsnode">
+		<copy file="${modelsDir}/JMLListNode.java-generic" tofile="${modelsDir}/JMLListEqualsNode.java" overwrite="true"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_Elem_" replace="Equals"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_ElemsAreObjects_" replace="true"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_ElemType_English_" replace="object"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_ElemType_" replace="Object"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_NormParameter_" replace="E"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_StaticParameter_" replace="F"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_StaticMethodParameter_" replace="F"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_ClassParameter_" replace="E"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_CastType_" replace=""/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_StaticCastType_" replace=""/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match=" _elem_equality_ " replace=".equals"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_elem_equality_" replace=".equals"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_elem_clone_" replace=""/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_weClone_" replace="does not clone"/>
+		<replaceregexp file="${modelsDir}/JMLListEqualsNode.java" flags="g" match="_Clone_Body_" replace="return this;"/>
+    </target>
+    	
+	<target name="listobjectnode">
+		<copy file="${modelsDir}/JMLListNode.java-generic" tofile="${modelsDir}/JMLListObjectNode.java" overwrite="true"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_Elem_" replace="Object"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="/_ElemsAreObjects_" replace="true"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_ElemType_English_" replace="object"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_ElemType_" replace="Object"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_NormParameter_" replace="E"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_StaticParameter_" replace="F"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_StaticMethodParameter_" replace="F"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_ClassParameter_" replace="E"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_CastType_" replace=""/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_StaticCastType_" replace=""/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_elem_equality_ \(([^()]*)\)" replace="== \1"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_elem_equality_" replace="=="/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_elem_clone_" replace=""/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_weClone_" replace="does not clone"/>
+		<replaceregexp file="${modelsDir}/JMLListObjectNode.java" flags="g" match="_Clone_Body_" replace="return this;"/>
+	</target>
+	
+	<fileset id="valueset" dir="${modelsDir}">
+	   <include name="JMLValueSet.java"/>
+  	   <include name="JMLValueSetEnumerator.java"/>
+    </fileset>
+	
+	<fileset id="valueseq" dir="${modelsDir}">
+	   <include name="JMLValueSequence.java"/>
+  	   <include name="JMLValueSequenceEnumerator.java"/>
+    </fileset>
+	
+	<fileset id="valuebag" dir="${modelsDir}">
+	   <include name="JMLValueBag.java"/>
+	   <include name="JMLValueBagEnumerator.java"/>
+	</fileset>
+	
+	<target name="valuefiles">
+		<replaceregexp flags="g" match="_Elem_" replace="Value">
+		   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemsAreObjects_" replace="false">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemType_English_" replace="value">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemType_" replace="JMLType">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+	    <replaceregexp flags="g" match="_NormParameter_" replace="E">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticParameter_" replace="F">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodParameter_" replace="F extends JMLType">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ClassParameter_" replace="E extends JMLType">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_CastType_" replace="(E)">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticCastType_" replace="(F)">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ExtendsSuperClass_" replace="${superclass}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SuperType_" replace="JMLValueType">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeSuperClass_" replace="${seesuperclass}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeOtherType_" replace="${seeother}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeEnumerator_" replace="${seeenum}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match=" _elem_equality_ " replace=".equals">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_equality_" replace=".equals">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+ 	   <replaceregexp flags="g" match="_elemArrayHas_" replace=".hasValueEquals">
+	      <fileset refid="${files}"/>
+	   </replaceregexp>
+ 	   <replaceregexp flags="g" match="_elemArrayCount_" replace=".valueEqualsCount">
+	      <fileset refid="${files}"/>
+	   </replaceregexp>
+		<replaceregexp flags="g" match=" _elem_clone_" replace=".clone()">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_weClone_" replace="clones">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_downcast_" replace="(JMLType) ">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_nonNullIfObj_ " replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_alsoIfValue_" replace="also">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_resultGreater0IfObj_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_signalsIllegalWhenCntLT0IfObj_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Singleton_Constructor_Spec_End_" replace="${constructorspecend}">
+				   <fileset refid="${files}"/>
+			</replaceregexp>
+		<replaceregexp flags="g" match="_Clone_Body_" replace="${clonebod}">
+		   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Clone_Entry_Body_" replace="return new JMLValueBagEntry&#60;E>(theElem == null ? null&#10;
+                                    : (E)theElem.clone(),&#10;
+                                    count);">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+	</target>
+	
+	<fileset id="equalsset" dir="${modelsDir}">
+	   <include name="JMLEqualsSet.java"/>
+  	   <include name="JMLEqualsSetEnumerator.java"/>
+    </fileset>
+	
+	<fileset id="equalsseq" dir="${modelsDir}">
+	   <include name="JMLEqualsSequence.java"/>
+  	   <include name="JMLEqualsSequenceEnumerator.java"/>
+    </fileset>
+	
+	<fileset id="equalsbag" dir="${modelsDir}">
+	   <include name="JMLEqualsBag.java"/>
+	   <include name="JMLEqualsBagEnumerator.java"/>
+	</fileset>
+	
+	<target name="equalsfiles">
+		<replaceregexp flags="g" match="_Elem_" replace="Equals">
+		   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemsAreObjects_" replace="true">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemType_English_" replace="object">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+    	<replaceregexp flags="g" match="_ElemType_" replace="Object">
+ 		   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_NormParameter_" replace="E">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticParameter_" replace="F">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodParameter_" replace="F">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ClassParameter_" replace="E">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_CastType_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticCastType_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ExtendsSuperClass_ " replace="${superclass}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SuperType_" replace="JMLObjectType">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeSuperClass_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeOtherType_" replace="${seeother}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeEnumerator_" replace="${seeenum}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match=" _elem_equality_ " replace=".equals">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_equality_" replace=".equals">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elemArrayHas_" replace=".hasValueEquals">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+ 	    <replaceregexp flags="g" match="_elemArrayCount_" replace=".valueEqualsCount">
+		     <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match=" _elem_clone_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_weClone_" replace="does not clone">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_downcast_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_nonNullIfObj_ " replace="/*@ non_null @*/">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_alsoIfValue_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_resultGreater0IfObj_" replace="&#10;
+		  //@ implies_that&#10;
+		  //@    ensures \\\\result >= 0;">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_signalsIllegalWhenCntLT0IfObj_" replace="&#10;
+	  //@ also&#10;
+	  //@      signals (IllegalArgumentException) cnt &#60; 0;">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Singleton_Constructor_Spec_End_" replace="">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Clone_Body_" replace="${clonebod}">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Clone_Entry_Body_" replace="//@ assume owner == null;&#10;        return this;">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+	</target>
+	
+	<fileset id="objectseq" dir="${modelsDir}">
+	   <include name="JMLObjectSequence.java"/>
+  	   <include name="JMLObjectSequenceEnumerator.java"/>
+    </fileset>
+	
+	<fileset id="objectset" dir="${modelsDir}">
+	   <include name="JMLObjectSet.java"/>
+  	   <include name="JMLObjectSetEnumerator.java"/>
+    </fileset>
+	
+	<fileset id="objectbag" dir="${modelsDir}">
+	   <include name="JMLObjectBag.java"/>
+	   <include name="JMLObjectBagEnumerator.java"/>
+	</fileset>
+	
+	<target name="objectfiles">
+		<replaceregexp flags="g" match="_Elem_" replace="Object">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemsAreObjects_" replace="true">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemType_English_" replace="object">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ElemType_" replace="Object">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_NormParameter_" replace="E">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticParameter_" replace="F">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodParameter_" replace="F">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ClassParameter_" replace="E">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_CastType_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_StaticCastType_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_ExtendsSuperClass_ " replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SuperType_" replace="JMLObjectType">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeSuperClass_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeOtherType_" replace="${seeother}">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_SeeEnumerator_" replace="${seeenum}">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_equality_ \(([^()]*)\)" replace="== \1">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_equality_" replace="==">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elemArrayHas_" replace=".hasObjectIdentity">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+ 	    <replaceregexp flags="g" match="_elemArrayCount_" replace=".objectIdentityCount">
+		     <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_clone_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_weClone_" replace="does not clone">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_elem_downcast_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_nonNullIfObj_ " replace="/*@ non_null @*/ ">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_alsoIfValue_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_resultGreater0IfObj_" replace="&#10;
+	   //@ implies_that&#10;
+	   //@    ensures \\\\result >= 0;">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_signalsIllegalWhenCntLT0IfObj_" replace="&#10;
+	  //@ also&#10;
+	  //@      signals (IllegalArgumentException) cnt &#60; 0;">
+		    <fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Singleton_Constructor_Spec_End_" replace="">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Clone_Body_" replace="${clonebod}">
+			<fileset refid="${files}"/>
+		</replaceregexp>
+		<replaceregexp flags="g" match="_Clone_Entry_Body_" replace="//@ assume owner == null;&#10;        return this;">
+			   <fileset refid="${files}"/>
+		</replaceregexp>
+	</target>
+	
+	<target name="valueset">
+		<copy file="${modelsDir}/JMLSet.java-generic" tofile="${modelsDir}/JMLValueSet.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLSetEnumerator.java-generic" tofile="${modelsDir}/JMLValueSetEnumerator.java" overwrite="true"/>
+		<antcall target="valuefiles">
+			<param name="files" value="valueset"/>
+			<param name="seeother" value="@see JMLEqualsSet&#10; * @see JMLObjectSet"/>
+			<param name="seeenum" value="@see JMLValueSetEnumerator"/>
+			<param name="superclass" value="extends JMLValueSetSpecs&#60;E>"/>
+			<param name="seesuperclass" value="@see JMLValueSetSpecs"/>
+			<param name="constructorspecend" value="&#10;
+			  @ also&#10;
+			  @  public model_program {&#10;
+			  @    JMLType copy = (JMLType)e.clone();&#10;
+			  @    behavior&#10;
+			  @      assignable this.*;&#10;
+			  @      ensures hasObject(copy) &#38;&#38; int_size() == 1;&#10;
+			  @  }"/>
+			<param name="clonebod" value="if (the_list == null) {&#10;
+		         //@ assume owner == null;&#10;
+		         return this;&#10;
+		     } else {&#10;
+		         return new JMLValueSet&#60;E>((JMLListValueNode&#60;E>)the_list.clone(),&#10;
+		                                size);&#10;
+		     }"/>
+		</antcall>
+	</target>
+	
+	<target name="equalsset">
+		<copy file="${modelsDir}/JMLSet.java-generic" tofile="${modelsDir}/JMLEqualsSet.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLSetEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsSetEnumerator.java" overwrite="true"/>
+		<antcall target="equalsfiles">
+			<param name="files" value="equalsset"/>
+			<param name="seeother" value="@see JMLObjectSet&#10; * @see JMLValueSet"/>
+			<param name="seeenum" value="@see JMLEqualsSetEnumerator"/>
+			<param name="clonebod" value="//@ assume owner == null;&#10;        return this;"/>
+			<param name="superclass" value=""/>
+		</antcall>
+	</target>
+	
+	<target name="objectset">
+		<copy file="${modelsDir}/JMLSet.java-generic" tofile="${modelsDir}/JMLObjectSet.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLSetEnumerator.java-generic" tofile="${modelsDir}/JMLObjectSetEnumerator.java" overwrite="true"/>
+		<antcall target="objectfiles">
+			<param name="files" value="objectset"/>
+			<param name="seeother" value="@see JMLEqualsSet&#10; * @see JMLValueSet"/>
+			<param name="seeenum" value="@see JMLObjectSetEnumerator"/>
+			<param name="clonebod" value="//@ assume owner == null;&#10;        return this;"/>
+		</antcall>
+	</target>
+	
+	<target name="valuesequence">
+		<copy file="${modelsDir}/JMLSequence.java-generic" tofile="${modelsDir}/JMLValueSequence.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLSequenceEnumerator.java-generic" tofile="${modelsDir}/JMLValueSequenceEnumerator.java" overwrite="true"/>
+		<antcall target="valuefiles">
+			<param name="files" value="valueseq"/>
+			<param name="seeother" value="@see JMLObjectSequence"/>
+			<param name="seeenum" value="@see JMLValueSequenceEnumerator"/>
+			<param name="superclass" value="extends JMLValueSequenceSpecs&#60;E>"/>
+			<param name="seesuperclass" value="@see JMLValueSequenceSpecs"/>
+			<param name="constructorspecend" value="&#10;
+				 @ also&#10;
+				 @  public model_program {&#10;
+				 @    JMLType copy = (JMLType)e.clone();&#10;
+				 @    behavior&#10;
+				 @      assignable this.*;&#10;
+				 @      ensures objectAt(0) == copy &#38;&#38; int_length() == 1;&#10;
+				 @  }"/>
+			<param name="clonebod" value="if (theSeq == null) {&#10;
+			        return this;&#10;
+			    } else {&#10;
+			        return new JMLValueSequence&#60;E>((JMLListValueNode&#60;E>)theSeq.clone(),&#10;
+			                                    int_length());&#10;
+			    }"/>
+		</antcall>
+	</target>
+	
+	<target name="equalssequence">
+		<copy file="${modelsDir}/JMLSequence.java-generic" tofile="${modelsDir}/JMLEqualsSequence.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLSequenceEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsSequenceEnumerator.java" overwrite="true"/>
+		<antcall target="equalsfiles">
+			<param name="files" value="equalsseq"/>
+			<param name="seeother" value="@see JMLObjectSequence&#10; * @see JMLValueSequence"/>
+			<param name="seeenum" value="@see JMLEqualsSequenceEnumerator"/>
+			<param name="clonebod" value="return this;"/>
+			<param name="superclass" value=""/>
+		</antcall>
+	</target>
+	
+	<target name="objectsequence">
+		<copy file="${modelsDir}/JMLSequence.java-generic" tofile="${modelsDir}/JMLObjectSequence.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLSequenceEnumerator.java-generic" tofile="${modelsDir}/JMLObjectSequenceEnumerator.java" overwrite="true"/>
+		<antcall target="objectfiles">
+			<param name="files" value="objectseq"/>
+			<param name="seeother" value="@see JMLValueSequence"/>
+			<param name="seeenum" value="@see JMLObjectSequenceEnumerator"/>
+			<param name="clonebod" value="return this;"/>
+		</antcall>
+	</target>
+	
+	<target name="valuebag">
+		<copy file="${modelsDir}/JMLBag.java-generic" tofile="${modelsDir}/JMLValueBag.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLBagEnumerator.java-generic" tofile="${modelsDir}/JMLValueBagEnumerator.java" overwrite="true"/>
+		<antcall target="valuefiles">
+			<param name="files" value="valuebag"/>
+			<param name="seeother" value="@see JMLObjectBag"/>
+			<param name="seeenum" value="@see JMLValueBagEnumerator"/>
+			<param name="superclass" value="extends JMLValueBagSpecs&#60;E>"/>
+			<param name="seesuperclass" value="@see JMLValueBagSpecs"/>
+			<param name="constructorspecend" value="&#10;
+	    @ also&#10;
+	    @  public model_program {&#10;
+	    @    JMLType copy = (JMLType)elem.clone();&#10;
+	    @    behavior&#10;
+	    @      assignable this.*;&#10;
+	    @      ensures countObject(copy) == 1 &#38;&#38; int_size() == 1;&#10;
+	    @  }"/>
+			<param name="clonebod" value="if (the_list == null) {&#10;
+	          //@ assume owner == null;&#10;
+	          return this;&#10;
+	      } else {&#10;
+	          return new JMLValueBag&#60;E>((JMLValueBagEntryNode&#60;E>)the_list.clone(),&#10;
+	                                 size);&#10;
+	      }"/>
+		</antcall>
+	</target>
+	
+	<target name="equalsbag">
+		<copy file="${modelsDir}/JMLBag.java-generic" tofile="${modelsDir}/JMLEqualsBag.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLBagEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsBagEnumerator.java" overwrite="true"/>
+		<antcall target="equalsfiles">
+			<param name="files" value="equalsbag"/>
+			<param name="seeother" value="@see JMLObjectBag&#10;     * @see JMLValueBag"/>
+			<param name="seeenum" value="@see JMLEqualsBagEnumerator"/>
+			<param name="superclass" value=" "/>
+			<param name="seesuperclass" value=""/>
+			<param name="constructorspecend" value=""/>
+			<param name="clonebod" value="return this;"/>
+		</antcall>
+	</target>	
+	
+	<target name="objectbag">
+		<copy file="${modelsDir}/JMLBag.java-generic" tofile="${modelsDir}/JMLObjectBag.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLBagEnumerator.java-generic" tofile="${modelsDir}/JMLObjectBagEnumerator.java" overwrite="true"/>
+		<antcall target="objectfiles">
+			<param name="files" value="objectbag"/>
+			<param name="seeother" value="@see JMLValueBag"/>
+			<param name="seeenum" value="@see JMLObjectBagEnumerator"/>
+			<param name="clonebod" value="return this;"/>
+			<param name="superclass" value=" "/>
+		</antcall>
+	</target>
+	
+	<target name="valuekey">
+		<replaceregexp flags="g" match="_Domain_initializer_" replace="(K)dv.clone()">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_equal_to_dv_" replace="key.equals(dv)">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_equal_to_Domain_" replace="key.equals(key)">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_val_not_equal_to_dv_" replace="!val.equals(dv)">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_" replace="Value">
+		    <fileset refid="${files}"/>
+	    </replaceregexp>
+		<replaceregexp flags="g" match="_ClassDomainParam_" replace="K extends JMLType">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_DomainParam_" replace="K">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ComposeDomainParam_" replace="D">
+	       <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodDomainParam_" replace="SK extends JMLType">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticDomainParam_" replace="SK">
+	        <fileset refid="${files}"/>
+        </replaceregexp>
+	</target>
+	
+	<target name="equalskey">
+		<replaceregexp flags="g" match="_Domain_initializer_" replace="dv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_equal_to_dv_" replace="key.equals(dv)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_equal_to_Domain_" replace="key.equals(key)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_val_not_equal_to_dv_" replace="!val.equals(dv)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_" replace="Equals">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ClassDomainParam_" replace="K">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_DomainParam_" replace="K">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ComposeDomainParam_" replace="D">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodDomainParam_" replace="SK">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticDomainParam_" replace="SK">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+	</target>
+	
+	<target name="objectkey">
+		<replaceregexp flags="g" match="_Domain_initializer_" replace="dv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_equal_to_dv_" replace="key == dv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_equal_to_Domain_" replace="key == key">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_val_not_equal_to_dv_" replace="val != dv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Domain_" replace="Object">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ClassDomainParam_" replace="K">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_DomainParam_" replace="K">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ComposeDomainParam_" replace="D">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodDomainParam_" replace="SK">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticDomainParam_" replace="SK">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+	</target>
+	
+	<target name="valuevalue">
+		<replaceregexp flags="g" match="_Range_initializer_" replace="(V)rv.clone()">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_equal_to_Range_" replace="value.equals(value)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_equal_to_rv_" replace="value.equals(rv)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_r_not_equal_to_rv_" replace="!r.equals(rv)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_" replace="Value">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ClassRangeParam_" replace="V extends JMLType">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_RangeParam_" replace="V">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodRangeParam_" replace="SR extends JMLType">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticRangeParam_" replace="SR">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+	</target>
+	
+	<target name="equalsvalue">
+		<replaceregexp flags="g" match="_Range_initializer_" replace="rv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_equal_to_Range_" replace="value.equals(value)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_equal_to_rv_" replace="value.equals(rv)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_r_not_equal_to_rv_" replace="!r.equals(rv)">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_" replace="Equals">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ClassRangeParam_" replace="V">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_RangeParam_" replace="V">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodRangeParam_" replace="SR">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticRangeParam_" replace="SR">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+	</target>
+	
+	<target name="objectvalue">
+		<replaceregexp flags="g" match="_Range_initializer_" replace="rv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_equal_to_Range_" replace="value == value">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_equal_to_rv_" replace="value == rv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_r_not_equal_to_rv_" replace="r != rv">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_Range_" replace="Object">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_ClassRangeParam_" replace="V">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_RangeParam_" replace="V">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticMethodRangeParam_" replace="SR extends JMLType">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+		<replaceregexp flags="g" match="_StaticRangeParam_" replace="SR">
+            <fileset refid="${files}"/>
+        </replaceregexp>
+	</target>
+	
+	<fileset id="valuevaluefiles" dir="${modelsDir}">
+	   <include name="JMLValueValuePair.java"/>
+	   <include name="JMLValueToValueRelation.java"/>
+	   <include name="JMLValueToValueRelationImageEnumerator.java"/>
+	   <include name="JMLValueToValueRelationEnumerator.java"/>
+	   <include name="JMLValueToValueMap.java"/>
+    </fileset>
+	
+	<target name="valuevaluerel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLValueValuePair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLValueToValueRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLValueToValueRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLValueToValueRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLValueToValueMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLValueValuePair.java" flags="g" match="_SuperType_" replace="JMLValueType"/>
+		<antcall target="valuekey">
+			<param name="files" value="valuevaluefiles"/>
+		</antcall>
+		<antcall target="valuevalue">
+			<param name="files" value="valuevaluefiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="valueequalsfiles" dir="${modelsDir}">
+	   <include name="JMLValueEqualsPair.java"/>
+	   <include name="JMLValueToEqualsRelation.java"/>
+	   <include name="JMLValueToEqualsRelationImageEnumerator.java"/>
+	   <include name="JMLValueToEqualsRelationEnumerator.java"/>
+	   <include name="JMLValueToEqualsMap.java"/>
+    </fileset>
+	
+	<target name="valueequalsrel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLValueEqualsPair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLValueToEqualsRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLValueToEqualsRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLValueToEqualsRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLValueToEqualsMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLValueEqualsPair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="valuekey">
+			<param name="files" value="valueequalsfiles"/>
+		</antcall>
+		<antcall target="equalsvalue">
+			<param name="files" value="valueequalsfiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="valueobjectfiles" dir="${modelsDir}">
+	   <include name="JMLValueObjectPair.java"/>
+	   <include name="JMLValueToObjectRelation.java"/>
+	   <include name="JMLValueToObjectRelationImageEnumerator.java"/>
+	   <include name="JMLValueToObjectRelationEnumerator.java"/>
+	   <include name="JMLValueToObjectMap.java"/>
+    </fileset>
+	
+	<target name="valueobjectrel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLValueObjectPair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLValueToObjectRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLValueToObjectRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLValueToObjectRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLValueToObjectMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLValueObjectPair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="valuekey">
+			<param name="files" value="valueobjectfiles"/>
+		</antcall>
+		<antcall target="objectvalue">
+			<param name="files" value="valueobjectfiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="equalsvaluefiles" dir="${modelsDir}">
+	   <include name="JMLEqualsValuePair.java"/>
+	   <include name="JMLEqualsToValueRelation.java"/>
+	   <include name="JMLEqualsToValueRelationImageEnumerator.java"/>
+	   <include name="JMLEqualsToValueRelationEnumerator.java"/>
+	   <include name="JMLEqualsToValueMap.java"/>
+    </fileset>
+	
+	<target name="equalsvaluerel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLEqualsValuePair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLEqualsToValueRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsToValueRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsToValueRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLEqualsToValueMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLEqualsValuePair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="equalskey">
+			<param name="files" value="equalsvaluefiles"/>
+		</antcall>
+		<antcall target="valuevalue">
+			<param name="files" value="equalsvaluefiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="equalsequalsfiles" dir="${modelsDir}">
+	   <include name="JMLEqualsEqualsPair.java"/>
+	   <include name="JMLEqualsToEqualsRelation.java"/>
+	   <include name="JMLEqualsToEqualsRelationImageEnumerator.java"/>
+	   <include name="JMLEqualsToEqualsRelationEnumerator.java"/>
+	   <include name="JMLEqualsToEqualsMap.java"/>
+    </fileset>
+	
+	<target name="equalsequalsrel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLEqualsEqualsPair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLEqualsToEqualsRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsToEqualsRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsToEqualsRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLEqualsToEqualsMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLEqualsEqualsPair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="equalskey">
+			<param name="files" value="equalsequalsfiles"/>
+		</antcall>
+		<antcall target="equalsvalue">
+			<param name="files" value="equalsequalsfiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="equalsobjectfiles" dir="${modelsDir}">
+	   <include name="JMLEqualsObjectPair.java"/>
+	   <include name="JMLEqualsToObjectRelation.java"/>
+	   <include name="JMLEqualsToObjectRelationImageEnumerator.java"/>
+	   <include name="JMLEqualsToObjectRelationEnumerator.java"/>
+	   <include name="JMLEqualsToObjectMap.java"/>
+    </fileset>
+	
+	<target name="equalsobjectrel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLEqualsObjectPair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLEqualsToObjectRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsToObjectRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLEqualsToObjectRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLEqualsToObjectMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLEqualsObjectPair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="equalskey">
+			<param name="files" value="equalsobjectfiles"/>
+		</antcall>
+		<antcall target="objectvalue">
+			<param name="files" value="equalsobjectfiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="objectvaluefiles" dir="${modelsDir}">
+	   <include name="JMLObjectValuePair.java"/>
+	   <include name="JMLObjectToValueRelation.java"/>
+	   <include name="JMLObjectToValueRelationImageEnumerator.java"/>
+	   <include name="JMLObjectToValueRelationEnumerator.java"/>
+	   <include name="JMLObjectToValueMap.java"/>
+    </fileset>
+	
+	<target name="objectvaluerel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLObjectValuePair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLObjectToValueRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLObjectToValueRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLObjectToValueRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLObjectToValueMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLObjectValuePair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="objectkey">
+			<param name="files" value="objectvaluefiles"/>
+		</antcall>
+		<antcall target="valuevalue">
+			<param name="files" value="objectvaluefiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="objectequalsfiles" dir="${modelsDir}">
+	   <include name="JMLObjectEqualsPair.java"/>
+	   <include name="JMLObjectToEqualsRelation.java"/>
+	   <include name="JMLObjectToEqualsRelationImageEnumerator.java"/>
+	   <include name="JMLObjectToEqualsRelationEnumerator.java"/>
+	   <include name="JMLObjectToEqualsMap.java"/>
+    </fileset>
+	
+	<target name="objectequalsrel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLObjectEqualsPair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLObjectToEqualsRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLObjectToEqualsRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLObjectToEqualsRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLObjectToEqualsMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLObjectEqualsPair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="objectkey">
+			<param name="files" value="objectequalsfiles"/>
+		</antcall>
+		<antcall target="equalsvalue">
+			<param name="files" value="objectequalsfiles"/>
+		</antcall>
+	</target>	
+	
+	<fileset id="objectobjectfiles" dir="${modelsDir}">
+	   <include name="JMLObjectObjectPair.java"/>
+	   <include name="JMLObjectToObjectRelation.java"/>
+	   <include name="JMLObjectToObjectRelationImageEnumerator.java"/>
+	   <include name="JMLObjectToObjectRelationEnumerator.java"/>
+	   <include name="JMLObjectToObjectMap.java"/>
+    </fileset>
+	
+	<target name="objectobjectrel">
+		<copy file="${modelsDir}/JMLPair.java-generic" tofile="${modelsDir}/JMLObjectObjectPair.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelation.java-generic" tofile="${modelsDir}/JMLObjectToObjectRelation.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationImageEnumerator.java-generic" tofile="${modelsDir}/JMLObjectToObjectRelationImageEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLRelationEnumerator.java-generic" tofile="${modelsDir}/JMLObjectToObjectRelationEnumerator.java" overwrite="true"/>
+		<copy file="${modelsDir}/JMLMap.java-generic" tofile="${modelsDir}/JMLObjectToObjectMap.java" overwrite="true"/>		
+		<replaceregexp file="${modelsDir}/JMLObjectObjectPair.java" flags="g" match="_SuperType_" replace="JMLType"/>
+		<antcall target="objectkey">
+			<param name="files" value="objectobjectfiles"/>
+		</antcall>
+		<antcall target="objectvalue">
+			<param name="files" value="objectobjectfiles"/>
+		</antcall>
+	</target>	
+	
+	<target name="listnodes" depends="listvaluenode,listequalsnode,listobjectnode"/>
+	<target name="sets" depends="valueset,equalsset,objectset"/>
+	<target name="sequences" depends="valuesequence,equalssequence,objectsequence"/>
+	<target name="bags" depends="valuebag,equalsbag,objectbag"/>
+	<target name="relations" depends="valuevaluerel,valueequalsrel,valueobjectrel,equalsvaluerel,equalsequalsrel,equalsobjectrel,objectvaluerel,objectequalsrel,objectobjectrel"/> 
+	<target name="models" depends="listnodes,sets,sequences,bags,relations"/>
+
+</project>
