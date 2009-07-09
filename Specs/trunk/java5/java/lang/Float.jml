@@ -75,7 +75,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     public static final float MIN_VALUE;
 
     public static final Class<Float> TYPE;
-    //@ initially TYPE == \type(float);
+    //@ initially TYPE == float.class;
     //@ invariant_redundantly TYPE == float.class;
 
     /*@ public normal_behavior

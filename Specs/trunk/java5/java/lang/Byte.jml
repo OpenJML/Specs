@@ -93,8 +93,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
     public static final byte MAX_VALUE; //@ initially MAX_VALUE == 127;
 
     public static /* non_null */ final Class<Byte> TYPE;
-    //@ initially TYPE == \type(byte);
-    //@ invariant_redundantly TYPE == byte.class;
+    //@ initially TYPE == byte.class;
 
     /*@
       @ public normal_behavior

@@ -92,7 +92,7 @@ public /*@ pure @*/ final
 	public static final short   MAX_VALUE;
 
 	public static final Class<Short>   TYPE;
-	//@ initially TYPE == \type(short);
+	//@ initially TYPE == short.class;
 	//@ invariant_redundantly TYPE == short.class;
 
 	/*@

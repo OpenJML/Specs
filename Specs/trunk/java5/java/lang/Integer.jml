@@ -59,7 +59,7 @@ public  /*@ pure @*/ final
                                //@ initially MAX_VALUE == 0x7FFFFFFF;
 
     public static final Class<Integer> TYPE;  // 1.5 DIFFERENCE
-                               //@ initially TYPE == \type(Class<Integer>); // 1.5 DIFFERENCE
+                               //@ initially TYPE == int.class; // 1.5 DIFFERENCE
 
     /*@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix
