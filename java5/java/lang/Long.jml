@@ -59,7 +59,7 @@ public /*@ pure @*/ final
                      //@ initially MAX_VALUE == 0x7fffffffffffffffL;
 
     public static final Class<Long> TYPE;
-                     //@ initially TYPE == \type(long);
+                     //@ initially TYPE == long.class;
 		     //@ invariant_redundantly TYPE == long.class;
 
     /*@ public normal_behavior

@@ -38,7 +38,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
 
     //@ non_null
     public static final Class<Boolean>	TYPE;       // 1.5 DIFFERENCE
-    //@ initially TYPE == \type(Class<Boolean>);    // 1.5 DIFFERENCE
+    //@ initially TYPE == boolean.class;    // 1.5 DIFFERENCE
 
     //@ public model boolean theBoolean; in objectState;
 

@@ -93,7 +93,7 @@ public final class Class<T> implements java.io.Serializable,
         throws InstantiationException, IllegalAccessException;
 
     //@ public normal_behavior
-    //@   ensures \result <==> (obj != null && (\typeof(obj) <: this));
+    //@   ensures \result <==> (obj != null && (\typeof(obj) <: (\TYPE)this));
     public /*@ pure @*/ boolean isInstance(Object obj);
 
     public /*@ pure @*/ boolean isAssignableFrom(Class<?> cls);
@@ -117,15 +117,15 @@ public final class Class<T> implements java.io.Serializable,
     //@        represents _isArray = isArray();
 
     //@ ensures \result == _isArray;
-    //@ ensures \elemtype(this) <: \type(Object) ==> \result;
-    //@ ensures \elemtype(this) == \type(int) ==> \result;
-    //@ ensures \elemtype(this) == \type(byte) ==> \result;
-    //@ ensures \elemtype(this) == \type(short) ==> \result;
-    //@ ensures \elemtype(this) == \type(long) ==> \result;
-    //@ ensures \elemtype(this) == \type(char) ==> \result;
-    //@ ensures \elemtype(this) == \type(float) ==> \result;
-    //@ ensures \elemtype(this) == \type(double) ==> \result;
-    //@ ensures \elemtype(this) == \type(boolean) ==> \result;
+    // @ ensures \elemtype(this) <: \type(Object) ==> \result;
+    //@ ensures \elemtype(this) == int.class ==> \result;
+    //@ ensures \elemtype(this) == byte.class ==> \result;
+    //@ ensures \elemtype(this) == short.class ==> \result;
+    //@ ensures \elemtype(this) == long.class ==> \result;
+    //@ ensures \elemtype(this) == char.class ==> \result;
+    //@ ensures \elemtype(this) == float.class ==> \result;
+    //@ ensures \elemtype(this) == double.class ==> \result;
+    //@ ensures \elemtype(this) == boolean.class ==> \result;
 	// FIXME - really need a better way to express this
     public /*@ pure @*/ boolean isArray();
 

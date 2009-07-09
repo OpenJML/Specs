@@ -78,7 +78,7 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public normal_behavior
           ensures \result <==> ( content.theSize == 0
                               && containsNull == true
-                              && elementType == Object.class);
+                              && elementType == \type(Object));
         pure
          public model boolean initialCollection();
       @*/
