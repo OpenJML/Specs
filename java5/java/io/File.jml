@@ -9,6 +9,7 @@ package java.io;
 * the similarity is verified
 */
 
+//@ nullable_by_default
 //-@ immutable
 public class File implements Serializable, Comparable {
 
@@ -82,12 +83,14 @@ public class File implements Serializable, Comparable {
     //@ pure
     public static /*@nullable*/ File[] listRoots();
 
+/*
     //@ public normal_behavior
     //@   requires pathname != null;
     //@   ensures this == pathname ==>\result == 0;
     //@   //ensures \result == compareTo(pathname); // FIXME
     //@ pure
-    public int compareTo(/*@non_null*/ File pathname);
+*/
+    //public int compareTo(/*@non_null*/ File pathname);
 
     /*@ also public normal_behavior
       @    ensures \result == (\typeof(o) <: \typeof(this));
@@ -96,7 +99,7 @@ public class File implements Serializable, Comparable {
 
     //@ also public normal_behavior
     //@   requires pathname instanceof File && definedComparison(pathname);
-    //@   ensures \result == this.compareTo(pathname);
+    //@   // FIXME - recursive ensures \result == this.compareTo(pathname);
     //@ pure
     public int compareTo(/*@non_null*/ File pathname);
 
