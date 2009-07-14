@@ -1,6 +1,6 @@
 package java.lang.reflect;
 
-import org.jmlspecs.annotations.*;
+import org.jmlspecs.annotation.*;
 
 // FIXME - needs completion
  
