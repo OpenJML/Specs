@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** 
- * This class contains utility methods used during runtime assertion
- * checking.
+ * This class contains utility methods used in internal translations for both
+ * ESC and RAC.  In RAC, these functions are executed to provide the built-in
+ * functionality; in ESC, the specifications written here are used to provide
+ * background predicate logic for built-in functionality. 
  * @author David Cok
  *
  */
@@ -14,5 +16,21 @@ public class Utils {
     //@ public normal_behavior
     //@    ensures \result.size() == 0;
     static public /*@non_null pure*/ <E> org.jmlspecs.lang.JMLList<E> defaultEmpty();
+    
+//    //@ public normal_behavior
+//    //@   requires clazz != null && args != null;
+//    //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
+//    //@   ensures \result != null;
+//    //@   ensures \result.erasure() == clazz;
+//    //@   ensures \result.numargs == args.length;
+//    //@   ensures (\forall int i; 0<=i && i<args.length; \result.args(i) == args[i]);
+//    static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> clazz, @NonNull IJMLTYPE ... args);
+//    
+//    //@ public normal_behavior
+//    //@   requires clazz != null;
+//    //@   ensures \result != null;
+//    //@   ensures \result.erasure() == clazz;
+//    //@   ensures \result.numargs == 0;
+//    static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> clazz);
     
 }

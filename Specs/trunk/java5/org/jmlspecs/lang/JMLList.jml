@@ -1,5 +1,5 @@
 package org.jmlspecs.lang;
-import org.jmlspecs.annotations.*;
+import org.jmlspecs.annotation.*;
 
 /** This class is used internally within OpenJML for the purpose of desugaring
  * enhanced for loops.
