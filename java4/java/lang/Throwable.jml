@@ -43,7 +43,7 @@ public class Throwable extends Object implements java.io.Serializable
     //@ public model nullable Throwable _cause; in objectState;
 
     //@ public model boolean causeSet;  in _cause;
-    //@ public represents causeSet <- _cause != this;
+    //@ public represents causeSet = _cause != this;
 
     //@ public model non_null StackTraceElement[/*#@non_null*/] _stackTrace; in objectState;
     //@ public invariant \nonnullelements(_stackTrace);
