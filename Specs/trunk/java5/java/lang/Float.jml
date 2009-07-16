@@ -30,7 +30,7 @@ package java.lang;
 public /*@ pure @*/ final class Float extends Number implements Comparable {
     
     //@ public model float theFloat;
-    //@ public represents theFloat <- floatValue();
+    //@ public represents theFloat = floatValue();
     
     /** Returns true if the string is parseable as a float value (but not
 	an infinite or NaN value).

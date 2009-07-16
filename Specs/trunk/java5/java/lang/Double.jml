@@ -30,7 +30,7 @@ package java.lang;
 public /*@ pure @*/ final class Double extends Number implements Comparable {
     
     //@ public model double theDouble;
-    //@ represents theDouble <- doubleValue();
+    //@ represents theDouble = doubleValue();
 
     /** Returns true if the string is a parseable double value (but not
 	an infinite or NaN value).
