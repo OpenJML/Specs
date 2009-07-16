@@ -32,11 +32,11 @@ public class GregorianCalendar extends Calendar {
     public static final int AD;
 
     //@ public static model int  JAN_1_1_JULIAN_DAY;
-    //@ public static represents JAN_1_1_JULIAN_DAY <- 1721426;
+    //@ public static represents JAN_1_1_JULIAN_DAY = 1721426;
 //    private /*@ spec_public*/ final static  int  EPOCH_JULIAN_DAY;
-//    // FIXME static represents EPOCH_JULIAN_DAY <- 2440588;
+//    // FIXME static represents EPOCH_JULIAN_DAY = 2440588;
     private /*@ spec_public*/ final static  int  EPOCH_YEAR;
-    // FIXME public static represents EPOCH_YEAR <- 1970;
+    // FIXME public static represents EPOCH_YEAR = 1970;
 
     //@ ghost public static final int NUM_DAYS[] = {0,31,59,90,120,151,181,212,243,273,304,334};
     //@ ghost public static final int LEAP_NUM_DAYS[] = {0,31,60,91,121,152,182,213,244,274,305,335};
