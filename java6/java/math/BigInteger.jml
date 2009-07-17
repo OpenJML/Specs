@@ -45,7 +45,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //--- public model \bigint value; --
     //@ public model int sign;
-    //@ public represents sign <- signum();
+    //@ public represents sign = signum();
     //@ public invariant sign == compareTo(ZERO);
 
 
