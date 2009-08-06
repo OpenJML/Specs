@@ -2,6 +2,7 @@ package org.jmlspecs.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.jmlspecs.annotation.*;
 
 /** 
  * This class contains utility methods used in internal translations for both
@@ -12,25 +13,35 @@ import java.util.Map;
  *
  */
 public class Utils {
-    
+
     //@ public normal_behavior
     //@    ensures \result.size() == 0;
     static public /*@non_null pure*/ <E> org.jmlspecs.lang.JMLList<E> defaultEmpty();
     
-//    //@ public normal_behavior
-//    //@   requires clazz != null && args != null;
-//    //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
-//    //@   ensures \result != null;
-//    //@   ensures \result.erasure() == clazz;
-//    //@   ensures \result.numargs == args.length;
-//    //@   ensures (\forall int i; 0<=i && i<args.length; \result.args(i) == args[i]);
-//    static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> clazz, @NonNull IJMLTYPE ... args);
-//    
-//    //@ public normal_behavior
-//    //@   requires clazz != null;
-//    //@   ensures \result != null;
-//    //@   ensures \result.erasure() == clazz;
-//    //@   ensures \result.numargs == 0;
-//    static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> clazz);
+    //@ public normal_behavior
+    //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
+    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.numargs() == args.length;
+    //@   ensures (\forall int i; 0<=i && i<args.length; \result.arg(i) == args[i]);
+    static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> clazz, @NonNull IJMLTYPE ... args);
+
+    //@ public normal_behavior
+    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.numargs() == 0;
+    static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> clazz);
+
+    //@ public normal_behavior
+    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.numargs() == 1;
+    //@   ensures \result.arg(0) == a0;
+    public static @NonNull IJMLTYPE makeTYPE1(Class<?> clazz, IJMLTYPE a0);
     
+    //@ public normal_behavior
+    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.numargs() == 2;
+    //@   ensures \result.arg(0) == a0;
+    //@   ensures \result.arg(1) == a1;
+    public static @NonNull  IJMLTYPE makeTYPE2(Class<?> clazz, IJMLTYPE a0, IJMLTYPE a1);
+
+    //@ axiom (\forall \TYPE t,tt; (t != null && tt != null && t <: tt) ==> t.erasure() <: tt.erasure());
 }
