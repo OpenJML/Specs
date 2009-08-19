@@ -11,12 +11,13 @@
 
 // JML is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with JML; see the file COPYING.  If not, write to
-// the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with JML; see the file LesserGPL.txt.  If not, write to the Free
+// Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+// 02110-1301  USA.
 
 package java.lang;
 import java.lang.reflect.Array;
@@ -30,7 +31,11 @@ import java.lang.reflect.Array;
  */
 public class Object {
 
-    /** A data group for the complete state of this object.  
+    /** A data group for the state of this object.  This is used to
+     * allow side effects on unknown variables in methods such as
+     * equals, clone, and toString. It also provides a convenient way
+     * to talk about "the state" of an object in assignable
+     * clauses.
      */
     //@ public non_null model JMLDataGroup objectState;
 
@@ -53,7 +58,8 @@ public class Object {
 
 
     /*@ public normal_behavior
-      @   ensures \result == \typeof(this);
+      @   ensures \result == _getClass;
+      @   ensures_redundantly \result != null;
       @*/
     //-@ function // Not dependent on the state, just on the object identity
     public /*@ pure @*/ final /*@non_null*/ Class getClass();
@@ -64,15 +70,15 @@ public class Object {
       @     assignable privateState;
       @     ensures (* \result is a hash code for this object *);
       @     ensures \result == theHashCode;
-      @ also public normal_behavior
-      @     requires \typeof(this) == \type(Object);
-      @     assignable privateState;
-      @     ensures \result == System.identityHashCode(this);
       @*/
+    /*+@ also
+      @   public code normal_behavior
+      @     assignable \nothing;
+      @+*/
     public int hashCode();
 
-    //  FIXME - how do we ensure the following
-    //     (\forall Object o,oo; oo.equals(o) ==> o.theHashCode == oo.theHashCode);
+    /*  public invariant (\forall Object o,oo && oo.equals(o); 
+     @                                   o.theHashCode == oo.theHashCode); @*/
 
     /*@  public normal_behavior
       @     requires obj != null;
@@ -82,8 +88,8 @@ public class Object {
       @     requires this == obj;
       @     ensures \result;
       @  also
-      @   public normal_behavior
-      @     requires obj != null && \typeof(this) == \type(Object);
+      @   public code normal_behavior
+      @     requires obj != null;
       @     ensures \result <==> this == obj;
       @ also public normal_behavior
       @    ensures obj == null ==> !\result;
@@ -92,7 +98,7 @@ public class Object {
       @  //  requires obj != null;
       @   // ensures \result == obj.equals(this);
       @*/
-    public /*@ pure @*/ boolean equals(/*@ nullable \readonly @*/ Object obj);
+    public /*@ pure @*/ boolean equals(/*@ nullable /*+@ \readonly @+*/ Object obj);
 
     /*@ protected normal_behavior
       @   requires this instanceof Cloneable;
@@ -161,14 +167,14 @@ public class Object {
     protected /*@non_null*/ Object clone() throws CloneNotSupportedException;
 
     /** Use theString as the (pure) model value of toString() */
-    //@ public model non_null String theString; in objectState;
+    //@ public model non_null String theString; in privateState;
 
     /*@   public normal_behavior
       @     assignable privateState; */
     /*+@     ensures \result == theString;
       @     ensures (* \result is a string representation of this object *); */
     /*@ also
-      @   public normal_behavior
+      @   public code normal_behavior
       @     requires \typeof(this) == \type(Object);
       @     assignable privateState;
       @     ensures \result.equals(getClass().getName() + "@" + 
