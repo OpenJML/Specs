@@ -97,7 +97,7 @@ public /*@ pure @*/ class JML_Elem_Set<_ClassParameter_>
       @                     (e2 == null ? s : s.remove(e2).insert(null));
       @     also
       @       ensures \result <==>
-      @           e1 != null
+      @           e1 != null && !s.has(e2)
       @            ==> s.insert(e1).remove(e2)
       @                     .equals
       @                     (e1 _elem_equality_ (e2)
