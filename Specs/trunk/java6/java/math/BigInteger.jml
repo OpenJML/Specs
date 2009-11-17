@@ -130,8 +130,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     public static /*@ pure @*/ BigInteger valueOf(long val);
 
-    int signum;
-    int[] mag; 
+    // int signum;   package-level field removed from specification (dmz, 2009-11-17)
+    // int[] mag;    package-level field removed from specification (dmz, 2009-11-17)
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
@@ -234,15 +234,15 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     public int bitLength();
 
-    static int bitLen(int w);
+    // static int bitLen(int w);   package-level method removed from specification (dmz, 2009-11-17)
 
-    static final byte[] trailingZeroTable;
+    // static final byte[] trailingZeroTable;   package-level array removed from specification (dmz, 2009-11-17)
 
     public int bitCount();
 
-    static int bitCnt(int val);
+    // static int bitCnt(int val);   package-level method removed from specification (dmz, 2009-11-17)
 
-    static int trailingZeroCnt(int val);
+    // static int trailingZeroCnt(int val);   package-level method removed from specification (dmz, 2009-11-17)
 
     // Primality Testing
 
