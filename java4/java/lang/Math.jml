@@ -1,7 +1,3 @@
-// @(#)$Id: Math.jml 1388 2005-05-05 00:40:33Z davidcok $
-
-// Copyright (C) 2002 Iowa State University
-
 // This file is part of JML
 
 // JML is free software; you can redistribute it and/or modify
@@ -21,11 +17,16 @@
 package java.lang;
 import java.util.Random;
 
-/** JML's specification of java.lang.Math.
- * @version $Revision: 1388 $
+/** 
+ * JML specification for java.lang.Math in Java 1.4.
+ *
+ * @version OpenJML 1.0
  * @author Brandon Shilling
  * @author David Cok
  * @author Gary T. Leavens
+ * @author Daniel M. Zimmerman
+ * @author Erik Poll
+ * @author Radu Grigore
  */
 /* CAUTION: Note that 
     - there is a difference between float/double positive and negative 0
@@ -38,18 +39,21 @@ import java.util.Random;
     - primitive comparisions (<, >, <=, >=) on doubles are not the same as
 	.comparesTo on Doubles
 */
-public /*@ pure @*/ final strictfp class Math {
-
-    /*@ public static model boolean firstTimeCalledRandom;
-      @ public static initially firstTimeCalledRandom;
-      @*/
-
-    private Math();
-
-    //@ axiom E > 0;
+public /*@ pure @*/ final class Math {
+    /**
+     * @design These axioms are used to connect the floating point domain
+     * to the integer domain for static analysis tools that don't
+     * support floating point.
+     **/
+    // @+ESC axiom E > 0.0;  
     public static final double E;
 
-    //@ axiom PI > 0;
+    /**
+     * @design These axioms are used to connect the floating point domain
+     * to the integer domain for static analysis tools that don't
+     * support floating point.
+     **/
+    // @+ESC axiom PI > 0.0; 
     public static final double PI;
 
     /*@ public normal_behavior 
@@ -57,8 +61,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a) || Double.isInfinite(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative zero
-      @   ensures \result == 0;
+      @   requires a == 0.0;  // positive or negative zero
+      @   ensures \result == 0.0;
       @ also
       @   requires isPositiveZero(a);
       @   ensures isPositiveZero(\result);
@@ -66,9 +70,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.sin(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   requires isFinite(a);
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double sin(double a);
@@ -78,12 +81,11 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a) || Double.isInfinite(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative zero
+      @   requires a == 0.0;  // positive or negative zero
       @   ensures \result == 1.0;
       @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.cos(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   requires isFinite(a);
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double cos(double a);
@@ -93,8 +95,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a) || Double.isInfinite(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative zero
-      @   ensures \result == 0;
+      @   requires a == 0.0;  // positive or negative zero
+      @   ensures \result == 0.0;
       @ also
       @   requires isPositiveZero(a);
       @   ensures isPositiveZero(\result);
@@ -102,9 +104,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.tan(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   requires isFinite(a);
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double tan(double a);
@@ -114,8 +115,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a) || abs(a) > 1;
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative zero
-      @   ensures \result == 0;
+      @   requires a == 0.0;  // positive or negative zero
+      @   ensures \result == 0.0;
       @ also
       @   requires isPositiveZero(a);
       @   ensures isPositiveZero(\result);
@@ -124,11 +125,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   ensures isNegativeZero(\result);
       @ also
       @   requires !Double.isNaN(a) && abs(a) <= 1;
-      @   ensures sin(asin(a)) == a;
-      @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.asin(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   ensures -PI/2 <= \result && \result <= PI/2;
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double asin(double a);
@@ -139,11 +137,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   ensures Double.isNaN(\result);
       @ also
       @   requires !Double.isNaN(a) && abs(a) <= 1;
-      @   ensures close(cos(acos(a)),a,acos(a),1.e-17);
-      @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.acos(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   ensures -PI/2 <= \result && \result <= PI/2;
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double acos(double a);
@@ -153,8 +148,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative zero
-      @   ensures \result == 0;
+      @   requires a == 0.0;  // positive or negative zero
+      @   ensures \result == 0.0;
       @ also
       @   requires isPositiveZero(a);
       @   ensures isPositiveZero(\result);
@@ -162,34 +157,20 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @   requires !Double.isNaN(a) && !Double.isInfinite(a);
-      @   requires abs(a) < 1.e16;  // FIXME - to avoid precision problems
-      @   ensures close(tan(atan(a)),a,atan(a),1e-15);
-      @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.atan(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   requires !Double.isNaN(a);
+      @   ensures -PI/2 <= \result && \result <= PI/2;
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double atan(double a);
 
     /*@ public normal_behavior
-      @   requires !Double.isNaN(angdeg);
-      @   ensures \result == angdeg / 180.0 * PI;
-      @ also
-      @ public normal_behavior
-      @   requires Double.isNaN(angdeg);
-      @   ensures Double.isNaN(\result);
+      @   ensures Double.isNaN(angdeg) <==> Double.isNaN(\result);
       @*/
     public static /*@ pure @*/ double toRadians(double angdeg);
 
     /*@ public normal_behavior
-      @   requires !Double.isNaN(angrad);
-      @   ensures \result == angrad * 180.0 / PI;
-      @ also
-      @ public normal_behavior
-      @   requires Double.isNaN(angrad);
-      @   ensures Double.isNaN(\result);
+      @   ensures Double.isNaN(angrad) <==> Double.isNaN(\result);
       @*/
     public static /*@ pure @*/ double toDegrees(double angrad);
 
@@ -204,9 +185,8 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == Double.NEGATIVE_INFINITY;
       @   ensures isPositiveZero(\result);
       @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.exp(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   requires isFinite(a);
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double exp(double a);
@@ -219,12 +199,11 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == Double.POSITIVE_INFINITY;
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires a == 0;  // positive or negative zero
+      @   requires a == 0.0;  // positive or negative zero
       @   ensures \result == Double.NEGATIVE_INFINITY;
       @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.log(a);
-      @ also
-      @   ensures (* result within 1 ulp of correctly rounded result *);
+      @   requires a >= 0.0 && a < Double.POSITIVE_INFINITY;
+      @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double log(double a);
@@ -243,59 +222,41 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @	  requires a > 0 && a < Double.POSITIVE_INFINITY;
-      @   // ensures a == sqrt(a) * sqrt(a);
-      @   ensures close(a,sqrt(a)*sqrt(a),1.e-17);
-      @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.sqrt(a);
+      @	  requires a > 0.0 && a < Double.POSITIVE_INFINITY;
+      @   ensures close(a, \result * \result, 2.0E-16);
       @ |}
       @*/
     public static /*@ pure @*/ double sqrt(double a);
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(f1) || Double.isNaN(f2);
-      @   ensures Double.isNaN(\result);
-      @ also
-      @ requires !Double.isNaN(f1) && !Double.isNaN(f2);
-      @ {|
-      @   requires Double.isInfinite(f1) || f2 == 0.0;
+      @   requires Double.isNaN(f1) || Double.isNaN(f2) 
+      @         || Double.isInfinite(f1) || f2 == 0.0;
       @   ensures Double.isNaN(\result);
       @ also
       @   requires !Double.isInfinite(f1) && Double.isInfinite(f2);
       @   ensures \result == f1;
       @ also
       @   requires f1 == Double.MAX_VALUE && f2 == Double.MIN_VALUE;
-      @   ensures \result == 0;
+      @   ensures \result == 0.0;
       @ also
-      @   requires f2 != 0 
-      @		   && !Double.isInfinite(f2) 
-      @            && !Double.isInfinite(f1/f2)
-      @		   && !Double.isInfinite(f2 * rint(f1/f2))
-      @		   && ((f1/f2) != 0) ;
-      @   // FIXME - need a postcondition that works when precision is lost,
-	  // e.g. for when f1 is MAX_VALUE
-      @	  //ensures  \result == f1 - f2 * rint(f1 / f2 );
-      @	  //ensures  \result == f2 * ( (f1/f2) - rint(f1 / f2 ) );
-      @ |}
+      @   ensures isPositiveZero(\result) ==> isPositiveZero(f1) || 0.0 < f1; 
+      @   ensures isNegativeZero(\result) ==> isNegativeZero(f1) || f1 < 0.0;
+      @   ensures 
+      @   (* The remainder value is mathematically equal to 
+      @      <code>f1&nbsp;-&nbsp;f2</code>&nbsp;&times;&nbsp;<i>n</i>,
+      @      where <i>n</i> is the mathematical integer closest to the exact 
+      @      mathematical value of the quotient <code>f1/f2</code>, and if two 
+      @      mathematical integers are equally close to <code>f1/f2</code>, 
+      @      then <i>n</i> is the integer that is even. *);
       @ |}
       @*/
-    public static /*@ pure @*/ double IEEEremainder(double f1,
-                                                             double f2);
+    public static /*@ pure @*/ double IEEEremainder(double f1, double f2);
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(a);
-      @   ensures Double.isNaN(\result);
-      @ also
-      @   requires Double.isInfinite(a) || a == 0;  // positive or negative 0
+      @   requires Double.isNaN(a) || Double.isInfinite(a) || a == 0.0;
       @   ensures \result == a;
-      @ also
-      @   requires isPositiveZero(a);
-      @   ensures isPositiveZero(\result);
-      @ also
-      @   requires isNegativeZero(a);
-      @   ensures isNegativeZero(\result);
       @ also
       @   requires -1.0 < a && a < 0.0;
       @   ensures isNegativeZero(\result);
@@ -303,60 +264,41 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == rint(a);
       @   ensures \result == a;
       @ also
-      @   requires -Double.MAX_VALUE < a && a < Double.MAX_VALUE;
+      @   requires isFinite(a) && a != 0.0;
+      @   ensures isFinite(a);
       @   ensures \result == rint(\result);
       @   ensures a <= \result;
-      @   ensures ((a+1) != 1) ==> \result < (a+1);  // Guard is for precision problems
-      @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.ceil(a);
+      @   ensures (\forall double d; a < d & d < \result; rint(d) != d);
+      @   ensures \result == -floor(-a);
       @ |}
       @*/
     public static /*@ pure @*/ double ceil(double a);
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isInfinite(a) || a == 0;  // positive or negative 0
+      @   requires Double.isNaN(a) || Double.isInfinite(a) || a == 0.0;
       @   ensures \result == a;
-      @ also
-      @   requires isPositiveZero(a);
-      @   ensures isPositiveZero(\result);
-      @ also
-      @   requires isNegativeZero(a);
-      @   ensures isNegativeZero(\result);
-      @ also
-      @   requires Double.isNaN(a);
-      @   ensures Double.isNaN(\result);
       @ also 
       @   requires a == rint(a);
       @   ensures \result == a;
       @ also
-      @   requires -Double.MAX_VALUE < a && a < Double.MAX_VALUE;
+      @   requires isFinite(a) && a != 0.0;
+      @   ensures isFinite(\result);
       @   ensures \result == rint(\result);
       @   ensures \result <= a;
-      @   ensures ((a-1) != -1) ==> (a-1) < \result;  // Guard is for precision problems
-      @ also
-      @   ensures !Double.isNaN(\result) ==> \result == StrictMath.floor(a);
+      @   ensures (\forall double d; \result < d && d < a; rint(d) != d);
       @ |}
       @*/
     public static /*@ pure @*/ double floor(double a);
 
     /*@ public normal_behavior
       @ {|
-      @   requires !Double.isNaN(a) && !Double.isInfinite(a)
-      @         && a != 0;
-      @   ensures (* \result is mathematical integer closest to a *);  // FIXME
-      @ also
-      @   requires isPositiveZero(a);
-      @   ensures isPositiveZero(\result);
-      @ also
-      @   requires isNegativeZero(a);
-      @   ensures isNegativeZero(\result);
-      @ also
-      @   requires Double.isNaN(a);
-      @   ensures  Double.isNaN(\result);
-      @ also
-      @   requires Double.isInfinite(a) || a == 0.0;  // pos or neg zero
+      @   requires Double.isNaN(a) || Double.isInfinite(a) || a == 0.0;
       @   ensures \result == a;
+      @ also
+      @   requires isFinite(a) && a != 0.0;
+      @   ensures isFinite(\result);
+      @   ensures (* \result is mathematical integer closest to a *);
       @ |}
       @*/
     public static /*@ pure @*/ double rint(double a);
@@ -367,119 +309,119 @@ public /*@ pure @*/ final strictfp class Math {
       @   ensures Double.isNaN(\result);
       @ also
       @   requires (isPositiveZero(y) && x > 0.0)
-      @             || (0 < y && y <Double.POSITIVE_INFINITY 
-      @                 && x ==Double.POSITIVE_INFINITY);
+      @         || (0.0 < y && y < Double.POSITIVE_INFINITY 
+      @             && x == Double.POSITIVE_INFINITY);
       @   ensures isPositiveZero(\result);
       @ also
       @   requires (isNegativeZero(y) && x > 0.0)
-      @            || (Double.NEGATIVE_INFINITY < y && y < 0
-      @                && x ==Double.POSITIVE_INFINITY);
+      @         || (Double.NEGATIVE_INFINITY < y && y < 0.0
+      @             && x == Double.POSITIVE_INFINITY);
       @   ensures isNegativeZero(\result);
       @ also
       @   requires (isPositiveZero(y) && x < 0.0)
-      @            || (0 < y && y <Double.POSITIVE_INFINITY 
-      @                && x == Double.NEGATIVE_INFINITY);
+      @         || (0.0 < y && y < Double.POSITIVE_INFINITY 
+      @             && x == Double.NEGATIVE_INFINITY);
       @   ensures \result == PI;
       @ also
       @   requires (isNegativeZero(y) && x < 0.0)
-      @             || (Double.NEGATIVE_INFINITY < y && y < 0
-      @                 && x == Double.NEGATIVE_INFINITY);
-      @   ensures \result == -(PI);
+      @         || (Double.NEGATIVE_INFINITY < y && y < 0.0
+      @             && x == Double.NEGATIVE_INFINITY);
+      @   ensures \result == -PI;
       @ also
-      @   requires (y > 0.0 && x == 0)
-      @            || ( y ==Double.POSITIVE_INFINITY
-      @                 &&  Double.NEGATIVE_INFINITY < x
-      @                 && x <Double.POSITIVE_INFINITY);
-      @   ensures \result == PI/2;
+      @   requires (y > 0.0 && x == 0.0)
+      @         || (y == Double.POSITIVE_INFINITY
+      @             && Double.NEGATIVE_INFINITY < x
+      @             && x < Double.POSITIVE_INFINITY);
+      @   ensures \result == PI/2.0;
       @ also
-      @   requires (y < 0.0 && x == 0)
-      @            || ( y == Double.NEGATIVE_INFINITY
-      @                && Double.NEGATIVE_INFINITY < x
-      @                && x <Double.POSITIVE_INFINITY);
-      @   ensures \result == -(PI)/2;
+      @   requires (y < 0.0 && x == 0.0)
+      @         || (y == Double.NEGATIVE_INFINITY
+      @             && Double.NEGATIVE_INFINITY < x
+      @             && x < Double.POSITIVE_INFINITY);
+      @   ensures \result == -PI/2.0;
       @ also
-      @   requires y == x && y > 0;
-      @   ensures \result == PI/4;
+      @   requires y == Double.POSITIVE_INFINITY 
+      @         && x == Double.POSITIVE_INFINITY;
+      @   ensures \result == PI/4.0;
       @ also
-      @   requires y == -x && y > 0;
-      @   ensures \result == (3*PI)/4;
+      @   requires y == Double.POSITIVE_INFINITY
+      @         && x == Double.NEGATIVE_INFINITY;
+      @   ensures \result == 3.0*PI/4.0;
       @ also
-      @   requires y == -x && y < 0;
-      @   ensures \result == -(PI)/4;
+      @   requires y == Double.NEGATIVE_INFINITY
+      @         && x == Double.POSITIVE_INFINITY;
+      @   ensures \result == -PI/4.0;
       @ also
-      @   requires y == x && y < 0;
-      @   ensures \result == -(3*PI)/4;
+      @   requires y == Double.NEGATIVE_INFINITY
+      @         && x == Double.NEGATIVE_INFINITY;
+      @   ensures \result == -3.0*PI/4.0;
       @ also
-      @   ensures (* result within 2 ulp of correctly rounded result *);
+      @   ensures (* result within 2 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double atan2(double y, double x);
 
     /*@ public normal_behavior
       @ {|
+      @   requires b == 0.0;
+      @   ensures \result == 1.0;
+      @ also
+      @   requires b == 1.0;
+      @   ensures \result == a;
+      @ also 
       @   requires Double.isNaN(b);
       @   ensures Double.isNaN(\result);
       @ also
-      @ requires !Double.isNaN(b);
-      @ {|
-      @   requires b == 0;  // positive or negative zero
-      @   ensures \result == 1.0;
-      @ also
-      @   requires b == 1.0 && !Double.isNaN(a);
-      @   ensures \result == a;
-      @ also
-      @   requires Double.isNaN(a) && b != 0;  // positive or negative 0
+      @   requires Double.isNaN(a) && b != 0.0;
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires (abs(a) > 1 && b == Double.POSITIVE_INFINITY) || 
-      @        (abs(a) < 1 && b == Double.NEGATIVE_INFINITY);
+      @   requires (1.0 < abs(a) && b == Double.POSITIVE_INFINITY)
+      @         || (abs(a) < 1.0 && b == Double.NEGATIVE_INFINITY);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires (abs(a) < 1 && b == Double.POSITIVE_INFINITY) || 
-      @        (abs(a) > 1 && b == Double.NEGATIVE_INFINITY);
+      @   requires (1.0 < abs(a) && b == Double.NEGATIVE_INFINITY)
+      @         || (abs(a) < 1.0 && b == Double.POSITIVE_INFINITY);
       @   ensures isPositiveZero(\result);
       @ also
-      @   requires (a == -1.0 || a == 1.0) && Double.isInfinite(b);
+      @   requires abs(a) == 1.0 && Double.isInfinite(b);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires (isPositiveZero(a) && b > 0.0)
+      @   requires (isPositiveZero(a) && 0.0 < b)
       @         || (a == Double.POSITIVE_INFINITY && b < 0.0);
       @   ensures isPositiveZero(\result);
-      @ also
+      @ also 
       @   requires (isPositiveZero(a) && b < 0.0)
-      @         || (a == Double.POSITIVE_INFINITY && b > 0.0);
-      @   ensures \result ==Double.POSITIVE_INFINITY;
+      @         || (a == Double.POSITIVE_INFINITY && 0.0 < b);
+      @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires (isNegativeZero(a) && b > 0.0 && !isFiniteOdd(b))
-      @       || (a == Double.NEGATIVE_INFINITY && b < 0.0 && !isFiniteOdd(b));
+      @   requires (isNegativeZero(a) && 0.0 < b && !isFiniteOdd(b))
+      @         || (a == Double.NEGATIVE_INFINITY && b < 0.0 && !isFiniteOdd(b));
       @   ensures isPositiveZero(\result);
       @ also
-      @   requires (isNegativeZero(a) && b > 0.0 && isFiniteOdd(b))
-      @       || (a == Double.NEGATIVE_INFINITY && b < 0.0 && isFiniteOdd(b));
+      @   requires (isNegativeZero(a) && 0.0 < b && isFiniteOdd(b))
+      @         || (a == Double.NEGATIVE_INFINITY && b < 0.0 && isFiniteOdd(b));
       @   ensures isNegativeZero(\result);
       @ also
       @   requires (isNegativeZero(a) && b < 0.0 && !isFiniteOdd(b))
-      @       || (a == Double.NEGATIVE_INFINITY && b > 0.0 && !isFiniteOdd(b));
-      @   ensures \result ==Double.POSITIVE_INFINITY;
+      @         || (a == Double.NEGATIVE_INFINITY && 0.0 < b && !isFiniteOdd(b));
+      @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires (isNegativeZero(a) && b < 0.0 && isFiniteOdd(b))
-      @        || (a == Double.NEGATIVE_INFINITY && b > 0.0 && isFiniteOdd(b));
+      @         || (a == Double.NEGATIVE_INFINITY && 0.0 < b && isFiniteOdd(b));
       @   ensures \result == Double.NEGATIVE_INFINITY;
+      @ also 
+      @   requires !Double.isInfinite(a) && a < 0.0;
+      @   ensures isFiniteEven(b) ==> \result == pow(abs(a), b);
+      @   ensures isFiniteOdd(b) ==> \result == -pow(abs(a), b);
+      @   ensures !Double.isInfinite(b) && b != rint(b) ==> Double.isNaN(\result);
+      @   ensures (* result is within 1 ulp of exact result *);
       @ also
-      @   requires (a < 0.0 && isFiniteOdd(b)); 
-      @   ensures \result == - pow(-a,b);
-      @ also
-      @   requires (a < 0.0 && isFiniteEven(b));
-      @   ensures \result == pow( -a, b);
-      @ also
-      @   requires !Double.isInfinite(a) && a < 0.0 && !Double.isInfinite(b) 
-      @         && rint(b) != b;
-      @   ensures Double.isNaN(\result);
-      @ also
-      @   requires rint(a) == a && rint(b) == b;
-      @   ensures (* \result is a raised to the power of b *)
-      @		<==> (* \result can be represented as a double *);
-      @ |}
+      @   requires a == rint(a) && b == rint(b);
+      @   ensures 
+      @     (* result is exactly equal to the mathematical result of raising
+      @        a to the b power if that result can be represented exactly as
+      @        a double value *);
+      @   ensures (* result is within 1 ulp of exact result *);
       @ |}
       @*/
     public static /*@ pure @*/ double pow(double a, double b);
@@ -495,11 +437,10 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == Float.POSITIVE_INFINITY || a >= Integer.MAX_VALUE;
       @   ensures \result == Integer.MAX_VALUE;
       @ also
-      @   requires !Float.isNaN(a) && !Float.isInfinite(a)
-      @         && Integer.MIN_VALUE < a && a < Integer.MAX_VALUE;
-      @   ensures \result == (int)Math.floor(a + 0.5f);
+      @   requires Integer.MIN_VALUE < a && a < Integer.MAX_VALUE;
+      @   ensures \result == (int) Math.floor(a + 0.5f);
       @ |}
-      @*/ // rounds n+.5 to n+1
+      @*/
     public static /*@ pure @*/ int round(float a);
 
     /*@ public normal_behavior
@@ -513,24 +454,17 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == Double.POSITIVE_INFINITY || a >= Long.MAX_VALUE;
       @   ensures \result == Long.MAX_VALUE;
       @ also
-      @   requires !Double.isNaN(a) && !Double.isInfinite(a)
-      @         && Long.MIN_VALUE < a && a < Long.MAX_VALUE;
-      @   ensures \result == (long)Math.floor(a + 0.5d);
+      @   requires Long.MIN_VALUE < a && a < Long.MAX_VALUE;
+      @   ensures \result == (long) Math.floor(a + 0.5d);
       @ |}
-      @*/ // rounds n+.5 to n+1
+      @*/ 
     public static /*@ pure @*/ long round(double a);
 
-// FIXME - commented out because there is no implementation of firstTimeCalledRandom
-    /* public normal_behavior
+    /*@ public normal_behavior
       @ {|
-      @   requires firstTimeCalledRandom;
-      @   assignable firstTimeCalledRandom;
-      @   //ensures \result == StrictMath.random();
-      @ also
-      @   requires !firstTimeCalledRandom;
-      @   //ensures \result == StrictMath.random();  // FIXME - random is not pure; should have complained
+      @   ensures 0.0 <= \result && \result < 1.0;
       @ |}
-      @*/ // FIXME - what is the range of the result?
+      @*/ 
     public static double random();
 
     /*@ public normal_behavior
@@ -538,13 +472,13 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == Integer.MIN_VALUE;
       @   ensures \result == Integer.MIN_VALUE;
       @ also
-      @   requires a >= 0;
+      @   requires 0 <= a;
       @   ensures \result == a;
       @ also
       @   requires a < 0 && a != Integer.MIN_VALUE;
-      @   ensures \result == -a;
+      @   ensures \result == -a; 
       @ also
-      @   ensures (\result != Integer.MIN_VALUE) ==> \result >= 0; 
+      @   ensures_redundantly (\result != Integer.MIN_VALUE) ==> 0 <= \result;
       @ |}
       @*/
     public static /*@ pure @*/ int abs(int a);
@@ -554,15 +488,15 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires a == Long.MIN_VALUE;
       @   ensures \result == Long.MIN_VALUE;
       @ also
-      @   requires a >= 0;
+      @   requires 0 <= a;
       @   ensures \result == a;
       @ also
       @   requires a < 0 && a != Long.MIN_VALUE;
       @   ensures \result == -a;
+      @ also
+      @   ensures_redundantly (\result != Long.MIN_VALUE) ==> 0 <= \result;
       @ |}
       @*/
-    //@ also public normal_behavior
-    //@   ensures (\result != Long.MIN_VALUE) ==> \result >= 0L;
     public static /*@ pure @*/ long abs(long a);
 
     /*@ public normal_behavior
@@ -570,21 +504,23 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Float.isNaN(a);
       @   ensures Float.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative 0
+      @   requires a == 0.0;
       @   ensures isPositiveZero(\result);
       @ also
       @   requires Float.isInfinite(a);
       @   ensures \result == Float.POSITIVE_INFINITY;
       @ also
-      @   requires a > 0;
+      @   requires 0.0 < a;
       @   ensures \result == a;
       @ also
-      @   requires a < 0;
+      @   requires a < 0.0;
       @   ensures \result == -a;
-       @ |}
+      @ also
+      @   ensures_redundantly !Float.isNaN(a) ==> 0.0f <= \result;
+      @   ensures_redundantly 
+      @     \result == Float.intBitsToFloat(0x7fffffff & Float.floatToIntBits(a));
+      @ |}
       @*/
-    //@ implies_that
-    //@   ensures !Float.isNaN(a) ==> \result >= 0.0f;
     public static /*@ pure @*/ float abs(float a);
 
     /*@ public normal_behavior
@@ -592,53 +528,49 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires a == 0;  // positive or negative zero
+      @   requires a == 0.0; 
       @   ensures isPositiveZero(\result);
       @ also
       @   requires Double.isInfinite(a);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires a > 0;
+      @   requires 0.0 < a;
       @   ensures \result == a;
       @ also
-      @   requires a < 0;
+      @   requires a < 0.0;
       @   ensures \result == -a;
+      @ also
+      @   ensures_redundantly !Double.isNaN(a) ==> 0.0 <= \result;
+      @   ensures_redundantly
+      @     \result == Double.longBitsToDouble((Double.doubleToLongBits(a)<<1)>>>1);
       @ |}
       @*/
-    //@ implies_that
-    //@   ensures !Double.isNaN(a) ==> \result >= 0.0;
     public static /*@ pure @*/ double abs(double a);
 
     /*@ public normal_behavior
       @ {|
-      @   requires a == b;
-      @   ensures \result == a;
-      @ also
       @   requires a <= b;
       @   ensures \result == b;
       @ also
-      @   requires a >= b;
+      @   requires b <= a;
       @   ensures \result == a;
       @ also
-      @   ensures \result >= a && \result >= b;
-      @   ensures \result == a || \result == b;
+      @   ensures_redundantly a <= \result && b <= \result;
+      @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
     public static /*@ pure @*/ int max(int a, int b);
 
     /*@ public normal_behavior
       @ {|
-      @   requires a == b;
-      @   ensures \result == a;
-      @ also
       @   requires a <= b;
       @   ensures \result == b;
       @ also
-      @   requires a >= b;
+      @   requires b <= a;
       @   ensures \result == a;
       @ also
-      @   ensures \result >= a && \result >= b;
-      @   ensures \result == a || \result == b;
+      @   ensures_redundantly a <= \result && b <= \result;
+      @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
     public static /*@ pure @*/ long max(long a, long b);
@@ -648,19 +580,12 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Float.isNaN(a) || Float.isNaN(b);
       @   ensures Float.isNaN(\result);
       @ also
-      @   requires !(Float.isNaN(a) || Float.isNaN(b));
+      @   requires !Float.isNaN(a) && !Float.isNaN(b);
       @   {|
-      @     requires (isPositiveZero(a) && b == 0)
-      @              || (isPositiveZero(b) && a == 0);
-      @     ensures isPositiveZero(\result);
-      @   also
-      @     requires new Float(a).compareTo(new Float(b)) == 0;
-      @     ensures \result == a;
-      @   also
-      @     requires new Float(a).compareTo(new Float(b)) <= 0;
+      @     requires new Float(a).compareTo(new Float(b)) <= 0.0;
       @     ensures \result == b;
       @   also
-      @     requires new Float(a).compareTo(new Float(b)) >= 0;
+      @     requires 0.0 <= new Float(a).compareTo(new Float(b));
       @     ensures \result == a;
       @   |}
       @ |}
@@ -672,20 +597,13 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a) || Double.isNaN(b);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !( Double.isNaN(a) || Double.isNaN(b));
+      @   requires !Double.isNaN(a) && !Double.isNaN(b);
       @   {|
-      @     requires (isPositiveZero(a) && b == 0)
-      @              || (isPositiveZero(b) && a == 0);
-      @      ensures isPositiveZero(\result);
+      @     requires new Double(a).compareTo(new Double(b)) <= 0.0;
+      @     ensures \result == b;
       @   also
-      @      requires new Double(a).compareTo(new Double(b)) == 0;
-      @      ensures \result == a;
-      @   also
-      @      requires new Double(a).compareTo(new Double(b)) <= 0;
-      @      ensures \result == b;
-      @    also
-      @      requires new Double(a).compareTo(new Double(b)) >= 0;
-      @      ensures \result == a;
+      @     requires 0.0 <= new Double(a).compareTo(new Double(b));
+      @     ensures \result == a;
       @   |}
       @ |}
       @*/
@@ -693,34 +611,28 @@ public /*@ pure @*/ final strictfp class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires a == b;
-      @   ensures \result == a;
-      @ also
-      @   requires a >= b;
-      @   ensures \result == b;
-      @ also
       @   requires a <= b;
       @   ensures \result == a;
       @ also
-      @   ensures \result <= a && \result <= b;
-      @   ensures \result == a || \result == b;
+      @   requires b <= a;
+      @   ensures \result == b;
+      @ also
+      @   ensures_redundantly \result <= a && \result <= b;
+      @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
     public static /*@ pure @*/ int min(int a, int b);
 
     /*@ public normal_behavior
       @ {|
-      @   requires a == b;
-      @   ensures \result == a;
-      @ also
-      @   requires a >= b;
-      @   ensures \result == b;
-      @ also
       @   requires a <= b;
       @   ensures \result == a;
       @ also
-      @   ensures \result <= a && \result <= b;
-      @   ensures \result == a || \result == b;
+      @   requires b <= a;
+      @   ensures \result == b;
+      @ also
+      @   ensures_redundantly \result <= a && \result <= b;
+      @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
     public static /*@ pure @*/ long min(long a, long b);
@@ -730,18 +642,12 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Float.isNaN(a) || Float.isNaN(b);
       @   ensures Float.isNaN(\result);
       @ also
-      @   requires !(Float.isNaN(a) || Float.isNaN(b));
+      @   requires !Float.isNaN(a) && !Float.isNaN(b);
       @   {|
-      @     requires (isNegativeZero(a) && b == 0) || (isNegativeZero(b) && a == 0);
-      @     ensures isNegativeZero(\result);
-      @   also
-      @     requires new Float(a).compareTo(new Float(b)) == 0;
+      @     requires new Float(a).compareTo(new Float(b)) <= 0.0;
       @     ensures \result == a;
       @   also
-      @     requires new Float(a).compareTo(new Float(b)) <= 0;
-      @     ensures \result == a;
-      @   also
-      @     requires new Float(a).compareTo(new Float(b)) >= 0;
+      @     requires 0.0 <= new Float(a).compareTo(new Float(b));
       @     ensures \result == b;
       @   |}
       @ |}
@@ -753,18 +659,12 @@ public /*@ pure @*/ final strictfp class Math {
       @   requires Double.isNaN(a) || Double.isNaN(b);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !(Double.isNaN(a) || Double.isNaN(b));
+      @   requires !Double.isNaN(a) && !Double.isNaN(b);
       @   {|
-      @     requires (isNegativeZero(a) && b == 0) || (isNegativeZero(b) && a == 0);
-      @     ensures isNegativeZero(\result);
-      @   also
-      @     requires new Double(a).compareTo(new Double(b)) == 0;
+      @     requires new Double(a).compareTo(new Double(b)) <= 0.0;
       @     ensures \result == a;
       @   also
-      @     requires new Double(a).compareTo(new Double(b)) <= 0;
-      @     ensures \result == a;
-      @   also
-      @     requires new Double(a).compareTo(new Double(b)) >= 0;
+      @     requires 0.0 <= new Double(a).compareTo(new Double(b));
       @     ensures \result == b;
       @   |}
       @ |}
@@ -794,20 +694,28 @@ public /*@ pure @*/ final strictfp class Math {
 	// FIXME - can't seem to reference model methods in other specs
     @*/
 
+    /*@
+      @ public static model pure boolean isFinite(double a) {
+      @   return Double.NEGATIVE_INFINITY < a && a < Double.POSITIVE_INFINITY;
+      @ }
+      @*/
+      
     /*@ 
-      @ public static model pure boolean isFiniteOdd( double a ) {
-      @   if( (a - 2*floor(a/2)) == 1.0
-      @      && Double.NEGATIVE_INFINITY < a && a <Double.POSITIVE_INFINITY ) {
+      @ public static model pure boolean isFiniteOdd(double a) {
+      @   if ((a - 2.0 * floor(a / 2.0)) == 1.0 && isFinite(a)) 
+      @   {
       @     return true;
       @   }
-      @   return false;
+      @   else
+      @   {
+      @     return false;
+      @   }
       @ }
       @*/
 
     /*@ 
-      @ public static model pure boolean isFiniteEven( double a ) {
-      @   if( IEEEremainder(a, 2.0) == 0.0
-      @      && Double.NEGATIVE_INFINITY < a && a <Double.POSITIVE_INFINITY ) {
+      @ public static model pure boolean isFiniteEven(double a) {
+      @   if (IEEEremainder(a, 2.0) == 0.0 && isFinite(a)) {
       @     return true;
       @   }
       @   return false;
@@ -817,15 +725,14 @@ public /*@ pure @*/ final strictfp class Math {
     /*@
       @	public static model pure boolean close(double a, double b,
       @                                        double eps) {
-      @     return abs(a-b) <= max(abs(a),abs(b))*eps;
+      @   return abs(a - b) <= max(abs(a), abs(b)) * eps;
       @	}
       @*/
 
     /*@
       @	public static model pure boolean close(double a, double b, double c,
       @                                        double eps) {
-      @    return abs(a-b) <= max(max(abs(a),abs(b)),abs(c))*eps;
+      @    return abs(a - b) <= max(max(abs(a), abs(b)), abs(c)) * eps;
       @ }
       @ */
-
 }
