@@ -35,9 +35,6 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     //@ public invariant initialCapacity >= 0;  
     //@ public invariant mLoadFactor > 0;
     
-    //@ public ghost \TYPE keyType = \type(K);
-    //@ public ghost \TYPE elementType = \type(V);
-      
     /*@
       @ public normal_behavior
       @   ensures \result <==> ( initialMap() &&

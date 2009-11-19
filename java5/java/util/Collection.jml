@@ -45,13 +45,6 @@ public interface Collection<E> extends Iterable<E> {
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
     
-    /**
-     * The (more specific) type of our elements (set by the user of the
-     * object to state what is allowed to be added to the collection, and
-     * hence what is guaranteed to be retrieved from the collection).  It is
-     * not adjusted based on the content of the collection.
-     **/
-    //@ instance ghost public \TYPE elementType; in localState;
 
     /**
      * True iff we are allowed to contain null (not whether we do in fact
@@ -77,8 +70,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public normal_behavior
           ensures \result <==> ( content.theSize == 0
-                              && containsNull == true
-                              && elementType == \type(Object));
+                              && containsNull == true);
         pure
          public model boolean initialCollection();
       @*/
@@ -96,19 +88,17 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   ensures (!containsNull && o == null) ==> !\result;
-      @   ensures (o == null) || \typeof(o) <: elementType || !\result;
       @   ensures content.theSize == 0 ==> !\result;
       @   ensures containsObject(o) ==> \result;
       @   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
           // various exceptions may get thrown, but are optional,
           // so they are specified in the implementing classes
-          signals_only RuntimeException;
+      @   signals_only ClassCastException,NullPointerException;
       @*/
     /*@ pure @*/ boolean contains(/*@nullable*/ Object o);
 
     /*@ public normal_behavior
       @   ensures !containsNull && o == null ==> !\result;
-      @   ensures (o == null) || \typeof(o) <: elementType || !\result;
       @   ensures content.theSize == 0 ==> !\result;
       @   ensures \result ==> contains(o);
       @   ensures \result <==> content.containsObject(o);
@@ -119,7 +109,6 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public normal_behavior
       @   ensures \result != null;
       @   ensures \fresh(\result);
-      @   ensures \result.elementType == elementType;
       @   ensures containsNull == \result.returnsNull;
       @*/
     /* FIXME
@@ -151,9 +140,6 @@ public interface Collection<E> extends Iterable<E> {
        
     /*  FIXME @ public normal_behavior
       @   requires a!= null;
-      @   //requires elementType <: \elemtype(\typeof(a));
-      @   requires (\forall Object o; containsObject(o);
-      @                                \typeof(o) <: \elemtype(\typeof(a)));
       @   {|
       @     requires content.theSize <= a.length;
       @     assignable a[*];
@@ -177,9 +163,6 @@ public interface Collection<E> extends Iterable<E> {
       @ also
       @ public exceptional_behavior
       @   requires a != null;
-      @   //requires !(elementType <: \elemtype(\typeof(a)));
-      @   requires !(\forall Object o; containsObject(o);
-      @                                \typeof(o) <: \elemtype(\typeof(a)));
       @   assignable a[*];
       @   signals_only ArrayStoreException ;
       @*/
@@ -187,9 +170,8 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires !containsNull ==> o != null;
-      @   requires  (o == null) || \typeof(o) <: elementType;
       @   assignable objectState; 
-      @   ensures \not_modified(containsNull,elementType);
+      @   ensures \not_modified(containsNull);
       @   ensures \old(!contains(o)) ==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize+1);
       @   ensures !\result ==> content.theSize == \old(content.theSize);
@@ -207,9 +189,8 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires !containsNull ==> o != null;
-      @   requires  (o == null) || \typeof(o) <: elementType;
       @   assignable objectState; 
-      @   ensures \not_modified(containsNull,elementType);
+      @   ensures \not_modified(containsNull);
       @   ensures \old(contains(o)) <==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize-1);
       @   ensures !\result ==> content.theSize == \old(content.theSize);
@@ -241,10 +222,9 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires c != null;
-      @   requires c.elementType <: elementType;
       @   requires !containsNull ==> !c.containsNull;
       @   assignable objectState; 
-      @   ensures \not_modified(containsNull,elementType);
+      @   ensures \not_modified(containsNull);
       @   ensures content.theSize >= \old(content.theSize);
       @   ensures !\result <==> (content.theSize == \old(content.theSize));
       @   ensures (\forall Object o; \old(c.contains(o) || contains(o)) <==> contains(o));
@@ -261,7 +241,7 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public behavior
       @   requires c != null;
       @   assignable objectState; 
-      @   ensures \not_modified(containsNull,elementType);
+      @   ensures \not_modified(containsNull);
       @   ensures (\forall Object o; ( contains(o) || \old(c.contains(o))) <==>
                                         \old(contains(o)));
       @   ensures (contains(null) || \old(c.contains(null))) <==> \old(contains(null));
@@ -280,7 +260,7 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public behavior
       @   requires c != null;
       @   assignable objectState; 
-      @   ensures \not_modified(containsNull,elementType);
+      @   ensures \not_modified(containsNull);
           // See note in remove about exceptions
       @   ensures (\forall Object o; contains(o) <==>
 				    \old(contains(o) && c.contains(o)) );
@@ -301,7 +281,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   assignable objectState; 
-      @   ensures \not_modified(containsNull,elementType);
+      @   ensures \not_modified(containsNull);
       @   ensures isEmpty();
       @   ensures_redundantly size() == 0;
           // FIXME See note in remove about exceptions
@@ -311,13 +291,13 @@ public interface Collection<E> extends Iterable<E> {
     // FIXME
     // Note: if the collections are equal they must have the same size and
     // must at least contain elements in common.  However, the latter two
-    // conditions are not sufficient to imply equality for arbitrary collections.
+    // conditions are not sufficient to imply equality for arbitrary collections,
+    // hence the use of ==> below instead of <==>.
     /*@ also public normal_behavior
       @   requires c != null && c instanceof Collection;
       @   ensures \result ==> ( \forall Object oo; 
       @                         contains(oo) <==> ((Collection)c).contains(oo));
       @   ensures \result ==> (content.theSize == ((Collection)c).content.theSize);
-      // Other behavior is inherited
       @*/
     boolean equals(/*@nullable*/ Object c);
 

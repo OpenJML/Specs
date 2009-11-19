@@ -29,11 +29,11 @@ public class ArrayList<E> extends AbstractList<E>
 {
 
     /*@ public normal_behavior
-      @   ensures \result <==> (
+      @   ensures \result <==> 
       @                  initialAbstractList() &&
       @                  capacity == initialCapacity &&
       @                  isEmpty() &&
-      @                  containsNull && elementType == \type(Object));
+      @                  containsNull;
       @ public pure model boolean initialArrayList(int initialCapacity);
       @*/
 
@@ -68,7 +68,6 @@ public class ArrayList<E> extends AbstractList<E>
       @                     this.get(i) == (c.iterator().nthNextElement(i)));
       @   ensures capacity == c.size()*1.1;
       @   ensures containsNull == c.containsNull;
-      @   ensures elementType == c.elementType;
       @ also
       @  public exceptional_behavior
       @   requires c == null;
@@ -79,7 +78,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /*@  public normal_behavior
       @   assignable objectState;
-      @   ensures \not_modified(containsNull,elementType,content.theSize,content,
+      @   ensures \not_modified(containsNull,content.theSize,content,
                                                    theString,theHashCode);
       @   ensures capacity == this.size();
       @*/
@@ -88,7 +87,7 @@ public class ArrayList<E> extends AbstractList<E>
     /*@  public normal_behavior
       @   assignable objectState;
       @   ensures capacity >= minCapacity;
-      @   ensures \not_modified(containsNull,elementType,content.theSize,content);
+      @   ensures \not_modified(containsNull,content.theSize,content);
       @   ensures \not_modified(theString,theHashCode);
       @*/
     public void ensureCapacity(int minCapacity);
@@ -114,7 +113,6 @@ public class ArrayList<E> extends AbstractList<E>
       @   ensures \result != this;
       @   ensures \result.equals(this);
       @   ensures ((List)\result).containsNull == this.containsNull;
-      @   ensures ((List)\result).elementType == this.elementType;
       @   ensures ((ArrayList)\result).content.theSize == this.content.theSize;
       @   //-@ ensures List.equals(((List)\result).content,this.content);
       @   ensures ((ArrayList)\result).theString == this.theString;

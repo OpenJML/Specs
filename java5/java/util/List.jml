@@ -82,7 +82,6 @@ public interface List<E> extends Collection<E> {
       @   old int arrSize = a.length;
       @   old int colSize = size();
       @   requires a!= null; 
-      @   requires elementType <: \elemtype(\typeof(a));
       @   {|
       @     requires colSize <= arrSize;
       @     assignable a[*];
@@ -108,7 +107,6 @@ public interface List<E> extends Collection<E> {
     <T> T[] toArray(T[] a) throws NullPointerException;
 
     /*@ also public normal_behavior
-      @   requires \typeof(o) <: elementType;
       @   requires !containsNull ==> o != null;
       @   assignable objectState;
       @   ensures content != null;  // FIXME - not strictly necessary
@@ -145,35 +143,6 @@ public interface List<E> extends Collection<E> {
     // FIXME
     boolean addAll(Collection<? extends E> c);
 
-    // FIXME - spec the contents of the new list
-    /*@   public behavior
-      @     requires c != null;
-      @     requires 0 <= index && index <= size();
-      @     requires c.elementType <: elementType;
-      @     requires !containsNull ==> !c.containsNull;
-      @     assignable objectState;
-      @   signals_only UnsupportedOperationException, ClassCastException,
-                         IllegalArgumentException;
-      @     signals (UnsupportedOperationException)
-      @              (* if this operation is not supported *);
-      @     signals (IllegalArgumentException)
-      @              (* if some aspect of c prevents
-      @                 its elements from being added to the list *);
-      @ also
-      @   public exceptional_behavior
-      @     requires c == null || !(0 <= index && index <= size())
-      @             || !(c.elementType <: elementType)
-      @             || (!containsNull && c.containsNull);
-      @     assignable \nothing;
-      @     signals_only ClassCastException, NullPointerException, IndexOutOfBoundsException;
-      @     signals (ClassCastException)
-      @             c != null && !(c.elementType <: elementType);
-      @     signals (NullPointerException) c == null;
-      @     signals (IndexOutOfBoundsException)
-      @             !(0 <= index && index <= size());
-      @*/
-    boolean addAll(int index, Collection<? extends E> c);
-
     // inherited spec
     // FIXME - retains order
     boolean removeAll(Collection<?> c) throws NullPointerException;
@@ -202,8 +171,7 @@ public interface List<E> extends Collection<E> {
     /*@ public normal_behavior
       @   requires 0 <= index && index < size(); */
     /*-@  ensures \result == get(content,index); */
-    /*@   ensures (\result == null) || \typeof(\result) <: elementType;
-      @   ensures !containsNull ==> \result != null;
+    /*@   ensures !containsNull ==> \result != null;
       @ also
       @ public exceptional_behavior
       @   requires !(0 <= index && index < size());
@@ -216,11 +184,10 @@ public interface List<E> extends Collection<E> {
     /*@
       @ public behavior
       @ requires !containsNull ==> element != null;
-      @ requires (element == null) || \typeof(element) <: elementType;
       @ {|
       @   requires 0 <= index && index < size();
       @   assignable objectState;
-      @   ensures \not_modified(containsNull,elementType,content.theSize);
+      @   ensures \not_modified(containsNull,content.theSize);
       @   ensures \result == (\old(get(index)));
       @   ensures get(index) == element; */
     /*  @   ensures (\forall \bigint i; 0<=i && i<content.theSize && i != index;  FIXME - fix the use of get(content,i)
@@ -249,11 +216,10 @@ public interface List<E> extends Collection<E> {
     
     /*@ public behavior
       @   requires !containsNull ==> element != null;
-      @   requires (element == null) || \typeof(element) <: elementType;
       @   {|
       @     requires  0 <= index && index <= size();
       @     assignable objectState;
-      @     ensures \not_modified(containsNull,elementType);
+      @     ensures \not_modified(containsNull);
       @     ensures content.theSize == \old(content.theSize)+1;
       @     ensures get(index) == element;
       @     ensures (\forall int i; 0 <= i && i < index;
@@ -285,8 +251,7 @@ public interface List<E> extends Collection<E> {
     /*@ public behavior
       @   requires  0 <= index && index < size();
       @   assignable objectState;
-      @   ensures \not_modified(containsNull,elementType);
-      @   ensures (\result == null) || \typeof(\result) <: elementType;
+      @   ensures \not_modified(containsNull);
       @   ensures !containsNull ==> \result != null;
       @   ensures content.theSize == \old(content.theSize)-1;
       @   ensures \result == (\old(get(index))) ;
@@ -341,7 +306,6 @@ public interface List<E> extends Collection<E> {
       @       ==> (\forall int i; 0 <= i && i < size();
       @                \result.hasNext(i) && \result.nthNextElement(i)
       @                 == toArray()[i]);
-      @   ensures \result.elementType == elementType;
       @   ensures containsNull == \result.returnsNull;
       @*/
     /*@ pure @*/ /*@ non_null @*/ ListIterator<E> listIterator();
@@ -359,7 +323,6 @@ public interface List<E> extends Collection<E> {
       @   signals_only IndexOutOfBoundsException;
       @
       @  implies_that
-      @     ensures \result.elementType == elementType;
       @     ensures containsNull == \result.returnsNull;
       @*/
     /*@ pure @*/ /*@ non_null @*/ ListIterator<E> listIterator(int index);
