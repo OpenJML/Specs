@@ -1,8 +1,6 @@
 package java.util;
 
 public abstract class Dictionary<K,V> {
-    //@ public ghost \TYPE keyType = \type(K);
-    //@ public ghost \TYPE elementType = \type(V);
 
     //@ pure
     public Dictionary();

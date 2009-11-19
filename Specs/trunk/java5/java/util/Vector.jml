@@ -67,7 +67,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires initialCapacity >= 0 && capacityIncrement >= 0;
       @    ensures maxCapacity == initialCapacity
       @        && this.capacityIncrement == capacityIncrement;
-      @    ensures elementType == \type(E) && containsNull;
+      @    ensures containsNull;
       @    ensures isEmpty();
       @    ensures elementCount == 0;
       @*/
@@ -77,7 +77,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires initialCapacity >= 0;
       @    ensures maxCapacity == initialCapacity
       @        && capacityIncrement == 0;
-      @    ensures elementType == \type(E) && containsNull;
+      @    ensures containsNull;
       @    ensures isEmpty();
       @    ensures elementCount == 0;
       @*/
@@ -85,12 +85,11 @@ public class Vector<E> extends AbstractList<E>
 
     /*@  public normal_behavior
       @    assignable objectState;
-      @    assignable  maxCapacity, capacityIncrement, elementType, containsNull;
+      @    assignable  maxCapacity, capacityIncrement, containsNull;
       @    ensures containsNull;
       @    ensures maxCapacity > 0 && capacityIncrement == 0;
       @    ensures elementCount == 0;
       @    ensures content.theSize == 0;
-      @    ensures elementType == \type(E);
       @    ensures isEmpty();
       @*/
     public /*@ pure @*/ Vector();
@@ -98,9 +97,8 @@ public class Vector<E> extends AbstractList<E>
     /*@ public normal_behavior
       @    requires c != null;
       @    assignable objectState;
-      @    assignable maxCapacity, capacityIncrement, elementType, containsNull;
+      @    assignable maxCapacity, capacityIncrement, containsNull;
       @    ensures elementCount == c.size();
-      @    ensures this.elementType == c.elementType;
       @    ensures this.containsNull == c.containsNull;
       @    ensures this.content.theSize == c.content.theSize;
       @    ensures (\forall Object o; c.contains(o) <==> this.contains(o));
@@ -112,21 +110,10 @@ public class Vector<E> extends AbstractList<E>
     /*@ public normal_behavior
       @    requires anArray != null;
       @    requires elementCount <= anArray.length;
-      @    requires elementType <: \elemtype(\typeof(anArray));
       @    assignable anArray[0 .. elementCount - 1];
       @    ensures (\forall int i; 0 <= i && i < elementCount;
       @                             get(i) == anArray[i]);
       @    ensures !containsNull ==> !\nonnullelements(anArray);
-      @ also public exceptional_behavior
-      @    requires anArray == null;
-      @    assignable \not_specified;
-      @    signals_only NullPointerException;
-      @ also public exceptional_behavior
-           requires anArray != null;
-           requires (\exists int i; 0<=i && i<elementCount;
-                                 !(elementType <: \elemtype(\typeof(anArray))));
-      @    assignable \not_specified;
-           signals_only ArrayStoreException;
       @*/
     public synchronized void copyInto(Object[] anArray);
 
@@ -135,7 +122,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures \not_modified(theString,theHashCode);
                // theHashCode is not changed because the result does not
                // change equals
-      @    ensures \not_modified(elementCount,containsNull,elementType);
+      @    ensures \not_modified(elementCount,containsNull);
       @    ensures \not_modified(content.theSize);
       @    ensures (\forall int i; 0<=i && i<size(); get(i) == \old(get(i)));
       @    ensures maxCapacity == elementCount;
@@ -153,7 +140,7 @@ public class Vector<E> extends AbstractList<E>
     //@    ensures \not_modified(theString,theHashCode);
     //@           // theHashCode is not changed because the result does not
     //@           // changes equals
-    //@    ensures \not_modified(elementCount,containsNull,elementType);
+    //@    ensures \not_modified(elementCount,containsNull);
     //@          // FIXME - this is the implementation described for Vector
     //@          // is it required of subclasses?
     /*@    ensures maxCapacity == 
@@ -177,7 +164,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires newSize <= elementCount;
       @    assignable objectState; 
       @    ensures \not_modified(theString,theHashCode);
-      @    ensures \not_modified(containsNull,elementType);
+      @    ensures \not_modified(containsNull);
       @    ensures elementCount == newSize; */
     /*-@   ensures (\forall int i; 0<=i && i<elementCount;
       @			elementData[i] == \old(elementData[i])); */
@@ -186,7 +173,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires newSize > elementCount;
       @    assignable objectState;
       @    ensures \not_modified(theString,theHashCode);
-      @    ensures \not_modified(containsNull,elementType); */
+      @    ensures \not_modified(containsNull); */
     /*-@
       @    ensures (\forall int i; 0<=i && i<oldSize;
       @			elementData[i] == \old(elementData[i])); */
@@ -218,8 +205,7 @@ public class Vector<E> extends AbstractList<E>
     // FIXME
     /*@  public normal_behavior
       @    ensures (* \result is an Enumeration of this Vector *);
-      @    ensures \result != null && \result.elementType == elementType
-      @         && \result.returnsNull == containsNull;
+      @    ensures \result != null && \result.returnsNull == containsNull;
       @*/
     public /*@ pure @*/ /*@ non_null @*/ Enumeration<E> elements();
 
@@ -261,7 +247,6 @@ public class Vector<E> extends AbstractList<E>
       @    ensures \result == get(index);
       @ implies_that
       @    requires 0 <= index && index < elementCount;
-      @    ensures \result == null || \typeof(\result) <: elementType;
       @    ensures !containsNull ==> \result != null;
       @*/
     public /*@ pure @*/ synchronized E elementAt(int index);
@@ -276,7 +261,6 @@ public class Vector<E> extends AbstractList<E>
       @
       @ implies_that public normal_behavior
       @    requires elementCount > 0;
-      @    ensures \result == null || \typeof(\result) <: elementType;
       @    ensures !containsNull ==> \result != null;
       @*/
     public /*@ pure @*/ synchronized E firstElement() throws NoSuchElementException;
@@ -291,14 +275,12 @@ public class Vector<E> extends AbstractList<E>
       @ implies_that 
       @  public normal_behavior
       @    requires elementCount > 0;
-      @    ensures \result == null || \typeof(\result) <: elementType;
       @    ensures !containsNull ==> \result != null;
       @*/
     public /*@ pure @*/ synchronized E lastElement() throws NoSuchElementException;
 
     /*@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
-      @    requires \typeof(obj) <: elementType;
       @    requires containsNull || obj != null;
       @    assignable objectState;
       @    ensures elementCount == \old(elementCount);
@@ -330,11 +312,10 @@ public class Vector<E> extends AbstractList<E>
     public synchronized void removeElementAt(int index);
 
     /*@  public normal_behavior
-      @    requires obj==null || \typeof(obj) <: elementType;
       @    requires !containsNull ==> obj != null;
       @    requires 0 <= index && index < elementCount;
       @    assignable objectState;
-      @    ensures \not_modified(containsNull,elementType);
+      @    ensures \not_modified(containsNull);
       @    ensures get(index) == obj;
       @    ensures elementCount == \old(elementCount)+1;
       @    ensures (\forall int i; 0<=i && i<index;
@@ -369,10 +350,9 @@ public class Vector<E> extends AbstractList<E>
     public synchronized void insertElementAt(E obj, int index);
 
     /*@  public normal_behavior
-      @    requires \typeof(obj) <: elementType;
       @    requires containsNull || obj!=null;
       @    assignable objectState;
-      @    ensures \not_modified(containsNull,elementType);
+      @    ensures \not_modified(containsNull);
       @    ensures (obj == null & get(elementCount-1) == null) 
       @            || get(elementCount-1).equals(obj); // or == ?
       @    ensures elementCount == \old(elementCount)+1;
@@ -407,7 +387,6 @@ public class Vector<E> extends AbstractList<E>
 
     /*@  public normal_behavior
       @    requires !containsNull ==> obj != null;
-      @    requires obj==null || \typeof(obj) <: elementType;
       @  {|
       @    requires contains(obj);
       @    assignable objectState;
@@ -432,7 +411,6 @@ public class Vector<E> extends AbstractList<E>
       @ ensures \result != null;
       @ ensures ((Vector)\result).elementCount == elementCount;
       @ ensures ((Vector)\result).containsNull == containsNull;
-      @ ensures ((Vector)\result).elementType == elementType;
       @ ensures (\forall int i;0<=i && i<elementCount; get(i) == ((Vector)\result).get(i));
       @*/
     public /*@ pure @*/ synchronized Object clone(); // Overrides Object
@@ -492,7 +470,6 @@ public class Vector<E> extends AbstractList<E>
     /*@ also
       @  public normal_behavior
       @    requires 0 <= index && index < size();
-      @    requires element == null || \typeof(element) <: elementType;
       @    requires containsNull || element != null;
       @    assignable objectState;
       @    ensures elementCount == \old(elementCount);
@@ -509,7 +486,6 @@ public class Vector<E> extends AbstractList<E>
      // FIXME - all inherited?
     /*@ also
       @ public normal_behavior
-      @    requires o == null || \typeof(o) <: elementType;
       @    requires containsNull || o != null;
       @    assignable objectState;
       @    ensures (o == null & get(elementCount-1) == null) 
@@ -536,7 +512,6 @@ public class Vector<E> extends AbstractList<E>
      // FIXME - all inherited?
     /*@ also public normal_behavior
       @    requires 0 <= index && index <= size();
-      @    requires element == null || \typeof(element) <: elementType;
       @    requires containsNull || element != null;
       @    assignable objectState;
       @    ensures elementCount == \old(elementCount)+1;

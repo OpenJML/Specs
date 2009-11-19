@@ -44,10 +44,6 @@ public interface Enumeration<E> {
       @*/
     boolean hasMoreElements();
 
-    /** The type of the elements we return.
-     **/
-    //@ instance ghost public \TYPE elementType;
-
     /** Do we ever return null as an element?
      **/
     //@ instance ghost public boolean returnsNull;
@@ -56,7 +52,6 @@ public interface Enumeration<E> {
       @     requires moreElements;
       @     assignable objectState;
       @     assignable moreElements;
-      @     ensures (\result == null) || \typeof(\result) <: elementType;
       @     ensures !returnsNull ==> (\result != null);
       @ also
       @   public exceptional_behavior

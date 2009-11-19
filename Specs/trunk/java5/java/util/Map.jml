@@ -112,19 +112,8 @@ public interface Map<K,V> {
           @     ensures \result == \old(this.abstractValue);
           @     ensures this.abstractValue == value;
           @
-          @   // FIXME - fix these exceptions
           @     signals_only NullPointerException, UnsupportedOperationException,
                                ClassCastException, IllegalArgumentException;
-          @     signals (NullPointerException) \not_modified(this.abstractValue);
-          @     signals (UnsupportedOperationException)
-          @               \not_modified(this.abstractValue) 
-          @             && (* if the map's put operation is not supported  *);
-          @     signals (ClassCastException) \not_modified(this.abstractValue)
-          @             && (* \typeof(abstractValue) is incompatible
-          @                with the valueType of this map *);
-          @     signals (IllegalArgumentException) \not_modified(this.abstractValue)
-          @             && (* if some aspect of value is not 
-          @                allowed in the map *);
           @*/
         V setValue(V value);
 
@@ -177,7 +166,6 @@ public interface Map<K,V> {
       @    ensures content.hasMap(key) <==> \result;
       @
       @    signals_only ClassCastException, NullPointerException;
-           // FIXME - fix exceptions
       @    signals (ClassCastException)
       @         (* if the value is not appropriate for this object *);
       @    signals (NullPointerException) key == null
@@ -191,7 +179,6 @@ public interface Map<K,V> {
               nullequals(value,content.mapsObject(null)) ||
               (\exists Object k; nullequals(value,content.mapsObject(k))));
       @
-           // FIXME - fix exceptions
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
       @         (* if the value is not appropriate for this object *);
@@ -222,7 +209,7 @@ public interface Map<K,V> {
       @    ensures content.maps(key) == value;
       @    ensures \result == \old(get(key));
 
-      @    ensures (\forall Object k; k != key ==> 
+      @    ensures (\forall Object k; !k.equals(key) ==> 
                         (\old(content.hasMapObject(k)) 
                                        == content.hasMapObject(k)));
       @    ensures key != null ==> (\old(content.hasMapObject(null)) 
@@ -253,7 +240,7 @@ public interface Map<K,V> {
       @             && (* if the map's put operation is not supported  *);
       @    signals (ClassCastException) \not_modified(theMap)
       @             && (* \typeof(key) or \typeof(value) is incompatible
-      @                with the valueType or keyType of this map *);
+      @                with the corresponding V or K type *);
       @    signals (IllegalArgumentException) \not_modified(theMap)
       @             && (* if some aspect of key or value is not 
       @                allowed in the map *);
