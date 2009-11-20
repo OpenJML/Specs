@@ -909,68 +909,48 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double log1p(double x);
     
-    /*@ public static model pure boolean isPositiveZero( double a) {
-	  return new Double(a).equals(new Double("+0.0"));
-	  //return java.lang.Double.isPositiveZero(a);
+    // model methods to help make some of the special cases
+    // easier to deal with
+    /*@ public static model pure boolean isPositiveZero(double a) {
+	      return java.lang.Double.isPositiveZero(a);
         }
 	
-        public static model pure boolean isNegativeZero( double a) {
-	  return new Double(a).equals(new Double("-0.0"));
-	  //return java.lang.Double.isNegativeZero(a);
+        public static model pure boolean isNegativeZero(double a) {
+	      return java.lang.Double.isNegativeZero(a);
         }
     
-        public static model pure boolean isPositiveZero( float a) {
-	  return new Float(a).equals(new Float("+0.0"));
-	  //return java.lang.Float.isPositiveZero(a);
+        public static model pure boolean isPositiveZero(float a) {
+	      return java.lang.Float.isPositiveZero(a);
         }
 	
-        public static model pure boolean isNegativeZero( float a) {
-	  return new Float(a).equals(new Float("-0.0"));
-	  //return java.lang.Float.isNegativeZero(a);
+        public static model pure boolean isNegativeZero(float a) {
+	      return java.lang.Float.isNegativeZero(a);
         }
     
-	// FIXME - can't seem to reference model methods in other specs
+        public static model pure boolean isFinite(double a) {
+          return Double.NEGATIVE_INFINITY < a && 
+                 a < Double.POSITIVE_INFINITY;
+        }
+
+        public static model pure boolean isFiniteOdd(double a) {
+          if ((a - 2.0 * floor(a / 2.0)) == 1.0 && isFinite(a)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+     
+       public static model pure boolean isFiniteEven(double a) {
+          if (IEEEremainder(a, 2.0) == 0.0 && isFinite(a)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+       public static model pure boolean close(double a, double b,
+                                              double eps) {
+         return abs(a - b) <= max(abs(a), abs(b)) * eps;
+       }
     @*/
-
-    /*@
-      @ public static model pure boolean isFinite(double a) {
-      @   return Double.NEGATIVE_INFINITY < a && a < Double.POSITIVE_INFINITY;
-      @ }
-      @*/
-      
-    /*@ 
-      @ public static model pure boolean isFiniteOdd(double a) {
-      @   if ((a - 2.0 * floor(a / 2.0)) == 1.0 && isFinite(a)) 
-      @   {
-      @     return true;
-      @   }
-      @   else
-      @   {
-      @     return false;
-      @   }
-      @ }
-      @*/
-
-    /*@ 
-      @ public static model pure boolean isFiniteEven(double a) {
-      @   if (IEEEremainder(a, 2.0) == 0.0 && isFinite(a)) {
-      @     return true;
-      @   }
-      @   return false;
-      @ }
-      @*/
-
-    /*@
-      @	public static model pure boolean close(double a, double b,
-      @                                        double eps) {
-      @   return abs(a - b) <= max(abs(a), abs(b)) * eps;
-      @	}
-      @*/
-
-    /*@
-      @	public static model pure boolean close(double a, double b, double c,
-      @                                        double eps) {
-      @    return abs(a - b) <= max(max(abs(a), abs(b)), abs(c)) * eps;
-      @ }
-      @ */
 }
