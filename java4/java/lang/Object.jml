@@ -56,9 +56,8 @@ public class Object {
       @*/
     public /*@ pure @*/ Object();
 
-
     /*@ public normal_behavior
-      @   ensures \result == _getClass;
+      @   ensures \result == \typeof(this);
       @   ensures_redundantly \result != null;
       @*/
     //-@ function // Not dependent on the state, just on the object identity
