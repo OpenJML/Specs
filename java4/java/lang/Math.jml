@@ -39,6 +39,9 @@ import java.util.Random;
     - primitive comparisions (<, >, <=, >=) on doubles are not the same as
 	.comparesTo on Doubles
 */
+// nullable by default, because we don't know what the implementation
+// will do with its random number generator
+/*@ nullable_by_default @*/  
 public /*@ pure @*/ final class Math {
     /**
      * @design These axioms are used to connect the floating point domain
