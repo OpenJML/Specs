@@ -460,11 +460,9 @@ public /*@ pure @*/ final class Math {
       @*/ 
     public static /*@ pure @*/ long round(double a);
 
-    /*@ public normal_behavior
-      @ {|
-      @   ensures 0.0 <= \result && \result < 1.0;
-      @ |}
-      @*/ 
+    // lightweight spec case because we don't want or need to reason
+    // about how Math generates random numbers
+    //@ ensures 0.0 <= \result && \result < 1.0;
     public static double random();
 
     /*@ public normal_behavior
