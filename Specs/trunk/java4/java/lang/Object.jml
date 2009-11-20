@@ -98,7 +98,7 @@ public class Object {
       @  //  requires obj != null;
       @   // ensures \result == obj.equals(this);
       @*/
-    public /*@ pure @*/ boolean equals(/*@ nullable /*+@ \readonly @+*/ Object obj);
+    public /*@ pure @*/ boolean equals(/*@ nullable @*/ /*+@ \readonly @+*/ Object obj);
 
     /*@ protected normal_behavior
       @   requires this instanceof Cloneable;
