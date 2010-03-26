@@ -56,7 +56,7 @@ public /*@ pure @*/ abstract class JMLValueSequenceSpecs<E extends JMLType> impl
       @   ensures \result <==>
       @         (* elem is ".equals" to one of the objects in this sequence *);
       @*/
-    public abstract boolean has(E elem);
+    public abstract boolean has(JMLType elem);
 
     /** Is the argument ".equals" to one of the values in this sequence.
      *  @see #has(JMLType)
