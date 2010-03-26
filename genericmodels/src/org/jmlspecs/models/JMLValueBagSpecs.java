@@ -39,7 +39,7 @@ public /*@ pure @*/ abstract class JMLValueBagSpecs<E extends JMLType> implement
     /*@ public normal_behavior
       @   ensures \result <==> count(elem) > 0;
       @*/
-    public abstract boolean has(/*@ nullable @*/ E elem);
+    public abstract boolean has(/*@ nullable @*/ JMLType elem);
 
     /** Is the argument ".equals" to one of the values in this bag.
      *  @see #has(JMLType)

@@ -39,7 +39,7 @@ public /*@ pure @*/ abstract class JMLValueSetSpecs<E extends JMLType> implement
       @   ensures \result <==>
       @         (* elem tests as ".equals" to one of the objects in the set *);
       @*/
-    public abstract boolean has(/*@ nullable @*/ E elem);
+    public abstract boolean has(/*@ nullable @*/ JMLType elem);
 
     /** Is the argument ".equals" to one of the values in theSet.
      *  @see #has(JMLType)
