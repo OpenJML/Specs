@@ -37,9 +37,9 @@ public final class Class<T> implements java.io.Serializable,
     //@ pure
     public String toString();
 
-    // *@ also public normal_behavior
+    // @ also public normal_behavior
     // @   ensures \result <==> (this == o);
-    // @*/
+    // @
     // @ pure function 
     //public boolean equals(Object o);
 
