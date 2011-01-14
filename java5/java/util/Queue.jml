@@ -33,14 +33,14 @@ public interface Queue<E> extends Collection<E> {
       @   ensures !\fresh(\result);
       @   ensures containsObject((Object)\result);
       @ //** "magic" getter method used to specify the ordering of the queue.
-      @ public pure instance model E _get(\bigint n);
+      @ public pure model E _get(\bigint n);
       @*/
     
     /*@ public behavior
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
       @   ensures \result;
-      @   assignable this;
+      @   assignable this.*;
       @ also
       @ public exceptional_behavior
       @   requires e == null & !containsNull;
@@ -59,14 +59,14 @@ public interface Queue<E> extends Collection<E> {
     public /*@ pure nullable @*/ E element() throws NoSuchElementException;
 
     /*@ public behavior
-      @   requires  (* capacity restrictions respected *);
+      @   requires  false && (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
       @   ensures \result;
-      @   assignable this;
+      @   assignable this.*;
       @ also
       @ public behavior
-      @   requires (* capacity restrictions violated *);
+      @   requires false && (* capacity restrictions violated *);
       @   ensures !\result;
       @   assignable \nothing;
       @ also
@@ -93,7 +93,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E poll();
     
@@ -107,7 +107,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
 }

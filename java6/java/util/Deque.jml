@@ -33,11 +33,11 @@ public interface Deque<E> extends Queue<E> {
     
     /*@ public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i+1) == \old(_get(i)));
-      @   assignable this;
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
+      @   assignable this.*;
       @ also
       @ public exceptional_behavior
-      @   requires e == null & !containsNull;
+      @   requires e == null && !containsNull;
       @   signals_only NullPointerException;
       @*/
     public void addFirst(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
@@ -45,11 +45,11 @@ public interface Deque<E> extends Queue<E> {
     /*@ public behavior
       @   requires (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
-      @   assignable this;
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize-1; _get(i) == \old(_get(i)));
+      @   assignable this.*;
       @ also
       @ public exceptional_behavior
-      @   requires e == null & !containsNull;
+      @   requires e == null && !containsNull;
       @   signals_only NullPointerException;
       @*/
     public void addLast(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
@@ -73,7 +73,7 @@ public interface Deque<E> extends Queue<E> {
       @           (\forall int i; 0 <= i && i < size();
       @                 this.contains(\result.nthNextElement(i)));
       @   ensures_redundantly size() != 0 ==> \result.moreElements;
-      @   ensures (\forall \bigint i; 0 <= i & i < contents.theSize;
+      @   ensures (\forall int i; 0 <= i && i < content.theSize;
       @               \result.nthNextElement(i) == _get(size()-1-i));
       @*/
     public /*@ pure @*/  Iterator<E> descendingIterator();
@@ -102,7 +102,7 @@ public interface Deque<E> extends Queue<E> {
     public /*@ pure nullable @*/ E getLast() throws NoSuchElementException;
     
     /*@ public normal_behavior
-      @   ensures (\forall \bigint i; 0 <= i & i < contents.theSize;
+      @   ensures (\forall int i; 0 <= i && i < content.theSize;
       @               \result.nthNextElement(i) == _get(i));
       @*/
     public Iterator<E> iterator();
@@ -111,37 +111,37 @@ public interface Deque<E> extends Queue<E> {
     public boolean offer(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
     
     /*@ public behavior
-      @   requires (* capacity restrictions respected *);
+      @   requires false && (* capacity restrictions respected *);
       @   ensures _get(0) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i+1) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
       @   ensures \result;
-      @   assignable this;
+      @   assignable this.*;
       @ also
       @ public behavior
-      @   requires (* capacity restrictions violated *);
+      @   requires false && (* capacity restrictions violated *);
       @   ensures !\result;
       @   assignable \nothing;
       @ also
       @ public exceptional_behavior
-      @   requires e == null & !containsNull;
+      @   requires e == null && !containsNull;
       @   signals_only NullPointerException;
       @*/
     public boolean offerFirst(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
       
     /*@ public behavior
-      @   requires  (* capacity restrictions respected *);
+      @   requires  false && (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize-1; _get(i) == \old(_get(i)));
       @   ensures \result;
-      @   assignable this;
+      @   assignable this.*;
       @ also
       @ public behavior
-      @   requires (* capacity restrictions violated *);
+      @   requires false && (* capacity restrictions violated *);
       @   ensures !\result;
       @   assignable \nothing;
       @ also
       @ public exceptional_behavior
-      @   requires e == null & !containsNull;
+      @   requires e == null && !containsNull;
       @   signals_only NullPointerException;
       @*/
     public boolean offerLast(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
@@ -156,7 +156,7 @@ public interface Deque<E> extends Queue<E> {
     public /*@ pure nullable @*/ E peekFirst();
   
     /*@ public normal_behavior
-      @   ensures \result == (isEmpty()? null : _get(size()-1);
+      @   ensures \result == (isEmpty()? null : _get(size()-1));
       @   ensures \result == null ==> isEmpty() | containsNull;
       @*/
     public /*@ pure nullable @*/ E peekLast();
@@ -172,10 +172,10 @@ public interface Deque<E> extends Queue<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E pollFirst();
    
@@ -187,10 +187,10 @@ public interface Deque<E> extends Queue<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(size()-1));
-      @   ensures (\forall \bigint i; 0 <= i & i < content.theSize; _get(i) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize; _get(i) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E pollLast();
   
@@ -201,20 +201,20 @@ public interface Deque<E> extends Queue<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E pop() throws NoSuchElementException;
    
     /*@ public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i+1) == \old(_get(i)));
-      @   assignable this;
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
+      @   assignable this.*;
       @ also
       @ public exceptional_behavior
-      @   requires e == null & !containsNull;
+      @   requires e == null && !containsNull;
       @   signals_only NullPointerException;
       @*/
     public void push(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
@@ -229,10 +229,10 @@ public interface Deque<E> extends Queue<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E removeFirst() throws NoSuchElementException;
 
@@ -240,11 +240,11 @@ public interface Deque<E> extends Queue<E> {
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;
-      @   ensures (\exists \bigint i; 0 <= i & i <= content.theSize & (\old(_get(i))==null || \old(_get(i)).equals(o)) &
-      @               (\forall \bigint j; 0 <= j & j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
-      @               (\forall \bigint j; 0 <= j & j < i; _get(j)==\old(_get(j))) &
-      @               (\forall \bigint j; i < j & j <= content.theSize; _get(j-1)==\old(_get(j)));
-      @   assignable this;
+      @   ensures (\exists \bigint i; 0 <= i && i <= content.theSize && (\old(_get(i))==null || \old(_get(i)).equals(o)) &&
+      @               (\forall \bigint j; 0 <= j && j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
+      @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; _get(j-1)==\old(_get(j))));
+      @   assignable this.*;
       @ also
       @ public behavior
       @   requires !contains(o);
@@ -257,11 +257,11 @@ public interface Deque<E> extends Queue<E> {
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;
-      @   ensures (\exists \bigint i; 0 <= i & i <= content.theSize & (\old(_get(i))== null || \old(_get(i)).equals(o)) &
-      @               (\forall \bigint j; 0 <= j & j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
-      @               (\forall \bigint j; 0 <= j & j < i; _get(j)==\old(_get(j))) &
-      @               (\forall \bigint j; i < j & j <= content.theSize; _get(j-1)==\old(_get(j)));
-      @   assignable this;
+      @   ensures (\exists \bigint i; 0 <= i && i <= content.theSize && (\old(_get(i))== null || \old(_get(i)).equals(o)) &&
+      @               (\forall \bigint j; 0 <= j && j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
+      @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; _get(j-1)==\old(_get(j))));
+      @   assignable this.*;
       @ also
       @ public behavior
       @   requires !contains(o);
@@ -277,10 +277,10 @@ public interface Deque<E> extends Queue<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(size()-1));
-      @   ensures (\forall \bigint i; 0 <= i & i < content.theSize; _get(i) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize; _get(i) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this;
+      @   assignable this.*;
       @*/
     public /*@ nullable @*/ E removeLast() throws NoSuchElementException;
 
@@ -289,11 +289,11 @@ public interface Deque<E> extends Queue<E> {
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;
-      @   ensures (\exists \bigint i; 0 <= i & i <= content.theSize & \old(_get(i)).equals(o) &
-      @               (\forall \bigint j; i < j & j <= content.theSize; !\old(_get(j)).equals(o));
-      @               (\forall \bigint j; 0 <= j & j < i; _get(j)==\old(_get(j))) &
-      @               (\forall \bigint j; i < j & j <= content.theSize; _get(j-1)==\old(_get(j)));
-      @   assignable this;
+      @   ensures (\exists \bigint i; 0 <= i && i <= content.theSize && \old(_get(i)).equals(o) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; !\old(_get(j)).equals(o));
+      @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; _get(j-1)==\old(_get(j))));
+      @   assignable this.*;
       @ also
       @ public behavior
       @   requires !contains(o);
