@@ -25,14 +25,14 @@
 
 package java.util;
 
-public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Clonable, Serializable {
+public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cloneable, java.io.Serializable {
     
-    //@ public instance axiom !containsNull;
+    //@ instance invariant !containsNull;
     
-    //@ ensures \result.isEmpty();
+    //@ ensures isEmpty();
     public /*@ pure @*/ ArrayDeque();
     
-    //@ ensures \result.isEmpty();
+    //@ ensures isEmpty();
     public /*@ pure @*/ ArrayDeque(int numElements);
     
     /*@ public exceptional_behavior
@@ -40,16 +40,16 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
       @ also
       @ public normal_behavior
       @   requires c != null && !c.contains(null);
-      @   ensures (\forall \bigint i; 0 <= i & i < c.content.theSize;
-      @               c.iterator().nthNextElement(i) == \result._get(i));
-      @   ensures_redundantly (\forall Object o; true; c.contains(o) <==> \result.contains(o));
+      @   ensures (\forall int i; 0 <= i & i < c.content.theSize;
+      @               c.iterator().nthNextElement(i) == _get(i));
+      @   ensures_redundantly (\forall Object o; true; c.contains(o) <==> contains(o));
       @*/
     public /*@ pure @*/ ArrayDeque(/*@ nullable @*/ Collection<? extends E> c) throws NullPointerException;
     
-    //@ ensures (\forall \bigint i; 0 <= i & i < content.theSize; \result[i].equals((Object) _get(i)));
+    //@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((Object) _get(i)));
     public Object[] toArray();
     
-    //@ ensures (\forall \bigint i; 0 <= i & i < content.theSize; \result[i].equals((T) _get(i)));
+    //@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((T) _get(i)));
     public <T> T[] toArray(T[] a);
     
     // all other specifications inherited from java.util.Deque
