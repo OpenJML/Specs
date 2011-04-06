@@ -1544,7 +1544,7 @@ public class Arrays {
         public normal_behavior
           requires array != null;
           requires len <= array.length;
-          ensures \result <==> (\exists int i; 0<=i && i<len; array[i] == o);
+          ensures \result <==> (\exists int i; 0<=i && i<(int)len; array[i] == o); // FIXME - when math modes are supported we can allow i to be \bigint
         //-@ function
         static pure public model <T> boolean contains(T[] array, \bigint len, 
                                                                    Object o);
