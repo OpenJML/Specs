@@ -1519,17 +1519,20 @@ public class Arrays {
 
     //-----------------------------------------------------------------------
 
-    /*@  public normal_behavior
-      @   requires a != null;
-      @   ensures \result.content.theSize == a.length; */
-    /*-@  ensures (\forall int i; 0<=i && i<a.length;
-      @			List.get(\result.content,i) == a[i]); */
-    /*@ also public exceptional_behavior
-      @   requires a == null;
-      @   signals_only NullPointerException;
-      @*/
-    //@ pure
-    public static /*@ non_null @*/ <T> List<T> asList(/*@ nullable @*/T[] a) throws NullPointerException;
+    // FIXME - this is commented out because it provokes a non-suppressable varargs warning
+    // Put it back once that warning is resolved.
+//    /*@  public normal_behavior
+//      @   requires a != null;
+//      @   ensures \result.content.theSize == a.length; */
+//    /*-@  ensures (\forall int i; 0<=i && i<a.length;
+//      @			List.get(\result.content,i) == a[i]); */
+//    /*@ also public exceptional_behavior
+//      @   requires a == null;
+//      @   signals_only NullPointerException;
+//      @*/
+//    //@ pure
+//    @SuppressWarnings("varargs-unchecked")
+//    public static /*@ non_null @*/ <T> List<T> asList(/*@ nullable @*/T[] a) throws NullPointerException;
 
     //-----------------------------------------------------------------------
 
