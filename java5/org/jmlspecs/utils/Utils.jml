@@ -20,28 +20,32 @@ public class Utils {
     
     //@ public normal_behavior
     //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
-    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.erasure() == base;
     //@   ensures \result.numargs() == args.length;
     //@   ensures (\forall int i; 0<=i && i<args.length; \result.arg(i) == args[i]);
-    static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> clazz, @NonNull IJMLTYPE ... args);
+    static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> base, @NonNull IJMLTYPE ... args);
 
     //@ public normal_behavior
-    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.erasure() == base;
     //@   ensures \result.numargs() == 0;
-    static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> clazz);
+    static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> base);
 
     //@ public normal_behavior
-    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.erasure() == base;
     //@   ensures \result.numargs() == 1;
     //@   ensures \result.arg(0) == a0;
-    public static @NonNull IJMLTYPE makeTYPE1(Class<?> clazz, IJMLTYPE a0);
+    public static @NonNull IJMLTYPE makeTYPE1(Class<?> base, IJMLTYPE a0);
     
     //@ public normal_behavior
-    //@   ensures \result.erasure() == clazz;
+    //@   ensures \result.erasure() == base;
     //@   ensures \result.numargs() == 2;
     //@   ensures \result.arg(0) == a0;
     //@   ensures \result.arg(1) == a1;
-    public static @NonNull  IJMLTYPE makeTYPE2(Class<?> clazz, IJMLTYPE a0, IJMLTYPE a1);
+    public static @NonNull  IJMLTYPE makeTYPE2(Class<?> base, IJMLTYPE a0, IJMLTYPE a1);
 
     //@ axiom (\forall \TYPE t,tt; (t != null && tt != null && t <: tt) ==> t.erasure() <: tt.erasure());
+
+    //@ ensures \result == v;
+    public static @Nullable <T> T nonNullCheck(String message, @Nullable T v);
+
 }
