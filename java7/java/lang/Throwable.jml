@@ -174,7 +174,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   assignable _stackTrace;
       @   ensures \result == this;
       @*/
-    public synchronized native /*@non_null*/ Throwable fillInStackTrace();
+    public synchronized /*@non_null*/ Throwable fillInStackTrace();
 
     /*+@ public normal_behavior  // FIXME - this crashes Simplify
       @   ensures \result != null;
