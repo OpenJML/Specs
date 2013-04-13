@@ -52,7 +52,7 @@ public class Object {
     public /*@ pure @*/ Object();
 
 
-    /*@ public normal_behavior
+    /* FIXME @ public normal_behavior
       @   ensures \result == \typeof(this).erasure();
       @*/
     //-@ function // Not dependent on the state, just on the object identity
@@ -167,12 +167,12 @@ public class Object {
       @     assignable privateState;
       @     ensures \result == theString;
       @     ensures (* \result is a string representation of this object *);
-      @ also
-      @   public normal_behavior
-      @     requires \typeof(this) == \type(Object);
-      @     assignable privateState;
-      @     ensures \result.equals(getClass().getName() + "@" + 
-                                     Integer.toHexString(theHashCode));
+      @ // FIXME also
+      @   //public normal_behavior
+      @   //  requires \typeof(this) == \type(Object);
+      @   //  assignable privateState;
+      @   //  ensures \result.equals(getClass().getName() + "@" + 
+          //                           Integer.toHexString(theHashCode));
       @*/
     public /*@ non_null @*/ String toString();
 

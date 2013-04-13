@@ -20,9 +20,9 @@ public interface IJMLTYPE {
      @  ensures \result;
      @ also public normal_behavior
      @  requires t != null;
-     @  ensures \result == ( t.erasure() == this.erasure() &&
-                             t.numargs() == this.numargs() &&
-                             (\forall int i; 0<=i && i < numargs(); t.arg(i).equals(arg(i))));
+// FIXME    @  ensures \result == ( t.erasure() == this.erasure() &&
+//                             t.numargs() == this.numargs() &&
+//                             (\forall int i; 0<=i && i < numargs(); t.arg(i).equals(arg(i))));
      */
     public boolean equals(IJMLTYPE t);
     
@@ -37,9 +37,9 @@ public interface IJMLTYPE {
     @  ensures \result == t.erasure().isAssignableFrom(this.erasure());
     @ also public normal_behavior
     @  requires t != null;
-    @  ensures \result == ( t.erasure() <: this.erasure() &&
-                            t.numargs() == this.numargs() &&
-                            (\forall int i; 0<=i && i < numargs(); t.arg(i).equals(arg(i))));
+// FIXME   @  ensures \result == ( t.erasure() <: this.erasure() &&
+//                            t.numargs() == this.numargs() &&
+//                            (\forall int i; 0<=i && i < numargs(); t.arg(i).equals(arg(i))));
     */
     public boolean isSubtypeOf(IJMLTYPE t);
     
@@ -47,6 +47,6 @@ public interface IJMLTYPE {
     public int numargs();
     public IJMLTYPE arg(int i);
     
-    //@ ensures \result == erasure().isArray();
+// FIXME    //@ ensures \result == erasure().isArray();
     public boolean isArray();
 }

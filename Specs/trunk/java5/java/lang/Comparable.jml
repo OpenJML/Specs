@@ -69,11 +69,11 @@ public interface Comparable<T> {
 	 * (We don't make consistentWithEquals static so it can be overridden and dynamically dispatched.)
 	 */
 	// the variable in a forall is not null
-	//@ public invariant (\forall Comparable<T> o; \typeof(o) == \typeof(this) ==> o.consistentWithEquals() == this.consistentWithEquals());
+	// FIXME @ public invariant (\forall Comparable<T> o; \typeof(o) == \typeof(this) ==> o.consistentWithEquals() == this.consistentWithEquals());
 
-	//@ public invariant consistentWithEquals() ==> (\forall T o; equals(o) <==> compareTo(o) == 0);
+	// FIXME @ public invariant consistentWithEquals() ==> (\forall T o; equals(o) <==> compareTo(o) == 0);
 
-	/*@ public normal_behavior
+	/* FIXME @ public normal_behavior
       @    requires o == this && (\type(T) <: \type(Comparable<T>)); // reflexive
       @	   ensures  \result == 0;
       @ also public normal_behavior
