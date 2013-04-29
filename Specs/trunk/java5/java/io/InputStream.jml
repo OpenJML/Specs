@@ -47,15 +47,15 @@ public abstract class InputStream implements Closeable {
     //@ public model \bigint readPosition; in streamState;
     //@    public initially readPosition == 0;
 
-    //@ public invariant readPosition >= 0;
-    //@ public invariant readPosition+availableBytes <= inputBytes.length;
-
     //@ public model int availableBytes; in streamState;
     //@ public model boolean isOpen; in streamState;
     //@ public model boolean wasClosed; in streamState;
     //@ public represents wasClosed = !isOpen;
 
     //@ public invariant availableBytes >= 0;
+    //@ public invariant readPosition >= 0;
+    //@ public invariant readPosition+availableBytes <= inputBytes.length;
+
 
     //@ requires a != null && b != null;
     //@ requires a.length >= length && b.length >= length;
