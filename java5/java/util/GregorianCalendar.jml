@@ -38,12 +38,12 @@ public class GregorianCalendar extends Calendar {
     private /*@ spec_public*/ final static  int  EPOCH_YEAR;
     // FIXME public static represents EPOCH_YEAR = 1970;
 
-    //@ ghost public static final int NUM_DAYS[] = {0,31,59,90,120,151,181,212,243,273,304,334};
-    //@ ghost public static final int LEAP_NUM_DAYS[] = {0,31,60,91,121,152,182,213,244,274,305,335};
+    //@ public static final ghost int NUM_DAYS[] = {0,31,59,90,120,151,181,212,243,273,304,334};
+    //@ public static final ghost int LEAP_NUM_DAYS[] = {0,31,60,91,121,152,182,213,244,274,305,335};
     /*@ spec_public*/ static final int MONTH_LENGTH[] ;//= {31,28,31,30,31,30,31,31,30,31,30,31};
     /*@ spec_public*/ static final int LEAP_MONTH_LENGTH[] ;//= {31,29,31,30,31,30,31,31,30,31,30,31};
 
-    /*@ constraint 
+    /*@ public constraint 
       @		\old(NUM_DAYS).equals(NUM_DAYS) &&
       @		\old(LEAP_NUM_DAYS).equals(LEAP_NUM_DAYS) &&
       @		\old(MONTH_LENGTH).equals(MONTH_LENGTH) &&
@@ -82,6 +82,10 @@ public class GregorianCalendar extends Calendar {
      * (*) In units of one-hour
      */
 
+    /*@ spec_public*/ static final int MIN_VALUES[];
+    /*@ spec_public*/ static final int MAX_VALUES[];
+    /*@ spec_public*/ static final int LEAST_MAX_VALUES[];
+    
     /* FIXME @ public static final ghost int MIN_VALUES[] = {
       @   0,1,0,1,0,1,1,1,-1,0,0,0,0,0,0,-12*ONE_HOUR,0
       @ };

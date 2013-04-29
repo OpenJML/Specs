@@ -11,13 +11,14 @@ public class FileOutputStream extends OutputStream {
       @*/
 
     // FIELDS - FIXME these rename private fields
-    // @ private model FileDescriptor fd;
+    //@ spec_public
+	final private FileDescriptor fd;
     // @ private model FileChannel channel;
     // @ initially channel == null;
     // added this model field because the real thing is private and we
     // shouldn't be relying on it in the spec (especially since it goes
     // away in future Java versions) (dmz, 2009-11-17)
-    //@ private model boolean append_flag;
+    //@ public model boolean append_flag;
     //@ initially append_flag == false;
 
     // METHODS AND CONSTRUCTORS

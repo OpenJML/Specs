@@ -46,11 +46,12 @@ public class Vector<E> extends AbstractList<E>
 
     // protected members (for type checking in the java.util package
     // or subclasses)
+    //@ spec_public
     protected Object[] elementData; //@ in objectState; 
     //@                   maps elementData[*] \into objectState;
 
-    //@ invariant elementData.owner == this; 
-    //@ invariant elementData.length >= maxCapacity;
+    //@ public invariant elementData.owner == this; 
+    //@ public invariant elementData.length >= maxCapacity;
 
     protected /*@ spec_public @*/ int elementCount; //@ in objectState;
 
