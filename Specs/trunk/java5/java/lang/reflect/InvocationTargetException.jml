@@ -4,7 +4,7 @@ package java.lang.reflect;
  
 public class InvocationTargetException extends Exception {
   
-    /*@ public normal_behavior
+    /*@ protected normal_behavior
       @   ensures standardThrowable();
       @*/
     //@ pure
