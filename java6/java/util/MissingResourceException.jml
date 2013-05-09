@@ -16,7 +16,7 @@ public class MissingResourceException extends RuntimeException {
     //@ pure
     public MissingResourceException(/*@ non_null*/String s, /*@ non_null*/String ss, /*@ non_null*/String sss);
 
-    /*@ public normal_behavior
+    /*@ normal_behavior
       @   ensures standardThrowable(s,t);
       @   ensures theClass.equals(ss);
       @   ensures theKey.equals(sss);
