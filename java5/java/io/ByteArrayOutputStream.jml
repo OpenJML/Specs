@@ -13,12 +13,12 @@ public class ByteArrayOutputStream extends java.io.OutputStream {
 
     // METHODS AND CONSTRUCTORS
 
-    /*@
+    /*-RAC@
       @ ensures isOpen;
       @*/
     public ByteArrayOutputStream();
 
-    /*@
+    /*-RAC@
       @ ensures isOpen;
       @*/
     public ByteArrayOutputStream(int Param0);

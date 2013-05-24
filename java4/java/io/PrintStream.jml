@@ -27,53 +27,57 @@ package java.io;
  */
 public class PrintStream extends FilterOutputStream {
 
-    //@ model public non_null String outputText; in outputBytes;
-    //@ model public boolean endsInNewLine; in outputBytes;
-    //@ ghost public non_null static final String eol;
+    //-RAC@ model public non_null String outputText; in outputBytes;
+    //-RAC@ model public boolean endsInNewLine; in outputBytes;
+    //-RAC@ ghost public non_null static final String eol;
 
-    //@ public model boolean error;
+    //-RAC@ public model boolean error;
 
-    //@ public normal_behavior
-    //@   requires os != null;
-    //@   ensures outputText.equals("");
-    //@   ensures !endsInNewLine;
-    //@   ensures os.isOpen ==> isOpen;
-    //@   ensures underlyingStream == os;
+    /*-RAC@ public normal_behavior
+    @   requires os != null;
+    @   ensures outputText.equals("");
+    @   ensures !endsInNewLine;
+    @   ensures os.isOpen ==> isOpen;
+    @   ensures underlyingStream == os;
+    @*/
     //@ pure
     public PrintStream(OutputStream os);
 
-    //@ public normal_behavior
-    //@   ensures outputText.equals("");
-    //@   ensures !endsInNewLine;
-    //@   ensures os.isOpen ==> isOpen;
-    //@   ensures underlyingStream == os;
+    /*-RAC@ public normal_behavior
+    @   ensures outputText.equals("");
+    @   ensures !endsInNewLine;
+    @   ensures os.isOpen ==> isOpen;
+    @   ensures underlyingStream == os;
+    @*/
     //@ pure
     public PrintStream(OutputStream os, boolean autoFlush);
 
-    //@ public normal_behavior
-    //@   ensures outputText.equals("");
-    //@   ensures !endsInNewLine;
-    //@   ensures os.isOpen ==> isOpen;
-    //@   ensures underlyingStream == os;
+    /*-RAC@ public normal_behavior
+    @   ensures outputText.equals("");
+    @   ensures !endsInNewLine;
+    @   ensures os.isOpen ==> isOpen;
+    @   ensures underlyingStream == os;
+    @*/
     //@ pure
     public PrintStream(OutputStream os, boolean autoFlush, String enoding)
         throws java.io.UnsupportedEncodingException;
 
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures endsInNewLine;
-    //@   ensures outputText.equals(\old(outputText) + eol);
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures endsInNewLine;
+    @   ensures outputText.equals(\old(outputText) + eol);
+    @*/
     public void println();
 
-    /*@ protected normal_behavior
+    /*-RAC@ protected normal_behavior
       @   modifies error;
       @   ensures error;
       @*/
     protected void setError();
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires !isOpen;
       @   modifies error;
       @   ensures error;
@@ -81,30 +85,34 @@ public class PrintStream extends FilterOutputStream {
       @*/
     public boolean checkError();
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures outputText.equals(\old(outputText) + c);
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures outputText.equals(\old(outputText) + c);
+    @*/
     public void print(char c);
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures endsInNewLine;
-    //@   ensures outputText.equals(\old(outputText) + c + eol); 
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures endsInNewLine;
+    @   ensures outputText.equals(\old(outputText) + c + eol);
+    @*/ 
     public void println(char c); 
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures endsInNewLine;
-    //@   ensures s != null ==> outputText.equals(\old(outputText) + s + eol);
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures endsInNewLine;
+    @   ensures s != null ==> outputText.equals(\old(outputText) + s + eol);
+    @*/
     public void println(String s);
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures s != null ==> outputText.equals(\old(outputText) + s);
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures s != null ==> outputText.equals(\old(outputText) + s);
+    @*/
     public void print(String s);
 
     public void print(double Param0);
@@ -115,42 +123,46 @@ public class PrintStream extends FilterOutputStream {
 
     public void println(float Param0);
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures endsInNewLine;
-    //@   ensures (o!=null)==> outputText.equals(\old(outputText) + o.theString + eol);
-    //@   ensures (o==null)==> outputText.equals(\old(outputText)+"null"+eol);
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures endsInNewLine;
+    @   ensures (o!=null)==> outputText.equals(\old(outputText) + o.theString + eol);
+    @   ensures (o==null)==> outputText.equals(\old(outputText)+"null"+eol);
+    @*/
     public void println(Object o);
 
-    //@ public normal_behavior
-    //@   requires true;
-    //@   modifies outputText, endsInNewLine;
-    //@   ensures (o!=null)==> outputText.equals(\old(outputText) + o.theString);
-    //@   ensures (o==null)==> outputText.equals(\old(outputText)+"null");
+    /*-RAC@ public normal_behavior
+    @   requires true;
+    @   modifies outputText, endsInNewLine;
+    @   ensures (o!=null)==> outputText.equals(\old(outputText) + o.theString);
+    @   ensures (o==null)==> outputText.equals(\old(outputText)+"null");
+    @*/
     public void print(Object o);
 
-    //@ requires true;
-    //@ modifies outputText, endsInNewLine;
-    //@ ensures endsInNewLine;
-    //@ ensures outputText.startsWith(\old(outputText));
+    /*-RAC@ requires true;
+    @ modifies outputText, endsInNewLine;
+    @ ensures endsInNewLine;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
     public void println(boolean b);
 
     public void print(boolean Param0);
 
     public void print(int Param0);
 
-    //@ requires true;
-    //@ modifies outputText, endsInNewLine;
-    //@ ensures endsInNewLine;
-    //@ ensures outputText.startsWith(\old(outputText));
+    /*-RAC@ requires true;
+    @ modifies outputText, endsInNewLine;
+    @ ensures endsInNewLine;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
     public void println(int i);
 
     public void print(long Param0);
 
     public void println(long Param0);
 
-    /*@ also
+    /*-RAC@ also
       @ public normal_behavior
       @   requires !isOpen;
       @   modifies error;
@@ -170,7 +182,7 @@ public class PrintStream extends FilterOutputStream {
 
     public void write(byte[] b, int off, int len);
 
-    /*@ also
+    /*-RAC@ also
       @ public normal_behavior
       @   requires !isOpen;
       @   modifies error;

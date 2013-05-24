@@ -65,7 +65,7 @@ public class ByteArrayInputStream extends InputStream {
   //@   ensures \result == \old(buf[pos]);
   //   ensures pos == \old(pos+1);
   //@   ensures \result == buf[pos];
-  //@   ensures \not_modified(isOpen,wasClosed);
+  //-RAC@   ensures \not_modified(isOpen,wasClosed);
   //@   ensures valid();
   //@ also public normal_behavior
   //@   requires pos >= count;
@@ -102,7 +102,7 @@ public class ByteArrayInputStream extends InputStream {
     // The argument is ignored
     public void mark(int limit);
 
-    /*@
+    /*-RAC@
       @ also public normal_behavior
       @   requires len <= 0;
       @   modifies \nothing;
@@ -117,7 +117,7 @@ public class ByteArrayInputStream extends InputStream {
       @*/
     public synchronized long skip(long len);
 
-    /*@ also public behavior
+    /*-RAC@ also public behavior
       @   requires bytes != null;
       @   requires isOpen;
       @   requires len <= 0 && pos < count;

@@ -79,7 +79,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @*/
     public synchronized StringBuffer append(String s);
 
-    /*@   public normal_behavior
+    /*-RAC@   public normal_behavior
       @     requires o != null;
       @     assignable accumulatedString;
       @     ensures accumulatedString
