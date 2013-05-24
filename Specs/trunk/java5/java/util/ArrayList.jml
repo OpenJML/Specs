@@ -76,7 +76,7 @@ public class ArrayList<E> extends AbstractList<E>
       @*/
     /*@ pure @*/ public ArrayList(Collection<? extends E> c) throws NullPointerException;
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @   assignable objectState;
       @   ensures \not_modified(containsNull,content.theSize,content,
                                                    theString,theHashCode);
@@ -84,7 +84,7 @@ public class ArrayList<E> extends AbstractList<E>
       @*/
     public void trimToSize();
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @   assignable objectState;
       @   ensures capacity >= minCapacity;
       @   ensures \not_modified(containsNull,content.theSize,content);
@@ -115,8 +115,9 @@ public class ArrayList<E> extends AbstractList<E>
       @   ensures ((List)\result).containsNull == this.containsNull;
       @   ensures ((ArrayList)\result).content.theSize == this.content.theSize;
       @   //-@ ensures List.equals(((List)\result).content,this.content);
-      @   ensures ((ArrayList)\result).theString == this.theString;
       @   ensures ((ArrayList)\result).theHashCode == this.theHashCode;
+      @*//*-RAC@ also public normal_behavior
+      @   ensures ((ArrayList)\result).theString == this.theString;
       @*/
     public /*@ pure @*/ Object clone();
 

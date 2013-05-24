@@ -18,12 +18,12 @@ public class FileOutputStream extends OutputStream {
     // added this model field because the real thing is private and we
     // shouldn't be relying on it in the spec (especially since it goes
     // away in future Java versions) (dmz, 2009-11-17)
-    //@ public model boolean append_flag;
-    //@ initially append_flag == false;
+    //-RAC@ public model boolean append_flag;
+    //-RAC@ initially append_flag == false;
 
     // METHODS AND CONSTRUCTORS
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires name != null;
       @   assignable \nothing;
@@ -37,7 +37,7 @@ public class FileOutputStream extends OutputStream {
       @*/
     public FileOutputStream(String name) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires name != null;
       @   assignable \not_specified;
@@ -51,7 +51,7 @@ public class FileOutputStream extends OutputStream {
       @*/
     public FileOutputStream(String name, boolean append) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires file != null;
       @   assignable \not_specified;
@@ -65,7 +65,7 @@ public class FileOutputStream extends OutputStream {
       @*/    
     public FileOutputStream(File file) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires file != null;
       @   assignable \not_specified;
@@ -79,7 +79,7 @@ public class FileOutputStream extends OutputStream {
       @*/
     public FileOutputStream(File file, boolean append) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   assignable \not_specified;
       @   ensures !wasClosed && isOpen && outputBytes.length == 0 

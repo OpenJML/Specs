@@ -76,7 +76,7 @@ public class FilterInputStream extends java.io.InputStream {
     public int read(byte[] bytes, int off, int len)
         throws java.io.IOException;
 
-    /*@
+    /*-RAC@
       @ requires stream != null ==> stream.isOpen;
       @ ensures initialInputStream();
       @*/

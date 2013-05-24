@@ -118,7 +118,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public synchronized void copyInto(Object[] anArray);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    assignable objectState;
       @    ensures \not_modified(theString,theHashCode);
                // theHashCode is not changed because the result does not
@@ -138,7 +138,7 @@ public class Vector<E> extends AbstractList<E>
     //@  also
     //@    requires minCapacity > maxCapacity;
     //@    assignable objectState;
-    //@    ensures \not_modified(theString,theHashCode);
+    //-RAC@    ensures \not_modified(theString,theHashCode);
     //@           // theHashCode is not changed because the result does not
     //@           // changes equals
     //@    ensures \not_modified(elementCount,containsNull);
@@ -169,7 +169,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures elementCount == newSize; */
     /*-@   ensures (\forall int i; 0<=i && i<elementCount;
       @			elementData[i] == \old(elementData[i])); */
-    /*@  also
+    /*-RAC@  also
       @    old int oldSize = elementCount;
       @    requires newSize > elementCount;
       @    assignable objectState;

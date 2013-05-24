@@ -973,7 +973,7 @@ public final class String
       @  also public normal_behavior
       @    requires obj instanceof String;
       @    ensures \result.equals(obj);   // \result == obj ??? FIXME
-      @  also public behavior
+      @*//*-RAC@  also public behavior
       @    requires obj != null;
       @    ensures equals(\result,obj.theString); 
       @*/

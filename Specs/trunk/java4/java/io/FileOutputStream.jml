@@ -19,7 +19,7 @@ public class FileOutputStream extends OutputStream {
 
     // METHODS AND CONSTRUCTORS
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires name != null;
       @   assignable \nothing;
@@ -33,7 +33,7 @@ public class FileOutputStream extends OutputStream {
       @*/
     public FileOutputStream(String name) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires name != null;
       @   assignable \not_specified;
@@ -47,7 +47,7 @@ public class FileOutputStream extends OutputStream {
       @*/
     public FileOutputStream(String name, boolean append) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires file != null;
       @   assignable \not_specified;
@@ -61,7 +61,7 @@ public class FileOutputStream extends OutputStream {
       @*/    
     public FileOutputStream(File file) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   requires file != null;
       @   assignable \not_specified;
@@ -75,7 +75,7 @@ public class FileOutputStream extends OutputStream {
       @*/
     public FileOutputStream(File file, boolean append) throws FileNotFoundException;
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   assignable \not_specified;
       @   ensures !wasClosed && isOpen && outputBytes.length == 0 

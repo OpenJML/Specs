@@ -33,26 +33,26 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     /** The output data group is used to specify things like caching,
      * and to make sure that methods that might produce some output
      * have a side effect on some datagroup. */
-    //@ public model JMLDataGroup output; in objectState;
+    //-RAC@ public model JMLDataGroup output; in objectState;
 
     /** The bytes that are to be (or have been) output. */
-    //@ public model non_null byte[] outputBytes; in output;
+    //-RAC@ public model non_null byte[] outputBytes; in output;
 
     /** Is this file open? */
-    //@ public model boolean isOpen; in objectState;
+    //-RAC@ public model boolean isOpen; in objectState;
 
     /** Was this file closed? */
-    //@ public model boolean wasClosed; in objectState;
+    //-RAC@ public model boolean wasClosed; in objectState;
 
-    //@ public invariant isOpen ==> !wasClosed;
-    //@ public invariant wasClosed ==> !isOpen;
+    //-RAC@ public invariant isOpen ==> !wasClosed;
+    //-RAC@ public invariant wasClosed ==> !isOpen;
 
     // wasClosed can only change to true, not back to false
-    //@ public constraint \old(wasClosed) ==> wasClosed;
+    //-RAC@ public constraint \old(wasClosed) ==> wasClosed;
 
     // METHODS AND CONSTRUCTORS
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable isOpen, outputBytes;
       @   ensures !isOpen;
       @   ensures !wasClosed;
@@ -61,7 +61,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     //@ pure
     public OutputStream();
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires isOpen;
       @   assignable output, isOpen, wasClosed;
       @   ensures !isOpen;
@@ -72,7 +72,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     public void close() throws IOException;
 
 // FIXME - ought to keep track of how much of hte outputBytes buffer is flushed?
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires isOpen;
       @   assignable output;
       @   ensures \not_modified(outputBytes);
@@ -82,7 +82,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     public void flush() throws IOException;
 
 // FIXME - record what was written
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires isOpen;
       @   assignable outputBytes;
       @   signals (IOException) (* an IO error occured *);
@@ -90,7 +90,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     public abstract void write(int i) throws IOException;
 
 // FIXME - record what was written
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   old \bigint siz = outputBytes.length;
       @   requires isOpen;
       @   assignable outputBytes;
@@ -100,7 +100,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     public void write(/*@ non_null*/ byte[] b) throws IOException;
 
 // FIXME - record what was written
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   old \bigint siz = outputBytes.length;
       @   requires isOpen
       @         && b != null && off >= 0 && len >= 0 && off + len <= b.length;

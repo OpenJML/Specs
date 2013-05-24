@@ -161,9 +161,9 @@ public class Object {
     protected /*@non_null*/ Object clone() throws CloneNotSupportedException;
 
     /** Use theString as the (pure) model value of toString() */
-    //@ public model non_null String theString; in objectState;
+    //-RAC@ public model non_null String theString; in objectState;
 
-    /*@   public normal_behavior
+    /*-RAC@   public normal_behavior
       @     assignable privateState;
       @     ensures \result == theString;
       @     ensures (* \result is a string representation of this object *);
