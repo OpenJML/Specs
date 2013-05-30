@@ -27,7 +27,7 @@ package java.lang;
  */
 public interface CharSequence {
     //@ public instance model non_null char[] charArray;
-    //@ public invariant charArray.owner == this;
+    //@ public instance invariant charArray.owner == this;
 
     /*@ public normal_behavior
       @   ensures \result <==> ( charArray != null && charArray.owner == this);
