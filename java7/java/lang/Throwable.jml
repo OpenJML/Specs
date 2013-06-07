@@ -52,26 +52,26 @@ public class Throwable extends Object implements java.io.Serializable
       @ public normal_behavior
       @   ensures \result == (_message == null && !causeSet);
       @
-        public pure model boolean standardThrowable();
+        public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
       @   ensures \result == (_message == s && !causeSet);
       @
-        public pure model boolean standardThrowable(non_null String s);
+        public pure helper model boolean standardThrowable(non_null String s);
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (initMessage(c) && _cause == c);
       @   ensures_redundantly causeSet;
       @
-        public pure model boolean standardThrowable(nullable Throwable c);
+        public pure helper model boolean standardThrowable(nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (_message == s && _cause == c);
       @   ensures_redundantly causeSet;
       @
-        public pure model boolean standardThrowable(non_null String s, nullable Throwable c);
+        public pure helper model boolean standardThrowable(non_null String s, nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != null;
@@ -80,7 +80,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   requires c == null;
       @   ensures  \result == (_message == null);
       @
-        public pure model boolean initMessage(nullable Throwable c);
+        public pure helper model boolean initMessage(nullable Throwable c);
       @*/
 
     /*@ public normal_behavior

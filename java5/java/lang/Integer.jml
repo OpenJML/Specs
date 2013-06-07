@@ -50,7 +50,7 @@ public  /*@ pure @*/ final
     @*/
   //@   model public static pure boolean decodable( String nm );
           
-	//@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
+	//-RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
 
     public static final int   MIN_VALUE;
                                //@ initially MIN_VALUE == 0x80000000;
