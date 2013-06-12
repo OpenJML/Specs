@@ -42,11 +42,11 @@ public interface CharSequence {
      */
     /*@ public normal_behavior
         requires a != null && b!= null && astart >= 0 && bstart >= 0 &&
-                 length >= 0 &&
-                 astart+length <= a.length && bstart + length <= b.length;
+                 len >= 0 &&
+                 astart+len <= a.length && bstart + len <= b.length;
         ensures \result == ((a==b && astart == bstart) ||
-                      (\forall int i; 0<=i && i<length; a[i+astart] == b[i+bstart])); 
-        public static pure model boolean equal(char[] a, int astart, char[] b, int bstart, int length);
+                      (\forall int i; 0<=i && i<len; a[i+astart] == b[i+bstart])); 
+        public static pure model boolean equal(char[] a, int astart, char[] b, int bstart, int len);
      */
 
     //@ axiom (\forall char[] a;; equal(a,a));

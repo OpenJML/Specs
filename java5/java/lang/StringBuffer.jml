@@ -56,14 +56,14 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @*/
     public synchronized StringBuffer append(char c);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(b))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(boolean b);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires s != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -101,7 +101,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @*/
     public synchronized StringBuffer append(Object o);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires s != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -117,7 +117,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @*/
     public synchronized StringBuffer append(StringBuffer s);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires ca != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -127,28 +127,28 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @*/
     public synchronized StringBuffer append(char[] ca, int i, int j);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(i))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(int i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(f))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(float f);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(d))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(double d);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires ca != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(ca))));
@@ -162,7 +162,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @*/
     public synchronized StringBuffer append(char[] ca);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(l))));
       @   ensures \result == this;
