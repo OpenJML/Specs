@@ -273,9 +273,6 @@ public final class String
       @*/
 
     // inherits specs from CharSequence - \result == charArray.length
-    /*@ also public normal_behavior
-      @   ensures \result == length(this);
-      @*/
     public /*@ pure @*/ int length();
 
     // This should be derivable, but the relevant formulae are not always triggered
@@ -799,60 +796,38 @@ public final class String
     public /*@ pure @*/ CharSequence subSequence(int beginIndex,
                                                    int endIndex);
 
-    /*@ public normal_behavior
-      @   requires s != null && ss != null;
-      @   ensures equal(\result.charArray,0,s.charArray,0,s.length());
-      @   ensures equal(\result.charArray,s.length(),ss.charArray,0,ss.length());
-      @
-      @ //-@ function
-      @ public static pure model non_null
-      @                                 String concat(String s, String ss);
-      @
-      @
-      @ public normal_behavior
-      @   ensures \result == (s == null ? "null" : s) ;
-      @
-      @ //-@  function
-      @ model static public pure non_null String nonnull(String s);
-      @
-      @
-      @ public normal_behavior
-      @   assignable \nothing;
-      @   ensures \result != null;
-      @   ensures \fresh(\result);
-      @   ensures !isInterned(\result);
-      @   ensures \result.equals( concat(nonnull(s),nonnull(ss)));
-      @
-      @ //-@ function
-      @ model static public non_null pure String 
-      @                                  _infixConcat_(String s, String ss);
-      @*/
- 
+
+    //@ public model static non_null String concat(String s1, String s2);
 
     /*@ public normal_behavior
       @   requires str != null;
       @   {|
       @   requires str.length() != 0;
       @   assignable \nothing;
+      @   //ensures \result.charArray.owner == \result;
       @   ensures \result != null
       @            && \fresh(\result)
-      @            && !isInterned(\result)
-      @            && \result.equals(concat(this,str));
+      @            && !isInterned(\result);
       @   also
       @   requires str.length() == 0;
       @   assignable \nothing;
+      @   //ensures \result.charArray.owner == \result;
       @   ensures \result != null
       @            && \result == this
-      @            && \result.length() == length();
+      @            && \result.length() == this.length();
       @   |}
       @ also public exceptional_behavior
       @    requires str == null;
       @   assignable \nothing;
       @    signals_only NullPointerException;
       @*/
+    /*-RAC@ also public behavior
+      @    requires str != null; ensures \result.equals(concat(this,str));
+      @*/
     public /*@ pure @*/ /*@ non_null @*/ String concat(String str);
 
     /*@  public normal_behavior
+      @   ensures \result.charArray.owner == \result;
       @   ensures \result != null
       @            && \result.length() == length()
       @            && \fresh(\result)
