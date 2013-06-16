@@ -799,6 +799,7 @@ public final class String
 
     //@ public model static non_null String concat(String s1, String s2);
 
+    /** This is the method version of the infix + operation */
     /*@ public normal_behavior
       @   requires str != null;
       @   {|
@@ -816,15 +817,15 @@ public final class String
       @            && \result == this
       @            && \result.length() == this.length();
       @   |}
-      @ also public exceptional_behavior
-      @    requires str == null;
+      @ also public normal_behavior // It is OK to have a null argument
+      @   requires str == null;
       @   assignable \nothing;
-      @    signals_only NullPointerException;
       @*/
     /*-RAC@ also public behavior
-      @    requires str != null; ensures \result.equals(concat(this,str));
+      @    requires str != null; 
+      @    ensures \result.equals(concat(this,str));
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ String concat(String str);
+    public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*@  public normal_behavior
       @   ensures \result.charArray.owner == \result;
