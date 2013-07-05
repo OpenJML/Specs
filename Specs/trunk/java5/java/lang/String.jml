@@ -1050,15 +1050,12 @@ public final class String
       @   ensures equals(\result,this);
       @   ensures isInterned(this) ==> (\result == this);
       @*/
-    //@ pure // -@ function
+    //@ pure
     public native /*@ non_null @*/ String intern();
 
     //@ public normal_behavior
-    //+@    ensures \result <==> (s != null && (* \dttfsa(boolean,"|interned:|",s) *));
-    //-@    ensures \result <==> (s != null && \dttfsa(boolean,"|interned:|",s));
+    //@   ensures true; // No restriction on result
     //-@ function
-    //@ public pure static model boolean isInterned(String s);
-
-    //-@ axiom (\forall int i,k; length(\dttfsa(java.lang.String,"|intern:|",i,k)) == k);
+    //@ public pure static model boolean isInterned(non_null String s);
     
 }
