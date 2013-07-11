@@ -275,9 +275,6 @@ public final class String
     // inherits specs from CharSequence - \result == charArray.length
     public /*@ pure @*/ int length();
 
-    // This should be derivable, but the relevant formulae are not always triggered
-    //@ axiom (\forall String s,ss; s.equals(ss) ==>s.length() == ss.length());
-
     /*@ also public normal_behavior
       @   requires 0 <= index && index < charArray.length;
       @   ensures \result == charArray[index];

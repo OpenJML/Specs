@@ -37,6 +37,7 @@ public interface Iterator<E> {
     /*@ public model instance boolean moreElements;
       @                               in objectState;
       @*/
+	//@ public represents moreElements = hasNext();
 
     /** Do we ever return null as an element?
      **/
@@ -56,8 +57,6 @@ public interface Iterator<E> {
       @    ensures \result <==> moreElements;
       @*/
     boolean hasNext();
-
-    //+@ public invariant moreElements == hasNext(0);
 
     /*@ public normal_behavior
       @     requires n >= 0;
