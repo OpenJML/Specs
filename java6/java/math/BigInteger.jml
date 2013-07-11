@@ -46,7 +46,6 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //--- public model \bigint value; --
     //@ public model int sign;
     //@ public represents sign = signum();
-    //@ public invariant sign == compareTo(ZERO);
 
 
     /*@ public normal_behavior
@@ -128,17 +127,17 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //Static Factory Methods
 
-    public static /*@ pure @*/ BigInteger valueOf(long val);
+    public static /*@ pure helper @*/ BigInteger valueOf(long val);
 
     // int signum;   package-level field removed from specification (dmz, 2009-11-17)
     // int[] mag;    package-level field removed from specification (dmz, 2009-11-17)
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
-    //@ public invariant ZERO != null && ZERO.equals(valueOf(0L));
+    //@ public invariant ZERO != null && ZERO.longValue() == 0L;
     //@ public invariant ZERO.equals(ZERO);
     //@ public constraint ZERO == \old(ZERO);
-    //@ public invariant ONE != null && ONE.equals(valueOf(1L));
+    //@ public invariant ONE != null && ONE.longValue() == 1L;
     //@ public invariant ONE.equals(ONE);
     //@ public invariant !ZERO.equals(ONE);
     //@ public constraint ONE == \old(ONE);
@@ -257,7 +256,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @   assignable \nothing;
       @   ensures \result == x.equals(this);
       @*/
-    public /*@ pure @*/ boolean equals(Object x);
+    public /*@ pure helper @*/ boolean equals(Object x);
 
     public BigInteger min(BigInteger val);
 
@@ -278,22 +277,27 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //@ ensures convert(\result).equals(this);
     //@ ensures_redundantly this.equals(\old(this));
+    //@ pure helper
     public byte[] toByteArray();
 
     //@ also
     //@ ensures_redundantly this.equals(\old(this));
+    //@ pure helper
     public int intValue();
 
     //@ also
     //@ ensures_redundantly this.equals(\old(this));
+    //@ pure helper
     public long longValue();
 
     //@ also
     //@ ensures_redundantly this.equals(\old(this));
+    //@ pure helper
     public float floatValue();
 
     //@ also
     //@ ensures_redundantly this.equals(\old(this));
+    //@ pure helper
     public double doubleValue();
 
 }
