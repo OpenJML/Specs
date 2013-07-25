@@ -794,41 +794,19 @@ public final class String
                                                    int endIndex);
 
 
-    //@ public model static non_null String concat(String s1, String s2);
+    //@ public model static pure non_null String concat(String s1, String s2);
 
     /** This is the method version of the infix + operation */
-    /*@ public normal_behavior
-      @   requires str != null;
-      @   {|
-      @   requires str.length() != 0;
-      @   assignable \nothing;
-      @   //ensures \result.charArray.owner == \result;
-      @   ensures \result != null
-      @            && \fresh(\result)
-      @            && !isInterned(\result);
-      @   also
-      @   requires str.length() == 0;
-      @   assignable \nothing;
-      @   //ensures \result.charArray.owner == \result;
-      @   ensures \result != null
-      @            && \result == this
-      @            && \result.length() == this.length();
-      @   |}
-      @ also public normal_behavior // It is OK to have a null argument
-      @   requires str == null;
-      @   assignable \nothing;
-      @*/
-    /*-RAC@ also public behavior
-      @    requires str != null; 
-      @    ensures \result.equals(concat(this,str));
-      @*/
+    //@ public normal_behavior
+    //@     requires str == null; 
+    //@ also public normal_behavior
+    //@     requires str != null; 
+    //-RAC@ ensures \result.equals(concat(this,str));
     public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*@  public normal_behavior
       @   ensures \result.charArray.owner == \result;
-      @   ensures \result != null
-      @            && \result.length() == length()
-      @            && \fresh(\result)
+      @   ensures \result.length() == length()
       @            && (\forall int i; 0 <= i && i < length();
       @                  \result.charAt(i) 
       @                     == ((charAt(i) == oldChar) ? newChar : charAt(i)));
