@@ -45,16 +45,16 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     /*@ public normal_behavior
       @   ensures theBoolean == value;
       @*/
-    //@ pure
+    //@ pure helper
     public Boolean(boolean value);
 
     /*@ public normal_behavior
       @   ensures \result <==> (s != null && s.equalsIgnoreCase("true"));
-      @ public static pure model boolean decode(String s);
+      @ public static pure helper model boolean decode(String s);
       @
       @ public normal_behavior
       @   ensures \result == ( b ? "true" : "false" );
-      @ public static pure model String canonicalString(boolean b);
+      @ public static pure helper model String canonicalString(boolean b);
       @*/
 
     //@ axiom decode(canonicalString(true)) == true;
@@ -77,20 +77,20 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     /*@ public normal_behavior
       @   ensures \result == theBoolean;
       @*/
-    public /*@ pure @*/ boolean booleanValue();
+    public /*@ pure helper @*/ boolean booleanValue();
 
     // NOTE: The result is not fresh
     /*@ public normal_behavior
       @   ensures \result != null && \result.booleanValue() == b;
       @   ensures \result == ( b ? TRUE : FALSE );
       @*/
-    public static /*@ pure @*/ Boolean valueOf(boolean b);
+    public static /*@ pure helper @*/ Boolean valueOf(boolean b);
 
 
     /*@ public normal_behavior
       @   ensures \result == ( decode(s) ? TRUE : FALSE );
       @*/
-    public static /*@ pure @*/ Boolean valueOf(String s);
+    public static /*@ pure helper @*/ Boolean valueOf(String s);
 
     // NOTE: The results are interned (not fresh) Strings.
     /*@ public normal_behavior
@@ -124,7 +124,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @   ensures \result <==> ( t == obj || (t!= null && obj != null 
                          && (t.theBoolean == obj.theBoolean)));
         //-@ function
-      @ public pure static model boolean equalsBoolean(Boolean t, Boolean obj);
+      @ public pure helper static model boolean equalsBoolean(Boolean t, Boolean obj);
       @*/
 
     /*@ also
