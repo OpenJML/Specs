@@ -75,8 +75,8 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     public static final double MIN_VALUE;
 
     public static final Class<Double> TYPE;
-    //@ initially TYPE == double.class;
-    //@ invariant_redundantly TYPE == double.class;
+    //@ public initially TYPE == double.class;
+    //@ public invariant_redundantly TYPE == double.class;
 
     /*@ public normal_behavior
       @   ensures !isNaN(d) && !isInfinite(d) ==> parseable(\result);

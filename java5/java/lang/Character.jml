@@ -36,11 +36,11 @@ public /*@ pure @*/ final
     //+@ public constraint ch_ == \old(ch_);
     //+@ public represents ch_ = charValue();
 
-    public static final int MIN_RADIX; //@ initially MIN_RADIX == 2;
+    public static final int MIN_RADIX; //@ public initially MIN_RADIX == 2;
     public static final int MAX_RADIX;
     public static final char MIN_VALUE;
     public static final char MAX_VALUE;
-    public static final Class<Character> TYPE;   //@ initially TYPE == char.class;
+    public static final Class<Character> TYPE;   //@ public initially TYPE == char.class;
     public static final byte UPPERCASE_LETTER;
     public static final byte LOWERCASE_LETTER;
     public static final byte TITLECASE_LETTER;
