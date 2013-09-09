@@ -92,8 +92,8 @@ public /*@ pure @*/ final
 	public static final short   MAX_VALUE;
 
 	public static final Class<Short>   TYPE;
-	//@ initially TYPE == short.class;
-	//@ invariant_redundantly TYPE == short.class;
+	//@ public initially TYPE == short.class;
+	//@ public invariant_redundantly TYPE == short.class;
 
 	/*@
 	  @ public normal_behavior

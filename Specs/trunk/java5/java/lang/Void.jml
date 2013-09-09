@@ -25,6 +25,6 @@ package java.lang;
 public final class Void extends java.lang.Object {
 
     public static final java.lang.Class<Void> TYPE;  // 1.5 DIFFERENCE
-    //@ initially TYPE == void.class;
-    //@ invariant_redundantly TYPE == void.class;
+    //@ public initially TYPE == void.class;
+    //@ public invariant_redundantly TYPE == void.class;
 }

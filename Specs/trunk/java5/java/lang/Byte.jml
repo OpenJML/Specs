@@ -89,11 +89,11 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       }
       @*/
 
-    public static final byte MIN_VALUE; //@ initially MIN_VALUE == -128;
-    public static final byte MAX_VALUE; //@ initially MAX_VALUE == 127;
+    public static final byte MIN_VALUE; //@ public initially MIN_VALUE == -128;
+    public static final byte MAX_VALUE; //@ public initially MAX_VALUE == 127;
 
     public static /* non_null */ final Class<Byte> TYPE;
-    //@ initially TYPE == byte.class;
+    //@ public initially TYPE == byte.class;
 
     /*@
       @ public normal_behavior
