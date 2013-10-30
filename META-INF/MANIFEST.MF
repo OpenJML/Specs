@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Specs
 Bundle-SymbolicName: org.jmlspecs.Specs;singleton:=true
-Bundle-Version: 0.5.18
+Bundle-Version: 0.5.19
 Bundle-Vendor: David R. Cok
