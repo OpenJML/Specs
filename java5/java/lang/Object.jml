@@ -52,8 +52,8 @@ public class Object {
     public /*@ pure @*/ Object();
 
 
-    /* FIXME @ public normal_behavior
-      @   ensures \result == \typeof(this).erasure();
+    /*+ESC@ public normal_behavior
+      @   ensures \result == \erasure(\typeof(this));
       @*/
     //-@ function // Not dependent on the state, just on the object identity
     public /*@ pure @*/ final /*@non_null*/ Class<?> getClass();

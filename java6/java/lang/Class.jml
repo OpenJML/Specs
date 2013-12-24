@@ -116,17 +116,20 @@ public final class Class<T> implements java.io.Serializable,
     //@ public model boolean _isArray;
     //@        represents _isArray = isArray();
 
+    /*
     //@ ensures \result == _isArray;
-    // @ ensures \elemtype(this) <: \type(Object) ==> \result;
-    //@ ensures \elemtype(this) == int.class ==> \result;
-    //@ ensures \elemtype(this) == byte.class ==> \result;
-    //@ ensures \elemtype(this) == short.class ==> \result;
-    //@ ensures \elemtype(this) == long.class ==> \result;
-    //@ ensures \elemtype(this) == char.class ==> \result;
-    //@ ensures \elemtype(this) == float.class ==> \result;
-    //@ ensures \elemtype(this) == double.class ==> \result;
-    //@ ensures \elemtype(this) == boolean.class ==> \result;
+    //@ ensures \elemtype(\typeof(this)) <: \type(Object) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(int) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(byte) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(short) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(long) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(char) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(float) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(double) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) == \type(boolean) ==> \result;
 	// FIXME - really need a better way to express this
+	 * */
+    //
     public /*@ pure @*/ boolean isArray();
 
     /*@ public normal_behavior
