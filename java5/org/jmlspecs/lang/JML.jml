@@ -1,9 +1,29 @@
 package org.jmlspecs.lang;
 
+import org.jmlspecs.utils.Utils;
+
 public class JML {
 
-    //@ model pure public static Class<?> erasure(\TYPE type) { return null; }
-    
+	// This method is a model method because its argumetn is JML-only
+	//@ ensures \result == \erasure(t);
+	//@ model public static Class<?> erasure(\TYPE t) { return Utils.erasure(t); }
+	
+	//@ ensures \result == expr;
+	//@ pure
+	public static <T> T lbl(String id, T expr);
+	
+	//@ ensures \result == expr;
+	//@ pure
+	public static int lbl(String id, int expr);
+	
+	//@ ensures \result == expr;
+	//@ pure
+	public static boolean lblpos(String id, boolean expr);
+	
+	//@ ensures \result == expr;
+	//@ pure
+	public static boolean lblneg(String id, boolean expr);
+	
     //@ public normal_behavior
     //@ ensures \result;
     //@ pure helper
