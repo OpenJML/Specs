@@ -20,27 +20,27 @@ public class Utils {
     
     //@ public normal_behavior
     //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
-    //@   ensures \result.erasure() == base;
-    //@   ensures \result.numargs() == args.length;
-    //@   ensures (\forall int i; 0<=i && i<args.length; \result.arg(i) == args[i]);
+    //@   ensures JML.erasure(\result) == base;
+    //@   ensures JML.typeargs(\result).length == args.length;
+    //@   ensures (\forall int i; 0<=i && i<args.length; JML.typeargs(\result)[i] == args[i]);
     static public @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE(@org.jmlspecs.annotation.NonNull Class<?> base, @org.jmlspecs.annotation.NonNull IJMLTYPE ... args);
 
     //@ public normal_behavior
     //@   ensures \result.erasure() == base;
-    //@   ensures \result.numargs() == 0;
+    //@   ensures  JML.typeargs(\result).length == 0;
     static public @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE0(@org.jmlspecs.annotation.NonNull Class<?> base);
 
     //@ public normal_behavior
-    //@   ensures \result.erasure() == base;
-    //@   ensures \result.numargs() == 1;
-    //@   ensures \result.arg(0) == a0;
+    //@   ensures JML.erasure(\result) == base;
+    //@   ensures JML.typeargs(\result).length == 1;
+    //@   ensures JML.typeargs(\result)[0] == a0;
     public static @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE1(Class<?> base, IJMLTYPE a0);
     
     //@ public normal_behavior
-    //@   ensures \result.erasure() == base;
-    //@   ensures \result.numargs() == 2;
-    //@   ensures \result.arg(0) == a0;
-    //@   ensures \result.arg(1) == a1;
+    //@   ensures JML.erasure(\result) == base;
+    //@   ensures JML.typeargs(\result).length == 2;
+    //@   ensures JML.typeargs(\result)[0] == a0;
+    //@   ensures JML.typeargs(\result)[1] == a1;
     public static @org.jmlspecs.annotation.NonNull  IJMLTYPE makeTYPE2(Class<?> base, IJMLTYPE a0, IJMLTYPE a1);
 
     // FIXME @ axiom (\forall \TYPE t,tt; (t != null && tt != null && t <: tt) ==> t.erasure() <: tt.erasure());

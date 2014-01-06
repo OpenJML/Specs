@@ -44,8 +44,7 @@ public interface IJMLTYPE {
     public boolean isSubtypeOf(IJMLTYPE t);
     
     public Class<?> erasure();
-    public int numargs();
-    public IJMLTYPE arg(int i);
+    public IJMLTYPE[] typeargs();
     
 // FIXME    //@ ensures \result == erasure().isArray();
     public boolean isArray();
