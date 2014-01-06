@@ -4,24 +4,29 @@ import org.jmlspecs.utils.Utils;
 
 public class JML {
 
-	// This method is a model method because its argumetn is JML-only
+	// Some methods are model methods because they have a JML-only argument
+	
 	//@ ensures \result == \erasure(t);
-	//@ model public static Class<?> erasure(\TYPE t) { return Utils.erasure(t); }
+	//@ model pure public static Class<?> erasure(\TYPE t) { return Utils.erasure(t); }
+	
+	//@ model pure public static \TYPE[] typeargs(\TYPE t) { return Utils.typeargs(t); }
+	
+	//@ model pure public static boolean isArray(\TYPE t) { return Utils.isArray(t); }
 	
 	//@ ensures \result == expr;
-	//@ pure
+	//@ pure helper
 	public static <T> T lbl(String id, T expr);
 	
 	//@ ensures \result == expr;
-	//@ pure
-	public static int lbl(String id, int expr);
+	//@ pure helper
+	public static int lbl(String id, int expr);  // FIXME - do we need the rest of the primitive types? or does autoboxing do it?
 	
 	//@ ensures \result == expr;
-	//@ pure
+	//@ pure helper
 	public static boolean lblpos(String id, boolean expr);
 	
 	//@ ensures \result == expr;
-	//@ pure
+	//@ pure helper
 	public static boolean lblneg(String id, boolean expr);
 	
     //@ public normal_behavior
