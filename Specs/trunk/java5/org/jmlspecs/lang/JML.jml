@@ -13,13 +13,15 @@ public class JML {
 	
 	//@ model pure public static boolean isArray(\TYPE t) { return Utils.isArray(t); }
 	
+	// Works for primitive types by autoboxing and unboxing
 	//@ ensures \result == expr;
 	//@ pure helper
 	public static <T> T lbl(String id, T expr);
 	
+	// Not strictly needed, but avoids extra autoboxing
 	//@ ensures \result == expr;
 	//@ pure helper
-	public static int lbl(String id, int expr);  // FIXME - do we need the rest of the primitive types? or does autoboxing do it?
+	public static boolean lbl(String id, boolean expr);
 	
 	//@ ensures \result == expr;
 	//@ pure helper
