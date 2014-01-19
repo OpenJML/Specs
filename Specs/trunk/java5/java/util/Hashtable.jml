@@ -98,6 +98,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     //@ also public exceptional_behavior
     //@   requires key == null;
     //@   signals_only NullPointerException;
+    //@ pure
     public synchronized boolean containsKey(Object key) throws RuntimeException;
 
     // specification inherited

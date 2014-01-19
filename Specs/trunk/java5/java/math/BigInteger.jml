@@ -119,7 +119,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public static /*@ pure @*/ BigInteger probablePrime(int bitLength,
                                                           Random rnd);
 
-    boolean primeToCertainty(int certainty);
+    // boolean primeToCertainty(int certainty);
 
     private static int jacobiSymbol(int p, BigInteger n);
 
@@ -129,8 +129,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     public static /*@ pure @*/ BigInteger valueOf(long val);
 
-    int signum;
-    int[] mag; 
+    final int signum;
+    final int[] mag; 
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
@@ -233,15 +233,15 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     public int bitLength();
 
-    static int bitLen(int w);
+    //static int bitLen(int w);
 
-    static final byte[] trailingZeroTable;
+    //static final byte[] trailingZeroTable;
 
     public int bitCount();
 
-    static int bitCnt(int val);
+    //static int bitCnt(int val);
 
-    static int trailingZeroCnt(int val);
+    //static int trailingZeroCnt(int val);
 
     // Primality Testing
 

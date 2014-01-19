@@ -158,7 +158,7 @@ public final class Class<T> implements java.io.Serializable,
 
     public /*@ pure @*/ Package getPackage();
 
-    public /*@ pure @*/ Class[] getInterfaces();
+    public /*@ pure @*/ Class<?>[] getInterfaces();
 
     public /*@ pure @*/ Class<?> getComponentType();
 
@@ -170,13 +170,13 @@ public final class Class<T> implements java.io.Serializable,
 
     public /*@ pure @*/ Class<?> getDeclaringClass();
 
-    public /*@ pure @*/ Class[] getClasses();
+    public /*@ pure @*/ Class<?>[] getClasses();
 
     public /*@ pure @*/ Field[] getFields() throws SecurityException;
 
     public /*@ pure non_null @*/ Method[] getMethods() throws SecurityException;
 
-    public /*@ pure non_null @*/ Constructor[] getConstructors() throws SecurityException;
+    public /*@ pure non_null @*/ Constructor<?>[] getConstructors() throws SecurityException;
 
     public /*@ pure @*/ Field getField(String name)
         throws NoSuchFieldException, SecurityException;
@@ -189,7 +189,7 @@ public final class Class<T> implements java.io.Serializable,
 
     //@ ensures \result != null;
     //@ ensures \nonnullelements(\result);
-    public /*@ pure @*/ Class[] getDeclaredClasses() throws SecurityException;
+    public /*@ pure @*/ Class<?>[] getDeclaredClasses() throws SecurityException;
 
     //@ ensures \result != null;
     //@ ensures \nonnullelements(\result);
@@ -199,7 +199,7 @@ public final class Class<T> implements java.io.Serializable,
     //@ ensures \nonnullelements(\result);
     public /*@ pure @*/ Method[] getDeclaredMethods() throws SecurityException;
 
-    public /*@ pure @*/ Constructor[] getDeclaredConstructors() throws SecurityException;
+    public /*@ pure @*/ Constructor<?>[] getDeclaredConstructors() throws SecurityException;
 
 
     //@ non_null

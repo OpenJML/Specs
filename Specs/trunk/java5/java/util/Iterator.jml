@@ -53,9 +53,10 @@ public interface Iterator<E> {
     //@ public instance ghost boolean remove_called_since = false;
 
     /*@ public normal_behavior
-      @    assignable objectState;
+      @    // assignable objectState;
       @    ensures \result <==> moreElements;
       @*/
+	//@ pure
     boolean hasNext();
 
     /*@ public normal_behavior
