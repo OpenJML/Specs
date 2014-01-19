@@ -1,0 +1,22 @@
+package java.lang.reflect;
+public class Modifier {
+	
+	//@ pure
+	public static boolean isPrivate(int mods);
+	
+	//@ pure
+	public static boolean isProtected(int mods);
+	
+	//@ pure
+	public static boolean isPublic(int mods);
+	
+	//@ pure
+	public static boolean isStatic(int mods);
+	
+	//@ pure
+	public static boolean isStrict(int mods);
+	
+	//@ pure
+	public static boolean isSynchronized(int mods);
+	
+}
