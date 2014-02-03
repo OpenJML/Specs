@@ -162,8 +162,9 @@ t *);
       @    // requires src.getClass().isArray() && dest.getClass().isArray();
       @    requires !(    srcPos < 0 || destPos < 0 || length < 0 );
         {|
- 	    requires \elemtype(\typeof(src)) <: \type(Object) &&
-			\elemtype(\typeof(dest)) <: \type(Object) &&
+		requires (src instanceof Object[]) &&
+			     (dest instanceof Object[]) &&
+			     \elemtype(\typeof(src)) <: \elemtype(\typeof(dest)) &&
       @                 srcPos + length <= ((Object[])src).length
       @                && destPos + length <= ((Object[])dest).length;
       @   {|
@@ -171,11 +172,11 @@ t *);
       @      old Object [] da = (Object[]) dest;
       @      assignable da[destPos .. destPos + length - 1];
       @      ensures (\forall int i; 0 <= i && i < length;
-      @                \old(sa[(int)(srcPos+i)]) == da[(int)(destPos+i)]);
+      @                sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(int) &&
-			 \elemtype(\typeof(dest)) == \type(int) &&
+		requires (src instanceof int[]) &&
+			     (dest instanceof int[]) &&
       @                 srcPos + length <= ((int[])src).length
       @                && destPos + length <= ((int[])dest).length;
       @   {|
@@ -186,8 +187,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(long) &&
-			 \elemtype(\typeof(dest)) == \type(long) &&
+		requires \typeof(src) == \type(long[]) &&
+			     \typeof(dest) == \type(long[]) &&
       @                 srcPos + length <= ((long[])src).length
       @                && destPos + length <= ((long[])dest).length;
       @   {|
@@ -198,8 +199,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(char) &&
-			 \elemtype(\typeof(dest)) == \type(char) &&
+		requires (src instanceof char[]) &&
+			     (dest instanceof char[]) &&
       @                 srcPos + length <= ((char[])src).length
       @                && destPos + length <= ((char[])dest).length;
       @   {|
@@ -210,8 +211,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(boolean) &&
-			 \elemtype(\typeof(dest)) == \type(boolean) &&
+		requires \typeof(src) == \type(boolean[]) &&
+			     \typeof(dest) == \type(boolean[]) &&
       @                 srcPos + length <= ((boolean[])src).length
       @                && destPos + length <= ((boolean[])dest).length;
       @   {|
@@ -222,8 +223,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(short) &&
-			 \elemtype(\typeof(dest)) == \type(short) &&
+		requires \typeof(src) == \type(short[]) &&
+			     \typeof(dest) == \type(short[]) &&
       @                 srcPos + length <= ((short[])src).length
       @                && destPos + length <= ((short[])dest).length;
       @   {|
@@ -234,8 +235,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(byte) &&
-			 \elemtype(\typeof(dest)) == \type(byte) &&
+		requires \typeof(src) == \type(byte[]) &&
+			     \typeof(dest) == \type(byte[]) &&
       @                 srcPos + length <= ((byte[])src).length
       @                && destPos + length <= ((byte[])dest).length;
       @   {|
@@ -246,8 +247,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 *//*	   also
-		requires \elemtype(\typeof(src)) == \type(double) &&
-			 \elemtype(\typeof(dest)) == \type(double) &&
+		requires \typeof(src) == \type(double[]) &&
+			     \typeof(dest) == \type(double[]) &&
       @                 srcPos + length <= ((double[])src).length
       @                && destPos + length <= ((double[])dest).length;
       @   {|
@@ -258,8 +259,8 @@ t *);
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
 	   also
-		requires \elemtype(\typeof(src)) == \type(float) &&
-			 \elemtype(\typeof(dest)) == \type(float) &&
+		requires \typeof(src) == \type(float[]) &&
+			     \typeof(dest) == \type(float[]) &&
       @                 srcPos + length <= ((float[])src).length
       @                && destPos + length <= ((float[])dest).length;
       @   {|
