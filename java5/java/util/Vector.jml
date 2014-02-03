@@ -85,8 +85,6 @@ public class Vector<E> extends AbstractList<E>
     public /*@ pure @*/ Vector(int initialCapacity);
 
     /*@  public normal_behavior
-      @    assignable objectState;
-      @    assignable  maxCapacity, capacityIncrement, containsNull;
       @    ensures containsNull;
       @    ensures maxCapacity > 0 && capacityIncrement == 0;
       @    ensures elementCount == 0;
@@ -97,8 +95,6 @@ public class Vector<E> extends AbstractList<E>
 
     /*@ public normal_behavior
       @    requires c != null;
-      @    assignable objectState;
-      @    assignable maxCapacity, capacityIncrement, containsNull;
       @    ensures elementCount == c.size();
       @    ensures this.containsNull == c.containsNull;
       @    ensures this.content.theSize == c.content.theSize;

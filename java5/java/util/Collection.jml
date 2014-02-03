@@ -64,7 +64,7 @@ public interface Collection<E> extends Iterable<E> {
         }
       @*/
 
-    //@ public model non_null instance Content content; in localState;
+    //@ public ghost non_null instance Content content; in localState;
     //@ public invariant content.owner == this;
     //@ public invariant content.theSize >= 0;
 
