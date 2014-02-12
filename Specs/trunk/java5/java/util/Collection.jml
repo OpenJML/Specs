@@ -56,7 +56,7 @@ public interface Collection<E> extends Iterable<E> {
     //-@ immutable pure
     /*@ public static model class Content {
 
-            public \bigint theSize;
+            public int theSize; // FIXME - should be \bigint
 
              public normal_behavior
                 ensures true;
@@ -64,7 +64,9 @@ public interface Collection<E> extends Iterable<E> {
         }
       @*/
 
-    //@ public ghost non_null instance Content content; in localState;
+    //+ESC@ public ghost non_null instance Content content; in localState;
+    //-ESC@ public model non_null instance Content content; in localState;
+	//+ESC@ public constraint content == \old(content);
     //@ public invariant content.owner == this;
     //@ public invariant content.theSize >= 0;
 

@@ -203,6 +203,7 @@ public class Vector<E> extends AbstractList<E>
     /*@  public normal_behavior
       @    ensures (* \result is an Enumeration of this Vector *);
       @    ensures \result != null && \result.returnsNull == containsNull;
+      @    ensures \result.moreElements == elementCount > 0;
       @*/
     public /*@ pure @*/ /*@ non_null @*/ Enumeration<E> elements();
 
@@ -327,7 +328,7 @@ public class Vector<E> extends AbstractList<E>
       @ also
       @  public normal_behavior
       @    requires 0 <= index && index < elementCount;
-      @    requires \typeof(this) == \type(java.util.Vector);
+      @    requires \typeof(this) == \type(java.util.Vector<E>);
       @    {|
       @      requires elementCount < maxCapacity;
       @      modifies objectState;
@@ -355,7 +356,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures elementCount == \old(elementCount)+1;
       @ also
       @  public normal_behavior
-      @  requires \typeof(this) == \type(java.util.Vector);
+      @  requires \typeof(this) == \type(java.util.Vector<E>);
       @  {|
       @    requires elementCount < maxCapacity;
       @    assignable objectState;
