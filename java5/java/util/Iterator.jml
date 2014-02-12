@@ -37,7 +37,7 @@ public interface Iterator<E> {
     /*+ESC@ public ghost instance boolean moreElements; // FIXME - only lghost elements are handled in assignable lists
     @                               in objectState;
     @*/
-    /*+RAC@ public model instance boolean moreElements;
+    /*-ESC@ public model instance boolean moreElements;
     @                               in objectState;
     @*/
 	//-ESC@ public represents moreElements = hasNext(); // FIXME - does this recursive definition work for RAC?
