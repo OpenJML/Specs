@@ -472,7 +472,7 @@ public class Vector<E> extends AbstractList<E>
       @    assignable objectState;
       @    ensures elementCount == \old(elementCount);
       @    ensures (element == null & get(index) == null) 
-      @            || get(index).equals(element); // or == ?
+      @            || get(index) == (element); // or .equals ?
       @ also
       @  public exceptional_behavior
       @    requires !(0 <= index && index < size());
@@ -487,7 +487,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires containsNull || o != null;
       @    assignable objectState;
       @    ensures (o == null & get(elementCount-1) == null) 
-      @            || get(elementCount-1).equals(o); // or == ?
+      @            || get(elementCount-1) == (o); // or .equals ?
       @    ensures elementCount == \old(elementCount)+1;
       @*/
     public synchronized boolean add(E o);
