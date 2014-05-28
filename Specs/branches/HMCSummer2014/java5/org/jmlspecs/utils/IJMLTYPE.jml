@@ -1,0 +1,51 @@
+package org.jmlspecs.utils;
+
+import org.jmlspecs.annotation.*;
+
+/** This class is an interface for types within JML.  This could simply
+ * encapsulate something like TypeMirror, but we want an implementation
+ * that works on 1.5 as well.
+ * 
+ * @author David R. Cok
+ *
+ */
+@Pure
+public interface IJMLTYPE {
+
+    /*@ public normal_behavior
+     @  requires t == null;
+     @  ensures !\result;
+     @ also public normal_behavior
+     @  requires t == this;
+     @  ensures \result;
+     @ also public normal_behavior
+     @  requires t != null;
+// FIXME    @  ensures \result == ( t.erasure() == this.erasure() &&
+//                             t.numargs() == this.numargs() &&
+//                             (\forall int i; 0<=i && i < numargs(); t.arg(i).equals(arg(i))));
+     */
+    public boolean equals(IJMLTYPE t);
+    
+    //@ public normal_behavior
+    //@ ensures \result == (t instanceof IJMLTYPE && equals((IJMLTYPE)t));
+    public boolean equals(Object t);
+
+    /* @ public normal_behavior
+    @  requires t == this;
+    @  ensures \result;
+    @ also public normal_behavior
+    @  ensures \result == t.erasure().isAssignableFrom(this.erasure());
+    @ also public normal_behavior
+    @  requires t != null;
+// FIXME   @  ensures \result == ( t.erasure() <: this.erasure() &&
+//                            t.numargs() == this.numargs() &&
+//                            (\forall int i; 0<=i && i < numargs(); t.arg(i).equals(arg(i))));
+    */
+    public boolean isSubtypeOf(IJMLTYPE t);
+    
+    public Class<?> erasure();
+    public IJMLTYPE[] typeargs();
+    
+// FIXME    //@ ensures \result == erasure().isArray();
+    public boolean isArray();
+}

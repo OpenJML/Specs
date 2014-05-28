@@ -1,0 +1,56 @@
+// This file is part of JML
+// This includes all the Java 1.5 specs for java.lang.Math, and we
+// want to fix that as soon as possible with some sort of refinement
+// mechanism.
+
+// JML is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+
+// JML is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with JML; see the file COPYING.  If not, write to
+// the Free Software Foundation, 675 Mass  Ave, Cambridge, MA 02139, USA.
+
+
+/**
+ * JML specification for java.util.ArrayDeque.
+ * @author Daniel Bruns
+ */
+
+package java.util;
+
+public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cloneable, java.io.Serializable {
+    
+    //@ instance public invariant !containsNull;
+    
+    //@ ensures isEmpty();
+    public /*@ pure @*/ ArrayDeque();
+    
+    //@ ensures isEmpty();
+    public /*@ pure @*/ ArrayDeque(int numElements);
+    
+    /*@ public exceptional_behavior
+      @   requires c == null || c.contains(null);
+      @ also
+      @ public normal_behavior
+      @   requires c != null && !c.contains(null);
+      @   ensures (\forall int i; 0 <= i & i < c.content.theSize;
+      @               c.iterator().nthNextElement(i) == _get(i));
+      @   ensures_redundantly (\forall Object o; true; c.contains(o) <==> contains(o));
+      @*/
+    public /*@ pure @*/ ArrayDeque(/*@ nullable @*/ Collection<? extends E> c) throws NullPointerException;
+    
+    //@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((Object) _get(i)));
+    public Object[] toArray();
+    
+    //@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((T) _get(i)));
+    public <T> T[] toArray(T[] a);
+    
+    // all other specifications inherited from java.util.Deque
+}

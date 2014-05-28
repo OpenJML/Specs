@@ -1,0 +1,55 @@
+package org.jmlspecs.utils;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.jmlspecs.annotation.*;
+
+/** 
+ * This class contains utility methods used in internal translations for both
+ * ESC and RAC.  In RAC, these functions are executed to provide the built-in
+ * functionality; in ESC, the specifications written here are used to provide
+ * background predicate logic for built-in functionality. 
+ * @author David Cok
+ *
+ */
+public class Utils {
+
+    //@ public normal_behavior
+    //@    ensures \result.size() == 0;
+    static public /*@non_null pure*/ <E> org.jmlspecs.lang.JMLList<E> defaultEmpty();
+    
+    //@ public normal_behavior
+    //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
+    //@   ensures JML.erasure(\result) == base;
+    //@   ensures JML.typeargs(\result).length == args.length;
+    //@   ensures (\forall int i; 0<=i && i<args.length; JML.typeargs(\result)[i] == args[i]);
+    static public @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE(@org.jmlspecs.annotation.NonNull Class<?> base, @org.jmlspecs.annotation.NonNull IJMLTYPE ... args);
+
+    //@ public normal_behavior
+    //@   ensures \result.erasure() == base;
+    //@   ensures  JML.typeargs(\result).length == 0;
+    static public @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE0(@org.jmlspecs.annotation.NonNull Class<?> base);
+
+    //@ public normal_behavior
+    //@   ensures JML.erasure(\result) == base;
+    //@   ensures JML.typeargs(\result).length == 1;
+    //@   ensures JML.typeargs(\result)[0] == a0;
+    public static @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE1(Class<?> base, IJMLTYPE a0);
+    
+    //@ public normal_behavior
+    //@   ensures JML.erasure(\result) == base;
+    //@   ensures JML.typeargs(\result).length == 2;
+    //@   ensures JML.typeargs(\result)[0] == a0;
+    //@   ensures JML.typeargs(\result)[1] == a1;
+    public static @org.jmlspecs.annotation.NonNull  IJMLTYPE makeTYPE2(Class<?> base, IJMLTYPE a0, IJMLTYPE a1);
+
+    // FIXME @ axiom (\forall \TYPE t,tt; (t != null && tt != null && t <: tt) ==> t.erasure() <: tt.erasure());
+
+    //@ ensures \result == v;
+    public static @org.jmlspecs.annotation.Nullable <T> T nonNullCheck(String message, @org.jmlspecs.annotation.Nullable T v);
+
+}
+
+
+// FIXME - for some reason the release tests (runtime3) stopped working, and
+// needs the NonNull and Nullable annotations here to be fully qualified

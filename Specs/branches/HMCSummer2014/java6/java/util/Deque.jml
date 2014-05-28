@@ -1,0 +1,308 @@
+// This file is part of JML
+// This includes all the Java 1.5 specs for java.lang.Math, and we
+// want to fix that as soon as possible with some sort of refinement
+// mechanism.
+
+// JML is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+
+// JML is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with JML; see the file COPYING.  If not, write to
+// the Free Software Foundation, 675 Mass  Ave, Cambridge, MA 02139, USA.
+
+
+/**
+ * JML specification for java.util.Deque.
+ * This specification uses model methods and the \bigint type.
+ * @author Daniel Bruns
+ */
+
+package java.util;
+
+public interface Deque<E> extends Queue<E> {
+ 
+    // specification inherited
+    public boolean add(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
+    
+    /*@ public behavior
+      @   ensures _get(0) == e && size() == \old(size())+1;
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
+      @   assignable this.*;
+      @ also
+      @ public exceptional_behavior
+      @   requires e == null && !containsNull;
+      @   signals_only NullPointerException;
+      @*/
+    public void addFirst(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
+   
+    /*@ public behavior
+      @   requires (* capacity restrictions respected *);
+      @   ensures _get(size()-1) == e && size() == \old(size())+1;
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize-1; _get(i) == \old(_get(i)));
+      @   assignable this.*;
+      @ also
+      @ public exceptional_behavior
+      @   requires e == null && !containsNull;
+      @   signals_only NullPointerException;
+      @*/
+    public void addLast(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
+    
+    
+    // specification inherited
+    public boolean contains(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
+    
+    /*@ public normal_behavior
+      @   ensures \result != null;
+      @   ensures \fresh(\result);
+      @   ensures containsNull == \result.returnsNull;
+      @   ensures (\forall int i; 0 <= i && i < size();
+      @                 contains(\result.nthNextElement(i)));
+      @   ensures (\forall Object o; contains(o) ==>
+      @              (\exists int i; 0 <= i && i < size(); 
+      @                 o == \result.nthNextElement(i)));
+      @   ensures size() > 0 ==> \result.hasNext((int)(size()-1));
+      @   ensures !\result.hasNext((int)(size()));
+      @   ensures_redundantly
+      @           (\forall int i; 0 <= i && i < size();
+      @                 this.contains(\result.nthNextElement(i)));
+      @   ensures_redundantly size() != 0 ==> \result.moreElements;
+      @   ensures (\forall int i; 0 <= i && i < content.theSize;
+      @               \result.nthNextElement(i) == _get(size()-1-i));
+      @*/
+    public /*@ pure @*/  Iterator<E> descendingIterator();
+
+    // specification inherited
+    public /*@ nullable @*/ E element() throws NoSuchElementException;
+
+    /*@ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == _get(0);
+      @   ensures \result == null ==> containsNull;
+      @ also
+      @ public exceptional_behavior
+      @   requires isEmpty();
+      @*/
+    public /*@ pure nullable @*/ E getFirst() throws NoSuchElementException;
+    
+    /*@ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == _get(size()-1);
+      @   ensures \result == null ==> containsNull;
+      @ also
+      @ public exceptional_behavior
+      @   requires isEmpty();
+      @*/
+    public /*@ pure nullable @*/ E getLast() throws NoSuchElementException;
+    
+    /*@ public normal_behavior
+      @   ensures (\forall int i; 0 <= i && i < content.theSize;
+      @               \result.nthNextElement(i) == _get(i));
+      @*/
+    public Iterator<E> iterator();
+
+    // specification inherited
+    public boolean offer(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
+    
+    /*@ public behavior
+      @   requires false && (* capacity restrictions respected *);
+      @   ensures _get(0) == e && size() == \old(size())+1;
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
+      @   ensures \result;
+      @   assignable this.*;
+      @ also
+      @ public behavior
+      @   requires false && (* capacity restrictions violated *);
+      @   ensures !\result;
+      @   assignable \nothing;
+      @ also
+      @ public exceptional_behavior
+      @   requires e == null && !containsNull;
+      @   signals_only NullPointerException;
+      @*/
+    public boolean offerFirst(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
+      
+    /*@ public behavior
+      @   requires  false && (* capacity restrictions respected *);
+      @   ensures _get(size()-1) == e && size() == \old(size())+1;
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize-1; _get(i) == \old(_get(i)));
+      @   ensures \result;
+      @   assignable this.*;
+      @ also
+      @ public behavior
+      @   requires false && (* capacity restrictions violated *);
+      @   ensures !\result;
+      @   assignable \nothing;
+      @ also
+      @ public exceptional_behavior
+      @   requires e == null && !containsNull;
+      @   signals_only NullPointerException;
+      @*/
+    public boolean offerLast(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
+    
+    // specification inherited
+    public /*@ pure nullable @*/ E peek();
+  
+    /*@ public normal_behavior
+      @   ensures \result == (isEmpty()? null : _get(0));
+      @   ensures \result == null ==> isEmpty() | containsNull;
+      @*/
+    public /*@ pure nullable @*/ E peekFirst();
+  
+    /*@ public normal_behavior
+      @   ensures \result == (isEmpty()? null : _get(size()-1));
+      @   ensures \result == null ==> isEmpty() | containsNull;
+      @*/
+    public /*@ pure nullable @*/ E peekLast();
+  
+    // specification inherited
+    public /*@ nullable @*/ E poll();
+    
+    /*@ public normal_behavior
+      @   requires isEmpty();
+      @   ensures \result == null;
+      @   assignable \nothing;
+      @ also
+      @ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == \old(_get(0));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures size() == \old(size()) -1;
+      @   ensures \result == null ==> containsNull;
+      @   assignable this.*;
+      @*/
+    public /*@ nullable @*/ E pollFirst();
+   
+    /*@ public normal_behavior
+      @   requires isEmpty();
+      @   ensures \result == null;
+      @   assignable \nothing;
+      @ also
+      @ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == \old(_get(size()-1));
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize; _get(i) == \old(_get(i)));
+      @   ensures size() == \old(size()) -1;
+      @   ensures \result == null ==> containsNull;
+      @   assignable this.*;
+      @*/
+    public /*@ nullable @*/ E pollLast();
+  
+    /*@ public exceptional_behavior
+      @   requires isEmpty();
+      @   assignable \nothing;
+      @ also
+      @ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == \old(_get(0));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures size() == \old(size()) -1;
+      @   ensures \result == null ==> containsNull;
+      @   assignable this.*;
+      @*/
+    public /*@ nullable @*/ E pop() throws NoSuchElementException;
+   
+    /*@ public behavior
+      @   ensures _get(0) == e && size() == \old(size())+1;
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
+      @   assignable this.*;
+      @ also
+      @ public exceptional_behavior
+      @   requires e == null && !containsNull;
+      @   signals_only NullPointerException;
+      @*/
+    public void push(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
+ 
+    // specification inherited
+    public /*@ nullable @*/ E remove() throws NoSuchElementException;
+    
+    /*@ public exceptional_behavior
+      @   requires isEmpty();
+      @   assignable \nothing;
+      @ also
+      @ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == \old(_get(0));
+      @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures size() == \old(size()) -1;
+      @   ensures \result == null ==> containsNull;
+      @   assignable this.*;
+      @*/
+    public /*@ nullable @*/ E removeFirst() throws NoSuchElementException;
+
+    /*@ public behavior
+      @   requires contains(o);
+      @   ensures \result;
+      @   ensures size() == \old(size())-1;
+      @   ensures (\exists \bigint i; 0 <= i && i <= content.theSize && (\old(_get(i))==null || \old(_get(i)).equals(o)) &&
+      @               (\forall \bigint j; 0 <= j && j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
+      @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; _get(j-1)==\old(_get(j))));
+      @   assignable this.*;
+      @ also
+      @ public behavior
+      @   requires !contains(o);
+      @   ensures !\result;
+      @   assignable \nothing;
+      @*/
+    public boolean removeFirstOccurrence(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
+ 
+    /*@ public behavior
+      @   requires contains(o);
+      @   ensures \result;
+      @   ensures size() == \old(size())-1;
+      @   ensures (\exists \bigint i; 0 <= i && i <= content.theSize && (\old(_get(i))== null || \old(_get(i)).equals(o)) &&
+      @               (\forall \bigint j; 0 <= j && j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
+      @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; _get(j-1)==\old(_get(j))));
+      @   assignable this.*;
+      @ also
+      @ public behavior
+      @   requires !contains(o);
+      @   ensures !\result;
+      @   assignable \nothing;
+      @*/
+  public boolean remove(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
+
+    /*@ public exceptional_behavior
+      @   requires isEmpty();
+      @   assignable \nothing;
+      @ also
+      @ public normal_behavior
+      @   requires !isEmpty();
+      @   ensures \result == \old(_get(size()-1));
+      @   ensures (\forall \bigint i; 0 <= i && i < content.theSize; _get(i) == \old(_get(i)));
+      @   ensures size() == \old(size()) -1;
+      @   ensures \result == null ==> containsNull;
+      @   assignable this.*;
+      @*/
+    public /*@ nullable @*/ E removeLast() throws NoSuchElementException;
+
+
+    /*@ public behavior
+      @   requires contains(o);
+      @   ensures \result;
+      @   ensures size() == \old(size())-1;
+      @   ensures (\exists \bigint i; 0 <= i && i <= content.theSize && \old(_get(i)).equals(o) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; !\old(_get(j)).equals(o));
+      @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
+      @               (\forall \bigint j; i < j && j <= content.theSize; _get(j-1)==\old(_get(j))));
+      @   assignable this.*;
+      @ also
+      @ public behavior
+      @   requires !contains(o);
+      @   ensures !\result;
+      @   assignable \nothing;
+      @*/
+    public boolean removeLastOccurrence(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
+    
+    // specification inherited
+    public int size(); 
+    
+}
