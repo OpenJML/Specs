@@ -31,7 +31,15 @@ package java.util;
  * @author David Cok
  */
 public interface Iterator<E> {
-
+	
+	/** What is our underlying collection? */
+    //@ public instance ghost Collection<E> underlyingCollection;
+    /** How many times do we think the underlying collection has been modified?
+        (note that some iterators don't care). */
+    //@ public instance ghost int expectedModCount;
+    /** Do we care about concurrent modifications? */
+    //@ public instance ghost boolean concurrentModificationsAllowed = false;
+    
     /** Do we have more elements?
      **/
     /*+ESC@ public ghost instance boolean moreElements; // FIXME - only lghost elements are handled in assignable lists
@@ -46,19 +54,19 @@ public interface Iterator<E> {
     /** Do we ever return null as an element?
      **/
     //@ instance ghost public boolean returnsNull;
-
-    // !FIXME! - the aspect of the spec that an iterator is no longer
-    // valid if the underlying collection is modified, besides via remove,
-    // is not fully represented here.
-
+    
     /** Has remove() been called since the last element was returned?
      *	It is initially false, since no element has yet been returned.
      **/
     //@ public instance ghost boolean remove_called_since = false;
 
     /*@ public normal_behavior
-      @    // assignable objectState;
+      @	   requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
       @    ensures \result <==> moreElements;
+      @*/
+    /*@ also public exceptional_behavior
+      @    requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+      @    signals_only ConcurrentModificationException;
       @*/
 	//@ pure
     boolean hasNext();
@@ -71,6 +79,7 @@ public interface Iterator<E> {
 
     /*@  public normal_behavior
       @     requires moreElements;
+      @	    requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
       @     assignable objectState, remove_called_since, moreElements;
       @     ensures !remove_called_since;
       @     ensures !returnsNull ==> (\result != null);
@@ -79,11 +88,16 @@ public interface Iterator<E> {
       @     requires !moreElements;
       @     assignable \nothing;
       @     signals_only NoSuchElementException;
+      @ also 
+      @	   public exceptional_behavior
+      @    requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+      @    signals_only ConcurrentModificationException;
       @*/
     E next();
 
     /*@ public normal_behavior
       @    requires n >= 0 && hasNext(n);
+      @	   requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
       @    ensures (* \result is the nth, counting from 0,
       @             next element that would be returned by this iterator *);
       @    ensures !returnsNull ==> \result != null;
@@ -92,14 +106,27 @@ public interface Iterator<E> {
       @      requires n == 0 && moreElements;
       @      ensures (* \result == the object that would be
       @                 returned by calling next() *);
+      @ also 
+      @	   public exceptional_behavior
+      @    requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+      @    signals_only ConcurrentModificationException;
+      @*/
       public pure model E nthNextElement(int n);  @*/
 
     /*@ public behavior
+      @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+      @   requires !remove_called_since;
       @   assignable objectState, remove_called_since;
-      @   ensures !\old(remove_called_since) && remove_called_since;
+      @   ensures remove_called_since;
+      @	  ensures expectedModCount == underlyingCollection.modCount;
       @   signals_only RuntimeException;
       @   signals (UnsupportedOperationException);
-      @   signals (IllegalStateException) \old(remove_called_since);
+      @ also 
+      @	public exceptional_behavior
+      @    requires remove_called_since || 
+      @             (!concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount);
+      @    assignable \nothing;
+      @    signals_only ConcurrentModificationException, IllegalStateException;
       @*/
     void remove();
 }

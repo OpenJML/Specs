@@ -34,7 +34,12 @@ package java.util;
 public interface Collection<E> extends Iterable<E> {
 
     //@ public model instance JMLDataGroup localState; in objectState;
-
+	
+	/* keep track of how many times the underlying data structure has been modified,
+	 * useful for keeping track of which iterators are valid.
+	 */
+	//@ public instance ghost int modCount;
+	
     /** A utility method that compares possibly-null objects with equals,
         according to how the Collection classes do the comparison. 
         The presumption that o==oo ==> o.equals(oo) for non-null o,oo is
@@ -70,7 +75,7 @@ public interface Collection<E> extends Iterable<E> {
     //@ public invariant content.owner == this;
     //@ public invariant content.theSize >= 0;
 
-    /*@ public normal_behavior
+    x/*@ public normal_behavior
           ensures \result <==> ( content.theSize == 0
                               && containsNull == true);
         pure
@@ -110,8 +115,10 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public normal_behavior
       @   ensures \result != null;
+      @	  ensures \result.expectedModCount == modCount;
+      @   ensures \result.underlyingCollection == this;
       @   ensures \fresh(\result);
-      @   ensures containsNull == \result.returnsNull;
+      @   ensures \result.returnsNull == containsNull;
       @*/
     /* FIXME
       @   ensures (\forall int i; 0 <= i && i < size();
@@ -172,7 +179,9 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires !containsNull ==> o != null;
+      @	  set modCount = modCount + 1;
       @   assignable objectState; 
+      @	  ensures modCount > \old(modCount);
       @   ensures \not_modified(containsNull);
       @   ensures \old(!contains(o)) ==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize+1);
@@ -191,7 +200,9 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires !containsNull ==> o != null;
+      @	  set modCount = modCount + 1;
       @   assignable objectState; 
+      @	  ensures modCount > \old(modCount);
       @   ensures \not_modified(containsNull);
       @   ensures \old(contains(o)) <==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize-1);
@@ -220,18 +231,22 @@ public interface Collection<E> extends Iterable<E> {
               // FIXME - also the optional exceptions
     /*@ pure @*/ boolean containsAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
 
-    // FIXME - what if c == this in the following calls?
 
     /*@ public behavior
+      @   requires c != this || (c == this && isEmpty());
       @   requires c != null;
       @   requires !containsNull ==> !c.containsNull;
       @   assignable objectState; 
+      @	  ensures modCount > \old(modCount);
       @   ensures \not_modified(containsNull);
       @   ensures content.theSize >= \old(content.theSize);
       @   ensures !\result <==> (content.theSize == \old(content.theSize));
       @   ensures (\forall Object o; \old(c.contains(o) || contains(o)) <==> contains(o));
       @   ensures \old(c.contains(null) || contains(null)) <==> contains(null);
           // See note in add about exceptions
+      @ also public behavior
+      @   requires c == this && !isEmpty();
+      @   ensures (* something undefined happens *);
       @ also public exceptional_behavior
       @  requires c == null;
       @  assignable \nothing;
@@ -243,6 +258,7 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public behavior
       @   requires c != null;
       @   assignable objectState; 
+      @	  ensures modCount > \old(modCount);
       @   ensures \not_modified(containsNull);
       @   ensures (\forall Object o; ( contains(o) || \old(c.contains(o))) <==>
                                         \old(contains(o)));
@@ -284,6 +300,7 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public behavior
       @   assignable objectState; 
       @   ensures \not_modified(containsNull);
+      @	  ensures modCount > \old(modCount);
       @   ensures isEmpty();
       @   ensures_redundantly size() == 0;
           // FIXME See note in remove about exceptions

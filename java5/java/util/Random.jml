@@ -1,0 +1,154 @@
+// This file is part of JML
+
+// JML is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+
+// JML is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with JML; see the file COPYING.  If not, write to
+// the Free Software Foundation, 675 Mass  Ave, Cambridge, MA 02139, USA.
+
+package java.lang;
+
+/** 
+ * JML specification for java.lang.Random
+ *
+ * @version OpenJML 1.0
+ * @author Wenhao Lu
+ * @author Daniel M. Zimmerman
+ */
+
+public /*@ pure @*/ class Random {
+	
+	//represents the seed
+	//@ public model long seed;
+
+	//represents the Gaussian boolean
+	//@ private model boolean haveNextNextGaussian; 
+
+	//@ private model double nextNextGaussian;
+	
+	/*@  public normal_behavior
+      @    ensures (* seed is likely to be .... *);
+      @*/
+    public Random();
+
+    //Constructor with given seed
+
+    /*@  public code normal_behavior
+      @		 ensures this.seed == (seed ^ 0x5DEECE66DL) & ((1L << 48) - 1)
+      @*/
+    /*@  also public normal_behavior
+      @      ensures (* the random number generator is initialized with seed *);
+      @*/
+    public Random(long seed);
+    
+    /*@  public code normal_behavior
+      @		 ensures seed == (\old(seed) * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1);
+      @		 ensures \result == (int)(seed >>> (48 - bits)); 
+      @*/
+    /*@  also public normal_behavior
+      @      requires 1 <= bits && bits <= 32;
+      @      ensures (* an int with bits low-order random bits is returned *);
+      @*/
+    /*@  also public normal_behavior
+      @      requires bits < 1 || 32 < bits;
+      @      ensures (* an int is returned with no guarantee of randomness *);
+      @*/
+    protected int next(int bits);
+
+    // 47 in the nextBoolean() specs is the 48 - 1 for the next(1) call
+    
+    /*@  public code normal_behavior
+      @  {|
+      @      requires ((int) (seed >>> 47)) != 0; 
+      @		   ensures \result;
+      @  also 
+      @      requires ((int) (seed >>> 47)) == 0;
+      @      ensures !\result;
+      @  also
+      @      ensures seed == (\old(seed) ^ 0x5DEECE66DL) & ((1L << 48) - 1);
+      @  |}
+      @*/
+    /*@  also public normal_behavior
+      @      ensures (* a pseudorandom boolean value is returned *);
+      @*/
+    public /*@ pure @*/ boolean nextBoolean();
+
+
+    /*@ public static model void nextBytesModel(bytes[] bytes) {
+        (\forall int i; 0 <= i && i < bytes.length; 
+          (\forall int rnd; 0 <= i && i < array.length; 
+            something about array[i])
+          )
+        )      
+        }
+      @*/
+    /*@  public code normal_behavior
+      @		 ensures
+      @*/
+    /*@  public normal_behavior
+      @      ensures (* generates random bytes and puts them into user-supplied byte array *);
+      @*/
+    /*@  public exceptional_behavior
+      @    requires bytes == null;
+      @    signals_only NullPointerException;
+      @*/
+    public /*@ pure @*/ void nextBytes(bytes[] bytes);
+
+    /*@  public normal_behavior
+      @      FIXME
+      @*/
+    public double nextDouble();
+
+    /*@  public normal_behavior
+      @      FIXME
+      @*/
+    public float nextFloat();
+
+    /*@  public normal_behavior
+      @      FIXME
+      @*/
+    public double nextGaussian();
+
+    // 16 in the nextBoolean() specs is the 48 - 32 for the next(32) call
+    /*@  public code normal_behavior
+      @    ensures seed == (\old(seed) ^ 0x5DEECE66DL) & ((1L << 48) - 1);
+      @    ensures \result == (int)(seed >>> 16);
+      @*/
+    /*@  public normal_behavior
+      @    ensures (* \result is randomly generated *);
+      @*/
+    public int nextInt();
+
+    /*@  public normal_behavior
+      @    requires 0 < n;
+      @    ensures 0 <= \result && \result < n;
+      @    ensures (* \result is randomly generated *); 
+      @*/
+    /*@  public exceptional_behavior
+      @    requires n <= 0;
+      @    signals_only IllegalArgumentException;
+      @*/
+    public /*@ pure @*/ int nextInt(int n);
+
+    /*@  public normal_behavior
+      @      FIXME
+      @*/
+    public /*@ pure @*/ long nextLong();
+
+    /*@  public code normal_behavior
+      @		 ensures this.seed == (seed ^ 0x5DEECE66DL) & ((1L << 48) - 1);
+      @*/
+    /*@  public normal_behavior
+      @      ensures (* the seed is set *);      
+      @*/
+    public void setSeed(long seed);
+
+}
