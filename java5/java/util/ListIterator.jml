@@ -45,9 +45,16 @@ public interface ListIterator<E> extends Iterator<E> {
 	//-ESC@ public represents nextElement = next(); // FIXME - does this recursive definition work for RAC?
 
 
+	//@ public instance ghost boolean add_called_since = false;
+	//@ public instance ghost boolean set_called_since = false;
+
 	//specs inherited from Iterator
 	boolean hasNext();
-		
+	/*@ public behavior
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  ensures !set_called_since;
+    @	  ensures !add_called_since;
+    @*/
     E next();
 
     /*@ public behavior
@@ -64,7 +71,10 @@ public interface ListIterator<E> extends Iterator<E> {
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
     @	  requires hasPrevElements;
     @     ensures !remove_called_since;
+    @     ensures !add_called_since;
+    @     ensures !set_called_since;
     @     ensures !returnsNull ==> (\result != null);	  
+    @	  ensures cursor_position = cursor_position  - 1;
     @ also 
     @	public exceptional_behavior
     @   	requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
@@ -79,7 +89,8 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
-    @	  ensures \result == cursor_position;
+    @	  requires moreElements;	
+    @	  ensures \result == cursor_position + 1;
     @ also 
     @	  public exceptional_behavior
     @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
@@ -89,6 +100,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  requires cursor_position > 0;
     @	  ensures \result == cursor_position - 1;
     @ also 
     @	  public exceptional_behavior
@@ -104,7 +116,11 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @     requires !remove_called_since;
+    @	  requires !add_called_since;
+    @	  requires !set_called_since;
     @	  ensures expectedModCount == underlyingCollection.modCount;
+    @	  ensures set_called_since;
     @ also 
     @	  public exceptional_behavior
     @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
@@ -113,11 +129,21 @@ public interface ListIterator<E> extends Iterator<E> {
     void set(E o);
 
     /*@ public behavior
-    @	  requires modCount == underlyingCollection.modCount;
-    @	  ensures modCount == underlyingCollection.modCount;
-    @	  FIXME - behavior is not fully specified here
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @   requires !remove_called_since;
+    @	requires !add_called_since;
+    @	requires !set_called_since;
+    @   assignable objectState, remove_called_since;
+    @   ensures add_called_since;
+    @	ensures expectedModCount == underlyingCollection.modCount;
     @   signals_only RuntimeException;
-      @   signals (UnsupportedOperationException);
+    @   signals (UnsupportedOperationException);
+    @ also 
+    @	public exceptional_behavior
+    @    requires remove_called_since || 
+    @             (!concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount);
+    @    assignable \nothing;
+    @    signals_only ConcurrentModificationException, IllegalStateException;
     @*/
     void add(E o);
 }
