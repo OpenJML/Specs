@@ -28,29 +28,90 @@ package java.util;
  * @author Gary T. Leavens
  */
 public interface ListIterator<E> extends Iterator<E> {
-
+	/*
+	 * underlyingCollection and modCount ensure that the listIterator is still valid
+	 * when the operation is being called.
+	 */
+	//@ public instance ghost Collection<E> underlyingCollection;
+    //@ public instance ghost int modCount;
+    
     //@ model instance int cursor_position; in objectState;
 
     //@ public instance invariant 0 <= cursor_position;
+	
+	//-ESC@ public represents hasPrevElements = hasPrevious(); // FIXME - does this recursive definition work for RAC?
+	                                                    	   // FIXME - should have a warning for ESC
 
-    /*@ pure @*/ boolean hasNext();
-
+	//specs inherited from Iterator
+	boolean hasNext();
+		
     E next();
 
-    /*@ pure @*/ boolean hasPrevious();
+    /*@ public behavior
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  ensures \result <==> (cursor_position > 0);
+    @ also 
+    @	  public exceptional_behavior
+    @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+    @   signals_only ConcurrentModificationException;
+    @*/
+    boolean hasPrevious();
 
+    /*@ public behavior
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  requires hasPrevElements;
+    @     ensures !remove_called_since;
+    @     ensures !returnsNull ==> (\result != null);	  
+    @ also 
+    @	public exceptional_behavior
+    @   	requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+    @   	signals_only ConcurrentModificationException;
+    @ also
+    @   public exceptional_behavior
+    @   	requires !hasPrevElements;
+    @   	assignable \nothing;
+    @   	signals_only NoSuchElementException;
+    @*/
     E previous();
 
-    /*@ pure @*/ int nextIndex();
+    /*@ public behavior
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @ also 
+    @	  public exceptional_behavior
+    @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+    @   signals_only ConcurrentModificationException;
+    @*/
+    int nextIndex();
 
-    /*@ pure @*/ int previousIndex();
+    /*@ public behavior
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @ also 
+    @	  public exceptional_behavior
+    @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+    @   signals_only ConcurrentModificationException;
+    @*/
+    
+    int previousIndex();
 
 
     // Modification Operations
-
     void remove();
 
+    /*@ public behavior
+    @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  ensures expectedModCount == underlyingCollection.modCount;
+    @ also 
+    @	  public exceptional_behavior
+    @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
+    @   signals_only ConcurrentModificationException;
+    @*/
     void set(E o);
 
+    /*@ public behavior
+    @	  requires modCount == underlyingCollection.modCount;
+    @	  ensures modCount == underlyingCollection.modCount;
+    @   signals_only RuntimeException;
+      @   signals (UnsupportedOperationException);
+    @*/
     void add(E o);
 }
