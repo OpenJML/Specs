@@ -26,6 +26,8 @@ package java.util;
  * Some of this specification is taken from ESC/Java.
  * @version $Revision: 1299 $
  * @author Gary T. Leavens
+ * @author Daniel M. Zimmerman
+ * @author Wenhao Lu
  */
 public interface ListIterator<E> extends Iterator<E> {
 	/*
@@ -40,7 +42,8 @@ public interface ListIterator<E> extends Iterator<E> {
     //@ public instance invariant 0 <= cursor_position;
 	
 	//-ESC@ public represents hasPrevElements = hasPrevious(); // FIXME - does this recursive definition work for RAC?
-	                                                    	   // FIXME - should have a warning for ESC
+	//-ESC@ public represents nextElement = next(); // FIXME - does this recursive definition work for RAC?
+
 
 	//specs inherited from Iterator
 	boolean hasNext();
@@ -76,6 +79,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  ensures \result == cursor_position;
     @ also 
     @	  public exceptional_behavior
     @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
@@ -85,6 +89,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+    @	  ensures \result == cursor_position - 1;
     @ also 
     @	  public exceptional_behavior
     @   requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
@@ -110,6 +115,7 @@ public interface ListIterator<E> extends Iterator<E> {
     /*@ public behavior
     @	  requires modCount == underlyingCollection.modCount;
     @	  ensures modCount == underlyingCollection.modCount;
+    @	  FIXME - behavior is not fully specified here
     @   signals_only RuntimeException;
       @   signals (UnsupportedOperationException);
     @*/

@@ -1,0 +1,90 @@
+// @(#)$Id: copyright-for-java.txt,v 1.6 2008/05/13 20:15:48 leavens Exp $
+
+// Copyright (C) 2009.
+
+// This file is part of JML
+
+// JML is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+
+// JML is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with JML; see the file COPYING.  If not, write to
+// the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+package java.util;
+
+public abstract class AbstractQueue<E>
+ implements Iterable<E>, Collection<E>, Queue<E> {
+
+    // public java.util.Collection<E>.Content x;
+    // /*@ public static model class IndexedContent<E>
+    //          extends java.util.Collection<E>.Content {
+
+    //          public normal_behavior
+    //            requires 0 <= i && i < theSize;
+    //            ensures true;
+    //          public pure Object get(int i);
+
+    //          public invariant (\forall Object o; o.equals(get(i)); containsObject(o));
+    //          public invariant (\forall Object o; containsObject(o);
+    //             (\exists int i; 0 <= i && i < theSize; get(i).equals(o)));
+    //     }
+    //   @*/
+    // //@ public model IndexedContent<E> ic; in contents;
+    // //@ public represents content = abstractVal();
+    // /*@ public model pure java.util.Collection<E>.Content abstractVal() {
+    //      java.util.Collection<E>.Content c = new java.util.Collection<E>.Content() {
+
+    //         public normal_behavior
+    //            ensures \result <==> (\exists int i; ic.get(i).equals(o));
+    //         public pure boolean containsObject(Object o);
+    //      };
+    //      c.theSize = ic.theSize;
+    //     }
+    //   @*/
+
+    // protected AbstractQueue();
+
+    // /** Adds the specified element to this queue.*/
+    // //@ assignable ic;
+    // //@ ensures ic.theSize == \old(ic.theSize+1);
+    // //@ ensures ic.get(theSize-1).equals(o);
+    public boolean add(E o); 
+
+    // /** Adds all of the elements in the specified collection to this queue. */
+    // /*@ requires c != this;
+    //   @ assignable contents;
+    //   @ ensures (\forall int i; 0 <= i && i < \old(ic.theSize);
+    //   @                         ic.get(i).equals(ic.get(i)));
+    //   @ ensures (\forall int i; \old(ic.theSize) <= i
+    //   @                         && i < \old(ic.theSize)+c.size();
+    //   @                         c.contains(ic.get(i)));
+    //   @*/
+    public boolean addAll(Collection<? extends E> c);
+
+    // /** Removes all of the elements from this collection. */
+    // //@ assignable contents;
+    // //@ ensures ic.theSize == 0;
+    // //@ ensures_redundantly (\forall Object o; !containsObject(o));
+    public void clear();
+
+    // //@ requires theSize != 0;
+    // //@ ensures \result == \old(ic.get(0));
+    public /*@ pure @*/ E element();
+
+    // //@ requires theSize != 0;
+    // //@ assignable contents;
+    // //@ ensures \result == \old(ic.get(0));
+    // //@ ensures theSize == \old(theSize - 1);
+    // /*@ ensures (\forall int i; 1 <= i && i <= theSize; 
+    //   @                         ic.get(i-1) == \old(ic.get(i))); 
+    //   @*/
+    public E remove();
+}
