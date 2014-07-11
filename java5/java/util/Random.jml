@@ -81,7 +81,6 @@ public /*@ pure @*/ class Random {
       @*/
     public /*@ pure @*/ boolean nextBoolean();
 
-
     /*@ public static model void nextBytesModel(bytes[] bytes) {
         (\forall int i; 0 <= i && i < bytes.length; 
           (\forall int rnd; 0 <= i && i < array.length; 
@@ -91,7 +90,7 @@ public /*@ pure @*/ class Random {
         }
       @*/
     /*@  public code normal_behavior
-      @		 ensures
+      @		 FIXME - see model method above
       @*/
     /*@  public normal_behavior
       @      ensures (* generates random bytes and puts them into user-supplied byte array *);

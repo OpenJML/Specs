@@ -65,16 +65,23 @@ public class Hashtable<K,V> extends Dictionary<K,V>
       @*/
     //@ pure
     public Hashtable(); 
-
+    
+    //check each key and ensure that all keys are not null
+    /*@ public static model void hashtableMapModel(Map<? extends K,? extends V> t) {
+	    (\forall K value; t.containsKey(value); 
+	      requires value != null;
+	    )      
+    }
+    @*/
+    
     /*@ public normal_behavior
-      @   requires t != null;
+      @   requires t != null && hashtableMapModel(t);
       @     ensures mLoadFactor == 0.75;
       @     ensures equals(t);
       @     ensures initialCapacity >= t.size();
       @ also public exceptional_behavior
-      @   requires t == null;
+      @   requires t == null || !hashtableMapModel(t);
       @   signals_only NullPointerException;
-// FIXME - what if argument has a null key or value?
       @*/     
     //@ pure
     public Hashtable(Map<? extends K,? extends V> t);
