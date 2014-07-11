@@ -303,7 +303,7 @@ public interface List<E> extends Collection<E> {
 
     /* FIXME @ 
       @ public normal_behavior
-      @	  ensures \result.underlyingCollection = this;
+      @	  ensures \result.underlyingCollection = (List) this;
       @   ensures \result != null && size() < Integer.MAX_VALUE
       @       ==> (\forall int i; 0 <= i && i < size();
       @                \result.hasNext(i) && \result.nthNextElement(i)
@@ -315,6 +315,7 @@ public interface List<E> extends Collection<E> {
     /* FIXME @ 
       @ public normal_behavior
       @   requires 0 <= index && index < size();
+      @	  ensures \result.underlyingCollection = (List) this;
       @   ensures \result != null && size() < Integer.MAX_VALUE
       @       ==> (\forall int i; index <= i && i < size();
       @                \result.hasNext(i) && \result.nthNextElement(i)

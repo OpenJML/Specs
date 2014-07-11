@@ -60,11 +60,12 @@ public interface Iterator<E> {
     /** Has remove() been called since the last element was returned?
      *	It is initially false, since no element has yet been returned.
      **/
-    //@ public instance ghost boolean remove_called_since = false;
+    //@ public instance ghost boolean modified_since = false;
 
     /*@ public normal_behavior
-      @	   requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
+      @	   requires concurrentModificationsAllowed || CCollection.modCount == expectedModCount;
       @    ensures \result <==> moreElements;
+      
       @*/
     /*@ also public exceptional_behavior
       @    requires !concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount;
@@ -82,8 +83,8 @@ public interface Iterator<E> {
     /*@  public normal_behavior
       @     requires moreElements;
       @	    requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
-      @     assignable objectState, remove_called_since, moreElements;
-      @     ensures !remove_called_since;
+      @     assignable objectState, modified_since, moreElements;
+      @     ensures !modified_since;
       @     ensures !returnsNull ==> (\result != null);
       @ also
       @   public exceptional_behavior
@@ -117,15 +118,15 @@ public interface Iterator<E> {
 
     /*@ public behavior
       @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
-      @   requires !remove_called_since;
-      @   assignable objectState, remove_called_since;
-      @   ensures remove_called_since;
+      @   requires !modified_since;
+      @   assignable objectState, modified_since;
+      @   ensures modified_since;
       @	  ensures expectedModCount == underlyingCollection.modCount;
       @   signals_only RuntimeException;
       @   signals (UnsupportedOperationException);
       @ also 
       @	public exceptional_behavior
-      @    requires remove_called_since || 
+      @    requires modified_since || 
       @             (!concurrentModificationsAllowed && underlyingCollection.modCount != expectedModCount);
       @    assignable \nothing;
       @    signals_only ConcurrentModificationException, IllegalStateException;
