@@ -50,9 +50,14 @@ public interface Iterator<E> {
     /*-ESC@ public model instance boolean moreElements;
     @                               in objectState;
     @*/
-	//-ESC@ public represents moreElements = hasNext(); // FIXME - does this recursive definition work for RAC?
-	                                                    // FIXME - should have a warning for ESC
-
+	
+	
+	/**
+	 *  keep track of the number of times next or remove has been called
+	 */
+	/*@ public instance ghost int numbModifications;
+									in objectState;
+	*/
     /** Do we ever return null as an element?
      **/
     //@ instance ghost public boolean returnsNull;
@@ -61,10 +66,17 @@ public interface Iterator<E> {
      *	It is initially false, since no element has yet been returned.
      **/
     //@ public instance ghost boolean modified_since = false;
+	
+	/* @ public normal_behavior 
+    @     int totalSize = underlyingCollection.size();
+    @     assignable \nothing;
+    @     ensures \result <==> (totalSize - numbModifications > 0);
+    @*/
+  //@ public pure model boolean hasMoreElements();
 
     /*@ public normal_behavior
       @	   requires concurrentModificationsAllowed || CCollection.modCount == expectedModCount;
-      @    ensures \result <==> moreElements;
+      @    ensures \result <==> hasMoreElements();
       
       @*/
     /*@ also public exceptional_behavior
@@ -81,14 +93,15 @@ public interface Iterator<E> {
       public pure model boolean hasNext(int n);  @*/
 
     /*@  public normal_behavior
-      @     requires moreElements;
+      @     requires hasMoreElements();
       @	    requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
       @     assignable objectState, modified_since, moreElements;
       @     ensures !modified_since;
+      @	    ensures numbModifications = numbModifications + 1;
       @     ensures !returnsNull ==> (\result != null);
       @ also
       @   public exceptional_behavior
-      @     requires !moreElements;
+      @     requires !hasMoreElements();
       @     assignable \nothing;
       @     signals_only NoSuchElementException;
       @ also 
@@ -119,9 +132,11 @@ public interface Iterator<E> {
     /*@ public behavior
       @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
       @   requires !modified_since;
-      @   assignable objectState, modified_since;
+      @	  requires hasMoreElements();
+      @   assignable objectState, modified_since, numbModifications;
       @   ensures modified_since;
       @	  ensures expectedModCount == underlyingCollection.modCount;
+      @	  ensures numbModifications = numbModifications + 1;
       @   signals_only RuntimeException;
       @   signals (UnsupportedOperationException);
       @ also 

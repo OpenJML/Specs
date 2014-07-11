@@ -36,7 +36,7 @@ public interface ListIterator<E> extends Iterator<E> {
 	 */
 	//@ public instance ghost List<E> underlyingList;
     
-    //@ model instance int cursor_position; in objectState;
+    //@ model instance int cursor_position = 0; in objectState;
 
     //@ public instance invariant 0 <= cursor_position;
 	// does anything have to be done about the maximum cursor position?
@@ -49,7 +49,7 @@ public interface ListIterator<E> extends Iterator<E> {
 	boolean hasNext();
 	/*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
-    @	  requires moreElements;
+    @	  requires hasMoreElements();
     @	  ensures !modified_since;
     @	  ensures cursor_position = cursor_position + 1;
     @	  ensures \result == underlyingList.get(\old(cursor_position));
@@ -72,6 +72,7 @@ public interface ListIterator<E> extends Iterator<E> {
     @     ensures !modified_since;
     @     ensures !returnsNull ==> (\result != null);	  
     @	  ensures cursor_position = cursor_position  - 1;
+    @	  ensures numbModifications = numbModifications + 1;
     @	  ensures \result = underlyingList.get(\old(cursor_position-1));
     @ also 
     @	public exceptional_behavior
@@ -87,7 +88,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /*@ public behavior
     @	  requires concurrentModificationsAllowed || underlyingCollection.modCount == expectedModCount;
-    @	  requires moreElements;	
+    @	  requires hasMoreElements();	
     @	  ensures \result == cursor_position + 1;
     @ also 
     @	  public exceptional_behavior
@@ -129,6 +130,7 @@ public interface ListIterator<E> extends Iterator<E> {
     @   assignable objectState, modified_since;
     @   ensures modified_since;
     @	ensures expectedModCount == underlyingCollection.modCount;
+    @	ensures numbModifications = numbModifications + 1;
     @   signals_only RuntimeException;
     @   signals (UnsupportedOperationException);
     @ also 
