@@ -1,16 +1,29 @@
 package java.util;
 
 public abstract class Dictionary<K,V> {
-
+	
+	/**
+	 * How many keys there are in dictionary
+	 */
+	//@ public instance ghost int dictSize = 0;
+	
     //@ pure
     public Dictionary();
-
+    
+    /*@ public normal_behavior
+    @    ensures \result == dictSize;
+    @*/
     //@ modifies \nothing;
     public abstract int size();
 
+    /*@ public normal_behavior
+    @    ensures \result <==> (dictSize == 0);
+    @*/
     //@ modifies \nothing;
     public abstract boolean isEmpty();
 
+    
+    
     //@ modifies \nothing;
     public abstract /*@non_null*/ Enumeration<K> keys();
 
