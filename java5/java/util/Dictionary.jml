@@ -1,13 +1,36 @@
 package java.util;
 
+/** 
+ * JML specification for java.util.
+ *
+ * @version OpenJML 1.0
+ * @author Wenhao Lu
+ * @author Daniel M. Zimmerman
+ */
+
 public abstract class Dictionary<K,V> {
 	
 	/**
 	 * How many keys there are in dictionary
 	 */
-	//@ public instance ghost int dictSize = 0;
+	//@ private instance ghost int dictSize = 0;
 	
-    //@ pure
+	/**
+	 * Model of the relation defined by the map.
+	 */
+	//@ private instance ghost JMLObjectToEqualsMap modelDict;
+	
+	/*@ public normal_behavior
+    @   ensures \result == ( o == oo ||
+    @        ( o != null && oo != null && o.equals(oo)));
+    @ static public model pure boolean equals(JMLObjectToEqualsMap modelDict, Object oo);
+    @*/
+	//@ pure
+	
+	/*@ public normal_behavior
+    @    ensures modelDict = new JMLObjectToEqualsMap();
+    @*/
+    //@ pure 
     public Dictionary();
     
     /*@ public normal_behavior
@@ -20,20 +43,55 @@ public abstract class Dictionary<K,V> {
     @    ensures \result <==> (dictSize == 0);
     @*/
     //@ modifies \nothing;
-    public abstract boolean isEmpty();
-
+    public abstract boolean isEmpty();    
     
-    
+    /*@ public normal_behavior
+    @    	ensures \result == modelDict.domainElements();
+    @*/
     //@ modifies \nothing;
     public abstract /*@non_null*/ Enumeration<K> keys();
-
+    
+    /*@ public normal_behavior
+    @    	ensures \result == modelDict.elements();
+    @*/
     //@ modifies \nothing;
     public abstract /*@non_null*/ Enumeration<V> elements();
-
+    
+    /*@ public normal_behavior
+    @   	requires key != null;
+    @		ensures \result == modelDict.apply(key);
+    @ also public exceptional_behavior
+    @   	requires key == null;
+    @   	signals_only NullPointerException;
+    @*/   
     //@ modifies \nothing;
     public abstract /*@nullable*/ V get(/*@non_null*/ Object key);
 
+    /*@ public normal_behavior
+ 	  @   	requires modelDict.has(key);
+ 	  @   	requires !(key == null || value == null);
+ 	  @   	ensures modelDict = modelDict.extend(key,value);
+ 	  @	  	ensures dictSize = dictSize + 1;
+ 	  @	  	ensures \result == null;
+ 	  @ also public normal_behavior
+ 	  @   	requires !modelDict.has(key);
+ 	  @   	requires !(key == null || value == null);
+ 	  @   	ensures modelDict = modelDict.extend(key,value);
+ 	  @	  	ensures \result == \old(modelDict).apply(key);
+ 	  @ also public exceptional_behavior
+      @   	requires key == null || value == null;
+      @   	signals_only NullPointerException;
+    @*/
     public abstract /*@nullable*/ V put(/*@non_null*/ K key, /*@non_null*/ V value);
 
+    /*@ public normal_behavior
+    @   	requires key != null;
+    @		ensures modelDict = modelDict.removeDomainElement(key);
+    @		ensures modelDict.has(key) == false;
+    @		ensures dictSize = dictSize - 1;
+    @ also public exceptional_behavior
+    @   	requires key == null;
+    @   	signals_only NullPointerException;
+    @*/
     public abstract /*@nullable*/ V remove(/*@non_null*/ Object key);
 }
