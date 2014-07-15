@@ -21,9 +21,10 @@ public abstract class Dictionary<K,V> {
 	//@ private instance ghost JMLObjectToEqualsMap modelDict;
 	
 	/*@ public normal_behavior
-    @   ensures \result == ( o == oo ||
-    @        ( o != null && oo != null && o.equals(oo)));
-    @ static public model pure boolean equals(JMLObjectToEqualsMap modelDict, Object oo);
+    @   ensures (\forall Object obj;
+          modelDict.has(obj) ==>
+          compareObjects(\result, obj) <= 0)
+    @ static public model pure boolean equals(JMLObjectToEqualsMap modelDict, );
     @*/
 	//@ pure
 	
@@ -46,12 +47,14 @@ public abstract class Dictionary<K,V> {
     public abstract boolean isEmpty();    
     
     /*@ public normal_behavior
+    @		requires equals(modelDict, modelDict.domainElements());
     @    	ensures \result == modelDict.domainElements();
     @*/
     //@ modifies \nothing;
     public abstract /*@non_null*/ Enumeration<K> keys();
     
     /*@ public normal_behavior
+    @		requires equals(modelDict, modelDict.elements());
     @    	ensures \result == modelDict.elements();
     @*/
     //@ modifies \nothing;
