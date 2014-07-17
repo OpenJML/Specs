@@ -23,6 +23,8 @@ package java.util;
  * @author Katie Becker
  * @author Gary T. Leavens
  * @author David R. Cok
+ * @author Daniel M. Zimmerman
+ * @author Wenhao Lu
  */
 public interface Map<K,V> {
     /*@ public normal_behavior
@@ -30,30 +32,49 @@ public interface Map<K,V> {
       @        ( o != null && oo != null && o.equals(oo)));
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
+	
 
+	
     //-@ immutable
     /*-@ pure public static model class Content {
 
           public \bigint theSize;
-
+		  
+		  public JMLObjectToEqualsMap modelDict;
+			
           // This is object containment (not equals)
-          public normal_behavior
-            ensures true;
+	      public normal_behavior
+	          requires modelDict.has(key);
+	          ensures \result = modelDict.apply(key);
+          also public exceptional_behavior
+           requires !modelDict.has(key);
+           signals_only JMLNoSuchElementException;
           //-@ function pure
           public Object mapsObject(Object key);
 
-
           public normal_behavior
-            ensures true;
+	          requires modelDict.has(key);
+	          ensures \result = modelDict.apply(key);
+          also public exceptional_behavior
+           requires !modelDict.has(key);
+           signals_only JMLNoSuchElementException;
           //-@ function pure
           public Object maps(Object key);
 
           public normal_behavior
+            requires modelDict.range().has(key);
             ensures true;
+          public normal_behavior
+            requires !modelDict.range().has(key);
+            ensures false;
           public function pure boolean hasMapObject(Object key);
 
           public normal_behavior
+            requires modelDict.domain().has(key);
             ensures true;
+          public normal_behavior
+            requires !modelDict.domain().has(key);
+            ensures false;
           //-@ function pure
           public boolean hasMap(Object key);
         }

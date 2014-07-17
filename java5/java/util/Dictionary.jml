@@ -13,23 +13,25 @@ public abstract class Dictionary<K,V> {
 	/**
 	 * How many keys there are in dictionary
 	 */
-	//@ private instance ghost int dictSize = 0;
+	//@ public instance ghost int dictSize = 0;
 	
 	/**
 	 * Model of the relation defined by the map.
 	 */
-	//@ private instance ghost JMLObjectToEqualsMap modelDict;
+	//@ public instance ghost JMLObjectToEqualsMap modelDict;
 	
+	// FIXME - method that ensures each key/value is part of returned enumeration
 	/*@ public normal_behavior
     @   ensures (\forall Object obj;
           modelDict.has(obj) ==>
           compareObjects(\result, obj) <= 0)
-    @ static public model pure boolean equals(JMLObjectToEqualsMap modelDict, );
+    @ static public model pure boolean equals(JMLObjectToEqualsMap modelDict, JMLObjectSet s);
     @*/
 	//@ pure
 	
 	/*@ public normal_behavior
-    @    ensures modelDict = new JMLObjectToEqualsMap();
+    @    ensures modelDict.isEmpty();
+    @	 ensuers dictize == 0;
     @*/
     //@ pure 
     public Dictionary();
@@ -47,15 +49,13 @@ public abstract class Dictionary<K,V> {
     public abstract boolean isEmpty();    
     
     /*@ public normal_behavior
-    @		requires equals(modelDict, modelDict.domainElements());
-    @    	ensures \result == modelDict.domainElements();
+    @		FIXME - what can we say about the keys?
     @*/
     //@ modifies \nothing;
     public abstract /*@non_null*/ Enumeration<K> keys();
     
     /*@ public normal_behavior
-    @		requires equals(modelDict, modelDict.elements());
-    @    	ensures \result == modelDict.elements();
+    @		FIXME - what can we say about the elements?
     @*/
     //@ modifies \nothing;
     public abstract /*@non_null*/ Enumeration<V> elements();
