@@ -33,8 +33,6 @@ public interface Map<K,V> {
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
 	
-
-	
     //-@ immutable
     /*-@ pure public static model class Content {
 
@@ -50,7 +48,7 @@ public interface Map<K,V> {
            requires !modelDict.has(key);
            signals_only JMLNoSuchElementException;
           //-@ function pure
-          public Object mapsObject(Object key);
+          public Object maps(Object key);
 
           public normal_behavior
 	          requires modelDict.has(key);
@@ -62,17 +60,9 @@ public interface Map<K,V> {
           public Object maps(Object key);
 
           public normal_behavior
-            requires modelDict.range().has(key);
-            ensures true;
-          public normal_behavior
-            requires !modelDict.range().has(key);
-            ensures false;
-          public function pure boolean hasMapObject(Object key);
-
-          public normal_behavior
             requires modelDict.domain().has(key);
             ensures true;
-          public normal_behavior
+          also public normal_behavior
             requires !modelDict.domain().has(key);
             ensures false;
           //-@ function pure
@@ -82,32 +72,26 @@ public interface Map<K,V> {
 
     /*-@
         public invariant (\forall Object o; content.theSize == 0 ==> 
-                      !content.hasMapObject(o));
-        public invariant (\forall Object o; content.theSize == 0 ==>
                       !content.hasMap(o));
-        public invariant content.theSize == 0 ==> !content.hasMapObject(null);
+        public invariant content.theSize == 0 ==> !content.hasMap(null);
         public invariant content.theSize == 0 ==> !content.hasMap(null);
       @*/
-    /*-@ axiom (\forall Content c; (\forall Object o;
-                   c.hasMapObject(o) ==> c.hasMap(o)));
-        axiom (\forall Content c; c.hasMapObject(null) <==> c.hasMap(null));
-        axiom (\forall Content c; (\forall Object o;
-                   c.hasMapObject(o) ==> c.mapsObject(o) == c.maps(o)));
-        axiom (\forall Content c;
-                   c.hasMapObject(null) ==> c.mapsObject(null) == c.maps(null));
-     */
           
     //-@ public model instance non_null Content content; in objectState;
     //-@ public invariant content.owner == this;
-
+	
+	/**
+	 * Currently we allow null elements in map, documentation is unclear when this should 
+	 * be the case, FIXME
+	 */
+	//@ public model instance ghost boolean nullAllowed = true;
+	
     /*-@ public normal_behavior
       @   ensures \result <==> ( 
              content != null &&
              content.theSize == 0  && 
-             (\forall Object o; !content.hasMapObject(o)) &&
              (\forall Object o; !content.hasMap(o)) &&
-             !content.hasMapObject(null) &&
-             !content.hasMap(null) 
+             !content.hasMap(null)
              );
       @*/
     /*@ model pure public boolean initialMap();
@@ -183,22 +167,21 @@ public interface Map<K,V> {
     /*@ pure @*/ boolean isEmpty();
 	
     /*-@ public behavior
+      @	   requires !nullequals(key,null) || nullAllowed;
       @    ensures isEmpty() ==> !\result;
       @    ensures content.hasMap(key) <==> \result;
-      @
       @    signals_only ClassCastException, NullPointerException;
-      @    signals (ClassCastException)
-      @         (* if the value is not appropriate for this object *);
-      @    signals (NullPointerException) key == null
-      @         && (* this type doesn't permit null values *);
+      @ also public exceptional_behavior
+      @    requires nullequals(key,null) && !nullAllowed;
+      @    signals NullPointerException;
       @*/
     /*@ pure @*/ boolean containsKey(Object key) throws RuntimeException;
 
     /*-@ public behavior
       @    ensures isEmpty() ==> !\result;
       @    ensures \result <==> (
-              nullequals(value,content.mapsObject(null)) ||
-              (\exists Object k; nullequals(value,content.mapsObject(k))));
+              nullequals(value,content.maps(null)) ||
+              (\exists Object k; nullequals(value,content.maps(k))));
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -209,16 +192,15 @@ public interface Map<K,V> {
     /*@ pure @*/ boolean containsValue(Object value);
 
     /*-@ public normal_behavior
-      @    requires !content.hasMap(key);// hasMap or hasMapObject -- FIXME
+      @    requires !content.hasMap(key) && (!nullequals(key,null) || nullAllowed);
       @    ensures \result == null;
-      @ also public normal_behavior
-      @    requires content.hasMap(key);    // hasMap or hasMapObject -- FIXME
+      @ also public normal_behavior && (!nullequals(key,null) || nullAllowed);
+      @    requires content.hasMap(key);   
       @    ensures \result == content.maps(key);
-      @ also public normal_behavior
-      @    requires content.hasMapObject(key);
-      @    ensures \result == content.mapsObject(key);
-
-           // FIXME - exceptions?
+      @ also public exceptional_behavior
+      @	   requires (nullequals(key,null) && !nullAllowed);
+      @	   signals_only NullPointerException;
+      @ FIXME - What about ClassCastException
       @*/
     /*@ pure @*/ V get(Object key);
 
@@ -226,15 +208,15 @@ public interface Map<K,V> {
       @    assignable objectState;
       @    ensures content.hasMap(key);
       @    ensures !isEmpty() && containsKey(key) && containsValue(value);
-      @    ensures content.mapsObject(key) == value;
+      @    ensures content.maps(key) == value;
       @    ensures content.maps(key) == value;
       @    ensures \result == \old(get(key));
 
       @    ensures (\forall Object k; !k.equals(key) ==> 
-                        (\old(content.hasMapObject(k)) 
-                                       == content.hasMapObject(k)));
-      @    ensures key != null ==> (\old(content.hasMapObject(null)) 
-                                       == content.hasMapObject(null));
+                        (\old(content.hasMap(k)) 
+                                       == content.hasMap(k)));
+      @    ensures key != null ==> (\old(content.hasMap(null)) 
+                                       == content.hasMap(null));
 
       @
       @    ensures (\forall Object k; k.equals(key) ==> content.hasMap(k));
@@ -250,9 +232,9 @@ public interface Map<K,V> {
                         \old(content.maps(null)) == content.maps(null);
       @
       @    ensures (\forall Object k; \old(!k.equals(key)) ==> 
-                        \old(content.mapsObject(k)) == content.mapsObject(k));
-      @    ensures key != null ==> \old(content.mapsObject(null)) 
-                                       == content.mapsObject(null);
+                        \old(content.maps(k)) == content.maps(k));
+      @    ensures key != null ==> \old(content.maps(null)) 
+                                       == content.maps(null);
       @*/
     /* FIXME @
       @    signals (NullPointerException) \not_modified(value)
@@ -270,13 +252,13 @@ public interface Map<K,V> {
 
     /*-@ public behavior
       @    assignable objectState;
-      @    ensures !content.hasMapObject(key);
+      @    ensures !content.hasMap(key);
       @    ensures !content.hasMap(key);
       @    ensures !containsKey(key);
       @    ensures (\forall Object k; \old(!k.equals(key)) ==> 
-                        \old(content.mapsObject(k)) == content.mapsObject(k));
+                        \old(content.maps(k)) == content.maps(k));
       @    ensures key != null ==> 
-                        \old(content.mapsObject(null)) == content.mapsObject(null);
+                        \old(content.maps(null)) == content.maps(null);
       @    ensures \result == \old(get(key));
       @*/
     /*@ // FIXME
@@ -323,7 +305,7 @@ public interface Map<K,V> {
     /*-@ public normal_behavior
       @    assignable objectState;
       @    ensures isEmpty();
-      @    ensures (\forall Object k; !content.hasMapObject(k));
+      @    ensures (\forall Object k; !content.hasMap(k));
       @*/
     void clear();
 
