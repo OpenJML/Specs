@@ -31,14 +31,14 @@ public interface CharSequence {
 
     /*@ public normal_behavior
       @   ensures \result <==> ( charArray != null && charArray.owner == this);
-      @ public pure model boolean initialCharSequence();
+      @ public pure helper model boolean initialCharSequence();
       @*/
 
     /*@ public normal_behavior
         ensures \result == ( a == b || (a != null && b != null &&
                       a.length == b.length && 
                       equal(a,0,b,0,a.length) ));
-        public static pure model boolean equal(char[] a, char[] b);
+        public static pure helper model boolean equal(char[] a, char[] b);
      */
     /*@ public normal_behavior
         requires a != null && b!= null && astart >= 0 && bstart >= 0 &&
@@ -46,7 +46,7 @@ public interface CharSequence {
                  astart+len <= a.length && bstart + len <= b.length;
         ensures \result == ((a==b && astart == bstart) ||
                       (\forall int i; 0<=i && i<len; a[i+astart] == b[i+bstart])); 
-        public static pure model boolean equal(char[] a, int astart, char[] b, int bstart, int len);
+        public static pure helper model boolean equal(char[] a, int astart, char[] b, int bstart, int len);
      */
 
     //@ axiom (\forall char[] a; a!=null ; equal(a,a));

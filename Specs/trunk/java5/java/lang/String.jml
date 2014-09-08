@@ -269,11 +269,11 @@ public final class String
       @   ensures \result == s.charArray.length;
       @
       @ //-@ function
-      @ public static model pure int length(String s);
+      @ public static model pure helper int length(String s);
       @*/
 
     // inherits specs from CharSequence - \result == charArray.length
-    public /*@ pure @*/ int length();
+    public /*@ pure helper @*/ int length();
 
     /*@ also public normal_behavior
       @   requires 0 <= index && index < charArray.length;
@@ -384,7 +384,7 @@ public final class String
       @   ensures \result <==> (s1 == s2);
       @
       @ pure //-@ function
-      @ public static model boolean equals(String s1, String s2);
+      @ public static helper model boolean equals(String s1, String s2);
       @*/
 
     //@ axiom (\forall String s,ss; equals(s,ss) ==> s.length() == ss.length());
@@ -395,7 +395,7 @@ public final class String
 
     /*@ also public normal_behavior
       @   requires anObject != null && (anObject instanceof String);
-      @   ensures \result == equals(this,(String)anObject);
+      @   // ensures \result == equals(this,(String)anObject); // FIXME - causes many straightforward proofs to be incomplete
       @ also public normal_behavior
       @   requires this == anObject;
       @   ensures \result;
@@ -432,23 +432,29 @@ public final class String
       public static pure model
           boolean charLessIgnoreCase(char c1, char c2); @*/
 
+    // FIXME - the first case is too complicated for ESC
     /*@  public normal_behavior
       @   requires anotherString != null;
-      @   ensures equals(this,anotherString) ==> \result;
-      @   ensures \result <==> (length() == anotherString.length())
-      @                        && (\forall int i;
-      @                             0 <= i && i < this.length();
-      @                              charEqualsIgnoreCase(
-      @                                   charAt(i),
-      @                                   anotherString.charAt(i)));
+//      @   ensures equals(this,anotherString) ==> \result;
+//      @   ensures \result <==> (length() == anotherString.length())
+//      @                        && (\forall int i;
+//      @                             0 <= i && i < this.length();
+//      @                              charEqualsIgnoreCase(
+//      @                                   charAt(i),
+//      @                                   anotherString.charAt(i)));
       @ also
+      @ public normal_behavior
       @   requires anotherString == null;
       @   ensures !\result;
+      @ also public normal_behavior
+      @   requires anotherString == this;
+      @   ensures \result;
       @*/
     //-@ function
     public /*@ pure @*/ boolean equalsIgnoreCase(String anotherString);
 
-    /*@  public normal_behavior
+    // FIXME - overly complicated for esc?
+    /* @  public normal_behavior
       @   requires s1 != null && s2 != null;
       @   {|
       @     requires s2.length == 0 && s1.length == 0;
@@ -463,13 +469,14 @@ public final class String
       @     requires s1.length > 0 && s2.length > 0 && s1[0] != s2[0];
       @     ensures \result == (s1[0] < s2[0]);
       @   also
-      @     ensures \result == (
-      @               (\exists int i; 0 <= i && i < s1.length && i < s2.length;
-      @                        s1[i] < s2[i] && equal(s1,0,s2,0,i))
-      @               || 
-      @                 (s1.length < s2.length && equal(s1,0,s2,0,s1.length))
-      @               );
+//      @     ensures \result == (
+//      @               (\exists int i; 0 <= i && i < s1.length && i < s2.length;
+//      @                        s1[i] < s2[i] && equal(s1,0,s2,0,i))
+//      @               || 
+//      @                 (s1.length < s2.length && equal(s1,0,s2,0,s1.length))
+//      @               );
       @   |}
+      @*//*@
     public static pure model boolean lessThan(char[] s1,
                                               char[] s2);  @*/
 
@@ -1031,6 +1038,6 @@ public final class String
     //@ public normal_behavior
     //@   ensures true; // No restriction on result
     //-@ function
-    //@ public pure static model boolean isInterned(non_null String s);
+    //@ public pure helper static model boolean isInterned(non_null String s);
     
 }
