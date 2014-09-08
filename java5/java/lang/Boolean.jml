@@ -49,8 +49,8 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     public Boolean(boolean value);
 
     /*@ public normal_behavior
-      @   ensures \result <==> (s != null && s.equalsIgnoreCase("true"));
-      @ public static pure helper model boolean decode(String s);
+      @   ensures \result <==> ("true".equalsIgnoreCase(s));
+      @ public static pure helper model boolean decode( nullable String s);
       @
       @ public normal_behavior
       @   ensures \result == ( b ? "true" : "false" );
@@ -108,15 +108,13 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     public String toString();
 
     // TODO - do we need this
-    //+@ public static model int TRUE_HC;
-    //+@ public static model int FALSE_HC;
-    //-@ public static final model int TRUE_HC;
-    //-@ public static final model int FALSE_HC;
-    //@ axiom TRUE_HC != FALSE_HC;
+    //+ESC@ public static model int TRUE_HC;
+    //+ESC@ public static model int FALSE_HC;
+    //+ESC@ axiom TRUE_HC != FALSE_HC;
 
     // inherited specification
-    //@ also public normal_behavior
-    //@   ensures \result == ( theBoolean ? TRUE_HC : FALSE_HC);
+    //+ESC@ also public normal_behavior
+    //+ESC@   ensures \result == ( theBoolean ? TRUE_HC : FALSE_HC);
     public int hashCode();
 
     /*@ 
