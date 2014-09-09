@@ -158,7 +158,7 @@ public final class String
     // functionality in java.nio.charset.CharSet.
     //@ public static pure model boolean supportedEncoding(String charsetName);
 
-    /*@ public behavior
+    /*+ESC@ public behavior
       @  requires bytes != null && charsetName != null
       @             && 0 <= offset 
       @             && (offset + length) <= bytes.length
@@ -271,7 +271,6 @@ public final class String
       @ //-@ function
       @ public static model pure helper int length(String s);
       @*/
-
     // inherits specs from CharSequence - \result == charArray.length
     public /*@ pure helper @*/ int length();
 
