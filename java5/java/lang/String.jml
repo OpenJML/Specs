@@ -383,7 +383,7 @@ public final class String
       @   ensures \result <==> (s1 == s2);
       @
       @ pure //-@ function
-      @ public static helper model boolean equals(String s1, String s2);
+      @ public static helper model boolean equals(nullable String s1, nullable String s2);
       @*/
 
     //@ axiom (\forall String s,ss; equals(s,ss) ==> s.length() == ss.length());
@@ -396,14 +396,11 @@ public final class String
       @   requires anObject != null && (anObject instanceof String);
       @   // ensures \result == equals(this,(String)anObject); // FIXME - causes many straightforward proofs to be incomplete
       @ also public normal_behavior
-      @   requires this == anObject;
-      @   ensures \result;
-      @ also public normal_behavior
-      @   requires anObject == null || !(anObject instanceof String);
+      @   requires !(anObject instanceof String);
       @   ensures !\result;
       @
       @*/
-    public /*@ pure @*/ boolean equals(Object anObject);
+    public /*@ pure @*/ boolean equals(/*@ nullable */ Object anObject);
 
     /*@ public normal_behavior
       @   requires sb != null;

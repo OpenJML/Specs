@@ -39,7 +39,7 @@ public interface Enumeration<E> {
       @*/
 
     /*@ public normal_behavior
-      @    assignable objectState;
+      @    assignable \nothing;
       @    ensures \result <==> moreElements;
       @*/
     boolean hasMoreElements();
