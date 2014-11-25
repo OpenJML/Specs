@@ -23,6 +23,41 @@ public class JML {
 	//@ pure helper
 	public static boolean lbl(String id, boolean expr);
 	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static int lbl(String id, int expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static long lbl(String id, long expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static short lbl(String id, short expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static byte lbl(String id, byte expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static char lbl(String id, char expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static float lbl(String id, float expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static double lbl(String id, double expr);
+	
 	//@ ensures \result == expr;
 	//@ pure helper
 	public static boolean lblpos(String id, boolean expr);

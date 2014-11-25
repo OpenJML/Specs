@@ -85,14 +85,16 @@ public class Object {
       @   public normal_behavior
       @     requires obj != null && \typeof(this) == \type(Object);
       @     ensures \result <==> this == obj;
-      @ also public normal_behavior
-      @    ensures obj == null ==> !\result;
+      @ also 
+      @   public normal_behavior
+      @    requires obj == null;
+      @    ensures !\result;
         // FIXME - the following causes inconsistency when equals is used in annotations
       @ //also public normal_behavior
       @  //  requires obj != null;
       @   // ensures \result == obj.equals(this);
       @*/
-    public /*@ pure @*/ boolean equals(/*@\readonly*//*@nullable*/ Object obj);
+    public /*@ pure @*/ boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
 
     /*@ protected normal_behavior
       @   requires this instanceof Cloneable;
