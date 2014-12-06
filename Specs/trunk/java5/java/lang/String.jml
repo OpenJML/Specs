@@ -274,11 +274,11 @@ public final class String
     // inherits specs from CharSequence - \result == charArray.length
     public /*@ pure helper @*/ int length();
 
-    /*@ also public normal_behavior
-      @   requires 0 <= index && index < charArray.length;
-      @   ensures \result == charArray[index];
-      @ also
-      @  public exceptional_behavior
+    /*@ // Inherited from CharSequence:
+      @ //also public normal_behavior
+      @ //  requires 0 <= index && index < charArray.length;
+      @ //  ensures \result == charArray[index];
+      @ also public exceptional_behavior
       @   requires index < 0 || index >= charArray.length;
       @   signals_only StringIndexOutOfBoundsException;
       @*/
