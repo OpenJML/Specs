@@ -108,7 +108,7 @@ public final class System {
 
     // FIXME - need to show that the value is volatile ?
     //@ public normal_behavior
-    //@  modifies time;
+    //@  assignable time;
     //@  ensures \result >= 0;
     //@  ensures time >= \old(time);
     //@  ensures \result == time;
