@@ -64,9 +64,7 @@ public interface Collection<E> extends Iterable<E> {
         }
       @*/
 
-    //+ESC@ public ghost non_null instance Content content; in localState;
-    //-ESC@ public model non_null instance Content content; in localState;
-	//+ESC@ public constraint content == \old(content);
+    //@ public model non_null instance Content content; in localState;
     //@ public invariant content.owner == this;
     //@ public invariant content.theSize >= 0;
 
@@ -102,7 +100,6 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public normal_behavior
       @   ensures !containsNull && o == null ==> !\result;
       @   ensures content.theSize == 0 ==> !\result;
-      @   ensures \result ==> contains(o);
       @   ensures \result <==> content.containsObject(o);
       @*/
     //@ public model pure boolean containsObject(Object o);
@@ -172,7 +169,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires !containsNull ==> o != null;
-      @   assignable objectState; 
+      @   assignable content; 
       @   ensures \not_modified(containsNull);
       @   ensures \old(!contains(o)) ==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize+1);
@@ -191,7 +188,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*@ public behavior
       @   requires !containsNull ==> o != null;
-      @   assignable objectState; 
+      @   assignable content; 
       @   ensures \not_modified(containsNull);
       @   ensures \old(contains(o)) <==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize-1);
