@@ -89,7 +89,7 @@ public interface Collection<E> extends Iterable<E> {
     /*@ public behavior
       @   ensures (!containsNull && o == null) ==> !\result;
       @   ensures content.theSize == 0 ==> !\result;
-      @   ensures containsObject(o) ==> \result;
+      @   ensures containsObject(o) <==> \result;
       @   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
           // various exceptions may get thrown, but are optional,
           // so they are specified in the implementing classes
@@ -171,14 +171,14 @@ public interface Collection<E> extends Iterable<E> {
       @   requires !containsNull ==> o != null;
       @   assignable content; 
       @   ensures \not_modified(containsNull);
-      @   ensures \old(!contains(o)) ==> \result;
+      @   ensures \old(!containsObject(o)) ==> \result; // FIXME - old on a method call is probably not valid
       @   ensures \result ==> content.theSize == \old(content.theSize+1);
       @   ensures !\result ==> content.theSize == \old(content.theSize);
       @   ensures containsObject(o);
-      @   ensures (\forall Object _o; \old(containsObject(_o)) ==> containsObject(_o));
-      @   ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
-      @   ensures \old(containsObject(null)) ==> containsObject(null);
-      @   ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
+      @   //ensures (\forall Object _o; \old(containsObject(_o)) ==> containsObject(_o));
+      @   //ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
+      @   //ensures \old(containsObject(null)) ==> containsObject(null);
+      @   //ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
           // Various unspecified exceptions may be thrown if the element
           // is not allowed to be added to the Collection, or the add
           // operation is not supported.
