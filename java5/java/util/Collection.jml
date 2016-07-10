@@ -171,7 +171,6 @@ public interface Collection<E> extends Iterable<E> {
       @   requires !containsNull ==> o != null;
       @   assignable content; 
       @   ensures \not_modified(containsNull);
-      @   ensures \old(!containsObject(o)) ==> \result; // FIXME - old on a method call is probably not valid
       @   ensures \result ==> content.theSize == \old(content.theSize+1);
       @   ensures !\result ==> content.theSize == \old(content.theSize);
       @   ensures containsObject(o);
@@ -179,6 +178,12 @@ public interface Collection<E> extends Iterable<E> {
       @   //ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
       @   //ensures \old(containsObject(null)) ==> containsObject(null);
       @   //ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
+      @ also public normal_behavior
+      @   requires !containsNull ==> o != null;
+      @   requires !containsObject(o);
+      @   assignable content; 
+      @   ensures \result;
+      @  
           // Various unspecified exceptions may be thrown if the element
           // is not allowed to be added to the Collection, or the add
           // operation is not supported.
@@ -190,23 +195,44 @@ public interface Collection<E> extends Iterable<E> {
       @   requires !containsNull ==> o != null;
       @   assignable content; 
       @   ensures \not_modified(containsNull);
-      @   ensures \old(contains(o)) <==> \result;
       @   ensures \result ==> content.theSize == \old(content.theSize-1);
       @   ensures !\result ==> content.theSize == \old(content.theSize);
-      @   ensures (\forall Object oo; !oo.equals(o); \old(containsObject(oo)) ==> containsObject(oo));
-      @   ensures (\forall Object oo; containsObject(oo) ==> \old(containsObject(oo)));
-      @   ensures (o!=null && \old(contains(null))) ==> contains(null);
-      @   ensures containsObject(null) ==> \old(contains(null));
+      @   //ensures (\forall Object oo; !oo.equals(o); \old(containsObject(oo)) ==> containsObject(oo));
+      @   //ensures (\forall Object oo; containsObject(oo) ==> \old(containsObject(oo)));
+
           // Various unspecified exceptions may be thrown if the element
           // is not allowed to be removed from the Collection, or the remove
           // operation is not supported.
+          
+          // The following special cases are broken out because we cannot put method calls in \old, so we have to
+          // put them in requires clauses
+      @ also public behavior
+      @   requires !containsNull ==> o != null;
+      @   requires containsObject(o);
+      @   assignable content; 
+      @   ensures \result;
+      @ also public behavior
+      @   requires !containsNull ==> o != null;
+      @   requires !containsObject(o);
+      @   assignable content; 
+      @   ensures !\result;
+      @ also public behavior
+      @   requires !containsNull ==> o != null;
+      @   requires !containsObject(null);
+      @   assignable content; 
+      @   ensures !containsObject(null);
+      @ also public behavior
+      @   requires !containsNull ==> o != null;
+      @   requires o!=null && containsObject(null);
+      @   assignable content; 
+      @   ensures containsObject(null);
       @*/
     boolean remove(/*@nullable*/ Object o) throws RuntimeException;
 
     /*@ public behavior
       @   requires c != null && c != this;
-      @   ensures \result <==> 
-                    (\forall Object o; \old(c.contains(o)) ==> contains(o));
+      @   //ensures \result <==> 
+          //          (\forall Object o; \old(c.contains(o)) ==> contains(o)); // FIXME
       @ also public normal_behavior
           requires c == this;
           ensures \result;
@@ -226,8 +252,8 @@ public interface Collection<E> extends Iterable<E> {
       @   ensures \not_modified(containsNull);
       @   ensures content.theSize >= \old(content.theSize);
       @   ensures !\result <==> (content.theSize == \old(content.theSize));
-      @   ensures (\forall Object o; \old(c.contains(o) || contains(o)) <==> contains(o));
-      @   ensures \old(c.contains(null) || contains(null)) <==> contains(null);
+      @   // FIXME ensures (\forall Object o; \old(c.contains(o) || contains(o)) <==> contains(o));
+      @   // FIXME ensures \old(c.contains(null) || contains(null)) <==> contains(null);
           // See note in add about exceptions
       @ also public exceptional_behavior
       @  requires c == null;
@@ -241,9 +267,9 @@ public interface Collection<E> extends Iterable<E> {
       @   requires c != null;
       @   assignable objectState; 
       @   ensures \not_modified(containsNull);
-      @   ensures (\forall Object o; ( contains(o) || \old(c.contains(o))) <==>
-                                        \old(contains(o)));
-      @   ensures (contains(null) || \old(c.contains(null))) <==> \old(contains(null));
+      @   // FIXME ensures (\forall Object o; ( contains(o) || \old(c.contains(o))) <==>
+          //                              \old(contains(o)));
+      @   // FIXME ensures (contains(null) || \old(c.contains(null))) <==> \old(contains(null));
       @   ensures content.theSize <= \old(content.theSize);
       @   ensures !\result <==> (content.theSize == \old(content.theSize));
       @   ensures c == this ==> isEmpty();
@@ -261,13 +287,13 @@ public interface Collection<E> extends Iterable<E> {
       @   assignable objectState; 
       @   ensures \not_modified(containsNull);
           // See note in remove about exceptions
-      @   ensures (\forall Object o; contains(o) <==>
-				    \old(contains(o) && c.contains(o)) );
-      @   ensures contains(null) <==> \old(c.contains(null) && contains(null));
+      @   // FIXME ensures (\forall Object o; contains(o) <==>
+		  //		    \old(contains(o) && c.contains(o)) );
+      @   // FIXME ensures contains(null) <==> \old(c.contains(null) && contains(null));
       @   ensures content.theSize <= \old(content.theSize);
       @   ensures !\result <==> (content.theSize == \old(content.theSize));
-      @   ensures !\result ==> (\forall Object o; contains(o) <==> \old(contains(o)));
-      @   ensures !\result ==> (contains(null) <==> \old(contains(null)));
+      @   // FIXME ensures !\result ==> (\forall Object o; contains(o) <==> \old(contains(o)));
+      @   // FIXME ensures !\result ==> (contains(null) <==> \old(contains(null)));
       @   ensures c == this ==> !\result;
           // See note in remove about exceptions
       @ also public exceptional_behavior
