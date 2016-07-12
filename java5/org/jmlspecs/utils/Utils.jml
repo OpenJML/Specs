@@ -23,33 +23,29 @@ public class Utils {
     //@   ensures JML.erasure(\result) == base;
     //@   ensures JML.typeargs(\result).length == args.length;
     //@   ensures (\forall int i; 0<=i && i<args.length; JML.typeargs(\result)[i] == args[i]);
-    static public @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE(@org.jmlspecs.annotation.NonNull Class<?> base, @org.jmlspecs.annotation.NonNull IJMLTYPE ... args);
+    static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> base, @NonNull IJMLTYPE ... args);
 
     //@ public normal_behavior
     //@   ensures \result.erasure() == base;
     //@   ensures  JML.typeargs(\result).length == 0;
-    static public @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE0(@org.jmlspecs.annotation.NonNull Class<?> base);
+    static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> base);
 
     //@ public normal_behavior
     //@   ensures JML.erasure(\result) == base;
     //@   ensures JML.typeargs(\result).length == 1;
     //@   ensures JML.typeargs(\result)[0] == a0;
-    public static @org.jmlspecs.annotation.NonNull IJMLTYPE makeTYPE1(Class<?> base, IJMLTYPE a0);
+    public static @NonNull IJMLTYPE makeTYPE1(@NonNull Class<?> base, @NonNull IJMLTYPE a0);
     
     //@ public normal_behavior
     //@   ensures JML.erasure(\result) == base;
     //@   ensures JML.typeargs(\result).length == 2;
     //@   ensures JML.typeargs(\result)[0] == a0;
     //@   ensures JML.typeargs(\result)[1] == a1;
-    public static @org.jmlspecs.annotation.NonNull  IJMLTYPE makeTYPE2(Class<?> base, IJMLTYPE a0, IJMLTYPE a1);
+    public static @NonNull IJMLTYPE makeTYPE2(@NonNull Class<?> base, @NonNull IJMLTYPE a0, @NonNull IJMLTYPE a1);
 
     // FIXME @ axiom (\forall \TYPE t,tt; (t != null && tt != null && t <: tt) ==> t.erasure() <: tt.erasure());
 
     //@ ensures \result == v;
-    public static @org.jmlspecs.annotation.Nullable <T> T nonNullCheck(String message, @org.jmlspecs.annotation.Nullable T v);
+    public static @Nullable <T> T nonNullCheck(@Nullable String message, @Nullable T v);
 
 }
-
-
-// FIXME - for some reason the release tests (runtime3) stopped working, and
-// needs the NonNull and Nullable annotations here to be fully qualified
