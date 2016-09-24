@@ -75,7 +75,7 @@ public class Throwable extends Object implements java.io.Serializable
 
       @ public normal_behavior
       @   requires c != null;
-      @   ensures  \result == (_message != null && _message.equals(c.toString()));
+      @   ensures  \result == (_message != null ); //&& _message.equals(c.toString())); // FIXME - too complicated with the String.equals?
       @ also public normal_behavior
       @   requires c == null;
       @   ensures  \result == (_message == null);

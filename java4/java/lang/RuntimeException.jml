@@ -45,7 +45,7 @@ public class RuntimeException
     public /*@ pure @*/ RuntimeException(String message, Throwable cause);
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(null,cause);
+      @   ensures standardThrowable(cause);
       @*/
     public /*@ pure @*/ RuntimeException(Throwable cause);
 }
