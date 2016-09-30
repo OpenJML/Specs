@@ -105,10 +105,10 @@ public class Object {
       @   ensures \typeof(\result) == \typeof(this);
       @  // ensures (* \result is a clone of this *);
       @*/
-    /* FIXME  - seems not to reason with isArray @
-      @ also protected normal_behavior
-      @   requires this.getClass().isArray();
+    /*@ protected normal_behavior
+      @   requires this instanceof Array;
       @   assignable \nothing;
+      @   ensures \result != this;
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
       @   //ensures ((\peer \peer Object[])\result).length
       @   //         == ((\peer \peer Object[])this).length;
@@ -117,7 +117,7 @@ public class Object {
       @    //            ((\peer \peer Object[])\result)[i]
       @    //             == ((\peer \peer Object[])this)[i] );
       @ also
-      @   requires this.getClass().isArray();
+      @   requires this instanceof Array;
       @   // FIXME requires \elemtype(\typeof(this)).isPrimitive();
       @   assignable \nothing;
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
@@ -138,6 +138,7 @@ public class Object {
       @   requires \elemtype(\typeof(this)) <: \type(Object);
       @   assignable \nothing;
       @   ensures \result != this;
+      @   ensures java.util.Arrays.equals(this,\result);
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
       @   ensures ((Object[])\result).length == ((Object[])this).length;
       @   ensures (\forall int i; 0<=i && i < ((Object[])this).length;
@@ -145,7 +146,8 @@ public class Object {
       @ also protected normal_behavior
       @   requires \elemtype(\typeof(this)) == \type(int);
       @   assignable \nothing;
-      @   ensures \result != this;
+      @   ensures \result != this && \result != null;
+      @   ensures java.util.Arrays.equals(this,\result);
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
       @   ensures ((int[])\result).length == ((int[])this).length;
       @   ensures (\forall int i; 0<=i && i < ((int[])this).length;
@@ -154,6 +156,7 @@ public class Object {
       @   requires \elemtype(\typeof(this)) == \type(byte);
       @   assignable \nothing;
       @   ensures \result != this;
+      @   ensures java.util.Arrays.equals(this,\result);
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
       @   ensures ((byte[])\result).length == ((byte[])this).length;
       @   ensures (\forall int i; 0<=i && i < ((byte[])this).length;
