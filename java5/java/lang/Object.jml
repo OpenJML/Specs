@@ -32,10 +32,10 @@ public class Object {
 
     /** A data group for the complete state of this object.  
      */
-    //@ public non_null model JMLDataGroup objectState;
+    //@ public non_null model Object objectState;
 
     /** Use this for the private state holding benevolent side effects */
-    //@ public non_null model JMLDataGroup privateState; in objectState;
+    //@ public non_null model Object privateState; in objectState;
 
     /** The Object that has a field pointing to this Object.
      * Used to specify (among other things) injectivity (see

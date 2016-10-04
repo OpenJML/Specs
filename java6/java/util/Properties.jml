@@ -6,9 +6,9 @@ package java.util;
 
 public class Properties extends Hashtable{
 
-    /*@ public normal_behavior
-      @   ensures \result <==> ( initialHashtable() &&
-      @                          isEmpty() && defaults == p);
+    /*@  // public normal_behavior
+      @  // ensures \result <==> ( initialHashtable() && // FIXME - after we handle generics
+      @  //                        isEmpty() && defaults == p);
       @ public pure model boolean initialProperties(Properties p);
       @*/
 

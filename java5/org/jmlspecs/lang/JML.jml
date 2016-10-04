@@ -9,7 +9,7 @@ public class JML {
 	//@ ensures \result == \erasure(t);
 	//@ model pure public static Class<?> erasure(\TYPE t) { return Utils.erasure(t); }
 	
-	//@ model pure public static \TYPE[] typeargs(\TYPE t) { return Utils.typeargs(t); }
+	//@ model pure public static \TYPE[] typeargs(\TYPE t); // { return Utils.typeargs(t); } // FIXME for rac
 	
 	//@ model pure public static boolean isArray(\TYPE t) { return Utils.isArray(t); }
 	
