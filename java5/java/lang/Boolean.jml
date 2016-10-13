@@ -48,12 +48,12 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ pure helper
     public Boolean(boolean value);
 
-    /*@ public normal_behavior
-      @   ensures \result <==> ("true".equalsIgnoreCase(s));
+    /*@ //public normal_behavior  // FIXME - the constants in these expressions do not translate well.
+      @ //  ensures \result <==> ("true".equalsIgnoreCase(s));
       @ public static pure helper model boolean decode( nullable String s);
       @
-      @ public normal_behavior
-      @   ensures \result == ( b ? "true" : "false" );
+      @ //public normal_behavior
+      @ //  ensures \result == ( b ? "true" : "false" );
       @ public static pure helper model String canonicalString(boolean b);
       @*/
 
