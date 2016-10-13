@@ -37,7 +37,7 @@ import java.util.Comparator;
  */
 //-@ immutable 
 public final class String
-    implements java.io.Serializable, Comparable, CharSequence
+    implements java.io.Serializable, Comparable<String>, CharSequence
 {
     // NOTE: The value of the String is modeled by the charArray in CharSequence
 
