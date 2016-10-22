@@ -23,17 +23,16 @@ package java.lang.reflect;
 
 public final class Array extends java.lang.Object {
 
+	//@ axiom (\forall Object o; \elemtype(\typeof(o)) == \type(int) ==> o instanceof int[]);
 
     /*@
       @   requires \elemtype(\typeof(Param0)) <: \type(Object);
       @   ensures \result == ((Object[])Param0).length;
       @ also
       @   requires Param0 instanceof int[];
-      @   requires \elemtype(\typeof(Param0)) == \type(int);
       @   ensures \result == ((int[])Param0).length;
       @ also
-      @   requires Param0 instanceof byte[];
-      @   requires \elemtype(\typeof(Param0)) == \type(byte);
+      @   requires Param0 instanceof byte[] || \elemtype(\typeof(Param0)) == \type(byte);
       @   ensures \result == ((byte[])Param0).length;
 	// FIXME - do the rest of the primitive types
 	// Also if not an array then throw an exception - FIXME

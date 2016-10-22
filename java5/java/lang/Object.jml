@@ -118,18 +118,30 @@ public class Object {
       @    //            ((\peer \peer Object[])\result)[i]
       @    //             == ((\peer \peer Object[])this)[i] );
       @ also public behavior
-      @   requires this instanceof Array;
-      @   // FIXME requires \elemtype(\typeof(this)).isPrimitive();
-      @   assignable \nothing;
-      @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
-      @   ensures Array.getLength(\result) == Array.getLength(this);
-      @   ensures (\forall int i; 0<=i && i < Array.getLength(this);
-      @                (Array.get(\result,i) == null ==> Array.get(this,i) == null) && ( Array.get(\result,i) != null ==> Array.get(\result,i).equals(Array.get(this,i))  ));
+      @   requires this instanceof Object[];
+      @   ensures \result instanceof Object[];
+      @   ensures ((Object[])\result).length == ((Object[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((Object[])this).length; ((Object[])this)[i] == ((Object[])\result)[i]);
       @ also public behavior
       @   requires this instanceof int[];
       @   ensures \result instanceof int[];
       @   ensures ((int[])\result).length == ((int[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((int[])this).length; ((int[])this)[i] == ((int[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof long[];
+      @   ensures \result instanceof long[];
+      @   ensures ((long[])\result).length == ((long[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((long[])this).length; ((long[])this)[i] == ((long[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof short[];
+      @   ensures \result instanceof short[];
+      @   ensures ((short[])\result).length == ((short[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((short[])this).length; ((short[])this)[i] == ((short[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof byte[];
+      @   ensures \result instanceof byte[];
+      @   ensures ((byte[])\result).length == ((byte[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((byte[])this).length; ((byte[])this)[i] == ((byte[])\result)[i]);
       @*/
     /*@
       @ also public exceptional_behavior
