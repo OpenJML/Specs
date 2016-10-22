@@ -28,9 +28,11 @@ public final class Array extends java.lang.Object {
       @   requires \elemtype(\typeof(Param0)) <: \type(Object);
       @   ensures \result == ((Object[])Param0).length;
       @ also
+      @   requires Param0 instanceof int[];
       @   requires \elemtype(\typeof(Param0)) == \type(int);
       @   ensures \result == ((int[])Param0).length;
       @ also
+      @   requires Param0 instanceof byte[];
       @   requires \elemtype(\typeof(Param0)) == \type(byte);
       @   ensures \result == ((byte[])Param0).length;
 	// FIXME - do the rest of the primitive types
