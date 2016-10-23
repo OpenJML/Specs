@@ -44,7 +44,7 @@ public abstract class InputStream implements Closeable {
 
     // readPosition is the location within the inputBytes array that
     // corresponds to what has been read so far
-    //@ public model \bigint readPosition; in streamState;
+    //@ public model int readPosition; in streamState;  // FIXME - use int until \bigint is supported for model fields
     //@    public initially readPosition == 0;
 
     //-RAC@ public model int availableBytes; in streamState;
@@ -212,9 +212,9 @@ public abstract class InputStream implements Closeable {
     public int available() throws IOException;
 
     //-RAC@ public model boolean _markSupported; in objectState;
-    //-RAC@ public model \bigint markPosition; in objectState; 
+    //-RAC@ public model int markPosition; in objectState; // FIXME - use int instead of \bigint fo rnow
     //-RAC@                      initially markPosition == -1;
-    //-RAC@ public model \bigint markLimit; in objectState;
+    //-RAC@ public model int markLimit; in objectState; // FIXME - use int instead of \bigint for now
 
     // NOTE: For simplicity of specs we do not have the following modify
     // objectState.  If we did, we'd need to make sure that all other fields
