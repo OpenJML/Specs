@@ -80,6 +80,6 @@ class Field extends AccessibleObject implements Member {
     public void setDouble(Object obj, double d)
     throws IllegalArgumentException, IllegalAccessException;
 
-    static /*@ pure @*/ String getTypeName(Class type);
+   // static /*@ pure @*/ String getTypeName(Class type); // FIXME - appears to fail to match, in Java 8
 
 }
