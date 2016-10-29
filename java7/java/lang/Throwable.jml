@@ -104,7 +104,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   assignable _message, _cause, _stackTrace;
       @   ensures _message == message;
       @   ensures _cause == cause;
-      @   ensures_redundantly standardThrowable(message, cause);
+      @   ensures standardThrowable(message, cause);
       @*/
     public /*@pure*/ Throwable(/*@non_null*/String message, /*@nullable*/Throwable cause);
 
