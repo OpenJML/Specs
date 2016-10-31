@@ -223,7 +223,7 @@ public final class Class<T> implements java.io.Serializable,
 
     public /*@ pure @*/ java.security.ProtectionDomain getProtectionDomain();
 
-    native void setProtectionDomain0(java.security.ProtectionDomain pd);
+    //native void setProtectionDomain0(java.security.ProtectionDomain pd);
 
     public /*@ pure @*/ boolean desiredAssertionStatus();
 
