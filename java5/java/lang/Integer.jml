@@ -35,20 +35,20 @@ public  /*@ pure @*/ final
   /*@
     @   public normal_behavior
     @     ensures \result <==> parseable( s, 10 );
-    @   model public static pure boolean parseable( String s );
+    @   model public helper static pure boolean parseable( String s );
     @*/
           
   /*@
     @   public normal_behavior
     @     ensures \result <==> parseable( s, r, 32);
     @*/
-    //@   model public static pure boolean parseable( String s, int r );
+    //@   model public helper static pure boolean parseable( String s, int r );
 
   /*@
     @   public normal_behavior
     @     ensures \result <==> decodable(nm, 32);
     @*/
-  //@   model public static pure boolean decodable( String nm );
+  //@   model public helper static pure boolean decodable( String nm );
           
 	// FIXME: problem with undefined preconditions when using this axiom: -RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
 
@@ -78,7 +78,7 @@ public  /*@ pure @*/ final
       @   ensures i <  0 ==> \result.length() >= 2;
       @   ensures i == 0 ==> \result.equals("0");
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ String toString(int i,
+    public static /*@ pure helper non_null @*/ String toString(int i,
                                                                   int radix);
 
     /*@ public normal_behavior

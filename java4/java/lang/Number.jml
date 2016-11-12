@@ -52,7 +52,7 @@ public abstract class Number implements java.io.Serializable {
     // of a valid integral number - optional initial minus sign, then a
     // sequence of digits of the given radix, with the resulting signed
     // number fitting in the given number of bits.
-    @   model public static pure boolean parseable( String s, int r, int bits );
+    @   model public helper static pure boolean parseable( String s, int r, int bits );
     @*/
 
         // A String is decodable if it has a legitimate radix-indicating
@@ -112,7 +112,7 @@ public abstract class Number implements java.io.Serializable {
     @      ensures \result == parseable(nm, 10, bits);
     @    |}
     @*/
-  //@   model public static pure boolean decodable( String nm, int bits );
+  //@   model public helper static pure boolean decodable( String nm, int bits );
 
 
     /*@ public normal_behavior
