@@ -33,8 +33,7 @@ public interface Map {
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
 
-    //-@ immutable
-    /*-@ pure public static model class Content {
+    /*OPENJML@ pure immutable public static model class Content {
 
           public \bigint theSize;
 

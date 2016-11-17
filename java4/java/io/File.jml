@@ -4,7 +4,7 @@ package java.io;
  *  Edited by cok
  */
 //TODO - if it is immutable, then everything should be pure; can we say that everything is strictly pure?
-//-@ immutable
+//OPENJML@ immutable
 public class File implements Serializable, Comparable {
 
     // FIELDS

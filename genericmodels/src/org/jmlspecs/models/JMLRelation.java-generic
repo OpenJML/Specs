@@ -59,7 +59,7 @@ import java.util.Enumeration;
  * @see JMLObjectToValueRelation
  * @see JMLValueToValueRelation
  */
-//-@ immutable
+//OPENJML@ immutable
 public /*@ pure @*/ class JML_Domain_To_Range_Relation<_ClassDomainParam_, _ClassRangeParam_>
     implements JMLCollection<JML_Domain__Range_Pair<_DomainParam_, _RangeParam_>> {
 

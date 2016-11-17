@@ -29,7 +29,7 @@ package org.jmlspecs.models;
  * @see JMLValueType
  * @see JMLValueBag
  */
-//-@ immutable
+//OPENJML@ immutable
 public /*@ pure @*/ abstract class JMLValueBagSpecs<E extends JMLType> implements JMLValueType {
 
     /** Is the argument ".equals" to one of the values in this bag.

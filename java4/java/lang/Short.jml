@@ -25,7 +25,7 @@ package java.lang;
  * @author Brandon Shilling
  * @author Gary T. Leavens
  */
-//-@ immutable
+//OPENJML@ immutable
 public /*@ pure @*/ final
     class Short extends Number implements Comparable {
 

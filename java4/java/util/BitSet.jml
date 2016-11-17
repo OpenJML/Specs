@@ -9,8 +9,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
     // One could also model this as a Set of ints.
     // Which would be easier to reason with?
 
-    /*-@
-      @ //-@ immutable 
+    /*OPENJML@
+      @ immutable 
       @ model class Content {}
       @ public non_null model Content content;
       @

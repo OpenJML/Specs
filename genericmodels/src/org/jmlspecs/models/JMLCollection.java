@@ -37,7 +37,7 @@ package org.jmlspecs.models;
  * @see JMLEnumeration
  * @see JMLIterator
  */
-//-@ immutable
+//OPENJML@ immutable
 public interface JMLCollection<E> extends JMLType, Iterable<E> {
 
     /** The objectState of all elements is contained in elementState. */

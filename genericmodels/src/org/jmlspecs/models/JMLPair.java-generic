@@ -34,7 +34,7 @@ package org.jmlspecs.models;
  * @see JML_Domain_To_Range_Relation
  * @see JML_Domain_To_Range_Map
  */
-//-@ immutable
+//OPENJML@ immutable
 // FIXME: adapt this file to non-null-by-default and remove the following modifier.
 /*@ nullable_by_default @*/ 
 public /*@ pure @*/ class JML_Domain__Range_Pair<_ClassDomainParam_, _ClassRangeParam_> implements _SuperType_ {

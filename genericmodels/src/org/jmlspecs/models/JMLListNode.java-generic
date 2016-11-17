@@ -39,7 +39,7 @@ package org.jmlspecs.models;
  * @see JML_Elem_Bag
  * @see JML_Elem_Set
  */
-//-@ immutable
+//OPENJML@ immutable
 // FIXME: adapt this file to non-null-by-default and remove the following modifier.
 /*@ nullable_by_default @*/ 
 /*@ pure spec_public @*/ class JMLList_Elem_Node<_ClassParameter_> implements _SuperType_ {
