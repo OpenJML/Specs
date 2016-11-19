@@ -513,7 +513,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires containsNull || element != null;
       @    assignable objectState;
       @    ensures elementCount == \old(elementCount)+1;
-      @    ensures (element == null & get(index) == null) 
+      @    ensures (element == null && get(index) == null) 
       @            || get(index).equals(element); // or == ?
       @ also
       @   public exceptional_behavior
