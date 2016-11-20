@@ -184,7 +184,7 @@ t *);
       @      old int [] da = (int[]) dest;
       @      assignable da[destPos .. destPos + length - 1];
       @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+      @                 sa[srcPos+i] == da[destPos+i]);
       @   |}
 	   also
 		requires \typeof(src) == \type(long[]) &&
@@ -220,7 +220,7 @@ t *);
       @      old boolean [] da = (boolean[]) dest;
       @      assignable da[destPos .. destPos + length - 1];
       @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+      @                 sa[srcPos+i] == da[destPos+i]);
       @   |}
 	   also
 		requires \typeof(src) == \type(short[]) &&
@@ -246,35 +246,34 @@ t *);
       @      ensures (\forall int i; 0 <= i && i < length;
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
-*//*	   also
-		requires \typeof(src) == \type(double[]) &&
-			     \typeof(dest) == \type(double[]) &&
-      @                 srcPos + length <= ((double[])src).length
-      @                && destPos + length <= ((double[])dest).length;
-      @   {|
-      @      old double [] sa = (double[]) src;
-      @      old double [] da = (double[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
-	   also
-		requires \typeof(src) == \type(float[]) &&
-			     \typeof(dest) == \type(float[]) &&
-      @                 srcPos + length <= ((float[])src).length
-      @                && destPos + length <= ((float[])dest).length;
-      @   {|
-      @      old float [] sa = (float[]) src;
-      @      old float [] da = (float[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
-      *//*@
+//	   also  // FIXME - if we enable these cases, then a real-arithmetic logic is required and solving times are very long
+//		requires \typeof(src) == \type(double[]) &&
+//			     \typeof(dest) == \type(double[]) &&
+//      @                 srcPos + length <= ((double[])src).length
+//      @                && destPos + length <= ((double[])dest).length;
+//      @   {|
+//      @      old double [] sa = (double[]) src;
+//      @      old double [] da = (double[]) dest;
+//      @      assignable da[destPos .. destPos + length - 1];
+//      @      ensures (\forall int i; 0 <= i && i < length;
+//      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+//      @   |}
+//	   also
+//		requires \typeof(src) == \type(float[]) &&
+//			     \typeof(dest) == \type(float[]) &&
+//      @                 srcPos + length <= ((float[])src).length
+//      @                && destPos + length <= ((float[])dest).length;
+//      @   {|
+//      @      old float [] sa = (float[]) src;
+//      @      old float [] da = (float[]) dest;
+//      @      assignable da[destPos .. destPos + length - 1];
+//      @      ensures (\forall int i; 0 <= i && i < length;
+//      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+//      @   |}
+//      @
 	   |}
       @*/
-    //@ implies_that
-    //@   requires length >= 0 && 0 <= srcPos && 0 <= destPos;
+
     public static native void arraycopy(/*@non_null*/ Object src,
                                         int srcPos,
                                         /*@non_null*/ Object dest,
