@@ -35,13 +35,13 @@ public interface Set<E> extends Collection<E> {
       @*/
 
     // specification inherited
-    int size();
+    /*@ pure */ int size();
 
     // specification inherited
     boolean isEmpty();
 
-    // specification inherited
-    boolean contains(/*@nullable*/ Object o);
+    // specification inherited 
+    /*@ pure */ boolean contains(/*@ nullable */ Object o);
 
     // specification inherited
     Iterator<E> iterator();

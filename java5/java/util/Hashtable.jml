@@ -105,7 +105,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     //@ also public exceptional_behavior
     //@   requires key == null;
     //@   signals_only NullPointerException;
-    public synchronized V get(Object key);
+    public /*@ pure */ synchronized V get(Object key);
 
     // FIXME - need specs for these enumerators
     /*@ also
@@ -124,7 +124,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
       @   public behavior
       @     ensures value != null;
       @     signals (NullPointerException) value == null;
-      @*/
+      @*/ //@ pure
     public boolean containsValue(Object value) throws NullPointerException;
 
     /*@ protected normal_behavior
@@ -176,7 +176,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     public Collection<V> values();
 
     // specification inherited
-    public synchronized boolean equals(Object o);
+    /*@ pure */ public synchronized boolean equals(Object o);
 
    // specification inherited
     public synchronized int hashCode();
