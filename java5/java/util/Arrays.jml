@@ -25,6 +25,7 @@ package java.util;
  * @author Ajani Thomas
  * @author Gary T. Leavens
  */
+@SuppressWarnings("unchecked")
 public class Arrays {
 
 
