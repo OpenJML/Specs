@@ -614,23 +614,24 @@ public final class String
     /*@  public normal_behavior
       @   requires fromIndex >= length();
       @   ensures \result == -1;
+      @  //also
+      @  // requires fromIndex < 0;
+      @  // ensures \result == indexOf(ch, 0); // Note - can't use recursive
       @  also
-      @   requires fromIndex < 0;
-      @   ensures \result == indexOf(ch, 0);
-      @  also
-      @   requires 0 <= fromIndex && fromIndex < length();
+      @   old int fi = fromIndex < 0 ? 0 : fromIndex;
+      @   requires 0 <= fi && fi < length();
       @   {|
-      @     requires charAt(fromIndex) == ch;
-      @     ensures \result == fromIndex;
+      @     requires charAt(fi) == ch;
+      @     ensures \result == fi;
+      @   //also
+      @   //  requires charAt(fi) != ch;
+      @   //  ensures \result == indexOf(ch, (int)(fi + 1)); // FIXME - can't use recursive
       @   also
-      @     requires charAt(fromIndex) != ch;
-      @     ensures \result == indexOf(ch, (int)(fromIndex + 1));
-      @   also
-      @     ensures \result == -1 <==> (\forall int i; fromIndex<=i && i < charArray.length; charArray[i] != ch);
-      @     ensures \result != -1 <==> (fromIndex <= \result && \result < charArray.length);
+      @     ensures \result == -1 <==> (\forall int i; fi<=i && i < charArray.length; charArray[i] != ch);
+      @     ensures \result != -1 <==> (fi <= \result && \result < charArray.length);
       @     ensures \result != -1 <==> (
       @                charArray[\result] == ch &&
-      @                (\forall int i; fromIndex <= i && i < \result;
+      @                (\forall int i; fi <= i && i < \result;
       @                     charArray[i] != ch));
       @   |}
       @*/
@@ -655,9 +656,9 @@ public final class String
       @   {|
       @     requires charAt(fromIndex) == ch;
       @     ensures \result == fromIndex;
-      @   also
-      @     requires charAt(fromIndex) != ch;
-      @     ensures \result == lastIndexOf(ch, (int)(fromIndex - 1));
+      @   //also
+      @   //  requires charAt(fromIndex) != ch;
+      @   //  ensures \result == lastIndexOf(ch, (int)(fromIndex - 1)); // FIXME - no recursive use
       @   also
       @     ensures \result == -1 <==> (\forall int i; 0<=i && i <= fromIndex; charArray[i] != ch);
       @     ensures \result != -1 <==> (0 <= \result && \result < fromIndex);
