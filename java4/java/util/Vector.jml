@@ -230,7 +230,7 @@ public class Vector extends AbstractList
     // specification inherited
     public /*@ pure @*/ int indexOf(Object elem);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    ensures \result == -1 || ( index <= \result && \result < elementCount);
       @    ensures \result == -1 <==> (\forall int i; index<=i && i<size(); 
@@ -244,7 +244,7 @@ public class Vector extends AbstractList
     // inherits specification
     public /*@ pure @*/ synchronized int lastIndexOf (Object elem);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    ensures -1 <= \result &&  \result <= index;
       @    ensures \result == -1 <==> (\forall int i; 0<=i && i<=index; 
@@ -296,7 +296,7 @@ public class Vector extends AbstractList
       @*/
     public /*@ pure @*/ synchronized Object lastElement() throws NoSuchElementException;
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    requires \typeof(obj) <: elementType;
       @    requires containsNull || obj != null;

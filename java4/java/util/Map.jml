@@ -132,7 +132,7 @@ public interface Map {
         /*@  also
           @   public normal_behavior
           @     requires o instanceof Entry;
-          @     ensures \result ==  ( this == o ||
+          @     ensures !\key("RAC") ==> \result ==  ( this == o ||
           @      (    nullequals(((Entry)o).abstractKey, abstractKey)
           @        && nullequals(((Entry)o).abstractValue, abstractValue) ));
           @  also
@@ -145,7 +145,7 @@ public interface Map {
         /*@ pure @*/ int hashCode();
 
         /*@ public normal_behavior
-          @   ensures \result <==> (nullequals(abstractKey,key) &&
+          @   ensures !\key("RAC") ==> \result <==> (nullequals(abstractKey,key) &&
           @                         nullequals(abstractValue, value));
           @ public pure model boolean equals(Object key, Object value);
           @
@@ -186,7 +186,7 @@ public interface Map {
       @*/
     /*@ pure @*/ boolean containsKey(Object key) throws RuntimeException;
 
-    /*-@ public behavior
+    /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
       @    ensures \result <==> (
               nullequals(value,content.mapsObject(null)) ||

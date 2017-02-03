@@ -51,7 +51,8 @@ public interface List extends Collection {
     boolean isEmpty();
 
     //@ also public behavior
-    //@   ensures \result <==> (\exists int i; 0<=i && i<size(); nullequals(o,get(i)));
+    //@   requires true;
+    //-RAC@   ensures \result <==> (\exists int i; 0<=i && i<size(); nullequals(o,get(i)));
     //@ pure
     boolean contains(/*@nullable*/Object o);
 
@@ -126,7 +127,7 @@ public interface List extends Collection {
       @   assignable objectState;
       @   ensures content.theSize == \old(content.theSize-1);
       @   ensures \result != (size() == \old(size()) ); */
-    /*-@ ensures (\exists \bigint j; 0<=j && j<\old(size()) && nullequals(o,get(content,j));
+    /*-RAC@ ensures (\exists \bigint j; 0<=j && j<\old(size()) && nullequals(o,get(content,j));
               (\forall \bigint k; 0<=k && k<j; get(content,k) == \old(get(content,k)))
 	      &&  (\forall \bigint k; j<k && k<content.theSize; get(content,k-1)==\old(get(content,k+1)))); */
     /*@ also public exceptional_behavior
@@ -187,7 +188,7 @@ public interface List extends Collection {
     /*@ also
       @ public normal_behavior
       @   requires o instanceof List && size() == ((List) o).size(); */
-    /*-@  ensures \result <==> (\forall \bigint i; 0<=i && i < content.theSize; 
+    /*-RAC@  ensures \result <==> (\forall \bigint i; 0<=i && i < content.theSize; 
       @       nullequals(get(content,i),get(((List)o).content,i))); */
     /*@ also public normal_behavior
       @   requires !(o instanceof List && size() == ((List) o).size());
@@ -306,7 +307,7 @@ public interface List extends Collection {
 
     /*@ public behavior
       @   ensures \result >= -1 && \result < size();
-      @   ensures \result != -1 ==> nullequals(o,get(\result));
+      @   ensures !\key("RAC") ==> \result != -1 ==> nullequals(o,get(\result));
       @   // ensures (\forall int i; (0<=i && i < \result) ==> !nullequals(o,get(i)));
       @   //ensures \result == -1 <==>
           //   (\forall int i; (0<=i && i < content.theSize) ==> !nullequals(o,get(i)));
@@ -322,8 +323,8 @@ public interface List extends Collection {
 
     /*@ public behavior
       @   ensures \result >= -1 && \result < size();
-      @   ensures \result != -1 ==> nullequals(o,get(\result));
-      @   ensures (\forall int i; \result<i && i < size(); !nullequals(o,get(i)));
+      @   ensures !\key("RAC") ==> \result != -1 ==> nullequals(o,get(\result));
+      @   ensures !\key("RAC") ==> (\forall int i; \result<i && i < size(); !nullequals(o,get(i)));
       @   ensures \result == -1 <==> !contains(o);
       @   signals_only ClassCastException, NullPointerException;
       @   signals (ClassCastException)
