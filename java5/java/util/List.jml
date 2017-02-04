@@ -110,11 +110,11 @@ public interface List<E> extends Collection<E> {
       @   requires !containsNull ==> o != null;
       @   assignable content;
       @   ensures content != null;  // FIXME - not strictly necessary
-      @   ensures content.theSize == \old(content.theSize+1); */
-    /* @  ensures get(content,content.theSize-1) == o;
-      @   ensures (\forall \bigint i; 0<=i && i < content.theSize-1; 
-      @                    get(content,i) == \old(get(content,i))); */
-    /*-RAC@   ensures \result;
+      @   ensures content.theSize == \old(content.theSize+1); 
+      @   // ensures get(content,content.theSize-1) == o;
+      @   // ensures (\forall \bigint i; 0<=i && i < content.theSize-1; 
+      @   //                 get(content,i) == \old(get(content,i))); 
+      @   ensures \result;
       @*/
     boolean add(/*@ nullable*/ E o);
 

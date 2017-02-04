@@ -55,7 +55,7 @@ public interface Set<E> extends Collection<E> {
     /*@ also
       @  public normal_behavior
       @    requires contains(o);
-      @    requires !containsNull ==> o != null;
+      @    requires !\key("RAC") ==> !containsNull ==> o != null;
       @    assignable \nothing;
       @    ensures !\result;
       @*/
@@ -68,6 +68,12 @@ public interface Set<E> extends Collection<E> {
        @   ensures \result;
        @   ensures !contains(o);
        @*/
+    /*@ also public behavior
+      @   requires !\key("RAC") ==> !containsNull ==> o != null;
+      @   requires !contains(o);
+      @   assignable \nothing; 
+      @   ensures !\result;
+      */
     boolean remove(/*@nullable*/ Object o);
 
     // Bulk Operations
@@ -104,7 +110,7 @@ public interface Set<E> extends Collection<E> {
        @   ensures \result <==>
                ((\forall Object oo; contains(oo) <==> ((Set)o).contains(oo))
              && contains(null) <==> ((Set)o).contains(null));
-       @   ensures \result ==> (content.theSize == ((Set)o).content.theSize);
+       @   ensures !\key("RAC") ==> \result ==> (content.theSize == ((Set)o).content.theSize);
        @*/
     /*@ pure @*/ boolean equals(/*@nullable*/ Object o);
 
