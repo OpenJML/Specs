@@ -134,7 +134,7 @@ public final class String
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public /*@ pure @*/ String(byte[] ascii, int hibyte,
+    @Deprecated public /*@ pure @*/ String(byte[] ascii, int hibyte,
                   int offset, int count)
         throws StringIndexOutOfBoundsException;
   
@@ -151,7 +151,7 @@ public final class String
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public /*@ pure @*/ String(byte[] ascii, int hibyte);
+    @Deprecated public /*@ pure @*/ String(byte[] ascii, int hibyte);
 
     // Define the following to be true (e.g. with an axiom) to declare
     // a given encoding as supported.  FIXME - define this in terms of
@@ -338,7 +338,7 @@ public final class String
       @   modifies \nothing;
       @   signals_only NullPointerException;
       @*/
-    public void getBytes(int srcBegin, int srcEnd,
+    @Deprecated public void getBytes(int srcBegin, int srcEnd,
                                         byte[] dst, int dstBegin)
       throws StringIndexOutOfBoundsException;
 

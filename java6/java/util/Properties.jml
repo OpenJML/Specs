@@ -34,7 +34,7 @@ public class Properties extends Hashtable{
 
     public java.util.Enumeration<?> propertyNames();
 
-    public synchronized void save(java.io.OutputStream out, String s);
+    @Deprecated public synchronized void save(java.io.OutputStream out, String s); // FIXME - not sure when this was deprecated
 
     public void store(java.io.OutputStream out, String s)  // CHANGED IN 1.6
        throws java.io.IOException;

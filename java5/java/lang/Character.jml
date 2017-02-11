@@ -302,13 +302,13 @@ public /*@ pure @*/ final
     /*@  public normal_behavior
       @   ensures \result <==> isJavaIdentifierStart(ch);
       @*/
-    public static /*@ pure @*/ boolean isJavaLetter(char ch);
+    @Deprecated public static /*@ pure @*/ boolean isJavaLetter(char ch);
 
     /** @deprecated Replaced by isJavaIdentifierPart(char). */
     /*@  public normal_behavior
       @   ensures \result <==> isJavaIdentifierPart(ch);
       @*/
-    public static /*@ pure @*/ boolean isJavaLetterOrDigit(char ch);
+    @Deprecated public static /*@ pure @*/ boolean isJavaLetterOrDigit(char ch);
 
     /*@  public normal_behavior
       @   ensures \result <==> isLetter(ch) || 
@@ -492,7 +492,7 @@ public /*@ pure @*/ final
       @                         ch == '\r' ||
       @                         ch == ' ';
       @*/
-    public static /*@ pure @*/ boolean isSpace(char ch);
+    @Deprecated public static /*@ pure @*/ boolean isSpace(char ch);
 
     /*@  public normal_behavior
       @   ensures \result <==> 

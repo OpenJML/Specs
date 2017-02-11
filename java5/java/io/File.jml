@@ -115,7 +115,7 @@ public class File implements Serializable, Comparable {
     public /*@nullable*/ String /*! FIXME: GET THIS TO WORK non_null */ [] list();
     public /*@non_null*/ java.net.URI toURI();
 
-    public java.net.URL toURL()  throws java.net.MalformedURLException;
+    @Deprecated public java.net.URL toURL()  throws java.net.MalformedURLException;
 
     public /*@non_null*/ File[] listFiles(/*@non_null*/ FileFilter filter);
     public /*@non_null*/ File[] listFiles(/*@non_null*/ FilenameFilter filter);
