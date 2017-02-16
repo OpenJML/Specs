@@ -41,37 +41,32 @@ public class Throwable extends Object implements java.io.Serializable
 {
     //@ public model nullable String _message;  in objectState;
     //@ public model nullable Throwable _cause; in objectState;
-
-    //@ public model boolean causeSet;  in _cause;
-    //@ public represents causeSet = _cause != this;
+	//@ public model boolean _causeSet;         in _cause;
 
     //@ public model non_null StackTraceElement[/*#@non_null*/] _stackTrace; in objectState;
-    //@ public represents _stackTrace = getStackTrace();
 
     //@ public invariant \nonnullelements(_stackTrace);
 
     /*@
       @ public normal_behavior
-      @   ensures \result == (_message == null && !causeSet);
+      @   ensures \result == (_message == null && _cause == null && _causeSet == false);
       @
         public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
-      @   ensures \result == (_message == s && !causeSet);
+      @   ensures \result == (_message == s && _cause == null && _causeSet == false);
       @
         public pure helper model boolean standardThrowable(non_null String s);
 
       @ public normal_behavior
       @   requires c != this;
-      @   ensures \result == (initMessage(c) && _cause == c);
-      @   ensures_redundantly causeSet;
+      @   ensures \result == (initMessage(c) && _cause == c && _causeSet == true);
       @
         public pure helper model boolean standardThrowable(nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != this;
-      @   ensures \result == (_message == s && _cause == c);
-      @   ensures_redundantly causeSet;
+      @   ensures \result == (_message == s && _cause == c && _causeSet == true);
       @
         public pure helper model boolean standardThrowable(non_null String s, nullable Throwable c);
 
@@ -88,7 +83,8 @@ public class Throwable extends Object implements java.io.Serializable
     /*@ public normal_behavior
       @   assignable _message, _cause, _stackTrace;
       @   ensures _message == null;
-      @   ensures !causeSet;
+      @   ensures _cause == null;
+      @   ensures !_causeSet;
       @   ensures_redundantly standardThrowable();
       @*/
     public /*@pure*/ Throwable();
@@ -96,25 +92,26 @@ public class Throwable extends Object implements java.io.Serializable
     /*@ public normal_behavior
       @   assignable _message, _cause, _stackTrace;
       @   ensures _message == message;
-      @   ensures !causeSet;
+      @   ensures _cause == null;
+      @   ensures !_causeSet;
       @   ensures_redundantly standardThrowable(message);
       @*/
     public /*@pure*/ Throwable(/*@non_null*/String message);
 
     /*@ public normal_behavior
-      @   requires cause != this;
       @   assignable _message, _cause, _stackTrace;
       @   ensures _message == message;
       @   ensures _cause == cause;
+      @   ensures _causeSet;
       @   ensures standardThrowable(message, cause);
       @*/
     public /*@pure*/ Throwable(/*@non_null*/String message, /*@nullable*/Throwable cause);
 
     /*@ public normal_behavior
-      @   requires cause != this;
       @   assignable _message, _cause, _stackTrace;
       @   ensures initMessage(cause);
       @   ensures _cause == cause;
+      @   ensures _causeSet;
       @   ensures_redundantly standardThrowable(cause);
       @*/
     public /*@pure*/ Throwable(/*@nullable*/Throwable cause);
@@ -135,25 +132,22 @@ public class Throwable extends Object implements java.io.Serializable
     public /*@ pure helper nullable*/ String getLocalizedMessage();
 
     /*@ public normal_behavior
-      @  requires causeSet;
       @  ensures \result == _cause;
-      @ also public normal_behavior
-      @  requires !causeSet;
-      @  ensures \result == null;
       @*/
     synchronized public /*@pure helper nullable*/ Throwable getCause();
 
     /*@ public normal_behavior
-      @   requires !causeSet && cause != this;
+      @   requires !_causeSet;
       @   assignable _cause;
-      @   ensures causeSet;
+      @   ensures _causeSet;
+      @   ensures _cause == cause;
       @ also
       @ public exceptional_behavior
-      @   requires causeSet || cause == this;
+      @   requires _causeSet;
       @   assignable \nothing;
       @   signals_only IllegalStateException, IllegalArgumentException;
-      @   signals (IllegalStateException e) causeSet && e._message != null && !e.causeSet;
-      @   signals (IllegalArgumentException e) cause == this && e._message != null && !e.causeSet;
+      @   signals (IllegalStateException e) _causeSet && e._message != null && !e._causeSet;  // FIXME - check this
+      @   signals (IllegalArgumentException e) cause == this && e._message != null && !e._causeSet;   // FIXME - check this
       @*/
     public synchronized /*@non_null*/ Throwable initCause(/*@non_null*/Throwable cause);
 
