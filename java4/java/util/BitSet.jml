@@ -9,41 +9,39 @@ public class BitSet implements Cloneable, java.io.Serializable{
     // One could also model this as a Set of ints.
     // Which would be easier to reason with?
 
-    /*OPENJML@
+    /*@
       @ immutable 
       @ model class Content {}
       @ public non_null model Content content;
       @
       @ public normal_behavior
       @   ensures \result >= 0;
-      @ public static pure model int size(Content content);
+      @ public function static pure model int size(Content content);
       @
       @ public normal_behavior
       @   ensures \result >= 0;
-      @ public static pure model int cardinality(Content content);
+      @ public function static pure model int cardinality(Content content);
       @
-      @ public static pure model boolean isSet(Content c, int index);
+      @ public function static pure model boolean isSet(Content c, int index);
       @*/
 
     //@ normal_behavior
     //@   assignable \not_specified;
-    //-@   ensures size(content) >= 0;
-    //-@   ensures cardinality(content) == 0;
-    //-@   ensures (\forall int i; 0 <= i; !isSet(content,i));
+    //-RAC@   ensures size(content) >= 0;
+    //-RAC@   ensures cardinality(content) == 0;
+    //-RAC@   ensures (\forall int i; 0 <= i; !isSet(content,i));
     public BitSet();
 
     //@ public normal_behavior
     //@   assignable \not_specified;
-    //-@   ensures size(content) >= i;
-    //-@   ensures cardinality(content) == 0;
-    //-@   ensures (\forall int i; 0 <= i; !isSet(content,i));
+    //-RAC@   ensures size(content) >= i;
+    //-RAC@   ensures cardinality(content) == 0;
+    //-RAC@   ensures (\forall int i; 0 <= i; !isSet(content,i));
     public BitSet(int i);
 
     // number of set bits
     //@ public normal_behavior
-    //@   ensures isEmpty() ==> \result == 0;
-    //-@   ensures \result == cardinality(content);
-    //@   ensures \result <= length();
+    //-RAC@   ensures \result == cardinality(content);
     //@   // num_of not implemented for proofs, and causes inconsistencies - FIXME
     //@   // ensures \result == (\num_of int i; 0<=i; isSet(content,i));
     //@ pure
@@ -55,9 +53,10 @@ public class BitSet implements Cloneable, java.io.Serializable{
     // index of the highest set bit
     /*@ public normal_behavior
       @   ensures \result >= 0;
-      @   ensures \result >= cardinality(); */
-    /*-@
-      @   ensures \result == 0 <==> (\forall int i; 0<=i; !isSet(content,i));
+      @   ensures \result >= cardinality(); 
+      @   ensures \result == 0 <==> isEmpty();
+      @*/
+    /*-RAC@
       @   ensures \result > 0 ==> (isSet(content,\result-1) &&
       @                      (\forall int i; \result <= i; !isSet(content,i)));
       @*/
@@ -65,26 +64,26 @@ public class BitSet implements Cloneable, java.io.Serializable{
     public int length();
 
     //@ public normal_behavior
-    //-@   ensures \result == size(content);
+    //-RAC@   ensures \result == size(content);
     //@   ensures \result >= 0;
     //@   ensures \result >= length();
     //@ pure
     public int size();
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   assignable content;
-      @   ensures (\forall int i; 0<=i; !isSet(content, i) );
-      @   ensures cardinality() == 0;
+      @   ensures isEmpty();
       @*/
     public void clear();
 
     //@ public normal_behavior
-    //-@   ensures \result <==> (\forall int i; 0<=i; !isSet(content,i));
+    //-RAC@   ensures \result <==> (\forall int i; 0<=i; !isSet(content,i));
     //@   ensures \result <==> cardinality() == 0;
     //@ pure
     public boolean isEmpty();
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /*  @ public normal_behavior
       @   requires index > size(content);
       @   ensures \result == index;
       @   ensures !isSet(content,\result);
@@ -100,7 +99,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //@ pure
     public int nextClearBit(int index);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /*  @ public normal_behavior
       @   requires index > size(content);
       @   ensures \result == -1;
       @ also public normal_behavior
@@ -116,16 +116,17 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //@ pure
     public int nextSetBit(int index);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= i;
       @   assignable content;
       @   ensures isSet(content,i) == false;
       @   ensures (\forall int j; 0<=j && j != i;
-      @                        isSet(content,j) == \old(isSet(content,j)));
+      @                   isSet(content,j) == \old(isSet(content,j)));
       @   ensures \old(isSet(content,i)) ==>
-                          cardinality() == \old(cardinality() - 1);
+                          cardinality(content) == \old(cardinality(content) - 1);
       @   ensures \old(!isSet(content,i)) ==>
-                          cardinality() == \old(cardinality());
+                          cardinality(content) == \old(cardinality(content));
       @ also public exceptional_behavior
       @   requires i < 0;
       @   assignable \nothing;
@@ -133,7 +134,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void clear(int i);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= i;
       @   assignable content;
       @   ensures isSet(content,i) == !\old(isSet(content,i));
@@ -151,7 +153,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void flip(int i);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= i;
       @   assignable content;
       @   ensures isSet(content,i) == true;
@@ -169,7 +172,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void set(int i);
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= i;
       @   ensures \result == isSet(content,i);
       @ also public exceptional_behavior
@@ -179,7 +182,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //@ pure
     public boolean get(int i);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= i;
       @   assignable content;
       @   ensures isSet(content,i) == v;
@@ -201,7 +205,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void set(int i,boolean v);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= fromIndex;
       @   requires fromIndex <= toIndex;
       @   requires 0 <= toIndex;
@@ -211,7 +216,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @   ensures (\forall int j; ( 0<=j && j < fromIndex ) ||
       @                            toIndex <= j ;
       @                   isSet(content,j) == \old(isSet(content,j)));
-      @   ensures cardinality() <= \old(cardinality());
+      @   ensures cardinality(content) <= \old(cardinality(content));
       @ also public exceptional_behavior
       @   requires fromIndex < 0 || toIndex < 0 || fromIndex > toIndex;
       @   assignable \nothing;
@@ -219,7 +224,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void clear(int fromIndex,int toIndex);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= fromIndex;
       @   requires fromIndex <= toIndex;
       @   requires 0 <= toIndex;
@@ -237,7 +243,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void flip(int fromIndex, int toIndex);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= fromIndex;
       @   requires fromIndex <= toIndex;
       @   requires 0 <= toIndex;
@@ -256,7 +263,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void set(int fromIndex,int toIndex);
 
-    /*-@ public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires 0 <= fromIndex;
       @   requires fromIndex <= toIndex;
       @   requires 0 <= toIndex;
@@ -277,30 +285,33 @@ public class BitSet implements Cloneable, java.io.Serializable{
     public void set(int fromIndex,int toIndex,boolean b);
 
 
-    /*@ also public normal_behavior
+    // FIXME - review
+    /* @ also public normal_behavior
       @   assignable \not_specified;
       @   ensures \typeof(\result) == \type(BitSet);
       @   ensures \result != null; */
-    /*-@   ensures (\forall int i; 0<=i; isSet(((BitSet)\result).content,i) ==
+    /* @   ensures (\forall int i; 0<=i; isSet(((BitSet)\result).content,i) ==
       @                              isSet(content,i)); */
-    /*@   ensures ((BitSet)\result).cardinality() == cardinality();
+    /* @   ensures ((BitSet)\result).cardinality() == cardinality();
       @*/
     public Object clone();
 
     /*@ also public normal_behavior
       @   requires o != null && o instanceof BitSet; */
-    /*-@  ensures \result <==> (\forall int i; 
+    /*-RAC@  ensures \result <==> (\forall int i; 
       @			0<=i;
-      @             	isSet(content,i) == isSet(((BitSet)o).content,i)); */
+      @             	isSet(content,i) == isSet(((BitSet)o).content,i)); 
+      @*/
     /*@   ensures \result ==> (cardinality() == ((BitSet)o).cardinality());
       @ also public normal_behavior
-      @   requires o != null && !(o instanceof BitSet);
+      @   requires o == null || !(o instanceof BitSet);
       @   ensures !\result;
       @*/
     //@ pure
     public boolean equals(/*@nullable*/Object o);
 
-    /*@ also public normal_behavior
+    // FIXME - review
+    /* @ also public normal_behavior
       @   ensures \result != null && \result.length() > 0;
       @   ensures \result.charAt(0) == '{';
       @   ensures \result.charAt(\result.length()-1) == '}';
@@ -310,6 +321,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //@ pure
     public String toString();
 
+    // FIXME - review
     /*@ public normal_behavior
       @   requires 0 <= fromIndex && 0 <= toIndex;
       @   requires fromIndex <= toIndex;
@@ -324,12 +336,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //@ pure
     public BitSet get(int fromIndex,int toIndex);
 
-    /*@ public normal_behavior
-      @   requires b != null;
-      @   assignable \not_specified;
-      @*/
-    /*-@
-      @ also public normal_behavior
+    // FIXME - review
+    /* @ public normal_behavior
       @   requires b != null;
       @   assignable content;
       @   ensures size(content) >=\old(Math.min(size(content),size(b.content)));
@@ -338,6 +346,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @                \old(isSet(content,i) && isSet(b.content,i)));
       @   ensures cardinality() <= \old(cardinality());
       @   ensures cardinality() <= \old(b.cardinality());
+      @ 
       @ also public exceptional_behavior
       @   requires b == null;
       @   signals_only NullPointerException;
@@ -346,10 +355,6 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     /*@ public normal_behavior
       @   requires b != null;
-      @   assignable \not_specified;
-      @*/
-    /*-@
-      @ also public normal_behavior
       @   assignable content;
       @   ensures size(content) >= \old(size(content));
       @   ensures (\forall int i; 0<=i;
@@ -364,10 +369,6 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     /*@ public normal_behavior
       @   requires b != null;
-      @   assignable \not_specified;
-      @*/
-    /*-@
-      @ also public normal_behavior
       @   assignable content;
       @   ensures size(content) >=\old(Math.max(size(content),size(b.content))); 
       @   ensures (\forall int i; 0<=i;
@@ -383,12 +384,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     /*@ public normal_behavior
       @   requires b != null;
-      @   assignable \not_specified;
-      @*/
-    /*-@
-      @ also public normal_behavior
       @   assignable content;
-      @   ensures size(content) >=\old(Math.max(size(content),size(b.content))); 
       @   ensures (\forall int i; 0<=i;
       @              isSet(content,i) <==>
       @                \old(isSet(content,i) != isSet(b.content,i)));
@@ -398,11 +394,9 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
     public void xor(BitSet b);
 
+    // FIXME - for all of these specs, if there is to be a exceptional_behavior clause, then the argumente cannot be by default NonNull
     /*@ public normal_behavior
       @   requires b != null;
-      @*/
-    /*-@
-      @ also public normal_behavior
       @   ensures \result <==> (\exists int i; 0<=i ;
       @                isSet(content,i) && isSet(b.content,i));
       @ also public exceptional_behavior

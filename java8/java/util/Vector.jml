@@ -160,18 +160,18 @@ public class Vector<E> extends AbstractList<E>
       @    requires 0 <= newSize;
       @    requires newSize <= elementCount;
       @    assignable objectState; 
-      @    ensures \not_modified(theString,theHashCode);
-      @    ensures \not_modified(containsNull);
       @    ensures elementCount == newSize; */
-    /*-@   ensures (\forall int i; 0<=i && i<elementCount;
+    /*-RAC@    ensures \not_modified(theString,theHashCode);
+      @    ensures \not_modified(containsNull);
+      @   ensures (\forall int i; 0<=i && i<elementCount;
       @			elementData[i] == \old(elementData[i])); */
-    /*-RAC@  also
-      @    old int oldSize = elementCount;
-      @    requires newSize > elementCount;
-      @    assignable objectState;
-      @    ensures \not_modified(theString,theHashCode);
-      @    ensures \not_modified(containsNull); */
-    /*-@
+    //@  also
+    //@    old int oldSize = elementCount;
+    //@    requires newSize > elementCount;
+    //@    assignable objectState;
+    //-RAC@    ensures \not_modified(theString,theHashCode);
+    //-RAC@    ensures \not_modified(containsNull);
+    /*-RAC@
       @    ensures (\forall int i; 0<=i && i<oldSize;
       @			elementData[i] == \old(elementData[i])); */
     /*@    ensures (\forall int i; oldSize<=i && i < newSize;
