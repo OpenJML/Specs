@@ -50,16 +50,16 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
        @*/
     public Date(long date);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public Date(int year, int month, int date);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public Date(int year, int month, int date, int hrs, int min);
 
-   /** @deprecated as of JDK 1.1 */
+   @Deprecated //* @deprecated as of JDK 1.1 */
     public Date(int year, int month, int date, int hrs, int min, int sec);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public Date(String s);
 
    /*@ also
@@ -69,50 +69,50 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
        @*/
     public Object clone();
     
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public static long UTC(int year, int month, int date,
                            int hrs, int min, int sec);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public static long parse(String s);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getYear();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public void setYear(int year);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getMonth();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public void setMonth(int month);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getDate();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public void setDate(int date);
 
-   /** @deprecated as of JDK 1.1 */
+   @Deprecated //* @deprecated as of JDK 1.1 */
     public int getDay();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getHours();
     
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public void setHours(int hours);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getMinutes();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public void setMinutes(int minutes);
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getSeconds();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public void setSeconds(int seconds);
 
     /*@ public normal_behavior
@@ -198,12 +198,12 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
        @*/
     public String toString();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public String toLocaleString();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public String toGMTString();
 
-    /** @deprecated as of JDK 1.1 */
+    @Deprecated //* @deprecated as of JDK 1.1 */
     public int getTimezoneOffset();
 }

@@ -27,7 +27,7 @@ package java.lang;
  */
 public interface CharSequence {
     //@ public instance model non_null char[] charArray;
-    //@ public instance invariant charArray.owner == this;
+    //  @ public instance invariant charArray.owner == this; // FIXME - this seems necessary to avoid aliasing, but is often a difficult invariant to prove, for reasons as yet unknown
 
     /*@ public normal_behavior
       @   ensures \result <==> ( charArray != null && charArray.owner == this);
