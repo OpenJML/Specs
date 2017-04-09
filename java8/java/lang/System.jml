@@ -30,6 +30,7 @@ import java.util.Properties;
  * @author David R. Cok
  * @author Joseph R. Kiniry
  */
+//@ nullable_by_default
 public final class System {
 
     private /*@ pure @*/ System();
@@ -104,14 +105,16 @@ public final class System {
 
     /** The last value of currentTimeMillis() that was returned */
 
-    //@ public static ghost long time;
+    //@ public static model long time;
 
     // FIXME - need to show that the value is volatile ?
-    //@ public normal_behavior
-    //@  assignable time;
-    //@  ensures \result >= 0;
-    //@  ensures time >= \old(time);
-    //@  ensures \result == time;
+    /*-RAC@
+      @ public normal_behavior
+      @  assignable time;
+      @  ensures \result >= 0;
+      @  ensures time >= \old(time);
+      @  ensures \result == time;
+      @*/
     public static native long currentTimeMillis();
 
     // FIXME - exceptional cases
@@ -246,6 +249,7 @@ t *);
       @      ensures (\forall int i; 0 <= i && i < length;
       @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
       @   |}
+      @*//* @
 //	   also  // FIXME - if we enable these cases, then a real-arithmetic logic is required and solving times are very long
 //		requires \typeof(src) == \type(double[]) &&
 //			     \typeof(dest) == \type(double[]) &&
@@ -271,8 +275,8 @@ t *);
 //      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
 //      @   |}
 //      @
-	   |}
       @*/
+//@	   |}
 
     public static native void arraycopy(/*@non_null*/ Object src,
                                         int srcPos,
@@ -282,32 +286,28 @@ t *);
 
     // Note: Unequal objects are not required to have unequal hashCodes
     // There is no good, modularly provable way to express that anyway
-    //@ public normal_behavior
-    //@   ensures x == null ==> \result == 0;
-    //-@ function
-    public /*@ pure @*/ static native int identityHashCode(/*@nullable*/ Object x);
+    public /*@ pure function @*/ static native int identityHashCode(/*@nullable*/ Object x);
 
-    //@ public model static non_null Properties systemProperties;
-    //@    initially systemProperties.containsKey("java.home");
-    //@    initially systemProperties.getProperty("java.home") != null;
-    //@    initially !systemProperties.containsKey("xxxxxx");
+    //-RAC@ public model static non_null Properties systemProperties;
+    //-RAC@    initially systemProperties.containsKey("java.home");
+    //-RAC@    initially systemProperties.getProperty("java.home") != null;
+    //-RAC@    initially !systemProperties.containsKey("xxxxxx");
 
     /* Models the set of properties that you get when setProperties is called
        with a null argument.  This is not the same as the default (original)
        set of system properties, but it appears to be the same (per equals)
        throughout a program.
      */
-    //+@ public model static non_null Properties nullSystemProperties;
-    //-@ public model static final non_null Properties nullSystemProperties;
+    //-RAC@ public model static final non_null Properties nullSystemProperties;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    ensures \result == systemProperties;
       @    //signals (SecurityException) (* if access is not permitted *);
       @*/
-    //-@ function
-    public /*@ pure @*/ static /*@ non_null @*/ Properties getProperties();
+    public /*@ pure function @*/ static /*@ non_null @*/ Properties getProperties();
 
-    /*@ public behavior
+    /*-RAC@ 
+      @ public behavior
       @    requires props == null;
       @    assignable systemProperties;
       @    ensures systemProperties.equals(nullSystemProperties);
@@ -328,7 +328,7 @@ t *);
 // FIXME - conflict between exceptions
     //@ public behavior
     //@   requires key != null;
-    //@   ensures \result == getProperties().getProperty(key);
+    //-RAC@   ensures \result == getProperties().getProperty(key);
     //@   signals (SecurityException) (* if access is not permitted *);
     //@ also public exceptional_behavior
     //@   requires key == null;
@@ -349,19 +349,19 @@ t *);
 
 
 // FIXME - conflict between exceptions
-    /*@ public behavior
-      @    requires key != null && value != null;
-      @    assignable systemProperties;
-      @    signals (SecurityException) (* if access is not permitted *);
-      @ also public exceptional_behavior
-      @   requires key == null || value == null;
-      @   assignable \not_specified;
-      @   signals_only NullPointerException;
-      @*/
+    //@ public behavior
+    //@    requires key != null && value != null;
+    //-RAC@    assignable systemProperties;
+    //@    signals (SecurityException) (* if access is not permitted *);
+    //@ also public exceptional_behavior
+    //@   requires key == null || value == null;
+    //@   assignable \nothing;
+    //@   signals_only NullPointerException;
     public static /*@nullable*/ String setProperty(/*@non_null*/ String key, /*@nullable*/ String value) throws RuntimeException;
 
 
     /** @deprecated use java.lang.System.getProperty. */
+    @Deprecated
     public static /*@ pure nullable @*/ String getenv(/*@non_null*/ String name);
 
     /*@ public behavior

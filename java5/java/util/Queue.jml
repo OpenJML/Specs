@@ -32,8 +32,16 @@ public interface Queue<E> extends Collection<E> {
       @   requires n >= 0 && n < content.theSize;
       @   ensures !\fresh(\result);
       @   ensures containsObject((Object)\result);
-      @ //** "magic" getter method used to specify the ordering of the queue.
+      @ // "magic" getter method used to specify the ordering of the queue.
       @ public pure model E _get(\bigint n);
+      @*/
+    
+    /*@ public normal_behavior
+      @   requires n >= 0 && n < content.theSize;
+      @   ensures !\fresh(\result);
+      @   ensures containsObject((Object)\result);
+      @ // "magic" getter method used to specify the ordering of the queue.
+      @ public pure model E _get(int n);
       @*/
     
     /*@ public behavior

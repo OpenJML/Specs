@@ -55,20 +55,15 @@ public class Object {
     /*+ESC@ public normal_behavior
       @   ensures \result == \erasure(\typeof(this));
       @*/
-    //-@ function // Not dependent on the state, just on the object identity
-    public /*@ pure @*/ final /*@non_null*/ Class<?> getClass();
+    public final /*@ pure non_null */ Class<?> getClass();
 
-    //@ public model int theHashCode; in objectState;
+    //-RAC@ public model int theHashCode; in objectState;
 
-    /*@  public normal_behavior
-      @     assignable privateState;
-      @     ensures (* \result is a hash code for this object *);
-      @     ensures \result == theHashCode;
-      @ also public normal_behavior
-      @     requires \typeof(this) == \type(Object);
+    /*@  public code normal_behavior
       @     assignable privateState;
       @     ensures \result == System.identityHashCode(this);
       @*/
+    //-RAC@ ensures \result == theHashCode;
     public int hashCode();
 
     //  FIXME - how do we ensure the following
@@ -87,115 +82,98 @@ public class Object {
       @     ensures \result <==> this == obj;
       @ also 
       @   public normal_behavior
-      @    requires obj == null;
-      @    ensures !\result;
-        // FIXME - the following causes inconsistency when equals is used in annotations
-      @ //also public normal_behavior
-      @  //  requires obj != null;
-      @   // ensures \result == obj.equals(this);
+      @     requires obj == null;
+      @     ensures !\result;
       @*/
     public /*@ pure @*/ boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
 
     /*@ public normal_behavior
       @   requires this instanceof Cloneable;
       @   assignable \nothing;
-		// Note: clone is magic.  Object.clone ensures the following
-		// strict equality when it is called, and subclasses are
-		// expected to fulfill it by calling super.clone();
-      @   ensures \typeof(\result) == \typeof(this);
-      @   ensures \result != this;
-      @  // ensures (* \result is a clone of this *);
-      @*/
-    /*@ public normal_behavior
-      @   requires this instanceof Array;
-      @   assignable \nothing;
-      @   ensures \result != this;
+      // FIXME - be sure \elemtype is defined on non-array types
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
-      @   //ensures ((\peer \peer Object[])\result).length
-      @   //         == ((\peer \peer Object[])this).length;
-      @   //ensures (\forall int i;
-      @    //            0<=i && i < ((\peer \peer Object[])this).length;
-      @    //            ((\peer \peer Object[])\result)[i]
-      @    //             == ((\peer \peer Object[])this)[i] );
+      @
+      @ also public code normal_behavior
+      @   requires this instanceof Cloneable;
+      @   assignable \nothing;
+		// Note: clone is magic.  Object.clone ensures the following
+		// strict equality when it is called but only if subclasses are
+		// fulfill it by calling super.clone();
+      @   ensures \typeof(\result) == \typeof(this);  // This is not a strict requirement, although generally expected
+      @   ensures \result != this; // This is not a strict requirement, although generally expected
+      @
       @ also public behavior
       @   requires this instanceof Object[];
       @   ensures \result instanceof Object[];
+      @   ensures \fresh(\result); // Assuming this is true for arrays
       @   ensures ((Object[])\result).length == ((Object[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((Object[])this).length; ((Object[])this)[i] == ((Object[])\result)[i]);
       @ also public behavior
       @   requires this instanceof int[];
       @   ensures \result instanceof int[];
+      // FIXME - \fresh should imply \result != this
+      @   ensures \fresh(\result) && \result != this; // Assuming this is true for arrays
       @   ensures ((int[])\result).length == ((int[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((int[])this).length; ((int[])this)[i] == ((int[])\result)[i]);
       @ also public behavior
       @   requires this instanceof long[];
       @   ensures \result instanceof long[];
+      @   ensures \fresh(\result); // Assuming this is true for arrays
       @   ensures ((long[])\result).length == ((long[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((long[])this).length; ((long[])this)[i] == ((long[])\result)[i]);
       @ also public behavior
       @   requires this instanceof short[];
       @   ensures \result instanceof short[];
+      @   ensures \fresh(\result); // Assuming this is true for arrays
       @   ensures ((short[])\result).length == ((short[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((short[])this).length; ((short[])this)[i] == ((short[])\result)[i]);
       @ also public behavior
       @   requires this instanceof byte[];
       @   ensures \result instanceof byte[];
+      @   ensures \fresh(\result); // Assuming this is true for arrays
       @   ensures ((byte[])\result).length == ((byte[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((byte[])this).length; ((byte[])this)[i] == ((byte[])\result)[i]);
-      @*/
-    /*@
+      @ also public behavior
+      @   requires this instanceof boolean[];
+      @   ensures \result instanceof boolean[];
+      @   ensures \fresh(\result); // Assuming this is true for arrays
+      @   ensures ((boolean[])\result).length == ((boolean[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((boolean[])this).length; ((boolean[])this)[i] == ((boolean[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof char[];
+      @   ensures \result instanceof byte[];
+      @   ensures \fresh(\result); // Assuming this is true for arrays
+      @   ensures ((char[])\result).length == ((char[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((char[])this).length; ((char[])this)[i] == ((char[])\result)[i]);
+//      @ also public behavior
+//      @   requires this instanceof double[];
+//      @   ensures \result instanceof double[];
+//      @   ensures \fresh(\result); // Assuming this is true for arrays
+//      @   ensures ((double[])\result).length == ((double[])this).length;
+//      @   ensures (\forall int i; 0 <= i && i < ((double[])this).length; ((double[])this)[i] == ((double[])\result)[i]);
+//      @ also public behavior
+//      @   requires this instanceof float[];
+//      @   ensures \result instanceof float[];
+//      @   ensures \fresh(\result); // Assuming this is true for arrays
+//      @   ensures ((float[])\result).length == ((float[])this).length;
+//      @   ensures (\forall int i; 0 <= i && i < ((float[])this).length; ((float[])this)[i] == ((float[])\result)[i]);
+      @
+      @
       @ also public exceptional_behavior
       @   requires !(this instanceof Cloneable);
       @   assignable \nothing;
       @   signals_only CloneNotSupportedException;
       @*/
-// FIXME - is it always true that \result != this
-// FIXME - ifnot some derived classes will want to ensure this
-/*
-      @ also public normal_behavior
-      @   requires \elemtype(\typeof(this)) <: \type(Object);
-      @   assignable \nothing;
-      @   ensures \result != this;
-      @   ensures java.util.Arrays.equals(this,\result);
-      @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
-      @   ensures ((Object[])\result).length == ((Object[])this).length;
-      @   ensures (\forall int i; 0<=i && i < ((Object[])this).length;
-      @                ((Object[])\result)[i] == ((Object[])this)[i] );
-      @ also protected normal_behavior
-      @   requires \elemtype(\typeof(this)) == \type(int);
-      @   assignable \nothing;
-      @   ensures \result != this && \result != null;
-      @   ensures java.util.Arrays.equals(this,\result);
-      @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
-      @   ensures ((int[])\result).length == ((int[])this).length;
-      @   ensures (\forall int i; 0<=i && i < ((int[])this).length;
-      @                ((int[])\result)[i] == ((int[])this)[i] );
-      @ also protected normal_behavior
-      @   requires \elemtype(\typeof(this)) == \type(byte);
-      @   assignable \nothing;
-      @   ensures \result != this;
-      @   ensures java.util.Arrays.equals(this,\result);
-      @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
-      @   ensures ((byte[])\result).length == ((byte[])this).length;
-      @   ensures (\forall int i; 0<=i && i < ((byte[])this).length;
-      @                ((byte[])\result)[i] == ((byte[])this)[i] );
-	// FIXME - needs the above replicated for each primitive type
-*/
     protected /*@non_null*/ Object clone() throws CloneNotSupportedException;
 
     /** Use theString as the (pure) model value of toString() */
     //-RAC@ public model non_null String theString; in objectState;
 
     /*-RAC@   public normal_behavior
-      @  //   assignable privateState;
       @     ensures \result == theString;
       @     ensures (* \result is a string representation of this object *);
-      @ // FIXME also
-      @   //public normal_behavior
-      @   //  requires \typeof(this) == \type(Object);
-      @   //  assignable privateState;
-      @   //  ensures \result.equals(getClass().getName() + "@" + 
-          //                           Integer.toHexString(theHashCode));
+      @
+      @ // Ignore the case of what an Object actually produces as a String
       @*/
     public /*@ non_null pure @*/ String toString();
 
@@ -206,10 +184,10 @@ public class Object {
     //@ public behavior
     //@   requires timeout >= 0L;
           // FIXME also check thread ownership - IllegalMonitorStateException
-    //@   assignable \not_specified;
+    //@   assignable \nothing;
     //@ also public exceptional_behavior
     //@   requires timeout < 0;
-    //@   assignable \not_specified;
+    //@   assignable \nothing;
     //@   signals_only IllegalArgumentException;
     public final void wait(long timeout) throws InterruptedException;
 
@@ -232,10 +210,6 @@ public class Object {
       @   requires objectTimesFinalized == 0 ; // FIXME && \lockset.isEmpty();
       @   assignable objectTimesFinalized, objectState;
       @   ensures objectTimesFinalized == 1;
-      @ also protected exceptional_behavior
-      @   requires objectTimesFinalized == 1;
-      @   assignable \not_specified;
-      @   signals (Exception) true; // FIXME - what exception?
       @*/
     protected void finalize() throws Throwable;
 

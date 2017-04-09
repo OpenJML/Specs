@@ -37,7 +37,7 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
     
     /*@ public exceptional_behavior
       @   requires c == null || c.contains(null);
-      @ also
+    *//*-RAC@ also
       @ public normal_behavior
       @   requires c != null && !c.contains(null);
       @   ensures (\forall int i; 0 <= i & i < c.content.theSize;
@@ -46,10 +46,10 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
       @*/
     public /*@ pure @*/ ArrayDeque(/*@ nullable @*/ Collection<? extends E> c) throws NullPointerException;
     
-    //@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((Object) _get(i)));
+    //-RAC@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((Object) _get(i)));
     public Object[] toArray();
     
-    //@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((T) _get(i)));
+    //-RAC@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals((T) _get(i)));
     public <T> T[] toArray(T[] a);
     
     // all other specifications inherited from java.util.Deque

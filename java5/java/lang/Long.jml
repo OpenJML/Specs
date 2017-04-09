@@ -34,23 +34,17 @@ public /*@ pure @*/ final
 
     // A String is parseable iff it is a sequence of characters legal for
     // the radix, possibly prefixed by a - sign.
-  /*@
-    @   public normal_behavior
-    @     ensures \result == parseable( s, 10 );
-    @   model public static pure boolean parseable( String s );
-    @*/
 
-  /*@   public normal_behavior
-    @     ensures \result <==> parseable(s,r,64);
+  /*-RAC@   public normal_behavior
+    @     ensures \result <==> Number.parseable(s,r,Long.SIZE);
     @   model public static pure boolean parseable( String s, int r );
     @*/
 
-  /*@
+  /*-RAC@
     @   public normal_behavior
-    @     ensures \result <==> decodable( nm, 64 );
+    @     ensures \result <==> decodable( nm, Long.SIZE );
+    @   model public static pure boolean decodable( String nm );
     @*/
-  //@   model public static pure boolean decodable( String nm );
-
           
     public static final long MIN_VALUE;
              //@ public initially MIN_VALUE == 0x8000000000000000L;
@@ -62,7 +56,9 @@ public /*@ pure @*/ final
              //@ public initially TYPE == long.class;
 		     //@ public invariant_redundantly TYPE == long.class;
 
-    /*@ public normal_behavior
+	public static final int   SIZE = 64; // Number of bits in an Integer representation
+
+	/*-RAC@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix
       @             && radix <= Character.MAX_RADIX);
       @   ensures parseable(\result,radix);
@@ -82,7 +78,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ /*@ non_null @*/
         String toString(long i, int radix);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires i >= 0;
       @   ensures \result != null;
       @   ensures \fresh(\result);
@@ -101,7 +97,7 @@ public /*@ pure @*/ final
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toHexString(long i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires i >= 0;
       @   ensures \result != null;
       @   ensures \fresh(\result);
@@ -114,13 +110,13 @@ public /*@ pure @*/ final
       @   ensures \result != null;
       @   ensures \fresh(\result);
       @   ensures \result.length() >= 1;
-      @   ensures parseable(\result,8,65);
+      @   ensures parseable(\result,8);
       @   // FIXME ensures \result.equals(toString(i + (1<<64), 8, 65));
       @   // FIXME ensures (long)parseLong(\result,8) == i;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toOctalString(long i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires i >= 0;
       @   ensures \result != null;
       @   ensures \fresh(\result);
@@ -133,16 +129,16 @@ public /*@ pure @*/ final
       @   ensures \result != null;
       @   ensures \fresh(\result);
       @   ensures \result.length() >= 1;
-      @   ensures parseable(\result,2,65);
+      @   ensures parseable(\result,2);
       @   // FIXME ensures \result.equals(toString(i, 2));
       @   // FIXME ensures parseLong(\result,2) == i;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/
         String toBinaryString(long i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @  ensures \result != null;
-      @  ensures parseable(\result);
+      @  ensures parseable(\result, 10);
       @  ensures \result.equals(toString(i,10));
       @  ensures i == parseLong(\result, 10);
       @  ensures i == 0 ==> \result.length() == 1;
@@ -153,7 +149,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ /*@ non_null @*/ String toString(long i);
 
 // FIXME - what if radix is out of range - supposed to use 10
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires parseable(s, radix);
       @    ensures (* \result is the long of the string representation
       @               in the specified radix *);
@@ -165,7 +161,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ long parseLong(String s, int radix)
         throws NumberFormatException;
 
-    /*@    public normal_behavior
+    /*0-RAC@    public normal_behavior
       @      requires parseable(s,10);
       @      ensures \result == parseLong(s, 10);
       @ also
@@ -176,7 +172,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ long parseLong(String s)
         throws NumberFormatException;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires parseable(s, radix);
       @   ensures \fresh(\result);
       @   ensures \result.longValue() == parseLong(s,radix);
@@ -189,71 +185,71 @@ public /*@ pure @*/ final
         Long valueOf(String s, int radix)
         throws NumberFormatException;
 
-    /*@ public normal_behavior
-      @   requires parseable(s);
+    /*-RAC@ public normal_behavior
+      @   requires parseable(s, 10);
       @   ensures \fresh(\result);
       @   ensures \result.longValue() == parseLong(s,10);
       @ also
       @ public exceptional_behavior
-      @   requires !parseable(s);
+      @   requires !parseable(s, 10);
       @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ Long valueOf(String s)
         throws NumberFormatException;
 
-    /*@ public normal_behavior
-      @   requires decodable(nm);
+    /*-RAC@ public normal_behavior
+      @   requires decodable(nm, 10);
       @   ensures (* \result is a Long representation of nm *);
       @ also
       @ public exceptional_behavior
-      @   requires !decodable(nm);
+      @   requires !decodable(nm, 10);
       @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/
         Long decode(/*@non_null*/ String nm)
         throws NumberFormatException;
 
-    /*@ public normal_behavior
+  /*@ public normal_behavior
     @   ensures \result.longValue() == i;
     @*/
    public static /*@ pure @*/ /*@ non_null @*/ Long valueOf(long i);
 
-   /*@ public normal_behavior
-      @   assignable theLong;
+   /*-RAC@
+      @ public normal_behavior
       @   ensures theLong == value;
       @*/
-    public Long(long value);
+   /*@ pure */ public Long(long value);
 
-    /*@ public normal_behavior
-      @   requires parseable(s);
-      @   assignable theLong;
+    /*-RAC@ 
+      @ public normal_behavior
+      @   requires parseable(s, 10);
       @   ensures theLong == parseLong(s);
       @ also
       @ public exceptional_behavior
-      @   requires !parseable(s);
+      @   requires !parseable(s, 10);
       @   signals_only NumberFormatException;
       @*/
-    public Long(String s) throws NumberFormatException;
+    /*@ pure */ public Long(String s) throws NumberFormatException;
 
-    /*@ also
+    /*@ also // FIXME - I thought this ttruncated to max and min
       @   public normal_behavior
-      @     ensures \result == (byte) theLong;
+      @     ensures \result == (byte) longValue();
       @*/
     public byte byteValue();
 
-    /*@ also
+    /*@ also // FIXME - I thought this ttruncated to max and min
       @   public normal_behavior
-      @     ensures \result == (short) theLong;
+      @     ensures \result == (short) longValue();
       @*/
     public short shortValue();
 
-    /*@ also
+    /*@ also  // FIXME - I thought this ttruncated to max and min
       @   public normal_behavior
-      @     ensures \result == (int) theLong;
+      @     ensures \result == (int) longValue();
       @*/
     public int intValue();
 
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == theLong;
       @*/
@@ -261,31 +257,31 @@ public /*@ pure @*/ final
 
     /*@ also
       @   public normal_behavior
-      @     ensures \result == (float) theLong;
+      @     ensures \result == (float) longValue();
       @*/
     public float floatValue();
 
     /*@ also
       @   public normal_behavior
-      @     ensures \result == (double) theLong;
+      @     ensures \result == (double) longValue();
       @*/
     public double doubleValue();
 
     // specification inherited from Object
-    /*@ also public normal_behavior
-      @   ensures parseable(\result);
+    /*-RAC@ 
+      @ also public normal_behavior
+      @   ensures parseable(\result, 10);
       @   ensures Long.parseLong(\result,10) == longValue();
       @*/
     public /*@ non_null @*/ String toString();
 
     /*@ also
       @   public normal_behavior
-      @     ensures \result == (int)(this.longValue()^(this.longValue()>>>32)) 
-      @         && (* \result is a hash code for theLong *);
+      @     ensures \result == (int)(this.longValue()^(this.longValue()>>>32)) ;
       @*/
     public int hashCode();
 
-    /*@ 
+    /*-RAC@ 
       @   public normal_behavior
       @     requires i != null && ii != null;
       @     ensures \result <==> (i.theLong == ii.theLong);
@@ -294,11 +290,10 @@ public /*@ pure @*/ final
       @     requires i == null || ii == null;
       @     ensures \result <==> ( i == ii );
       @*/
-    //-@ function
-    /*@ public pure static model boolean equalsLong(Long i, Long ii);
+    /*@ public pure function static model boolean equalsLong(Long i, Long ii);
       @*/
 
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @     requires obj != null && (obj instanceof Long);
       @     ensures \result == equalsLong(this,(Long)obj);
@@ -321,7 +316,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ 
         Long getLong(String nm, long val);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires nm != null && !nm.equals("")
       @         && System.getProperty(nm) != null
       @         && decodable(System.getProperty(nm));

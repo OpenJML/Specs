@@ -26,29 +26,23 @@ package java.lang;
  * @author Gary T. Leavens
  * @author David R. Cok
  */
-//OPENJML@ immutable
+//@ immutable
 public  /*@ pure @*/ final
     class Integer extends Number implements Comparable {
 
     //@ public model int theInteger;  in objectState;
 
-  /*@
+  /*-RAC@
     @   public normal_behavior
-    @     ensures \result <==> parseable( s, 10 );
-    @   model public helper static pure boolean parseable( String s );
+    @     ensures \result <==> Number.parseable( s, r, Integer.SIZE);
+    @   model public helper static pure boolean parseable( String s, int r );
     @*/
-          
-  /*@
-    @   public normal_behavior
-    @     ensures \result <==> parseable( s, r, 32);
-    @*/
-    //@   model public helper static pure boolean parseable( String s, int r );
 
-  /*@
+  /*-RAC@
     @   public normal_behavior
-    @     ensures \result <==> decodable(nm, 32);
+    @     ensures \result <==> Number.decodable(nm, Integer.SIZE);
+    @   model public helper static pure boolean decodable( String nm );
     @*/
-  //@   model public helper static pure boolean decodable( String nm );
           
 	// FIXME: problem with undefined preconditions when using this axiom: -RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
 
@@ -61,7 +55,9 @@ public  /*@ pure @*/ final
     public static final Class<Integer> TYPE;  // 1.5 DIFFERENCE
                                //@ public initially TYPE == int.class; // 1.5 DIFFERENCE
 
-    /*@ public normal_behavior
+	public static final int   SIZE = 32; // Number of bits in an int representation
+	
+    /*-RAC@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix
       @             && radix <= Character.MAX_RADIX);
       @   ensures parseable(\result,radix);
@@ -81,7 +77,7 @@ public  /*@ pure @*/ final
     public static /*@ pure helper non_null @*/ String toString(int i,
                                                                   int radix);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result != null;
       @   ensures \result.length() >= 1;
       @ also public normal_behavior
@@ -100,7 +96,7 @@ public  /*@ pure @*/ final
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toHexString(int i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result != null;
       @   ensures \result.length() >= 1;
       @ also public normal_behavior
@@ -119,7 +115,7 @@ public  /*@ pure @*/ final
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toOctalString(int i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result != null;
       @   ensures \result.length() >= 1;
       @ also public normal_behavior
@@ -139,9 +135,9 @@ public  /*@ pure @*/ final
     public static /*@ pure @*/ /*@ non_null @*/ String toBinaryString(int i);
             
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result != null;
-      @   ensures parseable(\result);
+      @   ensures parseable(\result, 10);
       @   ensures \result.equals(toString(i, 10));
       @   ensures i == parseInt(\result, 10);
       @   ensures i == 0 ==> \result.length() == 1;
@@ -151,7 +147,8 @@ public  /*@ pure @*/ final
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toString(int i);
 
-    /*@  public normal_behavior
+    /*-RAC@
+      @  public normal_behavior
       @    requires parseable(s, radix);
       @    ensures (* \result is the int of the string representation
       @               in the specified radix *);
@@ -163,18 +160,18 @@ public  /*@ pure @*/ final
     public static /*@ pure @*/ int parseInt(String s, int radix)
         throws NumberFormatException;
                 
-    /*@    public normal_behavior
-      @      requires parseable(s);
+    /*-RAC@    public normal_behavior
+      @      requires parseable(s, 10);
       @      ensures \result == parseInt(s, 10);
       @ also
       @    public exceptional_behavior
-      @      requires !parseable(s);
+      @      requires !parseable(s, 10);
       @      signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ int parseInt(String s)
         throws NumberFormatException;
             
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires parseable(s, radix);
       @   ensures \result.intValue() == parseInt(s,radix);
       @ also
@@ -186,12 +183,12 @@ public  /*@ pure @*/ final
         Integer valueOf(String s, int radix)
         throws NumberFormatException;
     
-    /*@ public normal_behavior
-    @   requires parseable(s);
+    /*-RAC@ public normal_behavior
+    @   requires parseable(s, 10);
     @   ensures \result.intValue() == parseInt(s,10);
     @ also
     @ public exceptional_behavior
-    @   requires !parseable(s);
+    @   requires !parseable(s, 10);
     @   signals_only NumberFormatException;
     @*/
   public static /*@ pure @*/ /*@ non_null @*/ Integer valueOf(String s)
@@ -202,88 +199,85 @@ public  /*@ pure @*/ final
      @*/
     public static /*@ pure @*/ /*@ non_null @*/ Integer valueOf(int i);
 
-    /*@ public normal_behavior
-      @   assignable theInteger;
+    /*-RAC@ public normal_behavior
       @   ensures theInteger == value;
       @*/
     //@ pure
     public Integer(int value);
     
-    /*@ public normal_behavior
-      @   requires parseable(s);
-      @   assignable theInteger;
-      @   ensures theInteger == parseInt(s);
+    /*-RAC@ public normal_behavior
+      @   requires parseable(s, 10);
+      @   ensures intValue() == parseInt(s);
       @ also
       @ public exceptional_behavior
-      @   requires !parseable(s);
+      @   requires !parseable(s, 10);
       @   signals_only NumberFormatException;
       @*/
     //@ pure
     public Integer(String s) throws NumberFormatException ;
  
-    /*@ also
+    /*@ also  // FIXME - this is not correct
       @   public normal_behavior
       @     ensures \result == (byte) theInteger;
       @*/
-    //@ pure
-    public byte byteValue();
+    public /*@ pure @*/ byte byteValue();
     
-    /*@ also
+    /*@ also   // FIXME - this is not correct
       @   public normal_behavior
       @     ensures \result == (short) theInteger;
       @*/
-    public short shortValue();
+    public /*@ pure @*/ short shortValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == theInteger;
       @*/
-    public /*@ pure @*/ int intValue();
+    public /*@ pure function @*/ int intValue();
     
     /*@ also
       @   public normal_behavior
       @     ensures \result == (long) theInteger;
       @*/
-    public long longValue();
+    public /*@ pure @*/ long longValue();
     
     /*@ also
       @   public normal_behavior
       @      ensures \result == (float) theInteger;
       @*/
-    public float floatValue();
+    public /*@ pure @*/ float floatValue();
     
     /*@ also
       @   public normal_behavior
       @     ensures \result == (double) theInteger;
       @*/
-    public double doubleValue();
+    public /*@ pure @*/ double doubleValue();
     
     // specification inherited from Object
     //@ also public normal_behavior
-    //@   ensures parseable(\result);
+    //-RAC@   ensures parseable(\result, 10);
     //@   ensures Integer.parseInt(\result,10) == intValue();
     //@   ensures \result.equals(toString(intValue()));
     public /*@ non_null @*/ String toString();
             
     /*@ also
       @   public normal_behavior
-      @     ensures \result == theInteger;
+      @     ensures \result == intValue();
       @*/
     public int hashCode();
    
-    /*@ 
+    /*-RAC@ 
       @   public normal_behavior
       @     requires i != null && ii != null;
-      @     ensures \result <==> (i.theInteger == ii.theInteger);
+      @     ensures \result <==> (i.intValue() == ii.intValue());
       @   also
       @   public normal_behavior
-      @     requires i==null || ii== null;
+      @     requires i == null || ii == null;
       @     ensures \result <==> (i == ii);
-      @ pure //-@ function
+      @ pure function
       @ public model static boolean equalsInteger(Integer i, Integer ii);
       @*/
 
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @     requires obj != null && (obj instanceof Integer);
       @     ensures \result <==> equalsInteger(this,(Integer)obj);
@@ -307,7 +301,7 @@ public  /*@ pure @*/ final
     public static /*@ pure @*/ 
         Integer getInteger(String nm, int val);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires nm != null && !nm.equals("") 
       @         && System.getProperty(nm) != null
       @         && decodable(System.getProperty(nm));
@@ -324,7 +318,7 @@ public  /*@ pure @*/ final
     public static /*@ pure @*/ 
         Integer getInteger(String nm, Integer val);
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires decodable(nm);
       @   ensures (* \result is a Integer representation of nm *);
       @ also
@@ -336,7 +330,7 @@ public  /*@ pure @*/ final
         Integer decode(/*@ non_null @*/ String nm)
         throws NumberFormatException;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @ requires anotherInteger != null;
       @ {|
       @   requires theInteger == anotherInteger.intValue();

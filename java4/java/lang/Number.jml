@@ -24,7 +24,10 @@ package java.lang;
  * @version $Revision: 1388 $
  * @author Brandon Shilling
  * @author Gary T. Leavens
+ * Modified and Reviewed DRCok: 2017-04-03
  */
+ 
+//@ non_null_by_default
 public abstract class Number implements java.io.Serializable {
 
   /* FIXME - include this when we can reason about characters @
@@ -43,10 +46,12 @@ public abstract class Number implements java.io.Serializable {
     @             (\forall int i; 1 <= i && i < s.length();
     @                      Character.digit(s.charAt(i), r) != -1);
     @*/
-  /*@   public normal_behavior
-    @     requires s == null || s.equals("") ||
-    @       !( Character.MIN_RADIX <= r && r <= Character.MAX_RADIX);
-    @     ensures !\result;
+    
+  /*-RAC@ 
+    @   public normal_behavior
+    @     requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
+    @     requires bits > 0;
+    @     // String s is non-null by default
 
     // This returns true if the argument contains a character representation
     // of a valid integral number - optional initial minus sign, then a
@@ -59,11 +64,11 @@ public abstract class Number implements java.io.Serializable {
         // prefix followed by a parseable string for that radix and number
         // of bits in the final, signed result.  Any negation sign must appear
         // before the radix prefix, not after it.
-  /*@  public normal_behavior
+  /* FIXME - include when we can do character-level reasoning @
+    @  public normal_behavior
     @    requires nm == null || nm.length() == 0;
     @    ensures !\result;
-    @*/
-  /* FIXME - include when we can do character-level reasoning @
+    @  also
     @   public normal_behavior
     @    requires nm.length() > 0;
     @    {|
@@ -112,11 +117,15 @@ public abstract class Number implements java.io.Serializable {
     @      ensures \result == parseable(nm, 10, bits);
     @    |}
     @*/
-  //@   model public helper static pure boolean decodable( String nm, int bits );
+  /*-RAC@ 
+    @   public normal_behavior
+    @     requires bits > 0;
+    @     // String nm is non-null by default
+  //-RAC@   model public helper function static pure boolean decodable( String nm, int bits );
 
 
     /*@ public normal_behavior
-      @   assignable objectState;
+      @   requires true;
       @*/
     public /*@ pure @*/ Number();
 
@@ -148,11 +157,11 @@ public abstract class Number implements java.io.Serializable {
       @   ensures (* \result is an byte approximation
       @              to the value of this object *);
       @*/
-    public /*@ pure @*/ byte byteValue();
+    public abstract /*@ pure @*/ byte byteValue();
 
     /*@ public normal_behavior
       @   ensures (* \result is an short approximation
       @              to the value of this object *);
       @*/
-    public /*@ pure @*/ short shortValue();
+    public abstract /*@ pure @*/ short shortValue();
 }

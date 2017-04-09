@@ -115,8 +115,8 @@ public class ArrayList<E> extends AbstractList<E>
       @   ensures ((List)\result).containsNull == this.containsNull;
       @   ensures ((ArrayList)\result).content.theSize == this.content.theSize;
       @   //-@ ensures List.equals(((List)\result).content,this.content);
-      @   ensures ((ArrayList)\result).theHashCode == this.theHashCode;
       @*//*-RAC@ also public normal_behavior
+      @   ensures ((ArrayList)\result).theHashCode == this.theHashCode;
       @   ensures ((ArrayList)\result).theString == this.theString;
       @*/
     public /*@ pure @*/ Object clone();
