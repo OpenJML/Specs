@@ -107,7 +107,6 @@ public final class System {
 
     //@ public static model long time;
 
-    // FIXME - need to show that the value is volatile ?
     /*-RAC@
       @ public normal_behavior
       @  assignable time;
@@ -160,96 +159,97 @@ t *);
       @    signals_only ArrayIndexOutOfBoundsException;
       @ also
       */
-      /*@  public normal_behavior
-      @    // requires !(src == null || dest == null);
-      @    // requires src.getClass().isArray() && dest.getClass().isArray();
-      @    requires !(    srcPos < 0 || destPos < 0 || length < 0 );
-        {|
+    /*@  public normal_behavior
+    @    // requires !(src == null || dest == null);
+    @    // requires src.getClass().isArray() && dest.getClass().isArray();
+    @    requires !(    srcPos < 0 || destPos < 0 || length < 0 );
+      {|
 		requires (src instanceof Object[]) &&
 			     (dest instanceof Object[]) &&
 			     \elemtype(\typeof(src)) <: \elemtype(\typeof(dest)) &&
-      @                 srcPos + length <= ((Object[])src).length
-      @                && destPos + length <= ((Object[])dest).length;
-      @   {|
-      @      old Object [] sa = (Object[]) src;
-      @      old Object [] da = (Object[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
+    @                 srcPos + length <= ((Object[])src).length
+    @                && destPos + length <= ((Object[])dest).length;
+    @   {|
+    @      old Object [] sa = (Object[]) src;
+    @      old Object [] da = (Object[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @   |}
 	   also
 		requires (src instanceof int[]) &&
 			     (dest instanceof int[]) &&
-      @                 srcPos + length <= ((int[])src).length
-      @                && destPos + length <= ((int[])dest).length;
-      @   {|
-      @      old int [] sa = (int[]) src;
-      @      old int [] da = (int[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[srcPos+i] == da[destPos+i]);
-      @   |}
+    @                 srcPos + length <= ((int[])src).length
+    @                && destPos + length <= ((int[])dest).length;
+    @   {|
+    @      old int [] sa = (int[]) src;
+    @      old int [] da = (int[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                 sa[srcPos+i] == da[destPos+i]);
+    @   |}
 	   also
 		requires \typeof(src) == \type(long[]) &&
 			     \typeof(dest) == \type(long[]) &&
-      @                 srcPos + length <= ((long[])src).length
-      @                && destPos + length <= ((long[])dest).length;
-      @   {|
-      @      old long [] sa = (long[]) src;
-      @      old long [] da = (long[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
+    @                 srcPos + length <= ((long[])src).length
+    @                && destPos + length <= ((long[])dest).length;
+    @   {|
+    @      old long [] sa = (long[]) src;
+    @      old long [] da = (long[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @   |}
 	   also
 		requires (src instanceof char[]) &&
 			     (dest instanceof char[]) &&
-      @                 srcPos + length <= ((char[])src).length
-      @                && destPos + length <= ((char[])dest).length;
-      @   {|
-      @      old char [] sa = (char[]) src;
-      @      old char [] da = (char[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
+    @                 srcPos + length <= ((char[])src).length
+    @                && destPos + length <= ((char[])dest).length;
+    @   {|
+    @      old char [] sa = (char[]) src;
+    @      old char [] da = (char[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @   |}
 	   also
 		requires \typeof(src) == \type(boolean[]) &&
 			     \typeof(dest) == \type(boolean[]) &&
-      @                 srcPos + length <= ((boolean[])src).length
-      @                && destPos + length <= ((boolean[])dest).length;
-      @   {|
-      @      old boolean [] sa = (boolean[]) src;
-      @      old boolean [] da = (boolean[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[srcPos+i] == da[destPos+i]);
-      @   |}
+    @                 srcPos + length <= ((boolean[])src).length
+    @                && destPos + length <= ((boolean[])dest).length;
+    @   {|
+    @      old boolean [] sa = (boolean[]) src;
+    @      old boolean [] da = (boolean[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                 sa[srcPos+i] == da[destPos+i]);
+    @   |}
 	   also
 		requires \typeof(src) == \type(short[]) &&
 			     \typeof(dest) == \type(short[]) &&
-      @                 srcPos + length <= ((short[])src).length
-      @                && destPos + length <= ((short[])dest).length;
-      @   {|
-      @      old short [] sa = (short[]) src;
-      @      old short [] da = (short[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
+    @                 srcPos + length <= ((short[])src).length
+    @                && destPos + length <= ((short[])dest).length;
+    @   {|
+    @      old short [] sa = (short[]) src;
+    @      old short [] da = (short[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @   |}
 	   also
 		requires \typeof(src) == \type(byte[]) &&
 			     \typeof(dest) == \type(byte[]) &&
-      @                 srcPos + length <= ((byte[])src).length
-      @                && destPos + length <= ((byte[])dest).length;
-      @   {|
-      @      old byte [] sa = (byte[]) src;
-      @      old byte [] da = (byte[]) dest;
-      @      assignable da[destPos .. destPos + length - 1];
-      @      ensures (\forall int i; 0 <= i && i < length;
-      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
-      @   |}
-      @*//* @
+    @                 srcPos + length <= ((byte[])src).length
+    @                && destPos + length <= ((byte[])dest).length;
+    @   {|
+    @      old byte [] sa = (byte[]) src;
+    @      old byte [] da = (byte[]) dest;
+    @      assignable da[destPos .. destPos + length - 1];
+    @      ensures (\forall int i; 0 <= i && i < length;
+    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @   |}
+    @*//* @
+
 //	   also  // FIXME - if we enable these cases, then a real-arithmetic logic is required and solving times are very long
 //		requires \typeof(src) == \type(double[]) &&
 //			     \typeof(dest) == \type(double[]) &&
@@ -284,8 +284,10 @@ t *);
                                         int destPos,
                                         int length);
 
-    // Note: Unequal objects are not required to have unequal hashCodes
-    // There is no good, modularly provable way to express that anyway
+    //@ axiom (\forall Object x, y; identityHashCode(x) != identityHashCode(y); x != y);
+    
+    //@ public normal_behavior
+    //@  requires true;
     public /*@ pure function @*/ static native int identityHashCode(/*@nullable*/ Object x);
 
     //-RAC@ public model static non_null Properties systemProperties;
@@ -325,38 +327,28 @@ t *);
     public static void setProperties(Properties props);
 
 
-// FIXME - conflict between exceptions
     //@ public behavior
-    //@   requires key != null;
-    //-RAC@   ensures \result == getProperties().getProperty(key);
+    //@   ensures key != null && \result == getProperties().getProperty(key);
+    //@   signals_only SecurityException, NullPointerException;
     //@   signals (SecurityException) (* if access is not permitted *);
-    //@ also public exceptional_behavior
-    //@   requires key == null;
-    //@   signals_only NullPointerException;
+    //@   signals (NullPointerException) key == null;
     public /*@ pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key) throws RuntimeException;
 
 
-// FIXME - conflict between exceptions
     //@ public behavior
-    //@   requires key != null;
-    //@   ensures \result == getProperties().getProperty(key,def);
-    //@
-    //@    signals (SecurityException) (* if access is not permitted *);
-    //@ also public exceptional_behavior
-    //@   requires key == null;
-    //@   signals_only NullPointerException;
+    //@   ensures key != null && \result == getProperties().getProperty(key,def);
+    //@   signals_only SecurityException, NullPointerException;
+    //@   signals (SecurityException) (* if access is not permitted *);
+    //@   signals (NullPointerException) key == null;
     public /*@ pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key, /*@nullable*/ String def) throws RuntimeException;    
 
 
-// FIXME - conflict between exceptions
     //@ public behavior
     //@    requires key != null && value != null;
     //-RAC@    assignable systemProperties;
-    //@    signals (SecurityException) (* if access is not permitted *);
-    //@ also public exceptional_behavior
-    //@   requires key == null || value == null;
-    //@   assignable \nothing;
-    //@   signals_only NullPointerException;
+    //@   signals_only SecurityException, NullPointerException;
+    //-RAC@   signals (SecurityException) (* if access is not permitted *) && \not_modified(systemProperties);
+    //-RAC@   signals (NullPointerException) key == null || value == null && \not_modified(systemProperties);
     public static /*@nullable*/ String setProperty(/*@non_null*/ String key, /*@nullable*/ String value) throws RuntimeException;
 
 
@@ -373,6 +365,9 @@ t *);
       @*/
     public static void exit(int status);
 
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
     public static void gc();
 
     public static void runFinalization();

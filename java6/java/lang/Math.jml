@@ -52,7 +52,7 @@ public /*@ pure @*/ final class Math {
      * to the integer domain for static analysis tools that don't
      * support floating point.
      **/
-    // @+ESC axiom E > 0.0;  
+    //+ESC@ axiom E > 0.0;  
     public static final double E;
 
     /**
@@ -60,7 +60,7 @@ public /*@ pure @*/ final class Math {
      * to the integer domain for static analysis tools that don't
      * support floating point.
      **/
-    // @+ESC axiom PI > 0.0; 
+    //+ESC@ axiom PI > 0.0; 
     public static final double PI;
 
     /*@ public normal_behavior 
@@ -79,6 +79,7 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires isFinite(a);
       @   ensures (* result within 1 ulp of exact result *);
+      @   ensures \result <= 1.0 && \result >= -1.0;
       @ |}
       @*/
     public static /*@ pure @*/ double sin(double a);
@@ -93,6 +94,7 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires isFinite(a);
       @   ensures (* result within 1 ulp of exact result *);
+      @   ensures \result <= 1.0 && \result >= -1.0;
       @ |}
       @*/
     public static /*@ pure @*/ double cos(double a);
@@ -119,7 +121,7 @@ public /*@ pure @*/ final class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(a) || abs(a) > 1;
+      @   requires Double.isNaN(a) || a > 1 || a < -1;
       @   ensures Double.isNaN(\result);
       @ also
       @   requires a == 0.0;  // positive or negative zero
@@ -131,7 +133,7 @@ public /*@ pure @*/ final class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @   requires !Double.isNaN(a) && abs(a) <= 1;
+      @   requires !isFinite(a) && a <= 1 && a >= -1;
       @   ensures -PI/2 <= \result && \result <= PI/2;
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
@@ -140,10 +142,10 @@ public /*@ pure @*/ final class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(a) || abs(a) > 1;
+      @   requires Double.isNaN(a) || a > 1 || a < -1;
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !Double.isNaN(a) && abs(a) <= 1;
+      @   requires !Double.isNaN(a) && a <= 1 && a >= -1;
       @   ensures -PI/2 <= \result && \result <= PI/2;
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
@@ -282,7 +284,7 @@ public /*@ pure @*/ final class Math {
       @   ensures close(a, \result * \result * \result, 3.0E-16);
       @ |}
       @*/
-    public static /*@ pure @*/ double cbrt(double a);
+    public static /*@ pure @*/ double cbrt(double a);  // cube root
     
     /*@ public normal_behavior
       @ {|
@@ -1132,28 +1134,28 @@ public /*@ pure @*/ final class Math {
     
     // model methods to help make some of the special cases
     // easier to deal with
-    /*@ public static model pure boolean isPositiveZero(double a) {
+    /*@ public static model pure function boolean isPositiveZero(double a) {
 	      return java.lang.Double.isPositiveZero(a);
         }
 	
-        public static model pure boolean isNegativeZero(double a) {
+        public static model pure function boolean isNegativeZero(double a) {
 	      return java.lang.Double.isNegativeZero(a);
         }
     
-        public static model pure boolean isPositiveZero(float a) {
+        public static model pure function boolean isPositiveZero(float a) {
 	      return java.lang.Float.isPositiveZero(a);
         }
 	
-        public static model pure boolean isNegativeZero(float a) {
+        public static model pure function boolean isNegativeZero(float a) {
 	      return java.lang.Float.isNegativeZero(a);
         }
     
-        public static model pure boolean isFinite(double a) {
+        public static model pure function boolean isFinite(double a) {
           return Double.NEGATIVE_INFINITY < a && 
                  a < Double.POSITIVE_INFINITY;
         }
 
-        public static model pure boolean isFiniteOdd(double a) {
+        public static model pure function boolean isFiniteOdd(double a) {
           if ((a - 2.0 * floor(a / 2.0)) == 1.0 && isFinite(a)) {
             return true;
           } else {
@@ -1161,7 +1163,7 @@ public /*@ pure @*/ final class Math {
           }
         }
      
-       public static model pure boolean isFiniteEven(double a) {
+       public static model pure function boolean isFiniteEven(double a) {
           if (IEEEremainder(a, 2.0) == 0.0 && isFinite(a)) {
             return true;
           } else {
@@ -1169,7 +1171,7 @@ public /*@ pure @*/ final class Math {
           }
         }
 
-       public static model pure boolean close(double a, double b,
+       public static model pure function boolean close(double a, double b,
                                               double eps) {
          return abs(a - b) <= max(abs(a), abs(b)) * eps;
        }
