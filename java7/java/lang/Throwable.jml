@@ -54,6 +54,17 @@ public class Throwable extends Object implements java.io.Serializable
         public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
+      @   ensures \result == (_cause == null && _causeSet == false);
+      @
+        public pure model boolean standardThrowableUnspecifiedMessage();
+
+      @ public normal_behavior
+      @   requires c != this;
+      @   ensures \result == (_cause == c && _causeSet == true);
+      @
+        public pure model boolean standardThrowableUnspecifiedMessage(nullable Throwable c);
+
+      @ public normal_behavior
       @   ensures \result == (_message == s && _cause == null && _causeSet == false);
       @
         public pure helper model boolean standardThrowable(non_null String s);

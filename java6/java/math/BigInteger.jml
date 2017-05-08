@@ -30,6 +30,7 @@ import java.util.Random;
  * @author Gary T. Leavens
  */
 //OPENJML@ immutable
+//@ non_null_by_default
 public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     /*@
@@ -43,29 +44,31 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 	}
     @*/
 
-    //--- public model \bigint value; --
-    //@ public model int sign;
-    //@ public represents sign = signum();
+    //-RAC@ public model \bigint value; in objectState;
+    //-RAC@ public model int sign;
+    //-RAC@ public represents sign = signum();
 
 
     /*@ public normal_behavior
       @     requires val != null;
       @     requires val.length != 0;
+      @     ensures (* value and sign are what? *);
       @  also public exceptional_behavior
       @     requires val != null;
       @     requires val.length == 0;
-      @     //-@ signals_only java.lang.NumberFormatException;
+      @     signals_only java.lang.NumberFormatException;
       @  also public exceptional_behavior
       @     requires val == null;
-      @     //-@ signals_only java.lang.NullPointerException;
+      @     signals_only java.lang.NullPointerException;
       @*/
     //@ pure
-    public BigInteger(/*@ non_null @*/ byte[] val);
+    public BigInteger(/*@ nullable @*/ byte[] val);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    requires magnitude != null;
       @    requires signum == 0 || signum == 1 || signum == -1;
       @    requires signum == 0 <==> convert(magnitude).equals(ZERO);
+      @    ensures (* value and sign are what? *);
       @    ensures sign == signum;
       @*/
     //@ pure
@@ -99,11 +102,11 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @ also
       @   public exceptional_behavior
       @     requires val.equals("");
-      @     //-@ signals_only java.lang.NumberFormatException;
+      @     signals_only java.lang.NumberFormatException;
       @ also
       @   public exceptional_behavior
       @     requires val == null;
-      @     //-@ signals_only java.lang.NullPointerException;
+      @     signals_only java.lang.NullPointerException;
       @*/
     //@ pure
     public BigInteger(String val);
@@ -127,35 +130,47 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //Static Factory Methods
 
-    public static /*@ pure helper @*/ BigInteger valueOf(long val);
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result.value == val;
+    public static /*@ pure function @*/ BigInteger valueOf(long val);
 
     // int signum;   package-level field removed from specification (dmz, 2009-11-17)
     // int[] mag;    package-level field removed from specification (dmz, 2009-11-17)
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
+    
+    //@ axiom ZERO.value == 0;
+    //@ axiom ONE.value == 1;
 
-    //@ public invariant ZERO != null && ZERO.longValue() == 0L;
-    //@ public invariant ZERO.equals(ZERO);
-    //@ public constraint ZERO == \old(ZERO);
-    //@ public invariant ONE != null && ONE.longValue() == 1L;
-    //@ public invariant ONE.equals(ONE);
-    //@ public invariant !ZERO.equals(ONE);
-    //@ public constraint ONE == \old(ONE);
+    // @ public invariant ZERO != null && ZERO.longValue() == 0L;
+    // @ public invariant ZERO.equals(ZERO);
+    // @ public constraint ZERO == \old(ZERO);
+    // @ public invariant ONE != null && ONE.longValue() == 1L;
+    // @ public invariant ONE.equals(ONE);
+    // @ public invariant !ZERO.equals(ONE);
+    // @ public constraint ONE == \old(ONE);
 
     // Arithmetic Operations
 
-    //@ requires val != null;
+    //@ public normal_behavior
+    //-RAC@ ensures \result.value == this.value + val.value;
+    //@ pure
     public BigInteger add(BigInteger val);
 
-    //@ requires val != null;
-    //@ ensures equals(\result.add(val));
+    //@ public normal_behavior
+    //-RAC@ ensures \result.value == this.value - val.value;
+    //@ pure
     public BigInteger subtract(BigInteger val);
 
-    //@ requires val != null;
+    //@ public normal_behavior
+    //-RAC@ ensures \result.value == this.value * val.value;
+    //@ pure
     public BigInteger multiply(BigInteger val);
 
-    //@ requires val != null;
-    //@ ensures equals(\result.multiply(val).add(remainder(val)));
+    //@ public normal_behavior
+    //-RAC@ requires val.value != 0;
+    //-RAC@ ensures \result.value == this.value / val.value;
+    //@ pure
     public BigInteger divide(BigInteger val);
 
     //@ ensures \result[0].equals(divide(val));
@@ -176,67 +191,127 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ ensures \result.signum() >= 0 && (sign==0 ==> \result.signum() == 0);
     public BigInteger abs();
 
-    //@ assignable \nothing;
-    //@ ensures \result.signum() == - sign;
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result.value == -value;
+    //@ pure function
     public BigInteger negate();
 
-    //@ ensures \result == sign;
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures value == 0 ? 0 : value > 0 ? 1 : -1;
+    //@ pure function
     public int signum();
 
     // Modular Arithmetic Operations
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger mod(BigInteger m);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger modPow(BigInteger exponent, BigInteger m);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     static int[] bnExpModThreshTable;
 
     static int mulAdd(int[] out, int[] in, int offset, int len, int k);
 
     static int addOne(int[] a, int offset, int mlen, int carry);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger modInverse(BigInteger m);
 
     // Shift Operations
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger shiftLeft(int n);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger shiftRight(int n);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     int[] javaIncrement(int[] val);
 
     // Bitwise Operations
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger and(BigInteger val);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger or(BigInteger val);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger xor(BigInteger val);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger not();
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger andNot(BigInteger val);
 
     // Single Bit Operations
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public boolean testBit(int n);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger setBit(int n);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger clearBit(int n);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public BigInteger flipBit(int n);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public int getLowestSetBit();
 
     // Miscellaneous Bit Operations
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public int bitLength();
 
     // static int bitLen(int w);   package-level method removed from specification (dmz, 2009-11-17)
 
     // static final byte[] trailingZeroTable;   package-level array removed from specification (dmz, 2009-11-17)
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public int bitCount();
 
     // static int bitCnt(int val);   package-level method removed from specification (dmz, 2009-11-17)
@@ -245,25 +320,40 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Primality Testing
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public boolean isProbablePrime(int certainty);
 
     // Comparison Operations
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result == (value == val.value ? 0 : value < val.value ? -1: 1);
+    //-RAC@ pure
     public int compareTo(BigInteger val);
 
     /*@ also public normal_behavior
       @   requires x != null && x instanceof BigInteger;
       @   assignable \nothing;
-      @   ensures \result == x.equals(this);
+      @   ensures \result == (value == ((BigInteger)x).value);
       @*/
     public /*@ pure helper @*/ boolean equals(Object x);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures this.value < val.value ? \result.value == this.value : \result.value == val.value;
+    //@ pure function
     public BigInteger min(BigInteger val);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures this.value > val.value ? \result.value == this.value : \result.value == val.value;
+    //@ pure function
     public BigInteger max(BigInteger val);
 
     // Hash Function
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true; // FIXME - add detail
+    //@ pure function
     public int hashCode();
 
     //@  ensures \result != null;
@@ -276,28 +366,27 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public String toString();
 
     //@ ensures convert(\result).equals(this);
-    //@ ensures_redundantly this.equals(\old(this));
     //@ pure helper
     public byte[] toByteArray();
 
-    //@ also
-    //@ ensures_redundantly this.equals(\old(this));
-    //@ pure helper
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result == (int)value; // FIXME - what about overflow?
+    //@ pure function
     public int intValue();
 
-    //@ also
-    //@ ensures_redundantly this.equals(\old(this));
-    //@ pure helper
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result == (long)value; // FIXME - what about overflow?
+    //@ pure function
     public long longValue();
 
-    //@ also
-    //@ ensures_redundantly this.equals(\old(this));
-    //@ pure helper
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result == (float)value; // FIXME - what about overflow?
+    //@ pure function
     public float floatValue();
 
-    //@ also
-    //@ ensures_redundantly this.equals(\old(this));
-    //@ pure helper
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result == (double)value; // FIXME - what about overflow?
+    //@ pure function
     public double doubleValue();
 
 }
