@@ -1,47 +1,41 @@
 package java.util.concurrent.atomic;
 
-public class AtomicLong extends Number implements java.io.Serializable {
-//  private static final long serialVersionUID;
-//  private static final sun.misc.Unsafe unsafe;
-//  private static final long valueOffset;
-//  static final boolean VM_SUPPORTS_LONG_CAS;
-  /*@ spec_public */ private volatile long value;
-  
-  //@ private normal_behavior
-  //@   ensures true;
-  //@ pure
-  private static native boolean VMSupportsCS8();
+public class AtomicInteger extends java.lang.Number implements java.io.Serializable {
+  //private static final long serialVersionUID;
+  //private static final sun.misc.Unsafe unsafe;
+  //private static final long valueOffset;
+  /*@ spec_public */ private volatile int value;
 
   //@ public normal_behavior
   //@   ensures value == v;
   //@ pure
-  public AtomicLong(long v);
+  public AtomicInteger(int v);
 
   //@ public normal_behavior
   //@   ensures value == 0;
   //@ pure
-  public AtomicLong();
-  
+  public AtomicInteger();
+
   //-RAC@ public normal_behavior
   //-RAC@   ensures \result == value;
   //@ pure
-  public final long get();
+  public final int get();
 
   //@ public normal_behavior
   //@   assignable value;
   //@   ensures get() == v;
-  public final void set(long v);
+  public final void set(int v);
   
   //@ public normal_behavior
   //@   ensures true; // FIXME - when is this set?
-  public final void lazySet(long v);
+  public final void lazySet(int v);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == v;
   //-RAC@   ensures \result == \old(value);
-  public final long getAndSet(long v);
-  
+  public final int getAndSet(int v);
+
   //-RAC@ public normal_behavior
   //-RAC@   requires value == v;
   //-RAC@   assignable value;
@@ -51,7 +45,7 @@ public class AtomicLong extends Number implements java.io.Serializable {
   //-RAC@   requires value != v;
   //-RAC@   assignable \nothing;
   //-RAC@   ensures !\result;
-  public final boolean compareAndSet(long v, long vv);
+  public final boolean compareAndSet(int v, int vv);
 
   //-RAC@ public normal_behavior
   //-RAC@   requires value == v;
@@ -63,67 +57,68 @@ public class AtomicLong extends Number implements java.io.Serializable {
   //-RAC@   assignable \nothing;
   //-RAC@   ensures !\result;
   // FIXME - documentation is weak on this method - not sure of its behavior
-  public final boolean weakCompareAndSet(long v, long vv);
+  public final boolean weakCompareAndSet(int v, int vv);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == \old(value) + 1;
   //-RAC@   ensures \result == \old(value);
-  public final long getAndIncrement();
+  public final int getAndIncrement();
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == \old(value) - 1;
   //-RAC@   ensures \result == \old(value);
-  public final long getAndDecrement();
+  public final int getAndDecrement();
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == v;
-  //-RAC@   ensures \result == \old(value);
-  public final long getAndAdd(long v);
+  //-RAC@   ensures \result == \old(value) + v;
+  public final int getAndAdd(int v);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == 1 + \old(value);
   //-RAC@   ensures \result == value;
-  public final long incrementAndGet();
+  public final int incrementAndGet();
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == -1 + \old(value);
   //-RAC@   ensures \result == value;
-  public final long decrementAndGet();
+  public final int decrementAndGet();
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures value == v + \old(value);
   //-RAC@   ensures \result == value;
-  public final long addAndGet(long v);
-  
+  public final int addAndGet(int v);
+
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
-  //-RAC@   ensures true;
-  public final long getAndUpdate(java.util.function.LongUnaryOperator op);
+  //-RAC@   ensures value == v + \old(value);
+  //-RAC@   ensures \result == value;
+  public final int getAndUpdate(java.util.function.IntUnaryOperator op);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures \result == value;
   // FIXME - do something with the op
-  public final long updateAndGet(java.util.function.LongUnaryOperator op);
+  public final int updateAndGet(java.util.function.IntUnaryOperator op);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures \result == \old(value);
   // FIXME - do something with the op
-  public final long getAndAccumulate(long v, java.util.function.LongBinaryOperator op);
+  public final int getAndAccumulate(int v, java.util.function.IntBinaryOperator op);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   // FIXME @   ensures value == v;
   //-RAC@   ensures \result == \old(value);
   // FIXME - do something with the op
-  public final long accumulateAndGet(long v, java.util.function.LongBinaryOperator op);
+  public final int accumulateAndGet(int v, java.util.function.IntBinaryOperator op);
 
   //@ public normal_behavior
   //@   assignable \nothing;
@@ -131,12 +126,12 @@ public class AtomicLong extends Number implements java.io.Serializable {
   public java.lang.String toString();
 
   //@ public normal_behavior
-  //@   ensures \result == (int)get();
+  //@   ensures \result == get();
   //@ pure
   public int intValue();
 
   //@ public normal_behavior
-  //@   ensures \result == get();
+  //@   ensures \result == (long)get();
   //@ pure
   public long longValue();
 
