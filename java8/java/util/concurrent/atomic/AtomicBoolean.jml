@@ -5,9 +5,10 @@ public class AtomicBoolean implements java.io.Serializable {
   //private static final sun.misc.Unsafe unsafe;
   //private static final long valueOffset;
   /*@ spec_public */ private volatile int value;
+  // FIXME make a public model boolean represented by the private int
 
   //@ public normal_behavior
-  //@   ensures value == v;
+  //@   ensures value == (v ? 1:0);
   //@ pure
   public AtomicBoolean(boolean v);
 

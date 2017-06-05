@@ -97,8 +97,9 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
-  //-RAC@   ensures value == v + \old(value);
+  //-RAC@   ensures (* value is the result of op *);
   //-RAC@   ensures \result == value;
+  // FIXME - do something with the op
   public final int getAndUpdate(java.util.function.IntUnaryOperator op);
 
   //-RAC@ public normal_behavior
