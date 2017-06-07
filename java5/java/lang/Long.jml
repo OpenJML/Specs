@@ -53,8 +53,7 @@ public /*@ pure @*/ final
              //@ public initially MAX_VALUE == 0x7fffffffffffffffL;
 
     public static final Class<Long> TYPE;
-             //@ public initially TYPE == long.class;
-		     //@ public invariant_redundantly TYPE == long.class;
+             //@ public static invariant TYPE == long.class;
 
 	public static final int   SIZE = 64; // Number of bits in an Integer representation
 

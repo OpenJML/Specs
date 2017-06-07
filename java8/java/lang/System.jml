@@ -381,4 +381,8 @@ t *);
 
     public /*@ pure @*/ static native String mapLibraryName(/*@non_null*/ String libname);
 
+    //@ public normal_behavior // FIXME - need to model that time increases and changes between calls
+    //@   requires true;
+    //@   assignable \nothing;
+    public static long nanoTime();
 }

@@ -1,0 +1,63 @@
+package java.util.concurrent;
+// SInce 1.5
+
+//@ immutable
+public enum TimeUnit { // FIXME - change to enum?
+	 NANOSECONDS,
+	 MICROSECONDS,
+	 MILLISECONDS,
+	 SECONDS,
+	 MINUTES,
+	 HOURS,
+	 DAYS;
+
+//  static long x(long a, long b, long c);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long convert(long t, TimeUnit u);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toNanos(long t);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toMicros(long t);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toMillis(long t);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toSeconds(long t);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toMinutes(long t);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toHours(long t);
+  
+  //@ public normal_behavior
+  //@  assignable \nothing;
+  //@ function
+  public long toDays(long t);
+
+//  abstract int excessNanos(long t1, long t2);
+ // public void timedWait(java.lang.Object, long) throws java.lang.InterruptedException;
+//  public void timedJoin(java.lang.Thread, long) throws java.lang.InterruptedException;
+//  public void sleep(long) throws java.lang.InterruptedException;
+// FIXME  TimeUnit(java.lang.String, int, TimeUnit$1);
+
+//  static {};
+}
