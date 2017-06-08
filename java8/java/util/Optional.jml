@@ -56,6 +56,14 @@ public final class Optional<T> {
   public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> function);
   public T orElse(T t);
   public T orElseGet(java.util.function.Supplier<? extends T> supplier);
+  
+  //@ public normal_behavior
+  //@   requires isPresent();
+  //@   assignable \nothing;
+  //@   ensures \result == value;
+  //@ also public exceptional_behavior
+  //@   requires !isPresent();
+  //@   // FIXME - assignable depends on the lambda expression
   public <X extends java.lang.Throwable> T orElseThrow(java.util.function.Supplier<? extends X> supplier) throws X;
   public boolean equals(java.lang.Object o);
   public int hashCode();
