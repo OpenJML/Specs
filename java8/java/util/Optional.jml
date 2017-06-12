@@ -1,0 +1,71 @@
+package java.util;
+
+//@ non_null_by_default immutable
+public final class Optional<T> {
+  //@ spec_public
+  private static final Optional<?> EMPTY;
+  //@ public invariant EMPTY.value == null;
+  
+  //@ spec_public nullable
+  private final T value;
+  
+  //@ private normal_behavior
+  //@   ensures this.value == null;
+  //@ pure
+  private Optional();
+
+  //@ public normal_behavior
+  //@   ensures \result.value == null;
+  //@ pure function
+  public static <T> Optional<T> empty();
+
+  //@ private normal_behavior
+  //@   ensures this.value == t;
+  //@ pure
+  private Optional(T t);  // FIXME: throws NullPointerException if null
+
+  //@ public normal_behavior
+  //@   ensures \result.value == t;   // FIXME - throws NullPointerException if null
+  //@ pure function
+  public static <T> Optional<T> of(T t); // non-null required
+
+  //@ public normal_behavior
+  //@   ensures \result.value == t;
+  //@ pure function
+  public static <T> Optional<T> ofNullable(/*@ nullable */ T t);
+  
+  //@ public normal_behavior
+  //@   requires value != null;
+  //@   ensures \result == value;
+  //@ also public exceptional_behavior
+  //@   requires value == null;
+  //@   signals_only NoSuchElementException;
+  //@ pure function
+  public T get();
+  
+  //@ public normal_behavior
+  //@   ensures \result == (value != null);
+  //@ pure function
+  public boolean isPresent();
+  
+  
+  // FIXME - the rst still need specs
+  public void ifPresent(java.util.function.Consumer<? super T> consumer);
+  public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
+  public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> function);
+  public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> function);
+  public T orElse(T t);
+  public T orElseGet(java.util.function.Supplier<? extends T> supplier);
+  
+  //@ public normal_behavior
+  //@   requires isPresent();
+  //@   assignable \nothing;
+  //@   ensures \result == value;
+  //@ also public exceptional_behavior
+  //@   requires !isPresent();
+  //@   // FIXME - assignable depends on the lambda expression
+  public <X extends java.lang.Throwable> T orElseThrow(java.util.function.Supplier<? extends X> supplier) throws X;
+  public boolean equals(java.lang.Object o);
+  public int hashCode();
+  public java.lang.String toString();
+}
