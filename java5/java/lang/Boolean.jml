@@ -27,7 +27,8 @@ package java.lang;
  * @author Gary T. Leavens
  * @author David R. Cok
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
+//@ non_null_by_default
 public final /*@ pure @*/ class Boolean implements java.io.Serializable, Comparable<Boolean> {
 
     //@ non_null
@@ -50,11 +51,11 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
 
     /*@ //public normal_behavior  // FIXME - the constants in these expressions do not translate well.
       @ //  ensures \result <==> ("true".equalsIgnoreCase(s));
-      @ public static pure helper model boolean decode( nullable String s);
+      @ public static pure helper function model boolean decode( nullable String s);
       @
-      @ //public normal_behavior
-      @ //  ensures \result == ( b ? "true" : "false" );
-      @ public static pure helper model String canonicalString(boolean b);
+      @ public normal_behavior
+      @   ensures \result == ( b ? "true" : "false" );
+      @ public static pure helper function model String canonicalString(boolean b);
       @*/
 
     //@ axiom decode(canonicalString(true)) == true;
@@ -68,46 +69,48 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ axiom !decode("False");
     //@ axiom !decode("FALSE");
     //@ axiom !decode("");
+    //@ axiom !decode(null);
+    //@ axiom (\forall String s,ss; s.equals(ss); decode(s) == decode(ss));
 
     /*@ public normal_behavior
-      @   ensures theBoolean <==> decode(s);
+      @   ensures theBoolean == decode(s);
       @*/
-    public /*@ pure @*/ Boolean(String s);
+    public /*@ pure @*/ Boolean(/*@ nullable */ String s);
     
     /*@ public normal_behavior
       @   ensures \result == theBoolean;
       @*/
-    public /*@ pure helper @*/ boolean booleanValue();
+    public /*@ pure helper function @*/ boolean booleanValue();
 
     // NOTE: The result is not fresh
     /*@ public normal_behavior
       @   ensures \result != null && \result.booleanValue() == b;
       @   ensures \result == ( b ? TRUE : FALSE );
       @*/
-    public static /*@ pure helper @*/ Boolean valueOf(boolean b);
+    public static /*@ pure helper function @*/ Boolean valueOf(boolean b);
 
 
     /*@ public normal_behavior
       @   ensures \result == ( decode(s) ? TRUE : FALSE );
       @*/
-    public static /*@ pure helper @*/ Boolean valueOf(String s);
+    public static /*@ pure helper function @*/ Boolean valueOf(/*@ nullable */ String s);
 
-    // NOTE: The results are interned (not fresh) Strings.
+    // NOTE: The results are interned (not fresh) Strings.  // FIXME - is this actually certain to be the case
     /*@ public normal_behavior
       @   ensures decode(\result) == b;
       @   ensures \result == (canonicalString(b));
       @   ensures String.isInterned(\result);
       @*/
-    public static /*@ pure @*/ String toString(boolean b);
+    public static /*@ pure helper function @*/ String toString(boolean b);
 
     /*@ also
       @ public normal_behavior
       @   ensures decode(\result) == theBoolean;
       @   ensures \result == canonicalString(theBoolean);
       @*/
+    //@ pure helper function
     public String toString();
 
-    // TODO - do we need this
     //+ESC@ public static model int TRUE_HC;
     //+ESC@ public static model int FALSE_HC;
     //+ESC@ axiom TRUE_HC != FALSE_HC;
@@ -115,26 +118,31 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     // inherited specification
     //+ESC@ also public normal_behavior
     //+ESC@   ensures \result == ( theBoolean ? TRUE_HC : FALSE_HC);
+    //@ pure helper function
     public int hashCode();
-
-    /*@ 
-      @ public normal_behavior
-      @   ensures \result <==> ( t == obj || (t!= null && obj != null 
-                         && (t.theBoolean == obj.theBoolean)));
-        //-@ function
-      @ public pure helper static model boolean equalsBoolean(Boolean t, Boolean obj);
-      @*/
 
     /*@ also
       @ public normal_behavior
       @   ensures \result <==> ( obj != null && (obj instanceof Boolean)
-                         && equalsBoolean(this, (Boolean)obj));
+                         && booleanValue() == ((Boolean)obj).booleanValue());
       @*/
-    public /*@ pure @*/ boolean equals(Object obj);
+    public /*@ pure @*/ boolean equals(/*@ nullable */ Object obj);
+    
+    //@ public normal_behavior
+    //@   ensures (this.booleanValue() == b.booleanValue()) ==> \result == 0;
+    //@   ensures (this.booleanValue() && !b.booleanValue()) ==> \result > 0;
+    //@   ensures (!this.booleanValue() && b.booleanValue()) ==> \result < 0;
+    public int compareTo(Boolean b); // null argument produces exception
+    
+    //@ public normal_behavior
+    //@   ensures (b == bb) ==> \result == 0;
+    //@   ensures (b && !bb) ==> \result > 0;
+    //@   ensures (!b && bb) ==> \result < 0;
+    public static int compare(boolean b, boolean bb);
     
     /*@ public normal_behavior
       @   ensures \result <==> (name != null && 
                                 decode(System.getProperty(name)));
       @*/
-    public static /*@ pure @*/ boolean getBoolean(String name);
+    public static /*@ pure helper function @*/ boolean getBoolean(/*@ nullable */ String name); 
 }
