@@ -1,0 +1,18 @@
+package java.lang;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public interface Iterable<T> {
+
+	public Iterator<T> iterator();
+	
+	/*@ public model_program {
+	  @   for (T t: this) action.accept(t);
+	  @ }
+	  @*/
+	default void forEach(Consumer<? super T> action);
+	
+	default Spliterator<T> spliterator();
+
+}
