@@ -27,14 +27,15 @@ package java.lang;
  * @author David R. Cok
  * @author Mikolas Janota
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
+//@ non_null_by_default
 public /*@ pure @*/ final 
     class Character extends Object implements java.io.Serializable, Comparable
 {
 
     //@ public model char ch_;
-    //+@ public constraint ch_ == \old(ch_);
-    //+@ public represents ch_ = charValue();
+    //@ public constraint ch_ == \old(ch_);
+    //@ public represents ch_ = charValue();
 
     public static final int MIN_RADIX; //@ public initially MIN_RADIX == 2;
     public static final int MAX_RADIX;

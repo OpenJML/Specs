@@ -361,5 +361,10 @@ public  /*@ pure @*/ final
 //      @   signals_only NullPointerException;
 //      @*/
 //    public int compareTo(Object o);
+    
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure function
+    public static int bitCount(int k);
 
 }

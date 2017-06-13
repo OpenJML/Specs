@@ -1,0 +1,30 @@
+package java.security;
+
+//@ non_null_by_default
+public abstract class MessageDigest extends MessageDigestSpi {
+  private static final sun.security.util.Debug pdebug;
+  private static final boolean skipDebug;
+  private java.lang.String algorithm;
+  private static final int INITIAL;
+  private static final int IN_PROGRESS;
+  private int state;
+  private Provider provider;
+  protected MessageDigest(java.lang.String s);
+  public static MessageDigest getInstance(java.lang.String s) throws NoSuchAlgorithmException;
+  public static MessageDigest getInstance(java.lang.String s, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
+  public static MessageDigest getInstance(java.lang.String s, Provider p) throws NoSuchAlgorithmException;
+  public final Provider getProvider();
+  public void update(byte b);
+  public void update(byte[] bb, int offset, int length);
+  public void update(byte[] bb);
+  public final void update(java.nio.ByteBuffer bb);
+  public byte[] digest();
+  public int digest(byte[] bb, int offest, int length) throws DigestException;
+  public byte[] digest(byte[] bb);
+  public java.lang.String toString();
+  public static boolean isEqual(byte[] bb, byte[] bbb);
+  public void reset();
+  public final java.lang.String getAlgorithm();
+  public final int getDigestLength();
+  public java.lang.Object clone() throws java.lang.CloneNotSupportedException;
+}
