@@ -1,0 +1,17 @@
+package java.util.function;
+
+//@ non_null_by_default
+@FunctionalInterface
+public interface Function<T,R> {
+
+	//@ nullable
+	  public abstract R apply(T);
+	  
+	  default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T>);
+
+	  default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V>);
+
+	  public static <T> java.util.function.Function<T, T> identity();
+
+	  default 
+}

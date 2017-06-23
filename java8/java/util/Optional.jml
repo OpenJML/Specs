@@ -52,6 +52,10 @@ public final class Optional<T> {
   // FIXME - the rst still need specs
   public void ifPresent(java.util.function.Consumer<? super T> consumer);
   public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
+  
+  //@ public normal_behavior
+  //@   ensures value != null ==> \result.value == function.apply(value);
+  //@   ensures value == null ==> \result.value == null;
   public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> function);
   public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> function);
   public T orElse(T t);
