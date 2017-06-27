@@ -47,13 +47,13 @@ public /*@ pure @*/ final
     @*/
           
     public static final long MIN_VALUE;
-             //@ public initially MIN_VALUE == 0x8000000000000000L;
+             //@ public static initially MIN_VALUE == 0x8000000000000000L;
 
     public static final long MAX_VALUE;
-             //@ public initially MAX_VALUE == 0x7fffffffffffffffL;
+             //@ public static initially MAX_VALUE == 0x7fffffffffffffffL;
 
     public static final Class<Long> TYPE;
-             //@ public static invariant TYPE == long.class;
+             //@ public static initially TYPE == long.class;
 
 	public static final int   SIZE = 64; // Number of bits in an Integer representation
 
