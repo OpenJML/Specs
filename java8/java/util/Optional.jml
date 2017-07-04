@@ -61,13 +61,9 @@ public final class Optional<T> {
   public T orElse(T t);
   public T orElseGet(java.util.function.Supplier<? extends T> supplier);
   
-  //@ public normal_behavior
-  //@   requires isPresent();
-  //@   assignable \nothing;
-  //@   ensures \result == value;
-  //@ also public exceptional_behavior
-  //@   requires !isPresent();
-  //@   // FIXME - assignable depends on the lambda expression
+  //@ public model_program {
+  //@   if (isPresent()) return value; else throw supplier.get();
+  //@ }
   public <X extends java.lang.Throwable> T orElseThrow(java.util.function.Supplier<? extends X> supplier) throws X;
   public boolean equals(java.lang.Object o);
   public int hashCode();

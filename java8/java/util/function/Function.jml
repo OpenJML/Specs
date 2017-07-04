@@ -7,9 +7,9 @@ public interface Function<T,R> {
 	//@ nullable
 	  public abstract R apply(T t);
 	  
-//	  default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
-//
-//	  default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
+	  default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
+
+	  default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
 
 	  /*@ public static immutable model interface Identity<T> extends Function<T,T> {
 	    @   public model_program {
