@@ -4,7 +4,7 @@ package java.util;
 public final class Optional<T> {
   //@ spec_public
   private static final Optional<?> EMPTY;
-  //@ public invariant EMPTY.value == null;
+  //@ public static invariant EMPTY.value == null;
   
   //@ spec_public nullable
   private final T value;
@@ -49,21 +49,37 @@ public final class Optional<T> {
   public boolean isPresent();
   
   
-  // FIXME - the rst still need specs
+  // FIXME - the rest still need specs
   public void ifPresent(java.util.function.Consumer<? super T> consumer);
   public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
   
-  //@ public normal_behavior
-  //@   ensures value != null ==> \result.value == function.apply(value);
-  //@   ensures value == null ==> \result.value == null;
+  /*@ public model_program 
+    @   { return Optional.ofNullable( value == null ? null : null ); }
+    @*/
+  // @   ensures value != null ==> \result.value == function.apply(value);
+  // @   ensures value == null ==> \result.value == null;
+  //@ pure
   public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> function);
+  
+  
   public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> function);
+
+  //@ public normal_behavior
+  //@   ensures \result == (value != null ? value : t);
+  //@ pure
   public T orElse(T t);
+
+  /*@ public model_program
+    @   { return (value != null ? value : supplier.get() ); }
+    @*/
+  //@ pure
   public T orElseGet(java.util.function.Supplier<? extends T> supplier);
   
-  //@ public model_program {
-  //@   if (isPresent()) return value; else throw supplier.get();
-  //@ }
+  /*@ public model_program {
+    @   if (value!=null) return value; else throw supplier.get();
+    @ }
+    @*/
+  //@ pure  // FIXME - really only pure if the lambda expression is pure
   public <X extends java.lang.Throwable> T orElseThrow(java.util.function.Supplier<? extends X> supplier) throws X;
   public boolean equals(java.lang.Object o);
   public int hashCode();
