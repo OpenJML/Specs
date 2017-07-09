@@ -52,7 +52,7 @@ public /*@ pure @*/ final class Math {
      * to the integer domain for static analysis tools that don't
      * support floating point.
      **/
-    //+ESC@ axiom E > 0.0;  
+    //+FLOAT@ axiom E > 0.0;  
     public static final double E;
 
     /**
@@ -60,7 +60,7 @@ public /*@ pure @*/ final class Math {
      * to the integer domain for static analysis tools that don't
      * support floating point.
      **/
-    //+ESC@ axiom PI > 0.0; 
+    //+FLOAT@ axiom PI > 0.0; 
     public static final double PI;
 
     /*@ public normal_behavior 
