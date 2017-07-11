@@ -46,16 +46,17 @@ public  /*@ pure @*/ final
           
 	// FIXME: problem with undefined preconditions when using this axiom: -RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
 
-    public static final int   MIN_VALUE;
+    public static final int   MIN_VALUE = 0x80000000;
                                //@ public initially MIN_VALUE == 0x80000000;
 
-    public static final int   MAX_VALUE;
+    public static final int   MAX_VALUE = 0x7FFFFFFF;
                                //@ public initially MAX_VALUE == 0x7FFFFFFF;
 
     public static final Class<Integer> TYPE;  // 1.5 DIFFERENCE
                                //@ public initially TYPE == int.class; // 1.5 DIFFERENCE
 
 	public static final int   SIZE = 32; // Number of bits in an int representation
+	public static final int   BYTES = 4; // Number of bytes in an int representation
 	
     /*-RAC@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix

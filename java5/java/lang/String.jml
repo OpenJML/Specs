@@ -357,8 +357,8 @@ public final class String
       @                       conversion of this string's chars using charsetName *));
       @ also
       @  public exceptional_behavior
-      @   requires charsetName != null 
-      @             && !(* (charsetName is the name of a supporting encoding) *);
+      @   requires charsetName == null 
+      @             || !(* (charsetName is the name of a supporting encoding) *);
       @   signals_only UnsupportedEncodingException;
       @*/
     public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(String charsetName)

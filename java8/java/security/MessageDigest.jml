@@ -10,6 +10,10 @@ public abstract class MessageDigest extends MessageDigestSpi {
   private int state;
   private Provider provider;
   protected MessageDigest(java.lang.String s);
+  
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public static MessageDigest getInstance(java.lang.String s) throws NoSuchAlgorithmException;
   public static MessageDigest getInstance(java.lang.String s, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
   public static MessageDigest getInstance(java.lang.String s, Provider p) throws NoSuchAlgorithmException;
