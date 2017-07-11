@@ -349,19 +349,29 @@ public final class String
     public static pure model boolean byteArraysEqual(byte[] a, byte[] b);   @*/
 
     /*@  public normal_behavior
-      @   requires charsetName != null 
-      @             && (* charsetName is the name of a supporting encoding *);
-      @   ensures \result != null 
-      @            && (\forall int i; 0 <= i && i < \result.length;
+      @   requires (* charsetName is the name of a supporting encoding *);
+      @   ensures (\forall int i; 0 <= i && i < \result.length;
       @                    (* \result[i] is the byte at position i of the 
       @                       conversion of this string's chars using charsetName *));
       @ also
       @  public exceptional_behavior
-      @   requires charsetName == null 
-      @             || !(* (charsetName is the name of a supporting encoding) *);
+      @   requires !(* (charsetName is the name of a supporting encoding) *);
       @   signals_only UnsupportedEncodingException;
       @*/
     public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(String charsetName)
+      throws UnsupportedEncodingException;
+
+    /*@  public normal_behavior
+      @   requires  (* charset is a supporting encoding *);
+      @   ensures (\forall int i; 0 <= i && i < \result.length;
+      @                    (* \result[i] is the byte at position i of the 
+      @                       conversion of this string's chars using charset *));
+      @ also
+      @  public exceptional_behavior
+      @   requires !(* (charset is a supporting encoding) *);
+      @   signals_only UnsupportedEncodingException;
+      @*/
+    public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(java.nio.charset.Charset charset)
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior

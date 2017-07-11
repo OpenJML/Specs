@@ -22,13 +22,26 @@ public abstract class MessageDigest extends MessageDigestSpi {
   public void update(byte[] bb, int offset, int length);
   public void update(byte[] bb);
   public final void update(java.nio.ByteBuffer bb);
+  
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public byte[] digest();
+
   public int digest(byte[] bb, int offest, int length) throws DigestException;
+  
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public byte[] digest(byte[] bb);
   public java.lang.String toString();
   public static boolean isEqual(byte[] bb, byte[] bbb);
   public void reset();
   public final java.lang.String getAlgorithm();
+  
+  //@ public normal_behavior
+  //@   ensures \result >= 0;
+  //@ pure
   public final int getDigestLength();
   public java.lang.Object clone() throws java.lang.CloneNotSupportedException;
 }
