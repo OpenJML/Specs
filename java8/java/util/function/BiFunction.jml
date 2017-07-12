@@ -1,0 +1,11 @@
+package java.util.function;
+
+//@ non_null_by_default immutable
+@FunctionalInterface
+public interface BiFunction<T,U,R> {
+
+	//@ nullable
+	  public abstract R apply(T t, U u);
+	  
+
+}
