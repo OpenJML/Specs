@@ -45,40 +45,41 @@ public class Throwable extends Object implements java.io.Serializable
 
     //@ public model non_null StackTraceElement[/*#@non_null*/] _stackTrace; in objectState;
 
-    //@ public invariant \nonnullelements(_stackTrace);
+    //. FIXME @ public invariant \nonnullelements(_stackTrace);
 
     /*@
       @ public normal_behavior
       @   ensures \result == (_message == null && _cause == null && _causeSet == false);
-      @
+      @   ensures \nonnullelements(_stackTrace);
         public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
       @   ensures \result == (_cause == null && _causeSet == false);
-      @
+      @   ensures \nonnullelements(_stackTrace);
         public pure model boolean standardThrowableUnspecifiedMessage();
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (_cause == c && _causeSet == true);
       @
+      @   ensures \nonnullelements(_stackTrace);
         public pure model boolean standardThrowableUnspecifiedMessage(nullable Throwable c);
 
       @ public normal_behavior
       @   ensures \result == (_message == s && _cause == null && _causeSet == false);
-      @
+      @   ensures \nonnullelements(_stackTrace);
         public pure helper model boolean standardThrowable(non_null String s);
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (initMessage(c) && _cause == c && _causeSet == true);
-      @
+      @   ensures \nonnullelements(_stackTrace);
         public pure helper model boolean standardThrowable(nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (_message == s && _cause == c && _causeSet == true);
-      @
+      @   ensures \nonnullelements(_stackTrace);
         public pure helper model boolean standardThrowable(non_null String s, nullable Throwable c);
 
       @ public normal_behavior
