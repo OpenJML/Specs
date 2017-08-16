@@ -1,0 +1,22 @@
+package java.util.function;
+
+public interface Supplier<T> {
+	//@ public behavior requires true;
+	/*@ nullable */ T get();
+	
+	/*@
+
+	model public static interface Pure<T> extends Supplier<T> {
+	     public normal_behavior requires true;
+		 pure nullable T get();
+	}
+
+	model public static interface PureNonNull<T> extends Supplier<T> {
+	     public normal_behavior requires true;
+		 pure non_null T get();
+	}
+
+	*/
+
+}
+
