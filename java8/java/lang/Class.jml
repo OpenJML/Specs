@@ -93,7 +93,7 @@ public final class Class<T> implements java.io.Serializable,
         throws InstantiationException, IllegalAccessException;
 
     //@ public normal_behavior
-    //@   ensures \result <==> (obj != null && (\typeof(obj) <: (\TYPE)this));
+    //@   ensures \result <==> (obj != null && (obj.getClass() <: this)); // FIXME - should \typeof(obj) <: (\TYPE)this work? The cast gives error.
     public /*@ pure @*/ boolean isInstance(Object obj);
 
     public /*@ pure @*/ boolean isAssignableFrom(Class<?> cls);
