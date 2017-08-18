@@ -3,19 +3,23 @@ package java.security;
 //@ non_null_by_default
 public interface Key extends java.io.Serializable {
   //public static final long serialVersionUID;
+	
+	//@ model non_null public String algorithm;
+	//@ model non_null public String format;
+	//@ model nullable public byte[] encoding;
  
   //@ public normal_behavior
-  //@   ensures true;
+  //@   ensures \result == algorithm;
   //@ pure
   public abstract java.lang.String getAlgorithm();
   
   //@ public normal_behavior
-  //@   ensures true;
+  //@   ensures \result == format;
   //@ pure nullable
   public abstract java.lang.String getFormat();
   
   //@ public normal_behavior
-  //@   ensures true;
-  //@ pure nullable
+  //@   ensures \result == encoding;
+  //@ pure nullable  // Can return null if the Key does not support encoding
   public abstract byte[] getEncoded();
 }

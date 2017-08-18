@@ -1,0 +1,47 @@
+package java.util.stream;
+
+//@ non_null_by_default
+public interface Stream<T> extends BaseStream<T, Stream<T>> {
+	Stream<T> filter(java.util.function.Predicate<? super T> pred);
+
+	<R> Stream<R> map(java.util.function.Function<? super T, ? extends R> func);
+	IntStream mapToInt(java.util.function.ToIntFunction<? super T> func);
+	LongStream mapToLong(java.util.function.ToLongFunction<? super T> func);
+	DoubleStream mapToDouble(java.util.function.ToDoubleFunction<? super T> func);
+	<R> Stream<R> flatMap(java.util.function.Function<? super T, ? extends Stream<? extends R>> func);
+	IntStream flatMapToInt(java.util.function.Function<? super T, ? extends IntStream> func);
+	LongStream flatMapToLong(java.util.function.Function<? super T, ? extends LongStream> func);
+	DoubleStream flatMapToDouble(java.util.function.Function<? super T, ? extends DoubleStream> func);
+	Stream<T> distinct();
+	Stream<T> sorted();
+	Stream<T> sorted(java.util.Comparator<? super T> comparator);
+	Stream<T> peek(java.util.function.Consumer<? super T> consumer);
+	Stream<T> limit(long limit);
+	Stream<T> skip(long n);
+	void forEach(java.util.function.Consumer<? super T> consumer);
+
+	void forEachOrdered(java.util.function.Consumer<? super T> consumer);
+	java.lang.Object[] toArray();
+	<A> A[] toArray(java.util.function.IntFunction<A[]> func);
+	T reduce(T t, java.util.function.BinaryOperator<T> op);
+	java.util.Optional<T> reduce(java.util.function.BinaryOperator<T> op);
+	<U> U reduce(U u, java.util.function.BiFunction<U, ? super T, U> func, java.util.function.BinaryOperator<U> op);
+	<R> R collect(java.util.function.Supplier<R> supplier, java.util.function.BiConsumer<R, ? super T> consumer, java.util.function.BiConsumer<R, R> consumer2);
+	<R, A> R collect(Collector<? super T, A, R> collector);
+	java.util.Optional<T> min(java.util.Comparator<? super T> comparator);
+	java.util.Optional<T> max(java.util.Comparator<? super T> comparator);
+	long count();
+	boolean anyMatch(java.util.function.Predicate<? super T> pred);
+	boolean allMatch(java.util.function.Predicate<? super T> pred);
+	boolean noneMatch(java.util.function.Predicate<? super T> pred);
+	java.util.Optional<T> findFirst();
+	java.util.Optional<T> findAny();
+	
+	public static <T> Stream.Builder<T> builder();
+	public static <T> Stream<T> empty();
+	public static <T> Stream<T> of(T t);
+	public static <T> Stream<T> of(T... ts);
+	public static <T> Stream<T> iterate(T value, java.util.function.UnaryOperator<T> op);
+	public static <T> Stream<T> generate(java.util.function.Supplier<T> supplier);
+	public static <T> Stream<T> concat(Stream<? extends T> first, Stream<? extends T> last);
+}

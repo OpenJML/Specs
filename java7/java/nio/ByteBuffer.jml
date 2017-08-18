@@ -1,0 +1,138 @@
+package java.nio;
+
+public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer> {
+	  //@ spec_public  
+	  final byte[] hb;
+	  
+	  //@ public invariant 0 <= offset && offset <= hb.length && hb.length <= Integer.MAX_VALUE;
+	  //@ public invariant hb.length-offset >= capacity;
+	  
+	  //@ spec_public  
+	  final int offset;
+	  //@ spec_public  
+	  boolean isReadOnly;
+	  //@ spec_public  
+	  boolean bigEndian;
+	  //@ spec_public  
+	  boolean nativeByteOrder;
+	  
+	  ByteBuffer(int i, int j, int k, int m, byte[] b, int n);
+	  ByteBuffer(int i, int j, int k, int m);
+	  public static ByteBuffer allocateDirect(int n);
+	  public static ByteBuffer allocate(int n);
+
+	  //@ public normal_behavior
+	  //@   requires 0 <= start && start <= end && end <= b.length;
+	  //@   ensures \fresh(\result);
+	  //@   ensures \result.mark == 0;
+	  //@   ensures \result.position == 0;
+	  //@   ensures \result.limit == end - start;
+	  //@   ensures \result.capacity == end - start;
+	  //@ pure
+	  public static ByteBuffer wrap(byte[] b, int start, int end);
+	  
+	  //@ public normal_behavior
+	  //@   ensures \fresh(\result);
+	  //@   ensures \result.mark == 0;
+	  //@   ensures \result.position == 0;
+	  //@   ensures \result.limit == b.length;
+	  //@   ensures \result.capacity == b.length;
+	  //@   ensures \result.hb == b;
+	  //@ pure
+	  public static ByteBuffer wrap(byte[] b);
+	  public abstract ByteBuffer slice();
+	  public abstract ByteBuffer duplicate();
+	  public abstract ByteBuffer asReadOnlyBuffer();
+	  
+	  //@ public normal_behavior
+	  //@   assignable this.position;
+	  //@   ensures this.position == \old(this.position) + 1;
+	  public abstract byte get();
+
+	  //@ public normal_behavior
+	  //@   assignable this.position;
+	  //@   ensures this.position == \old(this.position) + 1;
+	  public abstract ByteBuffer put(byte b);
+	  public abstract byte get(int i);
+	  public abstract ByteBuffer put(int i, byte b);
+	  public ByteBuffer get(byte[] buf, int i, int j);
+	  
+	  //@ public normal_behavior
+	  //@   requires position <= limit - buf.length;
+	  //@   assignable buf[*], this.position;
+	  //@   ensures \fresh(\result);
+	  //@   ensures this.position == \old(this.position) + buf.length;
+	  //@   ensures \result.mark == 0 && \result.position == 0 && \result.limit == buf.length && \result.capacity == buf.length;
+	  //@   ensures (\forall int i; 0 <= i && i < buf.length; true) ; // FIXME - content is correct
+	  public ByteBuffer get(byte[] buf);
+	  public ByteBuffer put(ByteBuffer bbuf);
+	  public ByteBuffer put(byte[] buf, int i, int j);
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - buf.length;
+	  //@   assignable this.position, this.hb[position .. (position + buf.length -1)];
+	  //@   ensures \fresh(\result);
+	  //@   ensures this.position == \old(this.position) + buf.length;
+	  //@   ensures \result.mark == 0 && \result.position == 0 && \result.limit == buf.length && \result.capacity == buf.length;
+	  //@   ensures (\forall int i; 0 <= i && i < buf.length; true) ; // FIXME - content is correct
+	  public final ByteBuffer put(byte[] buf);
+	  public final boolean hasArray();
+	  public final byte[] array();
+	  public final int arrayOffset();
+	  public abstract ByteBuffer compact();
+	  public abstract boolean isDirect();
+	  public java.lang.String toString();
+	  public int hashCode();
+	  public boolean equals(java.lang.Object o);
+	  private static boolean equals(byte b, byte bb);
+	  public int compareTo(ByteBuffer bbuf);
+	  private static int compare(byte b, byte bb);
+	  public final ByteOrder order();
+	  public final ByteBuffer order(ByteOrder order);
+	  abstract byte _get(int i);
+	  abstract void _put(int i, byte b);
+	  public abstract char getChar();
+	  public abstract ByteBuffer putChar(char c);
+	  public abstract char getChar(int i);
+	  public abstract ByteBuffer putChar(int i, char c);
+	  public abstract CharBuffer asCharBuffer();
+	  public abstract short getShort();
+	  public abstract ByteBuffer putShort(short s);
+	  public abstract short getShort(int i);
+	  public abstract ByteBuffer putShort(int i, short s);
+	  public abstract ShortBuffer asShortBuffer();
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - Integer.BYTES;
+	  //@   assignable this.position;
+	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
+	  //@   ensures (* FIXME: result is int representation of the bytes *);
+	  public abstract int getInt();
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - Integer.BYTES;
+	  //@   assignable this.position, hb[position .. position + Integer.BYTES-1];
+	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
+	  //@   ensures (* FIXME: result is bytes representation of the ints *);
+	  public abstract ByteBuffer putInt(int i);
+	  public abstract int getInt(int i);
+	  public abstract ByteBuffer putInt(int i, int j);
+	  public abstract IntBuffer asIntBuffer();
+	  public abstract long getLong();
+	  public abstract ByteBuffer putLong(long n);
+	  public abstract long getLong(int i);
+	  public abstract ByteBuffer putLong(int i, long n);
+	  public abstract LongBuffer asLongBuffer();
+	  public abstract float getFloat();
+	  public abstract ByteBuffer putFloat(float f);
+	  public abstract float getFloat(int i);
+	  public abstract ByteBuffer putFloat(int i, float f);
+	  public abstract FloatBuffer asFloatBuffer();
+	  public abstract double getDouble();
+	  public abstract ByteBuffer putDouble(double d);
+	  public abstract double getDouble(int i);
+	  public abstract ByteBuffer putDouble(int i, double d);
+	  public abstract DoubleBuffer asDoubleBuffer();
+	  public java.lang.Object array();
+	 // public int compareTo(java.lang.Object o);
+}

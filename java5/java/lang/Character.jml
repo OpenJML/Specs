@@ -237,6 +237,7 @@ public /*@ pure @*/ final
     /*@ also
       @  public normal_behavior
       @   ensures \result !=null && \result.equals(String.valueOf(ch_));
+      @   ensures \result.length() == 1;
       @   ensures \result.charAt(0) == ch_;
       @*/
     public String toString();

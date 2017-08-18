@@ -85,7 +85,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @     signals_only java.lang.NullPointerException;
       @*/
     //@ pure
-    public BigInteger(String val, int radix);
+    public BigInteger(/*@ nullable */ String val, int radix);
 
 // FIXME - OpenJML does not like handling default visibility methods of binary classes
 //    /*@ normal_behavior
@@ -107,7 +107,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @     //-@ signals_only java.lang.NullPointerException;
       @*/
     //@ pure
-    public BigInteger(String val);
+    public BigInteger(/*@ nullable */ String val);
 
     //@ pure
     public BigInteger(int numBits, Random rnd);

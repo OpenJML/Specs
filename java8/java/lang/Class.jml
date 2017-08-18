@@ -94,7 +94,16 @@ public final class Class<T> implements java.io.Serializable,
 
     //@ public normal_behavior
     //@   ensures \result <==> (obj != null && (obj.getClass() <: this)); // FIXME - should \typeof(obj) <: (\TYPE)this work? The cast gives error.
-    public /*@ pure @*/ boolean isInstance(Object obj);
+    public /*@ pure @*/ boolean isInstance(/*@ nullable */Object obj);
+    
+    //@ public normal_behavior
+    //@   requires obj == null || isInstance(obj);
+    //@   ensures \result == obj;
+    //@ also public exceptional_behavior
+    //@   requires !(obj == null || isInstance(obj));
+    //@   signals_only ClassCastException;
+    public /*@ pure nullable @*/ T cast(/*@ nullable */Object obj);
+
 
     public /*@ pure @*/ boolean isAssignableFrom(Class<?> cls);
 
