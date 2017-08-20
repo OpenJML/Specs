@@ -171,8 +171,17 @@ public class Throwable extends Object implements java.io.Serializable
     // FIXME - need to indicate that the output streams are modified and not
     // other stuff
     // Prints to System.err
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure  // FIXME - modifies the err stream
     public void printStackTrace();
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure  // FIXME - modifies the given stream
     public void printStackTrace(/*@non_null*/java.io.PrintStream s);
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure  // FIXME - modifies the given stream
     public void printStackTrace(/*@non_null*/java.io.PrintWriter s);
 
     /*@ public normal_behavior

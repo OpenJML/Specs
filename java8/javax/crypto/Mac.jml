@@ -1,0 +1,89 @@
+package javax.crypto;
+
+// FIXME _ this all needs review, as I don't know anything about MAC algorithsm of implementation
+//@ non_null_by_default
+public class Mac implements Cloneable {
+
+	//@ public model Object content;
+	
+	  private static final sun.security.util.Debug debug;
+	  private static final sun.security.util.Debug pdebug;
+	  private static final boolean skipDebug;
+	  private java.security.Provider provider;
+	  private MacSpi spi;
+	  private final java.lang.String algorithm;
+	  private boolean initialized;
+	  private java.security.Provider.Service firstService;
+	  private java.util.Iterator<java.security.Provider.Service> serviceIterator;
+	  private final java.lang.Object lock;
+	  private static int warnCount;
+	  
+	  //@ protected normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  protected Mac(MacSpi spi, java.security.Provider provider, java.lang.String s);
+	  //@ private normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  private Mac(java.security.Provider.Service service, java.util.Iterator<java.security.Provider.Service> iter, java.lang.String s);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public final java.lang.String getAlgorithm();
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public static final Mac getInstance(java.lang.String s) throws java.security.NoSuchAlgorithmException;
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public static final Mac getInstance(java.lang.String s, java.lang.String ss) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public static final Mac getInstance(java.lang.String s, java.security.Provider provider) throws java.security.NoSuchAlgorithmException;
+
+	  void chooseFirstProvider();
+	  private void chooseProvider(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+	  public final java.security.Provider getProvider();
+	  public final int getMacLength();
+
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void init(java.security.Key key) throws java.security.InvalidKeyException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void init(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void update(byte b) throws java.lang.IllegalStateException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void update(byte[] buf) throws java.lang.IllegalStateException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void update(byte[] buf, int from, int to) throws java.lang.IllegalStateException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void update(java.nio.ByteBuffer buffer);
+	  
+	  //@ public normal_behavior
+	  //@   ensures \fresh(\result);
+	  //@ pure
+	  public final byte[] doFinal() throws java.lang.IllegalStateException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void doFinal(byte[] buf, int n) throws ShortBufferException, java.lang.IllegalStateException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  //@   ensures \fresh(\result);
+	  public final byte[] doFinal(byte[] buf) throws java.lang.IllegalStateException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  public final void reset();
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public final java.lang.Object clone() throws java.lang.CloneNotSupportedException;
+
+}

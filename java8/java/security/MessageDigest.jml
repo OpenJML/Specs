@@ -8,34 +8,67 @@ public abstract class MessageDigest extends MessageDigestSpi {
   private static final int INITIAL;
   private static final int IN_PROGRESS;
   private int state;
+  //@ spec_public
   private Provider provider;
-  protected MessageDigest(java.lang.String s);
   
-  //@ public normal_behavior
+  //@ protected normal_behavior
   //@   ensures true;
   //@ pure
+  protected MessageDigest(java.lang.String s);
+  
+  //@ model public Object content;
+  
+  //@ public normal_behavior
+  //@   ensures \fresh(\result);
+  //@ pure
   public static MessageDigest getInstance(java.lang.String s) throws NoSuchAlgorithmException;
+  //@ public normal_behavior
+  //@   ensures \fresh(\result);
+  //@ pure
   public static MessageDigest getInstance(java.lang.String s, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
+  //@ public normal_behavior
+  //@   ensures \fresh(\result);
+  //@ pure
   public static MessageDigest getInstance(java.lang.String s, Provider p) throws NoSuchAlgorithmException;
+  //@ public normal_behavior
+  //@   ensures \result == provider;
+  //@ pure
   public final Provider getProvider();
+  
+  //@ public normal_behavior
+  //@   assignable this.content;
   public void update(byte b);
+  //@ public normal_behavior
+  //@   requires offset >= 0;
+  //@   requires length >= 0;
+  //@   requires buf.length - offset >= length;
+  //@   assignable this.content;
   public void update(byte[] bb, int offset, int length);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public void update(byte[] bb);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public final void update(java.nio.ByteBuffer bb);
   
   //@ public normal_behavior
-  //@   ensures true;
-  //@ pure
+  //@   assignable this.content;
+  //@   ensures \fresh(\result);
   public byte[] digest();
 
+  //@ public normal_behavior
+  //@   assignable this.content;
   public int digest(byte[] bb, int offest, int length) throws DigestException;
   
   //@ public normal_behavior
-  //@   ensures true;
-  //@ pure
+  //@   assignable this.content;
+  //@   ensures \fresh(\result);
   public byte[] digest(byte[] bb);
   public java.lang.String toString();
   public static boolean isEqual(byte[] bb, byte[] bbb);
+
+  //@ public normal_behavior
+  //@   assignable this.content;
   public void reset();
   public final java.lang.String getAlgorithm();
   

@@ -1,0 +1,43 @@
+package java.lang;
+
+//@ non_null_by_default
+public class Runtime {
+	//@ spec_public
+	private static Runtime currentRuntime;
+
+	//@ public normal_behavior
+	//@   ensures \result == currentRuntime;
+	public static Runtime getRuntime();
+	
+	//@ private normal_behavior
+	//@  ensures true;
+	//@ pure
+	private Runtime();
+	public void exit(int n);
+	public void addShutdownHook(Thread thread);
+	public boolean removeShutdownHook(Thread thread);
+	public void halt(int n);
+	@java.lang.Deprecated public static void runFinalizersOnExit(boolean b);
+	public Process exec(String cmd) throws java.io.IOException;
+	public Process exec(String cmd, String[] args) throws java.io.IOException;
+	public Process exec(String cmd, String[] args, java.io.File file) throws java.io.IOException;
+	public Process exec(String[] args) throws java.io.IOException;
+	public Process exec(String[] args, String[] env) throws java.io.IOException;
+	public Process exec(String[] args, String[] env, java.io.File file) throws java.io.IOException;
+	public native int availableProcessors();
+	public native long freeMemory();
+	public native long totalMemory();
+	public native long maxMemory();
+	public native void gc();
+	public void runFinalization();
+	public native void traceInstructions(boolean b);
+	public native void traceMethodCalls(boolean b);
+	public void load(String lib);
+	synchronized void load0(Class<?> clazz, String s);
+	public void loadLibrary(String lib);
+	synchronized void loadLibrary0(Class<?> clazz, String s);
+	@java.lang.Deprecated public java.io.InputStream getLocalizedInputStream(java.io.InputStream stream);
+	@java.lang.Deprecated public java.io.OutputStream getLocalizedOutputStream(java.io.OutputStream stream);
+	//private static native void runFinalization0();
+
+}
