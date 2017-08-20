@@ -43,7 +43,7 @@ public abstract class MessageDigest extends MessageDigestSpi {
   //@   requires length >= 0;
   //@   requires buf.length - offset >= length;
   //@   assignable this.content;
-  public void update(byte[] bb, int offset, int length);
+  public void update(byte[] buf, int offset, int length);
   //@ public normal_behavior
   //@   assignable this.content;
   public void update(byte[] bb);
