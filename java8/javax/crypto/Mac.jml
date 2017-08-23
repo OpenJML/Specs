@@ -31,15 +31,15 @@ public class Mac implements Cloneable {
 	  //@ pure
 	  public final java.lang.String getAlgorithm();
 	  //@ public normal_behavior
-	  //@   ensures true;
+	  //@   ensures \fresh(\result);
 	  //@ pure
 	  public static final Mac getInstance(java.lang.String s) throws java.security.NoSuchAlgorithmException;
 	  //@ public normal_behavior
-	  //@   ensures true;
+	  //@   ensures \fresh(\result);
 	  //@ pure
 	  public static final Mac getInstance(java.lang.String s, java.lang.String ss) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
 	  //@ public normal_behavior
-	  //@   ensures true;
+	  //@   ensures \fresh(\result);
 	  //@ pure
 	  public static final Mac getInstance(java.lang.String s, java.security.Provider provider) throws java.security.NoSuchAlgorithmException;
 

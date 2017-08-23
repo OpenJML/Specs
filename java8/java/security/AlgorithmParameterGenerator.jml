@@ -1,0 +1,32 @@
+package java.security;
+
+//@ non_null_by_default
+public class AlgorithmParameterGenerator {
+	
+//	  private Provider provider;
+//	  private AlgorithmParameterGeneratorSpi paramGenSpi;
+//	  private java.lang.String algorithm;
+//	  protected AlgorithmParameterGenerator(AlgorithmParameterGeneratorSpi, Provider, java.lang.String);
+//	  public final java.lang.String getAlgorithm();
+	  //@ public normal_behavior
+	  //@   ensures \fresh(\result);
+	  //@ pure
+	  public static AlgorithmParameterGenerator getInstance(java.lang.String s) throws NoSuchAlgorithmException;
+	  //@ public normal_behavior
+	  //@   ensures \fresh(\result);
+	  //@ pure
+	  public static AlgorithmParameterGenerator getInstance(java.lang.String s, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
+	  //@ public normal_behavior
+	  //@   ensures \fresh(\result);
+	  //@ pure
+	  public static AlgorithmParameterGenerator getInstance(java.lang.String s, Provider provider) throws NoSuchAlgorithmException;
+//	  public final Provider getProvider();
+//	  public final void init(int);
+//	  public final void init(int, SecureRandom);
+//	  public final void init(java.security.spec.AlgorithmParameterSpec) throws InvalidAlgorithmParameterException;
+//	  public final void init(java.security.spec.AlgorithmParameterSpec, SecureRandom) throws InvalidAlgorithmParameterException;
+	  //@ public normal_behavior
+	  //@   ensures \fresh(\result);
+	  //@ pure
+	  public final AlgorithmParameters generateParameters();
+}

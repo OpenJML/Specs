@@ -41,9 +41,21 @@ public class Cipher {
 //	  private static java.lang.String[] tokenizeTransformation(java.lang.String) throws java.security.NoSuchAlgorithmException;
 //	  private static java.util.List<javax.crypto.Cipher$Transform> getTransforms(java.lang.String) throws java.security.NoSuchAlgorithmException;
 //	  private static javax.crypto.Cipher$Transform getTransform(java.security.Provider$Service, java.util.List<javax.crypto.Cipher$Transform>);
-//	  public static final javax.crypto.Cipher getInstance(java.lang.String) throws java.security.NoSuchAlgorithmException, javax.crypto.NoSuchPaddingException;
-//	  public static final javax.crypto.Cipher getInstance(java.lang.String, java.lang.String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException, javax.crypto.NoSuchPaddingException;
-//	  public static final javax.crypto.Cipher getInstance(java.lang.String, java.security.Provider) throws java.security.NoSuchAlgorithmException, javax.crypto.NoSuchPaddingException;
+
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
+	public static final javax.crypto.Cipher getInstance(java.lang.String s) throws java.security.NoSuchAlgorithmException, javax.crypto.NoSuchPaddingException;
+	
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
+	public static final javax.crypto.Cipher getInstance(java.lang.String s, java.lang.String ss) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException, javax.crypto.NoSuchPaddingException;
+
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
+	public static final javax.crypto.Cipher getInstance(java.lang.String s, java.security.Provider provider) throws java.security.NoSuchAlgorithmException, javax.crypto.NoSuchPaddingException;
 //	  private void initCryptoPermission() throws java.security.NoSuchAlgorithmException;
 //	  void chooseFirstProvider();
 //	  private void implInit(javax.crypto.CipherSpi, int, int, java.security.Key, java.security.spec.AlgorithmParameterSpec, java.security.AlgorithmParameters, java.security.SecureRandom) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
@@ -61,26 +73,65 @@ public class Cipher {
 //	  private boolean passCryptoPermCheck(javax.crypto.CipherSpi, java.security.Key, java.security.spec.AlgorithmParameterSpec) throws java.security.InvalidKeyException;
 //	  private static void checkOpmode(int);
 //	  private static java.lang.String getOpmodeString(int);
-//	  public final void init(int, java.security.Key) throws java.security.InvalidKeyException;
-//	  public final void init(int, java.security.Key, java.security.SecureRandom) throws java.security.InvalidKeyException;
-//	  public final void init(int, java.security.Key, java.security.spec.AlgorithmParameterSpec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
-//	  public final void init(int, java.security.Key, java.security.spec.AlgorithmParameterSpec, java.security.SecureRandom) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
-//	  public final void init(int, java.security.Key, java.security.AlgorithmParameters) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
-//	  public final void init(int, java.security.Key, java.security.AlgorithmParameters, java.security.SecureRandom) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
-//	  public final void init(int, java.security.cert.Certificate) throws java.security.InvalidKeyException;
-//	  public final void init(int, java.security.cert.Certificate, java.security.SecureRandom) throws java.security.InvalidKeyException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.Key key) throws java.security.InvalidKeyException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.Key key, java.security.SecureRandom randome) throws java.security.InvalidKeyException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.Key key, java.security.spec.AlgorithmParameterSpec spec, java.security.SecureRandom random) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.Key key, java.security.AlgorithmParameters params) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.Key key, java.security.AlgorithmParameters params, java.security.SecureRandom random) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.cert.Certificate certificate) throws java.security.InvalidKeyException;
+	//@ public behavior
+	//@   assignable this.*;
+	//@   signals_only java.security.InvalidKeyException;
+	public final void init(int n, java.security.cert.Certificate certificate, java.security.SecureRandom randome) throws java.security.InvalidKeyException;
 //	  private void checkCipherState();
-//	  public final byte[] update(byte[]);
-//	  public final byte[] update(byte[], int, int);
-//	  public final int update(byte[], int, int, byte[]) throws javax.crypto.ShortBufferException;
-//	  public final int update(byte[], int, int, byte[], int) throws javax.crypto.ShortBufferException;
-//	  public final int update(java.nio.ByteBuffer, java.nio.ByteBuffer) throws javax.crypto.ShortBufferException;
-//	  public final byte[] doFinal() throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  //@   ensures \fresh(\result);
+	  public final byte[] update(byte[] buf);
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  //@   ensures \fresh(\result);
+	  public final byte[] update(byte[] buf, int inputOffset, int inputLen);
+	  //@ public normal_behavior
+	  //@   assignable this.*,output[*];
+	  public final int update(byte[] buf, int inputOffset, int inputLen, byte[] output) throws javax.crypto.ShortBufferException;
+	  //@ public normal_behavior
+	  //@   assignable this.*,output[*];
+	  public final int update(byte[] buf, int inputOffset, int inputLen, byte[] output, int outputOffset) throws javax.crypto.ShortBufferException;
+	  //@ public normal_behavior
+	  //@   assignable this.*,output.*;
+	  public final int update(java.nio.ByteBuffer input, java.nio.ByteBuffer output) throws javax.crypto.ShortBufferException;
+
+	  //	  public final byte[] doFinal() throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final int doFinal(byte[], int) throws javax.crypto.IllegalBlockSizeException, javax.crypto.ShortBufferException, javax.crypto.BadPaddingException;
 //	  public final byte[] doFinal(byte[]) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final byte[] doFinal(byte[], int, int) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final int doFinal(byte[], int, int, byte[]) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
-//	  public final int doFinal(byte[], int, int, byte[], int) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
+	  //@ public normal_behavior
+	  //@   assignable this.*,output[*];
+	  public final int doFinal(byte[] buf, int inputOffset, int inputLen, byte[] output, int outputOffset) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final int doFinal(java.nio.ByteBuffer, java.nio.ByteBuffer) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final byte[] wrap(java.security.Key) throws javax.crypto.IllegalBlockSizeException, java.security.InvalidKeyException;
 //	  public final java.security.Key unwrap(byte[], java.lang.String, int) throws java.security.InvalidKeyException, java.security.NoSuchAlgorithmException;
