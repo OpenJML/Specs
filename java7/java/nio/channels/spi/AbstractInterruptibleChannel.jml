@@ -5,7 +5,7 @@ public abstract class AbstractInterruptibleChannel implements java.nio.channels.
 //	private volatile boolean open;
 //	private sun.nio.ch.Interruptible interruptor;
 //	private volatile java.lang.Thread interrupted;
-	//@ public normal_behavior
+	//@ protected normal_behavior
 	//@   requires true;
 	//@ pure
 	protected AbstractInterruptibleChannel();
