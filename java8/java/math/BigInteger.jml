@@ -29,18 +29,19 @@ import java.util.Random;
  * @author David R. Cok
  * @author Gary T. Leavens
  */
-//OPENJML@ immutable
+//@ immutable
 public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     /*@
         public static model pure BigInteger parse(String val, int radix) {
 		// !FIXME! - should put in a non-circular computation
-		return new BigInteger(val,radix);
-	}
+		    return new BigInteger(val,radix);
+	    }
+	    
         public static model pure BigInteger convert(byte[] val) {
 		// !FIXME! - should put in a non-circular computation
-		return new BigInteger(val);
-	}
+		    return new BigInteger(val);
+	    }
     @*/
 
     //--- public model \bigint value; --
@@ -232,6 +233,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Miscellaneous Bit Operations
 
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure function
     public int bitLength();
 
     // static int bitLen(int w);   package-level method removed from specification (dmz, 2009-11-17)
@@ -246,6 +250,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Primality Testing
 
+    //@ public normal_behavior
+    //@   requires certainty > 0;
+    //@ pure function
     public boolean isProbablePrime(int certainty);
 
     // Comparison Operations

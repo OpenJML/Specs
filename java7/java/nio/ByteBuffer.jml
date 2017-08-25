@@ -22,14 +22,15 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public static ByteBuffer allocate(int n);
 
 	  //@ public normal_behavior
-	  //@   requires 0 <= start && start <= end && end <= b.length;
+	  //@   requires 0 <= offset && 0 <= length && length <= b.length - offset;
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.offset == offset;
 	  //@   ensures \result.mark == 0;
 	  //@   ensures \result.position == 0;
-	  //@   ensures \result.limit == end - start;
-	  //@   ensures \result.capacity == end - start;
+	  //@   ensures \result.limit == length;
+	  //@   ensures \result.capacity == length;
 	  //@ pure
-	  public static ByteBuffer wrap(byte[] b, int start, int end);
+	  public static ByteBuffer wrap(byte[] b, int offset, int length);
 	  
 	  //@ public normal_behavior
 	  //@   ensures \fresh(\result);
@@ -65,17 +66,32 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@   ensures \result.mark == 0 && \result.position == 0 && \result.limit == buf.length && \result.capacity == buf.length;
 	  //@   ensures (\forall int i; 0 <= i && i < buf.length; true) ; // FIXME - content is correct
 	  public ByteBuffer get(byte[] buf);
+	  
+	  //@ public normal_behavior
+	  //@   assignable hb[*], this.position;  // OPENJML - FIXME - be more precise
+	  //@   ensures position == Math.min(limit, \old(position) + bbuf.remaining());
 	  public ByteBuffer put(ByteBuffer bbuf);
-	  public ByteBuffer put(byte[] buf, int i, int j);
 
+	  // FIXME - OPENJML _ relation between this and result?
+	  //@ public normal_behavior
+	  //@   requires offset >= 0 && length >= 0;
+	  //@   requires offset <= buf.length;
+	  //@   requires length <= buf.length - offset;
+	  //@   assignable this.hb[*], this.position;  // OPENJML - FIXME - be more precise
+	  //@   ensures position == Math.min(limit, \old(position) + length);
+	  public ByteBuffer put(byte[] buf, int offset, int length);
+
+	  // FIXME - OPENJML _ relation between this and result?
 	  //@ public normal_behavior
 	  //@   requires position <= limit - buf.length;
-	  //@   assignable this.position, this.hb[position .. (position + buf.length -1)];
+	  //@   old int moved = Math.min(buf.length, limit - position);
+	  //@   assignable this.position, this.hb[position .. (position + (moved -1))];
 	  //@   ensures \fresh(\result);
-	  //@   ensures this.position == \old(this.position) + buf.length;
+	  //@   ensures this.position == \old(this.position) + moved;
 	  //@   ensures \result.mark == 0 && \result.position == 0 && \result.limit == buf.length && \result.capacity == buf.length;
 	  //@   ensures (\forall int i; 0 <= i && i < buf.length; true) ; // FIXME - content is correct
 	  public final ByteBuffer put(byte[] buf);
+
 	  public final boolean hasArray();
 	  public final byte[] array();
 	  public final int arrayOffset();

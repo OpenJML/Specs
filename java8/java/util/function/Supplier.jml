@@ -1,7 +1,10 @@
 package java.util.function;
 
 public interface Supplier<T> {
-	//@ public behavior requires true;
+
+	//@ model public nullable instance T value;
+	
+	//@ public behavior requires true; ensures \result == value;
 	/*@ nullable */ T get();
 	
 	/*@
@@ -12,6 +15,7 @@ public interface Supplier<T> {
 	}
 
 	model public static interface PureNonNull<T> extends Supplier<T> {
+		 public invariant value != null;
 	     public normal_behavior requires true;
 		 pure non_null T get();
 	}
