@@ -1,6 +1,6 @@
 package java.nio.channels.spi;
 
-public class Abstract SelectableChannel extends SelectableChannel {
+public abstract class AbstractSelectableChannel extends java.nio.channels.SelectableChannel {
 
 //	  private final java.nio.channels.spi.SelectorProvider provider;
 //	  private java.nio.channels.SelectionKey[] keys;

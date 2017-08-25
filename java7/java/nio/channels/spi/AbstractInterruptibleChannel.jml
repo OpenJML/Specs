@@ -1,6 +1,6 @@
 package java.nio.channels.spi;
 
-ublic abstract class AbstractInterruptibleChannel implements java.nio.channels.Channel,java.nio.channels.InterruptibleChannel {
+public abstract class AbstractInterruptibleChannel implements java.nio.channels.Channel,java.nio.channels.InterruptibleChannel {
 //	private final java.lang.Object closeLock;
 //	private volatile boolean open;
 //	private sun.nio.ch.Interruptible interruptor;
