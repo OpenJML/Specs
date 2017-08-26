@@ -364,7 +364,8 @@ public  /*@ pure @*/ final
 //    public int compareTo(Object o);
     
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures (k == 0) <==> (\result == 0);
+    //@   ensures (k == 1 || k == 2 || k == 4 || k == 8 || k == 16 || k == 32 || k == 64 || k == 128 || k == 256 || k == 512 || k == 1024) ==> \result == 1;
     //@ pure function
     public static int bitCount(int k);
 
