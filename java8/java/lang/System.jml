@@ -173,8 +173,8 @@ t *);
     @      old Object [] sa = (Object[]) src;
     @      old Object [] da = (Object[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
 	   also
 		requires (src instanceof int[]) &&
@@ -185,8 +185,8 @@ t *);
     @      old int [] sa = (int[]) src;
     @      old int [] da = (int[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                 sa[srcPos+i] == da[destPos+i]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
 	   also
 		requires (src instanceof long[]) &&
@@ -197,8 +197,8 @@ t *);
     @      old long [] sa = (long[]) src;
     @      old long [] da = (long[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
 	   also
 		requires (src instanceof char[]) &&
@@ -209,8 +209,8 @@ t *);
     @      old char [] sa = (char[]) src;
     @      old char [] da = (char[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
 	   also
 		requires (src instanceof boolean[]) &&
@@ -221,8 +221,8 @@ t *);
     @      old boolean [] sa = (boolean[]) src;
     @      old boolean [] da = (boolean[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                 sa[srcPos+i] == da[destPos+i]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
 	   also
 		requires (src instanceof short[]) &&
@@ -233,8 +233,8 @@ t *);
     @      old short [] sa = (short[]) src;
     @      old short [] da = (short[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
 	   also
 		requires (src instanceof byte[]) &&
@@ -245,8 +245,8 @@ t *);
     @      old byte [] sa = (byte[]) src;
     @      old byte [] da = (byte[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
-    @      ensures (\forall int i; 0 <= i && i < length;
-    @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+    @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
     @*//* @
 
@@ -259,8 +259,8 @@ t *);
 //      @      old double [] sa = (double[]) src;
 //      @      old double [] da = (double[]) dest;
 //      @      assignable da[destPos .. destPos + length - 1];
-//      @      ensures (\forall int i; 0 <= i && i < length;
-//      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+//    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+//    @                 da[i] == sa[(srcPos-destPos+i)] );
 //      @   |}
 //	   also
 //		requires (src instanceof float[]) &&
@@ -271,8 +271,8 @@ t *);
 //      @      old float [] sa = (float[]) src;
 //      @      old float [] da = (float[]) dest;
 //      @      assignable da[destPos .. destPos + length - 1];
-//      @      ensures (\forall int i; 0 <= i && i < length;
-//      @                 sa[(int)(srcPos+i)] == da[(int)(destPos+i)]);
+//    @      ensures (\forall int i; destPos <= i && i < destPos+length;
+//    @                 da[i] == sa[(srcPos-destPos+i)] );
 //      @   |}
 //      @
       @*/
