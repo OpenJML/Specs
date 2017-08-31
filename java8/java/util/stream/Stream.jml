@@ -48,12 +48,27 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	boolean anyMatch(java.util.function.Predicate<? super T> pred);
 	boolean allMatch(java.util.function.Predicate<? super T> pred);
 	boolean noneMatch(java.util.function.Predicate<? super T> pred);
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
 	java.util.Optional<T> findFirst();
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
 	java.util.Optional<T> findAny();
 	
 	public static <T> Stream.Builder<T> builder();
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
 	public static <T> Stream<T> empty();
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
 	public static <T> Stream<T> of(T t);
+	//@ public normal_behavior
+	//@   ensures \fresh(\result);
+	//@ pure
 	public static <T> Stream<T> of(T... ts);
 	public static <T> Stream<T> iterate(T value, java.util.function.UnaryOperator<T> op);
 	public static <T> Stream<T> generate(java.util.function.Supplier<T> supplier);

@@ -12,7 +12,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
 	//@ pure
 	  public static <E extends java.lang.Enum<E>> EnumSet<E> noneOf(java.lang.Class<E> clazz);
 		//@ public normal_behavior
-		//@   requires true;
+		//@   requires clazz <: java.lang.Enum.class;
 		//@ pure
 	  public static <E extends java.lang.Enum<E>> EnumSet<E> allOf(java.lang.Class<E> clazz);
 		//@ normal_behavior

@@ -31,6 +31,7 @@ package java.util;
  * @author Erik Poll 
  * @author David Cok
  */
+//@ non_null_by_default
 public interface Collection<E> extends Iterable<E> {
 
     //@ public model instance JMLDataGroup localState; in objectState;
@@ -341,5 +342,15 @@ public interface Collection<E> extends Iterable<E> {
 
     // Specification is inherited
     int hashCode();
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public java.util.stream.Stream<E> stream();
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public java.util.stream.Stream<E> parallelStream();
+
     
 }
