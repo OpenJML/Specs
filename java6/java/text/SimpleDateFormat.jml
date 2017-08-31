@@ -1,5 +1,6 @@
 package java.text;
 
+//@ non_null_by_default
 public class SimpleDateFormat extends DateFormat {
 
 	  static final long serialVersionUID;

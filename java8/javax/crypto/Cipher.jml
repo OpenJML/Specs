@@ -1,5 +1,6 @@
 package javax.crypto;
 
+//@ non_null_by_default
 public class Cipher {
 	
 //	  private static final sun.security.util.Debug debug;
@@ -126,8 +127,15 @@ public class Cipher {
 
 	  //	  public final byte[] doFinal() throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final int doFinal(byte[], int) throws javax.crypto.IllegalBlockSizeException, javax.crypto.ShortBufferException, javax.crypto.BadPaddingException;
-//	  public final byte[] doFinal(byte[]) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
-//	  public final byte[] doFinal(byte[], int, int) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
+	  
+	  
+	  //@ public normal_behavior
+	  //@   assignable this.*;
+	  //@   ensures \fresh(\result);
+	  //@   ensures (* FIXME OPENJML - length of output? is it really fresh? *);
+	  public final byte[] doFinal(byte[] b) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
+
+	  //	  public final byte[] doFinal(byte[], int, int) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 //	  public final int doFinal(byte[], int, int, byte[]) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 	  //@ public normal_behavior
 	  //@   assignable this.*,output[*];

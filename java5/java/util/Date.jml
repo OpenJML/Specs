@@ -33,7 +33,7 @@ import java.lang.ref.SoftReference;
  * @version $Revision: 1599 $
  * @author Kristina Boysen
  */
-
+//@ non_null_by_default
 public class Date implements java.io.Serializable, Cloneable, Comparable {
     //@ public model Calendar cal;
     private /*@ spec_public */ transient long fastTime;
@@ -41,12 +41,13 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
     /*@ public normal_behavior
        @   assignable \nothing;
        @   ensures cal == null;
+       @ pure
        @*/
     public Date();
     
     /*@ public normal_behavior
-       @   assignable fastTime;
-       @   ensures cal == null && fastTime == date;
+       @   ensures fastTime == date;
+       @ pure
        @*/
     public Date(long date);
 
@@ -136,12 +137,10 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
 
     /*@ public normal_behavior
        @   requires cal == null;
-       @   assignable \nothing;
        @   ensures \result == fastTime;
        @ also
        @ public normal_behavior
        @   requires cal != null;
-       @   assignable \nothing;
        @   ensures \result == cal.getTimeInMillis();
        @*/
     public /*@ pure @*/ long getTime();
@@ -153,7 +152,7 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
        @ also
        @ public normal_behavior
        @   requires cal != null;
-       @   assignable cal;
+       @   assignable cal.*;
        @   ensures time == cal.getTimeInMillis();
        @*/
     public void setTime(long time);

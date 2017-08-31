@@ -2,8 +2,14 @@ package java.util.stream;
 
 //@ non_null_by_default
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
 	Stream<T> filter(java.util.function.Predicate<? super T> pred);
 
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
 	<R> Stream<R> map(java.util.function.Function<? super T, ? extends R> func);
 	IntStream mapToInt(java.util.function.ToIntFunction<? super T> func);
 	LongStream mapToLong(java.util.function.ToLongFunction<? super T> func);
@@ -26,7 +32,15 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	T reduce(T t, java.util.function.BinaryOperator<T> op);
 	java.util.Optional<T> reduce(java.util.function.BinaryOperator<T> op);
 	<U> U reduce(U u, java.util.function.BiFunction<U, ? super T, U> func, java.util.function.BinaryOperator<U> op);
+
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
 	<R> R collect(java.util.function.Supplier<R> supplier, java.util.function.BiConsumer<R, ? super T> consumer, java.util.function.BiConsumer<R, R> consumer2);
+
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
 	<R, A> R collect(Collector<? super T, A, R> collector);
 	java.util.Optional<T> min(java.util.Comparator<? super T> comparator);
 	java.util.Optional<T> max(java.util.Comparator<? super T> comparator);
