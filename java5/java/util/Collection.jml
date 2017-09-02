@@ -105,7 +105,7 @@ public interface Collection<E> extends Iterable<E> {
       @   ensures !\key("RAC") ==> (\result <==> content.containsObject(o));
       @   ensures  \key("RAC") ==> (\result <==> contains(o));
       @*/
-    //@ public model pure boolean containsObject(Object o);
+    //@ public model pure boolean containsObject(nullable Object o);
 
 
     /*@ public normal_behavior
@@ -172,28 +172,27 @@ public interface Collection<E> extends Iterable<E> {
 
     /*-RAC@ public behavior
       @   requires !containsNull ==> o != null;
+      {|
+      @   requires containsObject(o);
+      @   assignable \nothing; 
+      @   ensures \result == false;
+      @   ensures content.theSize == \old(content.theSize);
+       also
+      @   requires !containsObject(o);
       @   assignable content; 
-      @   ensures \not_modified(containsNull);
-      @   ensures \result ==> content.theSize == \old(content.theSize+1);
-      @   ensures !\result ==> content.theSize == \old(content.theSize);
+      @   ensures \result == true;
+      @   ensures content.theSize == \old(content.theSize+1);
       @   ensures containsObject(o);
+      @   ensures \not_modified(containsNull);
+      |}
       @   //ensures (\forall Object _o; \old(containsObject(_o)) ==> containsObject(_o));
       @   //ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
       @   //ensures \old(containsObject(null)) ==> containsObject(null);
       @   //ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
-      @ also
       @*/
-    /*@ public normal_behavior
-      @   requires !\key("RAC") ==> (!containsNull ==> o != null);
-      @   requires !\key("RAC") ==> !containsObject(o);
-      @   assignable content; 
-      @   ensures \result;
-      @  
-          // Various unspecified exceptions may be thrown if the element
+           // Various unspecified exceptions may be thrown if the element
           // is not allowed to be added to the Collection, or the add
           // operation is not supported.
-          
-      @*/
     boolean add(/*@nullable*/ E o);
 
     /*-RAC@ public behavior
