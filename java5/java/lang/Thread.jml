@@ -38,11 +38,26 @@ public class Thread implements Runnable {
 //  private static synchronized int nextThreadNum();
 //  private static synchronized long nextThreadID();
 //  void blockedOn(sun.nio.ch.Interruptible );
+  
+  //@ public normal_behavior
+  //@   ensures \result != null;
+  //@ pure
   public static native Thread currentThread();
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public static native void yield();
+  //@ public behavior
+  //@   ensures true;
+  //@ pure
   public static native void sleep(long t) throws InterruptedException;
+  //@ public behavior
+  //@   ensures true;
+  //@ pure
   public static void sleep(long t, int tt) throws InterruptedException;
-//  private void init(ThreadGroup, Runnable, String, long);
+
+  
+  //  private void init(ThreadGroup, Runnable, String, long);
 //  private void init(ThreadGroup, Runnable, String, long, java.security.AccessControlContext);
   protected Object clone() throws CloneNotSupportedException;
   public Thread();

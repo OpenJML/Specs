@@ -11,46 +11,63 @@ public enum TimeUnit { // FIXME - change to enum?
 	 HOURS,
 	 DAYS;
 
+	//@ model public long scale;
+	//@ public final invariant NANOSECONDS.scale == 1L;
+	//@ public final invariant MICROSECONDS.scale == 1000L;
+	//@ public final invariant MILLISECONDS.scale == 1000L * 1000L;
+	//@ public final invariant SECONDS.scale == 1000L * 1000L * 1000L;
+	//@ public final invariant MINUTES.scale == 1000L * 1000L * 1000L * 60L;
+	//@ public final invariant HOURS.scale == 1000L * 1000L * 1000L * 60L * 60L;
+	//@ public final invariant DAYS.scale == 1000L * 1000L * 1000L * 60L * 60L * 24L;
+	
 //  static long x(long a, long b, long c);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * u.scale / this.scale;
+  //@ pure function
   public long convert(long t, TimeUnit u);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / NANOSECONDS.scale;
+  //@ pure function
   public long toNanos(long t);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / MICROSECONDS.scale;
+  //@ pure function
   public long toMicros(long t);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / MILLISECONDS.scale;
+  //@ pure function
   public long toMillis(long t);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / SECONDS.scale;
+  //@ pure function
   public long toSeconds(long t);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / MINUTES.scale;
+  //@ pure function
   public long toMinutes(long t);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / HOURS.scale;
+  //@ pure function
   public long toHours(long t);
   
   //@ public normal_behavior
-  //@  assignable \nothing;
-  //@ function
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / DAYS.scale;
+  //@ pure function
   public long toDays(long t);
 
 //  abstract int excessNanos(long t1, long t2);

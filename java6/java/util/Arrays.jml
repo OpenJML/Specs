@@ -25,6 +25,7 @@ package java.util;
  * @author Ajani Thomas
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 @SuppressWarnings("unchecked")
 public class Arrays {
 
@@ -1764,6 +1765,27 @@ public class Arrays {
     public static byte[] copyOf(byte[] src, int newLength);
 
     // FIXME - all the other copyOf calls
+
+//    public static <T> java.util.Spliterator<T> spliterator(T[]);
+//    public static <T> java.util.Spliterator<T> spliterator(T[], int, int);
+//    public static java.util.Spliterator$OfInt spliterator(int[]);
+//    public static java.util.Spliterator$OfInt spliterator(int[], int, int);
+//    public static java.util.Spliterator$OfLong spliterator(long[]);
+//    public static java.util.Spliterator$OfLong spliterator(long[], int, int);
+//    public static java.util.Spliterator$OfDouble spliterator(double[]);
+//    public static java.util.Spliterator$OfDouble spliterator(double[], int, int);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public static <T> java.util.stream.Stream<T> stream(T[] array);
+//    public static <T> java.util.stream.Stream<T> stream(T[], int, int);
+//    public static java.util.stream.IntStream stream(int[]);
+//    public static java.util.stream.IntStream stream(int[], int, int);
+//    public static java.util.stream.LongStream stream(long[]);
+//    public static java.util.stream.LongStream stream(long[], int, int);
+//    public static java.util.stream.DoubleStream stream(double[]);
+//    public static java.util.stream.DoubleStream stream(double[], int, int);
 
 }
 

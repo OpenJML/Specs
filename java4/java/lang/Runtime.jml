@@ -2,20 +2,33 @@ package java.lang;
 
 //@ non_null_by_default
 public class Runtime {
-	//@ spec_public
-	private static Runtime currentRuntime;
+	
+	//@ model public static int systemExitValue;
+	
+	//@ spec_public final
+	private static Runtime currentRuntime = new Runtime();
 
 	//@ public normal_behavior
 	//@   ensures \result == currentRuntime;
 	public static Runtime getRuntime();
 	
 	//@ private normal_behavior
-	//@  ensures true;
+	//@  ensures currentRuntime == this;
 	//@ pure
 	private Runtime();
+	//@ public behavior   // Does not return either normally or with exception
+	//@   assignable systemExitValue;
+	//@   diverges systemExitValue == n;
+	//@   ensures false;
+	//@   signals (Exception e) false;
 	public void exit(int n);
 	public void addShutdownHook(Thread thread);
 	public boolean removeShutdownHook(Thread thread);
+	//@ public behavior   // Does not return either normally or with exception
+	//@   assignable systemExitValue;
+	//@   diverges systemExitValue == n;
+	//@   ensures false;
+	//@   signals (Exception e) false;
 	public void halt(int n);
 	@java.lang.Deprecated public static void runFinalizersOnExit(boolean b);
 	public Process exec(String cmd) throws java.io.IOException;
