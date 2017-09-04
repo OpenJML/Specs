@@ -52,13 +52,6 @@ public interface Set<E> extends Collection<E> {
     // specification inherited
     /*@non_null*/ <T> T[] toArray(/*@non_null*/ T[] a) throws NullPointerException;
 
-    /*@ also
-      @  public normal_behavior
-      @    requires contains(o);
-      @    requires !\key("RAC") ==> !containsNull ==> o != null;
-      @    assignable \nothing;
-      @    ensures !\result;
-      @*/
     boolean add(/*@nullable*/ E o);
 
     /*@ also

@@ -190,6 +190,20 @@ public interface Collection<E> extends Iterable<E> {
       @   //ensures \old(containsObject(null)) ==> containsObject(null);
       @   //ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
       @*/
+    /*+RAC@
+      @  public normal_behavior
+      @    requires !\key("RAC") ==> !containsNull ==> o != null;
+      @    {|
+      @    requires contains(o);
+      @    assignable \nothing;
+      @    ensures !\result;
+      @    also
+      @    requires !contains(o);
+      @    assignable this.*;
+      @    ensures \result;
+      @    |}
+      @*/
+
            // Various unspecified exceptions may be thrown if the element
           // is not allowed to be added to the Collection, or the add
           // operation is not supported.
