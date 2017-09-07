@@ -38,14 +38,12 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     /** The bytes that are to be (or have been) output. */
     //-RAC@ public model non_null byte[] outputBytes; in output;
 
+    
     /** Is this file open? */
     //-RAC@ public model boolean isOpen; in objectState;
 
     /** Was this file closed? */
     //-RAC@ public model boolean wasClosed; in objectState;
-
-    //-RAC@ public invariant isOpen ==> !wasClosed;
-    //-RAC@ public invariant wasClosed ==> !isOpen;
 
     // wasClosed can only change to true, not back to false
     //-RAC@ public constraint \old(wasClosed) ==> wasClosed;
