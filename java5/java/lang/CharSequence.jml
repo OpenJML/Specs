@@ -27,7 +27,15 @@ package java.lang;
  */
 public interface CharSequence {
     //@ public instance model non_null char[] charArray;
-    //@ public instance invariant charArray.owner == this;
+    // @ public instance invariant charArray.owner == this;
+	
+	//@ public normal_behavior ensures \result == c.owner; pure
+	//@ model public static Object owner(Object c);
+	
+	//@ public normal_behavior ensures \result == c.charArray; pure
+	//@ model public static Object content(CharSequence c);
+	
+	//@ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
 
     /*@ public normal_behavior
       @   ensures \result <==> ( charArray != null && charArray.owner == this);
