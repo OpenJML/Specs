@@ -36,6 +36,7 @@ import java.util.Comparator;
  * @author Mikolas Janota
  */
 //OPENJML@ immutable 
+//@ non_null_by_default
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence
 {
@@ -1046,5 +1047,11 @@ public final class String
     //@   ensures true; // No restriction on result
     //-@ function
     //@ public pure helper static model boolean isInterned(non_null String s);
+
     
+    //@ public normal_behavior
+    //@   requires true; // Ignoring bad formatting
+    //@ pure
+    public static String format(String format, Object ... args);
+
 }
