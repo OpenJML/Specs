@@ -44,7 +44,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 	    }
     @*/
 
-    //--- public model \bigint value; --
+    //-RAC@ public model \bigint value;
     //@ public model int sign;
     //@ public represents sign = signum();
 
@@ -136,10 +136,10 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
-    //@ axiom ZERO != null && ZERO.longValue() == 0L;
+    //-RAC@ axiom ZERO != null && ZERO.value == 0;
     // @ public invariant ZERO.equals(ZERO);
     // @ public constraint ZERO == \old(ZERO);
-    //@ axiom ONE != null && ONE.longValue() == 1L;
+    //-RAC@ axiom ONE != null && ONE.value == 1;
     // @ public invariant ONE.equals(ONE);
     // @ public invariant !ZERO.equals(ONE);
     // @ public constraint ONE == \old(ONE);
