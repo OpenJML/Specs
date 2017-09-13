@@ -33,26 +33,14 @@ public /*@ pure @*/ final
 	//@ represents theShort = shortValue();
 
 	/*@
-	  @	public normal_behavior
-	  @	  ensures \result == parseable( s, 10 );
-	  @   model public static pure function boolean parseable( String s ) {
-		try { Short ss = Short.valueOf(s); return true; }
-		catch (Exception e) { return false; }
-          @   }
 	  @
 	  @	public normal_behavior
 	  @	  requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
 	  @	  ensures \result <==>
-	  @		  s != null && !s.equals("") &&
-	  @		  (\forall int i; 0 <= i && i < s.length(); 
-	  @			   Character.digit(s.charAt(i), r) != -1);
-	  @	also
-	  @	public normal_behavior
-	  @	  requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
-	  @	  ensures \result <==>
-	  @		  s != null && !s.equals("") &&
-	  @		  (\forall int i; 1 <= i && i < s.length() && s.charAt(0) == '-'; 
-	  @			   Character.digit(s.charAt(i), r) != -1);
+	  @		 ( s != null && s.length()>0 &&
+	  @       (s.charAt(0) == '-' || Character.digit(s.charAt(0), r) != -1) &&
+	  @		  (\forall int i; 1 <= i && i < s.length(); 
+	  @			   Character.digit(s.charAt(i), r) != -1));
 	  @   model public static pure function boolean parseable( String s, int r ){
 		try { Short ss = Short.valueOf(s,r); return true; }
 		catch (Exception e) { return false; }
@@ -78,7 +66,7 @@ public /*@ pure @*/ final
 	  @	   requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O');  // negetive octal
 	  @	   ensures \result == parseable(nm.substring(2), 8);
 	  @	  also
-	  @	   ensures \result == parseable(nm);  // positive or negetive short, radix 10
+	  @	   ensures \result == parseable(nm, 10);  // positive or negetive short, radix 10
 	  @	 |}
 	  @   model public static pure boolean decodeable( String nm ) {
 		try { decode(nm); return true; }
@@ -102,15 +90,15 @@ public /*@ pure @*/ final
 	  @ public normal_behavior
 	  @   {|
 	  @	requires s < 0;
-	  @	ensures \result != null && \result.length() >= 1 && parseable(\result) &&  \result.charAt(0) == '-' && \result.charAt(1) != '0'
+	  @	ensures \result != null && \result.length() >= 2 && parseable(\result,10) &&  \result.charAt(0) == '-' && \result.charAt(1) != '0'
 	  @		&& s == parseShort(\result);
 	  @   also
 	  @	requires s > 0;
-	  @	ensures \result != null && \result.length() >= 1 && parseable(\result) && \result.charAt(0) != '0'
+	  @	ensures \result != null && \result.length() >= 1 && parseable(\result,10) && \result.charAt(0) != '0'
 	  @		&& s == parseShort(\result);
 	  @   also
 	  @	requires s == 0;
-	  @	ensures \result != null && \result.length() == 1 && parseable(\result) && \result.charAt(0) == '0';
+	  @	ensures \result != null && \result.length() == 1 && parseable(\result,10) && \result.charAt(0) == '0';
 	  @   |}
           @ implies_that
           @   public normal_behavior
@@ -123,11 +111,11 @@ public /*@ pure @*/ final
 	public static /*@ pure @*/ /*@ non_null @*/ String toString(short s);
 
 	/*@    public normal_behavior
-	  @      requires parseable(s);
+	  @      requires parseable(s,10);
 	  @      ensures \result == parseShort(s, 10);
 	  @ also
 	  @    public exceptional_behavior
-	  @      requires !parseable(s);
+	  @      requires !parseable(s,10);
 	  @      signals (NumberFormatException);
 	  @*/
         public static /*@ pure @*/ short parseShort(String s)
@@ -161,11 +149,11 @@ public /*@ pure @*/ final
             throws NumberFormatException ;
 
 	/*@ public normal_behavior
-	  @   requires parseable(s);
+	  @   requires parseable(s,10);
 	  @   ensures \fresh(\result) && \result.shortValue() == parseShort(s);
 	  @ also
 	  @ public exceptional_behavior
-	  @   requires !parseable(s);
+	  @   requires !parseable(s,10);
 	  @   signals (NumberFormatException);
 	  @*/
 	public static /*@ pure @*/ /*@ non_null @*/
@@ -190,12 +178,12 @@ public /*@ pure @*/ final
 	public Short(short value) ;
 
 	/*@ public normal_behavior
-	  @   requires parseable(s);
+	  @   requires parseable(s,10);
 	  @   assignable theShort;
 	  @   ensures theShort == parseShort(s);
 	  @ also
 	  @ public exceptional_behavior
-	  @   requires !parseable(s);
+	  @   requires !parseable(s,10);
 	  @   signals(NumberFormatException);
 	  @*/
 	public Short(String s) throws NumberFormatException ;
