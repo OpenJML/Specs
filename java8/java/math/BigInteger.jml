@@ -55,10 +55,6 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 	    }
     @*/
 
-    //-RAC@ public model \bigint value;
-    //@ public model int sign;
-    //@ public represents sign = signum();
-
     /*@ public normal_behavior
       @     requires val != null;
       @     requires val.length != 0;
@@ -145,8 +141,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
-    //@ axiom ZERO != null && ZERO.value == 0;
-    //@ axiom ONE != null && ONE.value == 1;
+    //-RAC@ axiom ZERO != null && ZERO.value == 0;
+    //-RAC@ axiom ONE != null && ONE.value == 1;
 
     // Arithmetic Operations
 
@@ -164,8 +160,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ ensures equals(\result.multiply(val).add(remainder(val)));
     public BigInteger divide(BigInteger val);
 
-    //@ ensures \result[0].value == divide(val).value;
-    //@ ensures \result[1].value == remainder(val).value;
+    //-RAC@ ensures \result[0].value == divide(val).value;
+    //-RAC@ ensures \result[1].value == remainder(val).value;
     public BigInteger[] divideAndRemainder(BigInteger val);
 
     public BigInteger remainder(BigInteger val);
@@ -185,7 +181,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public normal_behavior
     //@ assignable \nothing;
     //@ ensures \result.signum() == - sign;
-    //@ ensures \result.value == - this.value;
+    //-RAC@ ensures \result.value == - this.value;
     //@ pure
     public BigInteger negate();
 
@@ -290,19 +286,19 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@ ensures  parse(\result,10) == this.value;
     public String toString();
 
-    //@ ensures convert(\result).value == this.value;
+    //-RAC@ ensures convert(\result).value == this.value;
     //@ pure helper
     public byte[] toByteArray();
 
-    //@ also
-    //@ requires this.value >= Integer.MIN_VALUE && this.value <= Integer.MAX_VALUE;
-    //@ ensures \result == this.value;
+    //-RAC@ also
+    //-RAC@ requires this.value >= Integer.MIN_VALUE && this.value <= Integer.MAX_VALUE;
+    //-RAC@ ensures \result == this.value;
     //@ pure helper
     public int intValue();
 
-    //@ also
-    //@ requires this.value >= Long.MIN_VALUE && this.value <= Long.MAX_VALUE;
-    //@ ensures \result == this.value;
+    //-RAC@ also
+    //-RAC@ requires this.value >= Long.MIN_VALUE && this.value <= Long.MAX_VALUE;
+    //-RAC@ ensures \result == this.value;
     //@ pure helper
     public long longValue();
 
