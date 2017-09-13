@@ -177,13 +177,14 @@ public class Object {
     /** Use theString as the (pure) model value of toString() */
     //-RAC@ public model non_null String theString; in objectState;
 
-    /*-RAC@   public normal_behavior
-      @     ensures \result == theString;
+    /*-RAC@   public behavior
       @     ensures (* \result is a string representation of this object *);
-      @
+      @ also code normal_behavior
+      @     assignable \nothing;
+      @     ensures \result == theString;
       @ // Ignore the case of what an Object actually produces as a String
       @*/
-    public /*@ non_null pure @*/ String toString();
+    public /*@ non_null @*/ String toString();
 
     public final void notify();
 

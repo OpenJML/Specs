@@ -32,14 +32,25 @@ import java.util.Random;
 //@ immutable
 public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
-    /*@
-        public static model pure BigInteger parse(String val, int radix) {
-		// !FIXME! - should put in a non-circular computation
-		    return new BigInteger(val,radix);
+    //-RAC@ public model \bigint value;
+    //@ public model int sign;
+    //@ public represents sign = signum();
+
+	
+	// See also Number.parseable()
+	
+	/*-RAC@
+	    public normal_behavior
+	      requires parseable(val,radix);
+        public static model pure \bigint parse(String val, int radix) {
+		// !FIXME! - should put in a non-circular computation for RAC
+		    return new BigInteger(val,radix).value;
 	    }
-	    
+	    */
+	
+	/*@
         public static model pure BigInteger convert(byte[] val) {
-		// !FIXME! - should put in a non-circular computation
+		// !FIXME! - should put in a non-circular computation for RAC
 		    return new BigInteger(val);
 	    }
     @*/
@@ -47,7 +58,6 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@ public model \bigint value;
     //@ public model int sign;
     //@ public represents sign = signum();
-
 
     /*@ public normal_behavior
       @     requires val != null;
@@ -73,18 +83,17 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public BigInteger(int signum, /*@ non_null @*/ byte[] magnitude);
 
     /*-RAC@  public normal_behavior
-      @     requires val != null && !val.equals("");
-      @     requires radix > 1;
-      @     ensures this.equals(parse(val,radix));
-      @ also
-      @   public exceptional_behavior
-      @     requires val != null && val.equals("");
-      @     signals_only java.lang.NumberFormatException;
-      @ also
-      @   public exceptional_behavior
-      @     requires val == null;
-      @     signals_only java.lang.NullPointerException;
-      @*/
+     @     requires val != null && Number.parseable(val,radix);
+     @     ensures this.value == parse(val,radix);
+     @ also
+     @   public exceptional_behavior
+     @     requires val != null && !Number.parseable(val,radix);
+     @     signals_only java.lang.NumberFormatException;
+     @ also
+     @   public exceptional_behavior
+     @     requires val == null;
+     @     signals_only java.lang.NullPointerException;
+     @*/
     //@ pure
     public BigInteger(/*@ nullable */ String val, int radix);
 
@@ -96,16 +105,16 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 //    BigInteger(char[] val);
 
     /*-RAC@  public normal_behavior
-      @     requires val != null && !val.equals("");
-      @     ensures this.equals(parse(val,10));
+      @     requires val != null && Number.parseable(val,16);
+      @     ensures this.value == parse(val,10);
       @ also
       @   public exceptional_behavior
-      @     requires val.equals("");
-      @     //-@ signals_only java.lang.NumberFormatException;
+      @     requires val != null && !Number.parseable(val,16);
+      @     signals_only java.lang.NumberFormatException;
       @ also
       @   public exceptional_behavior
       @     requires val == null;
-      @     //-@ signals_only java.lang.NullPointerException;
+      @     signals_only java.lang.NullPointerException;
       @*/
     //@ pure
     public BigInteger(/*@ nullable */ String val);
@@ -136,13 +145,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
-    //-RAC@ axiom ZERO != null && ZERO.value == 0;
-    // @ public invariant ZERO.equals(ZERO);
-    // @ public constraint ZERO == \old(ZERO);
-    //-RAC@ axiom ONE != null && ONE.value == 1;
-    // @ public invariant ONE.equals(ONE);
-    // @ public invariant !ZERO.equals(ONE);
-    // @ public constraint ONE == \old(ONE);
+    //@ axiom ZERO != null && ZERO.value == 0;
+    //@ axiom ONE != null && ONE.value == 1;
 
     // Arithmetic Operations
 
@@ -160,8 +164,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ ensures equals(\result.multiply(val).add(remainder(val)));
     public BigInteger divide(BigInteger val);
 
-    //@ ensures \result[0].equals(divide(val));
-    //@ ensures \result[1].equals(remainder(val));
+    //@ ensures \result[0].value == divide(val).value;
+    //@ ensures \result[1].value == remainder(val).value;
     public BigInteger[] divideAndRemainder(BigInteger val);
 
     public BigInteger remainder(BigInteger val);
@@ -178,8 +182,11 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ ensures \result.signum() >= 0 && (sign==0 ==> \result.signum() == 0);
     public BigInteger abs();
 
+    //@ public normal_behavior
     //@ assignable \nothing;
     //@ ensures \result.signum() == - sign;
+    //@ ensures \result.value == - this.value;
+    //@ pure
     public BigInteger negate();
 
     //@ ensures \result == sign;
@@ -275,26 +282,27 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public int hashCode();
 
     //@  ensures \result != null;
-    //-RAC@ ensures  parse(\result,radix).equals(this);
+    //-RAC@ ensures  parse(\result,radix) == this.value;
     public String toString(int radix);
 
     //@ also
     //@ ensures \result != null;
-    //-RAC@ ensures  parse(\result,10).equals(this);
+    //-RAC@ ensures  parse(\result,10) == this.value;
     public String toString();
 
-    //@ ensures convert(\result).equals(this);
-    //@ ensures_redundantly this.equals(\old(this));
+    //@ ensures convert(\result).value == this.value;
     //@ pure helper
     public byte[] toByteArray();
 
     //@ also
-    //@ ensures_redundantly this.equals(\old(this));
+    //@ requires this.value >= Integer.MIN_VALUE && this.value <= Integer.MAX_VALUE;
+    //@ ensures \result == this.value;
     //@ pure helper
     public int intValue();
 
     //@ also
-    //@ ensures_redundantly this.equals(\old(this));
+    //@ requires this.value >= Long.MIN_VALUE && this.value <= Long.MAX_VALUE;
+    //@ ensures \result == this.value;
     //@ pure helper
     public long longValue();
 
