@@ -32,8 +32,9 @@ public abstract class ServerSocketChannel extends java.nio.channels.spi.Abstract
 
 	//public abstract <T> ServerSocketChannel setOption(java.net.SocketOption<T> opt, T t) throws java.io.IOException;
 	
+	//-RAC@ model public java.net.ServerSocket _socket;
 	//@ public normal_behavior
-	//@   ensures \result != null;
+	//-RAC@   ensures \result == _socket;
 	//@ pure
 	public abstract java.net.ServerSocket socket();
 	public abstract SocketChannel accept() throws java.io.IOException;
