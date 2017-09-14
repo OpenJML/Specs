@@ -27,7 +27,7 @@ package java.lang;
  * @author David R. Cok
  * @author Mikolas Janota
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
 public /*@ pure @*/ final 
     class Character extends Object implements java.io.Serializable, Comparable
 {

@@ -10,7 +10,7 @@ package java.io;
 */
 
 //@ nullable_by_default
-//OPENJML@ immutable
+//+OPENJML@ immutable
 public class File implements Serializable, Comparable {
 
     // FIELDS

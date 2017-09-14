@@ -60,8 +60,8 @@ public interface Collection {
     //@ instance ghost public boolean containsNull; in localState;
 
 
-    //OPENJML@ immutable pure
-    /*@ public static model class Content {
+    //+OPENJML@ immutable 
+    /*@ public pure static model class Content {
 
             public \bigint theSize;
 

@@ -62,7 +62,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /*@  public normal_behavior
       @   requires c != null;
-      @   requires c.size()*1.1 <= Integer.MAX_VALUE;
+      @   requires c.size() <= (Integer.MAX_VALUE/11)*10;
       @   ensures this.size() == c.size();
       @   ensures (\forall int i; 0 <= i && i < c.size();
       @                     this.get(i) == (c.iterator().nthNextElement(i)));

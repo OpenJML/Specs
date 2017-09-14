@@ -28,7 +28,7 @@ import java.io.InputStream;
  * @author Gary T. Leavens
  * @author Erik Poll
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
 //@ pure 
 public final class Class implements java.io.Serializable {
 

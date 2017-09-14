@@ -26,7 +26,7 @@ package java.lang;
  * @author David R. Cok
  * @author Gary T. Leavens
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
 public /*@ pure @*/ final class Float extends Number implements Comparable {
     
     //@ public model float theFloat;

@@ -30,7 +30,7 @@ import java.util.Enumeration;
  * @see JMLIterator
  * @see JMLEnumerationToIterator
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
 public interface JMLEnumeration<E> extends Enumeration<E>, JMLType {
 
     /** Return a clone of this enumeration.

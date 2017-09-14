@@ -25,7 +25,7 @@ package java.lang;
  * @author Brandon Shilling
  * @author Gary T. Leavens
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
 public /*@ pure @*/ final class Byte extends Number implements Comparable
 {
 

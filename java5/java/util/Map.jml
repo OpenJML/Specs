@@ -31,30 +31,31 @@ public interface Map<K,V> {
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
 
-    //OPENJML@ immutable
-    /*-@ pure public static model class Content {
+    //+OPENJML-RAC@ immutable
+    /*-RAC@ pure public static model class Content {
 
           public \bigint theSize;
 
           // This is object containment (not equals)
           public normal_behavior
             ensures true;
-          //-@ function pure
+          //+OPENJML@ function
           public Object mapsObject(Object key);
 
 
           public normal_behavior
             ensures true;
-          //-@ function pure
-          public Object maps(Object key);
+          //+OPENJML@ function
+          public pure Object mapss(Object key);
 
           public normal_behavior
             ensures true;
-          public function pure boolean hasMapObject(Object key);
+          //+OPENJML@ function
+          public boolean hasMapObject(Object key);
 
           public normal_behavior
             ensures true;
-          //-@ function pure
+          //+OPENJML@ function
           public boolean hasMap(Object key);
         }
       @*/
@@ -71,15 +72,15 @@ public interface Map<K,V> {
                    c.hasMapObject(o) ==> c.hasMap(o)));
         axiom (\forall Content c; c.hasMapObject(null) <==> c.hasMap(null));
         axiom (\forall Content c; (\forall Object o;
-                   c.hasMapObject(o) ==> c.mapsObject(o) == c.maps(o)));
+                   c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)));
         axiom (\forall Content c;
-                   c.hasMapObject(null) ==> c.mapsObject(null) == c.maps(null));
+                   c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null));
      */
           
-    //-@ public model instance non_null Content content; in objectState;
+    //-RAC@ public model instance non_null Content content; in objectState;
     //-@ public invariant content.owner == this;
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> ( 
              content != null &&
              content.theSize == 0  && 
@@ -89,7 +90,7 @@ public interface Map<K,V> {
              !content.hasMap(null) 
              );
       @*/
-    /*@ model pure public boolean initialMap();
+    /*-RAC@ model pure public boolean initialMap();
       @*/
 
     public static interface Entry<K,V> {
@@ -192,7 +193,7 @@ public interface Map<K,V> {
       @    ensures \result == null;
       @ also public normal_behavior
       @    requires content.hasMap(key);    // hasMap or hasMapObject -- FIXME
-      @    ensures \result == content.maps(key);
+      @    ensures \result == content.mapss(key);
       @ also public normal_behavior
       @    requires content.hasMapObject(key);
       @    ensures \result == content.mapsObject(key);
@@ -206,7 +207,7 @@ public interface Map<K,V> {
       @    ensures content.hasMap(key);
       @    ensures !isEmpty() && containsKey(key) && containsValue(value);
       @    ensures content.mapsObject(key) == value;
-      @    ensures content.maps(key) == value;
+      @    ensures content.mapss(key) == value;
       @    ensures \result == \old(get(key));
 
       @    ensures (\forall Object k; !k.equals(key) ==> 
@@ -222,11 +223,11 @@ public interface Map<K,V> {
       @    ensures key != null ==> (\old(content.hasMap(null)) 
                                        == content.hasMap(null));
       @
-      @    ensures (\forall Object k; k.equals(key) ==> content.maps(k) == value);
+      @    ensures (\forall Object k; k.equals(key) ==> content.mapss(k) == value);
       @    ensures (\forall Object k; \old(!k.equals(key)) ==> 
-                        \old(content.maps(k)) == content.maps(k));
+                        \old(content.mapss(k)) == content.mapss(k));
       @    ensures key != null ==> 
-                        \old(content.maps(null)) == content.maps(null);
+                        \old(content.mapss(null)) == content.mapss(null);
       @
       @    ensures (\forall Object k; \old(!k.equals(key)) ==> 
                         \old(content.mapsObject(k)) == content.mapsObject(k));
@@ -305,21 +306,28 @@ public interface Map<K,V> {
       @    ensures (\forall Object k; !content.hasMapObject(k));
       @*/
     void clear();
+    
+    //@ model public Set<K> _keySet; in objectState; // FIXME - just for detereminism
 
     /*@ public normal_behavior 
       @    ensures \result != null;
+      @    ensures \result.size() >= 0; // FIXME - why needed?
+      @    ensures \result.content.owner == \result; // FIXME - why needed?
+      @    ensures \result == _keySet;
            // FIXME
       @*/
     /*@ pure @*/ Set<K> keySet();
 
     /*@ public normal_behavior 
       @    ensures \result != null;
+      @    ensures \result.size() >= 0; // FIXME - why needed?
            // FIXME
       @*/
     /*@ pure @*/ Collection<V> values();
 
     /*@ public normal_behavior
       @    ensures \result != null; 
+      @    ensures \result.size() >= 0;  // FIXME - why needed?
            // FIXME
       @*/
     /*@ pure @*/ Set<Entry<K,V>> entrySet();

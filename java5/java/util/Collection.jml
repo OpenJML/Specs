@@ -54,7 +54,8 @@ public interface Collection<E> extends Iterable<E> {
     //@ instance ghost public boolean containsNull; in localState;
 
 
-    //OPENJML@ immutable pure
+    //+OPENJML@ immutable 
+	//@ pure
     /*@ public static model class Content {
 
             public int theSize; // FIXME - should be \bigint

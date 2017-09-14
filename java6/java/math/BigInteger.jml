@@ -29,7 +29,7 @@ import java.util.Random;
  * @author David R. Cok
  * @author Gary T. Leavens
  */
-//OPENJML@ immutable
+//+OPENJML@ immutable
 //@ non_null_by_default
 public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 

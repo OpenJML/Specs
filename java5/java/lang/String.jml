@@ -35,7 +35,7 @@ import java.util.Comparator;
  * @author Joseph R. Kiniry
  * @author Mikolas Janota
  */
-//OPENJML@ immutable 
+//+OPENJML@ immutable 
 //@ non_null_by_default
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence
