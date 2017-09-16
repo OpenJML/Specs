@@ -28,14 +28,14 @@ public class Hashtable<K,V> extends Dictionary<K,V>
 {
     // NOTE: A Hashtable does not allow null elements
  
-    //@ public model int initialCapacity;    
-    //@ public model float mLoadFactor;
+    //-RAC@ public model int initialCapacity;    
+    //-RAC@ public model float mLoadFactor;
 	    // Can't use loadFactor because it is a private field identifier
     
-    //@ public invariant initialCapacity >= 0;  
-    //@ public invariant mLoadFactor > 0;
+    //-RAC@ public invariant initialCapacity >= 0;  
+    //-RAC@ public invariant mLoadFactor > 0;
     
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @   ensures \result <==> ( initialMap() &&
       @                          mLoadFactor == f &&
@@ -47,26 +47,26 @@ public class Hashtable<K,V> extends Dictionary<K,V>
       @ public pure model boolean initialHashtable();
       @*/
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires initialCapacity >= 0;
       @   ensures initialHashtable(mLoadFactor, initialCapacity);
       @*/           
     //@ pure
     public Hashtable(int initialCapacity, float mLoadFactor); 
             
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @     ensures initialHashtable(0.75,initialCapacity);
       @*/
     //@ pure
     public Hashtable(int initialCapacity); 
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @     ensures initialHashtable(0.75,11);
       @*/
     //@ pure
     public Hashtable(); 
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires t != null;
       @     ensures mLoadFactor == 0.75;
       @     ensures equals(t);
@@ -153,7 +153,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     // specification inherited
     public synchronized void clear();
 
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @       assignable \nothing;
       @       ensures \result instanceof Map && \fresh(\result)
