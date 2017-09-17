@@ -1,5 +1,6 @@
 package java.lang;
 
+//@ non_null_by_default
 public class Thread implements Runnable {
 	//@ public model boolean dead;
 //  private volatile String name;
@@ -64,6 +65,10 @@ public class Thread implements Runnable {
   public Thread(Runnable r);
 //  Thread(Runnable, java.security.AccessControlContext);
   public Thread(ThreadGroup g, Runnable r);
+  
+  //@ public normal_behavior
+  //@   requires true;
+  //@ pure
   public Thread(String s);
   public Thread(ThreadGroup g, String s);
   public Thread(Runnable r, String s);
@@ -71,6 +76,9 @@ public class Thread implements Runnable {
   public Thread(ThreadGroup g, Runnable r, String s, long t);
   public synchronized void start();
 //  private native void start0();
+  
+  //@ public behavior
+  //@   requires true;
   public void run();
 //  private void exit();
   public final void stop();
@@ -110,6 +118,10 @@ public class Thread implements Runnable {
   public final void setDaemon(boolean b);
   public final boolean isDaemon();
   public final void checkAccess();
+  
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public String toString();
   public ClassLoader getContextClassLoader();
   public void setContextClassLoader(ClassLoader loader);
