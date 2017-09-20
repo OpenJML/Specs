@@ -51,35 +51,40 @@ public class Throwable extends Object implements java.io.Serializable
       @ public normal_behavior
       @   ensures \result == (_message == null && _cause == null && _causeSet == false);
       @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;
         public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
       @   ensures \result == (_cause == null && _causeSet == false);
       @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;
         public pure model boolean standardThrowableUnspecifiedMessage();
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (_cause == c && _causeSet == true);
-      @
       @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;
         public pure model boolean standardThrowableUnspecifiedMessage(nullable Throwable c);
 
       @ public normal_behavior
       @   ensures \result == (_message == s && _cause == null && _causeSet == false);
       @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;
         public pure helper model boolean standardThrowable(non_null String s);
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (initMessage(c) && _cause == c && _causeSet == true);
       @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;
         public pure helper model boolean standardThrowable(nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != this;
       @   ensures \result == (_message == s && _cause == c && _causeSet == true);
       @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;
         public pure helper model boolean standardThrowable(non_null String s, nullable Throwable c);
 
       @ public normal_behavior
@@ -178,10 +183,14 @@ public class Throwable extends Object implements java.io.Serializable
     //@   assignable System.err.*;
     public void printStackTrace();
     //@ public normal_behavior
-    //@   assignable s.*;
+    //@   requires s.isOpen;
+    //@   assignable s.*; // FIXME - don't need to modify this much
+    //@   ensures s.isOpen;
     public void printStackTrace(/*@non_null*/java.io.PrintStream s);
     //@ public normal_behavior
-    //@   assignable s.*;
+    //@   //requires s.isOpen;
+    //@   assignable s.*; // FIXME - don't need to modify this much
+    //@   //ensures s.isOpen;
     public void printStackTrace(/*@non_null*/java.io.PrintWriter s);
 
     /*@ public normal_behavior
@@ -209,4 +218,19 @@ public class Throwable extends Object implements java.io.Serializable
       @   signals_only NullPointerException;
       @*/
     public void setStackTrace(/*@non_null*/StackTraceElement[/*#@non_null*/] stackTrace);
+
+    //@ model non_null public Throwable[] _throwables;
+    //+RAC@ public represents _throwables = getSuppressed();
+    
+    //@ public normal_behavior
+    //@  assignable _throwables;
+    //@  ensures _throwables.length == \old(_throwables).length + 1;
+    //@  ensures (* content is what it should be *);
+    public final synchronized void addSuppressed(java.lang.Throwable t);
+    
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _throwables; // FIXME - is the result the same array on every call?
+    //@ pure
+    public final synchronized java.lang.Throwable[] getSuppressed();
+
 }

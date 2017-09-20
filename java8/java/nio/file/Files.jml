@@ -78,9 +78,21 @@ public final class Files {
 	public static byte[] readAllBytes(Path path) throws java.io.IOException;
 //	  public static java.util.List<java.lang.String> readAllLines(Path, java.nio.charset.Charset) throws java.io.IOException;
 //	  public static java.util.List<java.lang.String> readAllLines(Path) throws java.io.IOException;
-//	  public static Path write(Path, byte[], OpenOption...) throws java.io.IOException;
-//	  public static Path write(Path, java.lang.Iterable<? extends java.lang.CharSequence>, java.nio.charset.Charset, OpenOption...) throws java.io.IOException;
-//	  public static Path write(Path, java.lang.Iterable<? extends java.lang.CharSequence>, OpenOption...) throws java.io.IOException;
+
+	//@ public behavior
+	//@  requires true;
+	//@ pure  // FIXME - need to model the file system
+	public static Path write(Path path, byte[] bytes, OpenOption... options) throws java.io.IOException;
+
+	//@ public behavior
+	//@  requires true;
+	//@ pure  // FIXME - need to model the file system
+	public static Path write(Path path, java.lang.Iterable<? extends java.lang.CharSequence> charSequences, java.nio.charset.Charset charset, OpenOption... options) throws java.io.IOException;
+
+	//@ public behavior
+	//@  requires true;
+	//@ pure  // FIXME - need to model the file system
+	public static Path write(Path path, java.lang.Iterable<? extends java.lang.CharSequence> charSequences, OpenOption... options) throws java.io.IOException;
 
 	  //@ public normal_behavior
 	  //@   requires true; // FIXME - model well-constructed paths

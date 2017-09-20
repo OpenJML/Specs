@@ -132,6 +132,7 @@ public class Cipher {
 	  //@ public normal_behavior
 	  //@   assignable this.*;
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.length == b.length; // FIXME - is this so? perhaps just when there have been no prvious calls?
 	  //@   ensures (* FIXME OPENJML - length of output? is it really fresh? *);
 	  public final byte[] doFinal(byte[] b) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
 

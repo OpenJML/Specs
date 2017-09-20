@@ -10,6 +10,10 @@ public abstract class AbstractInterruptibleChannel implements java.nio.channels.
 	//@ pure
 	protected AbstractInterruptibleChannel();
 	
+	//@ public behavior
+	//@   assignable this.*;
+	//@   ensures true;  // FIXME not open
+	//@   signals_only java.io.IOException;
 	public final void close() throws java.io.IOException;
 	
 //	protected abstract void implCloseChannel() throws java.io.IOException;

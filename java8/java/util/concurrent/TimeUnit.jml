@@ -22,9 +22,14 @@ public enum TimeUnit { // FIXME - change to enum?
 	
 //  static long x(long a, long b, long c);
   
+	// Converts t units of TimeUnit u into the result expressed ain the receiver's unit
+	// Relies on the fact that the scale values are multiples of each other
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * u.scale / this.scale;
+  //@  requires u.scale < this.scale;
+  //@  ensures \result == t / (this.scale / u.scale);
+  //@ also public normal_behavior
+  //@  requires u.scale >= this.scale && t <= Long.MAX_VALUE / (u.scale / this.scale);
+  //@  ensures \result == t * (u.scale / this.scale);
   //@ pure function
   public long convert(long t, TimeUnit u);
   
