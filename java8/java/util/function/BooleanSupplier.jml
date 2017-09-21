@@ -1,0 +1,17 @@
+package java.util.function;
+
+public interface BooleanSupplier {
+	
+	//@ public behavior
+	//@   ensures true;
+	  public abstract boolean getAsBoolean();
+	  
+	  /*@
+	  model public interface Pure {
+			//@ public normal_behavior
+			//@   ensures true;
+		    //@ pure
+			  public abstract boolean getAsBoolean();
+	  }
+	  */
+}
