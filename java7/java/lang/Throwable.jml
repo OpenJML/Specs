@@ -182,15 +182,15 @@ public class Throwable extends Object implements java.io.Serializable
     //@ public normal_behavior
     //@   assignable System.err.*;
     public void printStackTrace();
-    //@ public normal_behavior
-    //@   requires s.isOpen;
-    //@   assignable s.*; // FIXME - don't need to modify this much
-    //@   ensures s.isOpen;
+    //-RAC@ public normal_behavior
+    //-RAC@   requires s.isOpen;
+    //-RAC@   assignable s.*; // FIXME - don't need to modify this much
+    //-RAC@   ensures s.isOpen;
     public void printStackTrace(/*@non_null*/java.io.PrintStream s);
-    //@ public normal_behavior
-    //@   //requires s.isOpen;
-    //@   assignable s.*; // FIXME - don't need to modify this much
-    //@   //ensures s.isOpen;
+    //-RAC@ public normal_behavior
+    //-RAC@   //requires s.isOpen;
+    //-RAC@   assignable s.*; // FIXME - don't need to modify this much
+    //-RAC@   //ensures s.isOpen;
     public void printStackTrace(/*@non_null*/java.io.PrintWriter s);
 
     /*@ public normal_behavior
@@ -229,6 +229,7 @@ public class Throwable extends Object implements java.io.Serializable
     public final synchronized void addSuppressed(java.lang.Throwable t);
     
     //@ public normal_behavior
+    //@    requires true;
     //-RAC@   ensures \result == _throwables; // FIXME - is the result the same array on every call?
     //@ pure
     public final synchronized java.lang.Throwable[] getSuppressed();
