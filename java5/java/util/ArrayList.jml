@@ -28,7 +28,7 @@ public class ArrayList<E> extends AbstractList<E>
     implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 {
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> 
       @                  initialAbstractList() &&
       @                  capacity == initialCapacity &&
@@ -44,23 +44,23 @@ public class ArrayList<E> extends AbstractList<E>
       @*/
 
     // METHODS AND CONSTRUCTORS
-    /*@ public normal_behavior
-      @   requires 0 <= initialCapacity;
-      @   ensures initialArrayList(initialCapacity);
-      @ also
-      @  public exceptional_behavior
+    //@ public normal_behavior
+    //@   requires 0 <= initialCapacity;
+    //-RAC@   ensures initialArrayList(initialCapacity);
+    //@ also
+    /*@  public exceptional_behavior
       @   requires initialCapacity < 0;
       @   assignable \nothing;
       @   signals_only IllegalArgumentException;
       @*/
     /*@ pure @*/ public ArrayList(int initialCapacity) throws IllegalArgumentException;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures initialArrayList(10);
       @*/
     /*@ pure @*/ public ArrayList();
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @   requires c != null;
       @   requires c.size() <= (Integer.MAX_VALUE/11)*10;
       @   ensures this.size() == c.size();
@@ -108,14 +108,14 @@ public class ArrayList<E> extends AbstractList<E>
     public /*@ pure @*/ int lastIndexOf(Object elem);
 
     // specification inherited from Object
-    /*@ also
-      @  public normal_behavior
-      @   ensures \result != this;
-      @   ensures \result.equals(this);
-      @   ensures ((List)\result).containsNull == this.containsNull;
-      @   ensures ((ArrayList)\result).content.theSize == this.content.theSize;
-      @   //-@ ensures List.equals(((List)\result).content,this.content);
-      @*//*-RAC@ also public normal_behavior
+    //@ also
+    //@  public normal_behavior
+    //@   ensures \result != this;
+    //@   ensures \result.equals(this);
+    //-RAC@   ensures ((List)\result).containsNull == this.containsNull;
+    //-RAC@   ensures ((ArrayList)\result).content.theSize == this.content.theSize;
+    //-RAC@ ensures List.equals(((List)\result).content,this.content);
+    /*-RAC@ also public normal_behavior
       @   ensures ((ArrayList)\result).theHashCode == this.theHashCode;
       @   ensures ((ArrayList)\result).theString == this.theString;
       @*/

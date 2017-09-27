@@ -33,14 +33,14 @@ public interface List<E> extends Collection<E> {
       @ public pure model boolean initialList();
       @*/
 
-    //-@ pure public static model E get(Content c, \bigint i);
+    //@ pure public static model Object get(Content c, \bigint i);
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> ( c.theSize == cc.theSize &&
       @     (\forall \bigint i; 0<=i && i<c.theSize; get(c,i) == get(cc,i)));
       @*/
-    //-@ function
-    //-@ public pure static model boolean equals(Content c, Content cc);
+    //-RAC@ function
+    //-RAC@ public pure static model boolean equals(Content c, Content cc);
 
     // specification inherited
     //@ pure
@@ -168,11 +168,11 @@ public interface List<E> extends Collection<E> {
     // specification inherited
     int hashCode();
 
-    /*@ public normal_behavior
-      @   requires 0 <= index && index < size(); */
+    //@ public normal_behavior
+    //@   requires 0 <= index && index < size();
     /* FIXME -@  ensures \result == get(content,index); */
-    /*@   ensures !\key("RAC") ==> !containsNull ==> \result != null;
-      @ also
+    //-RAC@   ensures !containsNull ==> \result != null;
+    /*@ also
       @ public exceptional_behavior
       @   requires !(0 <= index && index < size());
       @   signals_only IndexOutOfBoundsException;

@@ -34,7 +34,7 @@ package java.util;
 //@ non_null_by_default
 public interface Collection<E> extends Iterable<E> {
 
-    //@ public model instance JMLDataGroup localState; in objectState;
+    //-RAC@ public model instance JMLDataGroup localState; in objectState;
 
     /** A utility method that compares possibly-null objects with equals,
         according to how the Collection classes do the comparison. 
@@ -51,7 +51,7 @@ public interface Collection<E> extends Iterable<E> {
      * True iff we are allowed to contain null (not whether we do in fact
      * contain null).
      **/
-    //@ instance ghost public boolean containsNull; in localState;
+    //-RAC@ instance ghost public boolean containsNull; in localState;
 
 
     //+OPENJML@ immutable 
@@ -66,11 +66,11 @@ public interface Collection<E> extends Iterable<E> {
         }
       @*/
 
-    //@ public model non_null instance Content content; in localState;
-    //@ public invariant content.owner == this;
-    //@ public invariant content.theSize >= 0;
+    //-RAC@ public model non_null instance Content content; in localState;
+    //-RAC@ public invariant content.owner == this;
+    //-RAC@ public invariant content.theSize >= 0;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
           ensures \result <==> ( content.theSize == 0
                               && containsNull == true);
         pure
@@ -88,32 +88,29 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*@ pure @*/ boolean isEmpty();
 
-    /*@ public behavior
-      @   ensures !\key("RAC") ==> (!containsNull && o == null) ==> !\result;
-      @   ensures size() == 0 ==> !\result;
-      @   ensures !\key("RAC") ==> (containsObject(o) <==> \result);
-      @   ensures  \key("RAC") ==> (contains(o) <==> \result);
-      @   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
+    //@ public behavior
+    //-RAC@   ensures (!containsNull && o == null) ==> !\result;
+    //@   ensures size() == 0 ==> !\result;
+    //-RAC@   ensures (containsObject(o) <==> \result);
+    //+RAC@   ensures (contains(o) <==> \result);
+    //@   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
           // various exceptions may get thrown, but are optional,
           // so they are specified in the implementing classes
-      @   signals_only ClassCastException,NullPointerException;
-      @*/
+    //@   signals_only ClassCastException,NullPointerException;
     /*@ pure @*/ boolean contains(/*@nullable*/ Object o);
 
-    /*@ public normal_behavior
-      @   ensures !containsNull && o == null ==> !\result;
-      @   ensures content.theSize == 0 ==> !\result;
-      @   ensures !\key("RAC") ==> (\result <==> content.containsObject(o));
-      @   ensures  \key("RAC") ==> (\result <==> contains(o));
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures !containsNull && o == null ==> !\result;
+    //-RAC@ ensures content.theSize == 0 ==> !\result;
+    //-RAC@   ensures (\result <==> content.containsObject(o));
+    //+RAC@   ensures (\result <==> contains(o));
     //@ public model pure boolean containsObject(nullable Object o);
 
 
-    /*@ public normal_behavior
-      @   ensures \result != null;
-      @   ensures \fresh(\result);
-      @   ensures containsNull == \result.returnsNull;
-      @*/
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //-RAC@   ensures \fresh(\result);
+    //-RAC@   ensures containsNull == \result.returnsNull;
     /* FIXME
       @   ensures (\forall int i; 0 <= i && i < size();
       @                 contains(\result.nthNextElement(i)));
@@ -129,16 +126,15 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*@ non_null @*/ /*@ pure @*/ Iterator<E> iterator();
 
-    /*@ public normal_behavior
-      @   ensures \result != null;
-      @   ensures !\key("RAC") ==> (containsNull || \nonnullelements(\result));
-      @   ensures \result.length == size();
-      @   ensures \typeof(\result) == \type(Object[]);
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //-RAC@   ensures  (containsNull || \nonnullelements(\result));
+    //@   ensures \result.length == size();
+    //@   ensures \typeof(\result) == \type(Object[]);
        // NOTE: does not worry about duplicate entries - see subclasses for that
            // FIXME - is the following ok
       // @   ensures (\forall int i; 0<=i && i<\result.length; containsObject(\result[i]));
-      @   ensures !\key("RAC") ==> (\forall Object o; containsObject(o) <==> Arrays.contains(\result,o));
-      @*/
+    //-RAC@   ensures  (\forall Object o; containsObject(o) <==> Arrays.contains(\result,o));
     /*@ pure @*//*@non_null*/ Object[] toArray();
        
     /*  FIXME @ public normal_behavior
@@ -193,7 +189,6 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*+RAC@
       @  public normal_behavior
-      @    requires !\key("RAC") ==> !containsNull ==> o != null;
       @    {|
       @    requires contains(o);
       @    assignable \nothing;
@@ -266,7 +261,7 @@ public interface Collection<E> extends Iterable<E> {
 
     // FIXME - what if c == this in the following calls?
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires c != null;
       @   requires !\key("RAC") ==> !containsNull ==> !c.containsNull;
       @   assignable objectState; 
@@ -332,7 +327,7 @@ public interface Collection<E> extends Iterable<E> {
     // FIXME - also the optional exceptions
     boolean retainAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   assignable objectState; 
       @   ensures !\key("RAC") ==> \not_modified(containsNull);
       @   ensures isEmpty();

@@ -60,7 +60,7 @@ public interface Map<K,V> {
         }
       @*/
 
-    /*-@
+    /*-RAC@
         public invariant (\forall Object o; content.theSize == 0 ==> 
                       !content.hasMapObject(o));
         public invariant (\forall Object o; content.theSize == 0 ==>
@@ -68,7 +68,7 @@ public interface Map<K,V> {
         public invariant content.theSize == 0 ==> !content.hasMapObject(null);
         public invariant content.theSize == 0 ==> !content.hasMap(null);
       @*/
-    /*-@ axiom (\forall Content c; (\forall Object o;
+    /*-RAC@ axiom (\forall Content c; (\forall Object o;
                    c.hasMapObject(o) ==> c.hasMap(o)));
         axiom (\forall Content c; c.hasMapObject(null) <==> c.hasMap(null));
         axiom (\forall Content c; (\forall Object o;
@@ -78,7 +78,7 @@ public interface Map<K,V> {
      */
           
     //-RAC@ public model instance non_null Content content; in objectState;
-    //-@ public invariant content.owner == this;
+    //-RAC@ public invariant content.owner == this;
 
     /*-RAC@ public normal_behavior
       @   ensures \result <==> ( 
@@ -309,13 +309,11 @@ public interface Map<K,V> {
     
     //@ model public Set<K> _keySet; in objectState; // FIXME - just for detereminism
 
-    /*@ public normal_behavior 
-      @    ensures \result != null;
-      @    ensures \result.size() >= 0; // FIXME - why needed?
-      @    ensures \result.content.owner == \result; // FIXME - why needed?
-      @    ensures \result == _keySet;
-           // FIXME
-      @*/
+    //@ public normal_behavior 
+    //@    ensures \result != null;
+    //@    ensures \result.size() >= 0; // FIXME - why needed?
+    //-RAC@    ensures \result.content.owner == \result; // FIXME - why needed?
+    //@    ensures \result == _keySet;
     /*@ pure @*/ Set<K> keySet();
 
     /*@ public normal_behavior 

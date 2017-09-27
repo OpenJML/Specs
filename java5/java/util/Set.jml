@@ -61,12 +61,11 @@ public interface Set<E> extends Collection<E> {
        @   ensures \result;
        @   ensures !contains(o);
        @*/
-    /*@ also public behavior
-      @   requires !\key("RAC") ==> !containsNull ==> o != null;
-      @   requires !contains(o);
-      @   assignable \nothing; 
-      @   ensures !\result;
-      */
+    //@ also public behavior
+    //-RAC@   requires !containsNull ==> o != null;
+    //@   requires !contains(o);
+    //@   assignable \nothing; 
+    //@   ensures !\result;
     boolean remove(/*@nullable*/ Object o);
 
     // Bulk Operations
@@ -97,14 +96,13 @@ public interface Set<E> extends Collection<E> {
 
     // Comparison and hashing
 
-    /*@ also public normal_behavior
-       @   requires o != null;
-       @   requires o instanceof Set;
-       @   ensures \result <==>
+    //@ also public normal_behavior
+    //@   requires o != null;
+    //@   requires o instanceof Set;
+    /*@   ensures \result <==>
                ((\forall Object oo; contains(oo) <==> ((Set)o).contains(oo))
-             && contains(null) <==> ((Set)o).contains(null));
-       @   ensures !\key("RAC") ==> \result ==> (content.theSize == ((Set)o).content.theSize);
-       @*/
+             && contains(null) <==> ((Set)o).contains(null)); */
+    //-RAC@   ensures  \result ==> (content.theSize == ((Set)o).content.theSize);
     /*@ pure @*/ boolean equals(/*@nullable*/ Object o);
 
     // specification inherited
