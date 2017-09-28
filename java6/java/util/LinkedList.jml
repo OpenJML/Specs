@@ -31,13 +31,13 @@ public class LinkedList<E> extends AbstractSequentialList<E>
     implements List<E>, Cloneable, java.io.Serializable, Deque<E>
 {
 	
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures isEmpty();
       @   ensures containsNull;
       @*/
     /*@ pure @*/ public LinkedList();
           
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires c != null;
       @   ensures containsNull == c.containsNull;
       @ also
@@ -47,7 +47,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/
     /*@ pure @*/ public LinkedList(Collection<? extends E> c);
     
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires !isEmpty();
       @    ensures !containsNull ==> \result != null;
       @    ensures \result == get(0);
@@ -58,7 +58,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/
     public /*@ pure @*/ E getFirst();
     
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires !isEmpty();
       @    ensures !containsNull ==> \result != null;
       @    ensures \result == get(size()-1);
@@ -69,7 +69,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/
     public /*@ pure @*/ E getLast();
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires !isEmpty();
       @     assignable objectState;
       @    ensures !containsNull ==> \result != null;
@@ -86,7 +86,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/    
     public E removeFirst();
  
-    /*@  public behavior
+    /*-RAC@  public behavior
       @    requires !isEmpty();
       @    assignable objectState;
       @    ensures !containsNull ==> \result != null;
@@ -103,7 +103,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/     
     public E removeLast();
   
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    requires containsNull || o != null;
       @    assignable objectState;
       @    ensures size() == \old(size()+1);
@@ -114,7 +114,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/    
     public void addFirst(E o);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    requires containsNull || o != null;
       @    assignable objectState;
       @    ensures size() == \old(size()+1);

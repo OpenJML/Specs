@@ -4,12 +4,12 @@ package java.util;
 
 public abstract class AbstractSequentialList<E> extends java.util.AbstractList<E> {
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> initialAbstractList();
       @ public pure model boolean initialAbstractSequentialList();
       @*/
 
-    /*@ protected normal_behavior
+    /*-RAC@ protected normal_behavior
       @   ensures initialAbstractSequentialList();
       @*/
     //@ pure
