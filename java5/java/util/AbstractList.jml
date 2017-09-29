@@ -28,12 +28,12 @@ package java.util;
  */
 public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> ( initialAbstractCollection() && initialList());
       @ public pure model boolean initialAbstractList();
       @*/
 
-    /*@ protected normal_behavior
+    /*-RAC@ protected normal_behavior
           ensures initialAbstractList();
       @*/
     /*@ pure @*/ protected AbstractList();
@@ -90,7 +90,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
     // specification inherited from Object
     public /*@ pure @*/ int hashCode();
 
-    /*@ protected normal_behavior
+    /*-RAC@ protected normal_behavior
       @  requires 0 <= fromIndex && fromIndex < size();
       @  {|
       @     requires fromIndex >= toIndex;

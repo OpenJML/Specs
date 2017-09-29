@@ -8,7 +8,6 @@ public abstract class ServerSocketChannel extends java.nio.channels.spi.Abstract
 	protected ServerSocketChannel(java.nio.channels.spi.SelectorProvider provider);
 	
 	//@ public behavior
-	//@   assignable \result.state;
 	//@   ensures \fresh(\result);
 	//@   signals_only java.io.IOException;
 	public static ServerSocketChannel open() throws java.io.IOException;

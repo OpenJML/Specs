@@ -33,7 +33,7 @@ package java.util;
  */
 public interface Collection {
 
-    //@ public model instance JMLDataGroup localState; in objectState;
+    //-RAC@ public model instance JMLDataGroup localState; in objectState;
 
     /** A utility method that compares possibly-null objects with equals,
         according to how the Collection classes do the comparison. 
