@@ -26,17 +26,19 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @*/
 
     //@ normal_behavior
-    //@   assignable \not_specified;
+    //@   requires true;
     //-RAC@   ensures size(content) >= 0;
     //-RAC@   ensures cardinality(content) == 0;
     //-RAC@   ensures (\forall int i; 0 <= i; !isSet(content,i));
+    //@ pure
     public BitSet();
 
     //@ public normal_behavior
-    //@   assignable \not_specified;
+    //@   requires true;
     //-RAC@   ensures size(content) >= i;
     //-RAC@   ensures cardinality(content) == 0;
     //-RAC@   ensures (\forall int i; 0 <= i; !isSet(content,i));
+    //@ pure
     public BitSet(int i);
 
     // number of set bits

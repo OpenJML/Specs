@@ -45,6 +45,10 @@ public final class String
 
     public static final Comparator<String> CASE_INSENSITIVE_ORDER;
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures true;
+    //-RAC@ static_initializer
+    
     //---------------------------------------------------------------------
     // Constructors (and their helpers)
     //---------------------------------------------------------------------
