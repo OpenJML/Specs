@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.Comparator;
+import java.nio.charset.Charset;
 
 /** JML's specification of java.lang.String.
  * @version $Revision: 2412 $
@@ -156,10 +157,11 @@ public final class String
 
     // Define the following to be true (e.g. with an axiom) to declare
     // a given encoding as supported.  FIXME - define this in terms of
-    // functionality in java.nio.charset.CharSet.
+    // functionality in java.nio.charset.Charset.
     //@ public static pure model boolean supportedEncoding(String charsetName);
+    //@ public static pure model boolean supportedEncoding(Charset charsetName);
 
-    /*+ESC@ public behavior
+    /*+ESC@ public normal_behavior
       @  requires bytes != null && charsetName != null
       @             && 0 <= offset 
       @             && (offset + length) <= bytes.length
@@ -191,6 +193,38 @@ public final class String
                                  String charsetName)
         throws UnsupportedEncodingException;
 
+    /*+ESC@ public normal_behavior
+      @  requires bytes != null && charsetName != null
+      @             && 0 <= offset 
+      @             && (offset + length) <= bytes.length
+      @             && 0 <= length;
+      @     requires supportedEncoding(charsetName);
+      @     ensures charArray != null;
+      @     ensures charArray.length <= length;
+      @     ensures 
+      @            (\forall int i; 0 <= i && i < length;
+      @                  (* charArray[i] == 
+      @                     char at position i of the conversion of subarray
+      @                     of bytes using the encoding charsetName *));
+      @
+      @ also public exceptional_behavior
+      @   requires bytes == null || charsetName == null ||
+                   !supportedEncoding(charsetName) ||
+                   (offset < 0 || length < 0 || offset+length>bytes.length);
+      @   assignable \nothing;
+      @   signals_only NullPointerException, StringIndexOutOfBoundsException,
+                                  UnsupportedEncodingException;
+      @   signals (StringIndexOutOfBoundsException e) 
+                           offset<0 || length<0 || (offset+length)>bytes.length;
+      @   signals (NullPointerException) bytes==null || charsetName == null;
+      @   //signals (UnsupportedEncodingException) charsetName != null &&
+		  //			     !supportedEncoding(charsetName);
+      @*/
+    public /*@ pure @*/ String(byte[] bytes,
+                                 int offset, int length,
+                                 Charset charsetName)
+        throws UnsupportedEncodingException;
+    
     /*@
       @  public exceptional_behavior
       @   requires bytes == null || charsetName == null

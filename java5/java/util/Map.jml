@@ -24,6 +24,7 @@ package java.util;
  * @author Gary T. Leavens
  * @author David R. Cok
  */
+//@ non_null_by_default
 public interface Map<K,V> {
     /*@ public normal_behavior
       @   ensures \result == ( o == oo ||
@@ -40,23 +41,23 @@ public interface Map<K,V> {
           public normal_behavior
             ensures true;
           //+OPENJML@ function
-          public Object mapsObject(Object key);
+          public Object mapsObject(nullable Object key);
 
 
           public normal_behavior
             ensures true;
           //+OPENJML@ function
-          public pure Object mapss(Object key);
+          public pure Object mapss(nullable Object key);
+
+          public normal_behavior
+            ensures true;
+          //+OPENJML@ pure function
+          public boolean hasMapObject(nullable Object key);
 
           public normal_behavior
             ensures true;
           //+OPENJML@ function
-          public boolean hasMapObject(Object key);
-
-          public normal_behavior
-            ensures true;
-          //+OPENJML@ function
-          public boolean hasMap(Object key);
+          public boolean hasMap(nullable Object key);
         }
       @*/
 
