@@ -76,13 +76,13 @@ public /*@ pure @*/ final
 	  @*/
 
 
-	public static final short   MIN_VALUE;
-					//@ public initially MIN_VALUE == -65536;
-	public static final short   MAX_VALUE;
-					//@ public initially MAX_VALUE == 65535;
+	public static final short   MIN_VALUE = -65536;
+	public static final short   MAX_VALUE = 65535;
 
 	public static final Class<Short>   TYPE;
-					//@ public initially TYPE == short.class;
+
+    //@ ensures TYPE == short.class;
+    //@ static_initializer
 
 	public static final int   SIZE = 16; // Number of bits in a short representation
 

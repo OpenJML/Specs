@@ -68,6 +68,12 @@ public final class System {
         /*@ public initially err != null; @*/ 
         //@ public invariant !allowNullStreams ==> err != null;
 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures in.isOpen;
+    //-RAC@   ensures out.isOpen;
+    //-RAC@   ensures err.isOpen;
+    //-RAC@ static_initializer
+    
     //@ requires allowNullStreams || i != null;
     //@ assignable in;  // strangely enough, in is like a read-only var.
     //@ ensures in == i;

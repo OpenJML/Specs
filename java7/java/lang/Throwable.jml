@@ -39,6 +39,11 @@ package java.lang;
 
 public class Throwable extends Object implements java.io.Serializable
 {
+    
+    //@ public normal_behavior
+    //@   ensures true; // This is here to suppress warnings about private static final fields
+    //@ static_initializer
+    
     //@ public model nullable String _message;  in objectState;
     //@ public model nullable Throwable _cause; in objectState;
 	//@ public model boolean _causeSet;         in _cause;

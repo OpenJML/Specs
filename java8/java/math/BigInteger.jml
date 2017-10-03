@@ -141,8 +141,10 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
-    //-RAC@ axiom ZERO != null && ZERO.value == 0;
-    //-RAC@ axiom ONE != null && ONE.value == 1;
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures ZERO != null && ZERO.value == 0;
+    //-RAC@   ensures ONE  != null && ONE.value == 1;
+    //-RAC@ static_initializer
 
     // Arithmetic Operations
 
