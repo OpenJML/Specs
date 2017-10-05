@@ -52,6 +52,9 @@ public interface Set<E> extends Collection<E> {
     // specification inherited
     /*@non_null*/ <T> T[] toArray(/*@non_null*/ T[] a) throws NullPointerException;
 
+    //@ public normal_behavior
+    //@   assignable this.content;
+    //@   ensures true;
     boolean add(/*@nullable*/ E o);
 
     /*@ also

@@ -1,7 +1,15 @@
 package java.util.stream;
 
-//@ non_null_by_default
+//@ non_null_by_default immutable
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
+	
+	//@ public normal_behavior
+	//@   requires 0 <= i && i < _length;
+	//@ model public T get(\bigint i);
+	
+	//@ model public final instance \bigint _length;
+	//@ public invariant _length >= 0;
+	
 	//@ public normal_behavior
 	//@   ensures true;
 	//@ pure
@@ -26,7 +34,11 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	Stream<T> skip(long n);
 	void forEach(java.util.function.Consumer<? super T> consumer);
 
+	//@ public normal_behavior
+	//@   requires true;
+	//@   { for (\bigint i=0; i < _length; i++) consumer.accept(get(i)); }
 	void forEachOrdered(java.util.function.Consumer<? super T> consumer);
+	
 	java.lang.Object[] toArray();
 	<A> A[] toArray(java.util.function.IntFunction<A[]> func);
 	T reduce(T t, java.util.function.BinaryOperator<T> op);
@@ -45,6 +57,10 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	java.util.Optional<T> min(java.util.Comparator<? super T> comparator);
 	java.util.Optional<T> max(java.util.Comparator<? super T> comparator);
 	long count();
+	
+	//@ public normal_behavior
+	//@   ensures true;  // FIXME - OPENJML
+	//@ pure
 	boolean anyMatch(java.util.function.Predicate<? super T> pred);
 	boolean allMatch(java.util.function.Predicate<? super T> pred);
 	boolean noneMatch(java.util.function.Predicate<? super T> pred);

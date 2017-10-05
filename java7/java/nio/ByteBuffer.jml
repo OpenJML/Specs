@@ -127,7 +127,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
 	  //@ public normal_behavior
 	  //@   requires position <= limit - Integer.BYTES;
-	  //@   assignable this.position, hb[position .. position + Integer.BYTES-1];
+	  //@   assignable this.position, hb[position .. position + (Integer.BYTES-1)];
 	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
 	  //@   ensures (* FIXME: result is bytes representation of the ints *);
 	  public abstract ByteBuffer putInt(int i);

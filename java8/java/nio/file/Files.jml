@@ -26,7 +26,11 @@ public final class Files {
 //	  public static Path createSymbolicLink(Path, Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
 //	  public static Path createLink(Path, Path) throws java.io.IOException;
 //	  public static void delete(Path) throws java.io.IOException;
-//	  public static boolean deleteIfExists(Path) throws java.io.IOException;
+	
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean deleteIfExists(Path path) throws java.io.IOException;
 //	  public static Path copy(Path, Path, CopyOption...) throws java.io.IOException;
 //	  public static Path move(Path, Path, CopyOption...) throws java.io.IOException;
 //	  public static Path readSymbolicLink(Path) throws java.io.IOException;
@@ -98,6 +102,7 @@ public final class Files {
 	  //@   requires true; // FIXME - model well-constructed paths
 	  //@ pure
 	  public static java.util.stream.Stream<Path> list(Path path) throws java.io.IOException;
+
 //	  public static java.util.stream.Stream<Path> walk(Path, int, FileVisitOption...) throws java.io.IOException;
 //	  public static java.util.stream.Stream<Path> walk(Path, FileVisitOption...) throws java.io.IOException;
 //	  public static java.util.stream.Stream<Path> find(Path, int, java.util.function.BiPredicate<Path, java.nio.file.attribute.BasicFileAttributes>, FileVisitOption...) throws java.io.IOException;

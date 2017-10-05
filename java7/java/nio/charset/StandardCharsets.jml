@@ -9,4 +9,8 @@ public final class StandardCharsets {
 	public static final Charset UTF_16BE;
 	public static final Charset UTF_16LE;
 	public static final Charset ISO_8859_1;
+	
+	//@ normal_behavior
+	//@   ensures true;
+	//@ static_initializer
 }
