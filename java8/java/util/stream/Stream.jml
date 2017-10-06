@@ -4,13 +4,6 @@ package java.util.stream;
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	
 	//@ public normal_behavior
-	//@   requires 0 <= i && i < _length;
-	//@ model public T get(\bigint i);
-	
-	//@ model public final instance \bigint _length;
-	//@ public invariant _length >= 0;
-	
-	//@ public normal_behavior
 	//@   ensures true;
 	//@ pure
 	Stream<T> filter(java.util.function.Predicate<? super T> pred);
@@ -36,7 +29,12 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 	//@ public normal_behavior
 	//@   requires true;
-	//@   { for (\bigint i=0; i < _length; i++) consumer.accept(get(i)); }
+	/*@   { 
+	        //@ loop_invariant 0 <= i && i <= _length;
+	        //  @ decreases _length - i;  // FIXME - allow the decreases to be a \bigint
+	        for (\bigint i=0; i < _length; i++) consumer.accept(get(i)); 
+	      }
+	 */
 	void forEachOrdered(java.util.function.Consumer<? super T> consumer);
 	
 	java.lang.Object[] toArray();
@@ -76,14 +74,17 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	public static <T> Stream.Builder<T> builder();
 	//@ public normal_behavior
 	//@   ensures \fresh(\result);
+	//@   ensures \result._length == 0;
 	//@ pure
 	public static <T> Stream<T> empty();
 	//@ public normal_behavior
 	//@   ensures \fresh(\result);
+	//@   ensures \result._length == 1;
 	//@ pure
 	public static <T> Stream<T> of(T t);
 	//@ public normal_behavior
 	//@   ensures \fresh(\result);
+	//@   ensures \result._length == ts.length;
 	//@ pure
 	public static <T> Stream<T> of(T... ts);
 	public static <T> Stream<T> iterate(T value, java.util.function.UnaryOperator<T> op);

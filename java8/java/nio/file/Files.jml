@@ -59,8 +59,15 @@ public final class Files {
 //	  public static Path setLastModifiedTime(Path, java.nio.file.attribute.FileTime) throws java.io.IOException;
 //	  public static long size(Path) throws java.io.IOException;
 //	  private static boolean followLinks(LinkOption...);
-//	  public static boolean exists(Path, LinkOption...);
-//	  public static boolean notExists(Path, LinkOption...);
+	
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean exists(Path path, LinkOption... opts);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean notExists(Path path, LinkOption... opts);
 //	  private static boolean isAccessible(Path, AccessMode...);
 //	  public static boolean isReadable(Path);
 //	  public static boolean isWritable(Path);

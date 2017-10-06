@@ -2,6 +2,15 @@ package java.util.stream;
 
 //@ non_null_by_default
 public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.AutoCloseable {
+
+	//@ public normal_behavior
+	//@   requires 0 <= i && i < _length;
+	//@ model public T get(\bigint i);
+	
+	//@ model public final instance \bigint _length;
+	//@ public invariant _length >= 0;
+	
+
 //	  public abstract java.util.Iterator<T> iterator();
 //	  public abstract java.util.Spliterator<T> spliterator();
 //	  public abstract boolean isParallel();

@@ -26,7 +26,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@   ensures \fresh(\result);
 	  //@   ensures \result.offset == offset;
 	  //@   ensures \result.mark == 0;
-	  //@   ensures \result.position == 0;
+	  //@   ensures \result.position == 0;  // FIXME should these all be +offset
 	  //@   ensures \result.limit == length;
 	  //@   ensures \result.capacity == length;
 	  //@ pure
@@ -34,6 +34,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  
 	  //@ public normal_behavior
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.offset == 0;
 	  //@   ensures \result.mark == 0;
 	  //@   ensures \result.position == 0;
 	  //@   ensures \result.limit == b.length;
@@ -127,10 +128,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
 	  //@ public normal_behavior
 	  //@   requires position <= limit - Integer.BYTES;
-	  //@   assignable this.position, hb[position .. position + (Integer.BYTES-1)];
+	  //@   assignable this.position, hb[position .. (position + (Integer.BYTES-1))];
 	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
 	  //@   ensures (* FIXME: result is bytes representation of the ints *);
 	  public abstract ByteBuffer putInt(int i);
+	  
 	  public abstract int getInt(int i);
 	  public abstract ByteBuffer putInt(int i, int j);
 	  public abstract IntBuffer asIntBuffer();
