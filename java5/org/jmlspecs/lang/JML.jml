@@ -1,7 +1,7 @@
 package org.jmlspecs.lang;
 
 import org.jmlspecs.utils.Utils;
-
+//@ pure  // TODO: Needed to use in specs, but do report out to System.out
 public class JML {
 
 	// Some methods are model methods because they have a JML-only argument
