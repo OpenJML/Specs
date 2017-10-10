@@ -10,6 +10,7 @@ public abstract class ServerSocketChannel extends java.nio.channels.spi.Abstract
 	//@ public behavior
 	//@   ensures \fresh(\result);
 	//@   signals_only java.io.IOException;
+	//@ pure
 	public static ServerSocketChannel open() throws java.io.IOException;
 
 	public final int validOps();

@@ -36,6 +36,11 @@ public final class Class<T> implements java.io.Serializable,
       @*/
     //@ pure
     public String toString();
+    
+    //@ public normal_behavior
+    //@    ensures true;
+    //@ pure
+    public String getSimpleName();
 
     // @ also public normal_behavior
     // @   ensures \result <==> (this == o);

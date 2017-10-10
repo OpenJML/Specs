@@ -116,7 +116,14 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public abstract short getShort();
 	  public abstract ByteBuffer putShort(short s);
 	  public abstract short getShort(int i);
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - Short.BYTES;
+	  //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
+	  //@   ensures this.position == \old(this.position) + Short.BYTES;
+	  //@   ensures (* FIXME: result is bytes representation of the ints *);
 	  public abstract ByteBuffer putShort(int i, short s);
+	  
 	  public abstract ShortBuffer asShortBuffer();
 
 	  //@ public normal_behavior

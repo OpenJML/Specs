@@ -25,6 +25,15 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	Stream<T> peek(java.util.function.Consumer<? super T> consumer);
 	Stream<T> limit(long limit);
 	Stream<T> skip(long n);
+
+	//@ public normal_behavior
+	//@   requires true;
+	/*@   { 
+	        //@ loop_invariant 0 <= i && i <= _length;
+	        //  @ decreases _length - i;  // FIXME - allow the decreases to be a \bigint
+	        for (\bigint i=0; i < _length; i++) consumer.accept(get(i)); 
+	      }
+	 */
 	void forEach(java.util.function.Consumer<? super T> consumer);
 
 	//@ public normal_behavior

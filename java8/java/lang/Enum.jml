@@ -1,5 +1,6 @@
 package java.lang;
 
+//@ non_null_by_default
 public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.Serializable {
 	  /*@ spec_public */ private final String name;
 	  /*@ spec_public */ private final int ordinal;
@@ -44,4 +45,5 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.
 //	  private void readObject(java.io.ObjectInputStream) throws java.io.IOException, ClassNotFoundException;
 //	  private void readObjectNoData() throws java.io.ObjectStreamException;
 //	  public int compareTo(Object);
+	  
 	}

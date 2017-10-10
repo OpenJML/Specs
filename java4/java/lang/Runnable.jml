@@ -27,8 +27,7 @@ package java.lang;
 public interface Runnable {
 
     /*@ public behavior
-      @    diverges true;
-      @    assignable \everything;
+      @    ensures true;
       @*/
     void run();
 }
