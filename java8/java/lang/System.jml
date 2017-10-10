@@ -283,7 +283,7 @@ t *);
 //      @
       @*/
 //@	   |}
-
+    @org.jmlspecs.annotation.Options("-no-strictJML")
     public static native void arraycopy(/*@non_null*/ Object src,
                                         int srcPos,
                                         /*@non_null*/ Object dest,

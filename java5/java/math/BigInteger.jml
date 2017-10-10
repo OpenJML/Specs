@@ -72,7 +72,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public BigInteger(int signum, /*@ non_null @*/ byte[] magnitude);
 
     /*@  public normal_behavior
-      @     requires val != null && !val.equals("");
+      @     requires val != null && val.length() > 0;
       @     requires radix > 1;
       @     ensures this.equals(parse(val,radix));
       @ also
