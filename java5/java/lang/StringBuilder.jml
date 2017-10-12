@@ -22,13 +22,13 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
   //@ public normal_behavior
   //@   assignable _value;
   //@   ensures (* _value == \old(_value) + s *);
-  public StringBuilder(CharSequence);
+  public StringBuilder(CharSequence cs);
 
   //@ public normal_behavior
   //@   assignable _value;
   //@   ensures (* _value == \old(_value) + s *);
   //@   ensures \result == this;
-  public StringBuilder append(Object);
+  public StringBuilder append(Object o);
   
   //@ public normal_behavior
   //@   assignable _value;
@@ -40,32 +40,32 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(StringBuffer);
+    public StringBuilder append(StringBuffer b);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(CharSequence);
+    public StringBuilder append(CharSequence cs);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(CharSequence, int, int);
+    public StringBuilder append(CharSequence cs, int offset, int length);// FIXME - check that it is length, not end
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(char[]);
+    public StringBuilder append(char[] ch);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(char[], int, int);
+    public StringBuilder append(char[] ch, int offset, int length);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(boolean);
+    public StringBuilder append(boolean b);
   
     //@ public normal_behavior
     //@   assignable _value;
@@ -76,27 +76,27 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(int);
+    public StringBuilder append(int i);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(long);
+    public StringBuilder append(long i);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(float);
+    public StringBuilder append(float f);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder append(double);
+    public StringBuilder append(double d);
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
-    public StringBuilder appendCodePoint(int);
+    public StringBuilder appendCodePoint(int k);
 //  public StringBuilder delete(int, int);
 //  public StringBuilder deleteCharAt(int);
 //  public StringBuilder replace(int, int, String);
