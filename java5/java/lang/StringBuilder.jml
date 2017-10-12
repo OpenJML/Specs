@@ -17,31 +17,86 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
   //@   ensures _value == s;
   //@ pure
   public StringBuilder(String s);
-//  public StringBuilder(CharSequence);
-//  public StringBuilder append(Object);
+
   
   //@ public normal_behavior
   //@   assignable _value;
   //@   ensures (* _value == \old(_value) + s *);
+  public StringBuilder(CharSequence);
+
+  //@ public normal_behavior
+  //@   assignable _value;
+  //@   ensures (* _value == \old(_value) + s *);
+  //@   ensures \result == this;
+  public StringBuilder append(Object);
+  
+  //@ public normal_behavior
+  //@   assignable _value;
+  //@   ensures (* _value == \old(_value) + s *);
+  //@   ensures \result == this;
     public StringBuilder append(String s);
     
-//  public StringBuilder append(StringBuffer);
-//  public StringBuilder append(CharSequence);
-//  public StringBuilder append(CharSequence, int, int);
-//  public StringBuilder append(char[]);
-//  public StringBuilder append(char[], int, int);
-//  public StringBuilder append(boolean);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(StringBuffer);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(CharSequence);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(CharSequence, int, int);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(char[]);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(char[], int, int);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(boolean);
   
     //@ public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + c *);
     public StringBuilder append(char c);
     
-//  public StringBuilder append(int);
-//  public StringBuilder append(long);
-//  public StringBuilder append(float);
-//  public StringBuilder append(double);
-//  public StringBuilder appendCodePoint(int);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(int);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(long);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(float);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder append(double);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public StringBuilder appendCodePoint(int);
 //  public StringBuilder delete(int, int);
 //  public StringBuilder deleteCharAt(int);
 //  public StringBuilder replace(int, int, String);

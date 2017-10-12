@@ -1764,6 +1764,46 @@ public class Arrays {
     //@ pure
     public static byte[] copyOf(byte[] src, int newLength);
 
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == false);
+    //@ pure
+    public static boolean[] copyOf(boolean[] src, int newLength);
+
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
+    //@ pure
+    public static char[] copyOf(char[] src, int newLength);
+
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
+    //@ pure
+    public static short[] copyOf(short[] src, int newLength);
+
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
+    //@ pure
+    public static int[] copyOf(int[] src, int newLength);
+
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
+    //@ pure
+    public static long[] copyOf(long[] src, int newLength);
+
     // FIXME - all the other copyOf calls
 
 //    public static <T> java.util.Spliterator<T> spliterator(T[]);
