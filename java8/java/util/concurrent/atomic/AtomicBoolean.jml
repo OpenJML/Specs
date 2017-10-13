@@ -1,11 +1,8 @@
 package java.util.concurrent.atomic;
 
 public class AtomicBoolean implements java.io.Serializable {
-  //private static final long serialVersionUID;
-  //private static final sun.misc.Unsafe unsafe;
-  //private static final long valueOffset;
+
   /*@ spec_public */ private volatile int value;
-  // FIXME make a public model boolean represented by the private int
 
   //@ public normal_behavior
   //@   ensures value == (v ? 1:0);
@@ -62,6 +59,6 @@ public class AtomicBoolean implements java.io.Serializable {
 
   //@ public normal_behavior
   //@   assignable \nothing;
-  //@   ensures (* result is string representation of get() *);
+  //@   ensures (* TODO: result is string representation of get() *);
   public java.lang.String toString();
 }
