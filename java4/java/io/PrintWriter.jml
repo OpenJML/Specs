@@ -2,7 +2,10 @@
 package java.io;
 
 public class PrintWriter extends Writer{
-    protected Writer out;
+
+    //-RAC@ model public non_null String outputText; in outputBytes;
+
+	protected Writer out;
     public PrintWriter(Writer w);
     public PrintWriter(Writer w,boolean b);
     public PrintWriter(OutputStream o);
