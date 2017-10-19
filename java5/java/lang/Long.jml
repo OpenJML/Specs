@@ -31,6 +31,7 @@ public /*@ pure @*/ final
     class Long extends Number implements Comparable {
 
     //@ public model long theLong;
+    //+RAC@ represents theLong = longValue();
 
     // A String is parseable iff it is a sequence of characters legal for
     // the radix, possibly prefixed by a - sign.
