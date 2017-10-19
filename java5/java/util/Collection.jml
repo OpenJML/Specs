@@ -43,7 +43,7 @@ public interface Collection<E> extends Iterable<E> {
      */
     /*@ public normal_behavior
       @   ensures \result <==> ( o==oo || (o != null && o.equals(oo)));
-      @ static public model pure boolean nullequals(Object o, Object oo);
+      @ static public model pure boolean nullequals(nullable Object o, nullable Object oo);
       @*/
     
 
