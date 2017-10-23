@@ -267,6 +267,8 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
     public /*@ pure @*/ synchronized CharSequence subSequence(int start, int end);  // CHANGE IN 1.6
 
+    //@ normal_behavior
+    //@ requires true;
     public /*@ pure @*/ synchronized int capacity();
 
     //@ ensures capacity() >= minimumCapacity;
