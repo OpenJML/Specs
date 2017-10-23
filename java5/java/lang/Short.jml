@@ -30,7 +30,7 @@ public /*@ pure @*/ final
     class Short extends Number implements Comparable {
 
 	//@ public model short theShort;
-	//@ represents theShort = shortValue();
+	//+RAC@ represents theShort = shortValue();
 
 	/*@
 	  @

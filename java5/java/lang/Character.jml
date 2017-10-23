@@ -34,8 +34,9 @@ public /*@ pure @*/ final
 {
 
     //@ public model char ch_;
+    //+RAC@ public represents ch_ = charValue();
+    
     //@ public constraint ch_ == \old(ch_);
-    //@ public represents ch_ = charValue();
 
     public static final int MIN_RADIX; //@ public initially MIN_RADIX == 2;
     public static final int MAX_RADIX;
