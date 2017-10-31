@@ -10,6 +10,7 @@ public class Runtime {
 
 	//@ public normal_behavior
 	//@   ensures \result == currentRuntime;
+	//@ pure
 	public static Runtime getRuntime();
 	
 	//@ private normal_behavior

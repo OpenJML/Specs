@@ -8,6 +8,7 @@ public interface Consumer<T> {
 	
 	//@ public normal_behavior
 	//@   ensures \fresh(\result);  // FIXME - how to specify a composed Consumer
+	//@ pure
 	public java.util.function.Consumer<T> andThen(java.util.function.Consumer<? super T> f);
 
 	/*@ model public static interface Local<T> extends Consumer<T> {

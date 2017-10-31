@@ -177,7 +177,7 @@ public class Object {
     /** Use theString as the (pure) model value of toString() */
     //-RAC@ public model non_null String theString; in objectState;
 
-    /*-RAC@   public behavior
+    /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
       @     ensures (* \result is a string representation of this object *);
       @ also code normal_behavior
       @     assignable \nothing;

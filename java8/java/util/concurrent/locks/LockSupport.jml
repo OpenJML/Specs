@@ -13,12 +13,12 @@ public class LockSupport {
 	  //@ public normal_behavior
 	  //@   ensures true;
 	  //@ pure
-	  public static void unpark(java.lang.Thread thread);
+	  public static void unpark(/*@ nullable */ java.lang.Thread thread);
 
 	  //@ public normal_behavior
 	  //@   ensures true;
 	  //@ pure
-	  public static void park(java.lang.Object object);
+	  public static void park(java.lang.Object object);  // FIXME - nullable?
 //	  public static void parkNanos(java.lang.Object, long);
 //	  public static void parkUntil(java.lang.Object, long);
 //	  public static java.lang.Object getBlocker(java.lang.Thread);

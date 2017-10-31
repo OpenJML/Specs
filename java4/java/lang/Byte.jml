@@ -30,7 +30,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
 {
 
     //@ public model byte theByte;
-    //@ represents theByte <- byteValue();
+    //+RAC@ represents theByte <- byteValue();
 
     /*@ 
       @     public normal_behavior

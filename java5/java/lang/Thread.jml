@@ -70,11 +70,29 @@ public class Thread implements Runnable {
   //@   requires true;
   //@ pure
   public Thread(String s);
+  //@ public normal_behavior
+  //@   requires true;
+  //@ pure
   public Thread(ThreadGroup g, String s);
+  //@ public normal_behavior
+  //@   requires true;
+  //@ pure
   public Thread(Runnable r, String s);
+  //@ public normal_behavior
+  //@   requires true;
+  //@ pure
   public Thread(ThreadGroup g, Runnable r, String s);
+  //@ public normal_behavior
+  //@   requires true;
+  //@ pure
   public Thread(ThreadGroup g, Runnable r, String s, long t);
+  
+  //@ public normal_behavior
+  //@   assignable this.*;  // FIXME - be more specific?
+  //@   ensures true;
   public synchronized void start();
+  
+  
 //  private native void start0();
   
   //@ public behavior
@@ -83,10 +101,25 @@ public class Thread implements Runnable {
 //  private void exit();
   public final void stop();
   public final synchronized void stop(Throwable t);
+
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public void interrupt();
+
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public static boolean interrupted();
+
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public boolean isInterrupted();
-//  private native boolean isInterrupted(boolean);
+
+  //@ public normal_behavior
+  //@   assignable dead;  // FIXME - check this
+  //@   ensures dead;
   public void destroy();
   
   //@ public normal_behavior
@@ -115,8 +148,18 @@ public class Thread implements Runnable {
   public final void join() throws InterruptedException;
   
   public static void dumpStack();
+  
+  //@ model public boolean _isDaemon;
+  
+  //@ public normal_behavior
+  //@   assignable _isDaemon;
+  //@   ensures _isDaemon == b;
   public final void setDaemon(boolean b);
+  //@ public normal_behavior
+  //@   ensures _isDaemon == \result;
+  //@ pure
   public final boolean isDaemon();
+  
   public final void checkAccess();
   
   //@ public normal_behavior

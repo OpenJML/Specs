@@ -28,7 +28,7 @@ package java.io;
 public class PrintStream extends FilterOutputStream implements Closeable, Appendable {
 
     //-RAC@ model public non_null String outputText; in outputBytes;
-    //-RAC@ model public boolean endsInNewLine; in outputBytes;
+    //-RAC@ model public boolean endsInNewLine; in outputText;
     //-RAC@ ghost public non_null static final String eol;
 
     //-RAC@ public model boolean error;

@@ -167,7 +167,7 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*@ non_null @*/ <T> T[] toArray(/*@non_null*/ T[] a) throws NullPointerException, ArrayStoreException;
 
-    /*-RAC@ public behavior
+    /*-RAC@ public normal_behavior
       @   requires !containsNull ==> o != null;
       {|
       @   requires containsObject(o);
@@ -361,5 +361,9 @@ public interface Collection<E> extends Iterable<E> {
     //@ pure
     public java.util.stream.Stream<E> parallelStream();
 
-    
+    // FIXME - crash if we have this spec.
+//    //@ public normal_behavior
+//    //@   requires true;
+//    //@ pure
+//    public String toString();
 }
