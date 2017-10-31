@@ -31,6 +31,7 @@ public  /*@ pure @*/ final
     class Integer extends Number implements Comparable {
 
     //@ public model int theInteger;  in objectState;
+    //+RAC@ represents theInteger = intValue();
 
   /*-RAC@
     @   public normal_behavior
