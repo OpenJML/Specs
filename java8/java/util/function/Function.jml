@@ -5,7 +5,7 @@ package java.util.function;
 public interface Function<T,R> {
 
 	//@ nullable
-	  public abstract R apply(T t);
+	  public abstract R apply(/*@ nullable */ T t);
 	  
 	  default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
 
@@ -16,7 +16,7 @@ public interface Function<T,R> {
 	    @      return t;
 	    @   }
 	    @   pure function
-	    @   public T apply(T t);
+	    @   public nullable T apply(nullable T t);
 	    @ }
 	    @*/
 	  
