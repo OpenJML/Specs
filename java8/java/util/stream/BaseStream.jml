@@ -23,5 +23,9 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.Aut
 //	  public abstract S parallel();
 //	  public abstract S unordered();
 //	  public abstract S onClose(java.lang.Runnable);
-//	  public abstract void close();
+	  
+	  //@ public normal_behavior
+	  //@   requires _isAutoCloseable;
+	  //@   assignable content;
+	  public abstract void close();
 	}

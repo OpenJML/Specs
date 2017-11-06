@@ -950,8 +950,9 @@ public class Arrays {
       @ also 
       @  public normal_behavior
       @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i && i < a.length; a[i] == a2[i]);
+      @   ensures \result <==> 
+      @                 (a.length == a2.length && 
+      @                   (\forall int i; 0 <= i && i < a.length; a[i] == a2[i]));
       @*/
     public static /*@pure@*/ boolean equals(byte[] a, byte[] a2);
 
@@ -961,8 +962,8 @@ public class Arrays {
       @ also 
       @  public normal_behavior
       @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i && i < a.length; a[i] == a2[i]);
+      @   ensures \result <==> (a.length == a2.length && 
+      @                   (\forall int i; 0 <= i && i < a.length; a[i] == a2[i]));
       @*/
     public static /*@pure@*/ boolean equals(boolean[] a, boolean[] a2);
 
@@ -973,9 +974,9 @@ public class Arrays {
       @ also 
       @  public normal_behavior
       @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
+      @   ensures \result <==> (a.length == a2.length && 
       @                    (\forall int i; 0 <= i && i < a.length;
-      @                     new Double(a[i]).equals(new Double(a2[i])));
+      @                     new Double(a[i]).equals(new Double(a2[i]))));
       @*/
     public static /*@pure@*/ boolean equals(double[] a, double[] a2);
 
@@ -986,9 +987,9 @@ public class Arrays {
       @ also 
       @  public normal_behavior
       @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
+      @   ensures \result <==> (a.length == a2.length && 
       @                    (\forall int i; 0 <= i && i < a.length;
-      @                     new Float(a[i]).equals(new Float(a2[i])));
+      @                     new Float(a[i]).equals(new Float(a2[i]))));
       @*/
     public static /*@pure@*/ boolean equals(float[] a, float[] a2);
 
@@ -999,9 +1000,9 @@ public class Arrays {
       @ also 
       @  public normal_behavior
       @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
+      @   ensures \result <==> (a.length == a2.length && 
       @              (\forall int i; 0 <= i && i < a.length;
-      @                a[i].equals(a2[i]));
+      @                a[i].equals(a2[i])));
       @*/
     public static /*@pure@*/ boolean equals(Object[] a, Object[] a2);
 
@@ -1757,6 +1758,7 @@ public class Arrays {
     public static <T,U> T[] copyOfRange(U[] src, int from, int to, Class<? extends T[]> newType);
     
     //@ public normal_behavior
+    //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
@@ -1765,6 +1767,7 @@ public class Arrays {
     public static byte[] copyOf(byte[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
@@ -1773,6 +1776,7 @@ public class Arrays {
     public static boolean[] copyOf(boolean[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
@@ -1781,6 +1785,7 @@ public class Arrays {
     public static char[] copyOf(char[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
@@ -1789,6 +1794,7 @@ public class Arrays {
     public static short[] copyOf(short[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
@@ -1797,6 +1803,7 @@ public class Arrays {
     public static int[] copyOf(int[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);

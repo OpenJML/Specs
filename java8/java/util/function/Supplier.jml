@@ -1,5 +1,6 @@
 package java.util.function;
 
+@FunctionalInterface
 public interface Supplier<T> {
 
 	//@ model public nullable instance T value;

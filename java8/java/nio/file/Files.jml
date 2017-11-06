@@ -15,8 +15,17 @@ public final class Files {
 //	  public static DirectoryStream<Path> newDirectoryStream(Path) throws java.io.IOException;
 //	  public static DirectoryStream<Path> newDirectoryStream(Path, java.lang.String) throws java.io.IOException;
 //	  public static DirectoryStream<Path> newDirectoryStream(Path, DirectoryStream$Filter<? super Path>) throws java.io.IOException;
-//	  public static Path createFile(Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-//	  public static Path createDirectory(Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+
+	
+	//@ public behavior
+	//@   ensures true;
+	//@ pure
+	public static Path createFile(Path path, java.nio.file.attribute.FileAttribute<?>... attributes) throws java.io.IOException;
+
+	//@ public behavior
+	//@   ensures true;
+	//@ pure
+	public static Path createDirectory(Path path, java.nio.file.attribute.FileAttribute<?>... attributes) throws java.io.IOException;
 //	  public static Path createDirectories(Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
 //	  private static void createAndCheckIsDirectory(Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
 //	  public static Path createTempFile(Path, java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
@@ -53,8 +62,16 @@ public final class Files {
 	  //	  public static java.nio.file.attribute.UserPrincipal getOwner(Path, LinkOption...) throws java.io.IOException;
 //	  public static Path setOwner(Path, java.nio.file.attribute.UserPrincipal) throws java.io.IOException;
 //	  public static boolean isSymbolicLink(Path);
-//	  public static boolean isDirectory(Path, LinkOption...);
-//	  public static boolean isRegularFile(Path, LinkOption...);
+	
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public static boolean isDirectory(Path path, LinkOption... options);
+	
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public static boolean isRegularFile(Path path, LinkOption... options);
 //	  public static java.nio.file.attribute.FileTime getLastModifiedTime(Path, LinkOption...) throws java.io.IOException;
 //	  public static Path setLastModifiedTime(Path, java.nio.file.attribute.FileTime) throws java.io.IOException;
 //	  public static long size(Path) throws java.io.IOException;
@@ -68,10 +85,22 @@ public final class Files {
 	  //@   ensures true;
 	  //@ pure    // FIXME _ need to model the file system
 	  public static boolean notExists(Path path, LinkOption... opts);
-//	  private static boolean isAccessible(Path, AccessMode...);
-//	  public static boolean isReadable(Path);
-//	  public static boolean isWritable(Path);
-//	  public static boolean isExecutable(Path);
+	  //@ private normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  private static boolean isAccessible(Path path, AccessMode... modes);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean isReadable(Path path);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean isWritable(Path path);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean isExecutable(Path path);
 //	  public static Path walkFileTree(Path, java.util.Set<FileVisitOption>, int, FileVisitor<? super Path>) throws java.io.IOException;
 //	  public static Path walkFileTree(Path, FileVisitor<? super Path>) throws java.io.IOException;
 //	  public static java.io.BufferedReader newBufferedReader(Path, java.nio.charset.Charset) throws java.io.IOException;
@@ -107,6 +136,8 @@ public final class Files {
 
 	  //@ public normal_behavior
 	  //@   requires true; // FIXME - model well-constructed paths
+	  //@   ensures \fresh(\result);
+	  //@   ensures \result._isAutoCloseable;
 	  //@ pure
 	  public static java.util.stream.Stream<Path> list(Path path) throws java.io.IOException;
 

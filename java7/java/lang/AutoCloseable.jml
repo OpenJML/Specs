@@ -2,14 +2,17 @@ package java.lang;
 
 public interface AutoCloseable {
 	
-	//@ model instance public boolean _isCloseable;
+	//@ model instance public Object content;
+	
+	//@ model instance public boolean _isAutoCloseable; in content;
 	
 	// FIXME - derived classes may alter various contents or even other stuff
 	
-	// @ public normal_behavior
-	// @   requires _isCloseable;
-	// @   assignable _isCloseable;
-	// @ also public behavior
-	// @   requires !_isCloseable;
+	//@ public normal_behavior
+	//@   requires _isAutoCloseable;
+	//@   assignable _isAutoCloseable, content;
+	//@ also public behavior
+	//@   requires !_isAutoCloseable;
+	//@   assignable _isAutoCloseable, content;
 	public void close() throws Exception;
 }
