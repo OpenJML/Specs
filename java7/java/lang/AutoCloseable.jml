@@ -11,8 +11,10 @@ public interface AutoCloseable {
 	//@ public normal_behavior
 	//@   requires _isAutoCloseable;
 	//@   assignable _isAutoCloseable, content;
+	//@   ensures !_isAutoCloseable;
 	//@ also public behavior
 	//@   requires !_isAutoCloseable;
-	//@   assignable _isAutoCloseable, content;
+	//@   assignable content;
+	//@   ensures !_isAutoCloseable;
 	public void close() throws Exception;
 }
