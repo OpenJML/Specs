@@ -49,14 +49,26 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@ public normal_behavior
 	  //@   assignable this.position;
 	  //@   ensures this.position == \old(this.position) + 1;
+	  //@   ensures \result == hb[\old(this.position)];
 	  public abstract byte get();
 
 	  //@ public normal_behavior
-	  //@   assignable this.position;
+	  //@   assignable this.position, hb[this.position];
 	  //@   ensures this.position == \old(this.position) + 1;
+	  //@   ensures hb[\old(this.position)] == b;
 	  public abstract ByteBuffer put(byte b);
+
+	  //@ public normal_behavior
+	  //@   ensures \result == hb[i];
+	  //@ pure
 	  public abstract byte get(int i);
+	  
+	  //@ public normal_behavior
+	  //@   assignable hb[i];
+	  //@   ensures hb[i] == b;
 	  public abstract ByteBuffer put(int i, byte b);
+	  
+	  
 	  public ByteBuffer get(byte[] buf, int i, int j);
 	  
 	  //@ public normal_behavior
@@ -68,8 +80,16 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public ByteBuffer get(byte[] buf);
 	  
 	  //@ public normal_behavior
-	  //@   assignable hb[*], this.position;  // OPENJML - FIXME - be more precise
-	  //@   ensures position == Math.min(limit, \old(position) + bbuf.remaining());
+	  //@   old int move = bbuf.limit - bbuf.position;
+	  //@   requires move <= this.limit - this.position;
+	  //@   assignable hb[this.position .. this.position + (move - 1)], this.position, bbuf.position;
+	  //@   ensures position == \old(position) + move;
+	  //@   ensures bbuf.position == bbuf.limit;
+	  //@   ensures (\forall int i; \old(this.position) <= i && i < \old(this.position) + move; this.hb[i] == bbuf.hb[\old(bbuf.position) + (i-\old(this.position))]) ;
+	  //@ also public exceptional_behavior
+	  //@   requires bbuf.limit - bbuf.position > this.limit - this.position;
+	  //@   assignable \nothing;
+	  //@   signals_only BufferOverflowException ;
 	  public ByteBuffer put(ByteBuffer bbuf);
 
 	  //@ public normal_behavior

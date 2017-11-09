@@ -29,12 +29,21 @@ public abstract class Buffer {
 	  //@   ensures \result == position;
 	  //@ pure
 	  public final int position();
+	  
+	  //@ public normal_behavior
+	  //@   requires 0 <= i && i <= limit;
+	  //@   assignable position;
+	  //@   ensures position == i;
 	  public final Buffer position(int i);
 	  
 	  //@ public normal_behavior
 	  //@   ensures \result == limit;
 	  //@ pure
 	  public final int limit();
+	  //@ public normal_behavior
+	  //@   requires this.position <= i && i <= this.capacity;
+	  //@   assignable this.limit;
+	  //@   ensures this.limit == i;
 	  public final Buffer limit(int i);
 	  
 	  public final Buffer mark();

@@ -1,7 +1,10 @@
 package java.nio.channels.spi;
 
 public abstract class AbstractInterruptibleChannel implements java.nio.channels.Channel,java.nio.channels.InterruptibleChannel {
-//	private final java.lang.Object closeLock;
+
+	//@ model public Object channelCloseContent;
+	
+	//	private final java.lang.Object closeLock;
 //	private volatile boolean open;
 //	private sun.nio.ch.Interruptible interruptor;
 //	private volatile java.lang.Thread interrupted;
@@ -11,7 +14,7 @@ public abstract class AbstractInterruptibleChannel implements java.nio.channels.
 	protected AbstractInterruptibleChannel();
 	
 	//@ public behavior
-	//@   assignable this.*;
+	//@   assignable channelCloseContent;
 	//@   ensures !_isOpen;
 	//@   signals_only java.io.IOException;
 	public final void close() throws java.io.IOException;

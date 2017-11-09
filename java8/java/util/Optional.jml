@@ -4,7 +4,7 @@ package java.util;
 public final class Optional<T> {
   //@ spec_public
   private static final Optional<?> EMPTY;
-  //@ public static invariant EMPTY.value == null;
+  //@ public static final invariant EMPTY.value == null;
   
   //@ spec_public nullable
   private final T value;
