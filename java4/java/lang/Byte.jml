@@ -215,16 +215,16 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
 
     /*@ also
       @   public normal_behavior
-      @     assignable \nothing;
       @     ensures \result == theByte;
       @*/
+    //@ pure helper
     public byte byteValue();
 
     /*@ also
       @   public normal_behavior
-      @     assignable \nothing;
       @     ensures \result == (short) theByte;
       @*/
+    //@ pure helper
     public short shortValue();
 
     /*@ also
@@ -232,6 +232,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       @     assignable \nothing;
       @     ensures \result == (int) theByte;
       @*/
+    //@ helper
     public int intValue();
 
     /*@ also
@@ -239,6 +240,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       @     assignable \nothing;
       @     ensures \result == (long) theByte;
       @*/
+    //@ helper
     public long longValue();
 
     /*@ also

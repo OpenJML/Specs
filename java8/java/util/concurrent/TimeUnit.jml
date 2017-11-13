@@ -12,24 +12,30 @@ public enum TimeUnit { // FIXME - change to enum?
 	 DAYS;
 
 	//@ model public long scale;
-	//@ public final invariant NANOSECONDS.scale == 1L;
-	//@ public final invariant MICROSECONDS.scale == 1000L;
-	//@ public final invariant MILLISECONDS.scale == 1000L * 1000L;
-	//@ public final invariant SECONDS.scale == 1000L * 1000L * 1000L;
-	//@ public final invariant MINUTES.scale == 1000L * 1000L * 1000L * 60L;
-	//@ public final invariant HOURS.scale == 1000L * 1000L * 1000L * 60L * 60L;
-	//@ public final invariant DAYS.scale == 1000L * 1000L * 1000L * 60L * 60L * 24L;
+	//@ public final static invariant NANOSECONDS.scale == 1L;
+	//@ public final static invariant MICROSECONDS.scale == 1000L;
+	//@ public final static invariant MILLISECONDS.scale == 1000L * 1000L;
+	//@ public final static invariant SECONDS.scale == 1000L * 1000L * 1000L;
+	//@ public final static invariant MINUTES.scale == 1000L * 1000L * 1000L * 60L;
+	//@ public final static invariant HOURS.scale == 1000L * 1000L * 1000L * 60L * 60L;
+	//@ public final static invariant DAYS.scale == 1000L * 1000L * 1000L * 60L * 60L * 24L;
 	
-//  static long x(long a, long b, long c);
+	//@ public final invariant this.scale >= 1L;
   
 	// Converts t units of TimeUnit u into the result expressed ain the receiver's unit
 	// Relies on the fact that the scale values are multiples of each other
   //@ public normal_behavior
-  //@  requires u.scale < this.scale;
+  //@  requires u.scale <= this.scale;
   //@  ensures \result == t / (this.scale / u.scale);
   //@ also public normal_behavior
-  //@  requires u.scale >= this.scale && t <= Long.MAX_VALUE / (u.scale / this.scale);
+  //@  requires u.scale > this.scale && t <= Long.MAX_VALUE / (u.scale / this.scale) && t >= Long.MIN_VALUE / (u.scale / this.scale);
   //@  ensures \result == t * (u.scale / this.scale);
+  //@ also public normal_behavior
+  //@  requires u.scale > this.scale && t > Long.MAX_VALUE / (u.scale / this.scale);
+  //@  ensures \result == Long.MAX_VALUE;
+  //@ also public normal_behavior
+  //@  requires u.scale > this.scale && t < Long.MIN_VALUE / (u.scale / this.scale);
+  //@  ensures \result == Long.MIN_VALUE;
   //@ pure function
   public long convert(long t, TimeUnit u);
   

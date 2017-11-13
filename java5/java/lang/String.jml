@@ -76,8 +76,11 @@ public final class String
 
     /*@  public normal_behavior
       @   requires value != null;
+      @   ensures this.length() == value.length;
+      @   ensures this.charArray.length == value.length;
       @   ensures initialCharSequence();
       @   ensures equal(charArray,value);
+      @   ensures (\forall int i; 0<=i && i<this.length(); this.charAt(i) == value[i]);
       @
       @ also public exceptional_behavior
       @   requires value == null;
