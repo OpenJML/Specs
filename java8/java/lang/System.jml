@@ -113,12 +113,17 @@ public final class System {
 
     //@ public static model long time;
 
+    // OPENJML - modeling the behavior as that on a call of currentTimeMillis()
+    // the field time gets a new value, such that 'time' always has the value
+    // returned by the most recent call of currentTimeMillis(), and does not change
+    // in between calls.
+    // The specs do not allow the time to overflow, as it actually will in a
+    // few hundred million years.
     /*-RAC@
       @ public normal_behavior
-      @  assignable time;
-      @  ensures \result >= 0;
-      @  ensures time >= \old(time);
-      @  ensures \result == time;
+      @   assignable time;
+      @   ensures time >= \old(time);
+      @   ensures \result == time;
       @*/
     public static native long currentTimeMillis();
 
@@ -387,8 +392,16 @@ t *);
 
     public /*@ pure @*/ static native String mapLibraryName(/*@non_null*/ String libname);
 
-    //@ public normal_behavior // FIXME - need to model that time increases and changes between calls
-    //@   requires true;
-    //@   assignable \nothing;
+    //@ model public static long nanoTime;
+    
+    // OPENJML - modeling the behavior as that on a call of nanoTime()
+    // the field nanoTime gets a new value. Thus nanoTime always has the value
+    // returned by the most recent call of nanoTime(), and does not change in between calls.
+    /*-RAC@ public normal_behavior
+     @   requires true;
+     @   assignable nanoTime;
+     @   ensures nanoTime - \old(nanoTime) >= 0; // Time increasees and never extends more than 2**63 nanoseconds.
+     @   ensures \result == nanoTime;
+     @*/
     public static long nanoTime();
 }
