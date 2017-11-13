@@ -236,36 +236,42 @@ public /*@ pure @*/ final
       @   public normal_behavior
       @     ensures \result == (byte) longValue();
       @*/
+    //@ pure helper
     public byte byteValue();
 
     /*@ also // FIXME - I thought this ttruncated to max and min
       @   public normal_behavior
       @     ensures \result == (short) longValue();
       @*/
+    //@ pure helper
     public short shortValue();
 
     /*@ also  // FIXME - I thought this ttruncated to max and min
       @   public normal_behavior
       @     ensures \result == (int) longValue();
       @*/
+    //@ pure helper
     public int intValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == theLong;
       @*/
+    //@ pure helper
     public long longValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (float) longValue();
       @*/
+    //@ pure helper
     public float floatValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (double) longValue();
       @*/
+    //@ pure helper
     public double doubleValue();
 
     // specification inherited from Object

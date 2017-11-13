@@ -192,36 +192,42 @@ public /*@ pure @*/ final
           @   public normal_behavior
 	  @     ensures \result == (byte) theShort;
 	  @*/
+    //@ pure helper
 	public byte byteValue() ;
 
 	/*@ also
 	  @   public normal_behavior
 	  @     ensures \result == theShort;
 	  @*/
+    //@ pure helper
 	public short shortValue() ;
 
 	/*@ also
 	  @   public normal_behavior
 	  @     ensures \result == (int) theShort;
 	  @*/
+    //@ pure helper
 	public int intValue() ;
 
 	/*@ also
 	  @   public normal_behavior
 	  @     ensures \result == (long) theShort;
 	  @*/
+    //@ pure helper
 	public long longValue() ;
 
 	/*@ also
 	  @   public normal_behavior
 	  @     ensures \result == (float) theShort;
 	  @*/
+    //@ pure helper
 	public float floatValue() ;
 
 	/*@ also
 	  @   public normal_behavior
 	  @     ensures \result == (double) theShort;
 	  @*/
+    //@ pure helper
 	public double doubleValue() ;
 
         // specification inherited from Object

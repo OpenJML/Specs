@@ -33,10 +33,10 @@ public /*@ pure @*/ final
     class Character extends Object implements java.io.Serializable, Comparable
 {
 
-    //@ public model char ch_;
-    //+RAC@ public represents ch_ = charValue();
+    //@ public model char theCharacter;
+    //+RAC@ public represents theCharacter = charValue();
     
-    //@ public constraint ch_ == \old(ch_);
+    //@ public constraint theCharacter == \old(theCharacter);
 
     public static final int MIN_RADIX; //@ public initially MIN_RADIX == 2;
     public static final int MAX_RADIX;
@@ -207,8 +207,7 @@ public /*@ pure @*/ final
     //---------------------------------------------------------------------
 
     /*@  public normal_behavior
-      @   assignable ch_;
-      @   ensures ch_ == value;
+      @   ensures theCharacter == value;
       @*/
     public Character(char value);
 
@@ -216,21 +215,23 @@ public /*@ pure @*/ final
     // Character.java Methods
     //---------------------------------------------------------------------
     /*@  public normal_behavior
-      @   ensures \result == ch_;
+      @   ensures \result == theCharacter;
       @*/
+    //@ helper
     public char charValue();
 
     /*@ also
       @ public normal_behavior
-      @   ensures \result >= 0 && (* \result is a hash code for ch_ *);
+      @   ensures \result >= 0 && (* \result is a hash code for theCharacter *);
       @*/
+    //@ helper
     public int hashCode();
 
     /*@ also
       @  public normal_behavior
       @  {|
       @    requires (obj instanceof Character);
-      @    ensures \result <==> ((Character) obj).ch_ == ch_;
+      @    ensures \result <==> ((Character) obj).theCharacter == theCharacter;
       @  also
       @    requires !(obj instanceof Character);
       @    ensures \result <==> false;
@@ -240,9 +241,9 @@ public /*@ pure @*/ final
 
     /*@ also
       @  public normal_behavior
-      @   ensures \result !=null && \result.equals(String.valueOf(ch_));
+      @   ensures \result !=null && \result.equals(String.valueOf(theCharacter));
       @   ensures \result.length() == 1;
-      @   ensures \result.charAt(0) == ch_;
+      @   ensures \result.charAt(0) == theCharacter;
       @*/
     public String toString();
 
@@ -280,7 +281,6 @@ public /*@ pure @*/ final
     //@ axiom isDigit('9');
     //@ axiom (\forall char c;; (c!='0' && c!='1' && c!='2' && c!='3' && c!='4' && c!='5' && c!='6' && c!='7' && c!='8' && c!='9') ==> !isDigit(c));
 
-    // FIXME - need to say when isDigit is false!
     /*@  public normal_behavior
       @   ensures \result <==> getType(ch) == DECIMAL_DIGIT_NUMBER;
       @*/

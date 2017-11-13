@@ -222,37 +222,37 @@ public  /*@ pure @*/ final
       @   public normal_behavior
       @     ensures \result == (byte) theInteger;
       @*/
-    public /*@ pure @*/ byte byteValue();
+    public /*@ pure helper @*/ byte byteValue();
     
     /*@ also   // FIXME - this is not correct
       @   public normal_behavior
       @     ensures \result == (short) theInteger;
       @*/
-    public /*@ pure @*/ short shortValue();
+    public /*@ pure helper @*/ short shortValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == theInteger;
       @*/
-    public /*@ pure function @*/ int intValue();
+    public /*@ pure helper @*/ int intValue();
     
     /*@ also
       @   public normal_behavior
       @     ensures \result == (long) theInteger;
       @*/
-    public /*@ pure @*/ long longValue();
+    public /*@ pure helper @*/ long longValue();
     
     /*@ also
       @   public normal_behavior
       @      ensures \result == (float) theInteger;
       @*/
-    public /*@ pure @*/ float floatValue();
+    public /*@ pure helper @*/ float floatValue();
     
     /*@ also
       @   public normal_behavior
       @     ensures \result == (double) theInteger;
       @*/
-    public /*@ pure @*/ double doubleValue();
+    public /*@ pure helper @*/ double doubleValue();
     
     // specification inherited from Object
     //@ also public normal_behavior
@@ -270,7 +270,7 @@ public  /*@ pure @*/ final
     /*-RAC@ 
       @   public normal_behavior
       @     requires i != null && ii != null;
-      @     ensures \result <==> (i.intValue() == ii.intValue());
+      @     ensures \result <==> (i.theInteger == ii.theInteger);
       @   also
       @   public normal_behavior
       @     requires i == null || ii == null;
