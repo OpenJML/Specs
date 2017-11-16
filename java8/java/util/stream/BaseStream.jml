@@ -5,23 +5,33 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.Aut
 
 	//@ public normal_behavior
 	//@   requires 0 <= i && i < _length;
+	//@   ensures \result == values[i];
 	//@ pure
-	//@ model public T get(\bigint i);
+	//@ model public T get(int i);
 	
-	//@ model public final instance \bigint _length;
-	//@ public invariant _length >= 0;
+	//@ model public final instance T[] values;
+
+	//@ model public final instance int _length;
+	//@ public invariant _length == values.length;
 	
+	// FIXME - would like to make the above a \bigint, but then problems arise with bitvector computations
 
 //	  public abstract java.util.Iterator<T> iterator();
 //	  public abstract java.util.Spliterator<T> spliterator();
 //	  public abstract boolean isParallel();
 	
 	//@ public normal_behavior
-	//@   ensures true;
+	//@   ensures \result == this;
 	//@ pure
 	  public abstract S sequential();
-//	  public abstract S parallel();
-//	  public abstract S unordered();
+		//@ public normal_behavior
+		//@   ensures \result == this;  // FIXME - result is an arbitrary permutation of the input
+		//@ pure
+	  public abstract S parallel();
+		//@ public normal_behavior
+		//@   ensures \result == this;  // FIXME - result is an arbitrary permutation of the input
+		//@ pure
+	  public abstract S unordered();
 //	  public abstract S onClose(java.lang.Runnable);
 	  
 	  //@ public normal_behavior
