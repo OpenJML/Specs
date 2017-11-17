@@ -150,7 +150,6 @@ public class Cipher {
 	//@   requires isInitialized;
 	//@   requires inputLen >= 0;
 	//@   requires inputOffset >= 0 && inputOffset <= buf.length - inputLen;
-	//@   requires outputOffset <= output.length;
 	//@   assignable this.*,output[0 .. inputLen-1];
 	//@ also public exceptional_behavior
 	//@   requires !isInitialized;
@@ -158,7 +157,7 @@ public class Cipher {
 	//@   signals_only IllegalStateException;
 	//@ also public exceptional_behavior
 	//@   requires !isInitialized;
-	//@   requires !(inputLen >= 0) || !(inputOffset >= 0 && inputOffset <= buf.length - inputLen) && !(0 <= output.length - outputOffset);
+	//@   requires !(inputLen >= 0) || !(inputOffset >= 0 && inputOffset <= buf.length - inputLen) ;
 	//@   assignable \nothing;
 	//@   signals_only ShortBufferException;
 	public final int update(byte[] buf, int inputOffset, int inputLen, byte[] output) throws javax.crypto.ShortBufferException;
