@@ -2,19 +2,9 @@ package java.lang;
 
 public interface AutoCloseable {
 	
-	//@ model instance public Object content;
+	//@ model instance public JMLDataGroup autocloseableContent;
 	
-	//@ model instance public boolean _isAutoCloseable; in content;
-	
-	// FIXME - derived classes may alter various contents or even other stuff
-	
-	//@ public normal_behavior
-	//@   requires _isAutoCloseable;
-	//@   assignable _isAutoCloseable, content;
-	//@   ensures !_isAutoCloseable;
-	//@ also public behavior
-	//@   requires !_isAutoCloseable;
-	//@   assignable content;
-	//@   ensures !_isAutoCloseable;
+	//@ public behavior
+	//@   assignable autocloseableContent;
 	public void close() throws Exception;
 }

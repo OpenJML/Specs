@@ -24,11 +24,12 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@ public normal_behavior
 	  //@   requires 0 <= offset && 0 <= length && length <= b.length - offset;
 	  //@   ensures \fresh(\result);
-	  //@   ensures \result.offset == offset;
-	  //@   ensures \result.mark == 0;
-	  //@   ensures \result.position == 0;  // FIXME should these all be +offset
-	  //@   ensures \result.limit == length;
-	  //@   ensures \result.capacity == length;
+	  //@   ensures \result.offset == 0;
+	  //@   ensures \result.mark == offset;
+	  //@   ensures \result.position == offset;
+	  //@   ensures \result.limit == offset+length;
+	  //@   ensures \result.capacity == b.length;
+	  //@   ensures \result.hb == b;
 	  //@ pure
 	  public static ByteBuffer wrap(byte[] b, int offset, int length);
 	  
@@ -55,17 +56,17 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@ public normal_behavior
 	  //@   assignable this.position, hb[this.position];
 	  //@   ensures this.position == \old(this.position) + 1;
-	  //@   ensures hb[\old(this.position)] == b;
+	  //@   ensures hb[offset+\old(this.position)] == b;
 	  public abstract ByteBuffer put(byte b);
 
 	  //@ public normal_behavior
-	  //@   ensures \result == hb[i];
+	  //@   ensures \result == hb[offset+i];
 	  //@ pure
 	  public abstract byte get(int i);
 	  
 	  //@ public normal_behavior
-	  //@   assignable hb[i];
-	  //@   ensures hb[i] == b;
+	  //@   assignable hb[offset+i];
+	  //@   ensures hb[offset+i] == b;
 	  public abstract ByteBuffer put(int i, byte b);
 	  
 	  
@@ -154,18 +155,32 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@   requires position <= limit - Integer.BYTES;
 	  //@   assignable this.position;
 	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
-	  //@   ensures (* FIXME: result is int representation of the bytes *);
+	  //@   ensures \result == asInt(hb[\old(position)],hb[\old(position+1)],hb[\old(position+2)],hb[\old(position+3)]);
 	  public abstract int getInt();
+
+	    //@ public normal_behavior
+	    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x10000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
+	    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
 	  //@ public normal_behavior
 	  //@   requires position <= limit - Integer.BYTES;
 	  //@   assignable this.position, hb[position .. (position + (Integer.BYTES-1))];
 	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
-	  //@   ensures (* FIXME: result is bytes representation of the ints *);
+	  //@   ensures getInt(\old(position)) == i;
 	  public abstract ByteBuffer putInt(int i);
 	  
+	  //@ public normal_behavior
+	  //@   requires i <= limit - Integer.BYTES;
+	  //@   ensures \result == asInt(hb[i],hb[i+1],hb[i+2],hb[i+3]);
+	  //@ pure
 	  public abstract int getInt(int i);
-	  public abstract ByteBuffer putInt(int i, int j);
+
+	  //@ public normal_behavior
+	  //@   requires index <= limit - Integer.BYTES;
+	  //@   assignable hb[index .. (index + (Integer.BYTES-1))];
+	  //@   ensures getInt(index) == value;
+	  public abstract ByteBuffer putInt(int index, int value);
+	  
 	  public abstract IntBuffer asIntBuffer();
 	  public abstract long getLong();
 	  public abstract ByteBuffer putLong(long n);
@@ -184,4 +199,9 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public abstract DoubleBuffer asDoubleBuffer();
 	  public java.lang.Object array();
 	 // public int compareTo(java.lang.Object o);
+	  
+	    //@ public normal_behavior
+	    //@   ensures \result == (b >= 0 ? b : b + 256);
+	    //@ model public static pure helper function int asUnsigned(byte b);
+
 }

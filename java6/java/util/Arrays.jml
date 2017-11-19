@@ -1758,7 +1758,7 @@ public class Arrays {
     public static <T,U> T[] copyOfRange(U[] src, int from, int to, Class<? extends T[]> newType);
     
     //@ public normal_behavior
-    //@   requires newLength >= 0;
+    //@   requires newLength >= 0  && newLength <= Integer.MAX_VALUE;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);

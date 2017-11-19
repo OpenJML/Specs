@@ -28,8 +28,8 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
       @*/
 
     /*@ protected normal_behavior
-      @   assignable \not_specified;
       @   ensures initialAbstractMap();
+      @ pure
       @*/
     protected AbstractMap();
 

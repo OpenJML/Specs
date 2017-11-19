@@ -41,15 +41,21 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 	
 	/*-RAC@
 	    public normal_behavior
-	      requires parseable(val,radix);
-        public static model pure \bigint parse(String val, int radix) {
+	      requires radix > 0;
+	      requires Number.parseable(val,radix);
+        public static model pure function \bigint parse(String val, int radix) {
 		// !FIXME! - should put in a non-circular computation for RAC
 		    return new BigInteger(val,radix).value;
 	    }
 	    */
 	
 	/*@
-        public static model pure BigInteger convert(byte[] val) {
+	    //@ public normal_behavior
+	    //@   requires val.length > 0;
+	    //@   ensures (\result == 0) <==> (\forall int i; 0<=i && i<val.length; val[i] == 0);
+	    //@   ensures (\result < 0) <==> (val[0] < 0);
+	    //@ pure
+        public static model \bigint convert(byte[] val) {
 		// !FIXME! - should put in a non-circular computation for RAC
 		    return new BigInteger(val);
 	    }
@@ -72,7 +78,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     /*@ public normal_behavior
       @    requires magnitude != null;
       @    requires signum == 0 || signum == 1 || signum == -1;
-      @    requires signum == 0 <==> convert(magnitude).equals(ZERO);
+      @    requires signum == 0 <==> convert(magnitude) == 0;
       @    ensures sign == signum;
       @*/
     //@ pure
@@ -288,7 +294,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@ ensures  parse(\result,10) == this.value;
     public String toString();
 
-    //-RAC@ ensures convert(\result).value == this.value;
+    //-RAC@ ensures convert(\result) == this.value;
     //@ pure helper
     public byte[] toByteArray();
 

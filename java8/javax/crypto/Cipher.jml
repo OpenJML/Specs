@@ -166,7 +166,7 @@ public class Cipher {
 	//@   requires isInitialized;
 	//@   requires inputLen >= 0;
 	//@   requires inputOffset >= 0 && inputOffset <= buf.length - inputLen;
-	//@   requires outputOffset >= 0 && outputOffset <= output.length - outputOffset;
+	//@   requires outputOffset >= 0 && outputOffset <= output.length - inputLen;
 	//@   assignable this.*,output[outputOffset .. outputOffset+inputLen-1];
 	//@ also public exceptional_behavior
 	//@   requires !isInitialized;

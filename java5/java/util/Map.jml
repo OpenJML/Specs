@@ -154,16 +154,16 @@ public interface Map<K,V> {
 
     //@ public normal_behavior
     //@   ensures (* \result == content.theSize *);
-    //-@   ensures \result == content.theSize;
+    //-RAC@   ensures \result == content.theSize;
     /*@ pure @*/
     int size();
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    ensures \result <==> (content.theSize == 0); 
       @*/
     /*@ pure @*/ boolean isEmpty();
 	
-    /*-@ public behavior
+    /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
       @    ensures content.hasMap(key) <==> \result;
       @
@@ -175,7 +175,7 @@ public interface Map<K,V> {
       @*/
     /*@ pure @*/ boolean containsKey(Object key) throws RuntimeException;
 
-    /*-@ public behavior
+    /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
       @    ensures !\key("RAC") ==> \result <==> (
               nullequals(value,content.mapsObject(null)) ||
@@ -189,7 +189,7 @@ public interface Map<K,V> {
       @*/
     /*@ pure @*/ boolean containsValue(Object value);
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    requires !content.hasMap(key);// hasMap or hasMapObject -- FIXME
       @    ensures \result == null;
       @ also public normal_behavior
@@ -203,7 +203,7 @@ public interface Map<K,V> {
       @*/
     /*@ pure @*/ V get(Object key);
 
-    /*-@ public behavior
+    /*-RAC@ public behavior
       @    assignable objectState;
       @    ensures content.hasMap(key);
       @    ensures !isEmpty() && containsKey(key) && containsValue(value);
@@ -249,7 +249,7 @@ public interface Map<K,V> {
       @*/
     V put(K key, V value);
 
-    /*-@ public behavior
+    /*-RAC@ public behavior
       @    assignable objectState;
       @    ensures !content.hasMapObject(key);
       @    ensures !content.hasMap(key);
@@ -301,7 +301,7 @@ public interface Map<K,V> {
       @*/
     void putAll(Map<? extends K, ? extends V> t);
 
-    /*-@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    assignable objectState;
       @    ensures isEmpty();
       @    ensures (\forall Object k; !content.hasMapObject(k));

@@ -6,83 +6,222 @@ public class Mac implements Cloneable {
 
 	//@ public model Object content;
 	
+	//@ model public final static int SIZE = 32; // TODO: Actually only true for specific algorithms
+	
 	  private static final sun.security.util.Debug debug;
 	  private static final sun.security.util.Debug pdebug;
 	  private static final boolean skipDebug;
+	  //@ spec_public
 	  private java.security.Provider provider;
 	  private MacSpi spi;
+	  
+	  //@ spec_public
 	  private final java.lang.String algorithm;
-	  private boolean initialized;
+	  
+	  //@ spec_public
+	  private boolean initialized; //@ in content;
+	  
+	  //@ model public boolean isReset; //@ in content;
+	  
+	  //@ model public static byte[] savedInfo; //@ in content;
+	  //@ model public byte[] currentHash;
+	  
+	  //@ public normal_behavior
+	  //@   requires len >= 0;
+	  //@   requires offa >= 0 && offa <= a.length - len;
+	  //@   requires offb >= 0 && offb <= b.length - len;
+	  //@   ensures (\forall int i; offa<=i && i<offa+len; a[i] == b[i-offa+offb]);
+	  //@ pure helper
+	  //@ model public static boolean equalArrays(byte[] a, int offa, byte[] b, int offb, int len);
+
+	  //@ public normal_behavior
+	  //@   requires len > 0;
+	  //@   ensures \result.length == len;
+	  //@ also public normal_behavior
+	  //@   requires len > 0;
+	  //@   requires input[input.length-1] == 1;
+	  //@   requires equalArrays(savedInfo,0,input,0,input.length-1);
+	  //@   ensures \result == hmacHashHelperInit(savedInfo, (byte)1, len);
+	  //@ also public normal_behavior
+	  //@   requires len > 0;
+	  //@   requires input[input.length-1] > 1 && input[input.length-1] <= 127;
+	  //@   requires equalArrays(hmacHash(savedInfo,input[input.length-1]-1),0,input,0,input.length-1);
+	  //@   requires equalArrays(savedInfo,0,input,len,input.length-1-len);
+	  //@   ensures \result == hmacHashHelper(hmacHash(savedInfo,input[input.length-1]-1),savedInfo, (byte)input[input.length-1], len);
+	  //@   ensures \result.length == len;
+	  //@ pure helper function
+	  //@ model public static byte[] hmacHash(byte[] input, int len); 
+
+	  //@ public normal_behavior
+	  //@   ensures \result.length == len;
+	  //@ pure helper function
+	  //@ model public static byte[] hmacHashHelperInit(byte[] info, byte n, int len); 
+
+	  //@ public normal_behavior
+	  //@   requires data.length == len;
+	  //@   ensures \result.length == len;
+	  //@ pure helper function
+	  //@ model public static byte[] hmacHashHelper(byte[] data, byte[] info, byte n, int len); 
+
+	  // The output is the concatenated hashes produced by n iterations
+	  // of the hmacHashHelper algorithm.
+	  //@ public normal_behavior
+	  //@   requires n == 1;
+	  //@   ensures \result == hmacHashHelperInit(info, (byte)1, SIZE);
+	  //@ also public normal_behavior
+	  //@   requires n > 1;
+	  //@   ensures \result == hmacHashHelper(hmacIteratedHash(info, n-1), info, (byte)n, SIZE);
+	  //@   ensures \result.length == SIZE;
+	  //@ pure helper function
+	  //@ model public static byte[] hmacIteratedHash(byte[] info, int n);
+	  
+	  
+	  // Returns the concatenation of n blocks (each of length SIZE) of repeated iteration of
+	  // the hash acting on the 'info' material, according to https://tools.ietf.org/html/rfc5869
+	  //@ public normal_behavior
+	  //@   requires n > 0;
+	  //@   ensures \result.length >= n*SIZE;
+	  //@   ensures (\forall int i; 1<=i && i<=n; equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
+	  //@ pure helper function
+	  //@ model public static byte[] concatenatedIteratedHash(byte[] info, int n);
+	  
 	  private java.security.Provider.Service firstService;
 	  private java.util.Iterator<java.security.Provider.Service> serviceIterator;
 	  private final java.lang.Object lock;
 	  private static int warnCount;
 	  
 	  //@ protected normal_behavior
-	  //@   ensures true;
+	  //@   ensures this.initialized == false;
+	  //@   ensures this.algorithm == algorithm;
 	  //@ pure
-	  protected Mac(MacSpi spi, java.security.Provider provider, java.lang.String s);
+	  protected Mac(MacSpi spi, java.security.Provider provider, java.lang.String algorithm);
+
 	  //@ private normal_behavior
-	  //@   ensures true;
+	  //@   ensures initialized == false;
+	  //@   ensures this.algorithm == algorithm;
 	  //@ pure
-	  private Mac(java.security.Provider.Service service, java.util.Iterator<java.security.Provider.Service> iter, java.lang.String s);
+	  private Mac(java.security.Provider.Service service, java.util.Iterator<java.security.Provider.Service> iter, java.lang.String algorithm);
+
+	  
 	  //@ public normal_behavior
-	  //@   ensures true;
+	  //@   ensures \result == this.algorithm;
 	  //@ pure
 	  public final java.lang.String getAlgorithm();
+	  
 	  //@ public normal_behavior
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.algorithm == algorithm;
 	  //@ pure
-	  public static final Mac getInstance(java.lang.String s) throws java.security.NoSuchAlgorithmException;
+	  public static final Mac getInstance(java.lang.String algorithm) throws java.security.NoSuchAlgorithmException;
+
 	  //@ public normal_behavior
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.algorithm == algorithm;
 	  //@ pure
-	  public static final Mac getInstance(java.lang.String s, java.lang.String ss) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
+	  public static final Mac getInstance(java.lang.String algorithm, java.lang.String provider) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
+
 	  //@ public normal_behavior
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.algorithm == algorithm;
 	  //@ pure
-	  public static final Mac getInstance(java.lang.String s, java.security.Provider provider) throws java.security.NoSuchAlgorithmException;
+	  public static final Mac getInstance(java.lang.String algorithm, java.security.Provider provider) throws java.security.NoSuchAlgorithmException;
 
 	  void chooseFirstProvider();
 	  private void chooseProvider(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
 	  public final java.security.Provider getProvider();
+	  
+	  
+	  //@ public normal_behavior
+	  //@   ensures \result == SIZE;
 	  public final int getMacLength();
 
 	  //@ public normal_behavior
 	  //@   assignable this.*;
+	  //@   ensures this.initialized == true;
+	  //@   ensures this.isReset == true;
 	  public final void init(java.security.Key key) throws java.security.InvalidKeyException;
+
 	  //@ public normal_behavior
 	  //@   assignable this.*;
+	  //@   ensures this.initialized == true;
+	  //@   ensures this.isReset == true;
 	  public final void init(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
+
 	  //@ public normal_behavior
-	  //@   assignable this.*;
+	  //@   requires this.initialized;
+	  //@   assignable this.currentHash;
 	  public final void update(byte b) throws java.lang.IllegalStateException;
+
 	  //@ public normal_behavior
-	  //@   assignable this.*;
+	  //@   { update(buf, 0, buf.length); }
 	  public final void update(byte[] buf) throws java.lang.IllegalStateException;
+
 	  //@ public normal_behavior
-	  //@   assignable this.*;
-	  public final void update(byte[] buf, int from, int to) throws java.lang.IllegalStateException;
+	  //@   requires len == 0;
+	  //@   assignable \nothing;
 	  //@ public normal_behavior
-	  //@   assignable this.*;
+	  //@   requires buf.length > 0;
+	  //@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
+	  //@   requires this.initialized;
+	  //@   assignable this.currentHash;
+	  //@   ensures isReset ==> this.currentHash == hmacHash(buf, SIZE);
+	  //@ also public normal_behavior
+	  //@   requires buf.length > 0;
+	  //@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
+	  //@   requires this.initialized && this.isReset;
+	  //@   old int n = buf[offset+len-1];
+	  //@   requires n == 1;
+	  //@   assignable this.currentHash, this.savedInfo;
+	  //@   ensures \fresh(this.savedInfo);
+	  //@   ensures this.savedInfo.length == len - 1;
+	  //@   ensures equalArrays(this.savedInfo,0,buf,offset,len-1);
+	  //@   ensures this.currentHash == hmacHashHelperInit(this.savedInfo,(byte)1,SIZE);
+	  //@ also public normal_behavior
+	  //@   requires buf.length > 0;
+	  //@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
+	  //@   requires this.initialized && this.isReset;
+	  //@   old byte n = buf[offset+len-1];
+	  //@   old byte[] prev = this.currentHash;
+	  //@   requires n > 1;
+	  //@   requires prev != null && equalArrays(prev,0,hmacHash(this.savedInfo,n-1),0,SIZE);
+	  //@   requires (\forall int i; SIZE+offset<=i && i<SIZE+len-1; this.savedInfo[i] == buf[offset+i]);
+	  //@   assignable this.currentHash;
+	  //@   ensures this.savedInfo.length == len - 1;
+	  //@   ensures this.currentHash == hmacHashHelper(prev,this.savedInfo,(byte)n,SIZE);
+	  
+	  public final void update(byte[] buf, int offset, int len) throws java.lang.IllegalStateException;
+
+	  //@ public normal_behavior
+	  //@   requires this.initialized;
+	  //@   assignable this.currentHash;
 	  public final void update(java.nio.ByteBuffer buffer);
 	  
 	  //@ public normal_behavior
+	  //@   requires this.initialized;
 	  //@   ensures \fresh(\result);
+	  //@   ensures this.isReset;
+	  //@   ensures \result == this.currentHash;
 	  //@ pure
 	  public final byte[] doFinal() throws java.lang.IllegalStateException;
+
 	  //@ public normal_behavior
-	  //@   assignable this.*;
-	  public final void doFinal(byte[] buf, int n) throws ShortBufferException, java.lang.IllegalStateException;
+	  //@   requires outOffset >= 0 && outOffset + SIZE <= out.length;
+	  //@   assignable out[outOffset .. outOffset + SIZE -1];
+	  //@   ensures equalArrays(out,outOffset,currentHash,0,SIZE);
+	  public final void doFinal(byte[] out, int outOffset) throws ShortBufferException, java.lang.IllegalStateException;
+
 	  //@ public normal_behavior
-	  //@   assignable this.*;
-	  //@   ensures \fresh(\result);
-	  public final byte[] doFinal(byte[] buf) throws java.lang.IllegalStateException;
+	  //@   { /*update(input); */return doFinal(); }
+	  public final byte[] doFinal(byte[] input) throws java.lang.IllegalStateException;
+
 	  //@ public normal_behavior
-	  //@   assignable this.*;
+	  //@   requires this.initialized;
+	  //@   assignable this.isReset;
+	  //@   ensures this.isReset;
 	  public final void reset();
+
 	  //@ public normal_behavior
-	  //@   ensures true;
+	  //@   ensures true;  // TODO: Javadoc is not clear on what part of state is copied
 	  //@ pure
 	  public final java.lang.Object clone() throws java.lang.CloneNotSupportedException;
 

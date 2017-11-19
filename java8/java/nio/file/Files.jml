@@ -137,7 +137,6 @@ public final class Files {
 	  //@ public normal_behavior
 	  //@   requires true; // FIXME - model well-constructed paths
 	  //@   ensures \fresh(\result);
-	  //@   ensures \result._isAutoCloseable;
 	  //@ pure
 	  public static java.util.stream.Stream<Path> list(Path path) throws java.io.IOException;
 
