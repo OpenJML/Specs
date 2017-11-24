@@ -2,7 +2,7 @@ package java.nio.channels;
 
 public interface Channel extends java.io.Closeable {
 	
-	//@ public model instance boolean _isOpen;
+	//@ public model instance boolean _isOpen; in autocloseableContent;
 	
 	//@ public normal_behavior
 	//@   ensures \result == _isOpen;
@@ -10,7 +10,7 @@ public interface Channel extends java.io.Closeable {
 	public abstract boolean isOpen();
 
 	//@ public behavior
-	//@   assignable _isOpen;
+	//@   assignable _isOpen, autocloseableContent;
 	//@   ensures !_isOpen;
 	//@   signals_only java.io.IOException;
 	public abstract void close() throws java.io.IOException;

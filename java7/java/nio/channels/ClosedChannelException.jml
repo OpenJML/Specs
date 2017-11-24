@@ -1,0 +1,11 @@
+package java.nio.channels;
+
+public class ClosedChannelException extends java.io.IOException {
+	  //private static final long serialVersionUID;
+
+    /*@ public normal_behavior
+      @   ensures standardThrowable();
+      @*/
+    //@ pure
+    public ClosedChannelException();
+}
