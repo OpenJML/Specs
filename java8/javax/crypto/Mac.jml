@@ -78,7 +78,7 @@ public class Mac implements Cloneable {
 	  // @   requires n > 1;
 	  // @   ensures \result == hmacHashHelper(hmacIteratedHash(info, n-1), info, (byte)n, SIZE);
 	  // @   ensures \result.length == SIZE;
-	  //@ pure helper function
+	  //@ pure helper function non_null
 	  //@ model public static byte[] hmacIteratedHash(byte[] info, int n);
 	  
 	  
@@ -186,8 +186,7 @@ public class Mac implements Cloneable {
 	  //+H2@   requires (\lbl SLEN this.savedInfo.length) == (\lbl LEN len) - 1 - SIZE;
 	  //+H2@   old byte n = buf[offset+len-1];
 	  //+H2@   requires n > 1;
-	  //+H2@   old byte[] prev = hmacIteratedHash(this.savedInfo,n-1);
-	  //+H2@   requires equalArrays(buf,(offset),prev,0,SIZE);
+	  //+H2@   requires equalArrays(buf,(offset),hmacIteratedHash(this.savedInfo,n-1),0,SIZE);
 	  //+H2@   requires equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
 	  //+H2@   assignable this.currentHash;
 	  //+H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
