@@ -167,29 +167,29 @@ public class Mac implements Cloneable {
 	  //@ public normal_behavior
 	  //@   requires len == 0;
 	  //@   assignable \nothing;
-	  // @ also public normal_behavior
-	  // @   requires offset >= 0 && len > 0 && offset <= buf.length - len;
-	  // @   requires this.initialized;
-	  // @   assignable this.currentHash;
-	  // @   ensures isReset ==> this.currentHash == hmacHash(buf, SIZE);
-	  //+H1@ also public normal_behavior
-	  //+H1@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
-	  //+H1@   requires this.initialized && this.isReset;
-	  //+H1@   requires buf[offset+len-1] == 1;
-	  //+H1@   requires (\lbl SLEN1 this.savedInfo.length) == (\lbl LEN1 len) - 1;
-	  //+H1@   requires equalArrays(this.savedInfo,0,buf,offset,len-1);
-	  //+H1@   assignable this.currentHash;
-	  //+H1@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,(byte)1);
-	  //+H2@ also public normal_behavior
-	  //+H2@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
-	  //+H2@   requires this.initialized && this.isReset;
-	  //+H2@   requires (\lbl SLEN this.savedInfo.length) == (\lbl LEN len) - 1 - SIZE;
-	  //+H2@   old byte n = buf[offset+len-1];
-	  //+H2@   requires n > 1;
-	  //+H2@   requires equalArrays(buf,(offset),hmacIteratedHash(this.savedInfo,n-1),0,SIZE);
-	  //+H2@   requires equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
-	  //+H2@   assignable this.currentHash;
-	  //+H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
+	  //-H3@ also public normal_behavior
+	  //-H3@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
+	  //-H3@   requires this.initialized;
+	  //-H3@   assignable this.currentHash;
+	  //-H3@   ensures isReset ==> this.currentHash == hmacHash(buf, SIZE);
+	  //-H1@ also public normal_behavior
+	  //-H1@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
+	  //-H1@   requires this.initialized && this.isReset;
+	  //-H1@   requires buf[offset+len-1] == 1;
+	  //-H1@   requires this.savedInfo.length == len - 1;
+	  //-H1@   requires equalArrays(this.savedInfo,0,buf,offset,len-1);
+	  //-H1@   assignable this.currentHash;
+	  //-H1@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,(byte)1);
+	  //-H2@ also public normal_behavior
+	  //-H2@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
+	  //-H2@   requires this.initialized && this.isReset;
+	  //-H2@   requires this.savedInfo.length == len - 1 - SIZE;
+	  //-H2@   old byte n = buf[offset+len-1];
+	  //-H2@   requires n > 1;
+	  //-H2@   requires equalArrays(buf,(offset),hmacIteratedHash(this.savedInfo,n-1),0,SIZE);
+	  //-H2@   requires equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
+	  //-H2@   assignable this.currentHash;
+	  //-H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
 	  
 	  public final void update(byte[] buf, int offset, int len) throws java.lang.IllegalStateException;
 
@@ -213,7 +213,7 @@ public class Mac implements Cloneable {
 	  public final void doFinal(byte[] out, int outOffset) throws ShortBufferException, java.lang.IllegalStateException;
 
 	  //@ public normal_behavior
-	  //@   { /*update(input); */return doFinal(); }
+	  //@   { /* update(input,0,input.length); */ return doFinal(); }
 	  public final byte[] doFinal(byte[] input) throws java.lang.IllegalStateException;
 
 	  //@ public normal_behavior
