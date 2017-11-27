@@ -20,12 +20,20 @@ public final class Optional<T> {
   public static <T> Optional<T> empty();
 
   //@ private normal_behavior
+  //@   requires t != null;
   //@   ensures this.value == t;
+  //@ also private exceptional_behavior
+  //@   requires t == null;
+  //@   signals_only NullPointerException;
   //@ pure
-  private Optional(T t);  // FIXME: throws NullPointerException if null
+  private Optional(T t); // non-null required
 
   //@ public normal_behavior
-  //@   ensures \result.value == t;   // FIXME - throws NullPointerException if null
+  //@   requires t != null;
+  //@   ensures \result.value == t;
+  //@ also public exceptional_behavior
+  //@   requires t == null;
+  //@   signals_only NullPointerException;
   //@ pure function
   public static <T> Optional<T> of(T t); // non-null required
 
@@ -44,7 +52,7 @@ public final class Optional<T> {
   public T get();
   
   //@ public normal_behavior
-  //@   ensures \result == (value != null);
+  //@   { return value != null; }
   //@ pure function
   public boolean isPresent();
   
@@ -52,19 +60,27 @@ public final class Optional<T> {
   //@ public model_program { if (value != null) consumer.accept(value); }
   public void ifPresent(java.util.function.Consumer<? super T> consumer);
 
-  // FIXME - to do 
+  /*@ public model_program 
+  @   { if (predicate == null) throw new NullPointerException(); return Optional.ofNullable( value == null || !predicate.test(value) ? null : value); }
+  @*/
+  //@ pure
   public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
   
-  /*@ public model_program 
-    @   { return Optional.ofNullable( value == null ? null : null ); }
+  /* @ public model_program // FIXME - can't get these types to work
+    @   { if (f==null) throw new NullPointerException(); ghost U x = value == null ? null : f.apply(value) ; return Optional.<U>ofNullable(x); }
     @*/
-  // @   ensures value != null ==> \result.value == function.apply(value);
-  // @   ensures value == null ==> \result.value == null;
+  //@ public normal_behavior
+  //@   requires f != null;
+  //@   ensures value != null ==> \result.value == f.apply(value);
+  //@   ensures value == null ==> \result.value == null;
+  //@ also public exceptional_behavior
+  //@   requires f == null;
+  //@   signals_only NullPointerException;
   //@ pure
-  public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> function);
+  public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> f);
   
-  
-  public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> function);
+  // FIXME
+  public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> f);
 
   //@ public normal_behavior
   //@   ensures \result == (value != null ? value : t);

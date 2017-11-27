@@ -4,6 +4,8 @@ public interface Channel extends java.io.Closeable {
 	
 	//@ public model instance boolean _isOpen; in autocloseableContent;
 	
+	//@ public model byte[] bytes;
+	
 	//@ public normal_behavior
 	//@   ensures \result == _isOpen;
 	//@ pure

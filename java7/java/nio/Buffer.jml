@@ -49,6 +49,12 @@ public abstract class Buffer {
 	  public final Buffer mark();
 	  public final Buffer reset();
 	  public final Buffer clear();
+	  
+	  //@ public normal_behavior
+	  //@   assignable this.position, this.limit, this.mark;
+	  //@   ensures this.limit == \old(this.position);
+	  //@   ensures this.position == 0;
+	  //@   ensures \result == this;
 	  public final Buffer flip();
 	  public final Buffer rewind();
 

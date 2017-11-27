@@ -23,7 +23,7 @@ public class Mac implements Cloneable {
 	  
 	  //@ model public boolean isReset; //@ in macContent;
 	  
-	  //@ model public static byte[] savedInfo; //@ in macContent;
+	  //@ model public byte[] savedInfo; //@ in macContent;
 	  //@ model public byte[] currentHash; //@ in macContent;
 	  
 	  // @ public normal_behavior
@@ -40,58 +40,27 @@ public class Mac implements Cloneable {
 	  //@ public normal_behavior
 	  //@   requires len > 0;
 	  //@   ensures \result.length == len;
-	  // @ also public normal_behavior
-	  // @   requires len > 0;
-	  // @   requires input[input.length-1] == 1;
-	  // @   requires equalArrays(savedInfo,0,input,0,input.length-1);
-	  // @   ensures \result == hmacHashHelperInit(savedInfo, (byte)1, len);
-	  // @   ensures \result.length == len;
-	  // @ also public normal_behavior
-	  // @   requires len > 0;
-	  // @   requires input[input.length-1] > 1 && input[input.length-1] <= 127;
-	  // @   requires equalArrays(hmacHash(savedInfo,input[input.length-1]-1),0,input,0,input.length-1);
-	  // @   requires equalArrays(savedInfo,0,input,len,input.length-1-len);
-	  // @   ensures \result == hmacHashHelper(hmacHash(savedInfo,input[input.length-1]-1),savedInfo, (byte)input[input.length-1], len);
-	  // @   ensures \result.length == len;
 	  //@ pure helper function non_null
 	  //@ model public static byte[] hmacHash(byte[] input, int len); 
-
-	  // @ public normal_behavior
-	  // @   ensures \result.length == len;
-	  // @ pure helper function non_null
-	  // @ model public static byte[] hmacHashHelperInit(byte[] info, byte n, int len); 
-
-	  // @ public normal_behavior
-	  // @   requires data.length == len;
-	  // @   ensures \result.length == len;
-	  // @ pure helper function non_null
-	  // @ model public static byte[] hmacHashHelper(byte[] data, byte[] info, byte n, int len); 
 
 	  // The output is nth iteration
 	  // of the hmacHashHelper algorithm.
 	  //@ public normal_behavior
 	  //@   requires n >= 1;
 	  //@   ensures \result.length == SIZE;
-	  // @   requires n == 1;
-	  // @   ensures \result == hmacHashHelperInit(info, (byte)1, SIZE);
-	  // @ also public normal_behavior
-	  // @   requires n > 1;
-	  // @   ensures \result == hmacHashHelper(hmacIteratedHash(info, n-1), info, (byte)n, SIZE);
-	  // @   ensures \result.length == SIZE;
 	  //@ pure helper function non_null
 	  //@ model public static byte[] hmacIteratedHash(byte[] info, int n);
 	  
+	  //@ model public static final int MAXBL = 255;
 	  
 	  // Returns the concatenation of n blocks (each of length SIZE) of repeated iteration of
 	  // the hash acting on the 'info' material, according to https://tools.ietf.org/html/rfc5869
 	  //@ public normal_behavior
-	  //@   requires n > 0;
-	  //@   requires savedInfo == info;
-	  //@   ensures \result.length >= n*SIZE;
-	  //@   ensures (\forall int i; 1<=i && i<=n; equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
-	  //@   ensures (\forall int k; 0<=k && k < n*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]);
+	  //@   ensures \result.length == MAXBL*SIZE;
+	  //@   ensures (\forall int i; 1<=i && i<=MAXBL; equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
+	  //@   ensures (\forall int k; 0<=k && k < MAXBL*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]);
 	  //@ pure helper function
-	  //@ model public static byte[] concatenatedIteratedHash(byte[] info, int n);
+	  //@ model public static byte[] concatenatedIteratedHash(byte[] info);
 	  
 //	  private java.security.Provider.Service firstService;
 //	  private java.util.Iterator<java.security.Provider.Service> serviceIterator;

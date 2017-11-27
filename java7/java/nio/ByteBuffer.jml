@@ -18,7 +18,32 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  
 	  ByteBuffer(int i, int j, int k, int m, byte[] b, int n);
 	  ByteBuffer(int i, int j, int k, int m);
+
+	  //@ public normal_behavior
+	  //@   requires n >= 0;
+	  //@   ensures \fresh(\result);
+	  //@   ensures \result.offset == 0;
+	  //@   // \result.mark is undefined;
+	  //@   ensures \result.position == 0;
+	  //@   ensures \result.limit == n;
+	  //@   ensures \result.capacity == n;
+	  //@   ensures \result.hb != null;
+	  //@   ensures \result.hb.length == n;
+	  //@ pure
 	  public static ByteBuffer allocateDirect(int n);
+	  
+	  //@ public normal_behavior
+	  //@   requires n >= 0;
+	  //@   ensures \fresh(\result);
+	  //@   ensures \result.offset == 0;
+	  //@   // \result.mark is undefined;
+	  //@   ensures \result.position == 0;
+	  //@   ensures \result.limit == n;
+	  //@   ensures \result.capacity == n;
+	  //@   ensures \result.hb != null;
+	  //@   ensures \fresh(\result.hb);
+	  //@   ensures \result.hb.length == n;
+	  //@ pure
 	  public static ByteBuffer allocate(int n);
 
 	  //@ public normal_behavior
@@ -112,6 +137,10 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public final ByteBuffer put(byte[] buf);
 
 	  public final boolean hasArray();
+	  
+	  //@ public normal_behavior
+	  //@   ensures \result == hb;
+	  //@ pure
 	  public final byte[] array();
 	  public final int arrayOffset();
 	  public abstract ByteBuffer compact();
