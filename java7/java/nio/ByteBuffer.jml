@@ -167,8 +167,25 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public abstract char getChar(int i);
 	  public abstract ByteBuffer putChar(int i, char c);
 	  public abstract CharBuffer asCharBuffer();
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - Short.BYTES;
+	  //@   assignable this.position;
+	  //@   ensures this.position == \old(this.position) + Short.BYTES;
+	  //@   ensures \result == asShort(hb[\old(position)],hb[\old(position+1)]);
 	  public abstract short getShort();
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - Short.BYTES;
+	  //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
+	  //@   ensures this.position == \old(this.position) + Short.BYTES;
+	  //@   ensures getShort(\old(this.position)) == s;
 	  public abstract ByteBuffer putShort(short s);
+
+	  //@ public normal_behavior
+	  //@   requires position <= limit - Short.BYTES;
+	  //@   ensures \result == asShort(hb[i],hb[i+1]);
+	  //@ pure
 	  public abstract short getShort(int i);
 
 	  //@ public normal_behavior
@@ -188,7 +205,16 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  public abstract int getInt();
 
 	    //@ public normal_behavior
-	    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x10000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
+	    //@   ensures \result == (b0*(0x100) + asUnsigned(b1));
+	    //@ model public static pure helper function short asShort(byte b0, byte b1);
+
+	    //@ public normal_behavior
+	    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x1_0000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
+	    //@   ensures (\result >= 0) <==> (b0 >= 0);
+	    //@   ensures b3 == (byte)(\result%256);
+	    //@   ensures b2 == (byte)((\result/256)%256);
+	    //@   ensures b1 == (byte)((\result/65536)%256);
+	    //@   ensures b0 == (byte)(\result/(256*65536));
 	    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
 	  //@ public normal_behavior

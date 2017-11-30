@@ -52,8 +52,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 	/*@
 	    //@ public normal_behavior
 	    //@   ensures (\result == 0) <==> (\forall int i; 0<=i && i<val.length; val[i] == 0);
-	    //@   ensures (\result < 0) <==> (val[0] < 0);
-	    //@   ensures val[0] >= 0 ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME 
+	    //@   ensures (\result < 0) <==> (val.length >= 1 && val[0] < 0);
+	    //@   ensures (val.length >= 1 && val[0] >= 0) ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME 
 	    //@ pure
         public static model \bigint convert(byte[] val) {
 		// !FIXME! - should put in a non-circular computation for RAC
