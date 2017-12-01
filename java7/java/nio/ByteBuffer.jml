@@ -210,11 +210,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
 	    //@ public normal_behavior
 	    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x1_0000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
-	    //@   ensures (\result >= 0) <==> (b0 >= 0);
-	    //@   ensures b3 == (byte)(\result%256);
-	    //@   ensures b2 == (byte)((\result/256)%256);
-	    //@   ensures b1 == (byte)((\result/65536)%256);
-	    //@   ensures b0 == (byte)(\result/(256*65536));
+	    // @   ensures (\result >= 0) <==> (b0 >= 0);
+	    // @   ensures b3 == (byte)(\result%256);
+	    // @   ensures b2 == (byte)((\result/256)%256);
+	    // @   ensures b1 == (byte)((\result/65536)%256);
+	    // @   ensures b0 == (byte)(\result/(256*65536));
 	    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
 	  //@ public normal_behavior
@@ -257,6 +257,6 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  
 	    //@ public normal_behavior
 	    //@   ensures \result == (b >= 0 ? b : b + 256);
-	    //@ model public static pure helper function int asUnsigned(byte b);
+	    //@ model public static inline pure helper function int asUnsigned(byte b) { return (b >= 0 ? b : b + 256); }
 
 }

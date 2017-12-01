@@ -87,7 +87,17 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	long count();
 	
 	//@ public normal_behavior
-	//@   { return !(\forall int j; 0<=j && j<_length; pred.test(values[j]) == false);}
+	/* @ {
+	 	loop_invariant 0<=i && i<= _length;
+		loop_invariant (\forall int j; 0<=j && j<i; !pred.test(values[j]));
+		decreases _length - i;
+		for (int i=0; i<_length; i++) {
+			if (pred.test(values[i])) return true;
+		}
+		return false;
+		}
+	 */
+	//@   { return !(\forall int j; 0<=j && j<_length; !pred.test(values[j]));}
 	//@ pure
 	boolean anyMatch(java.util.function.Predicate<? super T> pred);
 
