@@ -31,7 +31,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public boolean add(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
     
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
       @   assignable this.*;
@@ -42,7 +42,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public void addFirst(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
    
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i && i < content.theSize-1; _get(i) == \old(_get(i)));
@@ -58,7 +58,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public boolean contains(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result != null;
       @   ensures \fresh(\result);
       @   ensures containsNull == \result.returnsNull;
@@ -81,7 +81,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public /*@ nullable @*/ E element() throws NoSuchElementException;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == _get(0);
       @   ensures \result == null ==> containsNull;
@@ -91,7 +91,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ pure nullable @*/ E getFirst() throws NoSuchElementException;
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == _get(size()-1);
       @   ensures \result == null ==> containsNull;
@@ -101,7 +101,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ pure nullable @*/ E getLast() throws NoSuchElementException;
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures (\forall int i; 0 <= i && i < content.theSize;
       @               \result.nthNextElement(i) == _get(i));
       @*/
@@ -110,7 +110,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public boolean offer(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
     
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires false && (* capacity restrictions respected *);
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
@@ -128,7 +128,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public boolean offerFirst(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;;
       
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires  false && (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i && i < content.theSize-1; _get(i) == \old(_get(i)));
@@ -149,13 +149,13 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public /*@ pure nullable @*/ E peek();
   
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result == (isEmpty()? null : _get(0));
       @   ensures \result == null ==> isEmpty() | containsNull;
       @*/
     public /*@ pure nullable @*/ E peekFirst();
   
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result == (isEmpty()? null : _get(size()-1));
       @   ensures \result == null ==> isEmpty() | containsNull;
       @*/
@@ -164,7 +164,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public /*@ nullable @*/ E poll();
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires isEmpty();
       @   ensures \result == null;
       @   assignable \nothing;
@@ -179,7 +179,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ nullable @*/ E pollFirst();
    
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires isEmpty();
       @   ensures \result == null;
       @   assignable \nothing;
@@ -194,7 +194,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ nullable @*/ E pollLast();
   
-    /*@ public exceptional_behavior
+    /*-RAC@ public exceptional_behavior
       @   requires isEmpty();
       @   assignable \nothing;
       @ also
@@ -208,7 +208,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ nullable @*/ E pop() throws NoSuchElementException;
    
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 < i && i < content.theSize; _get(i+1) == \old(_get(i)));
       @   assignable this.*;
@@ -222,7 +222,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
     
-    /*@ public exceptional_behavior
+    /*-RAC@ public exceptional_behavior
       @   requires isEmpty();
       @   assignable \nothing;
       @ also
@@ -236,7 +236,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ nullable @*/ E removeFirst() throws NoSuchElementException;
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;
@@ -253,7 +253,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public boolean removeFirstOccurrence(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
  
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;
@@ -270,7 +270,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
   public boolean remove(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
 
-    /*@ public exceptional_behavior
+    /*-RAC@ public exceptional_behavior
       @   requires isEmpty();
       @   assignable \nothing;
       @ also
@@ -285,7 +285,7 @@ public interface Deque<E> extends Queue<E> {
     public /*@ nullable @*/ E removeLast() throws NoSuchElementException;
 
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;

@@ -28,7 +28,7 @@ package java.util;
 
 public interface Queue<E> extends Collection<E> {
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires n >= 0 && n < content.theSize;
       @   ensures !\fresh(\result);
       @   ensures containsObject((Object)\result);
@@ -36,7 +36,7 @@ public interface Queue<E> extends Collection<E> {
       @ public pure model E _get(\bigint n);
       @*/
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires n >= 0 && n < content.theSize;
       @   ensures !\fresh(\result);
       @   ensures containsObject((Object)\result);
@@ -44,7 +44,7 @@ public interface Queue<E> extends Collection<E> {
       @ public pure model E _get(int n);
       @*/
     
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
       @   ensures \result;
@@ -56,7 +56,7 @@ public interface Queue<E> extends Collection<E> {
       @*/
     public boolean add(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == _get(0);
       @   ensures \result == null ==> containsNull;
@@ -66,7 +66,7 @@ public interface Queue<E> extends Collection<E> {
       @*/
     public /*@ pure nullable @*/ E element() throws NoSuchElementException;
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   requires  false && (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
@@ -84,13 +84,13 @@ public interface Queue<E> extends Collection<E> {
       @*/
     public boolean offer(/*@ nullable @*/ E e) throws ClassCastException, NullPointerException, IllegalArgumentException;
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result == (isEmpty()? null : _get(0));
       @   ensures \result == null ==> isEmpty() | containsNull;
       @*/
     public /*@ pure nullable @*/ E peek();
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires isEmpty();
       @   ensures \result == null;
       @   assignable \nothing;
@@ -105,7 +105,7 @@ public interface Queue<E> extends Collection<E> {
       @*/
     public /*@ nullable @*/ E poll();
     
-    /*@ public exceptional_behavior
+    /*-RAC@ public exceptional_behavior
       @   requires isEmpty();
       @   assignable \nothing;
       @ also

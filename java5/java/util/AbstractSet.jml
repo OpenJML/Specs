@@ -25,12 +25,12 @@ public abstract class AbstractSet<E>
   extends AbstractCollection<E>
   implements Set<E>
 {
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> (initialCollection() && initialSet());
       @ public pure model boolean initialAbstractSet();
       @*/
 
-    /*@ protected normal_behavior
+    /*-RAC@ protected normal_behavior
       @   ensures initialAbstractSet();
       @*/
     //@ pure

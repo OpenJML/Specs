@@ -22,12 +22,12 @@
 package java.util;
 
 public abstract class AbstractMap<K,V> implements Map<K,V> {
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result <==> initialMap();
       @ public pure model boolean initialAbstractMap();
       @*/
 
-    /*@ protected normal_behavior
+    /*-RAC@ protected normal_behavior
       @   ensures initialAbstractMap();
       @ pure
       @*/
