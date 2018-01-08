@@ -217,14 +217,14 @@ public /*@ pure @*/ final
     /*@  public normal_behavior
       @   ensures \result == theCharacter;
       @*/
-    //@ helper
+    //@ pure helper
     public char charValue();
 
     /*@ also
       @ public normal_behavior
       @   ensures \result >= 0 && (* \result is a hash code for theCharacter *);
       @*/
-    //@ helper
+    //@ pure helper
     public int hashCode();
 
     /*@ also
