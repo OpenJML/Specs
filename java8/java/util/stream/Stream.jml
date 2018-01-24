@@ -57,9 +57,12 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	//@ public normal_behavior
 	//@   requires true;
 	/*@   { 
-	        //@ loop_invariant 0 <= i && i <= _length;
+	        //@ loop_invariant i == \count && 0 <= i && i <= _length;
 	        //@ decreases _length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
-	        for (int i=0; i < _length; i++) consumer.accept(get(i)); 
+	        for (int i=0; i < _length; i++) {
+	            show i, _length;
+	            consumer.accept(values[i]); 
+	        }
 	      }
 	 */
 	void forEachOrdered(java.util.function.Consumer<? super T> consumer);
@@ -76,14 +79,21 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	<R> R collect(java.util.function.Supplier<R> supplier, java.util.function.BiConsumer<R, ? super T> consumer, java.util.function.BiConsumer<R, R> consumer2);
 
 	//@ public normal_behavior
+	//@   requires collector != null;
 	//@   ensures \result != null;
+	//@   ensures ((java.util.Collection)\result).content.owner == \result;
+	//@   ensures ((java.util.Collection)\result).content.theSize >= 0;
+	//@   ensures ((java.util.List)\result).size() == values.length;
+	//@   ensures (\forall int i; 0<=i && i<values.length; ((java.util.List)\result).get(i) == this.values[i]); 
 	//@ pure
 	<R, A> R collect(Collector<? super T, A, R> collector);
+	
 	java.util.Optional<T> min(java.util.Comparator<? super T> comparator);
 	java.util.Optional<T> max(java.util.Comparator<? super T> comparator);
 
 	//@ public normal_behavior
 	//@   ensures \result == _length;
+	//@ pure
 	long count();
 	
 	//@ public normal_behavior

@@ -27,9 +27,10 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.Aut
 	public abstract boolean isParallel();
 	
 	//@ public normal_behavior
-	//@   ensures \result == this;
+	//@   ensures \result == this; // TODO: Not handling parallelism yet
 	//@ pure
 	  public abstract S sequential();
+	  
 		//@ public normal_behavior
 		//@   ensures \result == this;  // FIXME - result is an arbitrary permutation of the input
 		//@ pure
