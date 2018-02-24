@@ -60,7 +60,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	        //@ loop_invariant i == \count && 0 <= i && i <= _length;
 	        //@ decreases _length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
 	        for (int i=0; i < _length; i++) {
-	            show i, _length;
+	            //-STRICT@ show i, _length, values[i];
 	            consumer.accept(values[i]); 
 	        }
 	      }
@@ -81,8 +81,8 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	//@ public normal_behavior
 	//@   requires collector != null;
 	//@   ensures \result != null;
-	//@   ensures ((java.util.Collection)\result).content.owner == \result;
-	//@   ensures ((java.util.Collection)\result).content.theSize >= 0;
+	//-RAC@   ensures ((java.util.Collection)\result).content.owner == \result;
+	//-RAC@   ensures ((java.util.Collection)\result).content.theSize >= 0;
 	//@   ensures ((java.util.List)\result).size() == values.length;
 	//@   ensures (\forall int i; 0<=i && i<values.length; ((java.util.List)\result).get(i) == this.values[i]); 
 	//@ pure
@@ -149,6 +149,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 	//@   ensures \result != null;
 	//@   ensures \fresh(\result);
 	//@   ensures \result._length == 1;
+	//@   ensures \result.values[0] == t;
 	//@ pure
 	public static <T> Stream<T> of(T t);
 	//@ public normal_behavior
