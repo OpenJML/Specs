@@ -1,0 +1,64 @@
+package java.util;
+
+//@ non_null_by_default
+public class Random implements java.io.Serializable {
+	
+	//@ public model long content;
+	
+  static final long serialVersionUID;
+  private final java.util.concurrent.atomic.AtomicLong seed;
+  private static final long multiplier;
+  private static final long addend;
+  private static final long mask;
+  private static final double DOUBLE_UNIT;
+  static final java.lang.String BadBound;
+  static final java.lang.String BadRange;
+  static final java.lang.String BadSize;
+  private static final java.util.concurrent.atomic.AtomicLong seedUniquifier;
+  private double nextNextGaussian;
+  private boolean haveNextNextGaussian;
+  private static final java.io.ObjectStreamField[] serialPersistentFields;
+  private static final sun.misc.Unsafe unsafe;
+  private static final long seedOffset;
+  
+  public Random();
+  private static long seedUniquifier();
+  public Random(long seed);
+  private static long initialScramble(long seed);
+  public synchronized void setSeed(long seed);
+  protected int next(int n);
+
+  //@ public normal_behavior
+  //@   assignable this.content, bytes[*];
+  public void nextBytes(byte[] bytes);
+  final long internalNextLong(long a, long b);
+  final int internalNextInt(int a, int b);
+  final double internalNextDouble(double a, double b);
+  public int nextInt();
+  
+  //@ public normal_behavior
+  //@   requires n > 0;
+  //@   assignable this.content;
+  //@   ensures 0 <= \result && \result < n;
+  public int nextInt(int n);
+  public long nextLong();
+  public boolean nextBoolean();
+  public float nextFloat();
+  public double nextDouble();
+  public synchronized double nextGaussian();
+  public java.util.stream.IntStream ints(long n);
+  public java.util.stream.IntStream ints();
+  public java.util.stream.IntStream ints(long n, int i, int j);
+  public java.util.stream.IntStream ints(int i, int j);
+  public java.util.stream.LongStream longs(long n);
+  public java.util.stream.LongStream longs();
+  public java.util.stream.LongStream longs(long n, long nn, long nnn);
+  public java.util.stream.LongStream longs(long n, long nn);
+  public java.util.stream.DoubleStream doubles(long n);
+  public java.util.stream.DoubleStream doubles();
+  public java.util.stream.DoubleStream doubles(long n, double d, double dd);
+  public java.util.stream.DoubleStream doubles(double d, double dd);
+  private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, java.lang.ClassNotFoundException;
+  private synchronized void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException;
+  private void resetSeed(long seed);
+}

@@ -1,0 +1,33 @@
+package java.security;
+
+//@ non_null_by_default
+public class KeyFactory {
+
+	  private static final sun.security.util.Debug debug;
+	  private final java.lang.String algorithm;
+	  private Provider provider;
+	  private volatile KeyFactorySpi spi;
+	  private final java.lang.Object lock;
+	  private java.util.Iterator<Provider.Service> serviceIterator;
+	  
+	  protected KeyFactory(KeyFactorySpi factory, Provider provider, java.lang.String s);
+	  private KeyFactory(java.lang.String s) throws NoSuchAlgorithmException;
+	  
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public static KeyFactory getInstance(java.lang.String s) throws NoSuchAlgorithmException;
+	  public static KeyFactory getInstance(java.lang.String s, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
+	  public static KeyFactory getInstance(java.lang.String s, Provider provider) throws NoSuchAlgorithmException;
+	  public final Provider getProvider();
+	  public final java.lang.String getAlgorithm();
+	  private KeyFactorySpi nextSpi(KeyFactorySpi spi);
+	  
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure
+	  public final PublicKey generatePublic(java.security.spec.KeySpec spec) throws java.security.spec.InvalidKeySpecException;
+	  public final PrivateKey generatePrivate(java.security.spec.KeySpec spec) throws java.security.spec.InvalidKeySpecException;
+	  public final <T extends java.security.spec.KeySpec> T getKeySpec(Key key, java.lang.Class<T> clazz) throws java.security.spec.InvalidKeySpecException;
+	  public final Key translateKey(Key key) throws InvalidKeyException;
+}

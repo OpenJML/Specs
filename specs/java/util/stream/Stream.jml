@@ -1,0 +1,161 @@
+package java.util.stream;
+
+//@ nullable_by_default immutable
+public interface Stream<T> extends BaseStream<T, Stream<T>> {
+	
+	//@ public normal_behavior
+	//@   ensures \result == (\forall int i; 0<=i && i<_length; values[i] != null);
+	//@ pure
+	//@ model public boolean isNonNull();
+	
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@ pure
+	Stream<T> filter(java.util.function.Predicate<? super T> pred);
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@ pure
+	<R> Stream<R> map(java.util.function.Function<? super T, ? extends R> func);
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \result._length == _length;
+	//@   ensures (\forall int i; 0<=i && i<_length; \result.values[i] == func.applyAsInt(values[i]));
+	//@ pure
+	IntStream mapToInt(java.util.function.ToIntFunction<? super T> func);
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \result._length == _length;
+	//@   ensures (\forall int i; 0<=i && i<_length; \result.values[i] == func.applyAsLong(values[i]));
+	//@ pure
+	LongStream mapToLong(java.util.function.ToLongFunction<? super T> func);
+
+	DoubleStream mapToDouble(java.util.function.ToDoubleFunction<? super T> func);
+	<R> Stream<R> flatMap(java.util.function.Function<? super T, ? extends Stream<? extends R>> func);
+	IntStream flatMapToInt(java.util.function.Function<? super T, ? extends IntStream> func);
+	LongStream flatMapToLong(java.util.function.Function<? super T, ? extends LongStream> func);
+	DoubleStream flatMapToDouble(java.util.function.Function<? super T, ? extends DoubleStream> func);
+	Stream<T> distinct();
+	Stream<T> sorted();
+	Stream<T> sorted(java.util.Comparator<? super T> comparator);
+	Stream<T> peek(java.util.function.Consumer<? super T> consumer);
+	Stream<T> limit(long limit);
+	Stream<T> skip(long n);
+
+	// FIXME - clients should not be able to rely on the actions being ordered
+	//@ public normal_behavior
+	/*@   { 
+	        //@ loop_invariant 0 <= i && i <= _length;
+	        //@ decreases _length - i;  // FIXME - allow the decreases to be a \bigint
+	        for (int i=0; i < _length; i++) consumer.accept(get(i)); 
+	      }
+	 */
+	void forEach(java.util.function.Consumer<? super T> consumer);
+
+	//@ public normal_behavior
+	//@   requires true;
+	/*@   { 
+	        //@ loop_invariant 0 <= i && i <= _length;
+	        //@ decreases _length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
+	        for (int i=0; i < _length; i++) consumer.accept(get(i)); 
+	      }
+	 */
+	void forEachOrdered(java.util.function.Consumer<? super T> consumer);
+	
+	java.lang.Object[] toArray();
+	<A> A[] toArray(java.util.function.IntFunction<A[]> func);
+	T reduce(T t, java.util.function.BinaryOperator<T> op);
+	java.util.Optional<T> reduce(java.util.function.BinaryOperator<T> op);
+	<U> U reduce(U u, java.util.function.BiFunction<U, ? super T, U> func, java.util.function.BinaryOperator<U> op);
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@ pure
+	<R> R collect(java.util.function.Supplier<R> supplier, java.util.function.BiConsumer<R, ? super T> consumer, java.util.function.BiConsumer<R, R> consumer2);
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@ pure
+	<R, A> R collect(Collector<? super T, A, R> collector);
+	java.util.Optional<T> min(java.util.Comparator<? super T> comparator);
+	java.util.Optional<T> max(java.util.Comparator<? super T> comparator);
+
+	//@ public normal_behavior
+	//@   ensures \result == _length;
+	long count();
+	
+	//@ public normal_behavior
+	/* @ {
+	 	loop_invariant 0<=i && i<= _length;
+		loop_invariant (\forall int j; 0<=j && j<i; !pred.test(values[j]));
+		decreases _length - i;
+		for (int i=0; i<_length; i++) {
+			if (pred.test(values[i])) return true;
+		}
+		return false;
+		}
+	 */
+	//@   { return !(\forall int j; 0<=j && j<_length; !pred.test(values[j]));}
+	//@ pure
+	boolean anyMatch(java.util.function.Predicate<? super T> pred);
+
+	//@ public normal_behavior
+	//@   ensures \result == (\forall int j; 0<=j && j<_length; pred.test(values[j]) == true);
+	//@ pure
+	boolean allMatch(java.util.function.Predicate<? super T> pred);
+
+	//@ public normal_behavior
+	//@   ensures \result == (\forall int j; 0<=j && j<_length; pred.test(values[j]) == false);
+	//@ pure
+	boolean noneMatch(java.util.function.Predicate<? super T> pred);
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \fresh(\result);
+	//@   ensures (\result.value == null) <==> (_length == 0); 
+	//@   ensures \result.value != null ==> (\result.value == values[0]);
+	//@ pure
+	java.util.Optional<T> findFirst();
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \fresh(\result);
+	//@   ensures (\result.value == null) <==> (_length == 0); 
+	//@   ensures \result.value != null ==> (\exists int i; 0<=i && i <_length; \result.value == values[i]);
+	//@ pure
+	java.util.Optional<T> findAny();
+	
+	public static <T> Stream.Builder<T> builder();
+
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \fresh(\result);
+	//@   ensures \result._length == 0;
+	//@ pure
+	public static <T> Stream<T> empty();
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \fresh(\result);
+	//@   ensures \result._length == 1;
+	//@ pure
+	public static <T> Stream<T> of(T t);
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	//@   ensures \fresh(\result);
+	//@   ensures \result._length == ts.length;
+	//@   ensures (\forall int i; 0<=i && i<ts.length; \result.values[i] == ts[i]);
+	//@ pure
+	public static <T> Stream<T> of(T... ts);
+	
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	public static <T> Stream<T> iterate(T value, java.util.function.UnaryOperator<T> op);
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	public static <T> Stream<T> generate(java.util.function.Supplier<T> supplier);
+	//@ public normal_behavior
+	//@   ensures \result != null;
+	public static <T> Stream<T> concat(Stream<? extends T> first, Stream<? extends T> last);
+}

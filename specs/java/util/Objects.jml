@@ -1,0 +1,71 @@
+package java.util;
+
+//@ non_null_by_default
+public final class Objects {
+  //@ pure
+  private Objects();
+  
+  // FIXME - more to specify
+  public static boolean equals(java.lang.Object obj1, java.lang.Object obj2);
+  // FIXME - more to specify
+  public static boolean deepEquals(java.lang.Object obj1, java.lang.Object obj2);
+  
+  //@ public normal_behavior
+  //@   ensures \result == (obj == null ? 0 : obj.hashCode());
+  //@ pure function
+  public static int hashCode(java.lang.Object obj);
+  
+  //@ public normal_behavior
+  //@   ensures true; // TODO: constrain the output
+  //@ pure function
+  public static int hash(java.lang.Object... objs);
+  
+  //@ public normal_behavior
+  //@   ensures \result == (obj == null ? "null" : obj.toString());
+  //@ pure function
+  public static java.lang.String toString(/*@ nullable */java.lang.Object obj);
+  
+  //@ public normal_behavior
+  //@   ensures \result == (obj == null ? msg : obj.toString());
+  //@ pure function
+  public static /*@ nullable */ java.lang.String toString(/*@ nullable */java.lang.Object obj, /*@ nullable */java.lang.String msg);
+
+  //@ public normal_behavior
+  //@   ensures (* FIXME - what result; check nullity *);
+  //@ pure
+  public static <T> int compare(T lhs, T rhs, java.util.Comparator<? super T> cmp);
+
+  //@ public normal_behavior
+  //@   requires obj != null;
+  //@   ensures \result == obj;
+  //@ also public exceptional_behavior
+  //@   requires obj == null;
+  //@ pure function
+  public static <T> T requireNonNull(/*@ nullable */ T obj);
+  
+  //@ public normal_behavior
+  //@   requires obj != null;
+  //@   ensures \result == obj;
+  //@ also public exceptional_behavior
+  //@   requires obj == null;  // TODO - specify the use of msg
+  //@ pure function
+  public static <T> T requireNonNull(/*@ nullable */ T obj, java.lang.String msg);
+  
+  //@ public normal_behavior
+  //@   ensures \result == (obj == null);
+  //@ pure
+  public static boolean isNull(/*@ nullable */ java.lang.Object obj);
+
+  //@ public normal_behavior
+  //@   ensures \result == (obj != null);
+  //@ pure
+  public static boolean nonNull(/*@ nullable */ java.lang.Object obj);
+
+  //@ public normal_behavior
+  //@   requires obj != null;
+  //@   ensures \result == obj;
+  //@ also public exceptional_behavior
+  //@   requires obj == null;  // TODO: specify the use of msg
+  //@ pure function
+public static <T> T requireNonNull(T obj, java.util.function.Supplier<java.lang.String> msg);
+}

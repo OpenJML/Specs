@@ -1,0 +1,229 @@
+// @(#)$Id: Object.spec 2246 2006-12-18 03:03:10Z chalin $
+
+// Copyright (C) 2002 Iowa State University
+
+// This file is part of JML
+
+// JML is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2, or (at your option)
+// any later version.
+
+// JML is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with JML; see the file COPYING.  If not, write to
+// the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+package java.lang;
+import java.lang.reflect.Array;
+
+/** JML's specification of java.lang.Object.
+ *
+ * @version $Revision: 2246 $
+ * @author Gary T. Leavens
+ * @author Specifications from Compaq SRC's ESC/Java
+ * @author David R. Cok
+ */
+public class Object {
+
+    /** A data group for the complete state of this object.  
+     */
+    //@ public non_null model JMLDataGroup objectState;
+
+    /** Use this for the private state holding benevolent side effects */
+    //@ public non_null model JMLDataGroup privateState; in objectState;
+
+    /** The Object that has a field pointing to this Object.
+     * Used to specify (among other things) injectivity (see
+     * the ESC/Java User's Manual).
+     */
+    //@ ghost public nullable Object owner;
+        // NB It is inconvenient to include owner in objectState,
+        // because generally we do not change the owner after initialization
+
+
+    /*@ public normal_behavior
+      @   assignable \nothing;
+      @*/
+    public /*@ pure @*/ Object();
+
+
+    /*+ESC@ public normal_behavior
+      @   ensures \result == \erasure(\typeof(this));
+      @*/
+    public final /*@ pure non_null */ Class<?> getClass();
+
+    //-RAC@ public model int theHashCode; in objectState;
+
+    /*@  public code normal_behavior
+      @     assignable privateState;
+      @     ensures \result == System.identityHashCode(this);
+      @*/
+    //-RAC@ ensures \result == theHashCode;
+    public int hashCode();
+
+    //  FIXME - how do we ensure the following
+    //     (\forall Object o,oo; oo.equals(o) ==> o.theHashCode == oo.theHashCode);
+
+    /*@  public normal_behavior
+      @     requires obj != null;
+      @     ensures (* \result is true when obj is "equal to" this object *);
+      @  also
+      @   public normal_behavior
+      @     requires this == obj;
+      @     ensures \result;
+      @  also
+      @   public normal_behavior
+      @     requires obj != null && \typeof(this) == \type(Object);
+      @     ensures \result <==> this == obj;
+      @ also 
+      @   public normal_behavior
+      @     requires obj == null;
+      @     ensures !\result;
+      @*/
+    public /*@ pure @*/ boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
+
+    /*@ public normal_behavior
+      @   requires this instanceof Cloneable;
+      @   assignable \nothing;
+      // FIXME - be sure \elemtype is defined on non-array types
+      @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
+      @
+      @ also public code normal_behavior
+      @   requires this instanceof Cloneable;
+      @   assignable \nothing;
+		// Note: clone is magic.  Object.clone ensures the following
+		// strict equality when it is called but only if subclasses are
+		// fulfill it by calling super.clone();
+      @   ensures \typeof(\result) == \typeof(this);  // This is not a strict requirement, although generally expected
+      @   ensures \result != this; // This is not a strict requirement, although generally expected
+      @
+      @ also public behavior
+      @   requires this instanceof Object[];
+      @   assignable \nothing;
+      @   ensures \result instanceof Object[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((Object[])\result).length == ((Object[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((Object[])this).length; ((Object[])this)[i] == ((Object[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof int[];
+      @   assignable \nothing;
+      @   ensures \result instanceof int[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((int[])\result).length == ((int[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((int[])this).length; ((int[])this)[i] == ((int[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof long[];
+      @   assignable \nothing;
+      @   ensures \result instanceof long[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((long[])\result).length == ((long[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((long[])this).length; ((long[])this)[i] == ((long[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof short[];
+      @   assignable \nothing;
+      @   ensures \result instanceof short[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((short[])\result).length == ((short[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((short[])this).length; ((short[])this)[i] == ((short[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof byte[];
+      @   assignable \nothing;
+      @   ensures \result instanceof byte[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((byte[])\result).length == ((byte[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((byte[])this).length; ((byte[])this)[i] == ((byte[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof boolean[];
+      @   assignable \nothing;
+      @   ensures \result instanceof boolean[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((boolean[])\result).length == ((boolean[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((boolean[])this).length; ((boolean[])this)[i] == ((boolean[])\result)[i]);
+      @ also public behavior
+      @   requires this instanceof char[];
+      @   assignable \nothing;
+      @   ensures \result instanceof byte[];
+      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+      @   ensures ((char[])\result).length == ((char[])this).length;
+      @   ensures (\forall int i; 0 <= i && i < ((char[])this).length; ((char[])this)[i] == ((char[])\result)[i]);
+//      @ also public behavior
+//      @   requires this instanceof double[];
+//      @   assignable \nothing;
+//      @   ensures \result instanceof double[];
+//      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
+//      @   ensures ((double[])\result).length == ((double[])this).length;
+//      @   ensures (\forall int i; 0 <= i && i < ((double[])this).length; ((double[])this)[i] == ((double[])\result)[i]);
+//      @ also public behavior
+//      @   requires this instanceof float[];
+//      @   assignable \nothing;
+//      @   ensures \result instanceof float[];
+//      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this;; // Assuming this is true for arrays
+//      @   ensures ((float[])\result).length == ((float[])this).length;
+//      @   ensures (\forall int i; 0 <= i && i < ((float[])this).length; ((float[])this)[i] == ((float[])\result)[i]);
+      @
+      @
+      @ also public exceptional_behavior
+      @   requires !(this instanceof Cloneable);
+      @   assignable \nothing;
+      @   signals_only CloneNotSupportedException;
+      @*/
+    protected /*@non_null */ Object clone() throws CloneNotSupportedException;
+
+    /** Use theString as the (pure) model value of toString() */
+    //-RAC@ public model non_null String theString; in objectState;
+
+    /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
+      @     ensures (* \result is a string representation of this object *);
+      @ also code normal_behavior
+      @     assignable \nothing;
+      @     ensures \result == theString;
+      @ // Ignore the case of what an Object actually produces as a String
+      @*/
+    public /*@ non_null @*/ String toString();
+
+    public final void notify();
+
+    public final void notifyAll();
+
+    //@ public behavior
+    //@   requires timeout >= 0L;
+          // FIXME also check thread ownership - IllegalMonitorStateException
+    //@   assignable \nothing;
+    //@ also public exceptional_behavior
+    //@   requires timeout < 0;
+    //@   assignable \nothing;
+    //@   signals_only IllegalArgumentException;
+    public final void wait(long timeout) throws InterruptedException;
+
+    //@ public behavior
+    //@   requires timeout >= 0L;
+    //@   requires 0 <= nanos;
+    //@   requires nanos < 1000000;
+    //@   assignable \not_specified;
+          // FIXME also check thread ownership - IllegalMonitorStateException
+    //@ also public exceptional_behavior
+    //@   requires timeout < 0 || nanos < 0 || nanos >= 1000000;
+    //@   assignable \not_specified;
+    //@   signals_only IllegalArgumentException;
+    public final void wait(long timeout, int nanos)
+        throws InterruptedException;
+
+    public final void wait() throws InterruptedException;
+
+    /*@ protected normal_behavior
+      @   requires objectTimesFinalized == 0 ; // FIXME && \lockset.isEmpty();
+      @   assignable objectTimesFinalized, objectState;
+      @   ensures objectTimesFinalized == 1;
+      @*/
+    protected void finalize() throws Throwable;
+
+    /** The number of times this object has been finalized.
+     */
+    //@ protected ghost int objectTimesFinalized = 0; // not part of objectState
+
+}

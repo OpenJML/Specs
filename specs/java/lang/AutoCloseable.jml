@@ -1,0 +1,10 @@
+package java.lang;
+
+public interface AutoCloseable {
+	
+	//@ model instance public JMLDataGroup autocloseableContent;
+	
+	//@ public behavior
+	//@   assignable autocloseableContent;
+	public void close() throws Exception;
+}

@@ -1,0 +1,16 @@
+package java.security.spec;
+
+public class X509EncodedKeySpec extends EncodedKeySpec {
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public X509EncodedKeySpec(byte[] bytes);
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public byte[] getEncoded();
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public final java.lang.String getFormat();
+}

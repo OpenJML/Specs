@@ -1,0 +1,117 @@
+package java.util;
+
+//@ non_null_by_default immutable
+public final class Optional<T> {
+  //@ spec_public
+  private static final Optional<?> EMPTY;
+  //@ public static final invariant EMPTY.value == null;
+  
+  //@ spec_public nullable
+  private final T value;
+  
+  //@ private normal_behavior
+  //@   ensures this.value == null;
+  //@ pure
+  private Optional();
+
+  //@ public normal_behavior
+  //@   ensures \result.value == null;
+  //@ pure function
+  public static <T> Optional<T> empty();
+
+  //@ private normal_behavior
+  //@   requires t != null;
+  //@   ensures this.value == t;
+  //@ also private exceptional_behavior
+  //@   requires t == null;
+  //@   signals_only NullPointerException;
+  //@ pure
+  private Optional(T t); // non-null required
+
+  //@ public normal_behavior
+  //@   requires t != null;
+  //@   ensures \fresh(\result);
+  //@   ensures \result.value == t;
+  //@ also public exceptional_behavior
+  //@   requires t == null;
+  //@   signals_only NullPointerException;
+  //@ pure function
+  public static <T> Optional<T> of(T t); // non-null required
+
+  //@ public normal_behavior
+  //@   ensures \fresh(\result);
+  //@   ensures \result.value == t;
+  //@ pure function
+  public static <T> Optional<T> ofNullable(/*@ nullable */ T t);
+  
+  //@ public normal_behavior
+  //@   requires value != null;
+  //@   ensures \result == value;
+  //@ also public exceptional_behavior
+  //@   requires value == null;
+  //@   signals_only NoSuchElementException;
+  //@ pure function
+  public T get();
+  
+  //@ public normal_behavior
+  //@   { return value != null; }
+  //@ pure function
+  public boolean isPresent();
+  
+  
+  //@ public model_program { if (value != null) consumer.accept(value); }
+  public void ifPresent(java.util.function.Consumer<? super T> consumer);
+
+  /*@ public model_program 
+  @   { if (predicate == null) throw new NullPointerException(); return Optional.ofNullable( value == null || !predicate.test(value) ? null : value); }
+  @*/
+  //@ pure
+  public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
+  
+  /* @ public model_program // FIXME - can't get these types to work
+    @   { if (f==null) throw new NullPointerException(); ghost U x = value == null ? null : f.apply(value) ; return Optional.<U>ofNullable(x); }
+    @*/
+  //@ public normal_behavior
+  //@   requires f != null;
+  //@   requires f instanceof java.util.function.Function.Pure;  // FIXME - generic type here and below?
+  //@   assignable \nothing;
+  //@   ensures \fresh(\result);
+  //@   ensures value != null ==> \result.value == ((java.util.function.Function.Pure)f).apply(value);
+  //@   ensures value == null ==> \result.value == null;
+  //@ also public normal_behavior
+  //@   requires f != null;
+  //@   requires !(f instanceof java.util.function.Function.Pure);
+  //     FIXME - needs an assignable clause based on f
+  //@   ensures \fresh(\result);
+  //     FIXME    ensures value != null ==> \result.value == f.apply(value);
+  //@   ensures value == null ==> \result.value == null;
+  //@ also public exceptional_behavior
+  //@   requires f == null;
+  //@   assignable \nothing;
+  //@   signals_only NullPointerException;
+  public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> f);
+  
+  // FIXME
+  public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> f);
+
+  //@ public normal_behavior
+  //@   ensures \result == (value != null ? value : t);
+  //@ pure
+  public T orElse(T t);
+
+  /*@ public model_program
+    @   { return (value != null ? value : supplier.get() ); }
+    @*/
+  //@ pure
+  public T orElseGet(java.util.function.Supplier<? extends T> supplier);
+  
+  /*@ public model_program {
+    @   if (value!=null) return value; else throw supplier.get();
+    @ }
+    @*/
+  //@ pure  // FIXME - really only pure if the lambda expression is pure
+  public <X extends java.lang.Throwable> T orElseThrow( java.util.function.Supplier<? extends X> supplier) throws X;
+  public boolean equals(java.lang.Object o);
+  public int hashCode();
+  public java.lang.String toString();
+}

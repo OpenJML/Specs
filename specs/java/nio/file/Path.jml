@@ -1,0 +1,45 @@
+package java.nio.file;
+
+//@ non_null_by_default immutable
+public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Path>, Watchable {
+//	public abstract FileSystem getFileSystem();
+//	public abstract boolean isAbsolute();
+//	public abstract Path getRoot();
+//	public abstract Path getFileName();
+//	public abstract Path getParent();
+//	public abstract int getNameCount();
+//	public abstract Path getName(int);
+//	public abstract Path subpath(int, int);
+//	public abstract boolean startsWith(Path);
+//	public abstract boolean startsWith(java.lang.String);
+//	public abstract boolean endsWith(Path);
+//	public abstract boolean endsWith(java.lang.String);
+//	public abstract Path normalize();
+	
+	//@ public normal_behavior
+	//@   requires true;
+	//@   ensures path.isAbsolute() ==> \result == path;
+	//@ pure function
+	public abstract Path resolve(Path path);
+	//@ public normal_behavior
+	//@   requires true;
+	//@   ensures true;
+	//@ pure function
+	public abstract Path resolve(java.lang.String pathString);
+	
+//	public abstract Path resolveSibling(Path);
+//	public abstract Path resolveSibling(java.lang.String);
+//	public abstract Path relativize(Path);
+//	public abstract java.net.URI toUri();
+//	public abstract Path toAbsolutePath();
+//	public abstract Path toRealPath(LinkOption...) throws java.io.IOException;
+//	public abstract java.io.File toFile();
+//	public abstract WatchKey register(WatchService, WatchEvent$Kind<?>[], WatchEvent$Modifier...) throws java.io.IOException;
+//	public abstract WatchKey register(WatchService, WatchEvent$Kind<?>...) throws java.io.IOException;
+//	public abstract java.util.Iterator<Path> iterator();
+//	public abstract int compareTo(Path);
+//	public abstract boolean equals(java.lang.Object);
+//	public abstract int hashCode();
+//	public abstract java.lang.String toString();
+//	public int compareTo(java.lang.Object);
+}

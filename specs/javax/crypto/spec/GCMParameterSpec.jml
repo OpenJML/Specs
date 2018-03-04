@@ -1,0 +1,24 @@
+package javax.crypto.spec;
+
+public class GCMParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+
+  private byte[] iv;
+  private int tLen;
+
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
+  public GCMParameterSpec(int n, byte[] buf);
+
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
+  public GCMParameterSpec(int n, byte[] buf, int j, int k);
+  
+  //@ private normal_behavior
+  //@   assignable this.*;
+  //@   ensures true;
+  private void init(int n, byte[] buf, int j, int k);
+  public int getTLen();
+  public byte[] getIV();
+}

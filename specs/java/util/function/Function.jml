@@ -1,0 +1,34 @@
+package java.util.function;
+
+//@ non_null_by_default immutable
+@FunctionalInterface
+public interface Function<T,R> {
+
+	//@ nullable
+	  public abstract R apply(/*@ nullable */ T t);
+	  
+	  default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
+
+	  default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
+
+      /*@ public static immutable model interface Pure<T,R> extends Function<T,R> {
+      @   pure function
+      @   public nullable R apply(nullable T t);
+      @ }
+      @*/
+    
+      /*@ public static immutable model interface Identity<T> extends Function<T,T> {
+      @   public model_program {
+      @      return t;
+      @   }
+      @   pure function
+      @   public nullable T apply(nullable T t);
+      @ }
+      @*/
+    
+	  //@ public normal_behavior
+	  //@   ensures \result instanceof Identity;
+	  //@ pure
+	  public static <T> Function<T, T> identity();
+
+}

@@ -1,0 +1,148 @@
+package java.nio.file;
+
+//@ non_null_by_default
+public final class Files {
+//	  private static final int BUFFER_SIZE;
+//	  private static final int MAX_BUFFER_SIZE;
+//	  static final boolean $assertionsDisabled;
+//	  private Files();
+//	  private static spi.FileSystemProvider provider(Path);
+//	  private static java.lang.Runnable asUncheckedRunnable(java.io.Closeable);
+//	  public static java.io.InputStream newInputStream(Path, OpenOption...) throws java.io.IOException;
+//	  public static java.io.OutputStream newOutputStream(Path, OpenOption...) throws java.io.IOException;
+//	  public static java.nio.channels.SeekableByteChannel newByteChannel(Path, java.util.Set<? extends OpenOption>, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static java.nio.channels.SeekableByteChannel newByteChannel(Path, OpenOption...) throws java.io.IOException;
+//	  public static DirectoryStream<Path> newDirectoryStream(Path) throws java.io.IOException;
+//	  public static DirectoryStream<Path> newDirectoryStream(Path, java.lang.String) throws java.io.IOException;
+//	  public static DirectoryStream<Path> newDirectoryStream(Path, DirectoryStream$Filter<? super Path>) throws java.io.IOException;
+
+	
+	//@ public behavior
+	//@   ensures true;
+	//@ pure
+	public static Path createFile(Path path, java.nio.file.attribute.FileAttribute<?>... attributes) throws java.io.IOException;
+
+	//@ public behavior
+	//@   ensures true;
+	//@ pure
+	public static Path createDirectory(Path path, java.nio.file.attribute.FileAttribute<?>... attributes) throws java.io.IOException;
+//	  public static Path createDirectories(Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  private static void createAndCheckIsDirectory(Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static Path createTempFile(Path, java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static Path createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static Path createTempDirectory(Path, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static Path createTempDirectory(java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static Path createSymbolicLink(Path, Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
+//	  public static Path createLink(Path, Path) throws java.io.IOException;
+//	  public static void delete(Path) throws java.io.IOException;
+	
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean deleteIfExists(Path path) throws java.io.IOException;
+//	  public static Path copy(Path, Path, CopyOption...) throws java.io.IOException;
+//	  public static Path move(Path, Path, CopyOption...) throws java.io.IOException;
+//	  public static Path readSymbolicLink(Path) throws java.io.IOException;
+//	  public static FileStore getFileStore(Path) throws java.io.IOException;
+//	  public static boolean isSameFile(Path, Path) throws java.io.IOException;
+//	  public static boolean isHidden(Path) throws java.io.IOException;
+//	  public static java.lang.String probeContentType(Path) throws java.io.IOException;
+//	  public static <V extends java.nio.file.attribute.FileAttributeView> V getFileAttributeView(Path, java.lang.Class<V>, LinkOption...);
+//	  public static <A extends java.nio.file.attribute.BasicFileAttributes> A readAttributes(Path, java.lang.Class<A>, LinkOption...) throws java.io.IOException;
+//	  public static Path setAttribute(Path, java.lang.String, java.lang.Object, LinkOption...) throws java.io.IOException;
+//	  public static java.lang.Object getAttribute(Path, java.lang.String, LinkOption...) throws java.io.IOException;
+//	  public static java.util.Map<java.lang.String, java.lang.Object> readAttributes(Path, java.lang.String, LinkOption...) throws java.io.IOException;
+//	  public static java.util.Set<java.nio.file.attribute.PosixFilePermission> getPosixFilePermissions(Path, LinkOption...) throws java.io.IOException;
+
+	//@ public normal_behavior
+	//@   requires true; // FIXME - model well-constructed paths
+	//@ pure
+	public static Path setPosixFilePermissions(Path path, java.util.Set<java.nio.file.attribute.PosixFilePermission> permissions) throws java.io.IOException;
+
+	  //	  public static java.nio.file.attribute.UserPrincipal getOwner(Path, LinkOption...) throws java.io.IOException;
+//	  public static Path setOwner(Path, java.nio.file.attribute.UserPrincipal) throws java.io.IOException;
+//	  public static boolean isSymbolicLink(Path);
+	
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public static boolean isDirectory(Path path, LinkOption... options);
+	
+	//@ public normal_behavior
+	//@   ensures true;
+	//@ pure
+	public static boolean isRegularFile(Path path, LinkOption... options);
+//	  public static java.nio.file.attribute.FileTime getLastModifiedTime(Path, LinkOption...) throws java.io.IOException;
+//	  public static Path setLastModifiedTime(Path, java.nio.file.attribute.FileTime) throws java.io.IOException;
+//	  public static long size(Path) throws java.io.IOException;
+//	  private static boolean followLinks(LinkOption...);
+	
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean exists(Path path, LinkOption... opts);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean notExists(Path path, LinkOption... opts);
+	  //@ private normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  private static boolean isAccessible(Path path, AccessMode... modes);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean isReadable(Path path);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean isWritable(Path path);
+	  //@ public normal_behavior
+	  //@   ensures true;
+	  //@ pure    // FIXME _ need to model the file system
+	  public static boolean isExecutable(Path path);
+//	  public static Path walkFileTree(Path, java.util.Set<FileVisitOption>, int, FileVisitor<? super Path>) throws java.io.IOException;
+//	  public static Path walkFileTree(Path, FileVisitor<? super Path>) throws java.io.IOException;
+//	  public static java.io.BufferedReader newBufferedReader(Path, java.nio.charset.Charset) throws java.io.IOException;
+//	  public static java.io.BufferedReader newBufferedReader(Path) throws java.io.IOException;
+//	  public static java.io.BufferedWriter newBufferedWriter(Path, java.nio.charset.Charset, OpenOption...) throws java.io.IOException;
+//	  public static java.io.BufferedWriter newBufferedWriter(Path, OpenOption...) throws java.io.IOException;
+//	  private static long copy(java.io.InputStream, java.io.OutputStream) throws java.io.IOException;
+//	  public static long copy(java.io.InputStream, Path, CopyOption...) throws java.io.IOException;
+//	  public static long copy(Path, java.io.OutputStream) throws java.io.IOException;
+//	  private static byte[] read(java.io.InputStream, int) throws java.io.IOException;
+
+	//@ public normal_behavior
+	//@   requires true; // FIXME - model well-constructed paths
+	//@ pure
+	public static byte[] readAllBytes(Path path) throws java.io.IOException;
+//	  public static java.util.List<java.lang.String> readAllLines(Path, java.nio.charset.Charset) throws java.io.IOException;
+//	  public static java.util.List<java.lang.String> readAllLines(Path) throws java.io.IOException;
+
+	//@ public behavior
+	//@  requires true;
+	//@ pure  // FIXME - need to model the file system
+	public static Path write(Path path, byte[] bytes, OpenOption... options) throws java.io.IOException;
+
+	//@ public behavior
+	//@  requires true;
+	//@ pure  // FIXME - need to model the file system
+	public static Path write(Path path, java.lang.Iterable<? extends java.lang.CharSequence> charSequences, java.nio.charset.Charset charset, OpenOption... options) throws java.io.IOException;
+
+	//@ public behavior
+	//@  requires true;
+	//@ pure  // FIXME - need to model the file system
+	public static Path write(Path path, java.lang.Iterable<? extends java.lang.CharSequence> charSequences, OpenOption... options) throws java.io.IOException;
+
+	  //@ public normal_behavior
+	  //@   requires true; // FIXME - model well-constructed paths
+	  //@   ensures \fresh(\result);
+	  //@ pure
+	  public static java.util.stream.Stream<Path> list(Path path) throws java.io.IOException;
+
+//	  public static java.util.stream.Stream<Path> walk(Path, int, FileVisitOption...) throws java.io.IOException;
+//	  public static java.util.stream.Stream<Path> walk(Path, FileVisitOption...) throws java.io.IOException;
+//	  public static java.util.stream.Stream<Path> find(Path, int, java.util.function.BiPredicate<Path, java.nio.file.attribute.BasicFileAttributes>, FileVisitOption...) throws java.io.IOException;
+//	  public static java.util.stream.Stream<java.lang.String> lines(Path, java.nio.charset.Charset) throws java.io.IOException;
+//	  public static java.util.stream.Stream<java.lang.String> lines(Path) throws java.io.IOException;
+	}

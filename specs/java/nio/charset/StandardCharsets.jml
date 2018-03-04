@@ -1,0 +1,16 @@
+package java.nio.charset;
+
+//@ non_null_by_default
+public final class StandardCharsets {
+	
+	public static final Charset US_ASCII;
+	public static final Charset UTF_8;
+	public static final Charset UTF_16;
+	public static final Charset UTF_16BE;
+	public static final Charset UTF_16LE;
+	public static final Charset ISO_8859_1;
+	
+	//@ normal_behavior
+	//@   ensures true;
+	//@ static_initializer
+}

@@ -1,0 +1,91 @@
+package java.util.concurrent;
+// SInce 1.5
+
+//@ immutable
+public enum TimeUnit { // FIXME - change to enum?
+	 NANOSECONDS,
+	 MICROSECONDS,
+	 MILLISECONDS,
+	 SECONDS,
+	 MINUTES,
+	 HOURS,
+	 DAYS;
+
+	//@ model public long scale;
+	//@ public final static invariant NANOSECONDS.scale == 1L;
+	//@ public final static invariant MICROSECONDS.scale == 1000L;
+	//@ public final static invariant MILLISECONDS.scale == 1000L * 1000L;
+	//@ public final static invariant SECONDS.scale == 1000L * 1000L * 1000L;
+	//@ public final static invariant MINUTES.scale == 1000L * 1000L * 1000L * 60L;
+	//@ public final static invariant HOURS.scale == 1000L * 1000L * 1000L * 60L * 60L;
+	//@ public final static invariant DAYS.scale == 1000L * 1000L * 1000L * 60L * 60L * 24L;
+	
+	//@ public final invariant this.scale >= 1L;
+  
+	// Converts t units of TimeUnit u into the result expressed ain the receiver's unit
+	// Relies on the fact that the scale values are multiples of each other
+  //@ public normal_behavior
+  //@  requires u.scale <= this.scale;
+  //@  ensures \result == t / (this.scale / u.scale);
+  //@ also public normal_behavior
+  //@  requires u.scale > this.scale && t <= Long.MAX_VALUE / (u.scale / this.scale) && t >= Long.MIN_VALUE / (u.scale / this.scale);
+  //@  ensures \result == t * (u.scale / this.scale);
+  //@ also public normal_behavior
+  //@  requires u.scale > this.scale && t > Long.MAX_VALUE / (u.scale / this.scale);
+  //@  ensures \result == Long.MAX_VALUE;
+  //@ also public normal_behavior
+  //@  requires u.scale > this.scale && t < Long.MIN_VALUE / (u.scale / this.scale);
+  //@  ensures \result == Long.MIN_VALUE;
+  //@ pure function
+  public long convert(long t, TimeUnit u);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / NANOSECONDS.scale;
+  //@ pure function
+  public long toNanos(long t);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / MICROSECONDS.scale;
+  //@ pure function
+  public long toMicros(long t);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / MILLISECONDS.scale;
+  //@ pure function
+  public long toMillis(long t);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / SECONDS.scale;
+  //@ pure function
+  public long toSeconds(long t);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / MINUTES.scale;
+  //@ pure function
+  public long toMinutes(long t);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / HOURS.scale;
+  //@ pure function
+  public long toHours(long t);
+  
+  //@ public normal_behavior
+  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  ensures \result == t * this.scale / DAYS.scale;
+  //@ pure function
+  public long toDays(long t);
+
+//  abstract int excessNanos(long t1, long t2);
+ // public void timedWait(java.lang.Object, long) throws java.lang.InterruptedException;
+//  public void timedJoin(java.lang.Thread, long) throws java.lang.InterruptedException;
+//  public void sleep(long) throws java.lang.InterruptedException;
+// FIXME  TimeUnit(java.lang.String, int, TimeUnit$1);
+
+//  static {};
+}

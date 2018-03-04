@@ -1,0 +1,74 @@
+package java.text;
+
+//@ non_null_by_default
+public class SimpleDateFormat extends DateFormat {
+
+	  static final long serialVersionUID;
+	  static final int currentSerialVersion;
+	  private int serialVersionOnStream;
+	  private java.lang.String pattern;
+	  private transient NumberFormat originalNumberFormat;
+	  private transient java.lang.String originalNumberPattern;
+	  private transient char minusSign;
+	  private transient boolean hasFollowingMinusSign;
+	  private transient boolean forceStandaloneForm;
+	  private transient char[] compiledPattern;
+	  private static final int TAG_QUOTE_ASCII_CHAR;
+	  private static final int TAG_QUOTE_CHARS;
+	  private transient char zeroDigit;
+	  private DateFormatSymbols formatData;
+	  private java.util.Date defaultCenturyStart;
+	  private transient int defaultCenturyStartYear;
+	  private static final int MILLIS_PER_MINUTE;
+	  private static final java.lang.String GMT;
+	  private static final java.util.concurrent.ConcurrentMap<java.util.Locale, NumberFormat> cachedNumberFormatData;
+	  private java.util.Locale locale;
+	  transient boolean useDateFormatSymbols;
+	  private static final int[] PATTERN_INDEX_TO_CALENDAR_FIELD;
+	  private static final int[] PATTERN_INDEX_TO_DATE_FORMAT_FIELD;
+	  private static final DateFormat.Field[] PATTERN_INDEX_TO_DATE_FORMAT_FIELD_ID;
+	  private static final int[] REST_OF_STYLES;
+	  //static final boolean $assertionsDisabled;
+	  public SimpleDateFormat();
+	  public SimpleDateFormat(java.lang.String s);
+	  public SimpleDateFormat(java.lang.String s, java.util.Locale locale);
+	  public SimpleDateFormat(java.lang.String s, DateFormatSymbols symbols);
+	  private void initialize(java.util.Locale locale);
+	  private void initializeCalendar(java.util.Locale locale);
+	  private char[] compile(java.lang.String s);
+	  private static void encode(int a, int b, java.lang.StringBuilder s);
+	  private void initializeDefaultCentury();
+	  private void parseAmbiguousDatesAsAfter(java.util.Date date);
+	  public void set2DigitYearStart(java.util.Date date);
+	  public java.util.Date get2DigitYearStart();
+	  public java.lang.StringBuffer format(java.util.Date date, java.lang.StringBuffer sb, FieldPosition fp);
+	  private java.lang.StringBuffer format(java.util.Date date, java.lang.StringBuffer sb, Format.FieldDelegate fd);
+	  public AttributedCharacterIterator formatToCharacterIterator(java.lang.Object o);
+	  private void subFormat(int a, int b, Format.FieldDelegate fd, java.lang.StringBuffer sb, boolean b);
+	  private void zeroPaddingNumber(int a, int b, int c, java.lang.StringBuffer sb);
+	  public java.util.Date parse(java.lang.String s, ParsePosition pp);
+	  private int matchString(java.lang.String s, int a, int b, java.lang.String[] sa, CalendarBuilder cb);
+	  private int matchString(java.lang.String s, int a, int b, java.util.Map<java.lang.String, java.lang.Integer> map, CalendarBuilder cb);
+	  private int matchZoneString(java.lang.String s, int a, java.lang.String[] sa);
+	  private boolean matchDSTString(java.lang.String s, int a, int b, int c, java.lang.String[][] saa);
+	  private int subParseZoneString(java.lang.String s, int a, CalendarBuilder cb);
+	  private int subParseNumericZone(java.lang.String s, int a, int b, int c, boolean bb, CalendarBuilder cb);
+	  private boolean isDigit(char c);
+	  private int subParse(java.lang.String s, int a, int b, int c, boolean bb, boolean[] ba, ParsePosition pp, boolean bbb, CalendarBuilder cb);
+	  private boolean useDateFormatSymbols();
+	  private java.lang.String translatePattern(java.lang.String s, java.lang.String ss, java.lang.String sss);
+	  public java.lang.String toPattern();
+	  public java.lang.String toLocalizedPattern();
+	  public void applyPattern(java.lang.String s);
+	  private void applyPatternImpl(java.lang.String s);
+	  public void applyLocalizedPattern(java.lang.String s);
+	  public DateFormatSymbols getDateFormatSymbols();
+	  public void setDateFormatSymbols(DateFormatSymbols symbols);
+	  public java.lang.Object clone();
+	  public int hashCode();
+	  public boolean equals(java.lang.Object o);
+	  private java.util.Map<java.lang.String, java.lang.Integer> getDisplayNamesMap(int i, java.util.Locale locale);
+	  private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, java.lang.ClassNotFoundException;
+	  private void checkNegativeNumberExpression();
+	
+}

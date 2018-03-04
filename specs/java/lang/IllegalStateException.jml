@@ -1,0 +1,23 @@
+package java.lang;
+
+public class IllegalStateException extends RuntimeException {
+    /*@ public normal_behavior
+      @   ensures standardThrowable();
+      @*/
+    //@ pure
+    public IllegalStateException();
+
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s);
+      @*/
+    //@ pure
+    public IllegalStateException(String s);
+
+    /*@ public normal_behavior
+      @   ensures t != null ==> standardThrowable(s,t);
+      @   ensures t == null ==> standardThrowable(s);
+      @*/
+    //@ pure
+    public IllegalStateException(String s, /*@ nullable */ Throwable t);
+}
+

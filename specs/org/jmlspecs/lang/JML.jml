@@ -1,0 +1,73 @@
+package org.jmlspecs.lang;
+
+import org.jmlspecs.utils.Utils;
+//@ pure  // TODO: Needed to use in specs, but do report out to System.out
+public class JML {
+
+	// Some methods are model methods because they have a JML-only argument
+	
+	//@ ensures \result == \erasure(t);
+	//@ model pure public static Class<?> erasure(\TYPE t) { return Utils.erasure(t); }
+	
+	//@ model pure public static \TYPE[] typeargs(\TYPE t); // { return Utils.typeargs(t); } // FIXME for rac
+	
+	//@ model pure public static boolean isArray(\TYPE t) { return Utils.isArray(t); }
+	
+	// Works for primitive types by autoboxing and unboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static <T> T lbl(String id, T expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static boolean lbl(String id, boolean expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static int lbl(String id, int expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static long lbl(String id, long expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static short lbl(String id, short expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static byte lbl(String id, byte expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static char lbl(String id, char expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static float lbl(String id, float expr);
+	
+	// Not strictly needed, but avoids extra autoboxing
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static double lbl(String id, double expr);
+	
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static boolean lblpos(String id, boolean expr);
+	
+	//@ ensures \result == expr;
+	//@ pure helper
+	public static boolean lblneg(String id, boolean expr);
+	
+    //@ public normal_behavior
+    //@ ensures \result;
+    //@ pure helper
+    public static boolean informal(String s);
+}

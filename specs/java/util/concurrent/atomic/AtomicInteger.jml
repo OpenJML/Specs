@@ -1,0 +1,148 @@
+package java.util.concurrent.atomic;
+
+public class AtomicInteger extends java.lang.Number implements java.io.Serializable {
+  //private static final long serialVersionUID;
+  //private static final sun.misc.Unsafe unsafe;
+  //private static final long valueOffset;
+  /*@ spec_public */ private volatile int value;
+
+  //@ public normal_behavior
+  //@   ensures value == v;
+  //@ pure
+  public AtomicInteger(int v);
+
+  //@ public normal_behavior
+  //@   ensures value == 0;
+  //@ pure
+  public AtomicInteger();
+
+  //-RAC@ public normal_behavior
+  //-RAC@   ensures \result == value;
+  //@ pure
+  public final int get();
+
+  //@ public normal_behavior
+  //@   assignable value;
+  //@   ensures get() == v;
+  public final void set(int v);
+  
+  //@ public normal_behavior
+  //@   ensures true; // FIXME - when is this set?
+  public final void lazySet(int v);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == v;
+  //-RAC@   ensures \result == \old(value);
+  public final int getAndSet(int v);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   requires value == v;
+  //-RAC@   assignable value;
+  //-RAC@   ensures \result;
+  //-RAC@   ensures value == vv;
+  //-RAC@ also public normal_behavior
+  //-RAC@   requires value != v;
+  //-RAC@   assignable \nothing;
+  //-RAC@   ensures !\result;
+  public final boolean compareAndSet(int v, int vv);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   requires value == v;
+  //-RAC@   assignable value;
+  //-RAC@   ensures \result;
+  //-RAC@   ensures value == vv;
+  //-RAC@ also public normal_behavior
+  //-RAC@   requires value != v;
+  //-RAC@   assignable \nothing;
+  //-RAC@   ensures !\result;
+  // FIXME - documentation is weak on this method - not sure of its behavior
+  public final boolean weakCompareAndSet(int v, int vv);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == \old(value) + 1;
+  //-RAC@   ensures \result == \old(value);
+  public final int getAndIncrement();
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == \old(value) - 1;
+  //-RAC@   ensures \result == \old(value);
+  public final int getAndDecrement();
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == v;
+  //-RAC@   ensures \result == \old(value) + v;
+  public final int getAndAdd(int v);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == 1 + \old(value);
+  //-RAC@   ensures \result == value;
+  public final int incrementAndGet();
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == -1 + \old(value);
+  //-RAC@   ensures \result == value;
+  public final int decrementAndGet();
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == v + \old(value);
+  //-RAC@   ensures \result == value;
+  public final int addAndGet(int v);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures (* value is the result of op *);
+  //-RAC@   ensures \result == value;
+  // FIXME - do something with the op
+  public final int getAndUpdate(java.util.function.IntUnaryOperator op);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures \result == value;
+  // FIXME - do something with the op
+  public final int updateAndGet(java.util.function.IntUnaryOperator op);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  //-RAC@   ensures \result == \old(value);
+  // FIXME - do something with the op
+  public final int getAndAccumulate(int v, java.util.function.IntBinaryOperator op);
+
+  //-RAC@ public normal_behavior
+  //-RAC@   assignable value;
+  // FIXME @   ensures value == v;
+  //-RAC@   ensures \result == \old(value);
+  // FIXME - do something with the op
+  public final int accumulateAndGet(int v, java.util.function.IntBinaryOperator op);
+
+  //@ public normal_behavior
+  //@   assignable \nothing;
+  //@   ensures (* result is string representation of get() *);
+  public java.lang.String toString();
+
+  //@ public normal_behavior
+  //@   ensures \result == get();
+  //@ pure
+  public int intValue();
+
+  //@ public normal_behavior
+  //@   ensures \result == (long)get();
+  //@ pure
+  public long longValue();
+
+  //@ public normal_behavior
+  //@   ensures \result == (float)get();
+  //@ pure
+  public float floatValue();
+
+  //@ public normal_behavior
+  //@   ensures \result == (double)get();
+  //@ pure
+  public double doubleValue();
+}
