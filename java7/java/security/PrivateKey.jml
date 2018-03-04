@@ -1,5 +1,0 @@
-package java.security;
-
-public interface PrivateKey extends Key,javax.security.auth.Destroyable {
-  //public static final long serialVersionUID;
-}

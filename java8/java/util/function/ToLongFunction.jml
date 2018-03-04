@@ -1,7 +1,0 @@
-package java.util.function;
-
-public interface ToLongFunction<T> {
-    //@ pure   // FIXME - not necessarily pure - but see Stream.jml
-    public abstract long applyAsLong(T t);
-
-}
