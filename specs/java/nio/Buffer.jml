@@ -15,7 +15,10 @@ public abstract class Buffer {
 	  //@ spec_public
 	  private int capacity;
 	  
-	  //@ public invariant 0 <= mark && mark <= position && position <= limit && limit <= capacity;
+	  //@ public invariant 0 <= mark;
+	  //@ public invariant mark <= position;
+	  //@ public invariant position <= limit;
+	  //@ public invariant limit <= capacity;
 	  
 	  long address;
 	  Buffer(int i, int j, int k, int m);

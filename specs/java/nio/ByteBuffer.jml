@@ -4,7 +4,9 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 	  //@ spec_public  
 	  final byte[] hb;
 	  
-	  //@ public invariant 0 <= offset && offset <= hb.length && hb.length <= Integer.MAX_VALUE;
+	  //@ public invariant 0 <= offset;
+	  //@ public invariant offset <= hb.length;
+	  //@ public invariant hb.length <= Integer.MAX_VALUE;
 	  //@ public invariant hb.length-offset >= capacity;
 	  
 	  //@ spec_public  
@@ -177,13 +179,14 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
 	  //@ public normal_behavior
 	  //@   requires position <= limit - Short.BYTES;
+	  //@   old int oldpos = this.position;
 	  //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
-	  //@   ensures this.position == \old(this.position) + Short.BYTES;
-	  //@   ensures getShort(\old(this.position)) == s;
+	  //@   ensures this.position == oldpos + Short.BYTES;
+	  //@   ensures getShort(oldpos) == s;
 	  public abstract ByteBuffer putShort(short s);
 
 	  //@ public normal_behavior
-	  //@   requires position <= limit - Short.BYTES;
+	  //@   requires i <= limit - Short.BYTES;
 	  //@   ensures \result == asShort(hb[i],hb[i+1]);
 	  //@ pure
 	  public abstract short getShort(int i);
