@@ -116,7 +116,7 @@ public final class Class<T> implements java.io.Serializable,
     //@        represents _isInterface = isInterface();
 
     //@ ensures \result == _isInterface;
-    public /*@ pure @*/ boolean isInterface();
+    public /*@ pure helper @*/ boolean isInterface();
 
     /** Needed to specify that invoking isArray() on an object always
       * produces the same result: no methods include this model field
@@ -144,7 +144,7 @@ public final class Class<T> implements java.io.Serializable,
 	// FIXME - really need a better way to express this
 	 * */
     //
-    public /*@ pure @*/ boolean isArray();
+    public /*@ pure helper @*/ boolean isArray();
 
     /*@ public normal_behavior
       @ ensures \result <==> (
@@ -165,7 +165,7 @@ public final class Class<T> implements java.io.Serializable,
     //@        represents _getName = getName();
 
     //@ ensures \result == _getName;
-    public /*@ pure @*/ /*@ non_null @*/ String getName();
+    public /*@ pure helper @*/ /*@ non_null @*/ String getName();
 
     public /*@ pure nullable @*/ ClassLoader getClassLoader();
 

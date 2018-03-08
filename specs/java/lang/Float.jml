@@ -190,12 +190,14 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     /*@ also
       @   public normal_behavior
       @   ensures identical(theFloat, \result);
+      @ helper // FIXME - should inherit from Number?
       @*/
     public float floatValue();
 
     /*@ also
       @   public normal_behavior
       @   ensures Double.identical((double)theFloat, \result);
+      @ helper // FIXME - should inherit from Number?
       @*/
     public double doubleValue();
 

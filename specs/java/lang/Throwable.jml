@@ -238,7 +238,7 @@ public class Throwable extends Object implements java.io.Serializable
     //@ public normal_behavior
     //@    requires true;
     //-RAC@   ensures \result == _throwables; // FIXME - is the result the same array on every call?
-    //@ pure
+    //@ pure helper
     public final synchronized java.lang.Throwable[] getSuppressed();
 
 }

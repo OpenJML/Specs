@@ -60,7 +60,7 @@ public interface Iterator<E> {
       @    // assignable objectState;
       @    ensures \result <==> moreElements;
       @*/
-	//@ pure
+	//@ pure helper
     boolean hasNext();
 
     /*@ public normal_behavior

@@ -193,7 +193,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ pure
     public BigInteger negate();
 
-    //@ ensures \result == sign;
+    //@ public normal_behavior
+    //@   ensures \result == sign;
+    //@ helper
     public int signum();
 
     // Modular Arithmetic Operations
