@@ -109,14 +109,12 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
       @   requires isOpen
       @         && (b == null || off < 0 || len < 0 || off + len > b.length);
       @   assignable \nothing;
-      @   //-@ signals_only NullPointerException, IndexOutOfBoundsException;
       @   signals (IndexOutOfBoundsException) off < 0 || len < 0
       @                                       || off + len > b.length;
       @   signals (NullPointerException) b == null;
       @ also public exceptional_behavior
       @   requires !isOpen;
       @   assignable \nothing;
-      @   //-@ signals_only IOException;
       @*/
     public void write(/*@ non_null*/ byte[] b, int off, int len) throws IOException;
 }

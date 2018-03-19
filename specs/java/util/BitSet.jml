@@ -328,7 +328,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @   requires 0 <= fromIndex && 0 <= toIndex;
       @   requires fromIndex <= toIndex;
       @   ensures \result != null; */
-    /*-@  ensures (\forall int i; 0<=i && i<fromIndex; !isSet(\result.content,i));
+    /*-RAC@  ensures (\forall int i; 0<=i && i<fromIndex; !isSet(\result.content,i));
       @   ensures (\forall int i; toIndex<=i; !isSet(\result.content,i));
       @   ensures (\forall int i; fromIndex <= i && i < toIndex;
       @                       isSet(\result.content,i) == isSet(content,i));

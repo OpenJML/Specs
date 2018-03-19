@@ -1544,76 +1544,76 @@ public class Arrays {
           requires array != null;
           ensures \result <==> (\exists int i; 0<=i && i<array.length; 
                                                         array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model <T> boolean contains(T[] array, Object o);
 
         public normal_behavior
           requires array != null;
           requires len <= array.length;
           ensures \result <==> (\exists int i; 0<=i && i<(int)len; array[i] == o); // FIXME - when math modes are supported we can allow i to be \bigint
-        //-@ function
+        //+OPENJML@ function
         static pure public model <T> boolean contains(T[] array, \bigint len, 
                                                                    Object o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(int[] array, int o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(boolean[] array, boolean o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(char[] array, char o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(byte[] array, byte o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(short[] array, short o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(long[] array, long o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(float[] array, float o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-        //-@ function
+        //+OPENJML@ function
         static pure public model boolean contains(double[] array, double o);
 
 // FIXME _ need to implement bigint and real
 //        public normal_behavior
 //          requires array != null;
 //          ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-//        //-@ function
+//        //+OPENJML@ function
 //        static pure public model boolean contains(\bigint[] array, \bigint o);
 
 //        public normal_behavior
 //          requires array != null;
 //          ensures (\exists int i; 0<=i && i<array.length; array[i] == o);
-//        //-@ function
+//        //+OPENJML@ function
 //        static pure public model boolean contains(\real[] array, \real o);
      */
     
