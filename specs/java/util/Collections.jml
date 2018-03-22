@@ -89,7 +89,11 @@ public class Collections {
 //  static <E> java.util.Iterator<E> singletonIterator(E);
 //  static <T> java.util.Spliterator<T> singletonSpliterator(T);
 //  public static <T> java.util.List<T> singletonList(T);
-//  public static <K, V> java.util.Map<K, V> singletonMap(K, V);
+    
+    //@ public normal_behavior
+    //@   ensures \result != null;  // TODO - content of map
+    //@ pure
+    public static <K, V> java.util.Map<K, V> singletonMap(K k, V v);
 //  public static <T> java.util.List<T> nCopies(int, T);
 //  public static <T> java.util.Comparator<T> reverseOrder();
 //  public static <T> java.util.Comparator<T> reverseOrder(java.util.Comparator<T>);

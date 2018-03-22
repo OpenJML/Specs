@@ -942,7 +942,7 @@ public class Arrays {
       @   ensures \result <==> a.length == a2.length && 
       @                   (\forall int i; 0 <= i && i < a.length; a[i] == a2[i]);
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ char[] a, /*@ nullable */ char[] a2);
+    public static /*@ pure @*/ boolean equals(/*@ nullable */ char[] a, /*@ nullable */ char[] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
@@ -954,7 +954,7 @@ public class Arrays {
       @                 (a.length == a2.length && 
       @                   (\forall int i; 0 <= i && i < a.length; a[i] == a2[i]));
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ byte[] a, /*@ nullable */ byte[] a2);
+    public static /*@ pure @*/ boolean equals(/*@ nullable */ byte[] a, /*@ nullable */ byte[] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;

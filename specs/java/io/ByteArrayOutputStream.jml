@@ -68,6 +68,7 @@ public class ByteArrayOutputStream extends java.io.OutputStream {
     /*@
       @ 
       @*/
+    @Deprecated
     public synchronized java.lang.String toString(int Param0);  // CHANGED IN 1.5
 
     /*@
