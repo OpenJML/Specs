@@ -148,8 +148,8 @@ public class GregorianCalendar extends Calendar {
      * @return true if time <= System.currentTimeMillis() and if isTimeSet,
      *         areFieldsSet, and areAllFields set are true; false otherwise.
      */
-    //+@ public pure model boolean milliFieldsAreSet();
-    /*-@ public pure model boolean milliFieldsAreSet() {
+    //-RAC@ public pure model boolean milliFieldsAreSet();
+    /*+RAC@ public pure model boolean milliFieldsAreSet() {
       @    return time <= System.currentTimeMillis()
       @        && isTimeSet && areFieldsSet && areAllFieldsSet;
       @ }

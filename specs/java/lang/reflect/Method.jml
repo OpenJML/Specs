@@ -50,7 +50,7 @@ class Method extends AccessibleObject implements Member, GenericDeclaration {
 
     public /*@ pure @*/ String toString();
 
-    //+@ requires !Modifier.isStatic(getModifiers()) ==> obj != null;
+    //+ESC@ requires !Modifier.isStatic(getModifiers()) ==> obj != null;
     /*@ ensures getReturnType() == boolean.class ==> \result instanceof Boolean;
       @ ensures getReturnType() == byte.class    ==> \result instanceof Byte;
       @ ensures getReturnType() == char.class    ==> \result instanceof Character;

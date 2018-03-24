@@ -149,7 +149,7 @@ public class Vector<E> extends AbstractList<E>
       @                      \old(maxCapacity*2)  :
       @                      minCapacity);
       @*/
-    /*-@     ensures (\forall int i; 0<=i && i<elementCount;
+    /*   @     ensures (\forall int i; 0<=i && i<elementCount;
       @			elementData[i] == \old(elementData[i]));
       @*/
     //@ |}
@@ -456,7 +456,7 @@ public class Vector<E> extends AbstractList<E>
       @  public normal_behavior
       @    requires 0 <= index && index < size();
       @    ensures !containsNull ==> \result != null;
-      @    //-@ ensures \result == elementData[index];
+      @    //-RAC@ ensures \result == elementData[index];
       @ also
       @  public exceptional_behavior
       @    requires !(0 <= index && index < size());

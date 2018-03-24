@@ -310,7 +310,7 @@ public final class String
     /*@ public normal_behavior
       @   ensures \result == s.charArray.length;
       @
-      @ //-@ function
+      @ //+OPENJML@ function
       @ public static model pure helper int length(String s);
       @*/
     // inherits specs from CharSequence - \result == charArray.length
@@ -434,7 +434,7 @@ public final class String
                      (isInterned(s1) && isInterned(s2));
       @   ensures \result <==> (s1 == s2);
       @
-      @ pure //-@ function
+      @ pure //+OPENJML@ function
       @ public static helper model boolean equals(nullable String s1, nullable String s2);
       @*/
 
@@ -498,7 +498,7 @@ public final class String
       @   requires anotherString == this;
       @   ensures \result;
       @*/
-    //-@ function
+    //+OPENJML@ function
     public /*@ pure @*/ boolean equalsIgnoreCase(String anotherString);
 
     // FIXME - overly complicated for esc?
@@ -1086,7 +1086,7 @@ public final class String
 
     //@ public normal_behavior
     //@   ensures true; // No restriction on result
-    //-@ function
+    //+OPENJML@ function
     //@ public pure helper static model boolean isInterned(non_null String s);
 
     
