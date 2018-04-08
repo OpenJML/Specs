@@ -956,6 +956,16 @@ public class Arrays {
       @*/
     public static /*@ pure @*/ boolean equals(/*@ nullable */ byte[] a, /*@ nullable */ byte[] a2);
 
+    //@ public normal_behavior
+    //@   requires len >= 0;
+    //@   requires 0 <= index1 && index1 <= bytes1.length - len;
+    //@   requires 0 <= index2 && index2 <= bytes2.length - len;
+    //@// All of these ensures are included because solvers have a hard time with index arithmetic
+    //@   ensures \result == (\forall int i; index1 <= i && i < index1 + len; bytes1[i] == bytes2[i-index1+index2]);
+    //@   ensures \result == (\forall int i; index2 <= i && i < index2 + len; bytes2[i] == bytes1[i-index2+index1]);
+    //@   ensures \result == (\forall int i; 0 <= i && i < len; bytes1[i+index1] == bytes2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(byte[] bytes1, int index1, byte[] bytes2, int index2, int len);
+
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
       @   ensures \result <==> a == a2;

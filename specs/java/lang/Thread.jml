@@ -143,7 +143,7 @@ public class Thread implements Runnable {
   //@ public behavior
   //@   assignable dead;
   //@   ensures !isAlive();
-  //@   signals (Exception e) \not_modified(dead);
+  //@   signals (InterruptedException e) \not_modified(dead);
   //@   signals_only InterruptedException;
   public final void join() throws InterruptedException;
   

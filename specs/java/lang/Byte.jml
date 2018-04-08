@@ -315,4 +315,14 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
 //      @   signals_only ClassCastException;
 //      @*/
 //    public int compareTo(Object o);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (b >= 0 ? b : b + 256);
+    //@ model public static pure helper function int asUnsigned(byte b);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (b >= 0 ? b : b + 256);
+    //@ model public static pure helper function long asUnsignedL(byte b) { return (b >= 0 ? b : b + 256); }
+    
+
 }

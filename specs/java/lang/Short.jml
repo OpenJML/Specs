@@ -275,4 +275,20 @@ public /*@ pure @*/ final
 //	  @*/
 //	public int compareTo(Object o) throws ClassCastException;
 
+    //@ public normal_behavior
+    //@   ensures \result == (short)(b0*256 + Byte.asUnsigned(b1));
+    //@ model public static pure helper function short asShort(byte b0, byte b1);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (i < 0 ? (int)0x10000 + i : i); // The (int) is not necessary, but I add it for clarity
+    //@ pure helper
+    //@ model public static function int asUnsignedToInt(short i);
+
+    /*@
+    ensures 0 <= asUnsignedToInt(i);
+    ensures asUnsignedToInt(i) <= 65535;
+    model public static void lemma1(short i) {}
+   */
+
+
     }
