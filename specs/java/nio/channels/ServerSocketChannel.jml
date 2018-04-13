@@ -41,7 +41,7 @@ public abstract class ServerSocketChannel extends java.nio.channels.spi.Abstract
 	public abstract SocketChannel accept() throws java.io.IOException;
 	public abstract java.net.SocketAddress getLocalAddress() throws java.io.IOException;
 	//public NetworkChannel setOption(java.net.SocketOption opt, java.lang.Object obj) throws java.io.IOException;
-	public NetworkChannel bind(java.net.SocketAddress addr) throws java.io.IOException;
+	public NetworkChannel bind(/*@ nullable */ java.net.SocketAddress addr) throws java.io.IOException;
 
 	//@ public normal_behavior
 	//@   assignable this.state;

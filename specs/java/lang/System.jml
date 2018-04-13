@@ -184,6 +184,7 @@ t *);
     @      old Object [] sa = (Object[]) src;
     @      old Object [] da = (Object[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -196,6 +197,7 @@ t *);
     @      old int [] sa = (int[]) src;
     @      old int [] da = (int[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -208,6 +210,7 @@ t *);
     @      old long [] sa = (long[]) src;
     @      old long [] da = (long[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -220,6 +223,7 @@ t *);
     @      old char [] sa = (char[]) src;
     @      old char [] da = (char[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -232,6 +236,7 @@ t *);
     @      old boolean [] sa = (boolean[]) src;
     @      old boolean [] da = (boolean[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -244,6 +249,7 @@ t *);
     @      old short [] sa = (short[]) src;
     @      old short [] da = (short[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -256,6 +262,7 @@ t *);
     @      old byte [] sa = (byte[]) src;
     @      old byte [] da = (byte[]) dest;
     @      assignable da[destPos .. destPos + length - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @      ensures (\forall int i; destPos <= i && i < destPos+length;
     @                 da[i] == sa[(srcPos-destPos+i)] );
     @   |}
@@ -270,6 +277,7 @@ t *);
 //      @      old double [] sa = (double[]) src;
 //      @      old double [] da = (double[]) dest;
 //      @      assignable da[destPos .. destPos + length - 1];
+//    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
 //    @      ensures (\forall int i; destPos <= i && i < destPos+length;
 //    @                 da[i] == sa[(srcPos-destPos+i)] );
 //      @   |}
@@ -282,6 +290,7 @@ t *);
 //      @      old float [] sa = (float[]) src;
 //      @      old float [] da = (float[]) dest;
 //      @      assignable da[destPos .. destPos + length - 1];
+//    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
 //    @      ensures (\forall int i; destPos <= i && i < destPos+length;
 //    @                 da[i] == sa[(srcPos-destPos+i)] );
 //      @   |}

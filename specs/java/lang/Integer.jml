@@ -398,7 +398,7 @@ public  /*@ pure @*/ final
     //@ public normal_behavior // Avoids bit arithmetic
     //@   ensures \result == (i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i);
     //@   ensures 0 <= \result && \result <= 0xffff_ffffL;
-    //@ pure helper function
+    //@ pure helper  // FIXME - infeasible if made a function; can also combine the two ensures as a workaround
     //@ model public static long asUnsignedToLong(int i);
 
 
