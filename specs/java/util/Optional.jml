@@ -73,14 +73,16 @@ public final class Optional<T> {
     @*/
   //@ public normal_behavior
   //@   requires f != null;
-  //@   requires f instanceof java.util.function.Function.Pure;  // FIXME - generic type here and below?
+  //@   requires f instanceof java.util.function.Function.Pure;
+  //@   requires \typeof(f) <: \type(java.util.function.Function.Pure<T,U>);
   //@   assignable \nothing;
   //@   ensures \fresh(\result);
-  //@   ensures value != null ==> \result.value == ((java.util.function.Function.Pure)f).apply(value);
+  //@   ensures value != null ==> \result.value == f.apply(value);
   //@   ensures value == null ==> \result.value == null;
   //@ also public normal_behavior
   //@   requires f != null;
   //@   requires !(f instanceof java.util.function.Function.Pure);
+  //@   requires !(\typeof(f) <: \type(java.util.function.Function.Pure<T,U>));
   //     FIXME - needs an assignable clause based on f
   //@   ensures \fresh(\result);
   //     FIXME    ensures value != null ==> \result.value == f.apply(value);
