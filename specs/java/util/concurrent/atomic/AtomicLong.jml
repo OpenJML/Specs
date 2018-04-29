@@ -96,9 +96,11 @@ public class AtomicLong extends Number implements java.io.Serializable {
   public final long decrementAndGet();
 
   //-RAC@ public normal_behavior
+  //-RAC@   requires v <= Long.MAX_VALUE - value;
   //-RAC@   assignable value;
   //-RAC@   ensures value == v + \old(value);
   //-RAC@   ensures \result == value;
+  //@ spec_safe_math
   public final long addAndGet(long v);
   
   //-RAC@ public normal_behavior
