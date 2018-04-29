@@ -2,7 +2,7 @@ package java.security;
 
 //@ non_null_by_default
 public abstract class MessageDigest extends MessageDigestSpi {
-  private static final sun.security.util.Debug pdebug;
+  //private static final sun.security.util.Debug pdebug; // Non-public API
   private static final boolean skipDebug;
   private java.lang.String algorithm;
   private static final int INITIAL;

@@ -18,7 +18,7 @@ public class Random implements java.io.Serializable {
   private double nextNextGaussian;
   private boolean haveNextNextGaussian;
   private static final java.io.ObjectStreamField[] serialPersistentFields;
-  private static final sun.misc.Unsafe unsafe;
+//  private static final sun.misc.Unsafe unsafe;
   private static final long seedOffset;
   
   public Random();
