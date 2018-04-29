@@ -364,10 +364,42 @@ public  /*@ pure @*/ final
 //      @*/
 //    public int compareTo(Object o);
     
-    //@ public normal_behavior
-    //@   ensures (k == 0) <==> (\result == 0);
-    //@   ensures (k == 1 || k == 2 || k == 4 || k == 8 || k == 16 || k == 32 || k == 64 || k == 128 || k == 256 || k == 512 || k == 1024) ==> \result == 1;
+    /*@ public normal_behavior
+      @     // We enumerate seom cases that we need to avoid using bit arithmetic
+      @   ensures (\result == 0) <==> (k == 0);
+      @   ensures (\result == 1) <==> (k == 1 || k == 2 || k == 4 || k == 8 
+      @                             || k == 16 || k == 32 || k == 64 || k == 128 
+      @                             || k == 256 || k == 512 || k == 1024 || k == 0x800 
+      @                             || k == 0x1000 || k == 0x2000 || k == 0x4000 || k == 0x8000 
+      @                             || k == 0x1_0000 || k == 0x2_0000 || k == 0x4_0000 || k == 0x8_0000 
+      @                             || k == 0x10_0000 || k == 0x20_0000 || k == 0x40_0000 || k == 0x80_0000 
+      @                             || k == 0x100_0000 || k == 0x200_0000 || k == 0x400_0000 || k == 0x800_0000 
+      @                             || k == 0x1000_0000 || k == 0x2000_0000 || k == 0x4000_0000 || k == 0x8000_0000 
+      @                             );
+      @ //   ensures \result == (
+      @ //         (k&1) + ((k>>1)&1) + ((k>>2)&1) + ((k>>3)&1) +
+      @ //         ((k>>4)&1) + ((k>>5)&1) + ((k>>6)&1) + ((k>>7)&1) +
+      @ //         ((k>>8)&1) + ((k>>9)&1) + ((k>>10)&1) + ((k>>11)&1) +
+      @ //         ((k>>12)&1) + ((k>>13)&1) + ((k>>14)&1) + ((k>>15)&1) +
+      @ //         ((k>>16)&1) + ((k>>17)&1) + ((k>>18)&1) + ((k>>19)&1) +
+      @ //         ((k>>20)&1) + ((k>>21)&1) + ((k>>22)&1) + ((k>>23)&1) +
+      @ //         ((k>>24)&1) + ((k>>25)&1) + ((k>>26)&1) + ((k>>27)&1) +
+      @ //         ((k>>28)&1) + ((k>>29)&1) + ((k>>30)&1) + ((k>>31)&1) );
+      @*/ // OPENJML TODO - one could also add up table lookups on 4-bit quantities
+          // OPENJML TODO - perhaps should implement using different specs when in 
+          // OPENJML TODO - bitvector mode vs. not
     //@ pure function
     public static int bitCount(int k);
+
+    //@ public normal_behavior
+    //@   ensures \result == (b0*(0x100_0000) + Byte.asUnsigned(b1)*(0x1_0000) + Byte.asUnsigned(b2)*(0x100) + Byte.asUnsigned(b3));
+    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
+
+    //@ public normal_behavior // Avoids bit arithmetic
+    //@   ensures \result == (i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i);
+    //@   ensures 0 <= \result && \result <= 0xffff_ffffL;
+    //@ pure helper  // FIXME - infeasible if made a function; can also combine the two ensures as a workaround
+    //@ model public static long asUnsignedToLong(int i);
+
 
 }

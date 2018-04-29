@@ -50,10 +50,14 @@ public interface List<E> extends Collection<E> {
     //@ pure
     boolean isEmpty();
 
+    //@ also public normal_behavior
+    //@   requires o == null;
+    //@   ensures \result == !(\forall int i; 0<=i && i<size(); get(i) != null);
     //@ also public behavior
+    //@   requires o != null;
     //@   ensures !\key("RAC") ==> (\result <==> (\exists int i; 0<=i && i<size(); nullequals(o,get(i))));
     //@ pure
-    boolean contains(Object o);
+    boolean contains(/*@nullable*/ Object o);
 
     /*@ also
       @ public behavior
@@ -170,7 +174,7 @@ public interface List<E> extends Collection<E> {
 
     //@ public normal_behavior
     //@   requires 0 <= index && index < size();
-    /* FIXME -@  ensures \result == get(content,index); */
+    /*@   ensures \result == get(content,index); */
     //-RAC@   ensures !containsNull ==> \result != null;
     /*@ also
       @ public exceptional_behavior
