@@ -8,6 +8,10 @@ public abstract class MessageDigest extends MessageDigestSpi {
   private static final int INITIAL;
   private static final int IN_PROGRESS;
   private int state;
+  
+  //@ model public int length; // Length of the resulting digest, which depends on the algorithm
+  //@ model public static final int SHA256_SIZE = 32;
+  
   //@ spec_public
   private Provider provider;
   
@@ -57,14 +61,21 @@ public abstract class MessageDigest extends MessageDigestSpi {
   public byte[] digest();
 
   //@ public normal_behavior
-  //@   assignable this.content;
-  public int digest(byte[] bb, int offest, int length) throws DigestException;
+  //@   requires offset >= 0 && length >= 0 && offset <= bb.length - length;
+  //@   assignable this.content, bb[offset .. (offset+length-1)];
+  public int digest(byte[] bb, int offset, int length) throws DigestException;
   
   //@ public normal_behavior
   //@   assignable this.content;
   //@   ensures \fresh(\result);
+  //@   ensures \result.length == this.length;
   public byte[] digest(byte[] bb);
+  
   public java.lang.String toString();
+  
+  //@ public normal_behavior
+  //@   ensures \result == (bb.length == bbb.length && java.util.Arrays.equalArrays(bb,0,bbb,0,bb.length));
+  //@ pure
   public static boolean isEqual(byte[] bb, byte[] bbb);
 
   //@ public normal_behavior

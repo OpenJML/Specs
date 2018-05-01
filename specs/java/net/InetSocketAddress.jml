@@ -8,9 +8,12 @@ public class InetSocketAddress extends SocketAddress {
 //  private static final sun.misc.Unsafe UNSAFE;
 //  private static int checkPort(int);
 //  private static java.lang.String checkHost(java.lang.String);
-	//@ public normal_behavior
-	//@   requires 0 <= port && port <= 65535;
-	//@ pure
+  //@ public normal_behavior
+  //@   requires 0 <= port && port <= Short.MAX_UNSIGNED_VALUE;
+  //@ also public exceptional_behavior
+  //@   requires !(0 <= port && port <= Short.MAX_UNSIGNED_VALUE);
+  //@   signals_only IllegalArgumentException;
+  //@ pure
   public InetSocketAddress(int port);
 //  public InetSocketAddress(InetAddress, int);
 //  public InetSocketAddress(java.lang.String, int);

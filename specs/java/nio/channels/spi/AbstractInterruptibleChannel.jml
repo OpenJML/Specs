@@ -2,7 +2,7 @@ package java.nio.channels.spi;
 
 public abstract class AbstractInterruptibleChannel implements java.nio.channels.Channel,java.nio.channels.InterruptibleChannel {
 
-	//@ model public Object channelCloseContent;
+	//@ model public instance JMLDataGroup channelCloseContent;
 	
 	//	private final java.lang.Object closeLock;
 //	private volatile boolean open;

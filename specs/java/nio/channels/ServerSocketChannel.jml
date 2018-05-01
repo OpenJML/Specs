@@ -2,49 +2,47 @@ package java.nio.channels;
 
 //@ non_null_by_default
 public abstract class ServerSocketChannel extends java.nio.channels.spi.AbstractSelectableChannel implements NetworkChannel {
-	
-	//@ public model Object state;
-	
-	protected ServerSocketChannel(java.nio.channels.spi.SelectorProvider provider);
-	
-	//@ public behavior
-	//@   ensures \fresh(\result);
-	//@   signals_only java.io.IOException;
-	//@ pure
-	public static ServerSocketChannel open() throws java.io.IOException;
+    
+    //@ public model JMLDataGroup state; //@ in channelCloseContent;
+    
+    protected ServerSocketChannel(java.nio.channels.spi.SelectorProvider provider);
+    
+    //@ public behavior
+    //@   ensures \fresh(\result);
+    //@   signals_only java.io.IOException;
+    //@ pure
+    public static ServerSocketChannel open() throws java.io.IOException;
 
-	public final int validOps();
+    public final int validOps();
 
-	//@ public normal_behavior
-	//@   requires addr != null;
-	//@   assignable this.state;
-	//@   ensures \result == this;
-	//@ also public exceptional_behavior
-	//@   requires addr == null;
-	public final ServerSocketChannel bind(/*@ nullable */java.net.SocketAddress addr) throws java.io.IOException;
-	
-	//@ public normal_behavior
-	//@   requires addr != null;
-	//@   assignable this.state;
-	//@   ensures \result == this;
-	//@ also public exceptional_behavior
-	//@   requires addr == null;
-	public abstract ServerSocketChannel bind(/*@ nullable */java.net.SocketAddress addr, int n) throws java.io.IOException;
+    //@ public behavior
+    //@   assignable this.state;
+    //@   ensures \result == this;
+    //@   signals_only Exception; // A variety of exception types
+    public final ServerSocketChannel bind(/*@ nullable */java.net.SocketAddress addr) throws java.io.IOException;
+    
+    //@ public normal_behavior
+    //@   requires addr != null;
+    //@   assignable this.state;
+    //@   ensures \result == this;
+    //@ also public exceptional_behavior
+    //@   requires addr == null;
+    public abstract ServerSocketChannel bind(/*@ nullable */java.net.SocketAddress addr, int n) throws java.io.IOException;
 
-	//public abstract <T> ServerSocketChannel setOption(java.net.SocketOption<T> opt, T t) throws java.io.IOException;
-	
-	//-RAC@ model public java.net.ServerSocket _socket;
-	//@ public normal_behavior
-	//-RAC@   ensures \result == _socket;
-	//@ pure
-	public abstract java.net.ServerSocket socket();
-	public abstract SocketChannel accept() throws java.io.IOException;
-	public abstract java.net.SocketAddress getLocalAddress() throws java.io.IOException;
-	//public NetworkChannel setOption(java.net.SocketOption opt, java.lang.Object obj) throws java.io.IOException;
-	public NetworkChannel bind(/*@ nullable */ java.net.SocketAddress addr) throws java.io.IOException;
+    //public abstract <T> ServerSocketChannel setOption(java.net.SocketOption<T> opt, T t) throws java.io.IOException;
+    
+    //-RAC@ model public java.net.ServerSocket _socket;
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _socket;
+    //+RAC@   ensures true;
+    //@ pure
+    public abstract java.net.ServerSocket socket();
+    public abstract SocketChannel accept() throws java.io.IOException;
+    public abstract java.net.SocketAddress getLocalAddress() throws java.io.IOException;
+    //public NetworkChannel setOption(java.net.SocketOption opt, java.lang.Object obj) throws java.io.IOException;
 
-	//@ public normal_behavior
-	//@   assignable this.state;
-	public SelectableChannel configureBlocking(boolean b);  // FIXME - move to parent class?
+    //@ public normal_behavior
+    //@   assignable this.state;
+    public SelectableChannel configureBlocking(boolean b);  // FIXME - move to parent class?
 
 }
