@@ -93,6 +93,13 @@ public class Throwable extends Object implements java.io.Serializable
         public pure helper model boolean standardThrowable(non_null String s, nullable Throwable c);
 
       @ public normal_behavior
+      @   requires c != this;
+      @   ensures \result == (_message == s && _cause == c && _causeSet == true);
+      @   ensures \nonnullelements(_stackTrace);
+      @   ensures _throwables.length == 0;  // TODO - say more about boolean arguments
+        public pure helper model boolean standardThrowable(non_null String s, nullable Throwable c, boolean enableSuppression, boolean writableStackTrace);
+
+      @ public normal_behavior
       @   requires c != null;
       @   ensures  \result == (_message != null ); //&& _message.equals(c.toString())); // FIXME - too complicated with the String.equals?
       @ also public normal_behavior
@@ -120,23 +127,31 @@ public class Throwable extends Object implements java.io.Serializable
       @*/
     public /*@pure*/ Throwable(/*@non_null*/String message);
 
-    /*@ public normal_behavior
-      @   assignable _message, _cause, _stackTrace;
-      @   ensures _message == message;
-      @   ensures _cause == cause;
-      @   ensures _causeSet;
-      @   ensures standardThrowable(message, cause);
-      @*/
-    public /*@pure*/ Throwable(/*@non_null*/String message, /*@nullable*/Throwable cause);
+    //@ public normal_behavior
+    //@   ensures _message == message;
+    //@   ensures _cause == cause;
+    //@   ensures _causeSet;
+    //@   ensures standardThrowable(message, cause);
+    //@ pure
+    public Throwable(/*@non_null*/String message, /*@nullable*/Throwable cause);
 
-    /*@ public normal_behavior
-      @   assignable _message, _cause, _stackTrace;
-      @   ensures initMessage(cause);
-      @   ensures _cause == cause;
-      @   ensures _causeSet;
-      @   ensures_redundantly standardThrowable(cause);
-      @*/
-    public /*@pure*/ Throwable(/*@nullable*/Throwable cause);
+    //@ public normal_behavior
+    //@   ensures initMessage(cause);
+    //@   ensures _cause == cause;
+    //@   ensures _causeSet;
+    //@   ensures_redundantly standardThrowable(cause);
+    //@ pure
+    public Throwable(/*@nullable*/Throwable cause);
+    
+    //@ protected normal_behavior
+    //@   ensures _message == message;
+    //@   ensures _cause == cause;
+    //@   ensures _causeSet;
+    //@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
+    //@// TODO - say more about the boolean arguments
+    //@ pure
+    protected Throwable(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
+    
 
     /*@ public normal_behavior
       @   ensures \result == _message;

@@ -177,9 +177,17 @@ public class Object {
     /** Use theString as the (pure) model value of toString() */
     //-RAC@ public model non_null String theString; in objectState;
 
+    // @ public code normal_behavior
+    // @   ensures \result == true;
+    // @ pure
+    //@ model public boolean toStringDefined;
+    //@ represents toStringDefined = true;
+    
     /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
+      @     requires toStringDefined;
       @     ensures (* \result is a string representation of this object *);
       @ also code normal_behavior
+      @     requires toStringDefined;
       @     assignable \nothing;
       @     ensures \result == theString;
       @ // Ignore the case of what an Object actually produces as a String
