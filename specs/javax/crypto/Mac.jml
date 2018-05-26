@@ -194,7 +194,7 @@ public class Mac implements Cloneable {
 	  //@   ensures this.savedInfo == null;
 	  public final void reset();
 
-	  //@ public normal_behavior
+	  //@ also public normal_behavior
 	  //@   ensures true;  // TODO: Javadoc is not clear on what part of state is copied
 	  //@ pure
 	  public final java.lang.Object clone() throws java.lang.CloneNotSupportedException;

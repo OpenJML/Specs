@@ -18,14 +18,14 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.
 	  //@   ensures this.ordinal == ordinal;
 	  //@ pure
 	  protected Enum(String name, int ordinal);
-	  //@ public normal_behavior
+	  //@ also public normal_behavior
 	  //@   ensures \result == name;
 	  //@ pure
 	  public String toString();
 	  
 //	  public final boolean equals(Object);
 	  
-	  //@ public normal_behavior
+	  //@ also public normal_behavior
 	  //@   ensures true;
 	  //@ pure
 	  public final int hashCode();

@@ -26,8 +26,8 @@ public interface IJMLTYPE {
      */
     public boolean equals(IJMLTYPE t);
     
-    //@ public normal_behavior
-    //@ ensures \result == (t instanceof IJMLTYPE && equals((IJMLTYPE)t));
+    //@ also public normal_behavior
+    //@   ensures \result == (t instanceof IJMLTYPE && equals((IJMLTYPE)t));
     public boolean equals(Object t);
 
     /* @ public normal_behavior

@@ -15,7 +15,7 @@ public interface Predicate<T> {
     /*@
     model public static interface Pure<T> extends Predicate<T> {
 
-        //@ public normal_behavior
+        //@ also public normal_behavior
         //@    ensures true;
         //@ pure
         public abstract boolean test(T t);

@@ -44,7 +44,7 @@ public interface Queue<E> extends Collection<E> {
       @ public pure model E _get(int n);
       @*/
     
-    /*-RAC@ public behavior
+    /*-RAC@ also public behavior
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
       @   ensures \result;

@@ -52,7 +52,7 @@ public @Pure interface JMLSetType<E> extends JMLIterable<E>
       @*/    
     boolean has(@Nullable Object elem );  // TODO - should be contains?
 
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@    ensures s2 == null ==> !\result;
     //@    ensures !(s2 instanceof JMLSetType) ==> !\result; // TODO should be JMLSetType<E>
     boolean equals(@Nullable Object s2);
@@ -125,7 +125,7 @@ public @Pure interface JMLSetType<E> extends JMLIterable<E>
 
     /** Returns an Iterator over this set.
      */
-    /*@  public normal_behavior
+    /*@ also public normal_behavior
       @      ensures \fresh(\result);
       @*/  
     @NonNull JMLIterator<E> iterator();

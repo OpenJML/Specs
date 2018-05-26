@@ -562,7 +562,7 @@ public final class String
                    !equal(s1,s2) ==> (lessThan(s1,s2) <=!=> lessThan(s2,s1)));
      */
 
-    /*@  public normal_behavior
+    /*@ also public normal_behavior
       @   requires anotherString != null;
       @   {|
       @       requires  equal(charArray,anotherString.charArray);

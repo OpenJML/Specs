@@ -40,7 +40,7 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
 	  public abstract DoubleStream asDoubleStream();
 	  public abstract Stream<java.lang.Integer> boxed();
 	  
-	  //@ public normal_behavior
+	  //@ also public normal_behavior
 	  //@   ensures true;
 	  //@ pure
 	  public abstract IntStream sequential();
@@ -58,7 +58,7 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
 	  public static IntStream concat(IntStream first, IntStream last);
 	  public BaseStream parallel();
 
-	  //@ public normal_behavior
+	  //@ also public normal_behavior
 	  //@   ensures true;
 	  //@ pure
 	  public BaseStream sequential();

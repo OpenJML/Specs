@@ -74,7 +74,7 @@ public abstract class InputStream implements Closeable {
     //@ pure
     public InputStream();
 
-    /*-RAC@ public behavior
+    /*-RAC@ also public behavior
       @   assignable streamState;
       @   ensures !isOpen && wasClosed;
       @   signals (Exception) !isOpen && wasClosed && (* an IO error occured *);
