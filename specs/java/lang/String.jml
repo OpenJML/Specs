@@ -628,10 +628,10 @@ public final class String
                                                 int ooffset, int len);
 
     /*@  public normal_behavior
-      @   requires prefix != null && 0<=toffset && toffset < length();
+      @   requires prefix != null && 0 <= toffset && toffset + prefix.length() <= length();
       @   ensures \result ==  equal(charArray,toffset,prefix.charArray,0,prefix.charArray.length);
       @  also
-      @   requires prefix != null && toffset >= length();
+      @   requires prefix != null && toffset + prefix.length() >= length();
       @   ensures !\result;
       @*/
     public /*@ pure @*/ boolean startsWith(String prefix, int toffset);
