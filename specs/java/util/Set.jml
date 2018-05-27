@@ -52,7 +52,7 @@ public interface Set<E> extends Collection<E> {
     // specification inherited
     /*@non_null*/ <T> T[] toArray(/*@non_null*/ T[] a) throws NullPointerException;
 
-    //-RAC@ public normal_behavior
+    //-RAC@ also public normal_behavior
     //-RAC@   assignable this.content;
     //-RAC@   ensures true;
     boolean add(/*@nullable*/ E o);

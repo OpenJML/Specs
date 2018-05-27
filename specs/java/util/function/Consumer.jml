@@ -12,7 +12,7 @@ public interface Consumer<T> {
 	public java.util.function.Consumer<T> andThen(java.util.function.Consumer<? super T> f);
 
 	/*@ model public static interface Local<T> extends Consumer<T> {
-	       public normal_behavior
+	       also public normal_behavior
 	          requires t != null;
 	          assignable t.*;
 	       void accept(T t);

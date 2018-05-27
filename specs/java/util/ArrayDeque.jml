@@ -46,9 +46,10 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
       @*/
     public /*@ pure @*/ ArrayDeque(/*@ nullable @*/ Collection<? extends E> c) throws NullPointerException;
     
-    //-RAC@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals( _get(i)));
+    //-RAC@ also ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals( _get(i)));
     public Object[] toArray();
     
+    //-RAC@ also
     //   @ requires E <: T; // FIXME - E and T should be defined
     //-RAC@ ensures (\forall int i; 0 <= i & i < content.theSize; \result[i].equals( _get(i)));
     public <T> T[] toArray(T[] a);

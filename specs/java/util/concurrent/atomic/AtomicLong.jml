@@ -127,27 +127,27 @@ public class AtomicLong extends Number implements java.io.Serializable {
   // FIXME - do something with the op
   public final long accumulateAndGet(long v, java.util.function.LongBinaryOperator op);
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   assignable \nothing;
   //@   ensures (* result is string representation of get() *);
   public java.lang.String toString();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (int)get();
   //@ pure
   public int intValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == get();
   //@ pure
   public long longValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (float)get();
   //@ pure
   public float floatValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (double)get();
   //@ pure
   public double doubleValue();

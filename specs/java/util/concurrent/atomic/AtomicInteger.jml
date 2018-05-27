@@ -121,27 +121,27 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
   // FIXME - do something with the op
   public final int accumulateAndGet(int v, java.util.function.IntBinaryOperator op);
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   assignable \nothing;
   //@   ensures (* result is string representation of get() *);
   public java.lang.String toString();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == get();
   //@ pure
   public int intValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (long)get();
   //@ pure
   public long longValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (float)get();
   //@ pure
   public float floatValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (double)get();
   //@ pure
   public double doubleValue();

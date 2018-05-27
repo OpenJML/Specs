@@ -13,7 +13,7 @@ public abstract class AbstractInterruptibleChannel implements java.nio.channels.
 	//@ pure
 	protected AbstractInterruptibleChannel();
 	
-	//@ public behavior
+	//@ also public behavior
 	//@   assignable channelCloseContent;
 	//@   ensures !_isOpen;
 	//@   signals_only java.io.IOException;

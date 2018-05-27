@@ -57,7 +57,7 @@ public class AtomicBoolean implements java.io.Serializable {
   //-RAC@   ensures \result == (\old(value) != 0);
   public final boolean getAndSet(boolean v);
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   assignable \nothing;
   //@   ensures (* TODO: result is string representation of get() *);
   public java.lang.String toString();

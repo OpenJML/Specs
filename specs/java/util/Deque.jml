@@ -101,7 +101,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public /*@ pure nullable @*/ E getLast() throws NoSuchElementException;
     
-    /*-RAC@ public normal_behavior
+    /*-RAC@ also public normal_behavior
       @   ensures (\forall int i; 0 <= i && i < content.theSize;
       @               \result.nthNextElement(i) == _get(i));
       @*/
@@ -253,7 +253,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public boolean removeFirstOccurrence(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
  
-    /*-RAC@ public behavior
+    /*-RAC@ also public behavior
       @   requires contains(o);
       @   ensures \result;
       @   ensures size() == \old(size())-1;
