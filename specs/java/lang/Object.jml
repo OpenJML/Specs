@@ -194,8 +194,14 @@ public class Object {
       @*/
     public /*@ non_null @*/ String toString();
 
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure // Not specifying multi-threqaded behavior
     public final void notify();
 
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure // Not specifying multi-threqaded behavior
     public final void notifyAll();
 
     //@ public behavior
@@ -221,6 +227,10 @@ public class Object {
     public final void wait(long timeout, int nanos)
         throws InterruptedException;
 
+    //@ public behavior
+          // FIXME also check thread ownership - IllegalMonitorStateException
+    //@   assignable \nothing;
+    //@   signals_only InterruptedException;
     public final void wait() throws InterruptedException;
 
     /*@ protected normal_behavior
