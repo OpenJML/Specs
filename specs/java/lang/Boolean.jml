@@ -135,7 +135,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @*/
     public /*@ pure @*/ boolean equals(/*@ nullable */ Object obj);
     
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   ensures (this.booleanValue() == b.booleanValue()) ==> \result == 0;
     //@   ensures (this.booleanValue() && !b.booleanValue()) ==> \result > 0;
     //@   ensures (!this.booleanValue() && b.booleanValue()) ==> \result < 0;

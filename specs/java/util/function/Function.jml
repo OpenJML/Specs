@@ -18,7 +18,7 @@ public interface Function<T,R> {
       @*/
     
       /*@ public static immutable model interface Identity<T> extends Function<T,T> {
-      @   public model_program {
+      @   also public model_program {
       @      return t;
       @   }
       @   pure function

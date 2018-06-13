@@ -96,9 +96,11 @@ public class AtomicLong extends Number implements java.io.Serializable {
   public final long decrementAndGet();
 
   //-RAC@ public normal_behavior
+  //-RAC@   requires v <= Long.MAX_VALUE - value;
   //-RAC@   assignable value;
   //-RAC@   ensures value == v + \old(value);
   //-RAC@   ensures \result == value;
+  //@ spec_safe_math
   public final long addAndGet(long v);
   
   //-RAC@ public normal_behavior
@@ -125,27 +127,27 @@ public class AtomicLong extends Number implements java.io.Serializable {
   // FIXME - do something with the op
   public final long accumulateAndGet(long v, java.util.function.LongBinaryOperator op);
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   assignable \nothing;
   //@   ensures (* result is string representation of get() *);
   public java.lang.String toString();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (int)get();
   //@ pure
   public int intValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == get();
   //@ pure
   public long longValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (float)get();
   //@ pure
   public float floatValue();
 
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures \result == (double)get();
   //@ pure
   public double doubleValue();

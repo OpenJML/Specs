@@ -29,23 +29,28 @@ public class RuntimeException
     extends Exception
 {
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
-    public /*@ pure @*/ RuntimeException();
+    //@ public normal_behavior
+    //@   ensures standardThrowable();
+    //@ pure
+    public RuntimeException();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(message);
-      @*/
-    public /*@ pure @*/ RuntimeException(String message);
+    //@ public normal_behavior
+    //@   ensures standardThrowable(message);
+    //@ pure
+    public RuntimeException(String message);
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(message,cause);
-      @*/
-    public /*@ pure @*/ RuntimeException(String message, Throwable cause);
+    //@ public normal_behavior
+    //@   ensures standardThrowable(message,cause);
+    //@ pure
+    public RuntimeException(String message, Throwable cause);
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(cause);
-      @*/
-    public /*@ pure @*/ RuntimeException(Throwable cause);
+    //@ public normal_behavior
+    //@   ensures standardThrowable(cause);
+    //@ pure
+    public RuntimeException(Throwable cause);
+    
+    //@ protected normal_behavior
+    //@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
+    //@ pure
+    protected RuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
 }

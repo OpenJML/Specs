@@ -47,7 +47,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/
     /*@ pure @*/ public LinkedList(Collection<? extends E> c);
     
-    /*-RAC@  public normal_behavior
+    /*-RAC@ also public normal_behavior
       @    requires !isEmpty();
       @    ensures !containsNull ==> \result != null;
       @    ensures \result == get(0);
@@ -58,7 +58,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/
     public /*@ pure @*/ E getFirst();
     
-    /*-RAC@  public normal_behavior
+    /*-RAC@ also public normal_behavior
       @    requires !isEmpty();
       @    ensures !containsNull ==> \result != null;
       @    ensures \result == get(size()-1);
@@ -69,7 +69,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/
     public /*@ pure @*/ E getLast();
 
-    /*-RAC@  public normal_behavior
+    /*-RAC@ also public normal_behavior
       @    requires !isEmpty();
       @     assignable objectState;
       @    ensures !containsNull ==> \result != null;
@@ -86,7 +86,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/    
     public E removeFirst();
  
-    /*-RAC@  public behavior
+    /*-RAC@ also public behavior
       @    requires !isEmpty();
       @    assignable objectState;
       @    ensures !containsNull ==> \result != null;
@@ -103,7 +103,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/     
     public E removeLast();
   
-    /*-RAC@ public normal_behavior
+    /*-RAC@ also public normal_behavior
       @    requires containsNull || o != null;
       @    assignable objectState;
       @    ensures size() == \old(size()+1);
@@ -114,7 +114,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
       @*/    
     public void addFirst(E o);
 
-    /*-RAC@ public normal_behavior
+    /*-RAC@ also public normal_behavior
       @    requires containsNull || o != null;
       @    assignable objectState;
       @    ensures size() == \old(size()+1);

@@ -1,0 +1,117 @@
+package java.lang;
+//@ non_null_by_default
+abstract class AbstractStringBuilder implements Appendable,CharSequence {
+    char[] value; //@ in _value;
+    int count; //@ in _value;
+    
+    private static final int MAX_ARRAY_SIZE;
+
+    //@ normal_behavior
+    //@   ensures true;
+    //@ pure
+    AbstractStringBuilder();
+    //@ normal_behavior
+    //@   ensures true;
+    //@ pure
+    AbstractStringBuilder(int size);
+//    public int length();
+//    public int capacity();
+//    public void ensureCapacity(int);
+//    private void ensureCapacityInternal(int);
+//    private int newCapacity(int);
+//    private int hugeCapacity(int);
+//    public void trimToSize();
+//    public void setLength(int);
+//    public char charAt(int);
+//    public int codePointAt(int);
+//    public int codePointBefore(int);
+//    public int codePointCount(int, int);
+//    public int offsetByCodePoints(int, int);
+//    public void getChars(int, int, char[], int);
+//    public void setCharAt(int, char);
+    
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + o._value *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(/*@ nullable */Object o);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(String s);
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(StringBuffer s);
+//    AbstractStringBuilder append(AbstractStringBuilder);
+
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + c *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(CharSequence c);
+//    private AbstractStringBuilder appendNull();
+//    public AbstractStringBuilder append(CharSequence, int, int);
+//    public AbstractStringBuilder append(char[]);
+//    public AbstractStringBuilder append(char[], int, int);
+
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(boolean b);
+    
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + x *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(char x);
+
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + x *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(int x);
+
+    //@ public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + x *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder append(long x);
+//    public AbstractStringBuilder append(float);
+//    public AbstractStringBuilder append(double);
+//    public AbstractStringBuilder delete(int, int);
+//    public AbstractStringBuilder appendCodePoint(int);
+//    public AbstractStringBuilder deleteCharAt(int);
+//    public AbstractStringBuilder replace(int, int, String);
+//    public String substring(int);
+//    public CharSequence subSequence(int, int);
+//    public String substring(int, int);
+//    public AbstractStringBuilder insert(int, char[], int, int);
+//    public AbstractStringBuilder insert(int, Object);
+//    public AbstractStringBuilder insert(int, String);
+//    public AbstractStringBuilder insert(int, char[]);
+//    public AbstractStringBuilder insert(int, CharSequence);
+//    public AbstractStringBuilder insert(int, CharSequence, int, int);
+//    public AbstractStringBuilder insert(int, boolean);
+//    public AbstractStringBuilder insert(int, char);
+//    public AbstractStringBuilder insert(int, int);
+//    public AbstractStringBuilder insert(int, long);
+//    public AbstractStringBuilder insert(int, float);
+//    public AbstractStringBuilder insert(int, double);
+//    public int indexOf(String);
+//    public int indexOf(String, int);
+//    public int lastIndexOf(String);
+//    public int lastIndexOf(String, int);
+//    public AbstractStringBuilder reverse();
+//    private void reverseAllValidSurrogatePairs();
+//    public abstract String toString();
+//    final char[] getValue();
+//    public Appendable append(char) throws java.io.IOException;
+//    public Appendable append(CharSequence, int, int) throws java.io.IOException;
+//    public Appendable append(CharSequence) throws java.io.IOException;
+    
+    
+}

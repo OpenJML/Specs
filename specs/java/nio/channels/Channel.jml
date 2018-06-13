@@ -11,7 +11,7 @@ public interface Channel extends java.io.Closeable {
 	//@ pure
 	public abstract boolean isOpen();
 
-	//@ public behavior
+	//@ also public behavior
 	//@   assignable _isOpen, autocloseableContent;
 	//@   ensures !_isOpen;
 	//@   signals_only java.io.IOException;

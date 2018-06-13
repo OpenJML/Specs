@@ -124,6 +124,7 @@ public final class System {
       @   assignable time;
       @   ensures time >= \old(time);
       @   ensures \result == time;
+      @   ensures \result >= 0;
       @*/
     public static native long currentTimeMillis();
 

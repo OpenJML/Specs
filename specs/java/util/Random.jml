@@ -18,7 +18,7 @@ public class Random implements java.io.Serializable {
   private double nextNextGaussian;
   private boolean haveNextNextGaussian;
   private static final java.io.ObjectStreamField[] serialPersistentFields;
-//  private static final sun.misc.Unsafe unsafe;
+  //private static final sun.misc.Unsafe unsafe; // Non-public api
   private static final long seedOffset;
   
   public Random();
@@ -34,6 +34,9 @@ public class Random implements java.io.Serializable {
   final long internalNextLong(long a, long b);
   final int internalNextInt(int a, int b);
   final double internalNextDouble(double a, double b);
+  
+  //@ public normal_behavior
+  //@   assignable this.content;
   public int nextInt();
   
   //@ public normal_behavior

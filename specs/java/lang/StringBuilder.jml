@@ -1,9 +1,8 @@
 package java.lang;
 
+//@ non_null_by_default
 public final class StringBuilder extends AbstractStringBuilder implements java.io.Serializable,CharSequence {
   static final long serialVersionUID;
-  
-  //@ model public String _value;
   
   //@ public normal_behavior
   //@   ensures true;
@@ -18,82 +17,60 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
   //@ pure
   public StringBuilder(String s);
 
-  
   //@ public normal_behavior
-  //@   assignable _value;
-  //@   ensures (* _value == \old(_value) + s *);
+  //@   ensures (* _value == cs *);
+  //@ pure
   public StringBuilder(CharSequence cs);
 
-  //@ public normal_behavior
-  //@   assignable _value;
-  //@   ensures (* _value == \old(_value) + s *);
-  //@   ensures \result == this;
-  public StringBuilder append(Object o);
+  @Override
+  public StringBuilder append(/*@ nullable */ Object o);
   
-  //@ public normal_behavior
-  //@   assignable _value;
-  //@   ensures (* _value == \old(_value) + s *);
-  //@   ensures \result == this;
+    @Override
     public StringBuilder append(String s);
     
-    //@ public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+    @Override
     public StringBuilder append(StringBuffer b);
-    //@ public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+
+    @Override
     public StringBuilder append(CharSequence cs);
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public StringBuilder append(CharSequence cs, int offset, int length);// FIXME - check that it is length, not end
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public StringBuilder append(char[] ch);
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public StringBuilder append(char[] ch, int offset, int length);
-    //@ public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+    
+    @Override
     public StringBuilder append(boolean b);
   
-    //@ public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + c *);
-    //@   ensures \result == this;
+    @Override
     public StringBuilder append(char c);
     
-    //@ public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+    @Override
     public StringBuilder append(int i);
-    //@ public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+    
+    @Override
     public StringBuilder append(long i);
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public StringBuilder append(float f);
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public StringBuilder append(double d);
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
@@ -114,18 +91,18 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
 //  public StringBuilder insert(int, float);
 //  public StringBuilder insert(int, double);
     
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures true;
   //@ pure
   public int indexOf(String s);
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures true;
   //@ pure
   public int indexOf(String s , int k);
 //  public int lastIndexOf(String);
 //  public int lastIndexOf(String, int);
 //  public StringBuilder reverse();
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures true;
   //@ pure
   public String toString();

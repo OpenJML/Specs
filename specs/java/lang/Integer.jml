@@ -53,6 +53,8 @@ public  /*@ pure @*/ final
 
     public static final Class<Integer> TYPE = int.class;  // 1.5 DIFFERENCE
     
+    //@ model public static final long MAX_UNSIGNED_INT = 0xffff_ffffL;
+    
     //@ ensures TYPE == int.class;
     //@ static_initializer
 
@@ -365,7 +367,7 @@ public  /*@ pure @*/ final
 //    public int compareTo(Object o);
     
     /*@ public normal_behavior
-      @     // We enumerate seom cases that we need to avoid using bit arithmetic
+      @     // We enumerate some cases that we need to avoid using bit arithmetic
       @   ensures (\result == 0) <==> (k == 0);
       @   ensures (\result == 1) <==> (k == 1 || k == 2 || k == 4 || k == 8 
       @                             || k == 16 || k == 32 || k == 64 || k == 128 
@@ -396,10 +398,7 @@ public  /*@ pure @*/ final
     //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
     //@ public normal_behavior // Avoids bit arithmetic
-    //@   ensures \result == (i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i);
-    //@   ensures 0 <= \result && \result <= 0xffff_ffffL;
-    //@ pure helper  // FIXME - infeasible if made a function; can also combine the two ensures as a workaround
+    //@   ensures \result == (i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i) && 0 <= \result && \result <= MAX_UNSIGNED_INT;
+    //@ pure helper function // FIXME - causes infeasibility if written as a function with separated ensures conjuncts
     //@ model public static long asUnsignedToLong(int i);
-
-
 }

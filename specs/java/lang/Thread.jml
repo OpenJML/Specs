@@ -95,7 +95,7 @@ public class Thread implements Runnable {
   
 //  private native void start0();
   
-  //@ public behavior
+  //@ also public behavior
   //@   requires true;
   public void run();
 //  private void exit();
@@ -162,7 +162,7 @@ public class Thread implements Runnable {
   
   public final void checkAccess();
   
-  //@ public normal_behavior
+  //@ also public normal_behavior
   //@   ensures true;
   //@ pure
   public String toString();

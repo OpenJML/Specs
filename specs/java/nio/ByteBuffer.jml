@@ -1,265 +1,265 @@
 package java.nio;
 
 public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer> {
-	  //@ spec_public  
-	  final byte[] hb;
-	  
-	  //@ public invariant 0 <= offset;
-	  //@ public invariant offset <= hb.length;
-	  //@ public invariant hb.length <= Integer.MAX_VALUE;
-	  //@ public invariant hb.length-offset >= capacity;
-	  
-	  //@ spec_public  
-	  final int offset;
-	  //@ spec_public  
-	  boolean isReadOnly;
-	  //@ spec_public  
-	  boolean bigEndian;
-	  //@ spec_public  
-	  boolean nativeByteOrder;
-	  
-	  ByteBuffer(int i, int j, int k, int m, byte[] b, int n);
-	  ByteBuffer(int i, int j, int k, int m);
+    //@ spec_public  
+    final byte[] hb;
+    
+    //@ public invariant 0 <= offset;
+    //@ public invariant offset <= hb.length;
+    //@ public invariant hb.length <= Integer.MAX_VALUE;
+    //@ public invariant hb.length-offset >= capacity;
+    
+    //@ spec_public  
+    final int offset;
+    //@ spec_public  
+    boolean isReadOnly;
+    //@ spec_public  
+    boolean bigEndian;
+    //@ spec_public  
+    boolean nativeByteOrder;
+    
+    ByteBuffer(int i, int j, int k, int m, byte[] b, int n);
+    ByteBuffer(int i, int j, int k, int m);
 
-	  //@ public normal_behavior
-	  //@   requires n >= 0;
-	  //@   ensures \fresh(\result);
-	  //@   ensures \result.offset == 0;
-	  //@   // \result.mark is undefined;
-	  //@   ensures \result.position == 0;
-	  //@   ensures \result.limit == n;
-	  //@   ensures \result.capacity == n;
-	  //@   ensures \result.hb != null;
-	  //@   ensures \result.hb.length == n;
-	  //@ pure
-	  public static ByteBuffer allocateDirect(int n);
-	  
-	  //@ public normal_behavior
-	  //@   requires n >= 0;
-	  //@   ensures \fresh(\result);
-	  //@   ensures \result.offset == 0;
-	  //@   // \result.mark is undefined;
-	  //@   ensures \result.position == 0;
-	  //@   ensures \result.limit == n;
-	  //@   ensures \result.capacity == n;
-	  //@   ensures \result.hb != null;
-	  //@   ensures \fresh(\result.hb);
-	  //@   ensures \result.hb.length == n;
-	  //@ pure
-	  public static ByteBuffer allocate(int n);
+    //@ public normal_behavior
+    //@   requires n >= 0;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == 0;
+    //@   // \result.mark is undefined;
+    //@   ensures \result.position == 0;
+    //@   ensures \result.limit == n;
+    //@   ensures \result.capacity == n;
+    //@   ensures \result.hb != null;
+    //@   ensures \result.hb.length == n;
+    //@ pure
+    public static ByteBuffer allocateDirect(int n);
+    
+    //@ public normal_behavior
+    //@   requires n >= 0;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == 0;
+    //@   // \result.mark is undefined;
+    //@   ensures \result.position == 0;
+    //@   ensures \result.limit == n;
+    //@   ensures \result.capacity == n;
+    //@   ensures \result.hb != null;
+    //@   ensures \fresh(\result.hb);
+    //@   ensures \result.hb.length == n;
+    //@ pure
+    public static ByteBuffer allocate(int n);
 
-	  //@ public normal_behavior
-	  //@   requires 0 <= offset && 0 <= length && length <= b.length - offset;
-	  //@   ensures \fresh(\result);
-	  //@   ensures \result.offset == 0;
-	  //@   ensures \result.mark == offset;
-	  //@   ensures \result.position == offset;
-	  //@   ensures \result.limit == offset+length;
-	  //@   ensures \result.capacity == b.length;
-	  //@   ensures \result.hb == b;
-	  //@ pure
-	  public static ByteBuffer wrap(byte[] b, int offset, int length);
-	  
-	  //@ public normal_behavior
-	  //@   ensures \fresh(\result);
-	  //@   ensures \result.offset == 0;
-	  //@   ensures \result.mark == 0;
-	  //@   ensures \result.position == 0;
-	  //@   ensures \result.limit == b.length;
-	  //@   ensures \result.capacity == b.length;
-	  //@   ensures \result.hb == b;
-	  //@ pure
-	  public static ByteBuffer wrap(byte[] b);
-	  public abstract ByteBuffer slice();
-	  public abstract ByteBuffer duplicate();
-	  public abstract ByteBuffer asReadOnlyBuffer();
-	  
-	  //@ public normal_behavior
-	  //@   assignable this.position;
-	  //@   ensures this.position == \old(this.position) + 1;
-	  //@   ensures \result == hb[\old(this.position)];
-	  public abstract byte get();
+    //@ public normal_behavior
+    //@   requires 0 <= offset && 0 <= length && length <= b.length - offset;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == 0;
+    //@   ensures \result.mark == offset;
+    //@   ensures \result.position == offset;
+    //@   ensures \result.limit == offset+length;
+    //@   ensures \result.capacity == b.length;
+    //@   ensures \result.hb == b;
+    //@ pure
+    public static ByteBuffer wrap(byte[] b, int offset, int length);
+    
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == 0;
+    //@   ensures \result.mark == 0;
+    //@   ensures \result.position == 0;
+    //@   ensures \result.limit == b.length;
+    //@   ensures \result.capacity == b.length;
+    //@   ensures \result.hb == b;
+    //@ pure
+    public static ByteBuffer wrap(byte[] b);
+    public abstract ByteBuffer slice();
+    public abstract ByteBuffer duplicate();
+    public abstract ByteBuffer asReadOnlyBuffer();
+    
+    //@ public normal_behavior
+    //@   assignable this.position;
+    //@   ensures this.position == \old(this.position) + 1;
+    //@   ensures \result == hb[\old(this.position)];
+    public abstract byte get();
 
-	  //@ public normal_behavior
-	  //@   assignable this.position, hb[this.position];
-	  //@   ensures this.position == \old(this.position) + 1;
-	  //@   ensures hb[offset+\old(this.position)] == b;
-	  public abstract ByteBuffer put(byte b);
+    //@ public normal_behavior
+    //@   assignable this.position, hb[this.position];
+    //@   ensures this.position == \old(this.position) + 1;
+    //@   ensures hb[offset+\old(this.position)] == b;
+    public abstract ByteBuffer put(byte b);
 
-	  //@ public normal_behavior
-	  //@   ensures \result == hb[offset+i];
-	  //@ pure
-	  public abstract byte get(int i);
-	  
-	  //@ public normal_behavior
-	  //@   assignable hb[offset+i];
-	  //@   ensures hb[offset+i] == b;
-	  public abstract ByteBuffer put(int i, byte b);
-	  
-	  
-	  public ByteBuffer get(byte[] buf, int i, int j);
-	  
-	  //@ public normal_behavior
-	  //@   requires position <= limit - buf.length;
-	  //@   assignable buf[*], this.position;
-	  //@   ensures \fresh(\result);
-	  //@   ensures this.position == \old(this.position) + buf.length;
-	  //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.position) + i]) ;
-	  public ByteBuffer get(byte[] buf);
-	  
-	  //@ public normal_behavior
-	  //@   old int move = bbuf.limit - bbuf.position;
-	  //@   requires move <= this.limit - this.position;
-	  //@   assignable hb[this.position .. this.position + (move - 1)], this.position, bbuf.position;
-	  //@   ensures position == \old(position) + move;
-	  //@   ensures bbuf.position == bbuf.limit;
-	  //@   ensures (\forall int i; \old(this.position) <= i && i < \old(this.position) + move; this.hb[i] == bbuf.hb[\old(bbuf.position) + (i-\old(this.position))]) ;
-	  //@ also public exceptional_behavior
-	  //@   requires bbuf.limit - bbuf.position > this.limit - this.position;
-	  //@   assignable \nothing;
-	  //@   signals_only BufferOverflowException ;
-	  public ByteBuffer put(ByteBuffer bbuf);
+    //@ public normal_behavior
+    //@   ensures \result == hb[offset+i];
+    //@ pure
+    public abstract byte get(int i);
+    
+    //@ public normal_behavior
+    //@   assignable hb[offset+i];
+    //@   ensures hb[offset+i] == b;
+    public abstract ByteBuffer put(int i, byte b);
+    
+    
+    public ByteBuffer get(byte[] buf, int i, int j);
+    
+    //@ public normal_behavior
+    //@   requires position <= limit - buf.length;
+    //@   assignable buf[*], this.position;
+    //@   ensures \fresh(\result);
+    //@   ensures this.position == \old(this.position) + buf.length;
+    //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.position) + i]) ;
+    public ByteBuffer get(byte[] buf);
+    
+    //@ public normal_behavior
+    //@   old int move = bbuf.limit - bbuf.position;
+    //@   requires move <= this.limit - this.position;
+    //@   assignable hb[this.position .. this.position + (move - 1)], this.position, bbuf.position;
+    //@   ensures position == \old(position) + move;
+    //@   ensures bbuf.position == bbuf.limit;
+    //@   ensures (\forall int i; \old(this.position) <= i && i < \old(this.position) + move; this.hb[i] == bbuf.hb[\old(bbuf.position) + (i-\old(this.position))]) ;
+    //@ also public exceptional_behavior
+    //@   requires bbuf.limit - bbuf.position > this.limit - this.position;
+    //@   assignable \nothing;
+    //@   signals_only BufferOverflowException ;
+    public ByteBuffer put(ByteBuffer bbuf);
 
-	  //@ public normal_behavior
-	  //@   requires offset >= 0 && length >= 0;
-	  //@   requires offset <= buf.length;
-	  //@   requires length <= buf.length - offset;
-	  //@   assignable this.hb[position..(position+(length-1))], this.position;
-	  //@   ensures position == Math.min(limit, \old(position) + length);
-	  //@   ensures (\forall int i; offset<=i && i<offset+length; buf[i] == hb[i-offset+\old(position)]); // FIXME - check that this forall will reason correctly
-	  public ByteBuffer put(byte[] buf, int offset, int length);
+    //@ public normal_behavior
+    //@   requires offset >= 0 && length >= 0;
+    //@   requires offset <= buf.length;
+    //@   requires length <= buf.length - offset;
+    //@   assignable this.hb[position..(position+(length-1))], this.position;
+    //@   ensures position == Math.min(limit, \old(position) + length);
+    //@   ensures (\forall int i; offset<=i && i<offset+length; buf[i] == hb[i-offset+\old(position)]); // FIXME - check that this forall will reason correctly
+    public ByteBuffer put(byte[] buf, int offset, int length);
 
-	  //@ public normal_behavior
-	  //@   requires position <= limit - buf.length;
-	  //@   old int moved = Math.min(buf.length, limit - position);
-	  //@   assignable this.position, this.hb[position .. (position + (moved -1))];
-	  //@   ensures \fresh(\result);
-	  //@   ensures this.position == \old(this.position) + moved;
-	  //@   ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(position)]); // FIXME - check that this forall will reason correctly
-	  public final ByteBuffer put(byte[] buf);
+    //@ public normal_behavior
+    //@   requires position <= limit - buf.length;
+    //@   old int moved = Math.min(buf.length, limit - position);
+    //@   assignable this.position, this.hb[position .. (position + (moved -1))];
+    //@   ensures \fresh(\result);
+    //@   ensures this.position == \old(this.position) + moved;
+    //@   ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(position)]); // FIXME - check that this forall will reason correctly
+    public final ByteBuffer put(byte[] buf);
 
-	  public final boolean hasArray();
-	  
-	  //@ public normal_behavior
-	  //@   ensures \result == hb;
-	  //@ pure
-	  public final byte[] array();
-	  public final int arrayOffset();
-	  public abstract ByteBuffer compact();
-	  public abstract boolean isDirect();
-	  public java.lang.String toString();
-	  public int hashCode();
-	  public boolean equals(java.lang.Object o);
-	  private static boolean equals(byte b, byte bb);
-	  public int compareTo(ByteBuffer bbuf);
-	  private static int compare(byte b, byte bb);
-	  public final ByteOrder order();
-	  public final ByteBuffer order(ByteOrder order);
-	  
-	  //@ normal_behavior   // FIXME - any range limitation on i?
-	  //@   ensures \result == hb[i];
-	  //@ pure
-	  abstract byte _get(int i);
-	  //@ normal_behavior   // FIXME - any range limitation on i?
-	  //@   assignable hb[i];
-	  //@   ensures hb[i] == b;
-	  abstract void _put(int i, byte b);
-	  public abstract char getChar();
-	  public abstract ByteBuffer putChar(char c);
-	  public abstract char getChar(int i);
-	  public abstract ByteBuffer putChar(int i, char c);
-	  public abstract CharBuffer asCharBuffer();
+    public final boolean hasArray();
+    
+    //@ also public normal_behavior
+    //@   ensures \result == hb;
+    //@ pure
+    public final byte[] array();
+    public final int arrayOffset();
+    public abstract ByteBuffer compact();
+    public abstract boolean isDirect();
+    public java.lang.String toString();
+    public int hashCode();
+    public boolean equals(java.lang.Object o);
+    private static boolean equals(byte b, byte bb);
+    public int compareTo(ByteBuffer bbuf);
+    private static int compare(byte b, byte bb);
+    public final ByteOrder order();
+    public final ByteBuffer order(ByteOrder order);
+    
+    //@ normal_behavior   // FIXME - any range limitation on i?
+    //@   ensures \result == hb[i];
+    //@ pure
+    abstract byte _get(int i);
+    //@ normal_behavior   // FIXME - any range limitation on i?
+    //@   assignable hb[i];
+    //@   ensures hb[i] == b;
+    abstract void _put(int i, byte b);
+    public abstract char getChar();
+    public abstract ByteBuffer putChar(char c);
+    public abstract char getChar(int i);
+    public abstract ByteBuffer putChar(int i, char c);
+    public abstract CharBuffer asCharBuffer();
 
-	  //@ public normal_behavior
-	  //@   requires position <= limit - Short.BYTES;
-	  //@   assignable this.position;
-	  //@   ensures this.position == \old(this.position) + Short.BYTES;
-	  //@   ensures \result == asShort(hb[\old(position)],hb[\old(position+1)]);
-	  public abstract short getShort();
+    //@ public normal_behavior
+    //@   requires position <= limit - Short.BYTES;
+    //@   assignable this.position;
+    //@   ensures this.position == \old(this.position) + Short.BYTES;
+    //@   ensures \result == asShort(hb[\old(position)],hb[\old(position+1)]);
+    public abstract short getShort();
 
-	  //@ public normal_behavior
-	  //@   requires position <= limit - Short.BYTES;
-	  //@   old int oldpos = this.position;
-	  //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
-	  //@   ensures this.position == oldpos + Short.BYTES;
-	  //@   ensures getShort(oldpos) == s;
-	  public abstract ByteBuffer putShort(short s);
+    //@ public normal_behavior
+    //@   requires position <= limit - Short.BYTES;
+    //@   old int oldpos = this.position;
+    //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
+    //@   ensures this.position == oldpos + Short.BYTES;
+    //@   ensures getShort(oldpos) == s;
+    public abstract ByteBuffer putShort(short s);
 
-	  //@ public normal_behavior
-	  //@   requires i <= limit - Short.BYTES;
-	  //@   ensures \result == asShort(hb[i],hb[i+1]);
-	  //@ pure
-	  public abstract short getShort(int i);
+    //@ public normal_behavior
+    //@   requires i <= limit - Short.BYTES;
+    //@   ensures \result == asShort(hb[i],hb[i+1]);
+    //@ pure
+    public abstract short getShort(int i);
 
-	  //@ public normal_behavior
-	  //@   requires position <= limit - Short.BYTES;
-	  //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
-	  //@   ensures this.position == \old(this.position) + Short.BYTES;
-	  //@   ensures (* FIXME: result is bytes representation of the ints *);
-	  public abstract ByteBuffer putShort(int i, short s);
-	  
-	  public abstract ShortBuffer asShortBuffer();
+    //@ public normal_behavior
+    //@   requires position <= limit - Short.BYTES;
+    //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
+    //@   ensures this.position == \old(this.position) + Short.BYTES;
+    //@   ensures (* FIXME: result is bytes representation of the ints *);
+    public abstract ByteBuffer putShort(int i, short s);
+    
+    public abstract ShortBuffer asShortBuffer();
 
-	  //@ public normal_behavior
-	  //@   requires position <= limit - Integer.BYTES;
-	  //@   assignable this.position;
-	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
-	  //@   ensures \result == asInt(hb[\old(position)],hb[\old(position+1)],hb[\old(position+2)],hb[\old(position+3)]);
-	  public abstract int getInt();
+    //@ public normal_behavior
+    //@   requires position <= limit - Integer.BYTES;
+    //@   assignable this.position;
+    //@   ensures this.position == \old(this.position) + Integer.BYTES;
+    //@   ensures \result == asInt(hb[\old(position)],hb[\old(position+1)],hb[\old(position+2)],hb[\old(position+3)]);
+    public abstract int getInt();
 
-	    //@ public normal_behavior
-	    //@   ensures \result == (b0*(0x100) + asUnsigned(b1));
-	    //@ model public static pure helper function short asShort(byte b0, byte b1);
+    //@ public normal_behavior
+    //@   ensures \result == (b0*(0x100) + asUnsigned(b1));
+    //@ model public static pure helper function short asShort(byte b0, byte b1);
 
-	    //@ public normal_behavior
-	    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x1_0000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
-	    // @   ensures (\result >= 0) <==> (b0 >= 0);
-	    // @   ensures b3 == (byte)(\result%256);
-	    // @   ensures b2 == (byte)((\result/256)%256);
-	    // @   ensures b1 == (byte)((\result/65536)%256);
-	    // @   ensures b0 == (byte)(\result/(256*65536));
-	    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
+    //@ public normal_behavior
+    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x1_0000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
+    // @   ensures (\result >= 0) <==> (b0 >= 0);
+    // @   ensures b3 == (byte)(\result%256);
+    // @   ensures b2 == (byte)((\result/256)%256);
+    // @   ensures b1 == (byte)((\result/65536)%256);
+    // @   ensures b0 == (byte)(\result/(256*65536));
+    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
-	  //@ public normal_behavior
-	  //@   requires position <= limit - Integer.BYTES;
-	  //@   assignable this.position, hb[position .. (position + (Integer.BYTES-1))];
-	  //@   ensures this.position == \old(this.position) + Integer.BYTES;
-	  //@   ensures getInt(\old(position)) == i;
-	  public abstract ByteBuffer putInt(int i);
-	  
-	  //@ public normal_behavior
-	  //@   requires i <= limit - Integer.BYTES;
-	  //@   ensures \result == asInt(hb[i],hb[i+1],hb[i+2],hb[i+3]);
-	  //@ pure
-	  public abstract int getInt(int i);
+    //@ public normal_behavior
+    //@   requires position <= limit - Integer.BYTES;
+    //@   assignable this.position, hb[position .. (position + (Integer.BYTES-1))];
+    //@   ensures this.position == \old(this.position) + Integer.BYTES;
+    //@   ensures getInt(\old(position)) == i;
+    public abstract ByteBuffer putInt(int i);
+    
+    //@ public normal_behavior
+    //@   requires i <= limit - Integer.BYTES;
+    //@   ensures \result == asInt(hb[i],hb[i+1],hb[i+2],hb[i+3]);
+    //@ pure
+    public abstract int getInt(int i);
 
-	  //@ public normal_behavior
-	  //@   requires index <= limit - Integer.BYTES;
-	  //@   assignable hb[index .. (index + (Integer.BYTES-1))];
-	  //@   ensures getInt(index) == value;
-	  public abstract ByteBuffer putInt(int index, int value);
-	  
-	  public abstract IntBuffer asIntBuffer();
-	  public abstract long getLong();
-	  public abstract ByteBuffer putLong(long n);
-	  public abstract long getLong(int i);
-	  public abstract ByteBuffer putLong(int i, long n);
-	  public abstract LongBuffer asLongBuffer();
-	  public abstract float getFloat();
-	  public abstract ByteBuffer putFloat(float f);
-	  public abstract float getFloat(int i);
-	  public abstract ByteBuffer putFloat(int i, float f);
-	  public abstract FloatBuffer asFloatBuffer();
-	  public abstract double getDouble();
-	  public abstract ByteBuffer putDouble(double d);
-	  public abstract double getDouble(int i);
-	  public abstract ByteBuffer putDouble(int i, double d);
-	  public abstract DoubleBuffer asDoubleBuffer();
-	  public java.lang.Object array();
-	 // public int compareTo(java.lang.Object o);
-	  
-	    //@ public normal_behavior
-	    //@   ensures \result == (b >= 0 ? b : b + 256);
-	    //@ model public static inline pure helper function int asUnsigned(byte b) { return (b >= 0 ? b : b + 256); }
+    //@ public normal_behavior
+    //@   requires index <= limit - Integer.BYTES;
+    //@   assignable hb[index .. (index + (Integer.BYTES-1))];
+    //@   ensures getInt(index) == value;
+    public abstract ByteBuffer putInt(int index, int value);
+    
+    public abstract IntBuffer asIntBuffer();
+    public abstract long getLong();
+    public abstract ByteBuffer putLong(long n);
+    public abstract long getLong(int i);
+    public abstract ByteBuffer putLong(int i, long n);
+    public abstract LongBuffer asLongBuffer();
+    public abstract float getFloat();
+    public abstract ByteBuffer putFloat(float f);
+    public abstract float getFloat(int i);
+    public abstract ByteBuffer putFloat(int i, float f);
+    public abstract FloatBuffer asFloatBuffer();
+    public abstract double getDouble();
+    public abstract ByteBuffer putDouble(double d);
+    public abstract double getDouble(int i);
+    public abstract ByteBuffer putDouble(int i, double d);
+    public abstract DoubleBuffer asDoubleBuffer();
+    public java.lang.Object array();
+	// public int compareTo(java.lang.Object o);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (b >= 0 ? b : b + 256);
+    //@ model public static inline pure helper function int asUnsigned(byte b) { return (b >= 0 ? b : b + 256); }
 
 }

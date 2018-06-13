@@ -26,7 +26,7 @@ public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneab
 	
 	public boolean contains(Object o);
 	
-	//@ public normal_behavior ensures true;
+	//@ also public normal_behavior ensures true;
 	//@ pure
 	public boolean isEmpty();
 	
@@ -34,7 +34,7 @@ public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneab
 	
 	public boolean remove(Object o);
 	
-	//@ public normal_behavior ensures true;
+	//@ also public normal_behavior ensures true;
 	//@ pure
 	public int size();
 	
