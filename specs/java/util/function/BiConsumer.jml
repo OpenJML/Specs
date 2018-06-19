@@ -1,0 +1,16 @@
+package java.util.function;
+
+//@ non_null_by_default immutable
+@FunctionalInterface
+public interface BiConsumer<T, U> {
+    //@ model public instance JmlDataGroup acceptAssignable;
+    
+    //@ public normal_behavior
+    //@     assignable acceptAssignable;
+    void accept(/*@ nullable @*/ T t, /*@ nullable @*/ U u);
+
+    //@ public normal_behavior
+    //@     requires after != null;
+    //@ pure
+    default BiConsumer<T, U> andThen(BiConsumer<? super T, ? super U> after);
+}
