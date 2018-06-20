@@ -1,6 +1,8 @@
 package java.nio;
 
 public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer> {
+    //@ model public instance boolean _isDirect;
+    
     //@ spec_public  
     final byte[] hb;
     
@@ -38,13 +40,14 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires n >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.offset == 0;
-    //@   // \result.mark is undefined;
+    //@   ensures \result.mark >= 0 && \result.mark <= \result.position; // undefined? FIXME
     //@   ensures \result.position == 0;
     //@   ensures \result.limit == n;
     //@   ensures \result.capacity == n;
     //@   ensures \result.hb != null;
     //@   ensures \fresh(\result.hb);
     //@   ensures \result.hb.length == n;
+    //@   ensures \result._isDirect == false;
     //@ pure
     public static ByteBuffer allocate(int n);
 
@@ -57,6 +60,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.limit == offset+length;
     //@   ensures \result.capacity == b.length;
     //@   ensures \result.hb == b;
+    //@   ensures \result._isDirect == false;
     //@ pure
     public static ByteBuffer wrap(byte[] b, int offset, int length);
     
@@ -173,6 +177,9 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ pure
     public final int arrayOffset();
     public abstract ByteBuffer compact();
+    
+    //@ public normal_behavior
+    //@   ensures \result == _isDirect;
     //@ pure
     public abstract boolean isDirect();
     public java.lang.String toString();

@@ -3,7 +3,7 @@ package java.util.function;
 //@ non_null_by_default immutable
 @FunctionalInterface
 public interface BiConsumer<T, U> {
-    //@ model public instance JmlDataGroup acceptAssignable;
+    //@ model public instance JMLDataGroup acceptAssignable;
     
     //@ public normal_behavior
     //@     assignable acceptAssignable;

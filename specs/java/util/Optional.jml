@@ -54,8 +54,8 @@ public final class Optional<T> {
   public T get();
   
   //@ public normal_behavior
-  // @   ensures \result == (value != null);
-  //@   { return value != null; }
+  //@   ensures \result == (value != null);
+  // @   { return value != null; }
   //@ pure function
   public boolean isPresent();
   
