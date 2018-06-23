@@ -1804,44 +1804,50 @@ public class Arrays {
     public static double[] copyOfRange(double[] src, int from, int to);
     
     //@ public normal_behavior
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires 0 <= from && from <= to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i && i < to; \result[i-from] == src[i]);
-    //@ also public normal_behavior
-    //@   requires 0 <= from && from <= src.length && src.length < to;
-    //@   ensures \fresh(\result);
-    //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
+    //@   ensures \elemtype(\typeof(\result)) == \type(char);
+    //@   {|
+    //@       requires to <= src.length;
+    //@       ensures (\forall int i; 0 <= i && i < to-from; \result[i] == src[i+from]);
+    //@   also 
+    //@       requires src.length < to;
+    //@       ensures (\forall int i; 0 <= i && i < src.length - from; \result[i] == src[i+from]);
+    //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == 0);
+    //@   |}
     //@ pure
     public static char[] copyOfRange(char[] src, int from, int to);
     
     //@ public normal_behavior
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires 0 <= from && from <= to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i && i < to; \result[i-from] == src[i]);
-    //@ also public normal_behavior
-    //@   requires 0 <= from && from <= src.length && src.length < to;
-    //@   ensures \fresh(\result);
-    //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == null);
+    //@   ensures \elemtype(\typeof(\result)) == \type(T);
+    //@   {|
+    //@       requires to <= src.length;
+    //@       ensures (\forall int i; 0 <= i && i < to-from; \result[i] == src[i+from]);
+    //@   also 
+    //@       requires src.length < to;
+    //@       ensures (\forall int i; 0 <= i && i < src.length - from; \result[i] == src[i+from]);
+    //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == null);
+    //@   |}
     //@ pure
     public static <T> T[] copyOfRange(T[] src, int from, int to);
     
     //@ public normal_behavior
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires 0 <= from && from <= to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i && i < to; \result[i-from] == src[i]);
-    //@ also public normal_behavior
-    //@   requires 0 <= from && from <= src.length && src.length < to;
-    //@   ensures \fresh(\result);
-    //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == null);
+    //@   ensures \elemtype(\typeof(\result)) == \type(T);
+    //@   {|
+    //@       requires to <= src.length;
+    //@       ensures (\forall int i; 0 <= i && i < to-from; \result[i] == src[i+from]);
+    //@   also 
+    //@       requires src.length < to;
+    //@       ensures (\forall int i; 0 <= i && i < src.length - from; \result[i] == src[i+from]);
+    //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == null);
+    //@   |}
     //@ pure
     public static <T,U> T[] copyOfRange(U[] src, int from, int to, Class<? extends T[]> newType);
     
