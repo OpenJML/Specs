@@ -162,23 +162,23 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(position)]); // FIXME - check that this forall will reason correctly
     public final ByteBuffer put(byte[] buf);
 
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@     ensures \result == (hb != null && !isReadOnly);
     //@ pure
     public final boolean hasArray();
     
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   ensures \result == hb;
     //@ pure
     public final byte[] array();
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@     requires hb != null && !isReadOnly;
     //@     ensures \result == offset;
     //@ pure
     public final int arrayOffset();
     public abstract ByteBuffer compact();
     
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   ensures \result == _isDirect;
     //@ pure
     public abstract boolean isDirect();

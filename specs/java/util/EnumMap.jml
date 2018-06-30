@@ -30,7 +30,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@ pure
     public EnumMap(Map<K, ? extends V> map);
     
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   ensures \result == size;
     public int size();
     
