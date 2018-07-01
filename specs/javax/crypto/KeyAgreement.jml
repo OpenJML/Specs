@@ -56,8 +56,11 @@ public class KeyAgreement {
 	  //@   ensures \fresh(\result);
 	  public final java.security.Key doPhase(java.security.Key key, boolean b) throws java.security.InvalidKeyException, java.lang.IllegalStateException;
 	  
+	  //@ model public byte[] _secret;
+	  
 	  //@ public behavior
 	  //@   ensures \fresh(\result);
+	  //@   ensures \result.length == _secret.length;
 	  //@ pure
 	  public final byte[] generateSecret() throws java.lang.IllegalStateException;
 	  public final int generateSecret(byte[] bytes, int n) throws java.lang.IllegalStateException, ShortBufferException;

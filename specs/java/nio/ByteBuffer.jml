@@ -1,6 +1,8 @@
 package java.nio;
 
 public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer> {
+    //@ model public instance boolean _isDirect;
+    
     //@ spec_public  
     final byte[] hb;
     
@@ -38,13 +40,14 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires n >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.offset == 0;
-    //@   // \result.mark is undefined;
+    //@   ensures \result.mark >= 0 && \result.mark <= \result.position; // undefined? FIXME
     //@   ensures \result.position == 0;
     //@   ensures \result.limit == n;
     //@   ensures \result.capacity == n;
     //@   ensures \result.hb != null;
     //@   ensures \fresh(\result.hb);
     //@   ensures \result.hb.length == n;
+    //@   ensures \result._isDirect == false;
     //@ pure
     public static ByteBuffer allocate(int n);
 
@@ -57,6 +60,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.limit == offset+length;
     //@   ensures \result.capacity == b.length;
     //@   ensures \result.hb == b;
+    //@   ensures \result._isDirect == false;
     //@ pure
     public static ByteBuffer wrap(byte[] b, int offset, int length);
     
@@ -70,7 +74,27 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.hb == b;
     //@ pure
     public static ByteBuffer wrap(byte[] b);
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == position;
+    //@   // \result.mark is undefined
+    //@   ensures \result.position == 0;
+    //@   ensures \result.limit == limit - position;
+    //@   ensures \result.capacity == limit - position;
+    //@   ensures \result.hb == hb;
+    //@   ensures \result.isReadOnly == isReadOnly;
+    //@ pure
     public abstract ByteBuffer slice();
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == offset;
+    //@   ensures \result.mark == mark;
+    //@   ensures \result.position == position;
+    //@   ensures \result.limit == limit;
+    //@   ensures \result.capacity == capacity;
+    //@   ensures \result.hb == hb;
+    //@   ensures \result.isReadOnly == isReadOnly;
+    //@ pure
     public abstract ByteBuffer duplicate();
     public abstract ByteBuffer asReadOnlyBuffer();
     
@@ -138,14 +162,25 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(position)]); // FIXME - check that this forall will reason correctly
     public final ByteBuffer put(byte[] buf);
 
+    //@ also public normal_behavior
+    //@     ensures \result == (hb != null && !isReadOnly);
+    //@ pure
     public final boolean hasArray();
     
     //@ also public normal_behavior
     //@   ensures \result == hb;
     //@ pure
     public final byte[] array();
+    //@ also public normal_behavior
+    //@     requires hb != null && !isReadOnly;
+    //@     ensures \result == offset;
+    //@ pure
     public final int arrayOffset();
     public abstract ByteBuffer compact();
+    
+    //@ also public normal_behavior
+    //@   ensures \result == _isDirect;
+    //@ pure
     public abstract boolean isDirect();
     public java.lang.String toString();
     public int hashCode();

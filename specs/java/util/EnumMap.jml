@@ -1,10 +1,15 @@
 package java.util;
 
 public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements java.io.Serializable, Cloneable {
-//  private final java.lang.Class<K> keyType;
+    //@ spec_public
+    private final java.lang.Class<K> keyType;
 //  private transient K[] keyUniverse;
 //  private transient java.lang.Object[] vals;
-//  private transient int size;
+    
+    //@ spec_public
+    private transient int size;
+    //@ public invariant size >= 0;
+    
 //  private static final java.lang.Object NULL;
 //  private static final java.lang.Enum<?>[] ZERO_LENGTH_ENUM_ARRAY;
 //  private transient java.util.Set<java.util.Map$Entry<K, V>> entrySet;
@@ -12,19 +17,23 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
 //  private java.lang.Object maskNull(java.lang.Object);
 //  private V unmaskNull(java.lang.Object);
 
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
+    //@ public normal_behavior
+    //@   ensures keyType == clazz;
+    //@ pure
     public EnumMap(Class<K> clazz);
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
     public EnumMap(EnumMap<K, ? extends V> map);
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
     public EnumMap(Map<K, ? extends V> map);
-//  public int size();
+    
+    //@ also public normal_behavior
+    //@   ensures \result == size;
+    public int size();
+    
 //  public boolean containsValue(java.lang.Object);
 //  public boolean containsKey(java.lang.Object);
 //  private boolean containsMapping(java.lang.Object, java.lang.Object);

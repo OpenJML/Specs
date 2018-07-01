@@ -111,6 +111,7 @@ public final class System {
 
     /** The last value of currentTimeMillis() that was returned */
 
+    //@// The most recently read time
     //@ public static model long time;
 
     // OPENJML - modeling the behavior as that on a call of currentTimeMillis()

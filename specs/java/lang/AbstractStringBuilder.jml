@@ -47,7 +47,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     public AbstractStringBuilder append(StringBuffer s);
 //    AbstractStringBuilder append(AbstractStringBuilder);
 
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + c *);
     //@   ensures \result == this;
