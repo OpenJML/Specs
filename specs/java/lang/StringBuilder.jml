@@ -2,63 +2,103 @@ package java.lang;
 
 //@ non_null_by_default
 public final class StringBuilder extends AbstractStringBuilder implements java.io.Serializable,CharSequence {
-  static final long serialVersionUID;
+    static final long serialVersionUID;
   
-  //@ public normal_behavior
-  //@   ensures true;
-  //@ pure
-  public StringBuilder();
-  //@ public normal_behavior
-  //@   ensures _value.isEmpty();
-  //@ pure
-  public StringBuilder(int k);
-  //@ public normal_behavior
-  //@   ensures _value == s;
-  //@ pure
-  public StringBuilder(String s);
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public StringBuilder();
 
-  //@ public normal_behavior
-  //@   ensures (* _value == cs *);
-  //@ pure
-  public StringBuilder(CharSequence cs);
+    //@ public normal_behavior
+    //@   ensures _value.isEmpty();
+    //@ pure
+    public StringBuilder(int k);
+ 
+    //@ public normal_behavior
+    //@   ensures _value == s;
+    //@ pure
+    public StringBuilder(String s);
 
-  @Override
-  public StringBuilder append(/*@ nullable */ Object o);
+    //@ public normal_behavior
+    //@   ensures (* _value == cs *);
+    //@ pure
+    public StringBuilder(CharSequence cs);
+
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    @Override
+    public StringBuilder append(/*@ nullable */ Object o);
   
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     @Override
     public StringBuilder append(String s);
     
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     @Override
     public StringBuilder append(StringBuffer b);
 
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     @Override
     public StringBuilder append(CharSequence cs);
+
     //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
+    @Override
     public StringBuilder append(CharSequence cs, int offset, int length);// FIXME - check that it is length, not end
+
     //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
+    @Override
     public StringBuilder append(char[] ch);
+
     //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
+    @Override
     public StringBuilder append(char[] ch, int offset, int length);
     
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     @Override
     public StringBuilder append(boolean b);
   
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + c *);
+    //@   ensures \result == this;
     @Override
     public StringBuilder append(char c);
     
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     @Override
     public StringBuilder append(int i);
     
     @Override
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     public StringBuilder append(long i);
     //@ also public normal_behavior
     //@   assignable _value;

@@ -165,12 +165,14 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ also public normal_behavior
     //@     ensures \result == (hb != null && !isReadOnly);
     //@ pure
+    @Override
     public final boolean hasArray();
     
     //@ also public normal_behavior
     //@   ensures \result == hb;
     //@ pure
     public final byte[] array();
+
     //@ also public normal_behavior
     //@     requires hb != null && !isReadOnly;
     //@     ensures \result == offset;
