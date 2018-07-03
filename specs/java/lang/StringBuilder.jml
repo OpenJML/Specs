@@ -94,26 +94,32 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     @Override
     public StringBuilder append(int i);
     
+    //@ also public normal_behavior
+    //@   assignable _value;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
     @Override
-    //@ also public normal_behavior
-    //@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
     public StringBuilder append(long i);
+
     //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
+    @Override
     public StringBuilder append(float f);
+
     //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
+    @Override
     public StringBuilder append(double d);
+
     //@ also public normal_behavior
     //@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
+    @Override
     public StringBuilder appendCodePoint(int k);
 //  public StringBuilder delete(int, int);
 //  public StringBuilder deleteCharAt(int);
