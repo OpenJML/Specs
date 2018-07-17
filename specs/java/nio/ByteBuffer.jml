@@ -120,8 +120,16 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures hb[offset+i] == b;
     public abstract ByteBuffer put(int i, byte b);
     
-    
-    public ByteBuffer get(byte[] buf, int i, int j);
+    //@ public normal_behavior
+    //@   requires length >= 0 && offset >= 0;
+    //@   requires offset <= buf.length - length;
+    //@   requires this.position <= this.limit - length;
+    //@   assignable buf[*], this.position;
+    //@   ensures this.position == \old(this.position) + length;
+    //@   ensures (\forall int i; 0 <= i && i < length; buf[offset + i] == this.hb[\old(this.position) + i]);
+    //@   ensures (\forall int i; 0 <= i && i < offset; buf[i] == \old(buf[i]));
+    //@   ensures (\forall int i; offset + length <= i && i < buf.length; buf[i] == \old(buf[i]));
+    public ByteBuffer get(byte[] buf, int offset, int length);
     
     //@ public normal_behavior
     //@   requires position <= limit - buf.length;
