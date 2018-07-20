@@ -108,6 +108,16 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.isReadOnly == isReadOnly;
     //@ pure
     public abstract ByteBuffer duplicate();
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == offset;
+    //@   ensures \result.mark == mark;
+    //@   ensures \result.position == position;
+    //@   ensures \result.limit == limit;
+    //@   ensures \result.capacity == capacity;
+    //@   ensures \result.hb == hb;
+    //@   ensures \result.isReadOnly;
+    //@ pure
     public abstract ByteBuffer asReadOnlyBuffer();
     
     //@ public normal_behavior
