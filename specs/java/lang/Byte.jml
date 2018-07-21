@@ -317,6 +317,12 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
 //    public int compareTo(Object o);
     
     //@ public normal_behavior
+    //@   ensures b >= 0 ==> \result == b;
+    //@   ensures b < 0 ==> \result == (b+256);
+    //@ pure
+    public static int toUnsignedInt(byte b);
+    
+    //@ public normal_behavior
     //@   ensures \result == (b >= 0 ? b : b + 256);
     //@ model public static pure helper function int asUnsigned(byte b);
     

@@ -1,0 +1,10 @@
+package org.junit;
+
+//@ non_null_by_default
+public class Assert {
+    
+    //@ public normal_behavior
+    //@   requires exp == act;
+    //@ pure
+    public void assertEquals(String s, long exp, long act);
+}

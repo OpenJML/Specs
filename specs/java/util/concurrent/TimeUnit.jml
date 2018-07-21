@@ -52,8 +52,15 @@ public enum TimeUnit { // FIXME - change to enum?
   public long toMicros(long t);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * this.scale / MILLISECONDS.scale;
+  //@   requires this.scale >= MILLISECONDS.scale;
+  //@   old long factor = this.scale / MILLISECONDS.scale;
+  //@   requires t <= Long.MAX_VALUE/factor;
+  //@   ensures \result == t * factor;
+  //@ also public normal_behavior
+  //@   requires this.scale < MILLISECONDS.scale;
+  //@   old long factor = MILLISECONDS.scale / this.scale;
+  //@   ensures \result == t / factor;
+  
   //@ pure function
   public long toMillis(long t);
   

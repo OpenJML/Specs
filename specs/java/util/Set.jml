@@ -54,7 +54,7 @@ public interface Set<E> extends Collection<E> {
 
     //-RAC@ also public normal_behavior
     //-RAC@   assignable this.content;
-    //-RAC@   ensures true;
+    //-RAC@   ensures this.content.owner == \old(this.content.owner);
     boolean add(/*@nullable*/ E o);
 
     /*@ also

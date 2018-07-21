@@ -46,6 +46,9 @@ public final class Locale implements Cloneable, Serializable {
     static public final /*@non_null*/ Locale CANADA;
     static public final /*@non_null*/ Locale CANADA_FRENCH;
     static final long serialVersionUID;
+    
+    //@ static_initializer
+    
     public Locale(/*@non_null*/ String language,
 		  /*@non_null*/ String country,
 		  /*@non_null*/ String variant);
