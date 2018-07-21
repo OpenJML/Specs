@@ -28,7 +28,8 @@ import java.io.InputStream;
 public final class Class<T> implements java.io.Serializable,
     AnnotatedElement, GenericDeclaration, Type {
 
-//    private Class();
+	private Class(ClassLoader classLoader);
+
 
     /*@ also public normal_behavior
       @   ensures \result != null && !\result.equals("")
