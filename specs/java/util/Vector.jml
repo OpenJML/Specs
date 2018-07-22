@@ -508,13 +508,13 @@ public class Vector<E> extends AbstractList<E>
     public synchronized boolean remove(Object o);
 
      // FIXME - all inherited?
-    /*@ also public normal_behavior
+    /* @ also public normal_behavior
       @    requires 0 <= index && index <= size();
       @    requires containsNull || element != null;
-      @    assignable objectState;
+      @    assignable objectState,content;
       @    ensures elementCount == \old(elementCount)+1;
-      @    ensures (element == null && get(index) == null) 
-      @            || get(index).equals(element); // or == ?
+      @    ensures (element == null && get(content,index) == null) 
+      @            || get(content,index) == element;
       @ also
       @   public exceptional_behavior
       @    requires !(0 <= index && index <= size());
