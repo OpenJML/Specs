@@ -318,5 +318,9 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
     //@ public normal_behavior
     //@   ensures \result == (b >= 0 ? b : b + 256);
     //@ model public static pure helper function int asUnsigned(byte b);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (b >= 0 ? b : b + 256);
+    //@ model public static pure helper function long asUnsignedLong(byte b);
 
 }
