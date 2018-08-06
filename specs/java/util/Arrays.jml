@@ -1044,6 +1044,14 @@ public class Arrays {
     //@ model public static pure helper function boolean equalArrays(byte[] arr1, int index1, byte[] arr2, int index2, int len);
 
     //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(byte[] arr1, byte[] arr2);
+
+    //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 && index1 <= arr1.length - len;
     //@   requires 0 <= index2 && index2 <= arr2.length - len;

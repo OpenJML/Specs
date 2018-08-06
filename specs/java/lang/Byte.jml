@@ -305,30 +305,18 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       @*/
     public int compareTo(/*@ non_null */ Byte anotherByte);
 
-//    /*@ also public normal_behavior
-//      @   requires o instanceof Byte;
-//      @   assignable \nothing;
-//      @   ensures \result == compareTo((Byte) o);
-//      @ also public exceptional_behavior
-//      @   requires o != null && !(o instanceof Byte);
-//      @   assignable \nothing;
-//      @   signals_only ClassCastException;
-//      @*/
-//    public int compareTo(Object o);
-    
     //@ public normal_behavior
     //@   ensures b >= 0 ==> \result == b;
     //@   ensures b < 0 ==> \result == (b+256);
-    //@ pure
+    //@ pure helper
     public static int toUnsignedInt(byte b);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (b0>=0?b0:b0+256)*256+(b1>=0?b1:b1+256);
+    //@ model public static pure helper function int toUnsignedInt(byte b0, byte b1);
     
     //@ public normal_behavior
     //@   ensures \result == (b >= 0 ? b : b + 256);
     //@ model public static pure helper function int asUnsigned(byte b);
-    
-    //@ public normal_behavior
-    //@   ensures \result == (b >= 0 ? b : b + 256);
-    //@ model public static pure helper function long asUnsignedL(byte b) { return (b >= 0 ? b : b + 256); }
-    
 
 }
