@@ -104,7 +104,12 @@ public class Object {
       @
       @ also public behavior
       @   requires this instanceof Object[];
+      @   requires !(this instanceof boolean[]);
       @   requires !(this instanceof byte[]);
+      @   requires !(this instanceof short[]);
+      @   requires !(this instanceof char[]);
+      @   requires !(this instanceof int[]);
+      @   requires !(this instanceof long[]);
       @   assignable \nothing;
       @   ensures \result instanceof Object[];
       @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays

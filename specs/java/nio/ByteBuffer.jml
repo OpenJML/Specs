@@ -59,6 +59,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.hb.length == n;
     //@   ensures \result._isDirect == false;
     //@   ensures \result.isReadOnly == false;
+    //@   ensures \result.hasArray();
     //@ also
     //@ private exceptional_behavior
     //@   requires n < 0;
