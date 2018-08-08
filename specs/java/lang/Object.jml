@@ -19,7 +19,6 @@
 // the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package java.lang;
-import java.lang.reflect.Array;
 
 /** JML's specification of java.lang.Object.
  *
@@ -179,6 +178,7 @@ public class Object {
       @   assignable \nothing;
       @   signals_only CloneNotSupportedException;
       @*/
+    //@ pure
     protected /*@ non_null */ Object clone() throws CloneNotSupportedException;
 
     /** Use theString as the (pure) model value of toString() */

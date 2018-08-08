@@ -249,7 +249,7 @@ public interface List<E> extends Collection<E> {
       @   signals_only IndexOutOfBoundsException;
       @ |}
       @*/
-    /*+RAC@ also public behavior
+    /*+RAC@ public behavior
       @        requires  0 <= index && index <= size();
       @     assignable objectState;
       @     signals_only UnsupportedOperationException, ClassCastException,

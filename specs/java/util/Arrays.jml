@@ -1034,6 +1034,14 @@ public class Arrays {
     //@ model public static pure helper function boolean equalArrays(boolean[] arr1, int index1, boolean[] arr2, int index2, int len);
 
     //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(boolean[] arr1, boolean[] arr2);
+
+    //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 && index1 <= arr1.length - len;
     //@   requires 0 <= index2 && index2 <= arr2.length - len;
@@ -1062,6 +1070,14 @@ public class Arrays {
     //@ model public static pure helper function boolean equalArrays(char[] arr1, int index1, char[] arr2, int index2, int len);
 
     //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(char[] arr1, char[] arr2);
+
+    //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 && index1 <= arr1.length - len;
     //@   requires 0 <= index2 && index2 <= arr2.length - len;
@@ -1070,6 +1086,14 @@ public class Arrays {
     //@   ensures \result == (\forall int i; index2 <= i && i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall int i; 0 <= i && i < len; arr1[i+index1] == arr2[i+index2]);
     //@ model public static pure helper function boolean equalArrays(short[] arr1, int index1, short[] arr2, int index2, int len);
+
+    //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(short[] arr1, short[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1082,6 +1106,14 @@ public class Arrays {
     //@ model public static pure helper function boolean equalArrays(int[] arr1, int index1, int[] arr2, int index2, int len);
 
     //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(int[] arr1, int[] arr2);
+
+    //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 && index1 <= arr1.length - len;
     //@   requires 0 <= index2 && index2 <= arr2.length - len;
@@ -1090,6 +1122,14 @@ public class Arrays {
     //@   ensures \result == (\forall int i; index2 <= i && i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall int i; 0 <= i && i < len; arr1[i+index1] == arr2[i+index2]);
     //@ model public static pure helper function boolean equalArrays(long[] arr1, int index1, long[] arr2, int index2, int len);
+
+    //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(long[] arr1, long[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1102,6 +1142,14 @@ public class Arrays {
     //@ model public static pure helper function boolean equalArrays(float[] arr1, int index1, float[] arr2, int index2, int len);
 
     //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(float[] arr1, float[] arr2);
+
+    //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 && index1 <= arr1.length - len;
     //@   requires 0 <= index2 && index2 <= arr2.length - len;
@@ -1112,6 +1160,14 @@ public class Arrays {
     //@ model public static pure helper function boolean equalArrays(double[] arr1, int index1, double[] arr2, int index2, int len);
 
     //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(double[] arr1, double[] arr2);
+
+    //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 && index1 <= arr1.length - len;
     //@   requires 0 <= index2 && index2 <= arr2.length - len;
@@ -1120,6 +1176,14 @@ public class Arrays {
     //@   ensures \result == (\forall int i; index2 <= i && i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall int i; 0 <= i && i < len; arr1[i+index1] == arr2[i+index2]);
     //@ model public static pure helper function boolean equalArrays(Object[] arr1, int index1, Object[] arr2, int index2, int len);
+
+    //@ public normal_behavior
+    //@   requires arr1.length != arr2.length;
+    //@   ensures \result == false;
+    //@ also public normal_behavior
+    //@   requires arr1.length == arr2.length;
+    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@ model public static pure helper function boolean equalArrays(Object[] arr1, Object[] arr2);
 
     //-----------------------------------------------------------------------
 
