@@ -250,9 +250,9 @@ public interface List<E> extends Collection<E> {
       @ |}
       @*/
     /*+RAC@ public behavior
-      @        requires  0 <= index && index <= size();
-      @     assignable objectState;
-      @     signals_only UnsupportedOperationException, ClassCastException,
+      @   requires  0 <= index && index <= size();
+      @   assignable objectState;
+      @   signals_only UnsupportedOperationException, ClassCastException,
                          NullPointerException, IllegalArgumentException;
       @ also
       @   requires !(0 <= index && index <= size());
