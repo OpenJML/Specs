@@ -2034,6 +2034,7 @@ public class Arrays {
     public static char[] copyOf(/*@ nullable @*/ char[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires src != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
@@ -2047,6 +2048,7 @@ public class Arrays {
     public static short[] copyOf(/*@ nullable @*/ short[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires src != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
@@ -2060,6 +2062,7 @@ public class Arrays {
     public static int[] copyOf(/*@ nullable @*/ int[] src, int newLength);
 
     //@ public normal_behavior
+    //@   requires src != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
@@ -2072,8 +2075,64 @@ public class Arrays {
     //@ pure
     public static long[] copyOf(/*@ nullable @*/ long[] src, int newLength);
 
-    // FIXME - all the other copyOf calls
+    //@ public normal_behavior
+    //@   requires src != null;
+    //@   requires newLength >= 0;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
+    //@ also public exceptional_behavior
+    //@   requires src == null || newLength < 0;
+    //@   signals (NullPointerException) src == null;
+    //@   signals (NegativeArraySizeException) newLength < 0;
+    //@ pure
+    public static float[] copyOf(/*@ nullable @*/ float[] src, int newLength);
+    
+    //@ public normal_behavior
+    //@   requires src != null;
+    //@   requires newLength >= 0;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
+    //@ also public exceptional_behavior
+    //@   requires src == null || newLength < 0;
+    //@   signals (NullPointerException) src == null;
+    //@   signals (NegativeArraySizeException) newLength < 0;
+    //@ pure
+    public static double[] copyOf(/*@ nullable @*/ double[] src, int newLength);
+    
+    //@ public normal_behavior
+    //@   requires src != null;
+    //@   requires newLength >= 0;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == null);
+    //@ also public exceptional_behavior
+    //@   requires src == null || newLength < 0;
+    //@   signals (NullPointerException) src == null;
+    //@   signals (NegativeArraySizeException) newLength < 0;
+    //@ pure
+    public static <T> T[] copyOf(/*@ nullable @*/ T[] src, int newLength);
 
+    //@ public normal_behavior
+    //@   requires src != null;
+    //@   requires newLength >= 0;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.length == newLength;
+    //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
+    //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == null);
+    //@   ensures \elemtype(\typeof(\result)) == \type(T);
+    //@ // FIXME another exceptional case: if T and U are not compatible types. Not clear how to specify it
+    //@ also public exceptional_behavior
+    //@   requires src == null || newLength < 0;
+    //@   signals (NullPointerException) src == null;
+    //@   signals (NegativeArraySizeException) newLength < 0;
+    //@ pure
+    public static <T,U> T[] copyOf(/*@ nullable @*/ U[] src, int newLength, Class<? extends T[]> newType);
+    
 //    public static <T> java.util.Spliterator<T> spliterator(T[]);
 //    public static <T> java.util.Spliterator<T> spliterator(T[], int, int);
 //    public static java.util.Spliterator$OfInt spliterator(int[]);
