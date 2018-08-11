@@ -320,7 +320,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public exceptional_behavior
     //@   requires position > limit - Short.BYTES;
     //@   assignable \nothing;
-    //@   signals_only BufferOverflowException;
+    //@   signals_only BufferUnderflowException;
     public abstract short getShort();
 
     //@ public normal_behavior
@@ -344,7 +344,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ also
     //@ public exceptional_behavior
     //@   requires i < 0 || i > limit - Short.BYTES;
-    //@   signals_only BufferOverflowException;
+    //@   signals_only BufferUnderflowException;
     //@ pure
     public abstract short getShort(int i);
 
@@ -373,7 +373,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public exceptional_behavior
     //@   requires position > limit - Integer.BYTES;
     //@   assignable \nothing;
-    //@   signals_only BufferOverflowException;
+    //@   signals_only BufferUnderflowException;
     public abstract int getInt();
 
     //@ public normal_behavior
@@ -409,7 +409,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ also
     //@ public exceptional_behavior
     //@   requires i < 0 || i > limit - Integer.BYTES;
-    //@   signals_only BufferOverflowException;
+    //@   signals_only BufferUnderflowException;
     //@ pure
     public abstract int getInt(int i);
 
@@ -427,6 +427,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     public abstract ByteBuffer putInt(int index, int value);
     
     public abstract IntBuffer asIntBuffer();
+    
     public abstract long getLong();
     public abstract ByteBuffer putLong(long n);
     public abstract long getLong(int i);
