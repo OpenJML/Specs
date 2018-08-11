@@ -428,9 +428,61 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     
     public abstract IntBuffer asIntBuffer();
     
+    /*@ public normal_behavior
+      @   requires position <= limit - Long.BYTES;
+      @   assignable this.position;
+      @   ensures this.position == \old(this.position) + Long.BYTES;
+      @   ensures \result == Long.asLong(hb[\old(this.offset+position)],   hb[\old(this.offset+position+1)],
+      @                                  hb[\old(this.offset+position+2)], hb[\old(this.offset+position+3)],
+      @                                  hb[\old(this.offset+position+4)], hb[\old(this.offset+position+5)],
+      @                                  hb[\old(this.offset+position+6)], hb[\old(this.offset+position+7)]);
+      @ also
+      @ public exceptional_behavior
+      @   requires position > limit - Long.BYTES;
+      @   assignable \nothing;
+      @   signals_only BufferUnderflowException;
+      @*/
     public abstract long getLong();
+    
+    //@ public normal_behavior
+    //@   requires position <= limit - Long.BYTES;
+    //@   requires !this.isReadOnly;
+    //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Long.BYTES-1))];
+    //@   ensures this.position == \old(this.position) + Long.BYTES;
+    //@   ensures getLong(\old(position)) == n;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || position > limit - Long.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) position > limit - Long.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putLong(long n);
+    
+    /*@ public normal_behavior
+      @   requires 0 <= i && i <= limit - Long.BYTES;
+      @   ensures \result == Long.asLong(hb[this.offset+i], hb[this.offset+i+1],
+      @                                  hb[this.offset+i+2],hb[this.offset+i+3],
+      @                                  hb[this.offset+i+4],hb[this.offset+i+5],
+      @                                  hb[this.offset+i+6],hb[this.offset+i+7]);
+      @ also
+      @ public exceptional_behavior
+      @   requires i < 0 || i > limit - Long.BYTES;
+      @   signals_only BufferUnderflowException;
+      @ pure
+      @*/
     public abstract long getLong(int i);
+    
+    //@ public normal_behavior
+    //@   requires 0 <= i && i <= limit - Long.BYTES;
+    //@   requires !this.isReadOnly;
+    //@   assignable hb[this.offset+i .. (this.offset+i + (Long.BYTES-1))];
+    //@   ensures getLong(i) == n;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || i < 0 || i > limit - Long.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) i < 0 || i > limit - Long.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putLong(int i, long n);
     public abstract LongBuffer asLongBuffer();
     public abstract float getFloat();
