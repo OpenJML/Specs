@@ -57,14 +57,15 @@ public interface Set<E> extends Collection<E> {
     //-RAC@   ensures this.content.owner == \old(this.content.owner);
     boolean add(/*@nullable*/ E o);
 
-    /*@ also
-       @ public normal_behavior
-       @   requires contains(o);
-       @   assignable objectState;
-       @   ensures \result;
-       @   ensures !contains(o);
-       @*/
+    //@ also
+    //@ public normal_behavior
+    //-RAC@   requires !isImmutable;
+    //@   requires contains(o);
+    //@   assignable objectState;
+    //@   ensures \result;
+    //@   ensures !contains(o);
     //@ also public behavior
+    //-RAC@   requires !isImmutable;
     //-RAC@   requires !containsNull ==> o != null;
     //@   requires !contains(o);
     //@   assignable \nothing; 
@@ -83,15 +84,14 @@ public interface Set<E> extends Collection<E> {
     // specs are inherited
     boolean retainAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
 
-    /*@ also public normal_behavior
-       @   requires c != null;
-       @   assignable objectState;
-       @   ensures \old(c.contains(null)) ==> !contains(null);
-       @   ensures (\forall Object o; c.contains(o) <==>
-                      (\old(contains(o)) && !\old(c.contains(o))));
-       @   ensures size() <= \old(size());
-       @   ensures \result <==> size() != \old(size());
-       @*/
+    //@ also public normal_behavior
+    //-RAC@ requires !isImmutable; 
+    //@   requires c != null;
+    //@   assignable objectState;
+    //@   ensures \old(c.contains(null)) ==> !contains(null);
+    //@   ensures (\forall Object o; c.contains(o) <==> (\old(contains(o)) && !\old(c.contains(o))));
+    //@   ensures size() <= \old(size());
+    //@   ensures \result <==> size() != \old(size());
     boolean removeAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
 
     // specification inherited

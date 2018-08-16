@@ -55,6 +55,7 @@ public class Vector<E> extends AbstractList<E>
 
     protected /*@ spec_public @*/ int elementCount; //@ in objectState;
 
+    //@ public invariant !isImmutable;
     //@ public invariant 0 <= elementCount;
 
     // I'm commenting out the following, since this is guaranteed by the postcondition of size()

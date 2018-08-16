@@ -46,12 +46,40 @@ public class Collections {
 //  public static <T> boolean replaceAll(java.util.List<T>, T, T);
 //  public static int indexOfSubList(java.util.List<?>, java.util.List<?>);
 //  public static int lastIndexOfSubList(java.util.List<?>, java.util.List<?>);
-//  public static <T> java.util.Collection<T> unmodifiableCollection(java.util.Collection<? extends T>);
-//  public static <T> java.util.Set<T> unmodifiableSet(java.util.Set<? extends T>);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.content == c.content; // changes to original show
+    //@ pure
+    public static <T> java.util.Collection<T> unmodifiableCollection(java.util.Collection<? extends T> c);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.content == s.content; // changes to original show
+    //@ pure
+    public static <T> java.util.Set<T> unmodifiableSet(java.util.Set<? extends T> s);
 //  public static <T> java.util.SortedSet<T> unmodifiableSortedSet(java.util.SortedSet<T>);
 //  public static <T> java.util.NavigableSet<T> unmodifiableNavigableSet(java.util.NavigableSet<T>);
-//  public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T>);
-//  public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V>);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.content == l.content; // changes to original show
+    //@ pure
+    public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T> l);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.content == m.content; // changes to original show
+    //@ pure
+    public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V> m);
 //  public static <K, V> java.util.SortedMap<K, V> unmodifiableSortedMap(java.util.SortedMap<K, ? extends V>);
 //  public static <K, V> java.util.NavigableMap<K, V> unmodifiableNavigableMap(java.util.NavigableMap<K, ? extends V>);
 //  public static <T> java.util.Collection<T> synchronizedCollection(java.util.Collection<T>);

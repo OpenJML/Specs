@@ -43,6 +43,8 @@ public class ArrayList<E> extends AbstractList<E>
     /*@ public model int capacity; in objectState;
       @*/
 
+    //@ public invariant !isImmutable;
+
     // METHODS AND CONSTRUCTORS
     //@ public normal_behavior
     //@   requires 0 <= initialCapacity;
