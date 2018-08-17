@@ -8,9 +8,9 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     public HashMap();
     
     //@ public normal_behavior
-    //@   ensures this.theSize == m.theSize;
-    //@   ensures (\forall Object o; this.containsKey(k) <==> m.containsKey(k));
-    //@   ensures (\forall Object o; m.containsKey(k); this.containsKey(k) && this.get(k) == m.get(k));
+    //@   ensures this.size() == m.size();
+    //@   ensures (\forall Object k; this.containsKey(k) <==> m.containsKey(k));
+    //@   ensures (\forall Object k; m.containsKey(k); this.containsKey(k) && this.get(k) == m.get(k));
     //@ pure
     public HashMap(Map<? extends K, ? extends V> m);
     
