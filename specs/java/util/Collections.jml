@@ -106,11 +106,32 @@ public class Collections {
 //  public static <T> java.util.Iterator<T> emptyIterator();
 //  public static <T> java.util.ListIterator<T> emptyListIterator();
 //  public static <T> java.util.Enumeration<T> emptyEnumeration();
-//  public static final <T> java.util.Set<T> emptySet();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.isEmpty();
+    //@   // javadoc says it need not be fresh
+    //@ pure
+    public static final <T> java.util.Set<T> emptySet();
 //  public static <E> java.util.SortedSet<E> emptySortedSet();
 //  public static <E> java.util.NavigableSet<E> emptyNavigableSet();
-//  public static final <T> java.util.List<T> emptyList();
-//  public static final <K, V> java.util.Map<K, V> emptyMap();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.isEmpty();
+    //@   // javadoc says it need not be fresh
+    //@ pure
+    public static final <T> java.util.List<T> emptyList();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures \result.isImmutable;
+    //@   ensures \result.isEmpty();
+    //@   // javadoc says it need not be fresh
+    //@ pure    
+    public static final <K, V> java.util.Map<K, V> emptyMap();
 //  public static final <K, V> java.util.SortedMap<K, V> emptySortedMap();
 //  public static final <K, V> java.util.NavigableMap<K, V> emptyNavigableMap();
 //  public static <T> java.util.Set<T> singleton(T);
