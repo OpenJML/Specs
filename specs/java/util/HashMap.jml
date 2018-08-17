@@ -10,8 +10,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     //@ public normal_behavior
     //@   requires m != null;
     //@   ensures this.size() == m.size();
-    //@   ensures (\forall Object k; this.containsKey(k) <==> m.containsKey(k));
-    //@   ensures (\forall Object k; m.containsKey(k); this.containsKey(k) && this.get(k) == m.get(k));
+    //@   ensures this.entrySet().equals( m.entrySet() );
     //@ also public exceptional_behavior
     //@   requires m == null;
     //@   signals_only NullPointerException;
