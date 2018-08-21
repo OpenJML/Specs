@@ -5,7 +5,11 @@ public final class Objects {
   //@ pure
   private Objects();
   
-  // FIXME - more to specify
+  //@ public normal_behavior
+  //@   ensures (obj1 == null && obj2 == null) ==> \result;
+  //@   ensures (obj1 == null && obj2 != null || obj1 != null && obj2 == null) ==> !\result;
+  //@   ensures (obj1 != null && obj2 != null) ==> \result == obj1.equals(obj2);
+  //@ pure
   public static boolean equals(java.lang.Object obj1, java.lang.Object obj2);
   // FIXME - more to specify
   public static boolean deepEquals(java.lang.Object obj1, java.lang.Object obj2);
@@ -16,7 +20,7 @@ public final class Objects {
   public static int hashCode(java.lang.Object obj);
   
   //@ public normal_behavior
-  //@   ensures true; // TODO: constrain the output
+  //@   ensures \result == Arrays.hashCode(objs);
   //@ pure function
   public static int hash(java.lang.Object... objs);
   
