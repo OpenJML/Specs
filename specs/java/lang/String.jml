@@ -232,6 +232,14 @@ public final class String
                                  Charset charsetName)
         throws UnsupportedEncodingException;
     
+    /*+ESC@ public normal_behavior
+      @   requires bytes != null && charsetName != null;
+      @ also public exceptional_behavior
+      @   requires bytes == null || charsetName == null;
+      @   signals (NullPointerException) bytes==null || charsetName == null;
+      @*/
+    public /*@ pure @*/ String(byte[] bytes, Charset charsetName);
+    
     /*@
       @  public exceptional_behavior
       @   requires bytes == null || charsetName == null
@@ -392,6 +400,7 @@ public final class String
 
     /*@  public normal_behavior
       @   requires (* charsetName is the name of a supporting encoding *);
+      @   ensures \fresh(\result);
       @   ensures (\forall int i; 0 <= i && i < \result.length;
       @                    (* \result[i] is the byte at position i of the 
       @                       conversion of this string's chars using charsetName *));
@@ -405,6 +414,7 @@ public final class String
 
     /*@  public normal_behavior
       @   requires  (* charset is a supporting encoding *);
+      @   ensures \fresh(\result);
       @   ensures (\forall int i; 0 <= i && i < \result.length;
       @                    (* \result[i] is the byte at position i of the 
       @                       conversion of this string's chars using charset *));
@@ -417,7 +427,7 @@ public final class String
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior
-      @  ensures \result != null 
+      @  ensures \fresh(\result)
       @           && byteArraysEqual(\result, 
       @                       getBytes(System.getProperty("file.encoding")));
       @*/
