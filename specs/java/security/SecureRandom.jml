@@ -30,7 +30,11 @@ public class SecureRandom extends java.util.Random {
 //	public java.lang.String getAlgorithm();
 //	public synchronized void setSeed(byte[]);
 //	public void setSeed(long);
-//	public void nextBytes(byte[]);
+
+//@ public normal_behavior
+//@   requires bytes != null;
+//@   assignable bytes[*];
+public void nextBytes(byte[] bytes);
 //	protected final int next(int);
 //	public static byte[] getSeed(int);
 //	public byte[] generateSeed(int);
