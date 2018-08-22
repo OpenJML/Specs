@@ -50,7 +50,7 @@ public class Collections {
     //@ public normal_behavior
     //@   requires true;
     //@   ensures \fresh(\result);
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.content == c.content; // changes to original show
     //@ pure
     public static <T> java.util.Collection<T> unmodifiableCollection(java.util.Collection<? extends T> c);
@@ -58,7 +58,7 @@ public class Collections {
     //@ public normal_behavior
     //@   requires true;
     //@   ensures \fresh(\result);
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.content == s.content; // changes to original show
     //@ pure
     public static <T> java.util.Set<T> unmodifiableSet(java.util.Set<? extends T> s);
@@ -68,7 +68,7 @@ public class Collections {
     //@ public normal_behavior
     //@   requires true;
     //@   ensures \fresh(\result);
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.content == l.content; // changes to original show
     //@ pure
     public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T> l);
@@ -76,7 +76,7 @@ public class Collections {
     //@ public normal_behavior
     //@   requires true;
     //@   ensures \fresh(\result);
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.content == m.content; // changes to original show
     //@ pure
     public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V> m);
@@ -109,7 +109,7 @@ public class Collections {
 
     //@ public normal_behavior
     //@   requires true;
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.isEmpty();
     //@   // javadoc says it need not be fresh
     //@ pure
@@ -119,7 +119,7 @@ public class Collections {
 
     //@ public normal_behavior
     //@   requires true;
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.isEmpty();
     //@   // javadoc says it need not be fresh
     //@ pure
@@ -127,7 +127,7 @@ public class Collections {
 
     //@ public normal_behavior
     //@   requires true;
-    //@   ensures \result.isImmutable;
+    //-RAC@   ensures \result.isImmutable;
     //@   ensures \result.isEmpty();
     //@   // javadoc says it need not be fresh
     //@ pure    

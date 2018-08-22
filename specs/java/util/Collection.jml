@@ -58,7 +58,7 @@ public interface Collection<E> extends Iterable<E> {
      * UnsupportedOperationException), required by various asImmutable*() 
      * methods in Collections
      */
-    //-RAC@ instance ghost public boolean isImmutable; in localState;
+    //-RAC@ model instance public boolean isImmutable; in localState;
 
     //+OPENJML@ immutable 
     //@ pure

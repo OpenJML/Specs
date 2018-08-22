@@ -155,7 +155,7 @@ public interface Map<K,V> {
      * UnsupportedOperationException), required by various asImmutable*() 
      * methods in Collections
      */
-    //-RAC@ public instance ghost boolean isImmutable;
+    //-RAC@ model public instance boolean isImmutable;
 
     //@ public normal_behavior
     //@   ensures (* \result == content.theSize *);
@@ -281,14 +281,14 @@ public interface Map<K,V> {
       @    signals (NullPointerException) key == null
       @              && (* if this map doesn't support null keys *);
       @*/
-    /*@ also public exceptional_behavior
+    /*-RAC@ also public exceptional_behavior
       @   requires isImmutable;
       @   assignable \nothing;
       @   signals_only UnsupportedOperationException;
       @*/
     V remove(Object key);
 
-    /*@ public behavior
+    /*-RAC@ public behavior
            requires !isImmutable;
            requires t != null;
            assignable objectState;
@@ -344,20 +344,18 @@ public interface Map<K,V> {
     //@    ensures \result == _keySet;
     /*@ pure @*/ Set<K> keySet();
 
-    /*@ public normal_behavior 
-      @    ensures \result != null;
-      @    ensures \result.size() >= 0; // FIXME - why needed?
-      @    ensures isImmutable <==> \result.isImmutable;
-           // FIXME
-      @*/
+    //@ public normal_behavior 
+    //@    ensures \result != null;
+    //@    ensures \result.size() >= 0; // FIXME - why needed?
+    //-RAC@    ensures isImmutable <==> \result.isImmutable;
+    //@ // FIXME
     /*@ pure @*/ Collection<V> values();
 
-    /*@ public normal_behavior
-      @    ensures \result != null; 
-      @    ensures \result.size() >= 0;  // FIXME - why needed?
-      @    ensures isImmutable <==> \result.isImmutable;
-           // FIXME
-      @*/
+    //@ public normal_behavior
+    //@    ensures \result != null; 
+    //@    ensures \result.size() >= 0;  // FIXME - why needed?
+    //-RAC@    ensures isImmutable <==> \result.isImmutable;
+    //@ // FIXME
     /*@ pure @*/ Set<Entry<K,V>> entrySet();
 
     /*@

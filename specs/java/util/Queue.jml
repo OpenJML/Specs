@@ -28,7 +28,7 @@ package java.util;
 
 public interface Queue<E> extends Collection<E> {
     
-    //@ public invariant !isImmutable;
+    //-RAC@ public invariant !isImmutable;
     
     /*-RAC@ public normal_behavior
       @   requires n >= 0 && n < content.theSize;

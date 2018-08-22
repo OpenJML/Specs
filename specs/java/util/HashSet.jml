@@ -2,7 +2,7 @@ package java.util;
 
 public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneable, java.io.Serializable {
 
-    //@ public invariant !isImmutable;
+    //-RAC@ public invariant !isImmutable;
 
     //@ public normal_behavior ensures true;
     //@ pure
