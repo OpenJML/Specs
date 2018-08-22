@@ -1,5 +1,6 @@
 package java.security;
 
+//@ non_null_by_default
 public class SecureRandom extends java.util.Random {
 //	private static final sun.security.util.Debug pdebug;
 //	private static final boolean skipDebug;
@@ -31,10 +32,9 @@ public class SecureRandom extends java.util.Random {
 //	public synchronized void setSeed(byte[]);
 //	public void setSeed(long);
 
-//@ public normal_behavior
-//@   requires bytes != null;
-//@   assignable bytes[*];
-public void nextBytes(byte[] bytes);
+	@Override
+	public void nextBytes(byte[] bytes);
+	
 //	protected final int next(int);
 //	public static byte[] getSeed(int);
 //	public byte[] generateSeed(int);

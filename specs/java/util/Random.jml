@@ -31,6 +31,7 @@ public class Random implements java.io.Serializable {
   //@ public normal_behavior
   //@   assignable this.content, bytes[*];
   public void nextBytes(byte[] bytes);
+  
   final long internalNextLong(long a, long b);
   final int internalNextInt(int a, int b);
   final double internalNextDouble(double a, double b);
