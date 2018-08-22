@@ -1790,7 +1790,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1811,7 +1811,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == false);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1832,7 +1832,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1853,7 +1853,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1874,7 +1874,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1895,7 +1895,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1916,7 +1916,7 @@ public class Arrays {
     //@   ensures \result.length == to - from;
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1938,7 +1938,7 @@ public class Arrays {
     //@       ensures (\forall int i; 0 <= i && i < src.length - from; \result[i] == src[i+from]);
     //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == 0);
     //@   |}
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1960,7 +1960,7 @@ public class Arrays {
     //@       ensures (\forall int i; 0 <= i && i < src.length - from; \result[i] == src[i+from]);
     //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == null);
     //@   |}
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1983,7 +1983,7 @@ public class Arrays {
     //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == null);
     //@   |}
     //@ // FIXME another exceptional case: if T and U are not compatible types. Not clear how to specify it
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires from < 0 || from > src.length || from > to || src == null;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
@@ -1998,7 +1998,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2012,7 +2012,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == false);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2026,7 +2026,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2040,7 +2040,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2054,7 +2054,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2068,7 +2068,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2082,7 +2082,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2096,7 +2096,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == 0);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2110,7 +2110,7 @@ public class Arrays {
     //@   ensures \result.length == newLength;
     //@   ensures (\forall int i; 0 <= i && i < src.length && i < newLength; \result[i] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == null);
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
@@ -2126,7 +2126,7 @@ public class Arrays {
     //@   ensures (\forall int i; src.length <= i && i < newLength; \result[i] == null);
     //@   ensures \elemtype(\typeof(\result)) == \type(T);
     //@ // FIXME another exceptional case: if T and U are not compatible types. Not clear how to specify it
-    //@ also public exceptional_behavior
+    //@ also private exceptional_behavior
     //@   requires src == null || newLength < 0;
     //@   signals (NullPointerException) src == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
