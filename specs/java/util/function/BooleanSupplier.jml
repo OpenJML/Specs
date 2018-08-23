@@ -1,19 +1,19 @@
 package java.util.function;
 
 public interface BooleanSupplier {
-	
-	//@ model public instance boolean value;
-	
-	//@ public behavior
-	//@   ensures \result == value;
-	  public abstract boolean getAsBoolean();
-	  
-	  /*@
-	  model public interface Pure extends BooleanSupplier {
-			//@ also public normal_behavior
-			//@   ensures \result == value;
-		    //@ pure
-			public abstract boolean getAsBoolean();
-	  }
-	  */
+    
+    //@ model public instance boolean value;
+    
+    //@ public behavior
+    //@   ensures \result == value;
+      public abstract boolean getAsBoolean();
+      
+      /*@
+      model public interface Pure extends BooleanSupplier {
+            //@ also public normal_behavior
+            //@   ensures \result == value;
+            //@ pure
+            public abstract boolean getAsBoolean();
+      }
+      */
 }

@@ -132,7 +132,7 @@ public interface List<E> extends Collection<E> {
       @   ensures \result != (size() == \old(size()) ); */
     /* FIXME @ ensures (\exists \bigint j; 0<=j && j<\old(size()) && nullequals(o,get(content,j));
               (\forall \bigint k; 0<=k && k<j; get(content,k) == \old(get(content,k)))
-	      &&  (\forall \bigint k; j<k && k<content.theSize; get(content,k-1)==\old(get(content,k+1)))); */
+          &&  (\forall \bigint k; j<k && k<content.theSize; get(content,k-1)==\old(get(content,k+1)))); */
     /*-RAC@ also public exceptional_behavior
       @   requires !contains(o);
       @   assignable \nothing;

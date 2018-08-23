@@ -80,18 +80,18 @@ public class Color implements Paint, java.io.Serializable {
     public /*@non_null*/ float[] getComponents(/*@nullable*/ float[] Param0);
     public /*@non_null*/ float[] getColorComponents(/*@nullable*/ float[] Param0);
     public /*@non_null*/ float[] getComponents(/*@non_null*/ ColorSpace Param0, 
-					       /*@non_null*/ float[] Param1);
+                           /*@non_null*/ float[] Param1);
     public /*@non_null*/ float[] getColorComponents(/*@non_null*/ ColorSpace Param0, 
-						    /*@nullable*/ float[] Param1);
+                            /*@nullable*/ float[] Param1);
 
     public /*@non_null*/ ColorSpace getColorSpace();
 
     public synchronized /*@non_null*/ PaintContext 
-	createContext(/*@nullable*/ ColorModel Param0,
-		      /*@nullable*/ Rectangle Param1, 
-		      /*@nullable*/ Rectangle2D Param2, 
-		      /*@nullable*/ AffineTransform Param3, 
-		      /*@nullable*/ RenderingHints Param4);
+    createContext(/*@nullable*/ ColorModel Param0,
+              /*@nullable*/ Rectangle Param1, 
+              /*@nullable*/ Rectangle2D Param2, 
+              /*@nullable*/ AffineTransform Param3, 
+              /*@nullable*/ RenderingHints Param4);
 
     public int getTransparency();
 }

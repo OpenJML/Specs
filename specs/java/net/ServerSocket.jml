@@ -1,49 +1,49 @@
 package java.net;
 
 public class ServerSocket implements java.io.Closeable {
-//	  private boolean created;
-//	  private boolean bound;
-//	  private boolean closed;
-//	  private java.lang.Object closeLock;
-//	  private SocketImpl impl;
-//	  private boolean oldImpl;
-//	  private static SocketImplFactory factory;
-//	  ServerSocket(SocketImpl);
-//	  public ServerSocket() throws java.io.IOException;
-//	  public ServerSocket(int) throws java.io.IOException;
-//	  public ServerSocket(int, int) throws java.io.IOException;
-//	  public ServerSocket(int, int, InetAddress) throws java.io.IOException;
-//	  SocketImpl getImpl() throws SocketException;
-//	  private void checkOldImpl();
-//	  private void setImpl();
-//	  void createImpl() throws SocketException;
-//	  public void bind(SocketAddress) throws java.io.IOException;
-//	  public void bind(SocketAddress, int) throws java.io.IOException;
-//	  public InetAddress getInetAddress();
-	
-	//-RAC@ model public int _port;
-	
-	//@ public normal_behavior
-	//-RAC@   ensures \result == _port;
-	//@ pure
-	public int getLocalPort();
-	  
-//	  public SocketAddress getLocalSocketAddress();
-//	  public Socket accept() throws java.io.IOException;
-//	  protected final void implAccept(Socket) throws java.io.IOException;
-//	  public void close() throws java.io.IOException;
-//	  public java.nio.channels.ServerSocketChannel getChannel();
-//	  public boolean isBound();
-//	  public boolean isClosed();
-//	  public synchronized void setSoTimeout(int) throws SocketException;
-//	  public synchronized int getSoTimeout() throws java.io.IOException;
-//	  public void setReuseAddress(boolean) throws SocketException;
-//	  public boolean getReuseAddress() throws SocketException;
-//	  public java.lang.String toString();
-//	  void setBound();
-//	  void setCreated();
-//	  public static synchronized void setSocketFactory(SocketImplFactory) throws java.io.IOException;
-//	  public synchronized void setReceiveBufferSize(int) throws SocketException;
-//	  public synchronized int getReceiveBufferSize() throws SocketException;
-//	  public void setPerformancePreferences(int, int, int);
-	}
+//      private boolean created;
+//      private boolean bound;
+//      private boolean closed;
+//      private java.lang.Object closeLock;
+//      private SocketImpl impl;
+//      private boolean oldImpl;
+//      private static SocketImplFactory factory;
+//      ServerSocket(SocketImpl);
+//      public ServerSocket() throws java.io.IOException;
+//      public ServerSocket(int) throws java.io.IOException;
+//      public ServerSocket(int, int) throws java.io.IOException;
+//      public ServerSocket(int, int, InetAddress) throws java.io.IOException;
+//      SocketImpl getImpl() throws SocketException;
+//      private void checkOldImpl();
+//      private void setImpl();
+//      void createImpl() throws SocketException;
+//      public void bind(SocketAddress) throws java.io.IOException;
+//      public void bind(SocketAddress, int) throws java.io.IOException;
+//      public InetAddress getInetAddress();
+    
+    //-RAC@ model public int _port;
+    
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _port;
+    //@ pure
+    public int getLocalPort();
+      
+//      public SocketAddress getLocalSocketAddress();
+//      public Socket accept() throws java.io.IOException;
+//      protected final void implAccept(Socket) throws java.io.IOException;
+//      public void close() throws java.io.IOException;
+//      public java.nio.channels.ServerSocketChannel getChannel();
+//      public boolean isBound();
+//      public boolean isClosed();
+//      public synchronized void setSoTimeout(int) throws SocketException;
+//      public synchronized int getSoTimeout() throws java.io.IOException;
+//      public void setReuseAddress(boolean) throws SocketException;
+//      public boolean getReuseAddress() throws SocketException;
+//      public java.lang.String toString();
+//      void setBound();
+//      void setCreated();
+//      public static synchronized void setSocketFactory(SocketImplFactory) throws java.io.IOException;
+//      public synchronized void setReceiveBufferSize(int) throws SocketException;
+//      public synchronized int getReceiveBufferSize() throws SocketException;
+//      public void setPerformancePreferences(int, int, int);
+    }

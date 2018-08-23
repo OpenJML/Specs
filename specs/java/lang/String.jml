@@ -99,7 +99,7 @@ public final class String
       @   signals_only StringIndexOutOfBoundsException, NullPointerException;
       @   signals (NullPointerException) value == null;
       @   signals (StringIndexOutOfBoundsException) offset < 0 || count < 0 ||
-			     (value != null && (offset+count)>value.length);
+                 (value != null && (offset+count)>value.length);
       @
       @ also
       @  public normal_behavior
@@ -193,7 +193,7 @@ public final class String
                            offset<0 || length<0 || (offset+length)>bytes.length;
       @   signals (NullPointerException) bytes==null || charsetName == null;
       @   signals (UnsupportedEncodingException) charsetName != null &&
-					     !supportedEncoding(charsetName);
+                         !supportedEncoding(charsetName);
       @*/
     public /*@ pure @*/ String(byte[] bytes,
                                  int offset, int length,
@@ -225,7 +225,7 @@ public final class String
                            offset<0 || length<0 || (offset+length)>bytes.length;
       @   signals (NullPointerException) bytes==null || charsetName == null;
       @   //signals (UnsupportedEncodingException) charsetName != null &&
-		  //			     !supportedEncoding(charsetName);
+          //                 !supportedEncoding(charsetName);
       @*/
     public /*@ pure @*/ String(byte[] bytes,
                                  int offset, int length,
@@ -964,7 +964,7 @@ public final class String
       @            && \result.charAt(0) > ' '
       @            && \result.charAt((int)(\result.length() - 1)) > ' ';
       @*/
-	// FIXME - be more precise about what is omitted; also avoid recursion
+    // FIXME - be more precise about what is omitted; also avoid recursion
     public /*@ pure @*/ /*@ non_null @*/ String trim();
 
     /*@ also

@@ -496,6 +496,6 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     public abstract ByteBuffer putDouble(int i, double d);
     public abstract DoubleBuffer asDoubleBuffer();
     
-	// public int compareTo(java.lang.Object o);
+    // public int compareTo(java.lang.Object o);
     
 }

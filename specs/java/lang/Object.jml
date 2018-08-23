@@ -95,9 +95,9 @@ public class Object {
       @ also public code normal_behavior
       @   requires this instanceof Cloneable;
       @   assignable \nothing;
-		// Note: clone is magic.  Object.clone ensures the following
-		// strict equality when it is called but only if subclasses are
-		// fulfill it by calling super.clone();
+        // Note: clone is magic.  Object.clone ensures the following
+        // strict equality when it is called but only if subclasses are
+        // fulfill it by calling super.clone();
       @   ensures \typeof(\result) == \typeof(this);  // This is not a strict requirement, although generally expected
       @   ensures \result != this; // This is not a strict requirement, although generally expected
       @
