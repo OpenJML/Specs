@@ -64,8 +64,6 @@ public class ArrayList<E> extends AbstractList<E>
       @   requires c != null;
       @   requires c.size() <= (Integer.MAX_VALUE/11)*10;
       @   ensures this.size() == c.size();
-      @   ensures (\forall int i; 0 <= i && i < c.size();
-      @                     this.get(i) == (c.iterator().nthNextElement(i)));
       @   ensures capacity == c.size()*1.1;
       @   ensures containsNull == c.containsNull;
       @   {|
