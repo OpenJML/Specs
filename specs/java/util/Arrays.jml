@@ -1791,7 +1791,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1812,7 +1812,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == false);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1833,7 +1833,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1854,7 +1854,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1875,7 +1875,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1896,7 +1896,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1917,7 +1917,7 @@ public class Arrays {
     //@   ensures (\forall int i; from <= i && i < src.length; \result[i-from] == src[i]);
     //@   ensures (\forall int i; src.length <= i && i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1939,7 +1939,7 @@ public class Arrays {
     //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == 0);
     //@   |}
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1961,7 +1961,7 @@ public class Arrays {
     //@       ensures (\forall int i; 0 <= i && i < to - src.length; \result[i+src.length-from] == null);
     //@   |}
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
@@ -1984,7 +1984,7 @@ public class Arrays {
     //@   |}
     //@ // FIXME another exceptional case: if T and U are not compatible types. Not clear how to specify it
     //@ also private exceptional_behavior
-    //@   requires from < 0 || from > src.length || from > to || src == null;
+    //@   requires src == null || from < 0 || from > src.length || from > to;
     //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
     //@   signals (NullPointerException) src == null;
     //@   signals (IllegalArgumentException) from > to;
