@@ -2,17 +2,17 @@ package java.nio.file.attribute;
 
 //@ non_null_by_default
 public final class PosixFilePermissions {
-//	  private PosixFilePermissions();
-//	  private static void writeBits(java.lang.StringBuilder, boolean, boolean, boolean);
-//	  public static java.lang.String toString(java.util.Set<PosixFilePermission>);
-//	  private static boolean isSet(char, char);
-//	  private static boolean isR(char);
-//	  private static boolean isW(char);
-//	  private static boolean isX(char);
-//	  public static java.util.Set<PosixFilePermission> fromString(java.lang.String);
+//      private PosixFilePermissions();
+//      private static void writeBits(java.lang.StringBuilder, boolean, boolean, boolean);
+//      public static java.lang.String toString(java.util.Set<PosixFilePermission>);
+//      private static boolean isSet(char, char);
+//      private static boolean isR(char);
+//      private static boolean isW(char);
+//      private static boolean isX(char);
+//      public static java.util.Set<PosixFilePermission> fromString(java.lang.String);
 
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
-	public static FileAttribute<java.util.Set<PosixFilePermission>> asFileAttribute(java.util.Set<PosixFilePermission> permissions);
-	}
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public static FileAttribute<java.util.Set<PosixFilePermission>> asFileAttribute(java.util.Set<PosixFilePermission> permissions);
+    }

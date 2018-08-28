@@ -33,7 +33,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     //+RAC@ public represents theFloat = floatValue();
     
     /** Returns true if the string is parseable as a float value (but not
-	an infinite or NaN value).
+    an infinite or NaN value).
     */
     /*@   public normal_behavior
     @     requires s != null;
@@ -44,9 +44,9 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     @       requires s.equals("Infinity") || s.equals("-Infinity");
     @       ensures !\result;
     @     also
-    @	    requires s.equals("");
+    @        requires s.equals("");
     @       ensures !\result;
-    @	  also
+    @      also
     @       requires s.equals("0.0") || s.equals("-0.0");
     @       ensures \result;
     @     also 
@@ -59,9 +59,9 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     @       ensures !\result;
     @     |}
     @  public static model pure boolean parseable( String s ) {
-	    try { Float d = Float.valueOf(s); return true; }
-	    catch (Exception e) { return false; }
-	}
+        try { Float d = Float.valueOf(s); return true; }
+        catch (Exception e) { return false; }
+    }
     @*/
         
     public static final float POSITIVE_INFINITY;
@@ -354,7 +354,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
           return (new java.lang.Float(a)).equals(new java.lang.Float("+0.0f"));
         }    
       @*/ 
-      		
+              
     /** Returns true if a and b represent the same double value;
         the usual == does not work to distinguish positive and negative
         zeros or to identify two NaN values as equal.

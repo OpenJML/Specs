@@ -2,9 +2,9 @@ package java.util;
 
 //@ non_null_by_default
 public class Random implements java.io.Serializable {
-	
-	//@ public model long content;
-	
+    
+    //@ public model long content;
+    
   static final long serialVersionUID;
   private final java.util.concurrent.atomic.AtomicLong seed;
   private static final long multiplier;

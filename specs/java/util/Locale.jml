@@ -50,10 +50,10 @@ public final class Locale implements Cloneable, Serializable {
     //@ static_initializer
     
     public Locale(/*@non_null*/ String language,
-		  /*@non_null*/ String country,
-		  /*@non_null*/ String variant);
+          /*@non_null*/ String country,
+          /*@non_null*/ String variant);
     public Locale(/*@non_null*/ String language, 
-		  /*@non_null*/ String country);
+          /*@non_null*/ String country);
 
     public Locale(/*@non_null*/ String language);
 

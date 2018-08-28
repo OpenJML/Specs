@@ -98,17 +98,17 @@ public class DefaultTreeCellRenderer extends javax.swing.JLabel implements TreeC
     public void setOpenIcon(/*?non_null*//*?*/ javax.swing.Icon Param0);
 
     public /*@non_null*/ java.awt.Component 
-	getTreeCellRendererComponent(/*@non_null*/ javax.swing.JTree Param0, 
-				     /*@non_null*/ Object Param1, 
-				     boolean Param2, 
-				     boolean Param3, 
-				     boolean Param4, 
-				     int Param5, 
-				     boolean Param6);
+    getTreeCellRendererComponent(/*@non_null*/ javax.swing.JTree Param0, 
+                     /*@non_null*/ Object Param1, 
+                     boolean Param2, 
+                     boolean Param3, 
+                     boolean Param4, 
+                     int Param5, 
+                     boolean Param6);
 
     protected void firePropertyChange(/*?non_null*//*?*/ String Param0, 
-				      /*?non_null*//*?*/ Object Param1, 
-				      /*?non_null*//*?*/ Object Param2);
+                      /*?non_null*//*?*/ Object Param1, 
+                      /*?non_null*//*?*/ Object Param2);
 }
 
 // @(#)$Id: DefaultTreeCellRenderer.jml 2245 2006-12-16 23:13:06Z chalin $

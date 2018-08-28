@@ -141,7 +141,7 @@ public class Vector<E> extends AbstractList<E>
     //@          // FIXME - this is the implementation described for Vector
     //@          // is it required of subclasses?
     /*@    ensures maxCapacity == 
-      @ 	(capacityIncrement > 0 &&
+      @     (capacityIncrement > 0 &&
       @                 \old(maxCapacity+capacityIncrement)>=minCapacity ?
       @                      \old(maxCapacity+capacityIncrement)  :
       @                 capacityIncrement == 0 &&
@@ -150,7 +150,7 @@ public class Vector<E> extends AbstractList<E>
       @                      minCapacity);
       @*/
     /*   @     ensures (\forall int i; 0<=i && i<elementCount;
-      @			elementData[i] == \old(elementData[i]));
+      @            elementData[i] == \old(elementData[i]));
       @*/
     //@ |}
     public synchronized void ensureCapacity(int minCapacity);
@@ -164,7 +164,7 @@ public class Vector<E> extends AbstractList<E>
     /*-RAC@    ensures \not_modified(theString,theHashCode);
       @    ensures \not_modified(containsNull);
       @   ensures (\forall int i; 0<=i && i<elementCount;
-      @			elementData[i] == \old(elementData[i])); */
+      @            elementData[i] == \old(elementData[i])); */
     //@  also
     //@    old int oldSize = elementCount;
     //@    requires newSize > elementCount;
@@ -173,7 +173,7 @@ public class Vector<E> extends AbstractList<E>
     //-RAC@    ensures \not_modified(containsNull);
     /*-RAC@
       @    ensures (\forall int i; 0<=i && i<oldSize;
-      @			elementData[i] == \old(elementData[i])); */
+      @            elementData[i] == \old(elementData[i])); */
     /*@    ensures (\forall int i; oldSize<=i && i < newSize;
       @                           get(i) == null);
       @  |}

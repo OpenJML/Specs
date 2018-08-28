@@ -55,7 +55,7 @@ public interface Collection<E> extends Iterable<E> {
 
 
     //+OPENJML@ immutable 
-	//@ pure
+    //@ pure
     /*@ public static model class Content {
 
             public int theSize; // FIXME - should be \bigint
@@ -317,7 +317,7 @@ public interface Collection<E> extends Iterable<E> {
       @   ensures \not_modified(containsNull);
         // See note in remove about exceptions
       @   // FIXME ensures (\forall Object o; contains(o) <==>
-		  //		    \old(contains(o) && c.contains(o)) );
+          //            \old(contains(o) && c.contains(o)) );
       @   // FIXME ensures contains(null) <==> \old(c.contains(null) && contains(null));
       @   ensures content.theSize <= \old(content.theSize);
       @   ensures !\result <==> (content.theSize == \old(content.theSize));

@@ -57,9 +57,9 @@ public /*@ pure @*/ final
     //@ ensures TYPE == long.class;
     //@ static_initializer
 
-	public static final int   SIZE = 64; // Number of bits in an Integer representation
+    public static final int   SIZE = 64; // Number of bits in an Integer representation
 
-	/*-RAC@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix
       @             && radix <= Character.MAX_RADIX);
       @   ensures parseable(\result,radix);

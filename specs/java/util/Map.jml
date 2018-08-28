@@ -98,7 +98,7 @@ public interface Map<K,V> {
 
         //@ public model instance K abstractKey;
         //@ public model instance V abstractValue;
-		
+        
         /*@  public normal_behavior
           @     ensures \result == abstractKey;
           @*/
@@ -108,7 +108,7 @@ public interface Map<K,V> {
           @     ensures \result == abstractValue;
           @*/
         /*@ pure @*/ V getValue();
-		
+        
         /*@ public behavior
           @     assignable this.abstractValue;
           @     ensures \result == \old(this.abstractValue);
@@ -162,7 +162,7 @@ public interface Map<K,V> {
       @    ensures \result <==> (content.theSize == 0); 
       @*/
     /*@ pure @*/ boolean isEmpty();
-	
+    
     /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
       @    ensures content.hasMap(key) <==> \result;
@@ -341,6 +341,6 @@ public interface Map<K,V> {
       @    ensures !\result;
       @*/
     /*@ pure @*/ boolean equals(Object o);
-	
+    
     /*@ pure @*/ int hashCode();
 }

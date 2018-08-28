@@ -36,29 +36,29 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public model int sign;
     //@ public represents sign = signum();
 
-	
-	// See also Number.parseable()
-	
-	/*-RAC@
-	    public normal_behavior
-	      requires radix > 0;
-	      requires Number.parseable(val,radix);
+    
+    // See also Number.parseable()
+    
+    /*-RAC@
+        public normal_behavior
+          requires radix > 0;
+          requires Number.parseable(val,radix);
         public static model pure function \bigint parse(String val, int radix) {
-		// !FIXME! - should put in a non-circular computation for RAC
-		    return new BigInteger(val,radix).value;
-	    }
-	    */
-	
-	/*@
-	    //@ public normal_behavior
-	    //@   ensures (\result == 0) <==> (\forall int i; 0<=i && i<val.length; val[i] == 0);
-	    //@   ensures (\result < 0) <==> (val.length >= 1 && val[0] < 0);
-	    //@   ensures (val.length >= 1 && val[0] >= 0) ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME 
-	    //@ pure
+        // !FIXME! - should put in a non-circular computation for RAC
+            return new BigInteger(val,radix).value;
+        }
+        */
+    
+    /*@
+        //@ public normal_behavior
+        //@   ensures (\result == 0) <==> (\forall int i; 0<=i && i<val.length; val[i] == 0);
+        //@   ensures (\result < 0) <==> (val.length >= 1 && val[0] < 0);
+        //@   ensures (val.length >= 1 && val[0] >= 0) ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME 
+        //@ pure
         public static model \bigint convert(byte[] val) {
-		// !FIXME! - should put in a non-circular computation for RAC
-		    return new BigInteger(val);
-	    }
+        // !FIXME! - should put in a non-circular computation for RAC
+            return new BigInteger(val);
+        }
     @*/
 
     /*@ public normal_behavior

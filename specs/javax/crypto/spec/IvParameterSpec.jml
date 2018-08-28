@@ -1,17 +1,17 @@
 package javax.crypto.spec;
 
 public class IvParameterSpec implements java.security.spec.AlgorithmParameterSpec {
-	
-	  private byte[] iv;
-	  
-	  //@ public normal_behavior
-	  //@   ensures true;
-	  //@ pure
-	  public IvParameterSpec(byte[] buf);
+    
+      private byte[] iv;
+      
+      //@ public normal_behavior
+      //@   ensures true;
+      //@ pure
+      public IvParameterSpec(byte[] buf);
 
-	  //@ public normal_behavior
-	  //@   ensures true;
-	  //@ pure
-	  public IvParameterSpec(byte[] buf, int j, int k);
-	  public byte[] getIV();
+      //@ public normal_behavior
+      //@   ensures true;
+      //@ pure
+      public IvParameterSpec(byte[] buf, int j, int k);
+      public byte[] getIV();
 }

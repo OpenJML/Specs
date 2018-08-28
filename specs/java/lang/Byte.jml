@@ -35,21 +35,21 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
     /*@ 
       @     public normal_behavior
       @       assignable \nothing;
-      @	  ensures \result == parseable( s, 10 );
+      @      ensures \result == parseable( s, 10 );
       @   model public static pure boolean parseable( String s ) {
       try { Byte ss = Byte.valueOf(s); return true; }   
       catch (Exception e) { return false; }
       }     
 
-      @	public normal_behavior
-      @	  requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
+      @    public normal_behavior
+      @      requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
       @       assignable \nothing;
-      @	  ensures \result <==>
-      @		  s != null && !s.equals("") &&
-      @		  (\forall int i; 0 <= i && i < s.length(); 
-      @			   Character.digit(s.charAt(i), r) != -1);
+      @      ensures \result <==>
+      @          s != null && !s.equals("") &&
+      @          (\forall int i; 0 <= i && i < s.length(); 
+      @               Character.digit(s.charAt(i), r) != -1);
       @     also
-      @	public normal_behavior
+      @    public normal_behavior
       @       requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
       @       assignable \nothing;
       @       ensures \result <==>
@@ -61,28 +61,28 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       catch (Exception e) { return false; }     
       @   }
 
-      @	public normal_behavior
-      @	 {|
-      @	   requires (nm.charAt(0) == 'O' && nm.charAt(1) == 'x'); // posititve hex
-      @	   ensures \result == parseable(nm.substring(2), 16);
-      @	  also
-      @	   requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O' && nm.charAt(2) == 'x'); // negative hex
-      @	   ensures \result == parseable(nm.substring(3), 16);
-      @	  also
-      @	   requires (nm.charAt(0) == '#');  			// positive hex
-      @	   ensures \result == parseable(nm.substring(1), 16);
-      @	  also
-      @	   requires (nm.charAt(0) == '-' && nm.charAt(1) == '#');  // negative hex
-      @	   ensures \result == parseable(nm.substring(2), 16);
-      @	  also
-      @	   requires (nm.charAt(0) == 'O');  			//positive octal
-      @	   ensures \result == parseable(nm.substring(1), 8);
-      @	  also
-      @	   requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O');  // negative octal
-      @	   ensures \result == parseable(nm.substring(2), 8);
-      @	  also
-      @	   ensures \result == parseable(nm);  // positive or negative byte, radix 10
-      @	 |}
+      @    public normal_behavior
+      @     {|
+      @       requires (nm.charAt(0) == 'O' && nm.charAt(1) == 'x'); // posititve hex
+      @       ensures \result == parseable(nm.substring(2), 16);
+      @      also
+      @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O' && nm.charAt(2) == 'x'); // negative hex
+      @       ensures \result == parseable(nm.substring(3), 16);
+      @      also
+      @       requires (nm.charAt(0) == '#');              // positive hex
+      @       ensures \result == parseable(nm.substring(1), 16);
+      @      also
+      @       requires (nm.charAt(0) == '-' && nm.charAt(1) == '#');  // negative hex
+      @       ensures \result == parseable(nm.substring(2), 16);
+      @      also
+      @       requires (nm.charAt(0) == 'O');              //positive octal
+      @       ensures \result == parseable(nm.substring(1), 8);
+      @      also
+      @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O');  // negative octal
+      @       ensures \result == parseable(nm.substring(2), 8);
+      @      also
+      @       ensures \result == parseable(nm);  // positive or negative byte, radix 10
+      @     |}
       @   model public static pure boolean decodeable( String nm ) {
       try { decode(nm); return true; }
       catch (Exception e) { return false; }
@@ -103,23 +103,23 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
     /*@
       @ public normal_behavior
       @   {|
-      @	requires b < 0;
+      @    requires b < 0;
       @     assignable \nothing;
-      @	ensures \result != null &&  \result.charAt(0) == '-' && \result.charAt(1) != '0'
-      @		&& b == parseByte(\result);
+      @    ensures \result != null &&  \result.charAt(0) == '-' && \result.charAt(1) != '0'
+      @        && b == parseByte(\result);
       @   also
-      @	requires b > 0;
+      @    requires b > 0;
       @     assignable \nothing;
-      @	ensures \result != null  && \result.charAt(0) != '0'
-      @		&& b == parseByte(\result);
+      @    ensures \result != null  && \result.charAt(0) != '0'
+      @        && b == parseByte(\result);
       @   also
-      @	requires b == 0;
+      @    requires b == 0;
       @     assignable \nothing;
-      @	ensures \result != null && \result.charAt(0) == '0' && \result.length() == 1;
+      @    ensures \result != null && \result.charAt(0) == '0' && \result.length() == 1;
       @   |}
       @ implies_that
       @   public normal_behavior
-      @ 	ensures (*\result is a string representation of s *);
+      @     ensures (*\result is a string representation of s *);
       @ for_example
       @   public normal_example
       @     requires b == (short) -34;
@@ -151,8 +151,8 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       @   signals (NumberFormatException);
       @ for_example
       @   public normal_example
-      @	requires s.equals("-34")  && radix == 10;
-      @	ensures \result == -34;
+      @    requires s.equals("-34")  && radix == 10;
+      @    ensures \result == -34;
       @*/
     public static /*@ pure @*/ byte parseByte(String s, int radix)
         throws NumberFormatException;

@@ -33,38 +33,38 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     //+RAC@ represents theDouble = doubleValue();
 
     /** Returns true if the string is a parseable double value (but not
-	an infinite or NaN value).
+    an infinite or NaN value).
     */
     /*@
     @     public normal_behavior
-    @	  requires s != null;
-    @	  {|
-    @	    requires s.equals("NaN");
-    @	    ensures !\result;
-    @	  also
-    @	    requires s.equals("");
-    @	    ensures !\result;
-    @	  also
-    @	    requires s.equals("Infinity") || s.equals("-Infinity");
-    @	    ensures !\result;
-    @	  also
-    @	    requires s.equals("0.0") || s.equals("-0.0");
-    @	    ensures \result;
-    @	  also 
-    @	    requires (* parseable to a floating-point double
+    @      requires s != null;
+    @      {|
+    @        requires s.equals("NaN");
+    @        ensures !\result;
+    @      also
+    @        requires s.equals("");
+    @        ensures !\result;
+    @      also
+    @        requires s.equals("Infinity") || s.equals("-Infinity");
+    @        ensures !\result;
+    @      also
+    @        requires s.equals("0.0") || s.equals("-0.0");
+    @        ensures \result;
+    @      also 
+    @        requires (* parseable to a floating-point double
     @                     by the IEEE 754 standards *);
-    @	    ensures \result;
-    @	  also
-    @	    requires !(* parseable to a floating-point double
+    @        ensures \result;
+    @      also
+    @        requires !(* parseable to a floating-point double
     @                      by the IEEE 754 standards *);
-    @	    ensures !\result;
-    @	  |}
+    @        ensures !\result;
+    @      |}
     @  public static pure model boolean parseable( String s ) {
-	    try { Double d = Double.valueOf(s); return true; }
-	    catch (Exception e) { return false; }
-	}
+        try { Double d = Double.valueOf(s); return true; }
+        catch (Exception e) { return false; }
+    }
     @*/
-	
+    
     public static final double POSITIVE_INFINITY;
 
     public static final double NEGATIVE_INFINITY;
@@ -147,7 +147,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
 
     /*@ public normal_behavior
       @   ensures \result == ( theDouble == POSITIVE_INFINITY
-      @			|| theDouble == NEGATIVE_INFINITY );
+      @            || theDouble == NEGATIVE_INFINITY );
       @*/
     public boolean isInfinite();
 
@@ -227,7 +227,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @ implies_that
       @   public normal_behavior
       @     requires !isNaN(value);
-      @	ensures longBitsToDouble(\result) == value;
+      @    ensures longBitsToDouble(\result) == value;
       @*/
     public static /*@ pure @*/ long doubleToLongBits(double value);
 
@@ -252,7 +252,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @ implies_that
       @   public normal_behavior
       @     requires !isNaN(value);
-      @	ensures longBitsToDouble(\result) == value;
+      @    ensures longBitsToDouble(\result) == value;
       @*/
     public static /*@ pure @*/ long doubleToRawLongBits(double value);
 
@@ -266,7 +266,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @   also
       @     requires ( 0x7ff0000000000001L <= bits
       @                && bits <= 0x7fffffffffffffffL )
-      @	          || ( 0xfff0000000000001L <= bits
+      @              || ( 0xfff0000000000001L <= bits
       @                && bits <= 0xffffffffffffffffL );
       @     ensures isNaN(\result);
       @   also
@@ -355,10 +355,10 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
         zeros or to identify two NaN values as equal.
     */
     /*@ public static model pure boolean identical(double a, double b) {
-	  return (isNaN(a) == isNaN(b)) &&
+      return (isNaN(a) == isNaN(b)) &&
                  (isPositiveZero(a) == isPositiveZero(b)) &&
-		 (isNegativeZero(a) == isNegativeZero(b)) &&
-		 (isNaN(a) || isNaN(b) || (a==b));
-	}
+         (isNegativeZero(a) == isNegativeZero(b)) &&
+         (isNaN(a) || isNaN(b) || (a==b));
+    }
     */
 }

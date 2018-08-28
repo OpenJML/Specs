@@ -115,8 +115,8 @@ public abstract class Point2D implements Cloneable {
     
     public static class Float extends Point2D implements Serializable {
 
-    	public float x; //@ in xCoordinate;
-    	                //@ represents xCoordinate = x;
+        public float x; //@ in xCoordinate;
+                        //@ represents xCoordinate = x;
         public float y; //@ in yCoordinate;
                         //@ represents yCoordinate = y;
 
@@ -139,7 +139,7 @@ public abstract class Point2D implements Cloneable {
 
     public static class Double extends Point2D implements Serializable {
 
-    	public double x; //@ in xCoordinate;
+        public double x; //@ in xCoordinate;
                          //@ represents xCoordinate = x;
         public double y; //@ in yCoordinate;
                          //@ represents yCoordinate = y;

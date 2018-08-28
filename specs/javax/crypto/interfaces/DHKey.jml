@@ -2,5 +2,5 @@ package javax.crypto.interfaces;
 
 //@ non_null_by_default
 public interface DHKey {
-	javax.crypto.spec.DHParameterSpec getParams();
+    javax.crypto.spec.DHParameterSpec getParams();
 }

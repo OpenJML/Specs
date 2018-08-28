@@ -4,8 +4,8 @@ package java.util.function;
 @FunctionalInterface
 public interface BiFunction<T,U,R> {
 
-	//@ nullable
-	  public abstract R apply(T t, U u);
-	  
+    //@ nullable
+      public abstract R apply(T t, U u);
+      
 
 }
