@@ -6,5 +6,15 @@ public class Assert {
     //@ public normal_behavior
     //@   requires exp == act;
     //@ pure
-    public void assertEquals(String s, long exp, long act);
+    public static void assertEquals(String s, long exp, long act);
+    
+    //@ public normal_behavior
+    //@   ensures false;
+    //@ pure
+    public static void fail(String message);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public static <T> void assertThat(T actual, org.hamcrest.Matcher<? super T> matcher);
 }
