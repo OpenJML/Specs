@@ -1,0 +1,11 @@
+package org.junit.rules;
+
+public class ExpectedException {
+    
+    //@ model public boolean exceptionAllowed;
+    
+    //@ public normal_behavior
+    //@   ensures \result.exceptionAllowed == false;
+    //@ pure
+    public static ExpectedException none();
+}
