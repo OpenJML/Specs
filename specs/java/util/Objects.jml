@@ -1,6 +1,6 @@
 package java.util;
 
-//@ non_null_by_default
+//@ nullable_by_default
 public final class Objects {
   //@ pure
   private Objects();
