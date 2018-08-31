@@ -28,7 +28,8 @@ import java.io.InputStream;
 public final class Class<T> implements java.io.Serializable,
     AnnotatedElement, GenericDeclaration, Type {
 
-//    private Class();
+    private Class(ClassLoader classLoader);
+
 
     /*@ also public normal_behavior
       @   ensures \result != null && !\result.equals("")
@@ -141,8 +142,8 @@ public final class Class<T> implements java.io.Serializable,
     //@ ensures \elemtype(\typeof(this)) == \type(float) ==> \result;
     //@ ensures \elemtype(\typeof(this)) == \type(double) ==> \result;
     //@ ensures \elemtype(\typeof(this)) == \type(boolean) ==> \result;
-	// FIXME - really need a better way to express this
-	 * */
+    // FIXME - really need a better way to express this
+     * */
     //
     public /*@ pure helper @*/ boolean isArray();
 
@@ -156,7 +157,7 @@ public final class Class<T> implements java.io.Serializable,
                    this == char.class ||
                    this == boolean.class ||
                    this == byte.class ||
-		   this == void.class		// this case was missing --PC
+           this == void.class        // this case was missing --PC
                   );
       @*/
     public /*@ pure @*/ boolean isPrimitive();

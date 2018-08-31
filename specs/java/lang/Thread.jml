@@ -2,7 +2,7 @@ package java.lang;
 
 //@ non_null_by_default
 public class Thread implements Runnable {
-	//@ public model boolean dead;
+    //@ public model boolean dead;
 //  private volatile String name;
 //  private int priority;
 //  private Thread threadQ;

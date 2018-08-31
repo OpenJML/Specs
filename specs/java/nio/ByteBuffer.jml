@@ -4,7 +4,8 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ model public instance boolean _isDirect;
     
     //@ spec_public  
-    final byte[] hb;
+    final byte[] hb;  // FIXME _ perhaps this should be model?
+    //@ public represents _hasBackingArray = (hb != null);
     
     //@ public invariant 0 <= offset;
     //@ public invariant offset <= hb.length;
@@ -13,8 +14,12 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     
     //@ spec_public  
     final int offset;
+    //@ public represents _offset = offset;
+
     //@ spec_public  
     boolean isReadOnly;
+    //@ public represents _isReadOnly = isReadOnly;
+    
     //@ spec_public  
     boolean bigEndian;
     //@ spec_public  
@@ -33,6 +38,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.capacity == n;
     //@   ensures \result.hb != null;
     //@   ensures \result.hb.length == n;
+    //@   ensures \result.isReadOnly == false;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires n < 0;
+    //@   signals_only IllegalArgumentException;
     //@ pure
     public static ByteBuffer allocateDirect(int n);
     
@@ -48,6 +58,12 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \fresh(\result.hb);
     //@   ensures \result.hb.length == n;
     //@   ensures \result._isDirect == false;
+    //@   ensures \result.isReadOnly == false;
+    //@   ensures \result.hasArray();
+    //@ also
+    //@ private exceptional_behavior
+    //@   requires n < 0;
+    //@   signals_only IllegalArgumentException;
     //@ pure
     public static ByteBuffer allocate(int n);
 
@@ -61,6 +77,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.capacity == b.length;
     //@   ensures \result.hb == b;
     //@   ensures \result._isDirect == false;
+    //@   ensures \result.isReadOnly == false;
+    //@ also
+    //@ private exceptional_behavior
+    //@   requires offset < 0 || length < 0 || length > b.length - offset;
+    //@   signals_only IndexOutOfBoundsException;
     //@ pure
     public static ByteBuffer wrap(byte[] b, int offset, int length);
     
@@ -72,8 +93,10 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.limit == b.length;
     //@   ensures \result.capacity == b.length;
     //@   ensures \result.hb == b;
+    //@   ensures \result.isReadOnly == false;
     //@ pure
     public static ByteBuffer wrap(byte[] b);
+    
     //@ public normal_behavior
     //@   ensures \fresh(\result);
     //@   ensures \result.offset == position;
@@ -85,6 +108,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.isReadOnly == isReadOnly;
     //@ pure
     public abstract ByteBuffer slice();
+    
     //@ public normal_behavior
     //@   ensures \fresh(\result);
     //@   ensures \result.offset == offset;
@@ -96,86 +120,167 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   ensures \result.isReadOnly == isReadOnly;
     //@ pure
     public abstract ByteBuffer duplicate();
+    
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.offset == offset;
+    //@   ensures \result.mark == mark;
+    //@   ensures \result.position == position;
+    //@   ensures \result.limit == limit;
+    //@   ensures \result.capacity == capacity;
+    //@   ensures \result.hb == hb;
+    //@   ensures \result.isReadOnly;
+    //@ pure
     public abstract ByteBuffer asReadOnlyBuffer();
     
     //@ public normal_behavior
     //@   assignable this.position;
     //@   ensures this.position == \old(this.position) + 1;
-    //@   ensures \result == hb[\old(this.position)];
+    //@   ensures \result == hb[\old(this.offset+this.position)];
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.position >= this.limit;
+    //@   assignable \nothing;
+    //@   signals_only BufferUnderflowException;
     public abstract byte get();
 
     //@ public normal_behavior
-    //@   assignable this.position, hb[this.position];
+    //@   requires this.position < this.limit;
+    //@   requires !this.isReadOnly;
+    //@   assignable this.position, hb[this.offset+this.position];
     //@   ensures this.position == \old(this.position) + 1;
-    //@   ensures hb[offset+\old(this.position)] == b;
+    //@   ensures hb[this.offset+\old(this.position)] == b;
+    //@   ensures \result == this;
+    //@ also
+    //@ private exceptional_behavior
+    //@   requires isReadOnly || this.position >= this.limit;
+    //@   assignable \nothing;
+    //@   signals (ReadOnlyBufferException) isReadOnly;
+    //@   signals (BufferOverflowException) this.position >= this.limit;
+    //@   signals_only ReadOnlyBufferException, BufferOverflowException;
     public abstract ByteBuffer put(byte b);
 
     //@ public normal_behavior
+    //@   requires i >= 0 && i < this.limit;
     //@   ensures \result == hb[offset+i];
+    //@ also
+    //@ private exceptional_behavior
+    //@   requires i < 0 || i >= this.limit;
+    //@   signals_only IndexOutOfBoundsException;
     //@ pure
     public abstract byte get(int i);
     
     //@ public normal_behavior
+    //@   requires i >= 0 && i < this.limit;
+    //@   requires !this.isReadOnly;
     //@   assignable hb[offset+i];
     //@   ensures hb[offset+i] == b;
+    //@   ensures \result == this;
+    //@ also
+    //@ private exceptional_behavior
+    //@   requires isReadOnly || i < 0 || i >= this.limit;
+    //@   assignable \nothing;
+    //@   signals (ReadOnlyBufferException) isReadOnly;
+    //@   signals (IndexOutOfBoundsException) i < 0 || i >= this.limit;
+    //@   signals_only ReadOnlyBufferException, IndexOutOfBoundsException;
     public abstract ByteBuffer put(int i, byte b);
     
-    
-    public ByteBuffer get(byte[] buf, int i, int j);
+    //@ public normal_behavior
+    //@   requires length >= 0 && offset >= 0;
+    //@   requires offset <= buf.length - length;
+    //@   requires this.position <= this.limit - length;
+    //@   assignable buf[*], this.position;
+    //@   ensures this.position == \old(this.position) + length;
+    //@   ensures (\forall int i; 0 <= i && i < length; buf[offset + i] == this.hb[\old(this.offset+this.position) + i]);
+    //@   ensures (\forall int i; 0 <= i && i < offset; buf[i] == \old(buf[i]));
+    //@   ensures (\forall int i; offset + length <= i && i < buf.length; buf[i] == \old(buf[i]));
+    //@   ensures \result == this;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires length < 0 || offset < 0 || offset > limit - length || this.position <= this.limit - length;
+    //@   assignable \nothing;
+    //@   signals (IndexOutOfBoundsException) length < 0 || offset < 0 || offset > limit - length;
+    //@   signals (BufferUnderflowException)  position > limit - length;
+    public ByteBuffer get(byte[] buf, int offset, int length);
     
     //@ public normal_behavior
     //@   requires position <= limit - buf.length;
     //@   assignable buf[*], this.position;
     //@   ensures \fresh(\result);
     //@   ensures this.position == \old(this.position) + buf.length;
-    //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.position) + i]) ;
+    //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.offset+this.position) + i]) ;
+    //@   ensures \result == this;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires position > limit - buf.length;
+    //@   assignable \nothing;
+    //@   signals_only BufferUnderflowException;
     public ByteBuffer get(byte[] buf);
     
     //@ public normal_behavior
     //@   old int move = bbuf.limit - bbuf.position;
+    //@   requires !this.isReadOnly;
+    //@   requires bbuf != this;
     //@   requires move <= this.limit - this.position;
-    //@   assignable hb[this.position .. this.position + (move - 1)], this.position, bbuf.position;
+    //@   assignable hb[this.offset+this.position .. this.offset+this.position + (move - 1)], this.position, bbuf.position;
     //@   ensures position == \old(position) + move;
     //@   ensures bbuf.position == bbuf.limit;
-    //@   ensures (\forall int i; \old(this.position) <= i && i < \old(this.position) + move; this.hb[i] == bbuf.hb[\old(bbuf.position) + (i-\old(this.position))]) ;
+    //@   ensures (\forall int i; \old(this.offset+this.position) <= i && i < \old(this.offset+this.position) + move; this.hb[i] == bbuf.hb[\old(bbuf.position) + (i-\old(this.offset+this.position))]) ;
+    //@   ensures \result == this;
     //@ also public exceptional_behavior
-    //@   requires bbuf.limit - bbuf.position > this.limit - this.position;
+    //@   requires bbuf.limit - bbuf.position > this.limit - this.position || this.isReadOnly || bbuf == this;
     //@   assignable \nothing;
-    //@   signals_only BufferOverflowException ;
+    //@   signals (BufferOverflowException) bbuf.limit - bbuf.position > this.limit - this.position;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
+    //@   signals (IllegalArgumentException) bbuf == this;
     public ByteBuffer put(ByteBuffer bbuf);
 
     //@ public normal_behavior
     //@   requires offset >= 0 && length >= 0;
     //@   requires offset <= buf.length;
+    //@   requires !this.isReadOnly;
     //@   requires length <= buf.length - offset;
-    //@   assignable this.hb[position..(position+(length-1))], this.position;
+    //@   assignable this.hb[this.offset+position..(this.offset+position+(length-1))], this.position;
     //@   ensures position == Math.min(limit, \old(position) + length);
     //@   ensures (\forall int i; offset<=i && i<offset+length; buf[i] == hb[i-offset+\old(position)]); // FIXME - check that this forall will reason correctly
+    //@   ensures \result == this;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || length > buf.length - offset;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) length > buf.length - offset;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public ByteBuffer put(byte[] buf, int offset, int length);
 
     //@ public normal_behavior
     //@   requires position <= limit - buf.length;
+    //@   requires !this.isReadOnly;
     //@   old int moved = Math.min(buf.length, limit - position);
-    //@   assignable this.position, this.hb[position .. (position + (moved -1))];
-    //@   ensures \fresh(\result);
+    //@   assignable this.position, this.hb[this.offset+position .. (this.offset+position + (moved -1))];
     //@   ensures this.position == \old(this.position) + moved;
-    //@   ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(position)]); // FIXME - check that this forall will reason correctly
+    //@   ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(this.offset+position)]); // FIXME - check that this forall will reason correctly
+    //@   ensures \result == this;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || position > limit - buf.length;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) position > limit - buf.length;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public final ByteBuffer put(byte[] buf);
 
-    //@ also public normal_behavior
-    //@     ensures \result == (hb != null && !isReadOnly);
-    //@ pure
+    @Override
     public final boolean hasArray();
     
     //@ also public normal_behavior
+    //@   requires hasArray();
+    //@   assignable \nothing;
     //@   ensures \result == hb;
-    //@ pure
+    @Override
     public final byte[] array();
-    //@ also public normal_behavior
-    //@     requires hb != null && !isReadOnly;
-    //@     ensures \result == offset;
-    //@ pure
+
+    @Override
     public final int arrayOffset();
+    
     public abstract ByteBuffer compact();
     
     //@ also public normal_behavior
@@ -192,13 +297,14 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     public final ByteBuffer order(ByteOrder order);
     
     //@ normal_behavior   // FIXME - any range limitation on i?
-    //@   ensures \result == hb[i];
-    //@ pure
+    //@   assignable \nothing;
+    //@   ensures \result == hb[this.offset+i];
     abstract byte _get(int i);
     //@ normal_behavior   // FIXME - any range limitation on i?
-    //@   assignable hb[i];
-    //@   ensures hb[i] == b;
+    //@   assignable hb[this.offset+i];
+    //@   ensures hb[this.offset+i] == b;
     abstract void _put(int i, byte b);
+
     public abstract char getChar();
     public abstract ByteBuffer putChar(char c);
     public abstract char getChar(int i);
@@ -209,28 +315,51 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires position <= limit - Short.BYTES;
     //@   assignable this.position;
     //@   ensures this.position == \old(this.position) + Short.BYTES;
-    //@   ensures \result == asShort(hb[\old(position)],hb[\old(position+1)]);
+    //@   ensures \result == asShort(hb[\old(this.offset+position)],hb[\old(this.offset+position+1)]);
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires position > limit - Short.BYTES;
+    //@   assignable \nothing;
+    //@   signals_only BufferUnderflowException;
     public abstract short getShort();
 
     //@ public normal_behavior
     //@   requires position <= limit - Short.BYTES;
+    //@   requires !this.isReadOnly;
     //@   old int oldpos = this.position;
-    //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
+    //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Short.BYTES-1))];
     //@   ensures this.position == oldpos + Short.BYTES;
     //@   ensures getShort(oldpos) == s;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || position > limit - Short.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) position > limit - Short.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putShort(short s);
 
     //@ public normal_behavior
-    //@   requires i <= limit - Short.BYTES;
-    //@   ensures \result == asShort(hb[i],hb[i+1]);
+    //@   requires 0 <= i && i <= limit - Short.BYTES;
+    //@   ensures \result == asShort(hb[this.offset+i],hb[this.offset+i+1]);
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires i < 0 || i > limit - Short.BYTES;
+    //@   signals_only BufferUnderflowException;
     //@ pure
     public abstract short getShort(int i);
 
     //@ public normal_behavior
     //@   requires position <= limit - Short.BYTES;
-    //@   assignable this.position, hb[position .. (position + (Short.BYTES-1))];
+    //@   requires !this.isReadOnly;
+    //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Short.BYTES-1))];
     //@   ensures this.position == \old(this.position) + Short.BYTES;
     //@   ensures (* FIXME: result is bytes representation of the ints *);
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || i < 0 || i > limit - Short.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) i < 0 || i > limit - Short.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putShort(int i, short s);
     
     public abstract ShortBuffer asShortBuffer();
@@ -239,15 +368,20 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires position <= limit - Integer.BYTES;
     //@   assignable this.position;
     //@   ensures this.position == \old(this.position) + Integer.BYTES;
-    //@   ensures \result == asInt(hb[\old(position)],hb[\old(position+1)],hb[\old(position+2)],hb[\old(position+3)]);
+    //@   ensures \result == asInt(hb[\old(this.offset+position)],hb[\old(this.offset+position+1)],hb[\old(this.offset+position+2)],hb[\old(this.offset+position+3)]);
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires position > limit - Integer.BYTES;
+    //@   assignable \nothing;
+    //@   signals_only BufferUnderflowException;
     public abstract int getInt();
 
     //@ public normal_behavior
-    //@   ensures \result == (b0*(0x100) + asUnsigned(b1));
+    //@   ensures \result == (b0*(0x100) + Byte.toUnsignedInt(b1));
     //@ model public static pure helper function short asShort(byte b0, byte b1);
 
     //@ public normal_behavior
-    //@   ensures \result == (b0*(0x100_0000) + asUnsigned(b1)*(0x1_0000) + asUnsigned(b2)*(0x100) + asUnsigned(b3));
+    //@   ensures \result == (b0*(0x100_0000) + Byte.toUnsignedInt(b1)*(0x1_0000) + Byte.toUnsignedInt(b2)*(0x100) + Byte.toUnsignedInt(b3));
     // @   ensures (\result >= 0) <==> (b0 >= 0);
     // @   ensures b3 == (byte)(\result%256);
     // @   ensures b2 == (byte)((\result/256)%256);
@@ -257,27 +391,98 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
     //@ public normal_behavior
     //@   requires position <= limit - Integer.BYTES;
-    //@   assignable this.position, hb[position .. (position + (Integer.BYTES-1))];
+    //@   requires !this.isReadOnly;
+    //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Integer.BYTES-1))];
     //@   ensures this.position == \old(this.position) + Integer.BYTES;
     //@   ensures getInt(\old(position)) == i;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || position > limit - Integer.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) position > limit - Integer.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putInt(int i);
     
     //@ public normal_behavior
-    //@   requires i <= limit - Integer.BYTES;
-    //@   ensures \result == asInt(hb[i],hb[i+1],hb[i+2],hb[i+3]);
+    //@   requires 0 <= i && i <= limit - Integer.BYTES;
+    //@   ensures \result == asInt(hb[this.offset+i],hb[this.offset+i+1],hb[this.offset+i+2],hb[this.offset+i+3]);
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires i < 0 || i > limit - Integer.BYTES;
+    //@   signals_only BufferUnderflowException;
     //@ pure
     public abstract int getInt(int i);
 
     //@ public normal_behavior
-    //@   requires index <= limit - Integer.BYTES;
-    //@   assignable hb[index .. (index + (Integer.BYTES-1))];
+    //@   requires 0 <= index && index <= limit - Integer.BYTES;
+    //@   requires !this.isReadOnly;
+    //@   assignable hb[this.offset+index .. (this.offset+index + (Integer.BYTES-1))];
     //@   ensures getInt(index) == value;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || index < 0 || index > limit - Integer.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) index < 0 || index > limit - Integer.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putInt(int index, int value);
     
     public abstract IntBuffer asIntBuffer();
+    
+    /*@ public normal_behavior
+      @   requires position <= limit - Long.BYTES;
+      @   assignable this.position;
+      @   ensures this.position == \old(this.position) + Long.BYTES;
+      @   ensures \result == Long.asLong(hb[\old(this.offset+position)],   hb[\old(this.offset+position+1)],
+      @                                  hb[\old(this.offset+position+2)], hb[\old(this.offset+position+3)],
+      @                                  hb[\old(this.offset+position+4)], hb[\old(this.offset+position+5)],
+      @                                  hb[\old(this.offset+position+6)], hb[\old(this.offset+position+7)]);
+      @ also
+      @ public exceptional_behavior
+      @   requires position > limit - Long.BYTES;
+      @   assignable \nothing;
+      @   signals_only BufferUnderflowException;
+      @*/
     public abstract long getLong();
+    
+    //@ public normal_behavior
+    //@   requires position <= limit - Long.BYTES;
+    //@   requires !this.isReadOnly;
+    //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Long.BYTES-1))];
+    //@   ensures this.position == \old(this.position) + Long.BYTES;
+    //@   ensures getLong(\old(position)) == n;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || position > limit - Long.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) position > limit - Long.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putLong(long n);
+    
+    /*@ public normal_behavior
+      @   requires 0 <= i && i <= limit - Long.BYTES;
+      @   ensures \result == Long.asLong(hb[this.offset+i], hb[this.offset+i+1],
+      @                                  hb[this.offset+i+2],hb[this.offset+i+3],
+      @                                  hb[this.offset+i+4],hb[this.offset+i+5],
+      @                                  hb[this.offset+i+6],hb[this.offset+i+7]);
+      @ also
+      @ public exceptional_behavior
+      @   requires i < 0 || i > limit - Long.BYTES;
+      @   signals_only BufferUnderflowException;
+      @ pure
+      @*/
     public abstract long getLong(int i);
+    
+    //@ public normal_behavior
+    //@   requires 0 <= i && i <= limit - Long.BYTES;
+    //@   requires !this.isReadOnly;
+    //@   assignable hb[this.offset+i .. (this.offset+i + (Long.BYTES-1))];
+    //@   ensures getLong(i) == n;
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires this.isReadOnly || i < 0 || i > limit - Long.BYTES;
+    //@   assignable \nothing;
+    //@   signals (BufferOverflowException) i < 0 || i > limit - Long.BYTES;
+    //@   signals (ReadOnlyBufferException) this.isReadOnly;
     public abstract ByteBuffer putLong(int i, long n);
     public abstract LongBuffer asLongBuffer();
     public abstract float getFloat();
@@ -290,11 +495,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     public abstract double getDouble(int i);
     public abstract ByteBuffer putDouble(int i, double d);
     public abstract DoubleBuffer asDoubleBuffer();
-    public java.lang.Object array();
-	// public int compareTo(java.lang.Object o);
     
-    //@ public normal_behavior
-    //@   ensures \result == (b >= 0 ? b : b + 256);
-    //@ model public static inline pure helper function int asUnsigned(byte b) { return (b >= 0 ? b : b + 256); }
-
+    // public int compareTo(java.lang.Object o);
+    
 }

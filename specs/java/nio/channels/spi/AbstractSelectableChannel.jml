@@ -2,28 +2,34 @@ package java.nio.channels.spi;
 
 public abstract class AbstractSelectableChannel extends java.nio.channels.SelectableChannel {
 
+    //@ public model JMLDataGroup state; //@ in channelCloseContent;
 
-//	  private final java.nio.channels.spi.SelectorProvider provider;
-//	  private java.nio.channels.SelectionKey[] keys;
-//	  private int keyCount;
-//	  private final java.lang.Object keyLock;
-//	  private final java.lang.Object regLock;
-//	  boolean blocking;
-//	  static final boolean $assertionsDisabled;
-//	  protected java.nio.channels.spi.AbstractSelectableChannel(java.nio.channels.spi.SelectorProvider);
-//	  public final java.nio.channels.spi.SelectorProvider provider();
-//	  private void addKey(java.nio.channels.SelectionKey);
-//	  private java.nio.channels.SelectionKey findKey(java.nio.channels.Selector);
-//	  void removeKey(java.nio.channels.SelectionKey);
-//	  private boolean haveValidKeys();
-//	  public final boolean isRegistered();
-//	  public final java.nio.channels.SelectionKey keyFor(java.nio.channels.Selector);
-//	  public final java.nio.channels.SelectionKey register(java.nio.channels.Selector, int, java.lang.Object) throws java.nio.channels.ClosedChannelException;
-//	  protected final void implCloseChannel() throws java.io.IOException;
-//	  protected abstract void implCloseSelectableChannel() throws java.io.IOException;
-//	  public final boolean isBlocking();
-//	  public final java.lang.Object blockingLock();
-//	  public final java.nio.channels.SelectableChannel configureBlocking(boolean) throws java.io.IOException;
-//	  protected abstract void implConfigureBlocking(boolean) throws java.io.IOException;
+
+//      private final java.nio.channels.spi.SelectorProvider provider;
+//      private java.nio.channels.SelectionKey[] keys;
+//      private int keyCount;
+//      private final java.lang.Object keyLock;
+//      private final java.lang.Object regLock;
+//      boolean blocking;
+//      static final boolean $assertionsDisabled;
+//      protected java.nio.channels.spi.AbstractSelectableChannel(java.nio.channels.spi.SelectorProvider);
+//      public final java.nio.channels.spi.SelectorProvider provider();
+//      private void addKey(java.nio.channels.SelectionKey);
+//      private java.nio.channels.SelectionKey findKey(java.nio.channels.Selector);
+//      void removeKey(java.nio.channels.SelectionKey);
+//      private boolean haveValidKeys();
+//      public final boolean isRegistered();
+//      public final java.nio.channels.SelectionKey keyFor(java.nio.channels.Selector);
+//      public final java.nio.channels.SelectionKey register(java.nio.channels.Selector, int, java.lang.Object) throws java.nio.channels.ClosedChannelException;
+//      protected final void implCloseChannel() throws java.io.IOException;
+//      protected abstract void implCloseSelectableChannel() throws java.io.IOException;
+//      public final boolean isBlocking();
+//      public final java.lang.Object blockingLock();
+    
+    //@ also public normal_behavior
+    //@   assignable this.state;
+    public final java.nio.channels.SelectableChannel configureBlocking(boolean b) throws java.io.IOException;
+
+//      protected abstract void implConfigureBlocking(boolean) throws java.io.IOException;
 
 }

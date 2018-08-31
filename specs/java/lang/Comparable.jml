@@ -26,11 +26,11 @@ package java.lang;
  * @author Gary T. Leavens, et al.
  */
 public interface Comparable<T> {
-	// If T is a subclass of Comparable<T>, then all T objects are comparable.
-	// It is not quite defined what it means if U is a subclass of Comparable<T>
-	// (without being a subclass of T).
-	// Syntactically it means that u.compareTo(t) is defined.
-	
+    // If T is a subclass of Comparable<T>, then all T objects are comparable.
+    // It is not quite defined what it means if U is a subclass of Comparable<T>
+    // (without being a subclass of T).
+    // Syntactically it means that u.compareTo(t) is defined.
+    
     /*@   public normal_behavior
       @     requires i < 0;
       @     ensures \result == -1;
@@ -56,30 +56,30 @@ public interface Comparable<T> {
 //      @ public model pure boolean
 //      @ definedComparison(non_null Object o);
 //      @*/
-	
-	/** Override consistentWithEquals to indicate whether a given class's compareTo ordering
-	 * is consistent with equals: a.equals(b) <==> a.compareTo(b) ==0.  
-	 * Most classes are, but it is not necessarily the case.
-	 */
-	//@ public behavior
-	//@    signals (Exception) false;
-	//@ pure public model boolean consistentWithEquals();
-	
-	/** This declares that the value of consistentWithEquals() is the same for all members of a class.
-	 * (We don't make consistentWithEquals static so it can be overridden and dynamically dispatched.)
-	 */
-	// the variable in a forall is not null
-	// FIXME @ public invariant (\forall Comparable<T> o; \typeof(o) == \typeof(this) ==> o.consistentWithEquals() == this.consistentWithEquals());
+    
+    /** Override consistentWithEquals to indicate whether a given class's compareTo ordering
+     * is consistent with equals: a.equals(b) <==> a.compareTo(b) ==0.  
+     * Most classes are, but it is not necessarily the case.
+     */
+    //@ public behavior
+    //@    signals (Exception) false;
+    //@ pure public model boolean consistentWithEquals();
+    
+    /** This declares that the value of consistentWithEquals() is the same for all members of a class.
+     * (We don't make consistentWithEquals static so it can be overridden and dynamically dispatched.)
+     */
+    // the variable in a forall is not null
+    // FIXME @ public invariant (\forall Comparable<T> o; \typeof(o) == \typeof(this) ==> o.consistentWithEquals() == this.consistentWithEquals());
 
-	// FIXME @ public invariant consistentWithEquals() ==> (\forall T o; equals(o) <==> compareTo(o) == 0);
+    // FIXME @ public invariant consistentWithEquals() ==> (\forall T o; equals(o) <==> compareTo(o) == 0);
 
-	/* FIXME @ public normal_behavior
+    /* FIXME @ public normal_behavior
       @    requires o == this && (\type(T) <: \type(Comparable<T>)); // reflexive
-      @	   ensures  \result == 0;
+      @       ensures  \result == 0;
       @ also public normal_behavior
       @    requires (\typeof(o) <: \type(Comparable<T>)) && \typeof(this) <: \type(T);
       @    ensures sgn(\result) == - sgn(((Comparable<T>)o).compareTo((T)this)); // antisymmetric
       @*/
-	// A null argument is supposed to throw a NullPointerException
+    // A null argument is supposed to throw a NullPointerException
     /*@ pure @*/ int compareTo(/*@ non_null */ T o); // FIXME - change pure to query?
 }

@@ -12,7 +12,7 @@ public class FileOutputStream extends OutputStream {
 
     // FIELDS - FIXME these rename private fields
     //@ spec_public
-	final private FileDescriptor fd;
+    final private FileDescriptor fd;
     // @ private model FileChannel channel;
     // @ initially channel == null;
     // added this model field because the real thing is private and we

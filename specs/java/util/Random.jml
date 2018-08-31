@@ -2,9 +2,9 @@ package java.util;
 
 //@ non_null_by_default
 public class Random implements java.io.Serializable {
-	
-	//@ public model long content;
-	
+    
+    //@ public model long content;
+    
   static final long serialVersionUID;
   private final java.util.concurrent.atomic.AtomicLong seed;
   private static final long multiplier;
@@ -31,6 +31,7 @@ public class Random implements java.io.Serializable {
   //@ public normal_behavior
   //@   assignable this.content, bytes[*];
   public void nextBytes(byte[] bytes);
+  
   final long internalNextLong(long a, long b);
   final int internalNextInt(int a, int b);
   final double internalNextDouble(double a, double b);

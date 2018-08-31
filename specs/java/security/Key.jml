@@ -3,10 +3,10 @@ package java.security;
 //@ non_null_by_default
 public interface Key extends java.io.Serializable {
   //public static final long serialVersionUID;
-	
-	//@ model non_null public String algorithm;
-	//@ model non_null public String format;
-	//@ model nullable public byte[] encoding;
+    
+    //@ model non_null public String algorithm;
+    //@ model non_null public String format;
+    //@ model nullable public byte[] encoding;
  
   //@ public normal_behavior
   //@   ensures \result == algorithm;

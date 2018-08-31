@@ -47,15 +47,15 @@ public final class System {
         a decided nuisance, and I think the programmer would rather be
         warned that a possibly null stream is being assigned. 
 
-	Since allowNullStreams = false and is declared as final, this means
-	that in, out and err are effectively non-null.  The only way to allow
-	them to be nullable is to modify this specification (or make a copy of
-	it) and change the value of allowNullStreams.  Since changing the
-	nullity requires changing the spec, and since some tools can do more
-	if in, out and err are explicitly declared non-null, we are going one
-	step further and annotating in, out and err as non_null.  If ever you
-	change allowNullStreams to be true, then you will need to change the
-	annotations of in, out and err to be nullable.
+    Since allowNullStreams = false and is declared as final, this means
+    that in, out and err are effectively non-null.  The only way to allow
+    them to be nullable is to modify this specification (or make a copy of
+    it) and change the value of allowNullStreams.  Since changing the
+    nullity requires changing the spec, and since some tools can do more
+    if in, out and err are explicitly declared non-null, we are going one
+    step further and annotating in, out and err as non_null.  If ever you
+    change allowNullStreams to be true, then you will need to change the
+    annotations of in, out and err to be nullable.
     */
 
     public final static /*@non_null*//*see note above*/ InputStream in;
@@ -177,9 +177,9 @@ t *);
     @    // requires src.getClass().isArray() && dest.getClass().isArray();
     @    requires !(    srcPos < 0 || destPos < 0 || length < 0 );
       {|
-		requires (src instanceof Object[]) &&
-			     (dest instanceof Object[]) &&
-			     \elemtype(\typeof(src)) <: \elemtype(\typeof(dest)) &&
+        requires (src instanceof Object[]) &&
+                 (dest instanceof Object[]) &&
+                 \elemtype(\typeof(src)) <: \elemtype(\typeof(dest)) &&
     @                 srcPos + length <= ((Object[])src).length
     @                && destPos + length <= ((Object[])dest).length;
     @   {|
@@ -188,9 +188,9 @@ t *);
     @      assignable da[destPos .. destPos + length - 1];
     @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @   |}
-	   also
-		requires (src instanceof int[]) &&
-			     (dest instanceof int[]) &&
+       also
+        requires (src instanceof int[]) &&
+                 (dest instanceof int[]) &&
     @                 srcPos + length <= ((int[])src).length
     @                && destPos + length <= ((int[])dest).length;
     @   {|
@@ -199,9 +199,9 @@ t *);
     @      assignable da[destPos .. destPos + length - 1];
     @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @   |}
-	   also
-		requires (src instanceof long[]) &&
-			     (dest instanceof long[]) &&
+       also
+        requires (src instanceof long[]) &&
+                 (dest instanceof long[]) &&
     @                 srcPos + length <= ((long[])src).length
     @                && destPos + length <= ((long[])dest).length;
     @   {|
@@ -210,9 +210,9 @@ t *);
     @      assignable da[destPos .. destPos + length - 1];
     @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @   |}
-	   also
-		requires (src instanceof char[]) &&
-			     (dest instanceof char[]) &&
+       also
+        requires (src instanceof char[]) &&
+                 (dest instanceof char[]) &&
     @                 srcPos + length <= ((char[])src).length
     @                && destPos + length <= ((char[])dest).length;
     @   {|
@@ -221,9 +221,9 @@ t *);
     @      assignable da[destPos .. destPos + length - 1];
     @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @   |}
-	   also
-		requires (src instanceof boolean[]) &&
-			     (dest instanceof boolean[]) &&
+       also
+        requires (src instanceof boolean[]) &&
+                 (dest instanceof boolean[]) &&
     @                 srcPos + length <= ((boolean[])src).length
     @                && destPos + length <= ((boolean[])dest).length;
     @   {|
@@ -232,9 +232,9 @@ t *);
     @      assignable da[destPos .. destPos + length - 1];
     @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @   |}
-	   also
-		requires (src instanceof short[]) &&
-			     (dest instanceof short[]) &&
+       also
+        requires (src instanceof short[]) &&
+                 (dest instanceof short[]) &&
     @                 srcPos + length <= ((short[])src).length
     @                && destPos + length <= ((short[])dest).length;
     @   {|
@@ -243,9 +243,9 @@ t *);
     @      assignable da[destPos .. destPos + length - 1];
     @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
     @   |}
-	   also
-		requires (src instanceof byte[]) &&
-			     (dest instanceof byte[]) &&
+       also
+        requires (src instanceof byte[]) &&
+                 (dest instanceof byte[]) &&
     @                 srcPos + length <= ((byte[])src).length
     @                && destPos + length <= ((byte[])dest).length;
     @   {|
@@ -256,9 +256,9 @@ t *);
     @   |}
     @*//* @
 
-//	   also  // FIXME - if we enable these cases, then a real-arithmetic logic is required and solving times are very long
-//		requires (src instanceof double[]) &&
-//			     (dest instanceof double[]) &&
+//       also  // FIXME - if we enable these cases, then a real-arithmetic logic is required and solving times are very long
+//        requires (src instanceof double[]) &&
+//                 (dest instanceof double[]) &&
 //      @                 srcPos + length <= ((double[])src).length
 //      @                && destPos + length <= ((double[])dest).length;
 //      @   {|
@@ -267,9 +267,9 @@ t *);
 //      @      assignable da[destPos .. destPos + length - 1];
 //    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
 //      @   |}
-//	   also
-//		requires (src instanceof float[]) &&
-//			     (dest instanceof float[]) &&
+//       also
+//        requires (src instanceof float[]) &&
+//                 (dest instanceof float[]) &&
 //      @                 srcPos + length <= ((float[])src).length
 //      @                && destPos + length <= ((float[])dest).length;
 //      @   {|
@@ -280,7 +280,7 @@ t *);
 //      @   |}
 //      @
       @*/
-//@	   |}
+//@       |}
     @org.jmlspecs.annotation.Options("-no-strictJML")
     public static native void arraycopy(/*@non_null*/ Object src,
                                         int srcPos,

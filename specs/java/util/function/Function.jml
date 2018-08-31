@@ -4,12 +4,12 @@ package java.util.function;
 @FunctionalInterface
 public interface Function<T,R> {
 
-	//@ nullable
-	  public abstract R apply(/*@ nullable */ T t);
-	  
-	  default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
+    //@ nullable
+      public abstract R apply(/*@ nullable */ T t);
+      
+      default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
 
-	  default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
+      default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
 
       /*@ public static immutable model interface Pure<T,R> extends Function<T,R> {
       @   pure function
@@ -26,9 +26,9 @@ public interface Function<T,R> {
       @ }
       @*/
     
-	  //@ public normal_behavior
-	  //@   ensures \result instanceof Identity;
-	  //@ pure
-	  public static <T> Function<T, T> identity();
+      //@ public normal_behavior
+      //@   ensures \result instanceof Identity;
+      //@ pure
+      public static <T> Function<T, T> identity();
 
 }

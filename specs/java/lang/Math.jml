@@ -35,13 +35,13 @@ import java.lang.Double;
 /* CAUTION: Note that 
     - there is a difference between float/double positive and negative 0
     - primitive == does not distinguish between positive and negative zero
-	that is, (+0.0 == -0.0) is true; use isPositiveZero and 
-	isNegativeZero when you need to distinguish these
+    that is, (+0.0 == -0.0) is true; use isPositiveZero and 
+    isNegativeZero when you need to distinguish these
     - NaN compares false to everything: (NaN == NaN) is false; you have to
-	use Double.isNaN(\...)
+    use Double.isNaN(\...)
     - primitive == is not the same as .equals on Doubles
     - primitive comparisions (<, >, <=, >=) on doubles are not the same as
-	.comparesTo on Doubles
+    .comparesTo on Doubles
 */
 // nullable by default, because we don't know what the implementation
 // will do with its random number generator
@@ -256,7 +256,7 @@ public /*@ pure @*/ final class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @	  requires a > 0.0 && a < Double.POSITIVE_INFINITY;
+      @      requires a > 0.0 && a < Double.POSITIVE_INFINITY;
       @   ensures close(a, \result * \result, 2.0E-16);
       @ |}
       @*/
@@ -280,7 +280,7 @@ public /*@ pure @*/ final class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @	  requires a > 0.0 && a < Double.POSITIVE_INFINITY;
+      @      requires a > 0.0 && a < Double.POSITIVE_INFINITY;
       @   ensures close(a, \result * \result * \result, 3.0E-16);
       @ |}
       @*/
@@ -1135,19 +1135,19 @@ public /*@ pure @*/ final class Math {
     // model methods to help make some of the special cases
     // easier to deal with
     /*@ public static model pure function boolean isPositiveZero(double a) {
-	      return java.lang.Double.isPositiveZero(a);
+          return java.lang.Double.isPositiveZero(a);
         }
-	
+    
         public static model pure function boolean isNegativeZero(double a) {
-	      return java.lang.Double.isNegativeZero(a);
+          return java.lang.Double.isNegativeZero(a);
         }
     
         public static model pure function boolean isPositiveZero(float a) {
-	      return java.lang.Float.isPositiveZero(a);
+          return java.lang.Float.isPositiveZero(a);
         }
-	
+    
         public static model pure function boolean isNegativeZero(float a) {
-	      return java.lang.Float.isNegativeZero(a);
+          return java.lang.Float.isNegativeZero(a);
         }
     
         public static model pure function boolean isFinite(double a) {

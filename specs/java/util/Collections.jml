@@ -15,10 +15,10 @@ public class Collections {
 //  public static final java.util.List EMPTY_LIST;
 //  public static final java.util.Map EMPTY_MAP;
 //  private java.util.Collections();
-	
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
+    
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
     public static <T extends Comparable<? super T>> void sort(List<T> list);
 
   //  public static <T> void sort(java.util.List<T>, java.util.Comparator<? super T>);
@@ -105,5 +105,5 @@ public class Collections {
 //  public static <T> boolean addAll(java.util.Collection<? super T>, T...);
 //  public static <E> java.util.Set<E> newSetFromMap(java.util.Map<E, java.lang.Boolean>);
 //  public static <T> java.util.Queue<T> asLifoQueue(java.util.Deque<T>);
-	
+    
 }

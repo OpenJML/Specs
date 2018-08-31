@@ -32,8 +32,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     //-RAC@ ghost public non_null static final String eol;
 
     //-RAC@ public model boolean error;
-	
-	//@ static_initializer
+    
+    //@ static_initializer
 
     /*-RAC@ public normal_behavior
     @   requires os != null;

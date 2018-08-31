@@ -99,7 +99,7 @@ public final class String
       @   signals_only StringIndexOutOfBoundsException, NullPointerException;
       @   signals (NullPointerException) value == null;
       @   signals (StringIndexOutOfBoundsException) offset < 0 || count < 0 ||
-			     (value != null && (offset+count)>value.length);
+                 (value != null && (offset+count)>value.length);
       @
       @ also
       @  public normal_behavior
@@ -193,7 +193,7 @@ public final class String
                            offset<0 || length<0 || (offset+length)>bytes.length;
       @   signals (NullPointerException) bytes==null || charsetName == null;
       @   signals (UnsupportedEncodingException) charsetName != null &&
-					     !supportedEncoding(charsetName);
+                         !supportedEncoding(charsetName);
       @*/
     public /*@ pure @*/ String(byte[] bytes,
                                  int offset, int length,
@@ -225,12 +225,20 @@ public final class String
                            offset<0 || length<0 || (offset+length)>bytes.length;
       @   signals (NullPointerException) bytes==null || charsetName == null;
       @   //signals (UnsupportedEncodingException) charsetName != null &&
-		  //			     !supportedEncoding(charsetName);
+          //                 !supportedEncoding(charsetName);
       @*/
     public /*@ pure @*/ String(byte[] bytes,
                                  int offset, int length,
                                  Charset charsetName)
         throws UnsupportedEncodingException;
+    
+    /*+ESC@ public normal_behavior
+      @   requires bytes != null && charsetName != null;
+      @ also public exceptional_behavior
+      @   requires bytes == null || charsetName == null;
+      @   signals (NullPointerException) bytes==null || charsetName == null;
+      @*/
+    public /*@ pure @*/ String(byte[] bytes, Charset charsetName);
     
     /*@
       @  public exceptional_behavior
@@ -392,6 +400,7 @@ public final class String
 
     /*@  public normal_behavior
       @   requires (* charsetName is the name of a supporting encoding *);
+      @   ensures \fresh(\result);
       @   ensures (\forall int i; 0 <= i && i < \result.length;
       @                    (* \result[i] is the byte at position i of the 
       @                       conversion of this string's chars using charsetName *));
@@ -405,6 +414,7 @@ public final class String
 
     /*@  public normal_behavior
       @   requires  (* charset is a supporting encoding *);
+      @   ensures \fresh(\result);
       @   ensures (\forall int i; 0 <= i && i < \result.length;
       @                    (* \result[i] is the byte at position i of the 
       @                       conversion of this string's chars using charset *));
@@ -417,7 +427,7 @@ public final class String
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior
-      @  ensures \result != null 
+      @  ensures \fresh(\result)
       @           && byteArraysEqual(\result, 
       @                       getBytes(System.getProperty("file.encoding")));
       @*/
@@ -954,7 +964,7 @@ public final class String
       @            && \result.charAt(0) > ' '
       @            && \result.charAt((int)(\result.length() - 1)) > ' ';
       @*/
-	// FIXME - be more precise about what is omitted; also avoid recursion
+    // FIXME - be more precise about what is omitted; also avoid recursion
     public /*@ pure @*/ /*@ non_null @*/ String trim();
 
     /*@ also

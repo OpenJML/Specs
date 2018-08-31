@@ -30,7 +30,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
  
     //-RAC@ public model int initialCapacity;    
     //-RAC@ public model float mLoadFactor;
-	    // Can't use loadFactor because it is a private field identifier
+        // Can't use loadFactor because it is a private field identifier
     
     //-RAC@ public invariant initialCapacity >= 0;  
     //-RAC@ public invariant mLoadFactor > 0;

@@ -2,26 +2,26 @@ package java.security;
 
 //@ non_null_by_default
 public final class KeyPair implements java.io.Serializable {
-	
-	  private static final long serialVersionUID;
-	  //@ spec_public
-	  private PrivateKey privateKey;
-	  //@ spec_public
-	  private PublicKey publicKey;
-	  
-	  //@ public normal_behavior
-	  //@   ensures this.publicKey == publickey;
-	  //@   ensures this.privateKey == privatekey;
-	  //@ pure
-	  public KeyPair(PublicKey publickey, PrivateKey privatekey);
+    
+      private static final long serialVersionUID;
+      //@ spec_public
+      private PrivateKey privateKey;
+      //@ spec_public
+      private PublicKey publicKey;
+      
+      //@ public normal_behavior
+      //@   ensures this.publicKey == publickey;
+      //@   ensures this.privateKey == privatekey;
+      //@ pure
+      public KeyPair(PublicKey publickey, PrivateKey privatekey);
 
-	  //@ public normal_behavior
-	  //@   ensures this.publicKey == \result;
-	  //@ pure
-	  public PublicKey getPublic();
+      //@ public normal_behavior
+      //@   ensures this.publicKey == \result;
+      //@ pure
+      public PublicKey getPublic();
 
-	  //@ public normal_behavior
-	  //@   ensures this.privateKey == \result;
-	  //@ pure
-	  public PrivateKey getPrivate();
+      //@ public normal_behavior
+      //@   ensures this.privateKey == \result;
+      //@ pure
+      public PrivateKey getPrivate();
 }

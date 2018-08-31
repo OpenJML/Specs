@@ -7,14 +7,14 @@ public class ConcurrentLinkedQueue<E> extends java.util.AbstractQueue<E> impleme
 //  private static final sun.misc.Unsafe UNSAFE;
 //  private static final long headOffset;
 //  private static final long tailOffset;
-	
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
+    
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
     public ConcurrentLinkedQueue();
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
     public ConcurrentLinkedQueue(java.util.Collection<? extends E> collection);
 //  public boolean add(E);
 //  final void updateHead(ConcurrentLinkedQueue$Node<E>, ConcurrentLinkedQueue$Node<E>);

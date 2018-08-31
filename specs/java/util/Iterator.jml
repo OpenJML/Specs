@@ -40,8 +40,8 @@ public interface Iterator<E> {
     /*-ESC@ public model instance boolean moreElements;
     @                               in objectState;
     @*/
-	//-ESC@ public represents moreElements = hasNext(); // FIXME - does this recursive definition work for RAC?
-	                                                    // FIXME - should have a warning for ESC
+    //-ESC@ public represents moreElements = hasNext(); // FIXME - does this recursive definition work for RAC?
+                                                        // FIXME - should have a warning for ESC
 
     /** Do we ever return null as an element?
      **/
@@ -52,7 +52,7 @@ public interface Iterator<E> {
     // is not fully represented here.
 
     /** Has remove() been called since the last element was returned?
-     *	It is initially false, since no element has yet been returned.
+     *    It is initially false, since no element has yet been returned.
      **/
     //@ public instance ghost boolean remove_called_since = false;
 
@@ -60,7 +60,7 @@ public interface Iterator<E> {
       @    // assignable objectState;
       @    ensures \result <==> moreElements;
       @*/
-	//@ pure helper
+    //@ pure helper
     boolean hasNext();
 
     /*@ public normal_behavior
