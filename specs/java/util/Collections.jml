@@ -50,8 +50,21 @@ public class Collections {
 //  public static <T> java.util.Set<T> unmodifiableSet(java.util.Set<? extends T>);
 //  public static <T> java.util.SortedSet<T> unmodifiableSortedSet(java.util.SortedSet<T>);
 //  public static <T> java.util.NavigableSet<T> unmodifiableNavigableSet(java.util.NavigableSet<T>);
-//  public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T>);
-//  public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V>);
+
+    //@ public normal_behavior
+    //@   ensures (* \result.isImmutable *);
+    //@   ensures \result.size() == list.size();
+    //@   ensures (\forall int i; 0 <= i && i < \result.size(); \result.get(i) == list.get(i));
+    //@ pure
+    public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T> list);
+
+    //@ public normal_behavior
+    //@   ensures (* \result.isImmutable *);
+    //@   ensures \result.size() == m.size();
+    //@   ensures (\forall int i; 0 <= i && i < \result.size(); \result.get(i) == m.get(i));
+    //@ pure
+    public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V> m);
+
 //  public static <K, V> java.util.SortedMap<K, V> unmodifiableSortedMap(java.util.SortedMap<K, ? extends V>);
 //  public static <K, V> java.util.NavigableMap<K, V> unmodifiableNavigableMap(java.util.NavigableMap<K, ? extends V>);
 //  public static <T> java.util.Collection<T> synchronizedCollection(java.util.Collection<T>);
@@ -81,8 +94,17 @@ public class Collections {
 //  public static final <T> java.util.Set<T> emptySet();
 //  public static <E> java.util.SortedSet<E> emptySortedSet();
 //  public static <E> java.util.NavigableSet<E> emptyNavigableSet();
-//  public static final <T> java.util.List<T> emptyList();
-//  public static final <K, V> java.util.Map<K, V> emptyMap();
+
+    //@ public normal_behavior
+    //@   ensures (*\result.isImmutable *) && \result.isEmpty();
+    //@ pure
+    public static final <T> java.util.List<T> emptyList();
+
+    //@ public normal_behavior
+    //@   ensures (* \result.isImmutable *) && \result.isEmpty();
+    //@ pure
+    public static final <K, V> java.util.Map<K, V> emptyMap();
+    
 //  public static final <K, V> java.util.SortedMap<K, V> emptySortedMap();
 //  public static final <K, V> java.util.NavigableMap<K, V> emptyNavigableMap();
 //  public static <T> java.util.Set<T> singleton(T);
