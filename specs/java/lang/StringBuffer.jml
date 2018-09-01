@@ -31,28 +31,32 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
     //@ public non_null model String accumulatedString;
 
-    /*@ public normal_behavior
-      @   ensures this.accumulatedString.equals("");
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures this.accumulatedString.equals("");
+    //+RAC@   ensures true;
     //@ pure
     public StringBuffer();
 
-    /*@ public normal_behavior
-      @   ensures this.accumulatedString.equals("");
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures this.accumulatedString.equals("");
+    //+RAC@   ensures true;
     //@ pure
     public StringBuffer(int i);
 
-    /*@ public normal_behavior
-      @   ensures this.accumulatedString.equals(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures this.accumulatedString.equals(s);
+    //+RAC@   ensures true;
     //@ pure
     public StringBuffer(/*@non_null*/String s);
 
-    /*@ also public normal_behavior
+    /*-RAC@ also public normal_behavior
       @   modifies accumulatedString;
       @   ensures accumulatedString.equals(\old(accumulatedString + c));
       @   ensures \result == this;
+      @*/
+    // The following is needed because AbstractStringBuilder is not a public class
+    /*+RAC@ also public normal_behavior
+      @   assignable accumulatedString;
       @*/
     public synchronized StringBuffer append(char c);
 
@@ -60,6 +64,10 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(b))));
       @   ensures \result == this;
+      @*/
+    // The following is needed because AbstractStringBuilder is not a public class
+    /*+RAC@ also public normal_behavior
+      @   assignable accumulatedString;
       @*/
     public synchronized StringBuffer append(boolean b);
 
@@ -76,6 +84,10 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   ensures accumulatedString
       @           .equals(\old(String.concat(accumulatedString,"null")));
       @   ensures \result == this;
+      @*/
+    // The following is needed because AbstractStringBuilder is not a public class
+    /*+RAC@ also public normal_behavior
+      @   assignable accumulatedString;
       @*/
     public synchronized StringBuffer append(String s);
 
@@ -98,6 +110,10 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @     assignable accumulatedString;
       @     ensures accumulatedString.equals(\old(String.concat(accumulatedString,o.theString)));
       @     ensures \result == this;
+      @*/
+    // The following is needed because AbstractStringBuilder is not a public class
+    /*+RAC@ also public normal_behavior
+      @   assignable accumulatedString;
       @*/
     public synchronized StringBuffer append(Object o);
 

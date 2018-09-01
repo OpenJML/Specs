@@ -58,11 +58,12 @@ public class Object {
 
     //-RAC@ public model int theHashCode; in objectState;
 
-    /*@  public code normal_behavior
-      @     assignable privateState;
-      @     ensures \result == System.identityHashCode(this);
-      @*/
-    //-RAC@ ensures \result == theHashCode;
+    //@ public normal_behavior
+    //@     assignable privateState;
+    //-RAC@ ensures \result == theHashCode;  
+    //@ also public code normal_behavior
+    //@     assignable privateState;
+    //@     ensures \result == System.identityHashCode(this);
     public int hashCode();
 
     //  FIXME - how do we ensure the following
