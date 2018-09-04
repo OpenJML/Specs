@@ -1,0 +1,10 @@
+package org.hamcrest;
+
+public class Matchers {
+    
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //  FIXME @   ensures \result.matches == (z -> z == x || Object.equals(z,x));
+    //@ pure
+    public static <T> Matcher<T> is(T x);
+}

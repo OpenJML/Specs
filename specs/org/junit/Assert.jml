@@ -6,7 +6,22 @@ public class Assert {
     //@ public normal_behavior
     //@   requires exp == act;
     //@ pure
+    public static void assertEquals(long exp, long act);
+    
+    //@ public normal_behavior
+    //@   requires exp == act;
+    //@ pure
     public static void assertEquals(String s, long exp, long act);
+    
+    //@ public normal_behavior
+    //@   requires exp == act || (exp != null && exp.equals(act));
+    //@ pure
+    public static void assertEquals(Object exp, Object act);
+    
+    //@ public normal_behavior
+    //@   requires exp == act || (exp != null && exp.equals(act));
+    //@ pure
+    public static void assertEquals(String s, Object exp, Object act);
     
     //@ public normal_behavior
     //@   ensures false;
@@ -14,7 +29,7 @@ public class Assert {
     public static void fail(String message);
     
     //@ public normal_behavior
-    //@   requires true;
+    //@   ensures true; // FIXME: matcher.matches(actual);
     //@ pure
     public static <T> void assertThat(T actual, org.hamcrest.Matcher<? super T> matcher);
 }
