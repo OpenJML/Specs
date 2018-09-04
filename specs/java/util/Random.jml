@@ -20,12 +20,30 @@ public class Random implements java.io.Serializable {
   private static final java.io.ObjectStreamField[] serialPersistentFields;
   //private static final sun.misc.Unsafe unsafe; // Non-public api
   private static final long seedOffset;
-  
-  public Random();
   private static long seedUniquifier();
+  private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, java.lang.ClassNotFoundException;
+  private synchronized void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException;
+  private void resetSeed(long seed);
+  
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
+  public Random();
+
+  //@ public normal_behavior
+  //@   ensures true;
+  //@ pure
   public Random(long seed);
+
   private static long initialScramble(long seed);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public synchronized void setSeed(long seed);
+
+  //@ protected normal_behavior
+  //@   requires n > 0;
+  //@   assignable this.content;
+  //@   ensures 0 <= \result && \result < n;
   protected int next(int n);
 
   //@ public normal_behavior
@@ -45,24 +63,56 @@ public class Random implements java.io.Serializable {
   //@   assignable this.content;
   //@   ensures 0 <= \result && \result < n;
   public int nextInt(int n);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public long nextLong();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public boolean nextBoolean();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public float nextFloat();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public double nextDouble();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public synchronized double nextGaussian();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.IntStream ints(long n);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.IntStream ints();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.IntStream ints(long n, int i, int j);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.IntStream ints(int i, int j);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.LongStream longs(long n);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.LongStream longs();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.LongStream longs(long n, long nn, long nnn);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.LongStream longs(long n, long nn);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.DoubleStream doubles(long n);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.DoubleStream doubles();
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.DoubleStream doubles(long n, double d, double dd);
+  //@ public normal_behavior
+  //@   assignable this.content;
   public java.util.stream.DoubleStream doubles(double d, double dd);
-  private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, java.lang.ClassNotFoundException;
-  private synchronized void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException;
-  private void resetSeed(long seed);
+
 }
