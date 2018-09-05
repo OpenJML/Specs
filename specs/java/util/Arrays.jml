@@ -2156,43 +2156,43 @@ public class Arrays {
 
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(long[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(int[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(short[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(char[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(byte[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(boolean[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(float[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(double[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int hashCode(java.lang.Object[] b);
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ pure helper
     public static int deepHashCode(java.lang.Object[] b);
 
 }
