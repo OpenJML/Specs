@@ -10,14 +10,14 @@ public final class Objects {
   //@   ensures (obj1 == null && obj2 != null || obj1 != null && obj2 == null) ==> !\result;
   //@   ensures (obj1 != null && obj2 != null) ==> \result == obj1.equals(obj2);
   //@ pure
-  public static boolean equals(java.lang.Object obj1, java.lang.Object obj2);
+  public static boolean equals(/*@ nullable */java.lang.Object obj1, /*@ nullable */java.lang.Object obj2);
   // FIXME - more to specify
-  public static boolean deepEquals(java.lang.Object obj1, java.lang.Object obj2);
+  public static boolean deepEquals(/*@ nullable */java.lang.Object obj1, /*@ nullable */java.lang.Object obj2);
   
   //@ public normal_behavior
   //@   ensures \result == (obj == null ? 0 : obj.hashCode());
   //@ pure function
-  public static int hashCode(java.lang.Object obj);
+  public static int hashCode(/*@ nullable */java.lang.Object obj);
   
   //@ public normal_behavior
   //@   ensures \result == Arrays.hashCode(objs);
