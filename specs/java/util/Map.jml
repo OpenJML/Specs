@@ -77,7 +77,7 @@ public interface Map<K,V> {
      */
           
     //-RAC@ public model instance non_null Content content; in objectState;
-    //-RAC@ public invariant content.owner == this;
+    //-RAC@ public invariant isImmutable || content.owner == this;
 
     /*-RAC@ public normal_behavior
       @   ensures \result <==> ( 
