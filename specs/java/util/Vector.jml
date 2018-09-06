@@ -55,7 +55,6 @@ public class Vector<E> extends AbstractList<E>
 
     protected /*@ spec_public @*/ int elementCount; //@ in objectState;
 
-    //-RAC@ public invariant !isImmutable;
     //@ public invariant 0 <= elementCount;
 
     // I'm commenting out the following, since this is guaranteed by the postcondition of size()
@@ -72,6 +71,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures containsNull;
       @    ensures isEmpty();
       @    ensures elementCount == 0;
+      @    ensures !isImmutable;
       @*/
     public /*@ pure @*/ Vector (int initialCapacity, int capacityIncrement);
 
@@ -82,6 +82,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures containsNull;
       @    ensures isEmpty();
       @    ensures elementCount == 0;
+      @    ensures !isImmutable;
       @*/
     public /*@ pure @*/ Vector(int initialCapacity);
 
@@ -96,6 +97,7 @@ public class Vector<E> extends AbstractList<E>
 
     /*@ public normal_behavior
       @    requires c != null;
+      @    ensures !isImmutable;
       @    ensures elementCount == c.size();
       @    ensures this.containsNull == c.containsNull;
       @    ensures this.content.theSize == c.content.theSize;
@@ -121,6 +123,7 @@ public class Vector<E> extends AbstractList<E>
                // theHashCode is not changed because the result does not
                // change equals
       @    ensures \not_modified(elementCount,containsNull);
+      @    ensures \not_modified(isImmutable);
       @    ensures \not_modified(content.theSize);
       @    ensures (\forall int i; 0<=i && i<size(); get(i) == \old(get(i)));
       @    ensures maxCapacity == elementCount;
@@ -135,6 +138,7 @@ public class Vector<E> extends AbstractList<E>
     //@  also
     //@    requires minCapacity > maxCapacity;
     //@    assignable objectState;
+    //-RAC@    ensures \not_modified(isImmutable);
     //-RAC@    ensures \not_modified(theString,theHashCode);
     //@           // theHashCode is not changed because the result does not
     //@           // changes equals
@@ -164,6 +168,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures elementCount == newSize; */
     /*-RAC@    ensures \not_modified(theString,theHashCode);
       @    ensures \not_modified(containsNull);
+      @   ensures \not_modified(isImmutable);
       @   ensures (\forall int i; 0<=i && i<elementCount;
       @            elementData[i] == \old(elementData[i])); */
     //@  also

@@ -33,6 +33,7 @@ public class ArrayList<E> extends AbstractList<E>
       @                  initialAbstractList() &&
       @                  capacity == initialCapacity &&
       @                  isEmpty() &&
+      @                  !isImmutable &&
       @                  containsNull;
       @ public pure model boolean initialArrayList(int initialCapacity);
       @*/
@@ -42,8 +43,6 @@ public class ArrayList<E> extends AbstractList<E>
      **/
     /*@ public model int capacity; in objectState;
       @*/
-
-    //-RAC@ public invariant !isImmutable;
 
     // METHODS AND CONSTRUCTORS
     //@ public normal_behavior
@@ -70,6 +69,7 @@ public class ArrayList<E> extends AbstractList<E>
       @                     this.get(i) == (c.iterator().nthNextElement(i)));
       @   ensures capacity == c.size()*1.1;
       @   ensures containsNull == c.containsNull;
+      @   ensures !isImmutable;
       @ also
       @  public exceptional_behavior
       @   requires c == null;
@@ -81,7 +81,7 @@ public class ArrayList<E> extends AbstractList<E>
     /*-RAC@  public normal_behavior
       @   assignable objectState;
       @   ensures \not_modified(containsNull,content.theSize,content,
-                                                   theString,theHashCode);
+      @                         isImmutable, theString,theHashCode);
       @   ensures capacity == this.size();
       @*/
     public void trimToSize();
@@ -91,6 +91,7 @@ public class ArrayList<E> extends AbstractList<E>
       @   ensures capacity >= minCapacity;
       @   ensures \not_modified(containsNull,content.theSize,content);
       @   ensures \not_modified(theString,theHashCode);
+      @   ensures \not_modified(isImmutable);
       @*/
     public void ensureCapacity(int minCapacity);
 

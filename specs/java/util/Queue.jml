@@ -28,8 +28,6 @@ package java.util;
 
 public interface Queue<E> extends Collection<E> {
     
-    //-RAC@ public invariant !isImmutable;
-    
     /*-RAC@ public normal_behavior
       @   requires n >= 0 && n < content.theSize;
       @   ensures !\fresh(\result);
@@ -47,6 +45,7 @@ public interface Queue<E> extends Collection<E> {
       @*/
     
     /*-RAC@ also public behavior
+      @   requires !isImmutable;
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
       @   ensures \result;
@@ -98,6 +97,7 @@ public interface Queue<E> extends Collection<E> {
       @   assignable \nothing;
       @ also
       @ public normal_behavior
+      @   requires !isImmutable;
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
       @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
@@ -112,6 +112,7 @@ public interface Queue<E> extends Collection<E> {
       @   assignable \nothing;
       @ also
       @ public normal_behavior
+      @   requires !isImmutable;
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
       @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));

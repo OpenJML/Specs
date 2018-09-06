@@ -1,16 +1,16 @@
 package java.util;
 
 public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, java.io.Serializable {
-    //-RAC@ public invariant !isImmutable;
-    
     //@ public normal_behavior
     //@   ensures initialAbstractMap();
+    //@   ensures !isImmutable;
     public HashMap();
     
     //@ public normal_behavior
     //@   requires m != null;
     //@   ensures this.size() == m.size();
     //@   ensures this.entrySet().equals( m.entrySet() );
+    //@   ensures !isImmutable;
     //@ also public exceptional_behavior
     //@   requires m == null;
     //@   signals_only NullPointerException;
