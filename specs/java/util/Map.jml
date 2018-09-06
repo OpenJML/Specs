@@ -77,7 +77,7 @@ public interface Map<K,V> {
      */
           
     //-RAC@ public model instance non_null Content content; in objectState;
-    //-RAC@ public invariant content.owner == this;
+    //-RAC@ public invariant isImmutable || content.owner == this;
 
     /*-RAC@ public normal_behavior
       @   ensures \result <==> ( 
@@ -150,6 +150,13 @@ public interface Map<K,V> {
           @*/
     }
 
+    /**
+     * True iff map is specified to be immutable (mutators throw 
+     * UnsupportedOperationException), required by various asImmutable*() 
+     * methods in Collections
+     */
+    //-RAC@ model public instance boolean isImmutable;
+
     //@ public normal_behavior
     //@   ensures (* \result == content.theSize *);
     //-RAC@   ensures \result == content.theSize;
@@ -202,6 +209,7 @@ public interface Map<K,V> {
     /*@ pure @*/ V get(Object key);
 
     /*-RAC@ public behavior
+      @    requires !isImmutable;
       @    assignable objectState;
       @    ensures content.hasMap(key);
       @    ensures !isEmpty() && containsKey(key) && containsValue(value);
@@ -232,6 +240,10 @@ public interface Map<K,V> {
                         \old(content.mapsObject(k)) == content.mapsObject(k));
       @    ensures key != null ==> \old(content.mapsObject(null)) 
                                        == content.mapsObject(null);
+      @ also public exceptional_behavior
+      @   requires isImmutable;
+      @   assignable \nothing;
+      @   signals_only UnsupportedOperationException;
       @*/
     /* FIXME @
       @    signals (NullPointerException) \not_modified(value)
@@ -248,6 +260,7 @@ public interface Map<K,V> {
     V put(K key, V value);
 
     /*-RAC@ public behavior
+      @    requires !isImmutable;
       @    assignable objectState;
       @    ensures !content.hasMapObject(key);
       @    ensures !content.hasMap(key);
@@ -268,9 +281,15 @@ public interface Map<K,V> {
       @    signals (NullPointerException) key == null
       @              && (* if this map doesn't support null keys *);
       @*/
+    /*-RAC@ also public exceptional_behavior
+      @   requires isImmutable;
+      @   assignable \nothing;
+      @   signals_only UnsupportedOperationException;
+      @*/
     V remove(Object key);
 
-    /*@ public behavior
+    /*-RAC@ public behavior
+           requires !isImmutable;
            requires t != null;
            assignable objectState;
            ensures \old(isEmpty() && t.isEmpty()) <==> isEmpty();
@@ -281,9 +300,14 @@ public interface Map<K,V> {
            ensures (\forall Object k; \old(containsKey(k) && !t.containsKey(k))
                                               ==> get(k) == \old(get(k)));
         also public exceptional_behavior
+           requires !isImmutable;
            requires t == null;
            assignable \nothing;
            signals_only NullPointerException;
+        also public exceptional_behavior
+          requires isImmutable;
+          assignable \nothing;
+          signals_only UnsupportedOperationException;
       @*/
      /*  FIXME
       @    signals (NullPointerException) \not_modified(theMap)
@@ -300,9 +324,14 @@ public interface Map<K,V> {
     void putAll(Map<? extends K, ? extends V> t);
 
     /*-RAC@ public normal_behavior
-      @    assignable objectState;
-      @    ensures isEmpty();
-      @    ensures (\forall Object k; !content.hasMapObject(k));
+      @   requires !isImmutable;
+      @   assignable objectState;
+      @   ensures isEmpty();
+      @   ensures (\forall Object k; !content.hasMapObject(k));
+      @ also public exceptional_behavior
+      @   requires isImmutable;
+      @   assignable \nothing;
+      @   signals_only UnsupportedOperationException;
       @*/
     void clear();
     
@@ -315,18 +344,18 @@ public interface Map<K,V> {
     //@    ensures \result == _keySet;
     /*@ pure @*/ Set<K> keySet();
 
-    /*@ public normal_behavior 
-      @    ensures \result != null;
-      @    ensures \result.size() >= 0; // FIXME - why needed?
-           // FIXME
-      @*/
+    //@ public normal_behavior 
+    //@    ensures \result != null;
+    //@    ensures \result.size() >= 0; // FIXME - why needed?
+    //-RAC@    ensures isImmutable <==> \result.isImmutable;
+    //@ // FIXME
     /*@ pure @*/ Collection<V> values();
 
-    /*@ public normal_behavior
-      @    ensures \result != null; 
-      @    ensures \result.size() >= 0;  // FIXME - why needed?
-           // FIXME
-      @*/
+    //@ public normal_behavior
+    //@    ensures \result != null; 
+    //@    ensures \result.size() >= 0;  // FIXME - why needed?
+    //-RAC@    ensures isImmutable <==> \result.isImmutable;
+    //@ // FIXME
     /*@ pure @*/ Set<Entry<K,V>> entrySet();
 
     /*@

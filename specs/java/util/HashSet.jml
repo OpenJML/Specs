@@ -3,18 +3,22 @@ package java.util;
 public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneable, java.io.Serializable {
 
     //@ public normal_behavior ensures true;
+    //-RAC@ ensures !isImmutable;
     //@ pure
     public HashSet();
     
     //@ public normal_behavior ensures true;
+    //-RAC@ ensures !isImmutable;
     //@ pure
     public HashSet(Collection<? extends E> c);
     
     //@ public normal_behavior ensures true;
+    //-RAC@ ensures !isImmutable;
     //@ pure
     public HashSet(int initialCapacity);
     
     //@ public normal_behavior ensures true;
+    //-RAC@ ensures !isImmutable;
     //@ pure
     public HashSet(int initialCapacity, float loadFactor);
     
@@ -37,5 +41,4 @@ public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneab
     //@ also public normal_behavior ensures true;
     //@ pure
     public int size();
-    
 }

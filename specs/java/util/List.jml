@@ -112,6 +112,7 @@ public interface List<E> extends Collection<E> {
     <T> T[] toArray(T[] a) throws NullPointerException;
 
     /*-RAC@ also public normal_behavior
+      @   requires !isImmutable;
       @   requires !containsNull ==> o != null;
       @   assignable content;
       @   ensures content != null;  // FIXME - not strictly necessary
@@ -126,6 +127,7 @@ public interface List<E> extends Collection<E> {
 
     /*-RAC@
       @ also public normal_behavior
+      @   requires !isImmutable;
       @   requires contains(o);
       @   assignable objectState;
       @   ensures content.theSize == \old(content.theSize-1);
@@ -134,6 +136,7 @@ public interface List<E> extends Collection<E> {
               (\forall \bigint k; 0<=k && k<j; get(content,k) == \old(get(content,k)))
           &&  (\forall \bigint k; j<k && k<content.theSize; get(content,k-1)==\old(get(content,k+1)))); */
     /*-RAC@ also public exceptional_behavior
+      @   requires !isImmutable;
       @   requires !contains(o);
       @   assignable \nothing;
       @   signals_only NoSuchElementException;
@@ -186,6 +189,7 @@ public interface List<E> extends Collection<E> {
 
     /*-RAC@
       @ public behavior
+      @ requires !isImmutable;
       @ requires !containsNull ==> element != null;
       @ {|
       @   requires 0 <= index && index < size();
@@ -214,10 +218,15 @@ public interface List<E> extends Collection<E> {
       @   ensures false;
       @   signals_only IndexOutOfBoundsException;
       @ |}
+      @ also public exceptional_behavior
+      @   requires isImmutable;
+      @   assignable \nothing;
+      @   signals_only UnsupportedOperationException;
       @*/
     E set(int index, E element);
     
     /*-RAC@ public behavior
+      @   requires !isImmutable;
       @   requires !containsNull ==> element != null;
       @   {|
       @     requires  0 <= index && index <= size();
@@ -248,6 +257,10 @@ public interface List<E> extends Collection<E> {
       @   ensures false;
       @   signals_only IndexOutOfBoundsException;
       @ |}
+      @ also public exceptional_behavior
+      @   requires isImmutable;
+      @   assignable \nothing;
+      @   signals_only UnsupportedOperationException;
       @*/
     /*+RAC@ public behavior
       @   requires  0 <= index && index <= size();
@@ -264,6 +277,7 @@ public interface List<E> extends Collection<E> {
     void add(int index, E element);
 
     /*-RAC@ public behavior
+      @   requires !isImmutable;
       @   requires  0 <= index && index < size();
       @   assignable objectState;
       @   ensures \not_modified(containsNull);
@@ -279,9 +293,14 @@ public interface List<E> extends Collection<E> {
       @            (* remove method not supported by list *);
           // FIXME - other exceptions?
       @ also public exceptional_behavior
+      @   requires !isImmutable;
       @   requires !(0 <= index && index < size());
       @   assignable \nothing;
       @   signals_only IndexOutOfBoundsException;
+      @ also public exceptional_behavior
+      @   requires isImmutable;
+      @   assignable \nothing;
+      @   signals_only UnsupportedOperationException;
       @*/
     E remove(int index);
 
