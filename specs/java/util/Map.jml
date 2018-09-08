@@ -70,9 +70,9 @@ public interface Map<K,V> {
         public invariant content.theSize == 0 ==> !content.hasMap(null);
       @*/
     /*-RAC@ axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
-                                   && c.hasMapObject(null) <==> c.hasMap(null));
+                                   && (c.hasMapObject(null) <==> c.hasMap(null)));
         axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)) 
-                               && c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null));
+                               && (c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null)));
         // Z3 performed better with the conjunct in the above specs. cf git issue #644
      */
           
