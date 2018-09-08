@@ -30,7 +30,7 @@ public final class Optional<T> {
 
   //@ public normal_behavior
   //@   requires t != null;
-  //@   ensures \fresh(\result);
+  //-RAC@   ensures \fresh(\result);
   //@   ensures \result.value == t;
   //@ also public exceptional_behavior
   //@   requires t == null;
@@ -39,7 +39,7 @@ public final class Optional<T> {
   public static <T> Optional<T> of(T t); // non-null required
 
   //@ public normal_behavior
-  //@   ensures \fresh(\result);
+  //-RAC@   ensures \fresh(\result);
   //@   ensures \result.value == t;
   //@ pure function
   public static <T> Optional<T> ofNullable(/*@ nullable */ T t);
