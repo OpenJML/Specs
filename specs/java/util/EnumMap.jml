@@ -1,5 +1,6 @@
 package java.util;
 
+//@ non_null_by_default
 public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements java.io.Serializable, Cloneable {
     //@ spec_public
     private final java.lang.Class<K> keyType;
@@ -37,10 +38,12 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
 //  public boolean containsValue(java.lang.Object);
 //  public boolean containsKey(java.lang.Object);
 //  private boolean containsMapping(java.lang.Object, java.lang.Object);
-//  public V get(java.lang.Object);
-//  public V put(K, V);
-//  public V remove(java.lang.Object);
-//  private boolean removeMapping(java.lang.Object, java.lang.Object);
+    @Override
+    public /*@ nullable */ V get(/*@ nullable */ java.lang.Object o);
+    @Override
+    public /*@ nullable */ V put(/*@ nullable */ K k, /*@ nullable */ V v);
+//  public /*@ nullable */ V remove(/*@ nullable */ java.lang.Object);
+//  private boolean removeMapping(/*@ nullable */ java.lang.Object, /*@ nullable */ java.lang.Object);
 //  private boolean isValidKey(java.lang.Object);
 //  public void putAll(java.util.Map<? extends K, ? extends V>);
 //  public void clear();

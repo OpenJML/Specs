@@ -21,7 +21,11 @@ public class SecureRandom extends java.util.Random {
     public SecureRandom();
 //    public SecureRandom(byte[]);
 //    private void getDefaultPRNG(boolean, byte[]);
-//    protected SecureRandom(SecureRandomSpi, Provider);
+
+    //@ protected normal_behavior
+    //@   ensures true;
+    //@ pure
+    protected SecureRandom(SecureRandomSpi s, Provider p);
 //    private SecureRandom(SecureRandomSpi, Provider, java.lang.String);
 //    public static SecureRandom getInstance(java.lang.String) throws NoSuchAlgorithmException;
 //    public static SecureRandom getInstance(java.lang.String, java.lang.String) throws NoSuchAlgorithmException, NoSuchProviderException;

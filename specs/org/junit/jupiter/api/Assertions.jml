@@ -1,0 +1,14 @@
+package org.junit.jupiter.api;
+
+class Assertions {
+    
+    //@ public normal_behavior
+    //@   requires act == exp || (act != null && acxt.equals(exp));
+    //@ pure
+    public static void assertSame(Object act, Object exp);
+    
+    //@ public normal_behavior
+    //@   requires act == exp || (act != null && acxt.equals(exp));
+    //@ pure
+    public static void assertThrows(Object act, Object exp);
+}

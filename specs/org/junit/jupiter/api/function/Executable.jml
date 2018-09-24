@@ -1,0 +1,10 @@
+package org.junit.jupiter.api.function;
+
+@FunctionalInterface
+public interface Executable {
+    
+    //@ public behavior
+    //@// TODO: Need a solution for the frame condition
+    void execute() throws Throwable;
+
+}

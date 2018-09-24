@@ -1,5 +1,6 @@
 package org.junit.rules;
 
+//@ non_null_by_default
 public class ExpectedException {
     
     //@ model public JMLDataGroup expectedExceptions;

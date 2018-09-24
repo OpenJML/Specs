@@ -1,14 +1,25 @@
 package org.junit;
 
-//@ non_null_by_default
+//@ nullable_by_default
 public class Assert {
     
+    //@ public normal_behavior
+    //@   requires predicate;
+    //@ pure
+    public static void assertTrue(boolean predicate);
+
+    //@ public normal_behavior
+    //@   requires !predicate;
+    //@ pure
+    public static void assertFalse(boolean predicate);
+
     //@ public normal_behavior
     //@   requires exp == act;
     //@ pure
     public static void assertEquals(long exp, long act);
     
     //@ public normal_behavior
+    //@   requires s != null;
     //@   requires exp == act;
     //@ pure
     public static void assertEquals(String s, long exp, long act);
@@ -19,16 +30,19 @@ public class Assert {
     public static void assertEquals(Object exp, Object act);
     
     //@ public normal_behavior
+    //@   requires s != null;
     //@   requires exp == act || (exp != null && exp.equals(act));
     //@ pure
     public static void assertEquals(String s, Object exp, Object act);
     
     //@ public normal_behavior
+    //@   requires message != null;
     //@   ensures false;
     //@ pure
     public static void fail(String message);
     
     //@ public normal_behavior
+    //@   requires matcher != null;
     //@   ensures true; // FIXME: matcher.matches(actual);
     //@ pure
     public static <T> void assertThat(T actual, org.hamcrest.Matcher<? super T> matcher);

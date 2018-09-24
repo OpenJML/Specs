@@ -194,7 +194,7 @@ public interface Map<K,V> {
 
            // FIXME - exceptions?
       @*/
-    /*@ pure @*/ V get(Object key);
+    /*@ pure nullable @*/ V get(/*@ nullable */ Object key);
 
     /*-RAC@ public behavior
       @    assignable objectState;
