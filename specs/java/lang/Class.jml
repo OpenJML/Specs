@@ -145,6 +145,7 @@ public final class Class<T> implements java.io.Serializable,
     // FIXME - really need a better way to express this
      * */
     //@ public normal_behavior
+    //@   requires true;
     //@ pure helper
     public boolean isArray();
 
