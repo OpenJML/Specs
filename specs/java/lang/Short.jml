@@ -172,14 +172,12 @@ public /*@ pure @*/ final
             throws NumberFormatException ;
 
     /*@ public normal_behavior
-      @   assignable theShort;
       @   ensures theShort == value;
       @*/
     public Short(short value) ;
 
     /*@ public normal_behavior
       @   requires parseable(s,10);
-      @   assignable theShort;
       @   ensures theShort == parseShort(s);
       @ also
       @ public exceptional_behavior

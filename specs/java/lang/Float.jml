@@ -125,20 +125,17 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     public static /*@ pure @*/ boolean isInfinite(float v);
 
     /*@ public normal_behavior
-      @   assignable theFloat;
       @   ensures identical(theFloat, value);
       @*/
     public Float(float value);
 
     /*@ public normal_behavior
-      @   assignable theFloat;
       @   ensures identical(theFloat, (float)value);
       @*/
     public Float(double value);
 
     /*@ public normal_behavior
       @   requires parseable(s);
-      @   assignable theFloat;
       @   ensures identical(theFloat, parseFloat(s));
       @ also
       @ public exceptional_behavior

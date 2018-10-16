@@ -200,14 +200,12 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   assignable theByte;
       @   ensures theByte == value;
       @*/
     public Byte(byte value);
 
     /*@ public normal_behavior
       @   requires parseable(s);
-      @   assignable theByte;
       @   ensures theByte == parseByte(s);
       @ also
       @ public exceptional_behavior

@@ -110,7 +110,6 @@ public class Throwable extends Object implements java.io.Serializable
       @*/
 
     /*@ public normal_behavior
-      @   assignable _message, _cause, _stackTrace;
       @   ensures _message == null;
       @   ensures _cause == null;
       @   ensures !_causeSet;
@@ -119,7 +118,6 @@ public class Throwable extends Object implements java.io.Serializable
     public /*@pure*/ Throwable();
 
     /*@ public normal_behavior
-      @   assignable _message, _cause, _stackTrace;
       @   ensures _message == message;
       @   ensures _cause == null;
       @   ensures !_causeSet;

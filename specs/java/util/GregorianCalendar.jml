@@ -467,9 +467,9 @@ public class GregorianCalendar extends Calendar {
 
     /*@ public normal_behavior
       @ requires zone != null;
-      @ assignable this.zone, locale;
       @ ensures this.zone.equals(zone)
       @         && locale.equals(Locale.getDefault());
+      @ pure
       @*/
     public GregorianCalendar(TimeZone zone);
 
@@ -483,11 +483,9 @@ public class GregorianCalendar extends Calendar {
 
     /*@ public normal_behavior
       @ requires zone != null && aLocale != null;
-      @ assignable this.zone, locale;
-      @ assignable_redundantly time, isTimeSet, areFieldsSet, 
-      @                        areAllFieldsSet;
       @ ensures this.zone.equals(zone) && locale.equals(aLocale);
       @ ensures_redundantly milliFieldsAreSet();
+      @ pure
       @*/
     public GregorianCalendar(TimeZone zone, Locale aLocale);
 

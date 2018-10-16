@@ -122,15 +122,12 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ boolean isInfinite(double v);
 
-    /*@ public normal_behavior
-      @   assignable theDouble;
-      @   ensures identical(theDouble, value);
-      @*/
+    //@ public normal_behavior
+    //@   ensures identical(theDouble, value);
     public Double(double value);
 
     /*@ public normal_behavior
       @   requires parseable(s);
-      @   assignable theDouble;
       @   ensures identical(theDouble, parseDouble(s));
       @ also
       @ public exceptional_behavior

@@ -34,8 +34,8 @@ public class Observable {
       @*/
 
     /*@ public normal_behavior
-      @   assignable observers, _changed;
       @   ensures observers.length==0 && !_changed;
+      @ pure
       @*/
     public Observable();
 

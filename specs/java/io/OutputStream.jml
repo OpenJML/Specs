@@ -51,7 +51,6 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     // METHODS AND CONSTRUCTORS
 
     /*-RAC@ public normal_behavior
-      @   assignable isOpen, outputBytes;
       @   ensures !isOpen;
       @   ensures !wasClosed;
       @   ensures outputBytes.length == 0;
