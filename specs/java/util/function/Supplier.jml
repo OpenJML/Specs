@@ -3,9 +3,11 @@ package java.util.function;
 @FunctionalInterface
 public interface Supplier<T> {
 
-    //@ model public nullable instance T value;
+    //-RAC@ model public nullable instance T value;
     
-    //@ public behavior requires true; ensures \result == value;
+    //@ public behavior 
+    //@     requires true; 
+    //-RAC@ ensures \result == value;
     /*@ nullable */ T get();
     
     /*@
@@ -16,7 +18,7 @@ public interface Supplier<T> {
     }
 
     model public static interface PureNonNull<T> extends Supplier<T> {
-         public invariant value != null;
+         //0-RAC@ public invariant value != null;
          also public normal_behavior requires true;
          pure non_null T get();
     }
