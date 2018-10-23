@@ -1,19 +1,19 @@
 package java.nio.channels;
 
 public interface Channel extends java.io.Closeable {
-	
-	//@ public model instance boolean _isOpen; in autocloseableContent;
-	
-	//@ public model byte[] bytes;
-	
-	//@ public normal_behavior
-	//@   ensures \result == _isOpen;
-	//@ pure
-	public abstract boolean isOpen();
+    
+    //@ public model instance boolean _isOpen; in autocloseableContent;
+    
+    //@ public model byte[] bytes;
+    
+    //@ public normal_behavior
+    //@   ensures \result == _isOpen;
+    //@ pure
+    public abstract boolean isOpen();
 
-	//@ also public behavior
-	//@   assignable _isOpen, autocloseableContent;
-	//@   ensures !_isOpen;
-	//@   signals_only java.io.IOException;
-	public abstract void close() throws java.io.IOException;
+    //@ also public behavior
+    //@   assignable _isOpen, autocloseableContent;
+    //@   ensures !_isOpen;
+    //@   signals_only java.io.IOException;
+    public abstract void close() throws java.io.IOException;
 }

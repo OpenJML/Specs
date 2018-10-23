@@ -1,0 +1,17 @@
+package org.junit.rules;
+
+public class ExpectedException {
+    
+    //@ model public JMLDataGroup expectedExceptions;
+    //@ model public boolean exceptionAllowed; in expectedExceptions;
+    
+    //@ public normal_behavior
+    //@   ensures \result.exceptionAllowed == false;
+    //@ pure
+    public static ExpectedException none();
+    
+    
+    //@ public normal_behavior
+    //@   assignable expectedExceptions;
+    public void expect(Class<? extends Throwable> exception);
+}

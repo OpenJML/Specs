@@ -301,8 +301,8 @@ public class BitSet implements Cloneable, java.io.Serializable{
     /*@ also public normal_behavior
       @   requires o != null && o instanceof BitSet; */
     /*-RAC@  ensures \result <==> (\forall int i; 
-      @			0<=i;
-      @             	isSet(content,i) == isSet(((BitSet)o).content,i)); 
+      @            0<=i;
+      @                 isSet(content,i) == isSet(((BitSet)o).content,i)); 
       @*/
     /*@   ensures \result ==> (cardinality() == ((BitSet)o).cardinality());
       @ also public normal_behavior

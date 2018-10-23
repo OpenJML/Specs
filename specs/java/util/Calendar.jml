@@ -126,9 +126,9 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
 
     /*@ protected normal_behavior
-       @        assignable zone, locale;
        @        ensures_redundantly zone.equals(TimeZone.getDefault()) && 
        @                            locale.equals(Locale.getDefault());
+       @ pure
        @*/
     protected Calendar();
 
@@ -141,11 +141,11 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
     /*@ protected normal_behavior
        @        old int[] data = (int[]) cachedLocaleData.get(aLocale);
        @        requires zone != null && aLocale != null;
-       @        assignable this.zone, locale, firstDayOfWeek, minimalDaysInFirstWeek;
        @        ensures this.zone.equals(zone)
        @             && this.locale.equals(aLocale)
        @             && firstDayOfWeek == data[0]
        @             && minimalDaysInFirstWeek == data[1];
+       @ pure
        @*/
     protected Calendar(TimeZone zone, Locale aLocale);
 

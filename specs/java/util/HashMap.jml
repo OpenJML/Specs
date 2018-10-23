@@ -2,4 +2,13 @@ package java.util;
 
 public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, java.io.Serializable {
 
+    //@ public normal_behavior
+    //@       requires m != null;
+    //@       ensures size() == m.size();
+    //-RAC@   ensures (\forall Object o; ; get(o) == m.get(o));
+    //@ pure
+    public HashMap(Map<? extends K, ? extends V> m);
+    
+    @Override
+    V get(Object key);
 }

@@ -40,8 +40,8 @@ public class Vector<E> extends AbstractList<E>
     // not included in objectState, because this never changes, except
     // perhaps by direct assignment
 
-    /*@ public invariant maxCapacity >= 0 
-      @          && elementCount <= maxCapacity;
+    /*-RAC@
+      @ public invariant maxCapacity >= 0 && elementCount <= maxCapacity;
       @*/
 
     // protected members (for type checking in the java.util package
@@ -50,12 +50,12 @@ public class Vector<E> extends AbstractList<E>
     protected Object[] elementData; //@ in objectState; 
     //@                   maps elementData[*] \into objectState;
 
-    //@ public invariant elementData.owner == this; 
-    //@ public invariant elementData.length >= maxCapacity;
+    //-RAC@ public invariant elementData.owner == this; 
+    //-RAC@ public invariant elementData.length >= maxCapacity;
 
     protected /*@ spec_public @*/ int elementCount; //@ in objectState;
 
-    //@ public invariant 0 <= elementCount;
+    //-RAC@ public invariant 0 <= elementCount;
 
     // I'm commenting out the following, since this is guaranteed by the postcondition of size()
     // and this only baffles the prover.
@@ -64,54 +64,46 @@ public class Vector<E> extends AbstractList<E>
 
     // Public Constructors
 
-    /*@  public normal_behavior
-      @    requires initialCapacity >= 0 && capacityIncrement >= 0;
-      @    ensures maxCapacity == initialCapacity
-      @        && this.capacityIncrement == capacityIncrement;
-      @    ensures containsNull;
-      @    ensures isEmpty();
-      @    ensures elementCount == 0;
-      @*/
+    //@  public normal_behavior
+    //@    requires initialCapacity >= 0 && capacityIncrement >= 0;
+    //-RAC@ ensures maxCapacity == initialCapacity && this.capacityIncrement == capacityIncrement;
+    //-RAC@ ensures containsNull;
+    //@    ensures isEmpty();
+    //-RAC@    ensures elementCount == 0;
     public /*@ pure @*/ Vector (int initialCapacity, int capacityIncrement);
 
-    /*@  public normal_behavior
-      @    requires initialCapacity >= 0;
-      @    ensures maxCapacity == initialCapacity
-      @        && capacityIncrement == 0;
-      @    ensures containsNull;
-      @    ensures isEmpty();
-      @    ensures elementCount == 0;
-      @*/
+    //@  public normal_behavior
+    //@    requires initialCapacity >= 0;
+    //-RAC@ ensures maxCapacity == initialCapacity && capacityIncrement == 0;
+    //-RAC@ ensures containsNull;
+    //@    ensures isEmpty();
+    //-RAC@    ensures elementCount == 0;
     public /*@ pure @*/ Vector(int initialCapacity);
 
-    /*@  public normal_behavior
-      @    ensures containsNull;
-      @    ensures maxCapacity > 0 && capacityIncrement == 0;
-      @    ensures elementCount == 0;
-      @    ensures content.theSize == 0;
-      @    ensures isEmpty();
-      @*/
+    //@  public normal_behavior
+    //-RAC@    ensures maxCapacity > 0 && capacityIncrement == 0;
+    //-RAC@    ensures elementCount == 0;
+    //-RAC@    ensures content.theSize == 0;
+    //@    ensures isEmpty();
+    //-RAC@ ensures containsNull;
     public /*@ pure @*/ Vector();
 
-    /*@ public normal_behavior
-      @    requires c != null;
-      @    ensures elementCount == c.size();
-      @    ensures this.containsNull == c.containsNull;
-      @    ensures this.content.theSize == c.content.theSize;
-      @    ensures (\forall Object o; c.contains(o) <==> this.contains(o));
+    //@ public normal_behavior
+    //@    requires c != null;
+    //-RAC@    ensures elementCount == c.size();
+    //-RAC@    ensures this.containsNull == c.containsNull;
+    //-RAC@    ensures this.content.theSize == c.content.theSize;
+    //@    ensures (\forall Object o; c.contains(o) <==> this.contains(o));
                // FIXME - what about duplicate entries?
-      @*/
     public /*@ pure @*/ Vector(/*@non_null*/ Collection<? extends E> c);
 
 
-    /*@ public normal_behavior
-      @    requires anArray != null;
-      @    requires elementCount <= anArray.length;
-      @    assignable anArray[0 .. elementCount - 1];
-      @    ensures (\forall int i; 0 <= i && i < elementCount;
-      @                             get(i) == anArray[i]);
-      @    ensures !containsNull ==> !\nonnullelements(anArray);
-      @*/
+    //@ public normal_behavior
+    //@    requires anArray != null;
+    //-RAC@    requires elementCount <= anArray.length;
+    //-RAC@    assignable anArray[0 .. elementCount - 1];
+    //-RAC@    ensures (\forall int i; 0 <= i && i < elementCount; get(i) == anArray[i]);
+    //-RAC@    ensures !containsNull ==> !\nonnullelements(anArray);
     public synchronized void copyInto(Object[] anArray);
 
     /*-RAC@ public normal_behavior
@@ -126,22 +118,22 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public synchronized void trimToSize();
 
-    //@  public normal_behavior
-    //@  {|
-    //@    requires minCapacity <= maxCapacity;
-    //@    assignable \nothing;
-    //@    ensures true;
-    //@  also
-    //@    requires minCapacity > maxCapacity;
-    //@    assignable objectState;
+    //-RAC@  public normal_behavior
+    //-RAC@  {|
+    //-RAC@    requires minCapacity <= maxCapacity;
+    //-RAC@    assignable \nothing;
+    //-RAC@    ensures true;
+    //-RAC@  also
+    //-RAC@    requires minCapacity > maxCapacity;
+    //-RAC@    assignable objectState;
     //-RAC@    ensures \not_modified(theString,theHashCode);
-    //@           // theHashCode is not changed because the result does not
-    //@           // changes equals
-    //@    ensures \not_modified(elementCount,containsNull);
-    //@          // FIXME - this is the implementation described for Vector
-    //@          // is it required of subclasses?
-    /*@    ensures maxCapacity == 
-      @ 	(capacityIncrement > 0 &&
+    //-RAC@           // theHashCode is not changed because the result does not
+    //-RAC@           // changes equals
+    //-RAC@    ensures \not_modified(elementCount,containsNull);
+    //-RAC@          // FIXME - this is the implementation described for Vector
+    //-RAC@          // is it required of subclasses?
+    /*-RAC@    ensures maxCapacity == 
+      @     (capacityIncrement > 0 &&
       @                 \old(maxCapacity+capacityIncrement)>=minCapacity ?
       @                      \old(maxCapacity+capacityIncrement)  :
       @                 capacityIncrement == 0 &&
@@ -150,12 +142,12 @@ public class Vector<E> extends AbstractList<E>
       @                      minCapacity);
       @*/
     /*   @     ensures (\forall int i; 0<=i && i<elementCount;
-      @			elementData[i] == \old(elementData[i]));
+      @            elementData[i] == \old(elementData[i]));
       @*/
-    //@ |}
+    //-RAC@ |}
     public synchronized void ensureCapacity(int minCapacity);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @  {|
       @    requires 0 <= newSize;
       @    requires newSize <= elementCount;
@@ -164,17 +156,17 @@ public class Vector<E> extends AbstractList<E>
     /*-RAC@    ensures \not_modified(theString,theHashCode);
       @    ensures \not_modified(containsNull);
       @   ensures (\forall int i; 0<=i && i<elementCount;
-      @			elementData[i] == \old(elementData[i])); */
-    //@  also
-    //@    old int oldSize = elementCount;
-    //@    requires newSize > elementCount;
-    //@    assignable objectState;
+      @            elementData[i] == \old(elementData[i])); */
+    //-RAC@  also
+    //-RAC@    old int oldSize = elementCount;
+    //-RAC@    requires newSize > elementCount;
+    //-RAC@    assignable objectState;
     //-RAC@    ensures \not_modified(theString,theHashCode);
     //-RAC@    ensures \not_modified(containsNull);
     /*-RAC@
       @    ensures (\forall int i; 0<=i && i<oldSize;
-      @			elementData[i] == \old(elementData[i])); */
-    /*@    ensures (\forall int i; oldSize<=i && i < newSize;
+      @            elementData[i] == \old(elementData[i])); */
+    /*-RAC@    ensures (\forall int i; oldSize<=i && i < newSize;
       @                           get(i) == null);
       @  |}
       @  also exceptional_behavior
@@ -190,17 +182,17 @@ public class Vector<E> extends AbstractList<E>
     public /*@ pure @*/ synchronized int capacity();
 
     /*@ also public normal_behavior
-      @    ensures \result == elementCount;
+      @    //-RAC@ ensures \result == elementCount;
       @*/
     public /*@ pure @*/ synchronized int size();
 
     /*@ also public normal_behavior
-      @    ensures \result == (elementCount == 0);
+      @    //-RAC@ ensures \result == (elementCount == 0);
       @*/
     public /*@ pure @*/ synchronized boolean isEmpty();
 
     // FIXME
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    ensures (* \result is an Enumeration of this Vector *);
       @    ensures \result != null && \result.returnsNull == containsNull;
       @    ensures \result.moreElements == elementCount > 0;
@@ -214,7 +206,7 @@ public class Vector<E> extends AbstractList<E>
     // specification inherited
     public synchronized /*@ pure @*/ int indexOf(Object elem);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    ensures \result == -1 || ( index <= \result && \result < elementCount);
       @    ensures !\key("RAC") ==> \result == -1 <==> (\forall int i; index<=i && i<size(); 
@@ -228,7 +220,7 @@ public class Vector<E> extends AbstractList<E>
     // inherits specification
     public /*@ pure @*/ synchronized int lastIndexOf (Object elem);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    ensures -1 <= \result &&  \result <= index;
       @    ensures !\key("RAC") ==> \result == -1 <==> (\forall int i; 0<=i && i<=index; 
@@ -240,7 +232,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public /*@ pure @*/ synchronized int lastIndexOf(Object elem, int index);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    ensures \result == get(index);
       @ implies_that
@@ -249,7 +241,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public /*@ pure @*/ synchronized E elementAt(int index);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 < elementCount;
       @    ensures \result == get(0);
       @ also
@@ -259,11 +251,11 @@ public class Vector<E> extends AbstractList<E>
       @
       @ implies_that public normal_behavior
       @    requires elementCount > 0;
-      @    ensures !containsNull ==> \result != null;
       @*/
+    //-RAC@ ensures !containsNull ==> \result != null;
     public /*@ pure @*/ synchronized E firstElement() throws NoSuchElementException;
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 < elementCount;
       @    ensures \result == get((int)(elementCount-1));
       @ also
@@ -273,11 +265,11 @@ public class Vector<E> extends AbstractList<E>
       @ implies_that 
       @  public normal_behavior
       @    requires elementCount > 0;
-      @    ensures !containsNull ==> \result != null;
       @*/
+    //-RAC@    ensures !containsNull ==> \result != null;
     public /*@ pure @*/ synchronized E lastElement() throws NoSuchElementException;
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    requires containsNull || obj != null;
       @    assignable objectState;
@@ -293,7 +285,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public synchronized void setElementAt(E obj, int index);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    assignable objectState;
       @    ensures  elementCount == \old(elementCount)-1;
@@ -309,7 +301,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public synchronized void removeElementAt(int index);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires !containsNull ==> obj != null;
       @    requires 0 <= index && index < elementCount;
       @    assignable objectState;
@@ -347,7 +339,7 @@ public class Vector<E> extends AbstractList<E>
       @*/ 
     public synchronized void insertElementAt(E obj, int index);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires containsNull || obj!=null;
       @    assignable objectState;
       @    ensures \not_modified(containsNull);
@@ -383,7 +375,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public synchronized void addElement(E obj);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    requires !containsNull ==> obj != null;
       @  {|
       @    requires contains(obj);
@@ -398,14 +390,14 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public synchronized boolean removeElement(Object obj);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @    assignable objectState;
       @    ensures isEmpty();
       @    ensures elementCount == 0;
       @*/
     public synchronized void removeAllElements();
 
-    /*@ also public behavior
+    /*-RAC@ also public behavior
       @ ensures \result != null;
       @ ensures ((Vector)\result).elementCount == elementCount;
       @ ensures ((Vector)\result).containsNull == containsNull;
@@ -413,7 +405,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public /*@ pure @*/ synchronized Object clone(); // Overrides Object
 
-    /*@ also public normal_behavior
+    /*-RAC@ also public normal_behavior
       @    ensures \result != null && \fresh(\result);
       @    ensures \result.length == elementCount
       @      && (\forall int i; 0 <= i && i < size();
@@ -421,7 +413,7 @@ public class Vector<E> extends AbstractList<E>
       @*/
     public /*@ pure @*/ synchronized Object[] toArray();
 
-    /*@ also
+    /*-RAC@ also
       @ public normal_behavior
       @    requires a != null
       @             && (\forall int i; 0 <= i && i < elementCount;
@@ -455,7 +447,7 @@ public class Vector<E> extends AbstractList<E>
     /*@ also
       @  public normal_behavior
       @    requires 0 <= index && index < size();
-      @    ensures !containsNull ==> \result != null;
+      @    //-RAC@ ensures !containsNull ==> \result != null;
       @    //-RAC@ ensures \result == elementData[index];
       @ also
       @  public exceptional_behavior
@@ -465,7 +457,7 @@ public class Vector<E> extends AbstractList<E>
     public /*@ pure @*/ synchronized E get(int index);
 
      // FIXME - all inherited?
-    /*@ also
+    /*-RAC@ also
       @  public normal_behavior
       @    requires 0 <= index && index < size();
       @    requires containsNull || element != null;
@@ -482,7 +474,7 @@ public class Vector<E> extends AbstractList<E>
     public synchronized E set(int index, E element);
 
      // FIXME - all inherited?
-    /*@ also
+    /*-RAC@ also
       @ public normal_behavior
       @    requires containsNull || o != null;
       @    assignable objectState;
@@ -493,7 +485,7 @@ public class Vector<E> extends AbstractList<E>
     public synchronized boolean add(E o);
 
      // FIXME - all inherited?
-    /*@ also
+    /*-RAC@ also
       @ public normal_behavior
       @  {|
       @    requires contains(o);
@@ -508,13 +500,13 @@ public class Vector<E> extends AbstractList<E>
     public synchronized boolean remove(Object o);
 
      // FIXME - all inherited?
-    /*@ also public normal_behavior
+    /* @ also public normal_behavior
       @    requires 0 <= index && index <= size();
-      @    requires containsNull || element != null;
-      @    assignable objectState;
+      @    //-RAC@ requires containsNull || element != null;
+      @    assignable objectState,content;
       @    ensures elementCount == \old(elementCount)+1;
-      @    ensures (element == null && get(index) == null) 
-      @            || get(index).equals(element); // or == ?
+      @    ensures (element == null && get(content,index) == null) 
+      @            || get(content,index) == element;
       @ also
       @   public exceptional_behavior
       @    requires !(0 <= index && index <= size());
@@ -524,7 +516,7 @@ public class Vector<E> extends AbstractList<E>
     public void add(int index, E element);
 
      // FIXME - all inherited?
-    /*@ also
+    /*-RAC@ also
       @  public normal_behavior
       @    requires 0 <= index && index < size();
       @    assignable objectState;

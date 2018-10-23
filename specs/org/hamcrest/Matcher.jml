@@ -1,0 +1,6 @@
+package org.hamcrest;
+
+public interface Matcher<T> {
+    
+    //@ model public instance java.util.function.Function.Pure<T,Boolean> matches;
+}

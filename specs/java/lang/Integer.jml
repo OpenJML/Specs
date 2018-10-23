@@ -45,7 +45,7 @@ public  /*@ pure @*/ final
     @   model public helper static pure boolean decodable( String nm );
     @*/
           
-	// FIXME: problem with undefined preconditions when using this axiom: -RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
+    // FIXME: problem with undefined preconditions when using this axiom: -RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
 
     public static final int   MIN_VALUE = 0x80000000;
 
@@ -58,9 +58,9 @@ public  /*@ pure @*/ final
     //@ ensures TYPE == int.class;
     //@ static_initializer
 
-	public static final int   SIZE = 32; // Number of bits in an int representation
-	public static final int   BYTES = 4; // Number of bytes in an int representation
-	
+    public static final int   SIZE = 32; // Number of bits in an int representation
+    public static final int   BYTES = 4; // Number of bytes in an int representation
+    
     /*-RAC@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix
       @             && radix <= Character.MAX_RADIX);

@@ -30,7 +30,7 @@ package java.util;
 public class LinkedList<E> extends AbstractSequentialList<E>
     implements List<E>, Cloneable, java.io.Serializable, Deque<E>
 {
-	
+    
     /*-RAC@ public normal_behavior
       @   ensures isEmpty();
       @   ensures containsNull;

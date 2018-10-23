@@ -517,12 +517,12 @@ public /*@ pure @*/ final
       @                         getType(ch) == PARAGRAPH_SEPARATOR ||
       @                         ch == '\r' ||  // CARRIAGE RETURN
       @                         ch == '\n'     ||  // LINE FEED
-					// Note: Can't put the unicode for
-					// a linefeed directly in the quotes
-					// because it is converted into a
-					// real linefeed before lexing occurs.
-					// Real linefeeds are not allowed in
-					// quotes - you have to use \n
+                    // Note: Can't put the unicode for
+                    // a linefeed directly in the quotes
+                    // because it is converted into a
+                    // real linefeed before lexing occurs.
+                    // Real linefeeds are not allowed in
+                    // quotes - you have to use \n
       @                         ch == '\u0009' ||  // HORIZONTAL TABULATION
       @                         ch == '\u000B' ||  // VERTICAL TABULATION
       @                         ch == '\u000C' ||  // FORM FEED

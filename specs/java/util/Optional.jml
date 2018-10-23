@@ -2,9 +2,9 @@ package java.util;
 
 //@ non_null_by_default immutable
 public final class Optional<T> {
-  //@ spec_public
-  private static final Optional<?> EMPTY;
-  //@ public static final invariant EMPTY.value == null;
+//  //@ spec_public
+//  private static final Optional<?> EMPTY;
+//  //@ public static final invariant EMPTY.value == null;
   
   //@ spec_public nullable
   private final T value;
@@ -15,7 +15,7 @@ public final class Optional<T> {
   private Optional();
 
   //@ public normal_behavior
-  //@   ensures \result.value == null;
+  //-RAC@   ensures \result.value == null;
   //@ pure function
   public static <T> Optional<T> empty();
 
@@ -30,8 +30,9 @@ public final class Optional<T> {
 
   //@ public normal_behavior
   //@   requires t != null;
-  //@   ensures \fresh(\result);
-  //@   ensures \result.value == t;
+  //-RAC@   ensures \fresh(\result);
+  //-RAC@   ensures \result.value == t;
+  //+RAC@   ensures \result.get() == t;
   //@ also public exceptional_behavior
   //@   requires t == null;
   //@   signals_only NullPointerException;
@@ -39,28 +40,30 @@ public final class Optional<T> {
   public static <T> Optional<T> of(T t); // non-null required
 
   //@ public normal_behavior
-  //@   ensures \fresh(\result);
-  //@   ensures \result.value == t;
+  //-RAC@   ensures \fresh(\result);
+  //-RAC@   ensures \result.value == t;
+  //+RAC@   ensures \result.get() == t;
   //@ pure function
   public static <T> Optional<T> ofNullable(/*@ nullable */ T t);
   
-  //@ public normal_behavior
-  //@   requires value != null;
-  //@   ensures \result == value;
-  //@ also public exceptional_behavior
-  //@   requires value == null;
-  //@   signals_only NoSuchElementException;
-  //@ pure function
+  //-RAC@ public normal_behavior
+  //-RAC@   requires value != null;
+  //-RAC@   ensures \result == value;
+  //-RAC@ also public exceptional_behavior
+  //-RAC@   requires value == null;
+  //-RAC@   signals_only NoSuchElementException;
+  //-RAC@ pure function
   public T get();
   
   //@ public normal_behavior
-  //@   ensures \result == (value != null);
-  // @   { return value != null; }
+  //-RAC@   ensures \result == (value != null);
+  //+RAC@   ensures \result == (get() != null);
   //@ pure function
   public boolean isPresent();
   
   
-  //@ public model_program { if (value != null) consumer.accept(value); }
+  //-RAC@ public model_program { if (value != null) consumer.accept(value); }
+  //+RAC@ public model_program { if (get() != null) consumer.accept(value); }
   public void ifPresent(java.util.function.Consumer<? super T> consumer);
 
   /*@ public model_program 
@@ -98,18 +101,19 @@ public final class Optional<T> {
   public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> f);
 
   //@ public normal_behavior
-  //@   ensures \result == (value != null ? value : t);
+  //-RAC@   ensures \result == (value != null ? value : t);
+  //+RAC@   ensures \result == (get() != null ? get() : t);
   //@ pure
   public T orElse(T t);
 
   /*@ public model_program
-    @   { return (value != null ? value : supplier.get() ); }
+    @   { return (get() != null ? get() : supplier.get() ); }
     @*/
   //@ pure
   public T orElseGet(java.util.function.Supplier<? extends T> supplier);
   
   /*@ public model_program {
-    @   if (value!=null) return value; else throw supplier.get();
+    @   if (get()!=null) return get(); else throw supplier.get();
     @ }
     @*/
   //@ pure  // FIXME - really only pure if the lambda expression is pure

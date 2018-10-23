@@ -38,13 +38,13 @@ public class Exception extends Throwable
     public /*@ pure @*/ Exception(String message);
 
     /*@ public normal_behavior
-      @   requires cause != this;
+      @   //requires cause != this;
       @   ensures standardThrowable(null,cause);
       @*/
     public /*@ pure @*/ Exception(/*@nullable*/Throwable cause);
 
     /*@ public normal_behavior
-      @   requires cause != this;
+      @   //requires cause != this;
       @   ensures standardThrowable(message,cause);
       @*/
     public /*@ pure @*/ Exception(String message, /*@nullable*/Throwable cause);

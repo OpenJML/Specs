@@ -3,25 +3,27 @@ package java.util.function;
 @FunctionalInterface
 public interface Supplier<T> {
 
-	//@ model public nullable instance T value;
-	
-	//@ public behavior requires true; ensures \result == value;
-	/*@ nullable */ T get();
-	
-	/*@
+    //-RAC@ model public nullable instance T value;
+    
+    //@ public behavior 
+    //@     requires true; 
+    //-RAC@ ensures \result == value;
+    /*@ nullable */ T get();
+    
+    /*@
 
-	model public static interface Pure<T> extends Supplier<T> {
-	     also public normal_behavior requires true;
-		 pure nullable T get();
-	}
+    model public static interface Pure<T> extends Supplier<T> {
+         also public normal_behavior requires true;
+         pure nullable T get();
+    }
 
-	model public static interface PureNonNull<T> extends Supplier<T> {
-		 public invariant value != null;
-	     also public normal_behavior requires true;
-		 pure non_null T get();
-	}
+    model public static interface PureNonNull<T> extends Supplier<T> {
+         //0-RAC@ public invariant value != null;
+         also public normal_behavior requires true;
+         pure non_null T get();
+    }
 
-	*/
+    */
 
 }
 

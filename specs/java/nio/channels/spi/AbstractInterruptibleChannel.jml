@@ -2,30 +2,30 @@ package java.nio.channels.spi;
 
 public abstract class AbstractInterruptibleChannel implements java.nio.channels.Channel,java.nio.channels.InterruptibleChannel {
 
-	//@ model public instance JMLDataGroup channelCloseContent;
-	
-	//	private final java.lang.Object closeLock;
-//	private volatile boolean open;
-//	private sun.nio.ch.Interruptible interruptor;
-//	private volatile java.lang.Thread interrupted;
-	//@ protected normal_behavior
-	//@   requires true;
-	//@ pure
-	protected AbstractInterruptibleChannel();
-	
-	//@ also public behavior
-	//@   assignable channelCloseContent;
-	//@   ensures !_isOpen;
-	//@   signals_only java.io.IOException;
-	public final void close() throws java.io.IOException;
-	
-//	protected abstract void implCloseChannel() throws java.io.IOException;
-//	public final boolean isOpen();
-//	protected final void begin();
-//	protected final void end(boolean) throws java.nio.channels.AsynchronousCloseException;
-//	static void blockedOn(sun.nio.ch.Interruptible);
-//	static java.lang.Object access$000(java.nio.channels.spi.AbstractInterruptibleChannel);
-//	static boolean access$100(java.nio.channels.spi.AbstractInterruptibleChannel);
-//	static boolean access$102(java.nio.channels.spi.AbstractInterruptibleChannel, boolean);
-//	static java.lang.Thread access$202(java.nio.channels.spi.AbstractInterruptibleChannel, java.lang.Thread);
+    //@ model public instance JMLDataGroup channelCloseContent;
+    
+    //    private final java.lang.Object closeLock;
+//    private volatile boolean open;
+//    private sun.nio.ch.Interruptible interruptor;
+//    private volatile java.lang.Thread interrupted;
+    //@ protected normal_behavior
+    //@   requires true;
+    //@ pure
+    protected AbstractInterruptibleChannel();
+    
+    //@ also public behavior
+    //@   assignable channelCloseContent;
+    //@   ensures !_isOpen;
+    //@   signals_only java.io.IOException;
+    public final void close() throws java.io.IOException;
+    
+//    protected abstract void implCloseChannel() throws java.io.IOException;
+//    public final boolean isOpen();
+//    protected final void begin();
+//    protected final void end(boolean) throws java.nio.channels.AsynchronousCloseException;
+//    static void blockedOn(sun.nio.ch.Interruptible);
+//    static java.lang.Object access$000(java.nio.channels.spi.AbstractInterruptibleChannel);
+//    static boolean access$100(java.nio.channels.spi.AbstractInterruptibleChannel);
+//    static boolean access$102(java.nio.channels.spi.AbstractInterruptibleChannel, boolean);
+//    static java.lang.Thread access$202(java.nio.channels.spi.AbstractInterruptibleChannel, java.lang.Thread);
 }

@@ -62,20 +62,18 @@ public interface Map<K,V> {
       @*/
 
     /*-RAC@
-        public invariant (\forall Object o; content.theSize == 0 ==> 
+        axiom (\forall Object o; content.theSize == 0 ==> 
                       !content.hasMapObject(o));
-        public invariant (\forall Object o; content.theSize == 0 ==>
+        axiom (\forall Object o; content.theSize == 0 ==>
                       !content.hasMap(o));
-        public invariant content.theSize == 0 ==> !content.hasMapObject(null);
-        public invariant content.theSize == 0 ==> !content.hasMap(null);
+//        axiom content.theSize == 0 ==> !content.hasMapObject(null);
+//        axiom content.theSize == 0 ==> !content.hasMap(null);
       @*/
-    /*-RAC@ axiom (\forall Content c; (\forall Object o;
-                   c.hasMapObject(o) ==> c.hasMap(o)));
-        axiom (\forall Content c; c.hasMapObject(null) <==> c.hasMap(null));
-        axiom (\forall Content c; (\forall Object o;
-                   c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)));
-        axiom (\forall Content c;
-                   c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null));
+    /*-RAC@ axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
+                                   && (c.hasMapObject(null) <==> c.hasMap(null)));
+        axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)) 
+                               && (c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null)));
+        // Z3 performed better with the conjunct in the above specs. cf git issue #644
      */
           
     //-RAC@ public model instance non_null Content content; in objectState;
@@ -98,7 +96,7 @@ public interface Map<K,V> {
 
         //@ public model instance K abstractKey;
         //@ public model instance V abstractValue;
-		
+        
         /*@  public normal_behavior
           @     ensures \result == abstractKey;
           @*/
@@ -108,7 +106,7 @@ public interface Map<K,V> {
           @     ensures \result == abstractValue;
           @*/
         /*@ pure @*/ V getValue();
-		
+        
         /*@ public behavior
           @     assignable this.abstractValue;
           @     ensures \result == \old(this.abstractValue);
@@ -162,7 +160,7 @@ public interface Map<K,V> {
       @    ensures \result <==> (content.theSize == 0); 
       @*/
     /*@ pure @*/ boolean isEmpty();
-	
+    
     /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
       @    ensures content.hasMap(key) <==> \result;
@@ -341,6 +339,6 @@ public interface Map<K,V> {
       @    ensures !\result;
       @*/
     /*@ pure @*/ boolean equals(Object o);
-	
+    
     /*@ pure @*/ int hashCode();
 }

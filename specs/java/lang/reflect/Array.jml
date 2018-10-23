@@ -23,7 +23,7 @@ package java.lang.reflect;
 
 public final class Array extends java.lang.Object {
 
-	//@ axiom (\forall Object o; \elemtype(\typeof(o)) == \type(int) ==> o instanceof int[]);
+    //@ axiom (\forall Object o; \elemtype(\typeof(o)) == \type(int) ==> o instanceof int[]);
 
     /*@
       @   requires \elemtype(\typeof(Param0)) <: \type(Object);
@@ -34,8 +34,8 @@ public final class Array extends java.lang.Object {
       @ also
       @   requires Param0 instanceof byte[] || \elemtype(\typeof(Param0)) == \type(byte);
       @   ensures \result == ((byte[])Param0).length;
-	// FIXME - do the rest of the primitive types
-	// Also if not an array then throw an exception - FIXME
+    // FIXME - do the rest of the primitive types
+    // Also if not an array then throw an exception - FIXME
 
       @*/
     //@ pure
@@ -60,8 +60,8 @@ public final class Array extends java.lang.Object {
       @   requires \elemtype(\typeof(Param0)) == \type(byte);
       @   ensures \result == ((byte[])Param0)[Param1];
       @ |}
-	// FIXME - do the rest of the primitive types
-	// Also if not an array then throw an exception - FIXME
+    // FIXME - do the rest of the primitive types
+    // Also if not an array then throw an exception - FIXME
 
       @ 
       @*/
@@ -108,8 +108,8 @@ public final class Array extends java.lang.Object {
       @   requires \elemtype(\typeof(Param0)) == \type(byte);
       @   ensures \result == ((byte[])Param0)[Param1];
       @ |}
-	// FIXME - do the rest of the primitive types
-	// Also if not an array then throw an exception - FIXME
+    // FIXME - do the rest of the primitive types
+    // Also if not an array then throw an exception - FIXME
 
       @ 
       @*/
@@ -222,8 +222,8 @@ public final class Array extends java.lang.Object {
       @   ensures \result instanceof Byte;
       @   ensures ((Byte)\result).byteValue() == ((byte[])Param0)[Param1];
       @ |}
-	// FIXME - do the rest of the primitive types
-	// Also if not an array then throw an exception - FIXME
+    // FIXME - do the rest of the primitive types
+    // Also if not an array then throw an exception - FIXME
 
       @ 
       @*/

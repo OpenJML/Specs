@@ -5,7 +5,7 @@ public class PrintWriter extends Writer{
 
     //-RAC@ model public non_null String outputText; in outputBytes;
 
-	protected Writer out;
+    protected Writer out;
     public PrintWriter(Writer w);
     public PrintWriter(Writer w,boolean b);
     public PrintWriter(OutputStream o);

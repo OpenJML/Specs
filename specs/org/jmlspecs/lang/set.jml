@@ -1,0 +1,58 @@
+/*@
+
+public class set<T> extends IJmlPrimitiveType {
+    
+    public normal_behavior
+      ensures \result >= 0;
+    pure
+    public \bigint size();
+    
+    public normal_behavior
+    pure
+    public boolean contains(T x);
+
+    public normal_behavior
+      ensures \result == (this.size() == 0);
+    pure
+    public boolean empty();
+    
+    public normal_behavior
+      ensures \result.size() == 0;
+      ensures (\forall T x; ; !\result.contains(x));
+    static public <T> set<T> set();
+    
+    public normal_behavior
+      ensures \result.size() == 1;
+      ensures \result.contains(t);
+      ensures (\forall T x; ; x != t ==> !\result.contains(x));
+    static public <T> set<T> set(T t);
+    
+    public normal_behavior
+       ensures \result == (\forall T t;; s.contains(t) == ss.contains(t));
+    public static boolean equals(set<T> s, set<T> ss);
+    
+    public normal_behavior
+       ensures \result == (this == s || equals(this,s));
+    public boolean equals(set<T> s;
+    
+    public normal_behavior
+      requires this.contains(x);
+      ensures \result == this;
+    also
+      requires !this.contains(x);
+      ensures \result.size() == this.size() + 1;
+      ensures \result.contains(x);
+    public set<T> add(T x);
+    
+    public normal_behavior
+      requires !this.contains(x);
+      ensures \result == this;
+    also
+      requires this.contains(x);
+      ensures \result.size() == this.size() - 1;
+      ensures \result.contains(x);
+    public set<T> remove(T x);
+    
+}
+
+ @*/

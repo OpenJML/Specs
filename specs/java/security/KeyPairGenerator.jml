@@ -3,42 +3,42 @@ package java.security;
 //@ non_null_by_default
 public abstract class KeyPairGenerator {
 
-//	  private static final sun.security.util.Debug pdebug;
-//	  private static final boolean skipDebug;
-	
-	  //@ spec_public
-	  private final java.lang.String algorithm;
-	  Provider provider;
-	  
-	  //@ protected normal_behavior
-	  //@   ensures this.algorithm == algorithm;
-	  //@ pure
-	  protected KeyPairGenerator(java.lang.String algorithm);
-	  
-	  //@ public normal_behavior
-	  //@   ensures \result == algorithm;
-	  //@ pure
-	  public java.lang.String getAlgorithm();
-	  
-	  
-	  private static KeyPairGenerator getInstance(sun.security.jca.GetInstance.Instance inst, java.lang.String s);
-	  
-	  //@ public normal_behavior
-	  //@   ensures \fresh(\result);
-	  //@ pure
-	  public static KeyPairGenerator getInstance(java.lang.String algorithm) throws NoSuchAlgorithmException;
-	  public static KeyPairGenerator getInstance(java.lang.String algorithm, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
-	  public static KeyPairGenerator getInstance(java.lang.String algorithm, Provider provider) throws NoSuchAlgorithmException;
-	  public final Provider getProvider();
-	  void disableFailover();
-	  public void initialize(int n);
-	  public void initialize(int n, SecureRandom random);
-	  public void initialize(java.security.spec.AlgorithmParameterSpec alg) throws InvalidAlgorithmParameterException;
-	  public void initialize(java.security.spec.AlgorithmParameterSpec alg, SecureRandom random) throws InvalidAlgorithmParameterException;
-	  public final KeyPair genKeyPair();
-	  
-	  //@ public normal_behavior
-	  //@   ensures true;
-	  //@ pure
-	  public KeyPair generateKeyPair();
+//      private static final sun.security.util.Debug pdebug;
+//      private static final boolean skipDebug;
+    
+      //@ spec_public
+      private final java.lang.String algorithm;
+      Provider provider;
+      
+      //@ protected normal_behavior
+      //@   ensures this.algorithm == algorithm;
+      //@ pure
+      protected KeyPairGenerator(java.lang.String algorithm);
+      
+      //@ public normal_behavior
+      //@   ensures \result == algorithm;
+      //@ pure
+      public java.lang.String getAlgorithm();
+      
+      
+      private static KeyPairGenerator getInstance(sun.security.jca.GetInstance.Instance inst, java.lang.String s);
+      
+      //@ public normal_behavior
+      //@   ensures \fresh(\result);
+      //@ pure
+      public static KeyPairGenerator getInstance(java.lang.String algorithm) throws NoSuchAlgorithmException;
+      public static KeyPairGenerator getInstance(java.lang.String algorithm, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
+      public static KeyPairGenerator getInstance(java.lang.String algorithm, Provider provider) throws NoSuchAlgorithmException;
+      public final Provider getProvider();
+      void disableFailover();
+      public void initialize(int n);
+      public void initialize(int n, SecureRandom random);
+      public void initialize(java.security.spec.AlgorithmParameterSpec alg) throws InvalidAlgorithmParameterException;
+      public void initialize(java.security.spec.AlgorithmParameterSpec alg, SecureRandom random) throws InvalidAlgorithmParameterException;
+      public final KeyPair genKeyPair();
+      
+      //@ public normal_behavior
+      //@   ensures true;
+      //@ pure
+      public KeyPair generateKeyPair();
 }

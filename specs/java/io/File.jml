@@ -32,14 +32,14 @@ public class File implements Serializable, Comparable {
 
     //@ requires prefix.length() >= 3;
     public static /*@non_null*/ File 
-	createTempFile(/*@non_null*/ String prefix, 
-		       /*@nullable*/ String suffix) throws IOException;
+    createTempFile(/*@non_null*/ String prefix, 
+               /*@nullable*/ String suffix) throws IOException;
 
     //@ requires prefix.length() >= 3;
     public static /*@non_null*/ File 
-	createTempFile(/*@non_null*/ String prefix, 
-		       /*@nullable*/ String suffix, 
-		       /*@nullable*/ File directory)
+    createTempFile(/*@non_null*/ String prefix, 
+               /*@nullable*/ String suffix, 
+               /*@nullable*/ File directory)
         throws IOException;
 
     // METHODS

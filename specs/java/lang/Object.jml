@@ -19,7 +19,6 @@
 // the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package java.lang;
-import java.lang.reflect.Array;
 
 /** JML's specification of java.lang.Object.
  *
@@ -59,11 +58,12 @@ public class Object {
 
     //-RAC@ public model int theHashCode; in objectState;
 
-    /*@  public code normal_behavior
-      @     assignable privateState;
-      @     ensures \result == System.identityHashCode(this);
-      @*/
-    //-RAC@ ensures \result == theHashCode;
+    //@ public normal_behavior
+    //@     assignable privateState;
+    //-RAC@ ensures \result == theHashCode;  
+    //@ also public code normal_behavior
+    //@     assignable privateState;
+    //@     ensures \result == System.identityHashCode(this);
     public int hashCode();
 
     //  FIXME - how do we ensure the following
@@ -96,14 +96,20 @@ public class Object {
       @ also public code normal_behavior
       @   requires this instanceof Cloneable;
       @   assignable \nothing;
-		// Note: clone is magic.  Object.clone ensures the following
-		// strict equality when it is called but only if subclasses are
-		// fulfill it by calling super.clone();
+        // Note: clone is magic.  Object.clone ensures the following
+        // strict equality when it is called but only if subclasses are
+        // fulfill it by calling super.clone();
       @   ensures \typeof(\result) == \typeof(this);  // This is not a strict requirement, although generally expected
       @   ensures \result != this; // This is not a strict requirement, although generally expected
       @
       @ also public behavior
       @   requires this instanceof Object[];
+      @   requires !(this instanceof boolean[]);
+      @   requires !(this instanceof byte[]);
+      @   requires !(this instanceof short[]);
+      @   requires !(this instanceof char[]);
+      @   requires !(this instanceof int[]);
+      @   requires !(this instanceof long[]);
       @   assignable \nothing;
       @   ensures \result instanceof Object[];
       @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
@@ -136,7 +142,8 @@ public class Object {
       @   ensures \result instanceof byte[];
       @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((byte[])\result).length == ((byte[])this).length;
-      @   ensures (\forall int i; 0 <= i && i < ((byte[])this).length; ((byte[])this)[i] == ((byte[])\result)[i]);
+      @   ensures java.util.Arrays.equalArrays((byte[])\result,(byte[])this);
+      @   signals (Exception) false;
       @ also public behavior
       @   requires this instanceof boolean[];
       @   assignable \nothing;
@@ -147,7 +154,7 @@ public class Object {
       @ also public behavior
       @   requires this instanceof char[];
       @   assignable \nothing;
-      @   ensures \result instanceof byte[];
+      @   ensures \result instanceof char[];
       @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((char[])\result).length == ((char[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((char[])this).length; ((char[])this)[i] == ((char[])\result)[i]);
@@ -172,7 +179,8 @@ public class Object {
       @   assignable \nothing;
       @   signals_only CloneNotSupportedException;
       @*/
-    protected /*@non_null */ Object clone() throws CloneNotSupportedException;
+    //@ pure
+    protected /*@ non_null */ Object clone() throws CloneNotSupportedException;
 
     /** Use theString as the (pure) model value of toString() */
     //-RAC@ public model non_null String theString; in objectState;

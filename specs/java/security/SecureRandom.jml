@@ -1,41 +1,45 @@
 package java.security;
 
+//@ non_null_by_default
 public class SecureRandom extends java.util.Random {
-//	private static final sun.security.util.Debug pdebug;
-//	private static final boolean skipDebug;
-//	private Provider provider;
-//	private SecureRandomSpi secureRandomSpi;
-//	private java.lang.String algorithm;
-//	private static volatile SecureRandom seedGenerator;
-//	static final long serialVersionUID;
-//	private byte[] state;
-//	private MessageDigest digest;
-//	private byte[] randomBytes;
-//	private int randomBytesUsed;
-//	private long counter;
-	
-	//@ public normal_behavior
-	//@   ensures true;
-	//@ pure
-	public SecureRandom();
-//	public SecureRandom(byte[]);
-//	private void getDefaultPRNG(boolean, byte[]);
-//	protected SecureRandom(SecureRandomSpi, Provider);
-//	private SecureRandom(SecureRandomSpi, Provider, java.lang.String);
-//	public static SecureRandom getInstance(java.lang.String) throws NoSuchAlgorithmException;
-//	public static SecureRandom getInstance(java.lang.String, java.lang.String) throws NoSuchAlgorithmException, NoSuchProviderException;
-//	public static SecureRandom getInstance(java.lang.String, Provider) throws NoSuchAlgorithmException;
-//	SecureRandomSpi getSecureRandomSpi();
-//	public final Provider getProvider();
-//	public java.lang.String getAlgorithm();
-//	public synchronized void setSeed(byte[]);
-//	public void setSeed(long);
-//	public void nextBytes(byte[]);
-//	protected final int next(int);
-//	public static byte[] getSeed(int);
-//	public byte[] generateSeed(int);
-//	private static byte[] longToByteArray(long);
-//	private static java.lang.String getPrngAlgorithm();
-//	public static SecureRandom getInstanceStrong() throws NoSuchAlgorithmException;
-//	static {};
+//    private static final sun.security.util.Debug pdebug;
+//    private static final boolean skipDebug;
+//    private Provider provider;
+//    private SecureRandomSpi secureRandomSpi;
+//    private java.lang.String algorithm;
+//    private static volatile SecureRandom seedGenerator;
+//    static final long serialVersionUID;
+//    private byte[] state;
+//    private MessageDigest digest;
+//    private byte[] randomBytes;
+//    private int randomBytesUsed;
+//    private long counter;
+    
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public SecureRandom();
+//    public SecureRandom(byte[]);
+//    private void getDefaultPRNG(boolean, byte[]);
+//    protected SecureRandom(SecureRandomSpi, Provider);
+//    private SecureRandom(SecureRandomSpi, Provider, java.lang.String);
+//    public static SecureRandom getInstance(java.lang.String) throws NoSuchAlgorithmException;
+//    public static SecureRandom getInstance(java.lang.String, java.lang.String) throws NoSuchAlgorithmException, NoSuchProviderException;
+//    public static SecureRandom getInstance(java.lang.String, Provider) throws NoSuchAlgorithmException;
+//    SecureRandomSpi getSecureRandomSpi();
+//    public final Provider getProvider();
+//    public java.lang.String getAlgorithm();
+//    public synchronized void setSeed(byte[]);
+//    public void setSeed(long);
+
+    @Override
+    public void nextBytes(byte[] bytes);
+    
+//    protected final int next(int);
+//    public static byte[] getSeed(int);
+//    public byte[] generateSeed(int);
+//    private static byte[] longToByteArray(long);
+//    private static java.lang.String getPrngAlgorithm();
+//    public static SecureRandom getInstanceStrong() throws NoSuchAlgorithmException;
+//    static {};
 }
