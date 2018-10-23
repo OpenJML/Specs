@@ -2,7 +2,8 @@ package java.util;
 
 public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneable, java.io.Serializable {
 
-    //@ public normal_behavior ensures true;
+    //@ public normal_behavior 
+    //@   ensures isEmpty();
     //@ pure
     public HashSet();
     
@@ -26,8 +27,7 @@ public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneab
     
     public boolean contains(Object o);
     
-    //@ also public normal_behavior ensures true;
-    //@ pure
+    // specification inherited
     public boolean isEmpty();
     
     public Iterator<E> iterator();

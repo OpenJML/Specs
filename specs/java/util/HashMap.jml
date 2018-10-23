@@ -11,4 +11,10 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     
     @Override
     V get(Object key);
+
+    //@ public normal_behavior
+    //@       ensures size() == 0;
+    //-RAC@   ensures (\forall Object o; ; get(o) == null);
+    //@ pure
+    public HashMap();
 }

@@ -330,6 +330,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Short.BYTES-1))];
     //@   ensures this.position == oldpos + Short.BYTES;
     //@   ensures getShort(oldpos) == s;
+    //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
     //@   requires this.isReadOnly || position > limit - Short.BYTES;
@@ -354,6 +355,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Short.BYTES-1))];
     //@   ensures this.position == \old(this.position) + Short.BYTES;
     //@   ensures (* FIXME: result is bytes representation of the ints *);
+    //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
     //@   requires this.isReadOnly || i < 0 || i > limit - Short.BYTES;
@@ -395,6 +397,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Integer.BYTES-1))];
     //@   ensures this.position == \old(this.position) + Integer.BYTES;
     //@   ensures getInt(\old(position)) == i;
+    //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
     //@   requires this.isReadOnly || position > limit - Integer.BYTES;
@@ -418,6 +421,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires !this.isReadOnly;
     //@   assignable hb[this.offset+index .. (this.offset+index + (Integer.BYTES-1))];
     //@   ensures getInt(index) == value;
+    //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
     //@   requires this.isReadOnly || index < 0 || index > limit - Integer.BYTES;
@@ -450,6 +454,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   assignable this.position, hb[this.offset+position .. (this.offset+position + (Long.BYTES-1))];
     //@   ensures this.position == \old(this.position) + Long.BYTES;
     //@   ensures getLong(\old(position)) == n;
+    //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
     //@   requires this.isReadOnly || position > limit - Long.BYTES;
@@ -477,6 +482,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires !this.isReadOnly;
     //@   assignable hb[this.offset+i .. (this.offset+i + (Long.BYTES-1))];
     //@   ensures getLong(i) == n;
+    //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
     //@   requires this.isReadOnly || i < 0 || i > limit - Long.BYTES;

@@ -1,0 +1,34 @@
+package java.util.concurrent;
+
+public class CountDownLatch {
+    //@ model public int count;
+    
+    //@ public normal_behavior
+    //@   requires n >= 0;
+    //@   ensures count == n;
+    //@ pure
+    public CountDownLatch(int n);
+    
+    //@ public normal_behavior
+    //@   ensures count == 0;
+    public void await() throws java.lang.InterruptedException;
+
+    //    public boolean await(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
+    
+    //@ public normal_behavior
+    //@   requires count > 0;
+    //@   assignable count;
+    //@   ensures count == \old(count) - 1;
+    //@ also public normal_behavior
+    //@   requires count == 0;
+    //@   assignable \nothing;
+    public void countDown();
+    
+    //@ public normal_behavior
+    //@   ensures \result == count;
+    //@ pure
+    public long getCount();
+
+    @Override
+    public java.lang.String toString();
+  }

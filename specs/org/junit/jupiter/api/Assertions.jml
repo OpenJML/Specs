@@ -1,14 +1,16 @@
 package org.junit.jupiter.api;
+import org.junit.jupiter.api.function.Executable;
 
-class Assertions {
+//@ nullable_by_default
+public final class Assertions {
     
-    //@ public normal_behavior
-    //@   requires act == exp || (act != null && acxt.equals(exp));
+    //@ normal_behavior
+    //@   requires act == exp;
     //@ pure
     public static void assertSame(Object act, Object exp);
     
     //@ public normal_behavior
-    //@   requires act == exp || (act != null && acxt.equals(exp));
+    //@   { try { exp.execute(); assert false; } catch (Exception e) { assert e.getClass() <: act; }}
     //@ pure
-    public static void assertThrows(Object act, Object exp);
+    public static <T extends Throwable> T assertThrows(Class<T> act, Executable exp);
 }

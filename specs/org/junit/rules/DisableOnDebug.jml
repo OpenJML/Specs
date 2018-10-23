@@ -1,0 +1,9 @@
+package org.junit.rules;
+
+//@ non_null_by_default
+public class DisableOnDebug implements org.junit.rules.TestRule {
+    
+    //@ public normal_behavior
+    //@ pure
+    public DisableOnDebug(org.junit.rules.TestRule r);
+}

@@ -2,11 +2,13 @@ package java.util.function;
 
 public interface BooleanSupplier {
     
+    //@ model public nullable instance JMLDataGroup state;
     //@ model public instance boolean value;
     
     //@ public behavior
+    //@   assignable state;
     //@   ensures \result == value;
-      public abstract boolean getAsBoolean();
+    public abstract boolean getAsBoolean();
       
       /*@
       model public interface Pure extends BooleanSupplier {

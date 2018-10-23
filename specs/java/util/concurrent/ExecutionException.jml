@@ -1,0 +1,25 @@
+package java.util.concurrent;
+
+public class ExecutionException extends Exception {
+    
+    //@ protected normal_behavior
+    //@   ensures standardThrowable();
+    //@ pure
+    protected ExecutionException();
+
+    //@ protected normal_behavior
+    //@   ensures standardThrowable(msg);
+    //@ pure
+    protected ExecutionException(String msg);
+
+    //@ public normal_behavior
+    //@   ensures standardThrowable(msg,cause);
+    //@ pure
+    public ExecutionException(String msg, Throwable cause);
+
+    //@ public normal_behavior
+    //@   ensures standardThrowable(cause);
+    //@ pure
+    public ExecutionException(Throwable cause);
+
+}

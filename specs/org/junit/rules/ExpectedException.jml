@@ -1,5 +1,7 @@
 package org.junit.rules;
 
+import org.hamcrest.Matcher;
+
 //@ non_null_by_default
 public class ExpectedException {
     
@@ -15,4 +17,8 @@ public class ExpectedException {
     //@ public normal_behavior
     //@   assignable expectedExceptions;
     public void expect(Class<? extends Throwable> exception);
+    
+    //@ public normal_behavior
+    //@ pure // TODO: fix
+    public void expectCause(Matcher<? extends Throwable> cause);
 }

@@ -1,0 +1,10 @@
+package org.hamcrest;
+
+//@ non_null_by_default
+public interface Description {
+    //@ model public instance JMLDataGroup content;
+    
+    //@ public normal_behavior
+    //@   assignable content;
+    Description appendText(String msg);
+}

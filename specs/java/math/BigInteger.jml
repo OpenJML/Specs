@@ -140,6 +140,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //Static Factory Methods
 
+    //@ public normal_behavior
+    //@   ensures \result.value == val;
     public static /*@ pure helper @*/ BigInteger valueOf(long val);
 
     // int signum;   package-level field removed from specification (dmz, 2009-11-17)

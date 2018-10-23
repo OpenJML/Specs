@@ -1,8 +1,6 @@
 package org.hamcrest;
 
-//@ non_null_by_default
-public class Matchers {
-    
+public class CoreMatchers {
     
     //@ public normal_behavior
     //@   ensures \fresh(\result);
@@ -50,5 +48,6 @@ public class Matchers {
     //  FIXME @   ensures \result.matches == (z -> z == x );
     //@ pure
     // matches identical object
-    public static <T> Matcher<T> sameInstance(T x);    
+    public static <T> Matcher<T> sameInstance(T x);
+
 }

@@ -1,0 +1,25 @@
+package java.nio.file;
+
+//@ non_null_by_default
+public abstract class FileSystem implements java.io.Closeable {
+    //@ protected normal_behavior
+    //@ pure
+    protected FileSystem();
+    
+//  public abstract java.nio.file.spi.FileSystemProvider provider();
+//  public abstract void close() throws java.io.IOException;
+//  public abstract boolean isOpen();
+//  public abstract boolean isReadOnly();
+//  public abstract java.lang.String getSeparator();
+//  public abstract java.lang.Iterable<java.nio.file.Path> getRootDirectories();
+//  public abstract java.lang.Iterable<java.nio.file.FileStore> getFileStores();
+//  public abstract java.util.Set<java.lang.String> supportedFileAttributeViews();
+
+    //@ public normal_behavior
+    //@ pure
+    public abstract java.nio.file.Path getPath(java.lang.String s, java.lang.String... ss);
+
+    //  public abstract java.nio.file.PathMatcher getPathMatcher(java.lang.String);
+//  public abstract java.nio.file.attribute.UserPrincipalLookupService getUserPrincipalLookupService();
+//  public abstract java.nio.file.WatchService newWatchService() throws java.io.IOException;
+}

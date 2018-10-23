@@ -36,8 +36,13 @@ public class Assert {
     public static void assertEquals(String s, Object exp, Object act);
     
     //@ public normal_behavior
+    //@   requires false;
+    //@ pure
+    public static void fail();
+    
+    //@ public normal_behavior
     //@   requires message != null;
-    //@   ensures false;
+    //@   requires false;
     //@ pure
     public static void fail(String message);
     
