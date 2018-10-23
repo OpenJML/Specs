@@ -1,0 +1,63 @@
+/*@
+immutable pure
+public class set<V> extends IJmlkPrimitiveType {
+    
+    public normal_behavior
+      ensures \result >= 0;
+    pure
+    public \bigint size();
+    
+    public normal_behavior
+       ensures \result == (\exists \bigint i;; (0 <= i && i < size()) ==> get(i) == v);
+    pure
+    public boolean containsKey(V v);
+
+    public normal_behavior
+    pure
+    public V get(\bigint i);
+
+    public normal_behavior
+      ensures \result == (this.size() == 0);
+    pure
+    public boolean empty();
+    
+    public normal_behavior
+      ensures \result.size() == 0;
+    static public <V> seq<V> seq();
+    
+    public normal_behavior
+       ensures \result == ((s.size() == ss.size()) && (\forall \bigint i;; (0 <= i && i < s.size()) ==> (s.get(i) == ss.get(i)));
+    public static boolean <V> equals(seq<V> s, seq<V> ss);
+    
+    public normal_behavior
+       ensures \result == (this == s || equals(this,s));
+    public static boolean equals(seq<V> s);
+    
+    public normal_behavior
+      requires 0 <= j && j <= this.size();
+      ensures \result.size() == this.size() + 1;
+      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result.get(i) == this.get(i)));
+      ensures (\forall \bigint i;; (j+1 <= i && i < this.size()) ==> (\result.get(i) == this.get(i-1)));
+      ensures \result.get(j) == v;
+    public seq<V> add(\bigint j, V v);
+
+    public normal_behavior
+      ensures \result == add(size(),v);
+    public seq<V> add(V v);
+
+    public normal_behavior
+      ensures \result.size() == this.size() + s.size();
+      ensures (\forall \bigint i;; (0 <= i && i < this.size()) ==> (\result.get(i) == this.get(i)));
+      ensures (\forall \bigint i;; (0 <= i && i < s.size()) ==> (\result.get(i+this.size()) == this.get(i-1)));
+    public seq<V> append(seq<V> s);
+
+    public normal_behavior
+      requires 0 <= j && j < this.size();
+      ensures \result.size() == this.size() - 1;
+      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result.get(i) == this.get(i)));
+      ensures (\forall \bigint i;; (j+1 <= i && i < this.size()) ==> (\result.get(i-1) == this.get(i)));
+    public set<T> remove(\bigint j);
+    
+}
+
+ @*/
