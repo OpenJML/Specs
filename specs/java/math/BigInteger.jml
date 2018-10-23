@@ -301,6 +301,10 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@ public normal_behavior
     //-RAC@   ensures \result.length > 0;
     //-RAC@   ensures convert(\result) == this.value;
+    //@   ensures -128 <= value && value < 128 ==> \result.length == 1;
+    //@   ensures  128 <= value && value < 128*256 ==> \result.length == 2;
+    //@   ensures  128*256 <= value && value < 128*256*256 ==> \result.length == 3;
+    //@   ensures  128*256*256 <= value && value < 128*256*256*256 ==> \result.length == 4;
     //@ pure helper
     public byte[] toByteArray();
 
