@@ -46,7 +46,7 @@ public class map<K,V> implements IJmlPrimitiveType {
     //@   ensures \result.containsKey(k);
     //@   ensures \result.size() == this.size() + 1;
     //@   ensures \result.get(k) == v;
-    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) ==> this.containsKey(kk)));
+    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
     //@   ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
     public map<K,V> put(K k, V v);
     
@@ -59,7 +59,7 @@ public class map<K,V> implements IJmlPrimitiveType {
     //@   requires this.containsKey(k);
     //@   ensures !\result.containsKey(k);
     //@   ensures \result.size() == this.size() - 1;
-    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) ==> this.containsKey(kk)));
+    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
     //@   ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
     public map<K,V> remove(K k);
     
