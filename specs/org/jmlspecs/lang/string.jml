@@ -2,23 +2,20 @@ package org.jmlspecs.lang;
 
 //@ immutable pure
 public class string implements IJmlPrimitiveType {
- /*@   
+/*@   
     public normal_behavior
       ensures \result >= 0;
-    pure
     model public \bigint size();
     
     public normal_behavior
-    pure
     model public char get(\bigint i);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
-    pure
     model public boolean isEmpty();
     
-    //@ public normal_behavior
-    //@   ensures \result.size() == 0;
+    public normal_behavior
+      ensures \result.size() == 0;
     model static public string empty();
     
     public normal_behavior
@@ -65,6 +62,5 @@ public class string implements IJmlPrimitiveType {
       ensures (\forall \bigint i;; (0 <= i && i < \result.size()) ==> \result.get(i) == this.get(i+start));
     model public string substring(\bigint start, \bigint length);
   
-    @*/
+@*/
 }
-

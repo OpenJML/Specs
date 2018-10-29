@@ -62,12 +62,12 @@ public interface Map<K,V> {
       @*/
 
     /*-RAC@
-        axiom (\forall Object o; content.theSize == 0 ==> 
-                      !content.hasMapObject(o));
-        axiom (\forall Object o; content.theSize == 0 ==>
-                      !content.hasMap(o));
-//        axiom content.theSize == 0 ==> !content.hasMapObject(null);
-//        axiom content.theSize == 0 ==> !content.hasMap(null);
+        axiom (\forall Content c ; c.theSize == 0 ==>
+                      (\forall Object o;  !c.hasMapObject(o)));
+        axiom (\forall Content c ; c.theSize == 0 ==>
+                    (\forall Object o; !c.hasMap(o)));
+        axiom (\forall Content content ; content.theSize == 0 ==> !content.hasMapObject(null));
+        axiom (\forall Content content ; content.theSize == 0 ==> !content.hasMap(null));
       @*/
     /*-RAC@ axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
                                    && (c.hasMapObject(null) <==> c.hasMap(null)));

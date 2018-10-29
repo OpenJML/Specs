@@ -2,70 +2,70 @@ package org.jmlspecs.lang;
 
 //@ immutable pure
 public class map<K,V> implements IJmlPrimitiveType {
+/*@    
+    public normal_behavior
+      ensures \result >= 0;
+    model public long size();
     
-    //@ public normal_behavior
-    //@   ensures \result >= 0;
-    public long size();
-    
-    //@public normal_behavior
-    //@   ensures true;
-    public boolean containsKey(K k);
+    public normal_behavior
+      ensures true;
+    model public boolean containsKey(K k);
 
-    //@ public normal_behavior
-    //@   requires containsKey(k);
-    //@   ensures true;
-    public V get(K k);
+    public normal_behavior
+      requires containsKey(k);
+      ensures true;
+    model public V get(K k);
 
-    //@ public normal_behavior
-    //@   ensures \result == (this.size() == 0);
-    public boolean isEmpty();
+    public normal_behavior
+      ensures \result == (this.size() == 0);
+    model public boolean isEmpty();
     
-    //@ public normal_behavior
-    //@   ensures \result.size() == 0;
-    //@   ensures (\forall K x; ; !\result.containsKey(x));
-    static public <K,V> map<K,V> empty();
+    public normal_behavior
+      ensures \result.size() == 0;
+      ensures (\forall K x; ; !\result.containsKey(x));
+    model public static <K,V> map<K,V> empty();
     
-    //@ public normal_behavior
-    //@   ensures \result ==> (s.size() == ss.size());
-    //@   ensures \result == (\forall K k;; s.containsKey(k) == ss.containsKey(k) && (s.containsKey(k) ==> s.get(k) == ss.get(k)));
-    public static <K,V> boolean equals(map<K,V> s, map<K,V> ss);
+    public normal_behavior
+      ensures \result ==> (s.size() == ss.size());
+      ensures \result == (\forall K k;; s.containsKey(k) == ss.containsKey(k) && (s.containsKey(k) ==> s.get(k) == ss.get(k)));
+    model public static <K,V> boolean equals(map<K,V> s, map<K,V> ss);
     
-    //@ public normal_behavior
-    //@   ensures \result == (this == s || equals(this,s));
-    public boolean equals(map<K,V> s);
+    public normal_behavior
+      ensures \result == (this == s || equals(this,s));
+    model public boolean equals(map<K,V> s);
     
-    //@ public normal_behavior
-    //@   requires this.containsKey(k);
-    //@   ensures \result.containsKey(k);
-    //@   ensures \result.size() == this.size();
-    //@   ensures \result.get(k) == v;
-    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) ==> this.containsKey(kk)));
-    //@   ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
-    //@ also
-    //@   requires !this.containsKey(k);
-    //@   ensures \result.containsKey(k);
-    //@   ensures \result.size() == this.size() + 1;
-    //@   ensures \result.get(k) == v;
-    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
-    //@   ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
-    public map<K,V> put(K k, V v);
+    public normal_behavior
+      requires this.containsKey(k);
+      ensures \result.containsKey(k);
+      ensures \result.size() == this.size();
+      ensures \result.get(k) == v;
+      ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
+      ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> (\result.get(kk) == this.get(kk)));
+    also
+      requires !this.containsKey(k);
+      ensures \result.containsKey(k);
+      ensures \result.size() == this.size() + 1;
+      ensures \result.get(k) == v;
+      ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
+      ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
+    model public map<K,V> put(K k, V v);
     
-    //@ public normal_behavior
-    //@   requires !this.containsKey(k);
-    //@   ensures !\result.containsKey(k);
-    //@   ensures \result.size() == this.size();
-    //@   ensures equals(\result,this);
-    //@ also
-    //@   requires this.containsKey(k);
-    //@   ensures !\result.containsKey(k);
-    //@   ensures \result.size() == this.size() - 1;
-    //@   ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
-    //@   ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
-    public map<K,V> remove(K k);
+    public normal_behavior
+      requires !this.containsKey(k);
+      ensures !\result.containsKey(k);
+      ensures \result.size() == this.size();
+      ensures \result == this;
+    also
+      requires this.containsKey(k);
+      ensures !\result.containsKey(k);
+      ensures \result.size() == this.size() - 1;
+      ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
+      ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
+    model public map<K,V> remove(K k);
     
-//    public normal_behavior
-//      ensures (\forall K k;; \result.contains(k) <==> this.containsKey(k));
-//    model public set<K> keySet();
-
+    public normal_behavior
+      ensures (\forall K k;; \result.contains(k) <==> this.containsKey(k));
+    model public set<K> keySet();
+@*/
 }
 

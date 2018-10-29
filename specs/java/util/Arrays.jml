@@ -1949,7 +1949,7 @@ public class Arrays {
     //@ public normal_behavior
     //@   requires src != null;
     //@   requires 0 <= from && from <= to;
-    //@   ensures \fresh(\result);
+    //-RAC@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
     //@   ensures \elemtype(\typeof(\result)) == \type(T);
     //@   {|

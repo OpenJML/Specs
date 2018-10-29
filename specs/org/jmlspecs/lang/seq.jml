@@ -5,20 +5,17 @@ public class seq<T> implements IJmlPrimitiveType {
  /*@   
     public normal_behavior
       ensures \result >= 0;
-    pure
     model public \bigint size();
     
     public normal_behavior
-    pure
     model public T get(\bigint i);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
-    pure
     model public boolean isEmpty();
     
-    //@ public normal_behavior
-    //@   ensures \result.size() == 0;
+    public normal_behavior
+      ensures \result.size() == 0;
     model static public <T> seq<T> empty();
     
     public normal_behavior

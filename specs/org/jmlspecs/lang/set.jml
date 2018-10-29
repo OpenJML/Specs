@@ -2,14 +2,12 @@ package org.jmlspecs.lang;
 
 //@ immutable pure
 public class set<T> implements IJmlPrimitiveType {
-    /*@    
+/*@    
     public normal_behavior
       ensures \result >= 0;
-    pure
     model public \bigint size();
     
     public normal_behavior
-    pure
     model public boolean contains(T x);
 
     public normal_behavior
@@ -56,5 +54,5 @@ public class set<T> implements IJmlPrimitiveType {
       ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
     model public set<T> remove(T x);
     
- @*/}
-
+@*/
+}
