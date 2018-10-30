@@ -40,47 +40,43 @@ public interface Map<K,V> {
           // This is object containment (not equals)
           public normal_behavior
             ensures true;
-          //+OPENJML@ function
+          //+OPENJML-RAC@ function
           public Object mapsObject(nullable Object key);
 
 
           public normal_behavior
             ensures true;
-          //+OPENJML@ function
+          //+OPENJML-RAC@ function
           public pure Object mapss(nullable Object key);
 
           public normal_behavior
             ensures true;
-          //+OPENJML@ pure function
+          //+OPENJML-RAC@ pure function
           public boolean hasMapObject(nullable Object key);
 
           public normal_behavior
             ensures true;
-          //+OPENJML@ function
+          //+OPENJML-RAC@ function
           public boolean hasMap(nullable Object key);
         }
-      @*/
 
-    /*-RAC@
         axiom (\forall Content c ; c.theSize == 0 ==>
                       (\forall Object o;  !c.hasMapObject(o)));
         axiom (\forall Content c ; c.theSize == 0 ==>
                     (\forall Object o; !c.hasMap(o)));
         axiom (\forall Content content ; content.theSize == 0 ==> !content.hasMapObject(null));
         axiom (\forall Content content ; content.theSize == 0 ==> !content.hasMap(null));
-      @*/
-    /*-RAC@ axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
+        axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
                                    && (c.hasMapObject(null) <==> c.hasMap(null)));
         axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)) 
                                && (c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null)));
         // Z3 performed better with the conjunct in the above specs. cf git issue #644
-     */
           
-    //-RAC@ public model instance non_null Content content; in objectState;
-    //-RAC@ public invariant content.owner == this;
+        public model instance non_null Content content; in objectState;
+        public invariant content.owner == this;
 
-    /*-RAC@ public normal_behavior
-      @   ensures \result <==> ( 
+        public normal_behavior
+          ensures \result <==> ( 
              content != null &&
              content.theSize == 0  && 
              (\forall Object o; !content.hasMapObject(o)) &&
@@ -88,9 +84,8 @@ public interface Map<K,V> {
              !content.hasMapObject(null) &&
              !content.hasMap(null) 
              );
-      @*/
-    /*-RAC@ model pure public boolean initialMap();
-      @*/
+        model pure public boolean initialMap();
+    @*/
 
     public static interface Entry<K,V> {
 
