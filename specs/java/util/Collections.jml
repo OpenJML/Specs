@@ -21,7 +21,7 @@ public class Collections {
     //@ pure
     public static <T extends Comparable<? super T>> void sort(List<T> list);
 
-  //  public static <T> void sort(java.util.List<T>, java.util.Comparator<? super T>);
+//  public static <T> void sort(java.util.List<T>, java.util.Comparator<? super T>);
 //  public static <T> int binarySearch(java.util.List<? extends java.lang.Comparable<? super T>>, T);
 //  private static <T> int indexedBinarySearch(java.util.List<? extends java.lang.Comparable<? super T>>, T);
 //  private static <T> int iteratorBinarySearch(java.util.List<? extends java.lang.Comparable<? super T>>, T);
@@ -50,8 +50,17 @@ public class Collections {
 //  public static <T> java.util.Set<T> unmodifiableSet(java.util.Set<? extends T>);
 //  public static <T> java.util.SortedSet<T> unmodifiableSortedSet(java.util.SortedSet<T>);
 //  public static <T> java.util.NavigableSet<T> unmodifiableNavigableSet(java.util.NavigableSet<T>);
-//  public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T>);
-//  public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V>);
+
+    //@ public normal_behavior
+    //@   ensures \result.size() == list.size();  // TODO - content of list
+    //@ pure
+    public static <T> java.util.List<T> unmodifiableList(java.util.List<? extends T> list);
+    
+    //@ public normal_behavior
+    //@   ensures \result.size() == map.size();  // TODO - content of list
+    //@ pure
+    public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V> map);
+    
 //  public static <K, V> java.util.SortedMap<K, V> unmodifiableSortedMap(java.util.SortedMap<K, ? extends V>);
 //  public static <K, V> java.util.NavigableMap<K, V> unmodifiableNavigableMap(java.util.NavigableMap<K, ? extends V>);
 //  public static <T> java.util.Collection<T> synchronizedCollection(java.util.Collection<T>);
@@ -94,6 +103,7 @@ public class Collections {
     //@   ensures \result != null;  // TODO - content of map
     //@ pure
     public static <K, V> java.util.Map<K, V> singletonMap(K k, V v);
+    
 //  public static <T> java.util.List<T> nCopies(int, T);
 //  public static <T> java.util.Comparator<T> reverseOrder();
 //  public static <T> java.util.Comparator<T> reverseOrder(java.util.Comparator<T>);
