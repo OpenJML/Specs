@@ -21,7 +21,7 @@ public class Collections {
     //@ pure
     public static <T extends Comparable<? super T>> void sort(List<T> list);
 
-  //  public static <T> void sort(java.util.List<T>, java.util.Comparator<? super T>);
+//  public static <T> void sort(java.util.List<T>, java.util.Comparator<? super T>);
 //  public static <T> int binarySearch(java.util.List<? extends java.lang.Comparable<? super T>>, T);
 //  private static <T> int indexedBinarySearch(java.util.List<? extends java.lang.Comparable<? super T>>, T);
 //  private static <T> int iteratorBinarySearch(java.util.List<? extends java.lang.Comparable<? super T>>, T);
@@ -65,7 +65,7 @@ public class Collections {
     //@ pure
     public static <K, V> java.util.Map<K, V> unmodifiableMap(java.util.Map<? extends K, ? extends V> m);
 
-//  public static <K, V> java.util.SortedMap<K, V> unmodifiableSortedMap(java.util.SortedMap<K, ? extends V>);
+    //  public static <K, V> java.util.SortedMap<K, V> unmodifiableSortedMap(java.util.SortedMap<K, ? extends V>);
 //  public static <K, V> java.util.NavigableMap<K, V> unmodifiableNavigableMap(java.util.NavigableMap<K, ? extends V>);
 //  public static <T> java.util.Collection<T> synchronizedCollection(java.util.Collection<T>);
 //  static <T> java.util.Collection<T> synchronizedCollection(java.util.Collection<T>, java.lang.Object);
@@ -116,6 +116,7 @@ public class Collections {
     //@   ensures \result != null;  // TODO - content of map
     //@ pure
     public static <K, V> java.util.Map<K, V> singletonMap(K k, V v);
+    
 //  public static <T> java.util.List<T> nCopies(int, T);
 //  public static <T> java.util.Comparator<T> reverseOrder();
 //  public static <T> java.util.Comparator<T> reverseOrder(java.util.Comparator<T>);
