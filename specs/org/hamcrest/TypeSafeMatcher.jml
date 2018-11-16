@@ -1,0 +1,28 @@
+package org.hamcrest;
+
+//@ non_null_by_default
+abstract public class TypeSafeMatcher<T> extends BaseMatcher<T> {
+    
+    //@ protected normal_behavior
+    //@ pure
+    protected TypeSafeMatcher();
+    
+    //@ protected normal_behavior
+    //@ pure
+    protected TypeSafeMatcher(java.lang.Class<?> expectedType);
+    
+    // protected TypeSafeMatcher(ReflectiveTypeFinder typeFinder);
+    
+    // public void describeMismatch(java.lang.Object item, Description description);
+    
+    // protected void describeMismatchSafely(T item, Description mismatchDescription);
+    
+    //@ also public normal_behavior
+    //@ pure
+    @Override
+    public boolean matches(/*@ nullable */ Object item);
+    
+    //@ protected normal_behavior
+    //@ pure
+    protected abstract boolean matchesSafely(T item);
+}

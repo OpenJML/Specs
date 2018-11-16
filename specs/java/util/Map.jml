@@ -72,7 +72,7 @@ public interface Map<K,V> {
                                && (c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null)));
         // Z3 performed better with the conjunct in the above specs. cf git issue #644
           
-        public model instance non_null Content content; in objectState;
+        model public instance non_null Content content; in objectState;
         public invariant content.owner == this;
 
         public normal_behavior
@@ -196,7 +196,8 @@ public interface Map<K,V> {
       @*/
     /*@ pure nullable @*/ V get(/*@ nullable */ Object key);
 
-    /*-RAC@ public behavior
+    /*-RAC@ public normal_behavior
+      @    // requires containsNull || (key != null && value != null);
       @    assignable objectState;
       @    ensures content.hasMap(key);
       @    ensures !isEmpty() && containsKey(key) && containsValue(value);
@@ -229,6 +230,7 @@ public interface Map<K,V> {
                                        == content.mapsObject(null);
       @*/
     /* FIXME @
+      @ also exceptional_behavior
       @    signals (NullPointerException) \not_modified(value)
       @             && (key==null)||(value==null) && !containsNull;
       @    signals (UnsupportedOperationException) \not_modified(theMap) 
@@ -240,7 +242,7 @@ public interface Map<K,V> {
       @             && (* if some aspect of key or value is not 
       @                allowed in the map *);
       @*/
-    V put(K key, V value);
+    V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
     /*-RAC@ public behavior
       @    assignable objectState;
@@ -301,7 +303,7 @@ public interface Map<K,V> {
       @*/
     void clear();
     
-    //@ model public Set<K> _keySet; in objectState; // FIXME - just for detereminism
+    //@ model public instance Set<K> _keySet; in objectState; // FIXME - just for detereminism
 
     //@ public normal_behavior 
     //@    ensures \result != null;

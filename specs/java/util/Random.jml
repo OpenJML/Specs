@@ -74,6 +74,7 @@ public class Random implements java.io.Serializable {
   public float nextFloat();
   //@ public normal_behavior
   //@   assignable this.content;
+  //@   ensures 0 <= \result && \result < 1.0; // FIXME - is Finite
   public double nextDouble();
   //@ public normal_behavior
   //@   assignable this.content;

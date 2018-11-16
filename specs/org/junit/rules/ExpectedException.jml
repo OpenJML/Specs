@@ -15,6 +15,10 @@ public class ExpectedException {
     
     
     //@ public normal_behavior
+    //@   assignable \nothing;
+    public void expect(Matcher<?> matcher);
+    
+    //@ public normal_behavior
     //@   assignable expectedExceptions;
     public void expect(Class<? extends Throwable> exception);
     
