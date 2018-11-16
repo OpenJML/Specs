@@ -10,6 +10,11 @@ public final class Assertions {
     public static void assertEquals(Object act, Object exp);
     
     //@ public normal_behavior
+    //@   requires !(act == null && exp == null) && !(act != null && act.equals(exp));
+    //@ pure
+    public static void assertNotEquals(Object act, Object exp);
+    
+    //@ public normal_behavior
     //@   requires act == exp;
     //@ pure
     public static void assertSame(Object act, Object exp);
