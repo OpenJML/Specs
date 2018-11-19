@@ -130,11 +130,32 @@ public final class System {
     public static native long currentTimeMillis();
 
     // FIXME - exceptional cases
-    /* @  public exceptional_behavior
+    /*@  public exceptional_behavior
       @    requires src == null || dest == null;
       @    assignable \nothing;
-      @    signals_only NullPointerException;
+      @    signals (NullPointerException) src == null || dest == null;
+      @ also public exceptional_behavior
+           requires (src instanceof byte[]) &&
+                 (dest instanceof byte[]) &&
+                 ( length < 0 || srcPos < 0 || destPos < 0 ||
+                     ((byte[])src).length - srcPos < length ||
+                     ((byte[])dest).length - destPos < length);
+           signals_only ArrayIndexOutOfBoundsException;
+        also
+      @*/
+    /*
+      @  public exceptional_behavior
+      @    // requires !(src == null || dest == null);
+      @    requires !(!(src.getClass().isArray()) || !(dest.getClass().isArray()));
+      @    requires (srcPos < 0 || destPos < 0 || length < 0
+      @                  || srcPos + length > ((Object[])src).length
+      @                  || destPos + length > ((Object[])dest).length);
+              // FIXME - need the length restriction for primitive type arrays also
+      @    assignable \nothing;
+      @    signals_only ArrayIndexOutOfBoundsException;
       @  also
+      @*/
+    /*
       @  public exceptional_behavior
       @    requires !(src == null || dest == null);
       @    requires !(src.getClass().isArray()) || !(dest.getClass().isArray());
@@ -160,16 +181,6 @@ t *);
       @                && \elemtype(\typeof(dest)) <: \type(Object));
       @   assignable \nothing;
       @   signals_only ArrayStoreException;
-      @ also
-      @  public exceptional_behavior
-      @    // requires !(src == null || dest == null);
-      @    requires !(!(src.getClass().isArray()) || !(dest.getClass().isArray()));
-      @    requires (srcPos < 0 || destPos < 0 || length < 0
-      @                  || srcPos + length > ((Object[])src).length
-      @                  || destPos + length > ((Object[])dest).length);
-              // FIXME - need the length restriction for primitive type arrays also
-      @    assignable \nothing;
-      @    signals_only ArrayIndexOutOfBoundsException;
       @ also
       */
     /*@  public normal_behavior
@@ -282,9 +293,9 @@ t *);
       @*/
 //@       |}
     @org.jmlspecs.annotation.Options("-no-strictJML")
-    public static native void arraycopy(/*@non_null*/ Object src,
+    public static native void arraycopy(/*@nullable*/ Object src,
                                         int srcPos,
-                                        /*@non_null*/ Object dest,
+                                        /*@nullable*/ Object dest,
                                         int destPos,
                                         int length);
 

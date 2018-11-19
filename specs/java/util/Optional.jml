@@ -106,15 +106,14 @@ public final class Optional<T> {
   //@ pure
   public T orElse(T t);
 
-  /*@ public model_program
-    @   { return (get() != null ? get() : supplier.get() ); }
+  /*-RAC@ public behavior
+    @   { return (value != null ? value : supplier.get() ); }
     @*/
   //@ pure
   public T orElseGet(java.util.function.Supplier<? extends T> supplier);
   
-  /*@ public model_program {
-    @   if (get()!=null) return get(); else throw supplier.get();
-    @ }
+  /*-RAC@ public behavior 
+    @    { if (value!=null) return value; else throw supplier.get(); }
     @*/
   //@ pure  // FIXME - really only pure if the lambda expression is pure
   public <X extends java.lang.Throwable> T orElseThrow( java.util.function.Supplier<? extends X> supplier) throws X;
