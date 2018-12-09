@@ -394,11 +394,15 @@ public  /*@ pure @*/ final
     public static int bitCount(int k);
 
     //@ public normal_behavior
-    //@   ensures \result == (b0*(0x100_0000) + Byte.asUnsigned(b1)*(0x1_0000) + Byte.asUnsigned(b2)*(0x100) + Byte.asUnsigned(b3));
+    //@   ensures \result == (b0*(0x100_0000) + Byte.toUnsignedInt(b1)*(0x1_0000) + Byte.toUnsignedInt(b2)*(0x100) + Byte.toUnsignedInt(b3));
     //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
     //@ public normal_behavior // Avoids bit arithmetic
-    //@   ensures \result == (i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i) && 0 <= \result && \result <= MAX_UNSIGNED_INT;
-    //@ pure helper function // FIXME - causes infeasibility if written as a function with separated ensures conjuncts
-    //@ model public static long asUnsignedToLong(int i);
+    //@   ensures \result == \bigint_math(i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i) && 0 <= \result && \result <= MAX_UNSIGNED_INT;
+    //@ pure helper function
+    public static long toUnsignedLong(int i);
+    
+    //@ public normal_behavior
+    //@   ensures (0xFFFF_FFFFL & i) == Integer.toUnsignedLong(i);
+    //@ model public static void lemmaToUnsignedLong(int i) {}
 }

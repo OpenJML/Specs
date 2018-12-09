@@ -4,9 +4,8 @@ public interface ReadableByteChannel extends Channel {
     // FIXME - needs to model the buffer of content
     
     //@ public behavior
-    //@   old int oldpos = b.position;
-    //@   assignable b.hb[oldpos .. b.position -1], b.position;
-    //@   ensures \result >= 0;
-    //@   ensures b.position == \old(b.position) + \result;
+    //@   assignable b.hb[b.position .. b.position -1], b.position;
+    //@   ensures \result >= -1;
+    //@   ensures \result >= 0 ==> b.position == \old(b.position) + \result;
     public abstract int read(java.nio.ByteBuffer b) throws java.io.IOException;
 }

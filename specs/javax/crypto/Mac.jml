@@ -154,10 +154,11 @@ public class Mac implements Cloneable {
       //-H2@ also public normal_behavior
       //-H2@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
       //-H2@   requires this.initialized && this.isReset;
-      //-H2@   requires this.savedInfo != null && this.savedInfo.length == len - 1 - SIZE;
+      //-H2@   requires this.savedInfo != null ;//&& this.savedInfo.length == len - 1 - SIZE;
       //-H2@   old byte n = buf[offset+len-1];
       //-H2@   requires buf[offset+len-1] > 1;
-      //-H2@   requires equalArrays(buf,(offset),hmacIteratedHash(this.savedInfo,buf[offset+len-1]-1),0,SIZE);
+      //-H2@   requires equalArrays(buf,offset,this.savedInfo,0,SIZE);
+      //-H2@   requires equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,buf[offset+len-1]-1),0,SIZE);
       //-H2@   requires equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
       //-H2@   assignable this.currentHash;
       //-H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
@@ -174,6 +175,7 @@ public class Mac implements Cloneable {
       //@   ensures \fresh(\result);
       //@   ensures this.isReset;
       //@   ensures \result == this.currentHash;
+      //@   ensures \result.length >= 16;
       //@ pure
       public final byte[] doFinal() throws java.lang.IllegalStateException;
 

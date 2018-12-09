@@ -2,10 +2,11 @@ package javax.crypto.interfaces;
 
 //@ non_null_by_default
 public interface DHPublicKey extends DHKey,java.security.PublicKey {
-    // public static final long serialVersionUID;  // FIXME - why is this a syntax error?
+    
+    //@ model public instance java.math.BigInteger yvalue;
     
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures \result == yvalue;
     //@ pure
     public abstract java.math.BigInteger getY();
 }

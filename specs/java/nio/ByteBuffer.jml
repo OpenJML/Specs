@@ -206,9 +206,9 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public normal_behavior
     //@   requires position <= limit - buf.length;
     //@   assignable buf[*], this.position;
-    //@   ensures \fresh(\result);
     //@   ensures this.position == \old(this.position) + buf.length;
     //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.offset+this.position) + i]) ;
+    //@   ensures java.util.Arrays.equalArrays(buf, 0, this.hb, \old(this.position), buf.length);
     //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
@@ -218,22 +218,22 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     public ByteBuffer get(byte[] buf);
     
     //@ public normal_behavior
-    //@   old int move = bbuf.limit - bbuf.position;
+    //@   old int move = src.limit - src.position;
     //@   requires !this.isReadOnly;
-    //@   requires bbuf != this;
+    //@   requires src != this;
     //@   requires move <= this.limit - this.position;
-    //@   assignable hb[this.offset+this.position .. this.offset+this.position + (move - 1)], this.position, bbuf.position;
+    //@   assignable hb[this.offset+this.position .. this.offset+this.position + (move - 1)], this.position, src.position;
     //@   ensures position == \old(position) + move;
-    //@   ensures bbuf.position == bbuf.limit;
-    //@   ensures (\forall int i; \old(this.offset+this.position) <= i && i < \old(this.offset+this.position) + move; this.hb[i] == bbuf.hb[\old(bbuf.position) + (i-\old(this.offset+this.position))]) ;
+    //@   ensures src.position == src.limit;
+    //@   ensures java.util.Arrays.equalArrays(hb, \old(this.offset+this.position), src.hb, \old(src.offset+src.position), move);
     //@   ensures \result == this;
     //@ also public exceptional_behavior
-    //@   requires bbuf.limit - bbuf.position > this.limit - this.position || this.isReadOnly || bbuf == this;
+    //@   requires src.limit - src.position > this.limit - this.position || this.isReadOnly || src == this;
     //@   assignable \nothing;
-    //@   signals (BufferOverflowException) bbuf.limit - bbuf.position > this.limit - this.position;
+    //@   signals (BufferOverflowException) src.limit - src.position > this.limit - this.position;
     //@   signals (ReadOnlyBufferException) this.isReadOnly;
-    //@   signals (IllegalArgumentException) bbuf == this;
-    public ByteBuffer put(ByteBuffer bbuf);
+    //@   signals (IllegalArgumentException) src == this;
+    public ByteBuffer put(ByteBuffer src);
 
     //@ public normal_behavior
     //@   requires offset >= 0 && length >= 0;

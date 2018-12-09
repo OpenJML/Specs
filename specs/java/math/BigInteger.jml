@@ -33,8 +33,6 @@ import java.util.Random;
 public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //-RAC@ public model \bigint value;
-    //@ public model int sign;
-    //@ public represents sign = signum();
 
     
     // See also Number.parseable()
@@ -79,7 +77,6 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @    requires magnitude != null;
       @    requires signum == 0 || signum == 1 || signum == -1;
       @    requires signum == 0 <==> convert(magnitude) == 0;
-      @    ensures sign == signum;
       @*/
     //@ pure
     public BigInteger(int signum, /*@ non_null @*/ byte[] magnitude);
@@ -185,18 +182,19 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     static void primitiveLeftShift(int[] a, int len, int n);
 
     //@ assignable \nothing;
-    //@ ensures \result.signum() >= 0 && (sign==0 ==> \result.signum() == 0);
+    //@ ensures signum() >= 0 ==> \result == this;
+    //-RAC@ ensures signum() <  0 ==> \result.value == -this.value;
+    //+RAC@ ensures signum() <  0 ==> \result == this.negate();
     public BigInteger abs();
 
     //@ public normal_behavior
     //@ assignable \nothing;
-    //@ ensures \result.signum() == - sign;
     //-RAC@ ensures \result.value == - this.value;
     //@ pure
     public BigInteger negate();
 
     //@ public normal_behavior
-    //@   ensures \result == sign;
+    //-RAC@   ensures \result == (value > 0 ? 1 : value < 0 ? -1: 0);
     //@ helper
     public int signum();
 
@@ -267,8 +265,14 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //@ public normal_behavior
     //@   requires certainty > 0;
-    //@ pure function
+    //@   ensures \result == isProbablePrime(value,certainty);
+    //@ pure 
     public boolean isProbablePrime(int certainty);
+
+    //@ public normal_behavior
+    //@   requires certainty > 0;
+    //@ pure function
+    //@ model public static boolean isProbablePrime(\bigint v, int certainty);
 
     // Comparison Operations
 
@@ -297,14 +301,17 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ ensures \result != null;
     //-RAC@ ensures  parse(\result,10) == this.value;
     public String toString();
+    
+    //@ public normal_behavior
+    //@ ensures n <= 0 ==> \result == 1;
+    //@ ensures n > 0 ==> \result == 256 * pow256(n-1);
+    //@ model public static \bigint pow256(int n);
 
-    //-RAC@ public normal_behavior
+    //@ public normal_behavior
     //-RAC@   ensures \result.length > 0;
     //-RAC@   ensures convert(\result) == this.value;
-    //-RAC@   ensures -128 <= value && value < 128 ==> \result.length == 1;
-    //-RAC@   ensures  128 <= value && value < 128*256 ==> \result.length == 2;
-    //-RAC@   ensures  128*256 <= value && value < 128*256*256 ==> \result.length == 3;
-    //-RAC@   ensures  128*256*256 <= value && value < 128*256*256*256 ==> \result.length == 4;
+    //-RAC@   ensures pow256(\result.length-1)/2 <= this.value && this.value < pow256(\result.length-1) && \result[0] == 0;
+    //-RAC@   ensures pow256(\result.length-1) <= this.value && this.value < pow256(\result.length)/2 && \result[0] != 0;
     //@ pure helper
     public byte[] toByteArray();
 

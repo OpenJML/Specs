@@ -871,14 +871,18 @@ public final class String
     public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*@  public normal_behavior
-      @   ensures \result.charArray.owner == \result;
-      @   ensures \result.length() == length()
-      @            && (\forall int i; 0 <= i && i < length();
-      @                  \result.charAt(i) 
-      @                     == ((charAt(i) == oldChar) ? newChar : charAt(i)));
-      @*/
-    public /*@ pure @*/ /*@ non_null @*/ String replace(char oldChar,
-                                                          char newChar);
+    @   ensures \result.charArray.owner == \result;
+    @   ensures \result.length() == length()
+    @            && (\forall int i; 0 <= i && i < length();
+    @                  \result.charAt(i) 
+    @                     == ((charAt(i) == oldChar) ? newChar : charAt(i)));
+    @*/
+  public /*@ pure @*/ /*@ non_null @*/ String replace(char oldChar,
+                                                        char newChar);
+
+/*@  public normal_behavior
+  @*/
+public /*@ pure @*/ /*@ non_null @*/ String replace(CharSequence oldString, CharSequence newString);
 
     /* FIXME +@ public normal_behavior
       @     requires regex != null;
@@ -909,22 +913,24 @@ public final class String
         String replaceAll(/*@ non_null @*/ String regex,
                           /*@ non_null @*/ String replacement);
 
-    /* FIXME +@ public normal_behavior
-      @     requires regex != null;
-      @     assignable \nothing;
-      @     ensures equals(\result,
-                            Pattern.compile(regex).split(this, limit));
+    /*@ public normal_behavior
+      @   ensures \fresh(\result);
+      @   //  ensures equals(\result,
+          //                  Pattern.compile(regex).split(this, limit));
+      @   ensures (* output strings correspond to input substrings *);
+      @   ensures limit > 0 ==> \result.length == limit;
       @*/
-    public /*@ pure @*/ /*@ non_null @*/
-        String[] split(/*@ non_null @*/ String regex, int limit);
+    //@ pure non_null function helper
+    public String[] split(/*@ non_null @*/ String regex, int limit);
 
-    /* FIXME +@ public normal_behavior
-      @     requires regex != null;
-      @     assignable \nothing;
-      @     ensures equals(\result,split(regex,0));
+    /*@ public normal_behavior
+      @   ensures \fresh(\result);
+      @   ensures \result == split(this,0);
+      @   ensures (\forall int i; 0<=i && i<\result.length; \result[i] != null);
+      @   ensures (* output strings correspond to input substrings *);
       @*/
-    public /*@ pure @*/ /*@ non_null @*/
-        String[] split(/*@ non_null @*/ String regex);
+    //@ pure non_null function helper
+    public String[] split(/*@ non_null @*/ String regex);
 
     /*@  public normal_behavior
       @   requires locale != null;

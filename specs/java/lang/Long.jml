@@ -374,7 +374,7 @@ public /*@ pure @*/ final
 //    public int compareTo(Object o);
 
     //@ public normal_behavior
-    //@   ensures \result == (b0*(0x100_0000_0000_0000L) + Byte.asUnsignedLong(b1)*(0x1_0000_0000_0000L) + Byte.asUnsignedLong(b2)*(0x100_0000_0000L) + Byte.asUnsignedLong(b3)*(0x1_0000_0000L) + Byte.asUnsignedLong(b4)*(0x100_0000L) + Byte.asUnsignedLong(b5)*(0x1_0000L) + Byte.asUnsignedLong(b6)*(0x100L) + Byte.asUnsignedLong(b7));
+    //@   ensures \result == (b0*(0x100_0000_0000_0000L) + Byte.toUnsignedLong(b1)*(0x1_0000_0000_0000L) + Byte.toUnsignedLong(b2)*(0x100_0000_0000L) + Byte.toUnsignedLong(b3)*(0x1_0000_0000L) + Byte.toUnsignedLong(b4)*(0x100_0000L) + Byte.toUnsignedLong(b5)*(0x1_0000L) + Byte.toUnsignedLong(b6)*(0x100L) + Byte.toUnsignedLong(b7));
     //@ model public static pure helper function long asLong(byte b0, byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7);
 
     //@ public normal_behavior

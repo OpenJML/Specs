@@ -20,11 +20,22 @@ public abstract class KeyPairGenerator {
       //@ pure
       public java.lang.String getAlgorithm();
       
+      //@ public normal_behavior
+      //@ pure
+      //@ model public static boolean algorithmIsSupported(String algorithm);
       
+      //@ private behavior
+      //@   ensures \fresh(\result);
+      //@   signals_only NoSuchAlgorithmException;
+      //@ pure
       private static KeyPairGenerator getInstance(sun.security.jca.GetInstance.Instance inst, java.lang.String s);
       
       //@ public normal_behavior
+      //@   requires algorithmIsSupported(algorithm);
       //@   ensures \fresh(\result);
+      //@ also public exceptional_behavior
+      //@   requires !algorithmIsSupported(algorithm);
+      //@   signals_only NoSuchAlgorithmException;
       //@ pure
       public static KeyPairGenerator getInstance(java.lang.String algorithm) throws NoSuchAlgorithmException;
       public static KeyPairGenerator getInstance(java.lang.String algorithm, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
