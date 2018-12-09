@@ -1,0 +1,28 @@
+package org.jmlspecs.lang;
+
+//@ immutable pure
+public class array<T> implements IJmlPrimitiveType {
+ /*@   
+    public normal_behavior
+        ensures (\forall int i; 0<= i && i<a.length; \result.get(i) == a[i]);
+    model public static <T> array<T> of(T[] a);
+    
+    public normal_behavior
+    model public T get(\bigint i);
+    
+    public normal_behavior
+       ensures \result.get(i) == t;
+       ensures (\forall \bigint j; j != i ==> get(j) == \result.get(j));
+    model public array<T> set(\bigint i, T t);
+    
+    public normal_behavior
+       ensures \result == (\forall \bigint i;; s.get(i) == ss.get(i));
+    model public static <T> boolean equals(array<T> s, array<T> ss);
+    
+    public normal_behavior
+       ensures \result == (this == s || equals(this,s));
+    model public boolean equals(array<T> s);
+    
+    @*/
+}
+

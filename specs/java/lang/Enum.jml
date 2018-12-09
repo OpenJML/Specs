@@ -6,20 +6,20 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.
       /*@ spec_public */ private final int ordinal;
       
       //@ public normal_behavior
-      //@   ensures \result == name;
+      //-RAC@   ensures \result == name;
       //@ pure
       public final String name();
       //@ public normal_behavior
-      //@   ensures \result == ordinal;
+      //-RAC@   ensures \result == ordinal;
       //@ pure
       public final int ordinal();
       //@ protected normal_behavior
-      //@   ensures this.name == name;
-      //@   ensures this.ordinal == ordinal;
+      //-RAC@   ensures this.name == name;
+      //-RAC@   ensures this.ordinal == ordinal;
       //@ pure
       protected Enum(String name, int ordinal);
       //@ also public normal_behavior
-      //@   ensures \result == name;
+      //-RAC@   ensures \result == name;
       //@ pure
       public String toString();
       
@@ -34,12 +34,14 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.
 //      public final int compareTo(E);
 //      public final Class<E> getDeclaringClass();
 
-      //@ public normal_behavior 
-      //@   ensures \result != null ==> \result.name().equals(v); // FIXME _ OPENJML _ why does this not work using \result.name.equals(v)
-      //@   ensures \result != null ==> \result.getClass() == clazz;
-      //@   ensures \result == null ==> (* FIXME: v is not a name of a value of clazz *);
-      //@ pure
-      public static <T extends Enum<T>> T valueOf(Class<T> clazz, String v);
+      //@ public behavior 
+      //@   ensures \result.name().equals(v);
+      //@   ensures \result.getClass() == clazz;
+      //@   signals_only IllegalArgumentException, NullPointerException;
+      //@   signals (NullPointerException) v == null;
+      //@   signals (IllegalArgumentException) true; // FIXME - no matching name
+      //@ pure 
+      public static <T extends Enum<T>> T valueOf(Class<T> clazz, /*@ nullable */ String v);
 
 //      protected final void finalize();
 //      private void readObject(java.io.ObjectInputStream) throws java.io.IOException, ClassNotFoundException;
