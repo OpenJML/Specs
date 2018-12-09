@@ -1,0 +1,21 @@
+package javax.crypto.spec;
+
+public class DHPublicKeySpec implements java.security.spec.KeySpec {
+//        private java.math.BigInteger y;
+//        private java.math.BigInteger p;
+//        private java.math.BigInteger g;
+    
+    //@ public normal_behavior
+    //@ pure
+    public DHPublicKeySpec(java.math.BigInteger a, java.math.BigInteger b, java.math.BigInteger c);
+    //@ public normal_behavior
+    //@ pure
+    public java.math.BigInteger getY();
+    //@ public normal_behavior
+    //@ pure
+    public java.math.BigInteger getP();
+    //@ public normal_behavior
+    //@ pure
+    public java.math.BigInteger getG();
+
+}
