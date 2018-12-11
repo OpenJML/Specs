@@ -3,6 +3,8 @@ package javax.crypto;
 //@ non_null_by_default
 public class Cipher {
     
+    //@ model public instance JMLDataGroup content;
+    
 //      private static final sun.security.util.Debug debug;
 //      private static final sun.security.util.Debug pdebug;
 //      private static final boolean skipDebug;
@@ -43,7 +45,7 @@ public class Cipher {
 //      private static java.util.List<javax.crypto.Cipher$Transform> getTransforms(java.lang.String) throws java.security.NoSuchAlgorithmException;
 //      private static javax.crypto.Cipher$Transform getTransform(java.security.Provider$Service, java.util.List<javax.crypto.Cipher$Transform>);
 
-    //@ model public boolean isInitialized;
+    //@ model public boolean isInitialized; in content;
     
     //@ public normal_behavior
     //@   ensures \fresh(\result);
@@ -77,42 +79,42 @@ public class Cipher {
 //      private static void checkOpmode(int);
 //      private static java.lang.String getOpmodeString(int);
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.Key key) throws java.security.InvalidKeyException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.Key key, java.security.SecureRandom randome) throws java.security.InvalidKeyException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.Key key, java.security.spec.AlgorithmParameterSpec spec, java.security.SecureRandom random) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.Key key, java.security.AlgorithmParameters params) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.Key key, java.security.AlgorithmParameters params, java.security.SecureRandom random) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.cert.Certificate certificate) throws java.security.InvalidKeyException;
     //@ public behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures isInitialized;
     //@   signals_only java.security.InvalidKeyException;
     public final void init(int n, java.security.cert.Certificate certificate, java.security.SecureRandom randome) throws java.security.InvalidKeyException;
@@ -150,7 +152,7 @@ public class Cipher {
     //@   requires isInitialized;
     //@   requires inputLen >= 0;
     //@   requires inputOffset >= 0 && inputOffset <= buf.length - inputLen;
-    //@   assignable this.*,output[0 .. inputLen-1];
+    //@   assignable this.content,output[0 .. inputLen-1];
     //@ also public exceptional_behavior
     //@   requires !isInitialized;
     //@   assignable \nothing;
@@ -167,7 +169,7 @@ public class Cipher {
     //@   requires inputLen >= 0;
     //@   requires inputOffset >= 0 && inputOffset <= buf.length - inputLen;
     //@   requires outputOffset >= 0 && outputOffset <= output.length - inputLen;
-    //@   assignable this.*,output[outputOffset .. outputOffset+inputLen-1];
+    //@   assignable this.content,output[outputOffset .. outputOffset+inputLen-1];
     //@ also public exceptional_behavior
     //@   requires !isInitialized;
     //@   assignable \nothing;
@@ -181,7 +183,7 @@ public class Cipher {
 
     //@ public normal_behavior
     //@   requires isInitialized;
-    //@   assignable this.*,output.*;
+    //@   assignable this.content,output.*;
     public final int update(java.nio.ByteBuffer input, java.nio.ByteBuffer output) throws javax.crypto.ShortBufferException;
 
     //      public final byte[] doFinal() throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
@@ -189,7 +191,7 @@ public class Cipher {
 
 
     //@ public normal_behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == b.length; // FIXME - is this so? perhaps just when there have been no prvious calls?
     //@   ensures (* FIXME OPENJML - length of output? is it really fresh? *);
@@ -198,7 +200,7 @@ public class Cipher {
     //      public final byte[] doFinal(byte[], int, int) throws javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
     //      public final int doFinal(byte[], int, int, byte[]) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
     //@ public normal_behavior
-    //@   assignable this.*,output[*];
+    //@   assignable this.content,output[*];
     public final int doFinal(byte[] buf, int inputOffset, int inputLen, byte[] output, int outputOffset) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
     //      public final int doFinal(java.nio.ByteBuffer, java.nio.ByteBuffer) throws javax.crypto.ShortBufferException, javax.crypto.IllegalBlockSizeException, javax.crypto.BadPaddingException;
     //      public final byte[] wrap(java.security.Key) throws javax.crypto.IllegalBlockSizeException, java.security.InvalidKeyException;
@@ -208,13 +210,13 @@ public class Cipher {
     //      public static final int getMaxAllowedKeyLength(java.lang.String) throws java.security.NoSuchAlgorithmException;
     //      public static final java.security.spec.AlgorithmParameterSpec getMaxAllowedParameterSpec(java.lang.String) throws java.security.NoSuchAlgorithmException;
     //@ public normal_behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     public final void updateAAD(byte[] buf);
     //@ public normal_behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     public final void updateAAD(byte[] buf, int i, int j);
     //@ public normal_behavior
-    //@   assignable this.*;
+    //@   assignable this.content;
     public final void updateAAD(java.nio.ByteBuffer buffer);
       
 }
