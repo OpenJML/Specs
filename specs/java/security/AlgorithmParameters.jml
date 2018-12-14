@@ -26,8 +26,13 @@ public class AlgorithmParameters {
 //      public final void init(byte[]) throws java.io.IOException;
 //      public final void init(byte[], java.lang.String) throws java.io.IOException;
 
-      //@ public behavior
-      //@   ensures true;
+      //@ model public final pure <T extends java.security.spec.AlgorithmParameterSpec> boolean supportedParameterSpec(java.lang.Class<T> clazz);
+
+      //@ public normal_behavior
+      //@   requires supportedParameterSpec(clazz);
+      //@ also public exceptional_behavior
+      //@   requires !supportedParameterSpec(clazz);
+      //@   signals_only java.security.spec.InvalidParameterSpecException;
       //@ pure
       public final <T extends java.security.spec.AlgorithmParameterSpec> T getParameterSpec(java.lang.Class<T> clazz) throws java.security.spec.InvalidParameterSpecException;
 
