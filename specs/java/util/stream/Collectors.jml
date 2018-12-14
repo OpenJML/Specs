@@ -12,7 +12,7 @@ public final class Collectors {
 //    public static <T, C extends java.util.Collection<T>> Collector<T, ?, C> toCollection(java.util.function.Supplier<C>);
 
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures \fresh(\result);
     //@ pure
     public static <T> Collector<T, ?, java.util.List<T>> toList();
     //@ public normal_behavior

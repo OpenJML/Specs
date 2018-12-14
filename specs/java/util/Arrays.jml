@@ -1686,7 +1686,7 @@ public class Arrays {
 
     //@  public normal_behavior
     //@   requires a != null;
-    //@   ensures \fresh(\result);
+    //-RAC@   ensures \fresh(\result);
     //-RAC@   ensures \result.content.theSize == a.length;
     //@   ensures \result.size() == a.length;
     //-RAC@  ensures (\forall int i; 0<=i && i<a.length; List.get(\result.content,i) == a[i]);
