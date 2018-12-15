@@ -22,13 +22,13 @@ public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Pat
     //@   requires path.canonicalPath.length == 0;
     //@   ensures \result == this;
     //@ also public normal_behavior
-    //@   requires path.isAbsolute() && !path.canonicalPath.length == 0;
+    //@   requires path.isAbsolute() && path.canonicalPath.length != 0;
     //@   ensures \result == path;
     //@ also public normal_behavior
-    //@   requires !path.isAbsolute() && !path.canonicalPath.length == 0;
-    //@   ensures \result.canonicalPath.length == this.canonicalPatah.length + path.canonicalPath.length;
+    //@   requires !path.isAbsolute() && path.canonicalPath.length != 0;
+    //@   ensures \result.canonicalPath.length == this.canonicalPath.length + path.canonicalPath.length;
     //@   ensures java.util.Arrays.equalArrays(\result.canonicalPath, 0, this.canonicalPath, 0, this.canonicalPath.length);
-    //@   ensures java.util.Arrays.equalArrays(\result.canonicalPath, this.canonicalPath.length, path.canonicalPath, 0, path.canonicalPatah.length);
+    //@   ensures java.util.Arrays.equalArrays(\result.canonicalPath, this.canonicalPath.length, path.canonicalPath, 0, path.canonicalPath.length);
     //@ pure function
     public abstract Path resolve(Path path);
     //@ public normal_behavior

@@ -20,8 +20,15 @@ public class KeyAgreement {
       private KeyAgreement(java.security.Provider.Service service, java.util.Iterator<java.security.Provider.Service> iterator, java.lang.String s);
       public final java.lang.String getAlgorithm();
       
-      //@ public behavior
+      //@ public normal_behavior
+      //@ model public static final pure boolean validAlgorithm(java.lang.String algorithm);
+
+      //@ public normal_behavior
+      //@   requires validAlgorithm(s);
       //@   ensures \fresh(\result);
+      //@ also public exceptional_behavior
+      //@   requires validAlgorithm(s);
+      //@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure
       public static final KeyAgreement getInstance(java.lang.String s) throws java.security.NoSuchAlgorithmException;
       public static final KeyAgreement getInstance(java.lang.String s, java.lang.String ss) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
@@ -31,9 +38,9 @@ public class KeyAgreement {
       private void chooseProvider(int n, java.security.Key key, java.security.spec.AlgorithmParameterSpec spec, java.security.SecureRandom random) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
       public final java.security.Provider getProvider();
 
-      //@ public behavior
+      //@ public normal_behavior
       //@   assignable this.*;
-      //@   ensures true; // FIXME - fresh?
+      //@   ensures true; // FIXME - ignoring exception
       public final void init(java.security.Key key) throws java.security.InvalidKeyException;
 
       //@ public behavior
@@ -51,16 +58,16 @@ public class KeyAgreement {
       //@   ensures true;
       public final void init(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec, java.security.SecureRandom random) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
 
-      //@ public behavior
+      //@ public normal_behavior
       //@   assignable this.*;
-      //@   ensures \fresh(\result);
+      //@   ensures \fresh(\result); // FIXME - ignoring exception
       public final java.security.Key doPhase(java.security.Key key, boolean b) throws java.security.InvalidKeyException, java.lang.IllegalStateException;
       
       //@ model public byte[] _secret;
       
-      //@ public behavior
+      //@ public normal_behavior
       //@   ensures \fresh(\result);
-      //@   ensures \result.length == _secret.length;
+      //@   ensures \result.length == _secret.length; // FIXME - ignoring exception
       //@ pure
       public final byte[] generateSecret() throws java.lang.IllegalStateException;
       public final int generateSecret(byte[] bytes, int n) throws java.lang.IllegalStateException, ShortBufferException;
