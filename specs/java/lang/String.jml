@@ -880,7 +880,8 @@ public final class String
   public /*@ pure @*/ /*@ non_null @*/ String replace(char oldChar,
                                                         char newChar);
 
-/*@  public normal_behavior
+/*@ public normal_behavior
+  @   ensures true;
   @*/
 public /*@ pure @*/ /*@ non_null @*/ String replace(CharSequence oldString, CharSequence newString);
 
