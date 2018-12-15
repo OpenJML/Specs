@@ -24,7 +24,7 @@ public class KeyFactory {
       private KeyFactorySpi nextSpi(KeyFactorySpi spi);
       
       //@ public normal_behavior
-      //@   ensures true;
+      //@   ensures (spec instanceof javax.crypto.spec.DHPublicKeySpec) ==> (\result instanceof javax.crypto.interfaces.DHPublicKey);
       //@ pure
       public final PublicKey generatePublic(java.security.spec.KeySpec spec) throws java.security.spec.InvalidKeySpecException;
       public final PrivateKey generatePrivate(java.security.spec.KeySpec spec) throws java.security.spec.InvalidKeySpecException;

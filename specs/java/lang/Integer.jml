@@ -64,15 +64,16 @@ public  /*@ pure @*/ final
     /*-RAC@ public normal_behavior
       @   requires (Character.MIN_RADIX <= radix
       @             && radix <= Character.MAX_RADIX);
+      @   ensures \result != null;
       @   ensures parseable(\result,radix);
       @   ensures i == parseInt(\result, radix);
       @ also public normal_behavior
       @   requires !(Character.MIN_RADIX <= radix
-      @             && radix <= Character.MAX_RADIX);
+      @             && radix <= Character.MAX_RADIX) 
+      @            || radix == 10;
+      @   ensures \result != null;
       @   ensures parseable(\result,10);
       @   ensures i == parseInt(\result, 10);
-      @ also public normal_behavior
-      @   ensures \result != null;
       @   ensures i == 0 ==> \result.length() == 1;
       @   ensures i >  0 ==> \result.length() >= 1;
       @   ensures i <  0 ==> \result.length() >= 2;

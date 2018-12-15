@@ -44,6 +44,15 @@ public abstract class KeyPairGenerator {
       void disableFailover();
       public void initialize(int n);
       public void initialize(int n, SecureRandom random);
+      
+      //@ public normal_behavior
+      //@ model public pure boolean validParameterSpec(java.security.spec.AlgorithmParameterSpec alg);
+
+      //@ public normal_behavior
+      //@   requires validParameterSpec(alg);
+      //@ also public exceptional_behavior
+      //@   requires !validParameterSpec(alg);
+      //@   signals_only InvalidAlgorithmParameterException;
       public void initialize(java.security.spec.AlgorithmParameterSpec alg) throws InvalidAlgorithmParameterException;
       public void initialize(java.security.spec.AlgorithmParameterSpec alg, SecureRandom random) throws InvalidAlgorithmParameterException;
       public final KeyPair genKeyPair();

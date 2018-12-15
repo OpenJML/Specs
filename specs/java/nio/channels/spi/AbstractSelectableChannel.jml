@@ -2,8 +2,7 @@ package java.nio.channels.spi;
 
 public abstract class AbstractSelectableChannel extends java.nio.channels.SelectableChannel {
 
-    //@ public model JMLDataGroup state; //@ in channelCloseContent;
-
+    //@ model public instance JMLDataGroup state; //@ in channelCloseContent;
 
 //      private final java.nio.channels.spi.SelectorProvider provider;
 //      private java.nio.channels.SelectionKey[] keys;

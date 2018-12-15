@@ -871,19 +871,20 @@ public final class String
     public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*@  public normal_behavior
-    @   ensures \result.charArray.owner == \result;
-    @   ensures \result.length() == length()
-    @            && (\forall int i; 0 <= i && i < length();
-    @                  \result.charAt(i) 
-    @                     == ((charAt(i) == oldChar) ? newChar : charAt(i)));
-    @*/
-  public /*@ pure @*/ /*@ non_null @*/ String replace(char oldChar,
+      @   ensures \result.charArray.owner == \result;
+      @   ensures \result.length() == length()
+      @            && (\forall int i; 0 <= i && i < length();
+      @                  \result.charAt(i) 
+      @                     == ((charAt(i) == oldChar) ? newChar : charAt(i)));
+      @*/
+    public /*@ pure @*/ /*@ non_null @*/ String replace(char oldChar,
                                                         char newChar);
 
-/*@  public normal_behavior
-  @    ensures \result != null;
-  @*/
-public /*@ pure @*/ /*@ non_null @*/ String replace(CharSequence oldString, CharSequence newString);
+    /*@  public normal_behavior
+      @    ensures \result != null;
+      @  pure
+      @*/
+    public String replace(CharSequence oldString, CharSequence newString);
 
     /* FIXME +@ public normal_behavior
       @     requires regex != null;

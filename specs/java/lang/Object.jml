@@ -194,7 +194,7 @@ public class Object {
     /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
       @     requires toStringDefined;
       @     ensures (* \result is a string representation of this object *);
-      @ also code normal_behavior
+      @ also public code normal_behavior
       @     requires toStringDefined;
       @     assignable \nothing;
       @     ensures \result == theString;

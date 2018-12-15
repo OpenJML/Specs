@@ -87,7 +87,7 @@ public interface Collection<E> extends Iterable<E> {
       @  ensures \result <==> (content.theSize == 0);
       @*/
     /*@ pure @*/ boolean isEmpty();
-
+    
     //@ public behavior
     //-RAC@   ensures (!containsNull && o == null) ==> !\result;
     //@   ensures size() == 0 ==> !\result;
