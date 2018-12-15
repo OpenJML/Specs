@@ -881,6 +881,7 @@ public final class String
                                                         char newChar);
 
 /*@  public normal_behavior
+  @    ensures \result != null;
   @*/
 public /*@ pure @*/ /*@ non_null @*/ String replace(CharSequence oldString, CharSequence newString);
 
