@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 
 public interface Iterable<T> {
 
+    //@ model public instance T[] values;
+
     public Iterator<T> iterator();
     
     /*@ public model_program {

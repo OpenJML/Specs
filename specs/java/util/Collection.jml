@@ -353,7 +353,9 @@ public interface Collection<E> extends Iterable<E> {
     int hashCode();
     
     //@ public normal_behavior
-    //@   requires true;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.values.length == this.size();
+    //@   ensures (\forall int i; 0 <= i && i < \result.values.length; \result.values[i] == this.values[i]);
     //@ pure
     public java.util.stream.Stream<E> stream();
     //@ public normal_behavior
