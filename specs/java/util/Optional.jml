@@ -72,37 +72,18 @@ public final class Optional<T> {
   //@ pure
   public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
   
-  /* @ public model_program // FIXME - can't get these types to work
-    @   { if (f==null) throw new NullPointerException(); ghost U x = value == null ? null : f.apply(value) ; return Optional.<U>ofNullable(x); }
+  /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
+    @   { if (f==null) throw new NullPointerException(); return !isPresent() ? Optional.<U>empty() : Optional.<U>ofNullable( f.apply(value) ) ; }
     @*/
-  //@ public normal_behavior
-  //@   requires f != null;
-  //@   requires f instanceof java.util.function.Function.Pure;
-  //@   requires \typeof(f) <: \type(java.util.function.Function.Pure<T,U>);
-  //@   assignable \nothing;
-  //@   ensures \fresh(\result);
-  //@   ensures value != null ==> \result.value == f.apply(value);
-  //@   ensures value == null ==> \result.value == null;
-  //@ also public normal_behavior
-  //@   requires f != null;
-  //@   requires !(f instanceof java.util.function.Function.Pure);
-  //@   requires !(\typeof(f) <: \type(java.util.function.Function.Pure<T,U>));
-  //     FIXME - needs an assignable clause based on f
-  //@   ensures \fresh(\result);
-  //     FIXME    ensures value != null ==> \result.value == f.apply(value);
-  //@   ensures value == null ==> \result.value == null;
-  //@ also public exceptional_behavior
-  //@   requires f == null;
-  //@   assignable \nothing;
-  //@   signals_only NullPointerException;
   public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> f);
   
-  // FIXME
+  /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
+  @   { if (f==null) throw new NullPointerException(); if (!isPresent()) return Optional.<U>empty(); ghost Optional<U> r = f.apply(value); if (r == null) throw new NullPointerException(); return r; }
+  @*/
   public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> f);
 
   //@ public normal_behavior
-  //-RAC@   ensures \result == (value != null ? value : t);
-  //+RAC@   ensures \result == (get() != null ? get() : t);
+  //@   { return isPresent() ? this.get() : t; }
   //@ pure
   public T orElse(T t);
 

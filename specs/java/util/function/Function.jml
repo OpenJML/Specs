@@ -4,18 +4,23 @@ package java.util.function;
 @FunctionalInterface
 public interface Function<T,R> {
 
-    //@ nullable
+      //@ model public instance JMLDataGroup applyFrame;
+      
+      //@ assignable applyFrame;
+      //@ nullable
       public abstract R apply(/*@ nullable */ T t);
       
       default public <V> java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T> before);
 
       default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
 
-      /*@ public static immutable model interface Pure<T,R> extends Function<T,R> {
+      /*@  @FunctionalInterface public static immutable model interface Pure<T,R> extends Function<T,R> {
       @   pure function
       @   public nullable R apply(nullable T t);
       @ }
       @*/
+      
+
     
       /*@ public static immutable model interface Identity<T> extends Function<T,T> {
       @   also public model_program {
