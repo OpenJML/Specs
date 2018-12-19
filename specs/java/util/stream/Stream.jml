@@ -4,7 +4,7 @@ package java.util.stream;
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
     
     //@ public normal_behavior
-    //@   ensures \result == (\forall int i; 0<=i && i<_length; values[i] != null);
+    //@   ensures \result == (\forall int i; 0<=i && i<values.length; values[i] != null);
     //@ pure
     //@ model public boolean isNonNull();
     
@@ -20,15 +20,15 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \result._length == _length;
-    //@   ensures (\forall int i; 0<=i && i<_length; \result.values[i] == func.applyAsInt(values[i]));
+    //-RAC@   ensures \result.values.length == values.length;
+    //-RAC@   ensures (\forall int i; 0<=i && i<values.length; \result.values[i] == func.applyAsInt(values[i]));
     //@ pure
     IntStream mapToInt(java.util.function.ToIntFunction<? super T> func);
 
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \result._length == _length;
-    //@   ensures (\forall int i; 0<=i && i<_length; \result.values[i] == func.applyAsLong(values[i]));
+    //-RAC@   ensures \result.values.length == values.length;
+    //-RAC@   ensures (\forall int i; 0<=i && i<values.length; \result.values[i] == func.applyAsLong(values[i]));
     //@ pure
     LongStream mapToLong(java.util.function.ToLongFunction<? super T> func);
 
@@ -47,9 +47,9 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     // FIXME - clients should not be able to rely on the actions being ordered
     //@ public normal_behavior
     /*@   { 
-            //@ loop_invariant 0 <= i && i <= _length;
-            //@ decreases _length - i;  // FIXME - allow the decreases to be a \bigint
-            for (int i=0; i < _length; i++) consumer.accept(get(i)); 
+            //@ loop_invariant 0 <= i && i <= values.length;
+            //@ decreases values.length - i;  // FIXME - allow the decreases to be a \bigint
+            for (int i=0; i < values.length; i++) consumer.accept(get(i)); 
           }
      */
     void forEach(java.util.function.Consumer<? super T> consumer);
@@ -57,10 +57,10 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   requires true;
     /*@   { 
-            //@ loop_invariant i == \count && 0 <= i && i <= _length;
-            //@ decreases _length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
-            for (int i=0; i < _length; i++) {
-                //-STRICT@ show i, _length, values[i];
+            //@ loop_invariant i == \count && 0 <= i && i <= values.length;
+            //@ decreases values.length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
+            for (int i=0; i < values.length; i++) {
+                //-STRICT@ show i, values.length, values[i];
                 consumer.accept(values[i]); 
             }
           }
@@ -92,39 +92,39 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     java.util.Optional<T> max(java.util.Comparator<? super T> comparator);
 
     //@ public normal_behavior
-    //@   ensures \result == _length;
+    //-RAC@   ensures \result == values.length;
     //@ pure
     long count();
     
     //@ public normal_behavior
     /* @ {
-         loop_invariant 0<=i && i<= _length;
+         loop_invariant 0<=i && i<= values.length;
         loop_invariant (\forall int j; 0<=j && j<i; !pred.test(values[j]));
-        decreases _length - i;
-        for (int i=0; i<_length; i++) {
+        decreases values.length - i;
+        for (int i=0; i<values.length; i++) {
             if (pred.test(values[i])) return true;
         }
         return false;
         }
      */
-    //@   { return !(\forall int j; 0<=j && j<_length; !pred.test(values[j]));}
+    //@   { return !(\forall int j; 0<=j && j<values.length; !pred.test(values[j]));}
     //@ pure
     boolean anyMatch(java.util.function.Predicate<? super T> pred);
 
     //@ public normal_behavior
-    //@   ensures \result == (\forall int j; 0<=j && j<_length; pred.test(values[j]) == true);
+    //@   ensures \result == (\forall int j; 0<=j && j<values.length; pred.test(values[j]) == true);
     //@ pure
     boolean allMatch(java.util.function.Predicate<? super T> pred);
 
     //@ public normal_behavior
-    //@   ensures \result == (\forall int j; 0<=j && j<_length; pred.test(values[j]) == false);
+    //@   ensures \result == (\forall int j; 0<=j && j<values.length; pred.test(values[j]) == false);
     //@ pure
     boolean noneMatch(java.util.function.Predicate<? super T> pred);
 
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures (\result.value == null) <==> (_length == 0); 
+    //@   ensures (\result.value == null) <==> (values.length == 0); 
     //@   ensures \result.value != null ==> (\result.value == values[0]);
     //@ pure
     java.util.Optional<T> findFirst();
@@ -132,8 +132,8 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures (\result.value == null) <==> (_length == 0); 
-    //@   ensures \result.value != null ==> (\exists int i; 0<=i && i <_length; \result.value == values[i]);
+    //@   ensures (\result.value == null) <==> (values.length == 0); 
+    //@   ensures \result.value != null ==> (\exists int i; 0<=i && i <values.length; \result.value == values[i]);
     //@ pure
     java.util.Optional<T> findAny();
     
@@ -142,20 +142,20 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures \result._length == 0;
+    //@   ensures \result.values.length == 0;
     //@ pure
     public static <T> Stream<T> empty();
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures \result._length == 1;
+    //@   ensures \result.values.length == 1;
     //@   ensures \result.values[0] == t;
     //@ pure
     public static <T> Stream<T> of(T t);
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures \result._length == ts.length;
+    //@   ensures \result.values.length == ts.length;
     //@   ensures (\forall int i; 0<=i && i<ts.length; \result.values[i] == ts[i]);
     //@ pure
     public static <T> Stream<T> of(T... ts);

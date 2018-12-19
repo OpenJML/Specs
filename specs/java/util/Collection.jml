@@ -354,8 +354,8 @@ public interface Collection<E> extends Iterable<E> {
     
     //@ public normal_behavior
     //@   ensures \fresh(\result);
-    //@   ensures \result.values.length == this.size();
-    //@   ensures (\forall int i; 0 <= i && i < \result.values.length; \result.values[i] == this.values[i]);
+    //-RAC@   ensures \result.values.length == this.size();
+    //-RAC@   ensures (\forall int i; 0 <= i && i < \result.values.length; \result.values[i] == this.values[i]);
     //@ pure
     public java.util.stream.Stream<E> stream();
     //@ public normal_behavior
