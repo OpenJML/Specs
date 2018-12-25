@@ -5,16 +5,16 @@ public class map<K,V> implements IJmlPrimitiveType {
 /*@    
     public normal_behavior
       ensures \result >= 0;
-    model public long size();
+    model public function long size();
     
     public normal_behavior
       ensures true;
-    model public boolean containsKey(K k);
+    model public function boolean containsKey(K k);
 
     public normal_behavior
       requires containsKey(k);
       ensures true;
-    model public V get(K k);
+    model public function V get(K k);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
