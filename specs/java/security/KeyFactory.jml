@@ -4,6 +4,7 @@ package java.security;
 public class KeyFactory {
 
       private static final sun.security.util.Debug debug;
+      //@ spec_public
       private final java.lang.String algorithm;
       private Provider provider;
       private volatile KeyFactorySpi spi;
@@ -14,12 +15,24 @@ public class KeyFactory {
       private KeyFactory(java.lang.String s) throws NoSuchAlgorithmException;
       
       //@ public normal_behavior
-      //@   ensures true;
+      //@ pure
+      //@ model public static boolean validAlgorithm(String s);
+      
+      //@ public normal_behavior
+      //@   requires validAlgorithm(s);
+      //@   ensures \result.algorithm == s;
+      //@ also public exceptional_behavior
+      //@   requires !validAlgorithm(s);
+      //@   signals_only NoSuchAlgorithmException;
       //@ pure
       public static KeyFactory getInstance(java.lang.String s) throws NoSuchAlgorithmException;
       public static KeyFactory getInstance(java.lang.String s, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
       public static KeyFactory getInstance(java.lang.String s, Provider provider) throws NoSuchAlgorithmException;
       public final Provider getProvider();
+      
+      //@ public normal_behavior
+      //@   ensures \result == algorithm;
+      //@ pure
       public final java.lang.String getAlgorithm();
       private KeyFactorySpi nextSpi(KeyFactorySpi spi);
       

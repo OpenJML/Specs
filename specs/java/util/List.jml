@@ -176,6 +176,7 @@ public interface List<E> extends Collection<E> {
     //@ public normal_behavior
     //@   requires 0 <= index && index < size();
     //-RAC@   ensures \result == get(content,index);
+    //-RAC@   ensures \result == values[index];
     //-RAC@   ensures !containsNull ==> \result != null;
     //@ also
     //@ public exceptional_behavior

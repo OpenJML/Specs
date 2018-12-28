@@ -80,11 +80,13 @@ public interface Collection<E> extends Iterable<E> {
 
     /*-RAC@ public normal_behavior
       @    ensures \result == content.theSize;
+      @    ensures \result == values.length;
       @*/
     /*@ pure @*/ int size();
 
     /*-RAC@ public normal_behavior
       @  ensures \result <==> (content.theSize == 0);
+      @  ensures \result <==> (values.length == 0);
       @*/
     /*@ pure @*/ boolean isEmpty();
     
@@ -354,7 +356,7 @@ public interface Collection<E> extends Iterable<E> {
     
     //@ public normal_behavior
     //@   ensures \fresh(\result);
-    //-RAC@   ensures \result.values.length == this.size();
+    //-RAC@   ensures \result.values.length == this.values.length;
     //-RAC@   ensures (\forall int i; 0 <= i && i < \result.values.length; \result.values[i] == this.values[i]);
     //@ pure
     public java.util.stream.Stream<E> stream();

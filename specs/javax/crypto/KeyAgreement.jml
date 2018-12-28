@@ -21,13 +21,13 @@ public class KeyAgreement {
       public final java.lang.String getAlgorithm();
       
       //@ public normal_behavior
-      //@ model public static final pure boolean validAlgorithm(java.lang.String algorithm);
+      //@ model public static final pure function boolean validAlgorithm(java.lang.String algorithm);
 
       //@ public normal_behavior
       //@   requires validAlgorithm(s);
       //@   ensures \fresh(\result);
       //@ also public exceptional_behavior
-      //@   requires validAlgorithm(s);
+      //@   requires !validAlgorithm(s);
       //@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure
       public static final KeyAgreement getInstance(java.lang.String s) throws java.security.NoSuchAlgorithmException;
@@ -64,6 +64,7 @@ public class KeyAgreement {
       public final java.security.Key doPhase(java.security.Key key, boolean b) throws java.security.InvalidKeyException, java.lang.IllegalStateException;
       
       //@ model public byte[] _secret;
+      //@ public invariant _secret.length <= Integer.MAX_VALUE/2;
       
       //@ public normal_behavior
       //@   ensures \fresh(\result);

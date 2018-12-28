@@ -110,7 +110,13 @@ public class Collections {
 //  public static <T> java.util.Set<T> singleton(T);
 //  static <E> java.util.Iterator<E> singletonIterator(E);
 //  static <T> java.util.Spliterator<T> singletonSpliterator(T);
-//  public static <T> java.util.List<T> singletonList(T);
+
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures \result.values.length == 1;
+    //@   ensures \result.values[0] == item;
+    //@ pure
+    public static <T> java.util.List<T> singletonList(T item);
     
     //@ public normal_behavior
     //@   ensures \result != null;  // TODO - content of map

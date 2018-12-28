@@ -69,7 +69,7 @@ public class Object {
     //  FIXME - how do we ensure the following
     //     (\forall Object o,oo; oo.equals(o) ==> o.theHashCode == oo.theHashCode);
 
-    /*@  public normal_behavior
+    /*@  public code normal_behavior
       @     requires obj != null;
       @     ensures (* \result is true when obj is "equal to" this object *);
       @  also

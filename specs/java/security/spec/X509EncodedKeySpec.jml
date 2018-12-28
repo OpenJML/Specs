@@ -1,16 +1,25 @@
 package java.security.spec;
 
+//@ non_null_by_default
 public class X509EncodedKeySpec extends EncodedKeySpec {
+    
     //@ public normal_behavior
-    //@   ensures true;
+    //@   requires bytes != null;
+    //@   ensures \fresh(_bytes);
+    //@   ensures _bytes.length == bytes.length;
+    //@   ensures java.util.Arrays.equalArrays(_bytes,bytes);
+    //@ also public exceptional_behavior
+    //@   requires bytes == null;
+    //@   signals_only NullPointerException;
     //@ pure
-    public X509EncodedKeySpec(byte[] bytes);
-    //@ also public normal_behavior
-    //@   ensures true;
-    //@ pure
+    public X509EncodedKeySpec(/*@ nullable */ byte[] bytes);
+
+    @Override
     public byte[] getEncoded();
+
     //@ also public normal_behavior
-    //@   ensures true;
+    //@   ensures \result.equals("X.509");
     //@ pure
+    @Override
     public final java.lang.String getFormat();
 }
