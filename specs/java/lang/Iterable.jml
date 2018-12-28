@@ -3,9 +3,10 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
+//@ non_null_by_default
 public interface Iterable<T> {
 
-    //-RAC@ model public instance T[] values;
+    //-RAC@ model public non_null instance T[] values;
 
     public Iterator<T> iterator();
     

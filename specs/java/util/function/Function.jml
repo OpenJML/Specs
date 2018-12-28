@@ -6,7 +6,8 @@ public interface Function<T,R> {
 
       //@ model public instance JMLDataGroup applyFrame;
       
-      //@ assignable applyFrame;
+      //@ public normal_behavior
+      //@   assignable applyFrame;
       //@ nullable
       public abstract R apply(/*@ nullable */ T t);
       
