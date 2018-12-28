@@ -1,0 +1,26 @@
+package java.security.spec;
+
+//@ non_null_by_default
+public abstract class EncodedKeySpec implements KeySpec {
+    //@ model public byte[] _bytes;
+    
+    //@ public normal_behavior
+    //@   requires encodedKey != null;
+    //@   ensures \fresh(_bytes);
+    //@   ensures _bytes.length == encodedKey.length;
+    //@   ensures java.util.Arrays.equalArrays(_bytes,encodedKey);
+    //@ also public exceptional_behavior
+    //@   requires encodedKey == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public EncodedKeySpec(byte[] encodedKey);
+
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);
+    //@   ensures java.util.Arrays.equalArrays(\result,_bytes);
+    //@ pure
+    public byte[] getEncoded();
+    //@ public normal_behavior
+    //@ pure
+    public abstract java.lang.String getFormat();
+}
