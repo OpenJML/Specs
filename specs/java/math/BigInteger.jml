@@ -73,18 +73,17 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ pure
     public BigInteger(/*@ non_null @*/ byte[] val);
 
-    /*@ public normal_behavior
-      @    requires magnitude != null;
-      @    requires signum == 0 || signum == 1 || signum == -1;
-      @    requires signum == 0 <==> (\forall int i; 0 <= i && i < magnitude.length; magnitude[i] == 0);
-      @    ensures signum == 0 ==> value == 0;
-      @    ensures value == signum * convert(magnitude);
-      @ also public exceptional_behavior
-      @    requires !(signum == 0 || signum == 1 || signum == -1) || magnitude == null;
-      @    signals (NumberFormatException) !(signum == 0 || signum == 1 || signum == -1);
-      @    signals (NullPointerException) magnitude == null;
-      @    signals_only NullPointerException, NumberFormatException;
-      @*/
+    //@ public normal_behavior
+    //@    requires magnitude != null;
+    //@    requires signum == 0 || signum == 1 || signum == -1;
+    //@    requires signum == 0 <==> (\forall int i; 0 <= i && i < magnitude.length; magnitude[i] == 0);
+    //-RAC@    ensures signum == 0 ==> value == 0;
+    //-RAC@    ensures value == signum * convert(magnitude);
+    //@ also public exceptional_behavior
+    //@    requires !(signum == 0 || signum == 1 || signum == -1) || magnitude == null;
+    //@    signals (NumberFormatException) !(signum == 0 || signum == 1 || signum == -1);
+    //@    signals (NullPointerException) magnitude == null;
+    //@    signals_only NullPointerException, NumberFormatException;
     //@ pure
     public BigInteger(int signum, /*@ nullable @*/ byte[] magnitude);
 
