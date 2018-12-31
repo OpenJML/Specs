@@ -38,8 +38,10 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
 //  public boolean containsValue(java.lang.Object);
 //  public boolean containsKey(java.lang.Object);
 //  private boolean containsMapping(java.lang.Object, java.lang.Object);
+
     @Override
     public /*@ nullable */ V get(/*@ nullable */ java.lang.Object o);
+
     @Override
     public /*@ nullable */ V put(/*@ nullable */ K k, /*@ nullable */ V v);
 //  public /*@ nullable */ V remove(/*@ nullable */ java.lang.Object);

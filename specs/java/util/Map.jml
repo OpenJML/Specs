@@ -242,7 +242,7 @@ public interface Map<K,V> {
       @             && (* if some aspect of key or value is not 
       @                allowed in the map *);
       @*/
-    V put(/*@ nullable */ K key, /*@ nullable */ V value);
+    /*@ nullable */V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
     /*-RAC@ public behavior
       @    assignable objectState;

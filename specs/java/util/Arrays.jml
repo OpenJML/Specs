@@ -2146,7 +2146,7 @@ public class Arrays {
 //    public static java.util.Spliterator$OfDouble spliterator(double[], int, int);
     
     //@ public normal_behavior
-    //@   requires true;
+    //@   ensures \result.values == array;
     //@ pure
     public static <T> java.util.stream.Stream<T> stream(T[] array);
 //    public static <T> java.util.stream.Stream<T> stream(T[], int, int);
