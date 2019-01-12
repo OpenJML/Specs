@@ -1688,10 +1688,9 @@ public class Arrays {
     //@       requires a != null;
     //-RAC@   ensures \fresh(\result);
     //-RAC@   ensures \result.content.theSize == a.length;
-    //-RAC@   ensures \result.values.length == a.length;
+    //-RAC@   ensures \result.values == a;
     //@       ensures \result.size() == a.length;
     //-RAC@  ensures (\forall int i; 0<=i && i<a.length; List.get(\result.content,i) == a[i]);
-    //-RAC@  ensures (\forall int i; 0<=i && i<a.length; \result.values[i] == a[i]);
     //@ also public exceptional_behavior
     //@   requires a == null;
     //@   signals_only NullPointerException;

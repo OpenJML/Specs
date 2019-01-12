@@ -86,6 +86,8 @@ public interface Map<K,V> {
              );
         model pure public boolean initialMap();
     @*/
+    
+    //@ model public instance map<Object,V> modelMap;
 
     public static interface Entry<K,V> {
 
@@ -188,9 +190,11 @@ public interface Map<K,V> {
       @ also public normal_behavior
       @    requires content.hasMap(key);    // hasMap or hasMapObject -- FIXME
       @    ensures \result == content.mapss(key);
+      @    ensures \result == modelMap.get(key);
       @ also public normal_behavior
       @    requires content.hasMapObject(key);
       @    ensures \result == content.mapsObject(key);
+      @    ensures \result == modelMap.get(key);
 
            // FIXME - exceptions?
       @*/
@@ -198,7 +202,8 @@ public interface Map<K,V> {
 
     /*-RAC@ public normal_behavior
       @    // requires containsNull || (key != null && value != null);
-      @    assignable objectState;
+      @    assignable objectState, modelMap;
+      @    ensures modelMap == \old(modelMap).put(key,value);
       @    ensures content.hasMap(key);
       @    ensures !isEmpty() && containsKey(key) && containsValue(value);
       @    ensures content.mapsObject(key) == value;

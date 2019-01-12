@@ -82,22 +82,37 @@ public class Mac implements Cloneable {
       //@   ensures \result == this.algorithm;
       //@ pure
       public final java.lang.String getAlgorithm();
+
+      //@ public normal_behavior
+      //@ model public static pure function boolean validAlgorithm(String algorithm);
       
       //@ public normal_behavior
+      //@   requires validAlgorithm(algorithm);
       //@   ensures \fresh(\result);
       //@   ensures \result.algorithm == algorithm;
+      //@ also public exceptional_behavior
+      //@   requires !validAlgorithm(algorithm);
+      //@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure
       public static final Mac getInstance(java.lang.String algorithm) throws java.security.NoSuchAlgorithmException;
 
       //@ public normal_behavior
+      //@   requires validAlgorithm(algorithm);
       //@   ensures \fresh(\result);
       //@   ensures \result.algorithm == algorithm;
+      //@ also public exceptional_behavior
+      //@   requires !validAlgorithm(algorithm);
+      //@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure
       public static final Mac getInstance(java.lang.String algorithm, java.lang.String provider) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
 
       //@ public normal_behavior
+      //@   requires validAlgorithm(algorithm);
       //@   ensures \fresh(\result);
       //@   ensures \result.algorithm == algorithm;
+      //@ also public exceptional_behavior
+      //@   requires !validAlgorithm(algorithm);
+      //@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure
       public static final Mac getInstance(java.lang.String algorithm, java.security.Provider provider) throws java.security.NoSuchAlgorithmException;
 
@@ -115,6 +130,7 @@ public class Mac implements Cloneable {
       //@   ensures this.initialized == true;
       //@   ensures this.isReset == true;
       //@   ensures this.savedInfo == null;
+      //@// TODO: Model InvalidKeyException
       public final void init(java.security.Key key) throws java.security.InvalidKeyException;
 
       //@ public normal_behavior
@@ -122,6 +138,7 @@ public class Mac implements Cloneable {
       //@   ensures this.initialized == true;
       //@   ensures this.isReset == true;
       //@   ensures this.savedInfo == null;
+      //@// TODO: Model InvalidKeyException
       public final void init(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
 
       //@ public normal_behavior
