@@ -60,7 +60,6 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
             //@ loop_invariant i == \count && 0 <= i && i <= values.length;
             //@ decreases values.length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
             for (int i=0; i < values.length; i++) {
-                //-STRICT@ show i, values.length, values[i];
                 consumer.accept(values[i]); 
             }
           }

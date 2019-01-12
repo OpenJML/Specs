@@ -8,6 +8,7 @@ public class set<T> implements IJmlPrimitiveType {
     model public \bigint size();
     
     public normal_behavior
+       requires true;
     model public boolean contains(T x);
 
     public normal_behavior
