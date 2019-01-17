@@ -190,12 +190,12 @@ public interface Map<K,V> {
       @ also public normal_behavior
       @    requires content.hasMap(key);    // hasMap or hasMapObject -- FIXME
       @    ensures \result == content.mapss(key);
-      @    ensures \result == modelMap.get(key);
       @ also public normal_behavior
       @    requires content.hasMapObject(key);
       @    ensures \result == content.mapsObject(key);
+      @ also public normal_behavior
       @    ensures \result == modelMap.get(key);
-
+      
            // FIXME - exceptions?
       @*/
     /*@ pure nullable @*/ V get(/*@ nullable */ Object key);
