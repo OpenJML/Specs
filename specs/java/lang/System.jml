@@ -292,7 +292,7 @@ t *);
 //      @
       @*/
 //@       |}
-    @org.jmlspecs.annotation.Options("-no-strictJML")
+    @org.jmlspecs.annotation.Options("-lang=jml+")
     public static native void arraycopy(/*@nullable*/ Object src,
                                         int srcPos,
                                         /*@nullable*/ Object dest,
