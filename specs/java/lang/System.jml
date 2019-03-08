@@ -59,14 +59,17 @@ public final class System {
     */
 
     public final static /*@non_null*//*see note above*/ InputStream in;
-        /*@ public initially in != null; @*/ 
-        //@ public invariant !allowNullStreams ==> in != null;
+        /*@ public static initially in != null; @*/ 
+        //@ public static invariant !allowNullStreams ==> in != null;
+        //@ public static invariant \invariant_for(in);
     public final static /*@non_null*//*see note above*/ PrintStream out;
-        /*@ public initially out != null; @*/ 
+        /*@ public static initially out != null; @*/ 
         //@ public invariant !allowNullStreams ==> out != null;
+    //@ public static invariant \invariant_for(out);
     public final static /*@non_null*//*see note above*/ PrintStream err;
-        /*@ public initially err != null; @*/ 
-        //@ public invariant !allowNullStreams ==> err != null;
+        /*@ public static initially err != null; @*/ 
+        //@ public static invariant !allowNullStreams ==> err != null;
+        //@ public static invariant \invariant_for(err);
 
     //-RAC@ public normal_behavior
     //-RAC@   ensures in.isOpen;
