@@ -561,6 +561,7 @@ public /*@ pure @*/ final class Math {
       @   ensures Float.isNaN(\result);
       @ also
       @   requires a == 0.0;
+      @   ensures \result == 0.0;
       @   ensures isPositiveZero(\result);
       @ also
       @   requires Float.isInfinite(a);
@@ -585,6 +586,7 @@ public /*@ pure @*/ final class Math {
       @   ensures Double.isNaN(\result);
       @ also
       @   requires a == 0.0; 
+      @   ensures \result == 0.0;
       @   ensures isPositiveZero(\result);
       @ also
       @   requires Double.isInfinite(a);

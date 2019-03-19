@@ -111,16 +111,21 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     public static /*@ pure @*/ double parseDouble(/*@ non_null @*/ String s)
         throws NumberFormatException;
 
+    //@ public normal_behavior
+    //@   ensures \result <==> (!isNaN(v) && !isInfinite(v));
+    //@ pure helper
+    public static boolean isFinite(double v);
+    
     /*@ public normal_behavior
       @   ensures \result == !(v == v);
       @*/
-    public static /*@ pure @*/ boolean isNaN(double v);
+    public static /*@ pure helper @*/ boolean isNaN(double v);
 
     /*@ public normal_behavior
       @   ensures \result <==>
       @           (v == POSITIVE_INFINITY || v == NEGATIVE_INFINITY);
       @*/
-    public static /*@ pure @*/ boolean isInfinite(double v);
+    public static /*@ pure helper @*/ boolean isInfinite(double v);
 
     //@ public normal_behavior
     //@   ensures identical(theDouble, value);
@@ -253,7 +258,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ long doubleToRawLongBits(double value);
 
-    /*@ public normal_behavior
+    /* @ public normal_behavior  // FIXME - I think this is inconsistent and also needs isFinite
       @  {|
       @     requires bits == 0x7ff0000000000000L;
       @     ensures \result == POSITIVE_INFINITY;
@@ -266,9 +271,6 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @              || ( 0xfff0000000000001L <= bits
       @                && bits <= 0xffffffffffffffffL );
       @     ensures isNaN(\result);
-      @   also
-      @     ensures (* \result is floating-point value with
-      @                the same bit pattern as bits *);
       @  |}
       @*/
     public static /*@ pure @*/ double longBitsToDouble(long bits);

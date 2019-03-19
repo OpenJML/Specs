@@ -116,14 +116,19 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     /*@ public normal_behavior
       @   ensures \result ==  !(v == v);
       @*/
-    public static /*@ pure @*/ boolean isNaN(float v);
+    public static /*@ pure helper @*/ boolean isNaN(float v);
 
     /*@ public normal_behavior
       @   ensures \result == ( v == POSITIVE_INFINITY
       @                       || v == NEGATIVE_INFINITY );
       @*/
-    public static /*@ pure @*/ boolean isInfinite(float v);
+    public static /*@ pure helper @*/ boolean isInfinite(float v);
 
+    //@ public normal_behavior
+    //@   ensures \result <==> (!isNaN(v) && !isInfinite(v));
+    //@ pure helper
+    public static boolean isFinite(float v);
+    
     /*@ public normal_behavior
       @   ensures identical(theFloat, value);
       @*/
