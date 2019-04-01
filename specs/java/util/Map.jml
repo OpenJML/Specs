@@ -60,15 +60,15 @@ public interface Map<K,V> {
           public boolean hasMap(nullable Object key);
         }
 
-        axiom (\forall Content c ; c.theSize == 0 ==>
+        axiom (\forall Content c ; c != null && c.theSize == 0 ==>
                       (\forall Object o;  !c.hasMapObject(o)));
-        axiom (\forall Content c ; c.theSize == 0 ==>
+        axiom (\forall Content c ; c != null && c.theSize == 0 ==>
                     (\forall Object o; !c.hasMap(o)));
-        axiom (\forall Content content ; content.theSize == 0 ==> !content.hasMapObject(null));
-        axiom (\forall Content content ; content.theSize == 0 ==> !content.hasMap(null));
-        axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
+        axiom (\forall Content content ; content != null && content.theSize == 0 ==> !content.hasMapObject(null));
+        axiom (\forall Content content ; content != null && content.theSize == 0 ==> !content.hasMap(null));
+        axiom (\forall Content c; c != null ; (\forall Object o; c.hasMapObject(o) ==> c.hasMap(o)) 
                                    && (c.hasMapObject(null) <==> c.hasMap(null)));
-        axiom (\forall Content c; (\forall Object o; c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)) 
+        axiom (\forall Content c; c != null ; (\forall Object o; c.hasMapObject(o) ==> c.mapsObject(o) == c.mapss(o)) 
                                && (c.hasMapObject(null) ==> c.mapsObject(null) == c.mapss(null)));
         // Z3 performed better with the conjunct in the above specs. cf git issue #644
           

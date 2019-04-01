@@ -448,7 +448,7 @@ public final class String
       @ public static helper model boolean equals(nullable String s1, nullable String s2);
       @*/
 
-    //@ axiom (\forall String s,ss; equals(s,ss) ==> s.length() == ss.length());
+    //@ axiom (\forall String s,ss; s != null && ss != null; equals(s,ss) ==> s.length() == ss.length());
 
     //@ axiom (\forall String s,ss; equals(s,ss) ==> equals(ss,s));
 
