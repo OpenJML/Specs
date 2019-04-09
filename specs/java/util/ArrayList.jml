@@ -65,6 +65,10 @@ public class ArrayList<E> extends AbstractList<E>
       @   ensures this.size() == c.size();
       @   ensures (\forall int i; 0 <= i && i < c.size();
       @                     this.get(i) == (c.iterator().nthNextElement(i)));
+      @   ensures (\forall int i; 0 <= i && i < c.size();
+      @                     this.values[i] == c.values[i]);
+      @   ensures (\forall E e;
+      @                     this.contains(e) <==> c.contains(e));
       @   ensures c.size() <= capacity;
       @   ensures containsNull == c.containsNull;
       @ also

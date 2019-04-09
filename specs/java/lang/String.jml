@@ -322,7 +322,7 @@ public final class String
       @ public static model pure helper int length(String s);
       @*/
     // inherits specs from CharSequence - \result == charArray.length
-    public /*@ pure helper @*/ int length();
+    public /*@ pure helper function @*/ int length();
 
     /*@ // Inherited from CharSequence:
       @ //also public normal_behavior

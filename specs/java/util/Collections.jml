@@ -16,7 +16,7 @@ public class Collections {
 //  public static final java.util.Map EMPTY_MAP;
 //  private java.util.Collections();
     
-    //@ public normal_behavior
+    //@ public normal_behavior  // FIXME - needs to say that all elements are still present and a permutation
     //@   ensures true;
     //@ pure
     public static <T extends Comparable<? super T>> void sort(List<T> list);

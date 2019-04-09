@@ -35,8 +35,8 @@ public abstract class Number implements java.io.Serializable {
       @  // optional + or - sign followed by one or more digits of the right radix.
       @  // arbitrary leading zeros allowed
       @ public normal_behavior
-      @   requires radix > 0;
-      @   ensures val == null || val.length() == 0 ==> !\result;
+      @   requires Character.MIN_RADIX <= radix <= Character.MAX_RADIX;
+      @   ensures \result == (val != null && val.length() > 0);
       @ pure
       @ public static model function boolean parseable(nullable String val, int radix);
      */
