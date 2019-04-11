@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 //@ non_null_by_default
 public interface Iterable<T> {
 
-    //-RAC@ model public non_null instance T[] values;
+    //-RAC@ model public non_null instance T[] values; in objectState;
 
     public Iterator<T> iterator();
     
