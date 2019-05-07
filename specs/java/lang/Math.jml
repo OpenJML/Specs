@@ -524,34 +524,14 @@ public /*@ pure @*/ final class Math {
     public static double random();
 
     /*@ public normal_behavior
-      @ {|
-      @   requires a == Integer.MIN_VALUE;
-      @   ensures \result == Integer.MIN_VALUE;
-      @ also
-      @   requires 0 <= a;
-      @   ensures \result == a;
-      @ also
-      @   requires a < 0 && a != Integer.MIN_VALUE;
-      @   ensures \result == -a; 
-      @ also
+      @   ensures \result == ( 0 <= a ? a : a == Integer.MIN_VALUE ? Integer.MIN_VALUE: -a);
       @   ensures_redundantly (\result != Integer.MIN_VALUE) ==> 0 <= \result;
-      @ |}
       @*/
     public static /*@ pure @*/ int abs(int a);
 
     /*@ public normal_behavior
-      @ {|
-      @   requires a == Long.MIN_VALUE;
-      @   ensures \result == Long.MIN_VALUE;
-      @ also
-      @   requires 0 <= a;
-      @   ensures \result == a;
-      @ also
-      @   requires a < 0 && a != Long.MIN_VALUE;
-      @   ensures \result == -a;
-      @ also
+      @   ensures \result == ( 0 <= a ? a : a == Long.MIN_VALUE ? Long.MIN_VALUE: -a);
       @   ensures_redundantly (\result != Long.MIN_VALUE) ==> 0 <= \result;
-      @ |}
       @*/
     public static /*@ pure @*/ long abs(long a);
 

@@ -35,30 +35,19 @@ public class map<K,V> implements IJmlPrimitiveType {
     model public boolean equals(map<K,V> s);
     
     public normal_behavior
-      requires this.containsKey(k);
       ensures \result.containsKey(k);
-      ensures \result.size() == this.size();
+      ensures this.containsKey(k) ==> \result.size() == this.size();
+      ensures !this.containsKey(k) ==> \result.size() == this.size() + 1;
       ensures \result.get(k) == v;
       ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
       ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> (\result.get(kk) == this.get(kk)));
-    also
-      requires !this.containsKey(k);
-      ensures \result.containsKey(k);
-      ensures \result.size() == this.size() + 1;
-      ensures \result.get(k) == v;
-      ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
-      ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
     model public map<K,V> put(K k, V v);
     
     public normal_behavior
-      requires !this.containsKey(k);
       ensures !\result.containsKey(k);
-      ensures \result.size() == this.size();
-      ensures \result == this;
-    also
-      requires this.containsKey(k);
-      ensures !\result.containsKey(k);
-      ensures \result.size() == this.size() - 1;
+      ensures this.containsKey(k) ==> \result.size() == this.size() - 1;
+      ensures !this.containsKey(k) ==> \result == this;
+      ensures !this.containsKey(k) ==> \result.size() == this.size();
       ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
       ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
     model public map<K,V> remove(K k);

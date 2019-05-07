@@ -68,7 +68,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine;
+    @   ensures endsInNewLine && isOpen;
     @   ensures outputText.equals(\old(outputText) + eol);
     @*/
     public void println();
@@ -90,14 +90,14 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures outputText.equals(\old(outputText) + c);
+    @   ensures outputText.equals(\old(outputText) + c) && isOpen;
     @*/
     public void print(char c);
 
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine;
+    @   ensures endsInNewLine && isOpen;
     @   ensures outputText.equals(\old(outputText) + c + eol); 
     @*/
     public void println(char c); 
@@ -105,7 +105,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine;
+    @   ensures endsInNewLine && isOpen;
     @   ensures s != null ==> outputText.equals(\old(outputText) + s + eol);
     @*/
     public void println(String s);
@@ -128,7 +128,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine;
+    @   ensures endsInNewLine && isOpen;
     @   ensures (o!=null)==> outputText.equals(\old(outputText) + o.theString + eol);
     @   ensures (o==null)==> outputText.equals(\old(outputText)+"null"+eol);
     @*/
@@ -144,7 +144,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ requires true;
     @ modifies outputText, endsInNewLine;
-    @ ensures endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
     @ ensures outputText.startsWith(\old(outputText));
     @*/
     public void println(boolean b);
@@ -155,7 +155,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ requires true;
     @ modifies outputText, endsInNewLine;
-    @ ensures endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
     @ ensures outputText.startsWith(\old(outputText));
     @*/
     public void println(int i);
