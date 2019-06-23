@@ -98,10 +98,10 @@ public interface Queue<E> extends Collection<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures (\forall \bigint i; 0 < i & i < \old(content.theSize); _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable this.content, this.values;
       @*/
     public /*@ nullable @*/ E poll();
     
@@ -115,7 +115,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable this.content, this.values;
       @*/
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
 }
