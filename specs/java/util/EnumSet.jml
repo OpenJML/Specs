@@ -14,31 +14,38 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     //@   ensures \result.isEmpty();
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> noneOf(java.lang.Class<E> clazz);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> allOf(java.lang.Class<E> clazz);
+
     //@ normal_behavior
     //@   requires true;
     abstract void addAll();
+
     //@ public normal_behavior
     //@   requires true;
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> copyOf(EnumSet<E> clazz);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> copyOf(Collection<E> col);
+
     //@ public normal_behavior
     //@   ensures \fresh(\result) && \fresh(\result.values);
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> complementOf(EnumSet<E> set);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@   ensures \result.values.length == 1;
     //@   ensures \result.values[0] == e;
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> of(E e);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@   ensures \result.values.length == 2;
@@ -46,6 +53,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     //@   ensures \result.values[1] == e2;
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> of(E e1, E e2);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@   ensures \result.values.length == 3;
@@ -54,6 +62,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     //@   ensures \result.values[2] == e3;
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> of(E e1, E e2, E e3);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@   ensures \result.values.length == 4;
@@ -63,6 +72,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     //@   ensures \result.values[3] == e4;
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> of(E e1, E e2, E e3, E e4);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@   ensures \result.values.length == 5;
@@ -73,6 +83,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     //@   ensures \result.values[4] == e5;
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> of(E e1, E e2, E e3, E e4, E e5);
+
     //@ public normal_behavior
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
     //@   ensures \result.values.length == ee.length + 1;
@@ -81,6 +92,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     //@ pure
     @java.lang.SafeVarargs
     public static <E extends java.lang.Enum<E>> EnumSet<E> of(E e, E... ee);
+
     //@ public normal_behavior
     //@   requires to.ordinal() >= from.ordinal();
     //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
