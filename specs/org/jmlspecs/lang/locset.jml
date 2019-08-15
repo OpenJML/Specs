@@ -1,7 +1,7 @@
 package org.jmlspecs.lang;
 
 //@ immutable pure
-public class set<T> implements IJmlPrimitiveType {
+public class locset implements IJmlPrimitiveType {
 /*@    
     public normal_behavior
       ensures \result >= 0;
@@ -9,7 +9,7 @@ public class set<T> implements IJmlPrimitiveType {
     
     public normal_behavior
        requires true;
-    model public boolean contains(T x);
+    model public boolean contains(location x);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
@@ -18,36 +18,36 @@ public class set<T> implements IJmlPrimitiveType {
     
     public normal_behavior
       ensures \result.size() == 0;
-      ensures (\forall T x; ; !\result.contains(x));
-    model static public <T> set<T> set();
+      ensures (\forall location x; ; !\result.contains(x));
+    model static public locset locset();
     
     public normal_behavior
       ensures \result.size() == 1;
       ensures \result.contains(t);
-      ensures (\forall T x; ; x != t ==> !\result.contains(x));
-    model static public <T> set<T> set(T t);
+      ensures (\forall location x; ; x != t ==> !\result.contains(x));
+    model static public locset locset(location t);
     
     public normal_behavior
-       ensures \result == (\forall T t;; s.contains(t) == ss.contains(t));
-    model public static <T> boolean equals(set<T> s, set<T> ss);
+       ensures \result == (\forall location t;; s.contains(t) == ss.contains(t));
+    model public static boolean equals(locset s, locset ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model public boolean equals(set<T> s);
+    model public boolean equals(locset s);
     
-    public normal_behavior
+    public normal_behavior // Specs are more successful when written without spec cases
       ensures this.contains(x) ==> \result == this;
       ensures !this.contains(x) ==> \result.size() == this.size() + 1;
       ensures \result.contains(x);
-      ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
-    model public set<T> add(T x);
+      ensures (\forall location t; t != x; \result.contains(t) == this.contains(t));
+    model public locset add(location x);
     
     public normal_behavior
       ensures !this.contains(x) ==> \result == this;
       ensures this.contains(x) ==> \result.size() == this.size() - 1;
       ensures !\result.contains(x);
-      ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
-    model public set<T> remove(T x);
+      ensures (\forall location t; t != x; \result.contains(t) == this.contains(t));
+    model public locset remove(location x);
     
 @*/
 }
