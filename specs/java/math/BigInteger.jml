@@ -29,7 +29,7 @@ import java.util.Random;
  * @author David R. Cok
  * @author Gary T. Leavens
  */
-//@ immutable
+//@ immutable nullable_by_default
 public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //-RAC@ public model \bigint value;
@@ -52,8 +52,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
         //@   ensures (\result == 0) <==> (\forall int i; 0<=i && i<val.length; val[i] == 0);
         //@   ensures (\result < 0) <==> (val.length >= 1 && val[0] < 0);
         //@   ensures (val.length >= 1 && val[0] >= 0) ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME 
-        //@ pure
-        public static model \bigint convert(byte[] val) {
+        //@ pure helper
+        public static model \bigint convert(non_null byte[] val) {
         // !FIXME! - should put in a non-circular computation for RAC
             return new BigInteger(val);
         }
@@ -62,6 +62,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     /*@ public normal_behavior
       @     requires val != null;
       @     requires val.length != 0;
+      @     //-RAC@ ensures value == convert(val);
       @  also public exceptional_behavior
       @     requires val != null;
       @     requires val.length == 0;
@@ -71,13 +72,15 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @     signals_only java.lang.NullPointerException;
       @*/
     //@ pure
-    public BigInteger(/*@ non_null @*/ byte[] val);
+    public BigInteger(byte[] val);
 
     //@ public normal_behavior
     //@    requires magnitude != null;
     //@    requires signum == 0 || signum == 1 || signum == -1;
     //@    requires signum == 0 <==> (\forall int i; 0 <= i && i < magnitude.length; magnitude[i] == 0);
-    //-RAC@    ensures signum == 0 ==> value == 0;
+    //-RAC@    ensures signum == 0 <==> value == 0;
+    //-RAC@    ensures signum > 0 <==> value > 0;
+    //-RAC@    ensures signum < 0 <==> value < 0;
     //-RAC@    ensures value == signum * convert(magnitude);
     //@ also public exceptional_behavior
     //@    requires !(signum == 0 || signum == 1 || signum == -1) || magnitude == null;
@@ -147,8 +150,6 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@   ensures \result.value == val;
     public static /*@ pure helper @*/ BigInteger valueOf(long val);
 
-    // int signum;   package-level field removed from specification (dmz, 2009-11-17)
-    // int[] mag;    package-level field removed from specification (dmz, 2009-11-17)
     public static final BigInteger ZERO;
     public static final BigInteger ONE;
 
@@ -159,24 +160,51 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Arithmetic Operations
 
-    //@ requires val != null;
+    //@ public normal_behavior
+    //@   requires val != null;
+    //-RAC@   ensures \result.value == this.value + val.value;
     public BigInteger add(BigInteger val);
 
-    //@ requires val != null;
-    //@ ensures equals(\result.add(val));
+    //@ public normal_behavior
+    //@   requires val != null;
+    //-RAC@   ensures \result.value == this.value - val.value;
     public BigInteger subtract(BigInteger val);
 
-    //@ requires val != null;
+    //@ public normal_behavior
+    //@   requires val != null;
+    //-RAC@   ensures \result.value == this.value * val.value;
     public BigInteger multiply(BigInteger val);
 
-    //@ requires val != null;
-    //@ ensures equals(\result.multiply(val).add(remainder(val)));
+    //-RAC@ public normal_behavior
+    //-RAC@   requires val != null;
+    //-RAC@   requires val.value != 0;
+    //-RAC@   ensures equals(\result.multiply(val).add(remainder(val)));
+    //-RAC@   ensures \result.value == this.value / val.value;
+    //-RAC@ also public exceptional_behavior
+    //-RAC@   requires val != null;
+    //-RAC@   requires val.value == 0;
+    //-RAC@   signals_only ArithmeticException;
     public BigInteger divide(BigInteger val);
 
+    //@ public normal_behavior
+    //-RAC@   requires val != null;
+    //-RAC@   requires val.value != 0;
     //-RAC@ ensures \result[0].value == divide(val).value;
     //-RAC@ ensures \result[1].value == remainder(val).value;
+    //-RAC@ also public exceptional_behavior
+    //-RAC@   requires val != null;
+    //-RAC@   requires val.value == 0;
+    //-RAC@   signals_only ArithmeticException;
     public BigInteger[] divideAndRemainder(BigInteger val);
 
+    //-RAC@ public normal_behavior
+    //-RAC@   requires val != null;
+    //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result.value == this.value % val.value;
+    //-RAC@ also public exceptional_behavior
+    //-RAC@   requires val != null;
+    //-RAC@   requires val.value == 0;
+    //-RAC@   signals_only ArithmeticException;
     public BigInteger remainder(BigInteger val);
 
     public BigInteger pow(int exponent);
@@ -187,14 +215,12 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     static void primitiveLeftShift(int[] a, int len, int n);
 
-    //@ assignable \nothing;
     //@ ensures signum() >= 0 ==> \result == this;
     //-RAC@ ensures signum() <  0 ==> \result.value == -this.value;
     //+RAC@ ensures signum() <  0 ==> \result == this.negate();
     public BigInteger abs();
 
     //@ public normal_behavior
-    //@ assignable \nothing;
     //-RAC@ ensures \result.value == - this.value;
     //@ pure
     public BigInteger negate();
@@ -312,13 +338,27 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ ensures n <= 0 ==> \result == 1;
     //@ ensures n > 0 ==> \result == 256 * pow256(n-1);
     //@ model public static \bigint pow256(int n);
+    //@ axiom (\forall int m, n; m > n && n >= 0; pow256(m) > pow256(n));
 
-    //@ public normal_behavior
-    //-RAC@   ensures \result.length > 0;
+    //@     public normal_behavior
+    //@       requires this.signum() > 0;
+    //@       ensures \result.length > 0;
     //-RAC@   ensures convert(\result) == this.value;
-    //-RAC@   ensures pow256(\result.length-1)/2 <= this.value && this.value < pow256(\result.length-1) && \result[0] == 0;
-    //-RAC@   ensures pow256(\result.length-1) <= this.value && this.value < pow256(\result.length)/2 && \result[0] != 0;
-    //@ pure helper
+    //-RAC@   ensures (pow256(\result.length-1)/2 <= this.value && this.value < pow256(\result.length-1)) ==> \result[0] == 0;
+    //-RAC@   ensures (pow256(\result.length-1) <= this.value && this.value < pow256(\result.length)/2) ==> \result[0] != 0;
+    //-RAC@   ensures (pow256(\result.length-1)/2 <= this.value && this.value < pow256(\result.length)/2);
+    //@     also public normal_behavior
+    //@       requires this.signum() < 0;
+    //@       ensures \result.length > 0;
+    //@       ensures \result[0] < 0;
+    //-RAC@   ensures convert(\result) == this.value;
+    //-RAC@   ensures pow256(\result.length-1)/2 < -this.value && -this.value <= pow256(\result.length)/2;
+    //@     also public normal_behavior
+    //@       requires this.signum() == 0;
+    //@       ensures \result.length == 1;
+    //@       ensures \result[0] == 0;
+    //-RAC@   ensures convert(\result) == this.value;
+    //@ pure helper non_null
     public byte[] toByteArray();
 
     //-RAC@ also
