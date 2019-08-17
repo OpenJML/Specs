@@ -323,6 +323,11 @@ public final class String
       @*/
     // inherits specs from CharSequence - \result == charArray.length
     public /*@ pure helper function @*/ int length();
+    
+    /*@ public normal_behavior
+      @   ensures \result == (this.charArray.length == 0);
+      @*/
+    public /*@ pure helper @*/ boolean isEmpty();
 
     /*@ // Inherited from CharSequence:
       @ //also public normal_behavior

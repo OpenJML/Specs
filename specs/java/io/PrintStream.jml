@@ -33,11 +33,13 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     //-RAC@ public model boolean error;
     
+    //-RAC@ public invariant outputText != null;
+    
     //@ static_initializer
 
     /*-RAC@ public normal_behavior
     @   requires os != null;
-    @   ensures outputText.equals("");
+    @   ensures outputText != null && outputText.isEmpty();
     @   ensures !endsInNewLine;
     @   ensures os.isOpen ==> isOpen;
     @   ensures underlyingStream == os;
@@ -46,6 +48,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     public PrintStream(OutputStream os);
 
     /*-RAC@ public normal_behavior
+    @   ensures outputText.isEmpty();
     @   ensures outputText.equals("");
     @   ensures !endsInNewLine;
     @   ensures os.isOpen ==> isOpen;
@@ -55,6 +58,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     public PrintStream(OutputStream os, boolean autoFlush);
 
     /*-RAC@ public normal_behavior
+    @   ensures outputText.isEmpty();
     @   ensures outputText.equals("");
     @   ensures !endsInNewLine;
     @   ensures os.isOpen ==> isOpen;
@@ -113,7 +117,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures s != null ==> outputText.equals(\old(outputText) + s);
+    @   //ensures s != null ==> outputText.equals(\old(outputText) + s);
+    @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s;
     @*/
     public void print(String s);
 
