@@ -93,6 +93,10 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     /*-RAC@  public normal_behavior
      @     requires val != null && Number.parseable(val,radix);
      @     ensures this.value == parse(val,radix);
+     @     // The following are some special cases that have been useful
+     @     ensures (val.length() > 0 && (val.charAt(0) != '+' & val.charAt(0) != '-' & radix == 16)) ==> this.bitLength() <= (val.length()*4);
+     @     ensures (val.length() > 1 && (val.charAt(0) == '+' | val.charAt(0) == '-' & radix == 16)) ==> this.bitLength() <= ((val.length()-1)*4);
+     @     ensures (val.length() > 0 && (val.charAt(0) != '+' & val.charAt(0) != '-' & val.charAt(0) != '0' & radix == 16)) ==> (this.bitLength()) >= (val.length()*4-3);
      @ also
      @   public exceptional_behavior
      @     requires val != null && !Number.parseable(val,radix);
@@ -279,7 +283,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     // Miscellaneous Bit Operations
 
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures value == 0 ==> \result == 0;
+    //@   ensures value != 0 ==> \result > 0;
     //@ pure function
     public int bitLength();
 
