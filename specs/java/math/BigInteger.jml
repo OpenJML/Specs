@@ -283,8 +283,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     // Miscellaneous Bit Operations
 
     //@ public normal_behavior
-    //@   ensures value == 0 ==> \result == 0;
-    //@   ensures value != 0 ==> \result > 0;
+    //-RAC@   ensures value == 0 ==> \result == 0;
+    //-RAC@   ensures value != 0 ==> \result > 0;
+    //+RAC@   ensures \result >= 0;
     //@ pure function
     public int bitLength();
 
