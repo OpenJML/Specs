@@ -225,7 +225,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public BigInteger abs();
 
     //@ public normal_behavior
-    //-RAC@ ensures \result.value == - this.value;
+    //-RAC@ ensures \result != null && \result.value == - this.value;
     //@ pure
     public BigInteger negate();
 
@@ -236,8 +236,22 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Modular Arithmetic Operations
 
+    //@ public normal_behavior
+    //@   requires m != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires m == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger mod(BigInteger m);
 
+    //@ public normal_behavior
+    //@   requires m != null & exponent != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires m == null || exponent == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger modPow(BigInteger exponent, BigInteger m);
 
     static int[] bnExpModThreshTable;
@@ -246,6 +260,13 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     static int addOne(int[] a, int offset, int mlen, int carry);
 
+    //@ public normal_behavior
+    //@   requires m != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires m == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger modInverse(BigInteger m);
 
     // Shift Operations
@@ -258,14 +279,45 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Bitwise Operations
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger and(BigInteger val);
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger or(BigInteger val);
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger xor(BigInteger val);
 
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //@ pure
     public BigInteger not();
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger andNot(BigInteger val);
 
     // Single Bit Operations
@@ -319,6 +371,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Comparison Operations
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@ pure
     public int compareTo(BigInteger val);
 
     /*@ also public normal_behavior
@@ -328,8 +383,22 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
       @*/
     public /*@ pure helper @*/ boolean equals(Object x);
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger min(BigInteger val);
 
+    //@ public normal_behavior
+    //@   requires val != null;
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
     public BigInteger max(BigInteger val);
 
     // Hash Function
