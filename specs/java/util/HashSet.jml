@@ -8,14 +8,19 @@ public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneab
     public HashSet();
     
     //@ public normal_behavior ensures true;
+    //@   ensures size() == c.size();
+    //@   ensures \forall E e; containsObject(e) ==> c.containsObject(e);
+    //@   ensures c instanceof Set ==> \forall E e; c.containsObject(e) ==> containsObject(e);
     //@ pure
     public HashSet(Collection<? extends E> c);
     
-    //@ public normal_behavior ensures true;
+    //@ public normal_behavior 
+    //@   ensures isEmpty();
     //@ pure
     public HashSet(int initialCapacity);
     
-    //@ public normal_behavior ensures true;
+    //@ public normal_behavior 
+    //@   ensures isEmpty();
     //@ pure
     public HashSet(int initialCapacity, float loadFactor);
     
@@ -34,7 +39,8 @@ public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneab
     
     public boolean remove(Object o);
     
-    //@ also public normal_behavior ensures true;
+    //@ also public normal_behavior 
+    //@   ensures true;
     //@ pure
     public int size();
     

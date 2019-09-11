@@ -81,8 +81,8 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   requires collector != null;
     //@   assignable collector.content;
     //@   ensures \result == collector;
-    //-RAC@   ensures ((java.util.Collection)\result).content.owner == \result;
-    //-RAC@   ensures ((java.util.Collection)\result).content.theSize >= 0;
+    //-RAC@   //ensures ((java.util.Collection)\result).content.owner == \result;
+    //-RAC@   ensures ((java.util.Collection)\result).values.length >= 0;
     //@   ensures (\result instanceof java.util.List) ==> ((java.util.List)\result).size() == values.length;
     //@   ensures (\result instanceof java.util.List) ==> (\forall int i; 0<=i && i<values.length; ((java.util.List)\result).get(i) == this.values[i]); 
     <R, A> R collect(Collector<? super T, A, R> collector);

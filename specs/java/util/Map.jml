@@ -313,7 +313,6 @@ public interface Map<K,V> {
     //@ public normal_behavior 
     //@    ensures \result != null;
     //@    ensures \result.size() >= 0; // FIXME - why needed?
-    //-RAC@    ensures \result.content.owner == \result; // FIXME - why needed?
     //@    ensures \result == _keySet;
     //@    ensures \forall K k;; \result.contains(k) <==> this.containsKey(k) ;
     /*@ pure @*/ Set<K> keySet();

@@ -8,6 +8,18 @@ public interface Iterable<T> {
 
     //-RAC@ model public non_null instance T[] values; in objectState;
 
+    /**
+     * True iff we are allowed to contain null (not whether we do in fact
+     * contain null).
+     **/
+    //-RAC@ instance ghost public boolean containsNull; in objectState;
+
+    //@ public normal_behavior
+    //-RAC@   ensures values.length == 0 ==> !\result;
+    //-RAC@   ensures !containsNull && o == null ==> !\result;
+    //-RAC@   ensures \result <==> (\exists int i; 0 <= i < values.length; values[i] == o);
+    //@ public model pure boolean containsObject(nullable Object o);
+
     public Iterator<T> iterator();
     
     /*@ public model_program {

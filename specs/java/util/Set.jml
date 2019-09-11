@@ -53,8 +53,8 @@ public interface Set<E> extends Collection<E> {
     /*@non_null*/ <T> T[] toArray(/*@non_null*/ T[] a) throws NullPointerException;
 
     //-RAC@ also public normal_behavior
-    //-RAC@   assignable this.content, this.values;
-    //-RAC@   ensures this.content.owner == \old(this.content.owner);
+    //-RAC@   assignable this.objectState;
+    //-RAC@   //ensures this.content.owner == \old(this.content.owner);
     boolean add(/*@nullable*/ E o);
 
     /*@ also
@@ -105,7 +105,7 @@ public interface Set<E> extends Collection<E> {
     /*@   ensures \result <==>
                ((\forall Object oo; contains(oo) <==> ((Set)o).contains(oo))
              && contains(null) <==> ((Set)o).contains(null)); */
-    //-RAC@   ensures  \result ==> (content.theSize == ((Set)o).content.theSize);
+    //-RAC@   ensures  \result ==> (values.length == ((Set)o).values.length);
     /*@ pure @*/ boolean equals(/*@nullable*/ Object o);
 
     // specification inherited

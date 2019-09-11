@@ -32,6 +32,9 @@ package java.util;
  */
 public interface Iterator<E> {
 
+    //@ model public instance \bigint count;
+    //@ model public instance non_null E[] values;
+
     /** Do we have more elements?
      **/
     /*+ESC@ public ghost instance boolean moreElements; // FIXME - only lghost elements are handled in assignable lists
