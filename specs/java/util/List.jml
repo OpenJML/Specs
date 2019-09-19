@@ -113,7 +113,7 @@ public interface List<E> extends Collection<E> {
 
     /*-RAC@ also public normal_behavior
       @   requires !containsNull ==> o != null;
-      @   assignable objectState,values;
+      @   assignable values;
       @   ensures values.length == \old(values.length+1); 
       @   ensures values[values.length-1] == o;
       @   //ensures (\forall \bigint i; 0 <= i < values.length-1; 
@@ -126,7 +126,7 @@ public interface List<E> extends Collection<E> {
     /*-RAC@
       @ also public normal_behavior
       @   requires contains(o);
-      @   assignable objectState,values;
+      @   assignable values;
       @   ensures !\result ==> values.length == \old(values.length);
       @   ensures \result ==> values.length == \old(values.length-1);
       @*/

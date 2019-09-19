@@ -107,7 +107,7 @@ public class Vector<E> extends AbstractList<E>
     public synchronized void copyInto(Object[] anArray);
 
     /*-RAC@ public normal_behavior
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures \not_modified(theString,theHashCode);
                // theHashCode is not changed because the result does not
                // change equals
@@ -125,7 +125,7 @@ public class Vector<E> extends AbstractList<E>
     //-RAC@    ensures true;
     //-RAC@  also
     //-RAC@    requires minCapacity > maxCapacity;
-    //-RAC@    assignable objectState,values;
+    //-RAC@    assignable values;
     //-RAC@    ensures \not_modified(theString,theHashCode);
     //-RAC@           // theHashCode is not changed because the result does not
     //-RAC@           // changes equals
@@ -151,7 +151,7 @@ public class Vector<E> extends AbstractList<E>
       @  {|
       @    requires 0 <= newSize;
       @    requires newSize <= elementCount;
-      @    assignable objectState,values; 
+      @    assignable values; 
       @    ensures elementCount == newSize; */
     /*-RAC@    ensures \not_modified(theString,theHashCode);
       @    ensures \not_modified(containsNull);
@@ -160,7 +160,7 @@ public class Vector<E> extends AbstractList<E>
     //-RAC@  also
     //-RAC@    old int oldSize = elementCount;
     //-RAC@    requires newSize > elementCount;
-    //-RAC@    assignable objectState,values;
+    //-RAC@    assignable values;
     //-RAC@    ensures \not_modified(theString,theHashCode);
     //-RAC@    ensures \not_modified(containsNull);
     /*-RAC@
@@ -272,7 +272,7 @@ public class Vector<E> extends AbstractList<E>
     /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
       @    requires containsNull || obj != null;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures elementCount == \old(elementCount);
       @    ensures !\key("RAC") ==> nullequals(obj, get(index));
       @    ensures (\forall int i; 0<=i && i<elementCount && i != index;
@@ -287,7 +287,7 @@ public class Vector<E> extends AbstractList<E>
 
     /*-RAC@  public normal_behavior
       @    requires 0 <= index && index < elementCount;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures  elementCount == \old(elementCount)-1;
       @    ensures (\forall int i; 0<=i && i<index;
                            get(i) == \old(get(i)));
@@ -304,7 +304,7 @@ public class Vector<E> extends AbstractList<E>
     /*-RAC@  public normal_behavior
       @    requires !containsNull ==> obj != null;
       @    requires 0 <= index && index < elementCount;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures \not_modified(containsNull);
       @    ensures get(index) == obj;
       @    ensures elementCount == \old(elementCount)+1;
@@ -328,11 +328,11 @@ public class Vector<E> extends AbstractList<E>
       @      requires elementCount == maxCapacity;
       @      {|
       @        requires capacityIncrement > 0;
-      @        assignable objectState,values;
+      @        assignable values;
       @        ensures maxCapacity == \old(maxCapacity) + capacityIncrement;
       @      also
       @        requires capacityIncrement == 0;
-      @        assignable objectState,values;
+      @        assignable values;
       @        ensures maxCapacity == \old(maxCapacity) * 2;
       @      |}
       @    |}
@@ -341,7 +341,7 @@ public class Vector<E> extends AbstractList<E>
 
     /*-RAC@  public normal_behavior
       @    requires containsNull || obj!=null;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures \not_modified(containsNull);
       @    ensures (obj == null & get(elementCount-1) == null) 
       @            || get(elementCount-1).equals(obj); // or == ?
@@ -351,24 +351,24 @@ public class Vector<E> extends AbstractList<E>
       @  requires \typeof(this) == \type(java.util.Vector<E>);
       @  {|
       @    requires elementCount < maxCapacity;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures \not_modified(maxCapacity) && \not_modified(capacityIncrement);
       @  also
       @    requires elementCount == maxCapacity;
       @    {|
       @      requires 0 < capacityIncrement 
       @            && maxCapacity <= Integer.MAX_VALUE - capacityIncrement;
-      @      assignable objectState,values;
+      @      assignable values;
       @      ensures maxCapacity == \old(maxCapacity) + capacityIncrement;
       @    also
       @      requires capacityIncrement == 0 && maxCapacity == 0;
-      @      assignable objectState,values;
+      @      assignable values;
       @      ensures maxCapacity == 1;
       @    also
       @      requires capacityIncrement == 0
       @            && maxCapacity > 0
       @            && maxCapacity < Integer.MAX_VALUE/2;
-      @      assignable objectState,values;
+      @      assignable values;
       @      ensures maxCapacity == \old(maxCapacity) * 2;
       @    |}
       @  |}
@@ -379,7 +379,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires !containsNull ==> obj != null;
       @  {|
       @    requires contains(obj);
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures elementCount == \old(elementCount)-1 && \result;
              // FIXME - removes first matching element
       @  also
@@ -391,7 +391,7 @@ public class Vector<E> extends AbstractList<E>
     public synchronized boolean removeElement(Object obj);
 
     /*-RAC@  public normal_behavior
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures isEmpty();
       @    ensures elementCount == 0;
       @*/
@@ -461,7 +461,7 @@ public class Vector<E> extends AbstractList<E>
       @  public normal_behavior
       @    requires 0 <= index && index < size();
       @    requires containsNull || element != null;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures elementCount == \old(elementCount);
       @    ensures (element == null & get(index) == null) 
       @            || get(index) == (element); // or .equals ?
@@ -477,7 +477,7 @@ public class Vector<E> extends AbstractList<E>
     /*-RAC@ also
       @ public normal_behavior
       @    requires containsNull || o != null;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures (o == null & get(elementCount-1) == null) 
       @            || get(elementCount-1) == (o); // or .equals ?
       @    ensures elementCount == \old(elementCount)+1;
@@ -489,7 +489,7 @@ public class Vector<E> extends AbstractList<E>
       @ public normal_behavior
       @  {|
       @    requires contains(o);
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures \result;
       @    ensures elementCount == \old(elementCount)-1;
       @  also
@@ -503,7 +503,7 @@ public class Vector<E> extends AbstractList<E>
     /* @ also public normal_behavior
       @    requires 0 <= index && index <= size();
       @    //-RAC@ requires containsNull || element != null;
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures elementCount == \old(elementCount)+1;
       @    ensures (element == null && values[index] == null) 
       @            || values[index] == element;
@@ -519,7 +519,7 @@ public class Vector<E> extends AbstractList<E>
     /*-RAC@ also
       @  public normal_behavior
       @    requires 0 <= index && index < size();
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures elementCount == \old(elementCount)-1;
       @ also
       @  public exceptional_behavior
@@ -532,7 +532,7 @@ public class Vector<E> extends AbstractList<E>
      // FIXME - all inherited?
     /*@ also
       @  public normal_behavior
-      @    assignable objectState,values;
+      @    assignable values;
       @    ensures isEmpty();
       @*/
     public void clear();

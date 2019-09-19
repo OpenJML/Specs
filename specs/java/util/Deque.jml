@@ -34,7 +34,7 @@ public interface Deque<E> extends Queue<E> {
     /*-RAC@ public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 < i && i < values.length; values[i+1] == \old(values[i]));
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public exceptional_behavior
       @   requires e == null && !containsNull;
@@ -46,7 +46,7 @@ public interface Deque<E> extends Queue<E> {
       @   requires (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 <= i && i < values.length-1; values[i] == \old(values[i]));
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public exceptional_behavior
       @   requires e == null && !containsNull;
@@ -115,7 +115,7 @@ public interface Deque<E> extends Queue<E> {
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 < i && i < values.length; values[i+1] == \old(values[i]));
       @   ensures \result;
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public behavior
       @   requires false && (* capacity restrictions violated *);
@@ -133,7 +133,7 @@ public interface Deque<E> extends Queue<E> {
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 <= i && i < values.length-1; values[i] == \old(values[i]));
       @   ensures \result;
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public behavior
       @   requires false && (* capacity restrictions violated *);
@@ -175,7 +175,7 @@ public interface Deque<E> extends Queue<E> {
       @   ensures (\forall \bigint i; 0 < i && i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E pollFirst();
    
@@ -190,7 +190,7 @@ public interface Deque<E> extends Queue<E> {
       @   ensures (\forall \bigint i; 0 <= i && i < values.length; _get(i) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E pollLast();
   
@@ -204,14 +204,14 @@ public interface Deque<E> extends Queue<E> {
       @   ensures (\forall \bigint i; 0 < i && i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E pop() throws NoSuchElementException;
    
     /*-RAC@ public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall \bigint i; 0 < i && i < values.length; _get(i+1) == \old(_get(i)));
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public exceptional_behavior
       @   requires e == null && !containsNull;
@@ -232,7 +232,7 @@ public interface Deque<E> extends Queue<E> {
       @   ensures (\forall \bigint i; 0 < i && i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E removeFirst() throws NoSuchElementException;
 
@@ -244,7 +244,7 @@ public interface Deque<E> extends Queue<E> {
       @               (\forall \bigint j; 0 <= j && j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
       @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
       @               (\forall \bigint j; i < j && j <= values.length; _get(j-1)==\old(_get(j))));
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public behavior
       @   requires !contains(o);
@@ -261,7 +261,7 @@ public interface Deque<E> extends Queue<E> {
       @               (\forall \bigint j; 0 <= j && j < i; !(\old(_get(i))== null || \old(_get(j)).equals(o)));
       @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
       @               (\forall \bigint j; i < j && j <= values.length; _get(j-1)==\old(_get(j))));
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public behavior
       @   requires !contains(o);
@@ -280,7 +280,7 @@ public interface Deque<E> extends Queue<E> {
       @   ensures (\forall \bigint i; 0 <= i && i < values.length; _get(i) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.*;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E removeLast() throws NoSuchElementException;
 
@@ -293,7 +293,7 @@ public interface Deque<E> extends Queue<E> {
       @               (\forall \bigint j; i < j && j <= values.length; !\old(_get(j)).equals(o));
       @               (\forall \bigint j; 0 <= j && j < i; _get(j)==\old(_get(j))) &&
       @               (\forall \bigint j; i < j && j <= values.length; _get(j-1)==\old(_get(j))));
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public behavior
       @   requires !contains(o);

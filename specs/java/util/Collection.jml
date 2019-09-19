@@ -160,7 +160,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*-RAC@ public normal_behavior
       @   requires !containsNull ==> o != null;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures \result == false ==> values == \old(values);
       @   ensures \result == true ==> values.length == \old(values.length+1);
       @   ensures \not_modified(containsNull);
@@ -178,7 +178,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*-RAC@ public behavior
       @   requires !containsNull ==> o != null;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures \not_modified(containsNull);
       @   ensures \result ==> values.length == \old(values.length-1);
       @   ensures !\result ==> values.length == \old(values.length);
@@ -201,17 +201,17 @@ public interface Collection<E> extends Iterable<E> {
       @ also public behavior
       @   requires !containsNull ==> o != null;
       @   requires !containsObject(o);
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures !\result;
       @ also public behavior
       @   requires !containsNull ==> o != null;
       @   requires !containsObject(null);
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures !containsObject(null);
       @ also public behavior
       @   requires !containsNull ==> o != null;
       @   requires o!=null && containsObject(null);
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures containsObject(null);
       @*/
     boolean remove(/*@nullable*/ Object o) throws RuntimeException;
@@ -235,7 +235,7 @@ public interface Collection<E> extends Iterable<E> {
     /*-RAC@ public behavior
       @   requires c != null;
       @   requires !\key("RAC") ==> !containsNull ==> !c.containsNull;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures !\key("RAC") ==> \not_modified(containsNull);
       @   ensures size() >= \old(size());
       @   ensures !\result <==> (size() == \old(size()));
@@ -252,7 +252,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*-RAC@ public behavior
       @   requires c != null;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures c == this ==> isEmpty();
           // See note in remove about exceptions       
           // FIXME - also the optional exceptions
@@ -263,7 +263,7 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*-RAC@ also public behavior
       @   requires c != null;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures \not_modified(containsNull);
       @   // FIXME ensures (\forall Object o; ( contains(o) || \old(c.contains(o))) <==>
           //                              \old(contains(o)));
@@ -275,7 +275,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /*-RAC@ public behavior
       @   requires c != null;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures c == this ==> !\result;
           // See note in remove about exceptions
       @ also public exceptional_behavior
@@ -285,7 +285,7 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*-RAC@ also public behavior
       @   requires c != null;
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures \not_modified(containsNull);
         // See note in remove about exceptions
       @   // FIXME ensures (\forall Object o; contains(o) <==>
@@ -300,7 +300,7 @@ public interface Collection<E> extends Iterable<E> {
     boolean retainAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
 
     /*-RAC@ public behavior
-      @   assignable objectState,values; 
+      @   assignable values; 
       @   ensures !\key("RAC") ==> \not_modified(containsNull);
       @   ensures isEmpty();
       @   ensures_redundantly size() == 0;

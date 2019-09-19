@@ -60,7 +60,7 @@ public interface Set<E> extends Collection<E> {
     /*-RAC@ also
        @ public normal_behavior
        @   requires contains(o);
-       @   assignable objectState,values;
+       @   assignable values;
        @   ensures \result;
        @   ensures !contains(o);
        @*/
@@ -85,7 +85,7 @@ public interface Set<E> extends Collection<E> {
 
     /*-RAC@ also public normal_behavior
        @   requires c != null;
-       @   assignable objectState,values;
+       @   assignable values;
        @   ensures \old(c.contains(null)) ==> !contains(null);
        @   ensures (\forall Object o; c.contains(o) <==>
                       (\old(contains(o)) && !\old(c.contains(o))));

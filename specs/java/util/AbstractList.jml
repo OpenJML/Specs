@@ -99,7 +99,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
       @     old int mn = toIndex < size() ? toIndex : size();
       @     requires fromIndex < toIndex;
       @     ensures \not_modified(containsNull);
-      @     assignable objectState,values;
+      @     assignable values;
       @     ensures size() == \old(size()) - (mn-fromIndex);
       @     ensures (\forall int i; 0<=i && i < fromIndex;
                                get(i) == \old(get(i)));

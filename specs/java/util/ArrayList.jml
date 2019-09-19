@@ -80,7 +80,7 @@ public class ArrayList<E> extends AbstractList<E>
     /*@ pure @*/ public ArrayList(Collection<? extends E> c) throws NullPointerException;
 
     /*-RAC@  public normal_behavior
-      @   assignable objectState,values;
+      @   assignable values;
       @   ensures \not_modified(containsNull,values.length,values,
                                                    theString,theHashCode);
       @   ensures capacity == this.size();
@@ -88,7 +88,7 @@ public class ArrayList<E> extends AbstractList<E>
     public void trimToSize();
 
     /*-RAC@  public normal_behavior
-      @   assignable objectState,values;
+      @   assignable values;
       @   ensures capacity >= minCapacity;
       @   ensures \not_modified(containsNull,values.length,values);
       @   ensures \not_modified(theString,theHashCode);

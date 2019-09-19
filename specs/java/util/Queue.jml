@@ -32,7 +32,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 <= i & i < values.length-1; _get(i) == \old(_get(i)));
       @   ensures \result;
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public exceptional_behavior
       @   requires e == null & !containsNull;
@@ -55,7 +55,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 <= i & i < values.length-1; _get(i) == \old(_get(i)));
       @   ensures \result;
-      @   assignable this.*;
+      @   assignable values;
       @ also
       @ public behavior
       @   requires false && (* capacity restrictions violated *);
@@ -85,7 +85,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures (\forall int i; 0 < i & i < \old(values.length); _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.objectState;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E poll();
     
@@ -99,7 +99,7 @@ public interface Queue<E> extends Collection<E> {
       @   ensures (\forall int i; 0 < i & i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.objectState;
+      @   assignable values;
       @*/
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
 }
