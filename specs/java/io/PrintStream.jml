@@ -19,6 +19,7 @@
 // the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package java.io;
+//@ model import java.util.Locale;
 
 /** JML's specification of PrintStream
  * @author David Cok
@@ -153,6 +154,22 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @ ensures outputText.startsWith(\old(outputText));
     @*/
     public void println(boolean b);
+    
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures \result == this;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public PrintStream printf(Locale locale, String format, Object ... args);
+
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures \result == this;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public PrintStream printf(String format, Object ... args);
 
     public void print(boolean Param0);
 
