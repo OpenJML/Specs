@@ -80,17 +80,17 @@ public class ArrayList<E> extends AbstractList<E>
     /*@ pure @*/ public ArrayList(Collection<? extends E> c) throws NullPointerException;
 
     /*-RAC@  public normal_behavior
-      @   assignable objectState;
-      @   ensures \not_modified(containsNull,content.theSize,content,
+      @   assignable objectState,values;
+      @   ensures \not_modified(containsNull,values.length,values,
                                                    theString,theHashCode);
       @   ensures capacity == this.size();
       @*/
     public void trimToSize();
 
     /*-RAC@  public normal_behavior
-      @   assignable objectState;
+      @   assignable objectState,values;
       @   ensures capacity >= minCapacity;
-      @   ensures \not_modified(containsNull,content.theSize,content);
+      @   ensures \not_modified(containsNull,values.length,values);
       @   ensures \not_modified(theString,theHashCode);
       @*/
     public void ensureCapacity(int minCapacity);
@@ -116,8 +116,8 @@ public class ArrayList<E> extends AbstractList<E>
     //@   ensures \result != this;
     //@   ensures \result.equals(this);
     //-RAC@   ensures ((List)\result).containsNull == this.containsNull;
-    //-RAC@   ensures ((ArrayList)\result).content.theSize == this.content.theSize;
-    //-RAC@ ensures List.equals(((List)\result).content,this.content);
+    //-RAC@   ensures ((ArrayList)\result).values.length == this.values.length;
+    //-RAC@   ensures Arrays.equals(((List)\result).values,this.values);
     /*-RAC@ also public normal_behavior
       @   ensures ((ArrayList)\result).theHashCode == this.theHashCode;
       @   ensures ((ArrayList)\result).theString == this.theString;

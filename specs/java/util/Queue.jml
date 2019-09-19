@@ -28,25 +28,9 @@ package java.util;
 
 public interface Queue<E> extends Collection<E> {
     
-    /*-RAC@ public normal_behavior
-      @   requires n >= 0 && n < content.theSize;
-      @   ensures !\fresh(\result);
-      @   ensures containsObject((Object)\result);
-      @ // "magic" getter method used to specify the ordering of the queue.
-      @ public pure model E _get(\bigint n);
-      @*/
-    
-    /*-RAC@ public normal_behavior
-      @   requires n >= 0 && n < content.theSize;
-      @   ensures !\fresh(\result);
-      @   ensures containsObject((Object)\result);
-      @ // "magic" getter method used to specify the ordering of the queue.
-      @ public pure model E _get(int n);
-      @*/
-    
     /*-RAC@ also public behavior
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
+      @   ensures (\forall int i; 0 <= i & i < values.length-1; _get(i) == \old(_get(i)));
       @   ensures \result;
       @   assignable this.*;
       @ also
@@ -69,7 +53,7 @@ public interface Queue<E> extends Collection<E> {
     /*-RAC@ public behavior
       @   requires  false && (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
-      @   ensures (\forall \bigint i; 0 <= i & i < content.theSize-1; _get(i) == \old(_get(i)));
+      @   ensures (\forall int i; 0 <= i & i < values.length-1; _get(i) == \old(_get(i)));
       @   ensures \result;
       @   assignable this.*;
       @ also
@@ -98,10 +82,10 @@ public interface Queue<E> extends Collection<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall \bigint i; 0 < i & i < \old(content.theSize); _get(i-1) == \old(_get(i)));
+      @   ensures (\forall int i; 0 < i & i < \old(values.length); _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.content, this.values;
+      @   assignable this.objectState;
       @*/
     public /*@ nullable @*/ E poll();
     
@@ -112,10 +96,10 @@ public interface Queue<E> extends Collection<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall \bigint i; 0 < i & i < content.theSize; _get(i-1) == \old(_get(i)));
+      @   ensures (\forall int i; 0 < i & i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   assignable this.content, this.values;
+      @   assignable this.objectState;
       @*/
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
 }

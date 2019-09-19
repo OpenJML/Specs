@@ -128,7 +128,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     public boolean containsValue(Object value) throws NullPointerException;
 
     /*@ protected normal_behavior
-      @    assignable objectState; 
+      @    assignable objectState;
       @    ensures true; // FIXME - should ensure the map and some setting do  not change
       @*/
     protected void rehash();

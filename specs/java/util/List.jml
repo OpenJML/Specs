@@ -113,7 +113,7 @@ public interface List<E> extends Collection<E> {
 
     /*-RAC@ also public normal_behavior
       @   requires !containsNull ==> o != null;
-      @   assignable objectState;
+      @   assignable objectState,values;
       @   ensures values.length == \old(values.length+1); 
       @   ensures values[values.length-1] == o;
       @   //ensures (\forall \bigint i; 0 <= i < values.length-1; 
@@ -126,7 +126,7 @@ public interface List<E> extends Collection<E> {
     /*-RAC@
       @ also public normal_behavior
       @   requires contains(o);
-      @   assignable objectState;
+      @   assignable objectState,values;
       @   ensures !\result ==> values.length == \old(values.length);
       @   ensures \result ==> values.length == \old(values.length-1);
       @*/
@@ -350,7 +350,6 @@ public interface List<E> extends Collection<E> {
     //@   requires 0 <= fromIndex && fromIndex <= size() && 0 <= toIndex && toIndex <= size() && fromIndex <= toIndex;
     //@   ensures \result.size() == toIndex - fromIndex;
     //-RAC@   ensures (\forall int i; fromIndex <=i && i < toIndex; values[i] == \result.values[i-fromIndex]);
-    //+RAC@   ensures (\forall int i; fromIndex <=i && i < toIndex; values[i] == \result.values[i-fromIndex]);
     //@ also
     /*@ public exceptional_behavior
       @   requires !(0 <= fromIndex && fromIndex <= size())

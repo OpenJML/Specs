@@ -57,10 +57,10 @@ public interface Set<E> extends Collection<E> {
     //-RAC@   //ensures this.content.owner == \old(this.content.owner);
     boolean add(/*@nullable*/ E o);
 
-    /*@ also
+    /*-RAC@ also
        @ public normal_behavior
        @   requires contains(o);
-       @   assignable objectState;
+       @   assignable objectState,values;
        @   ensures \result;
        @   ensures !contains(o);
        @*/
@@ -83,9 +83,9 @@ public interface Set<E> extends Collection<E> {
     // specs are inherited
     boolean retainAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
 
-    /*@ also public normal_behavior
+    /*-RAC@ also public normal_behavior
        @   requires c != null;
-       @   assignable objectState;
+       @   assignable objectState,values;
        @   ensures \old(c.contains(null)) ==> !contains(null);
        @   ensures (\forall Object o; c.contains(o) <==>
                       (\old(contains(o)) && !\old(c.contains(o))));
