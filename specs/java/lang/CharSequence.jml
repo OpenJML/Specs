@@ -27,7 +27,6 @@ package java.lang;
  */
 public interface CharSequence {
     //@ public instance model non_null char[] charArray;
-    // @ public instance invariant charArray.owner == this;
     
     //@ public normal_behavior ensures \result == c.owner; pure function
     //@ model public static Object owner(Object c);
@@ -75,7 +74,7 @@ public interface CharSequence {
       @      requires !(0 <= index && index < charArray.length);
       @      signals_only IndexOutOfBoundsException;
       @*/
-    //@ pure
+    //@ pure helper
     char charAt(int index) throws IndexOutOfBoundsException;
 
     /*@   public normal_behavior
