@@ -42,8 +42,10 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     @Override
     public /*@ nullable */ V get(/*@ nullable */ java.lang.Object o);
 
+    // spec inherited from Map
     @Override
     public /*@ nullable */ V put(/*@ nullable */ K k, /*@ nullable */ V v);
+
 //  public /*@ nullable */ V remove(/*@ nullable */ java.lang.Object);
 //  private boolean removeMapping(/*@ nullable */ java.lang.Object, /*@ nullable */ java.lang.Object);
 //  private boolean isValidKey(java.lang.Object);

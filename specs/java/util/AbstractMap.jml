@@ -42,7 +42,11 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
     public boolean containsKey(Object key);
     public /*@ nullable */ V get(/*@ nullable */ java.lang.Object o);
     public /*@ nullable */ V get(/*@ nullable */ Object key);
+    
+    // specs inherited from Map
+    @Override
     public /*@ nullable */ V put(/*@ nullable */ K key, /*@ nullable */ V value);
+
     public V remove(Object key);
     public void putAll(Map<? extends K,? extends V> t);
     public void clear();

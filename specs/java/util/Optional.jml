@@ -16,7 +16,7 @@ public final class Optional<T> {
 
   //@ public normal_behavior
   //-RAC@   ensures \result.value == null;
-  //@ pure function
+  //@ pure function helper
   public static <T> Optional<T> empty();
 
   //@ private normal_behavior
@@ -36,14 +36,14 @@ public final class Optional<T> {
   //@ also public exceptional_behavior
   //@   requires t == null;
   //@   signals_only NullPointerException;
-  //@ pure function
+  //@ pure function helper
   public static <T> Optional<T> of(T t); // non-null required
 
   //@ public normal_behavior
   //-RAC@   ensures \fresh(\result);
   //-RAC@   ensures \result.value == t;
   //+RAC@   ensures \result.get() == t;
-  //@ pure function
+  //@ pure helper
   public static <T> Optional<T> ofNullable(/*@ nullable */ T t);
   
   //-RAC@ public normal_behavior
@@ -52,13 +52,13 @@ public final class Optional<T> {
   //-RAC@ also public exceptional_behavior
   //-RAC@   requires value == null;
   //-RAC@   signals_only NoSuchElementException;
-  //-RAC@ pure function
+  //-RAC@ pure function helper
   public T get();
   
   //@ public normal_behavior
   //-RAC@   ensures \result == (value != null);
   //+RAC@   ensures \result == (get() != null);
-  //@ pure function
+  //@ pure function helper
   public boolean isPresent();
   
   
@@ -69,7 +69,7 @@ public final class Optional<T> {
   /*@ public model_program 
   @   { if (predicate == null) throw new NullPointerException(); return Optional.ofNullable( value == null || !predicate.test(value) ? null : value); }
   @*/
-  //@ pure
+  //@ pure helper
   public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
