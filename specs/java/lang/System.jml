@@ -59,17 +59,17 @@ public final class System {
     */
 
     public final static /*@non_null*//*see note above*/ InputStream in;
-        /*@ public static initially in != null; @*/ 
-        //@ public static invariant !allowNullStreams ==> in != null;
-        //@ public static invariant \invariant_for(in);
+        /*@ public static initially System.in != null; @*/ 
+        //@ public static invariant !allowNullStreams ==> System.in != null;
+        //@ public static invariant \invariant_for(System.in);
     public final static /*@non_null*//*see note above*/ PrintStream out;
-        /*@ public static initially out != null; @*/ 
-        //@ public invariant !allowNullStreams ==> out != null;
-    //@ public static invariant \invariant_for(out);
+        /*@ public static initially System.out != null; @*/ 
+        //@ public invariant !allowNullStreams ==> System.out != null;
+    //@ public static invariant \invariant_for(System.out);
     public final static /*@non_null*//*see note above*/ PrintStream err;
-        /*@ public static initially err != null; @*/ 
-        //@ public static invariant !allowNullStreams ==> err != null;
-        //@ public static invariant \invariant_for(err);
+        /*@ public static initially System.err != null; @*/ 
+        //@ public static invariant !allowNullStreams ==> System.err != null;
+        //@ public static invariant \invariant_for(System.err);
 
     //-RAC@ public normal_behavior
     //-RAC@   ensures in.isOpen;
@@ -78,18 +78,24 @@ public final class System {
     //-RAC@ static_initializer
     
     //@ requires allowNullStreams || i != null;
+    //@ reads \nothing;
     //@ assignable in;  // strangely enough, in is like a read-only var.
     //@ ensures in == i;
+    //@ helper
     public static void setIn(InputStream i);
 
     //@ requires allowNullStreams || o != null;
+    //@ reads \nothing;
     //@ assignable out;
     //@ ensures out == o;
+    //@ helper
     public static void setOut(PrintStream o);
 
     //@ requires allowNullStreams || e != null;
+    //@ reads \nothing;
     //@ assignable err;
     //@ ensures err == e;
+    //@ helper
     public static void setErr(PrintStream e);
 
 
@@ -106,10 +112,13 @@ public final class System {
       @    ensures  systemSecurityManager == s;
       @    signals (SecurityException) (* if the change is not permitted *);
       @*/
+    //@ helper
     public static void setSecurityManager(/*@nullable*/ SecurityManager s) throws SecurityException;
 
     //@ public normal_behavior
+    //@   reads systemSecurityManager;
     //@   ensures \result == systemSecurityManager;
+    //@ helper
     public /*@ pure @*/ static /*@nullable*/ SecurityManager getSecurityManager();
 
     /** The last value of currentTimeMillis() that was returned */
@@ -126,15 +135,18 @@ public final class System {
     /*-RAC@
       @ public normal_behavior
       @   assignable time;
+      @   reads time;
       @   ensures time >= \old(time);
       @   ensures \result == time;
       @   ensures \result >= 0;
       @*/
+    //@ helper
     public static native long currentTimeMillis();
 
     // FIXME - exceptional cases
     /*@  public exceptional_behavior
       @    requires src == null || dest == null;
+      @    reads \nothing;
       @    assignable \nothing;
       @    signals (NullPointerException) src == null || dest == null;
       @ also public exceptional_behavior
@@ -154,6 +166,7 @@ public final class System {
       @                  || srcPos + length > ((Object[])src).length
       @                  || destPos + length > ((Object[])dest).length);
               // FIXME - need the length restriction for primitive type arrays also
+      @    reads \nothing;
       @    assignable \nothing;
       @    signals_only ArrayIndexOutOfBoundsException;
       @  also
@@ -162,6 +175,7 @@ public final class System {
       @  public exceptional_behavior
       @    requires !(src == null || dest == null);
       @    requires !(src.getClass().isArray()) || !(dest.getClass().isArray());
+      @    // TODO her and in the following reads \nothing;
       @    assignable \nothing;
       @    signals_only ArrayStoreException;
       @ also // FIXME - unify with the previous spec case
@@ -187,8 +201,6 @@ t *);
       @ also
       */
     /*@  public normal_behavior
-    @    // requires !(src == null || dest == null);
-    @    // requires src.getClass().isArray() && dest.getClass().isArray();
     @    requires !(    srcPos < 0 || destPos < 0 || length < 0 );
       {|
         requires (src instanceof Object[]) &&
@@ -295,6 +307,7 @@ t *);
 //      @
       @*/
 //@       |}
+    //@ helper
     @org.jmlspecs.annotation.Options("-lang=jml+")
     public static native void arraycopy(/*@nullable*/ Object src,
                                         int srcPos,
@@ -305,7 +318,8 @@ t *);
     //@ axiom (\forall Object x, y; identityHashCode(x) != identityHashCode(y); x != y);
     
     //@ public normal_behavior
-    //@  requires true;
+    //@  requires \invariant_for(x);
+    //@ helper
     public /*@ pure function @*/ static native int identityHashCode(/*@nullable*/ Object x);
 
     //-RAC@ public model static non_null Properties systemProperties;
@@ -324,6 +338,7 @@ t *);
       @    ensures \result == systemProperties;
       @    //signals (SecurityException) (* if access is not permitted *);
       @*/
+    //@ helper // TODO - reads?
     public /*@ pure function @*/ static /*@ non_null @*/ Properties getProperties();
 
     /*-RAC@ 
@@ -342,6 +357,7 @@ t *);
       @    signals (SecurityException) (* if access is not permitted *) &&
                                        \not_modified(systemProperties);
       @*/
+    //@ helper // TODO - reads?
     public static void setProperties(Properties props);
 
 
@@ -350,6 +366,7 @@ t *);
     //@   signals_only SecurityException, NullPointerException;
     //@   signals (SecurityException) (* if access is not permitted *);
     //@   signals (NullPointerException) key == null;
+    //@ helper // TODO - reads?
     public /*@ pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key) throws RuntimeException;
 
 
@@ -358,6 +375,7 @@ t *);
     //@   signals_only SecurityException, NullPointerException;
     //@   signals (SecurityException) (* if access is not permitted *);
     //@   signals (NullPointerException) key == null;
+    //@ helper // TODO - reads?
     public /*@ pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key, /*@nullable*/ String def) throws RuntimeException;    
 
 
@@ -367,6 +385,7 @@ t *);
     //@   signals_only SecurityException, NullPointerException;
     //-RAC@   signals (SecurityException) (* if access is not permitted *) && \not_modified(systemProperties);
     //-RAC@   signals (NullPointerException) key == null || value == null && \not_modified(systemProperties);
+    //@ helper // TODO - reads?
     public static /*@nullable*/ String setProperty(/*@non_null*/ String key, /*@nullable*/ String value) throws RuntimeException;
 
 
@@ -381,11 +400,12 @@ t *);
       @    signals_only SecurityException;
       @    signals (SecurityException) (* if exiting is not permitted *);
       @*/
+    //@ helper // TODO - reads?
     public static void exit(int status);
 
     //@ public normal_behavior
     //@   requires true;
-    //@ pure
+    //@ pure helper
     public static void gc();
 
     public static void runFinalization();
@@ -406,9 +426,11 @@ t *);
     // returned by the most recent call of nanoTime(), and does not change in between calls.
     /*-RAC@ public normal_behavior
      @   requires true;
+     @   reads nanoTime;
      @   assignable nanoTime;
      @   ensures nanoTime - \old(nanoTime) >= 0; // Time increasees and never extends more than 2**63 nanoseconds.
      @   ensures \result == nanoTime;
      @*/
+    //@ helper
     public static long nanoTime();
 }

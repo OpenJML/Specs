@@ -1,8 +1,10 @@
 package java.util.function;
 
 public interface Consumer<T> {
+    //@ model public instance JMLDataGroup consumerState; //@ in objectState;
+
     //@ public behavior
-    //@   requires true;
+    //@   requires false;
     //@ pure
     void accept(T t);
     

@@ -1,0 +1,22 @@
+package java.security;
+ 
+public class NoSuchAlgorithmException extends GeneralSecurityException {
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable();
+      @*/
+    //@ pure
+    public NoSuchAlgorithmException();
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable(cause);
+      @*/
+    //@ pure
+    public NoSuchAlgorithmException(Throwable cause);
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s,cause);
+      @*/
+    //@ pure
+    public NoSuchAlgorithmException(String s, Throwable cause);
+}

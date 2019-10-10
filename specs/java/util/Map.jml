@@ -87,34 +87,36 @@ public interface Map<K,V> {
           @
           @ public normal_behavior
           @   ensures \result <==> equalsObjects(e.getKey(),e.getValue());
-          @ public pure model boolean equalsObjects(Entry e);
+          @ public pure model boolean equals(Entry e);
           @*/
     }
 
     //@ model public instance map<Object,V> modelMap; in objectState;
-    //@ model public instance Entry<K,V>[] values; in objectState;
+    // @ model public instance Entry<K,V>[] values; in objectState;
+    //@ model public instance K[] keys; in objectState;
     
     /*@ public normal_behavior
-          ensures \result <==> (\exists int i; 0<=i<values.length; values[i].getKey() == o);
+          ensures \result <==> (\exists int i; 0<=i<keys.length; keys[i] == o);
           pure
         model public boolean hasKey(Object o);
       @*/
 
-    /*@ public normal_behavior
+    /* @ public normal_behavior
           ensures \result <==> (\exists int i; 0<=i<v.length; v[i].getKey() == o);
           pure
         model public boolean hasKey(Entry<K,V>[] v, Object o);
       @*/
 
-    /*@ public normal_behavior
+    /* @ public normal_behavior
           ensures \result <==> (\exists int i; 0<=i<values.length; values[i].getValue() == o);
           pure
         model public boolean hasValue(Object o);
       @*/
 
     /*@ public normal_behavior
-          ensures (\forall int i; 0<=i<values.length; values[i].getKey() != o) ==> \result == null;
-          ensures (\forall int i; 0<=i<values.length; values[i].getKey() == o ==> values[i].getValue() == \result);
+          ensures \result == modelMap.get(o);
+          //ensures (\forall int i; 0<=i<values.length; values[i].abstractKey != o) ==> \result == null;
+          //ensures (\forall int i; 0<=i<values.length; values[i].abstractKey == o ==> values[i].abstractValue == \result);
           pure nullable
         model public V getmodel(Object o);
       @*/
@@ -129,12 +131,12 @@ public interface Map<K,V> {
       
 
     //@ public normal_behavior
-    //-RAC@   ensures \result == values.length;
+    //-RAC@   ensures \result == keys.length;
     /*@ pure @*/
     int size();
 
     /*-RAC@ public normal_behavior
-      @    ensures \result <==> (values.length == 0); 
+      @    ensures \result <==> (keys.length == 0); 
       @*/
     /*@ pure @*/ boolean isEmpty();
     
@@ -152,7 +154,7 @@ public interface Map<K,V> {
 
     /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
-      @    ensures \result <==> hasValue(value);
+      @    //ensures \result <==> hasValue(value);
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -167,7 +169,7 @@ public interface Map<K,V> {
       @    ensures \result == null;
       @ also public normal_behavior
       @    requires hasKey(key);
-      @    ensures \result == getmodel(key);
+      @    ensures \result == modelMap.get(key); //getmodel(key);
        
            // FIXME - exceptions?
       @*/
@@ -178,10 +180,10 @@ public interface Map<K,V> {
       @    assignable objectState;
       @    ensures modelMap == \old(modelMap).put(key,value);
       @    ensures hasKey(key);
-      @    ensures getmodel(key) == value;
-      @    ensures \result == \old(getmodel(key));
-      @    ensures \forall int i; 0<=i<\old(values).length; hasKey(values[i].getKey());
-      @    ensures \forall int i; 0<=i<values.length; values[i] == key || hasKey(\old(values),values[i].getKey());
+      @    ensures modelMap.get(key) == value;
+      @    ensures \result == \old(modelMap).get(key);
+      @    //ensures \forall int i; 0<=i<\old(values).length; hasKey(values[i].getKey());
+      @    ensures \forall int i; 0<=i<keys.length; keys[i] == key || hasKey(\old(keys));
       @     // FIXME: Need to state that the map values are unchanged
       @*/
     /* FIXME @
@@ -262,14 +264,14 @@ public interface Map<K,V> {
 
     /*-RAC@ public normal_behavior 
       @    ensures \result != null;
-      @    ensures \result.size() == values.length;
+      @    ensures \result.size() == keys.length;
            // FIXME
       @*/
     /*@ pure @*/ Collection<V> values();
 
     /*-RAC@ public normal_behavior
       @    ensures \result != null; 
-      @    ensures \result.size() == values.length;
+      @    ensures \result.size() == keys.length;
            // FIXME
       @*/
     /*@ pure @*/ Set<Entry<K,V>> entrySet();

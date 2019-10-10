@@ -1,0 +1,28 @@
+package java.security;
+ 
+public class GeneralSecurityException extends Exception {
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable();
+      @*/
+    //@ pure
+    public GeneralSecurityException();
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s);
+      @*/
+    //@ pure
+    public GeneralSecurityException(String s);
+
+    /*@ public normal_behavior
+      @   ensures standardThrowable(cause);
+      @*/
+    //@ pure
+    public GeneralSecurityException(Throwable cause);
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s,cause);
+      @*/
+    //@ pure
+    public GeneralSecurityException(String s, Throwable cause);
+}

@@ -1,0 +1,28 @@
+package java.security;
+ 
+public class InvalidKeyException extends KeyException {
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable();
+      @*/
+    //@ pure
+    public InvalidKeyException();
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s);
+      @*/
+    //@ pure
+    public InvalidKeyException(String s);
+
+    /*@ public normal_behavior
+      @   ensures standardThrowable(cause);
+      @*/
+    //@ pure
+    public InvalidKeyException(Throwable cause);
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s,cause);
+      @*/
+    //@ pure
+    public InvalidKeyException(String s, Throwable cause);
+}

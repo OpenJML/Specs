@@ -1,0 +1,17 @@
+package javax.crypto;
+import java.security.GeneralSecurityException;
+ 
+public class ShortBufferException extends GeneralSecurityException {
+  
+    /*@ public normal_behavior
+      @   ensures standardThrowable();
+      @*/
+    //@ pure
+    public ShortBufferException();
+   
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s);
+      @*/
+    //@ pure
+    public ShortBufferException(String s);
+}
