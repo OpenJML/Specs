@@ -34,7 +34,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     //-RAC@ public model boolean error;
     
-    //-RAC@ public invariant outputText != null;
+    //-RAC@ public invariant outputText != null && \invariant_for(outputText);
     
     //@ static_initializer
 
