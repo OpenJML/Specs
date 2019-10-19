@@ -4,6 +4,19 @@ package java.util.stream;
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
     
     //@ public normal_behavior
+    //@   requires true;
+    /*@   { 
+            //@ loop_invariant i == \count && 0 <= i && i <= values.length;
+            //@ decreases values.length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
+            for (int i=0; i < values.length; i++) {
+                consumer.accept(values[i]); 
+            }
+          }
+     */
+    void forEachOrdered(java.util.function.Consumer<? super T> consumer);
+    // Linne 9 appears in error messages so we put it near the top of this file, so it does not change often
+    
+    //@ public normal_behavior
     //@   ensures \result == (\forall int i; 0<=i && i<values.length; values[i] != null);
     //@ pure
     //@ model public boolean isNonNull();
@@ -86,18 +99,6 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
      */
     void forEach(java.util.function.Consumer<? super T> consumer);
 
-    //@ public normal_behavior
-    //@   requires true;
-    /*@   { 
-            //@ loop_invariant i == \count && 0 <= i && i <= values.length;
-            //@ decreases values.length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
-            for (int i=0; i < values.length; i++) {
-                consumer.accept(values[i]); 
-            }
-          }
-     */
-    void forEachOrdered(java.util.function.Consumer<? super T> consumer);
-    
     java.lang.Object[] toArray();
     <A> A[] toArray(java.util.function.IntFunction<A[]> func);
     T reduce(T t, java.util.function.BinaryOperator<T> op);
