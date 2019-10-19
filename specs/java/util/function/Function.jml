@@ -39,5 +39,15 @@ public interface Function<T,R> {
       //@   ensures \result instanceof Identity;
       //@ pure
       public static <T> Function<T, T> identity();
+      
+      /*@
+      static model interface NoNulls<T,R> extends Function<T,R> {
+        
+        also public normal_behavior
+          ensures \result != null;
+        R apply(T p);
+      }
+      @*/
+      
 
 }

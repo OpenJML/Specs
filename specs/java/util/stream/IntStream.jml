@@ -2,6 +2,8 @@ package java.util.stream;
 
 //@ non_null_by_default
 public interface IntStream extends BaseStream<Integer,IntStream> {
+    //@ model public final instance int[] intvalues;
+
       public abstract IntStream filter(java.util.function.IntPredicate pred);
       public abstract IntStream map(java.util.function.IntUnaryOperator op);
       public abstract <U> Stream<U> mapToObj(java.util.function.IntFunction<? extends U> func);
@@ -48,12 +50,34 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       public abstract java.util.PrimitiveIterator.OfInt iterator();
       public abstract java.util.Spliterator.OfInt spliterator();
       public static IntStream.Builder builder();
+      
+      //@ public normal_behavior
+      //@   ensures \result.intvalues.length == 0;
+      //@ pure helper function
       public static IntStream empty();
+      //@ public normal_behavior
+      //@   ensures \result.intvalues.length == 1;
+      //@   ensures \result.intvalues[0] == i;
+      //@ pure helper function
       public static IntStream of(int i);
+      //@ public normal_behavior
+      //@   ensures \result.intvalues.length == ints.length;
+      //@   ensures java.util.Arrays.equals(\result.intvalues,ints);
+      //@ pure helper function
       public static IntStream of(int... ints);
       public static IntStream iterate(int i, java.util.function.IntUnaryOperator op);
       public static IntStream generate(java.util.function.IntSupplier supplier);
+      //@ public normal_behavior
+      //@   requires to >= from;
+      //@   ensures \result.intvalues.length == to - from;
+      //@   ensures \forall int k; 0 <= k < to-from; \result.intvalues[k] == from + k;
+      //@ pure helper function
       public static IntStream range(int from, int to);
+      //@ public normal_behavior
+      //@   requires to >= from;
+      //@   ensures \result.intvalues.length == to - from + 1;
+      //@   ensures \forall int k; 0 <= k <= to-from; \result.intvalues[k] == from + k;
+      //@ pure helper function
       public static IntStream rangeClosed(int from, int to);
       public static IntStream concat(IntStream first, IntStream last);
       public BaseStream parallel();

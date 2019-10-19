@@ -9,12 +9,44 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ model public boolean isNonNull();
     
     //@ public normal_behavior
+    //@   requires pred != null;
     //@   ensures \result != null;
+    //@   ensures \fresh(\result);
+    //@   ensures \forall int i; 0 <= i < \result.values.length; pred.test(\result.values[i]);
+    //@ also public normal_behavior
+    //@   requires pred != null;
+    //@   old boolean b0 = this.values.length > 0 && pred.test(this.values[0]);
+    //@   old boolean b1 = this.values.length > 1 && pred.test(this.values[1]);
+    //@   old boolean b2 = this.values.length > 2 && pred.test(this.values[2]);
+    //@   old boolean b3 = this.values.length > 3 && pred.test(this.values[3]);
+    //@   old boolean b4 = this.values.length > 4 && pred.test(this.values[4]);
+    //@   ensures b0 ==> \result.values.length > 0 && \result.values[0] == this.values[0];
+    //@   ensures !b0 & b1 ==> \result.values.length > 0 && \result.values[0] == this.values[1];
+    //@   ensures !b0 & !b1 & b2 ==> \result.values.length > 0 && \result.values[0] == this.values[2];
+
+    //@   ensures b0 & b1 ==> \result.values.length > 1 && \result.values[1] == this.values[1];
+    //@   ensures ((b0 & !b1)|(!b0 & b1)) & b2 ==> \result.values.length > 1 && \result.values[1] == this.values[2];
+
+    //@   ensures b0 & b1 & b2 ==> \result.values.length > 2 && \result.values[2] == this.values[2];
+    //@   ensures b0 & !b1 & b2 & b3 ==> \result.values.length > 2 && \result.values[2] == this.values[3];
+
+    //@   ensures b0 & b1 & b2 & b3 ==> \result.values.length > 3 && \result.values[3] == this.values[3];
+
+    //@   ensures b0 & b1 & b2 & b3 & !b4 & this.values.length == 5 ==> \result.values.length == 4;
+    //@   ensures b0 & !b1 & b2 & b3 & this.values.length == 4 ==> \result.values.length == 3;
+    //@   ensures b0 & b1 & b2 & this.values.length == 3 ==> \result.values.length == 3;
+    //@   ensures !b0 & b1 & b2 & this.values.length == 3 ==> \result.values.length == 2;
+    //@   ensures b0 & b1 & this.values.length == 2 ==> \result.values.length == 2;
     //@ pure
     Stream<T> filter(java.util.function.Predicate<? super T> pred);
 
     //@ public normal_behavior
+    //@   requires func != null;
     //@   ensures \result != null;
+    //@   ensures \fresh(\result);
+    //@   ensures \result.values.length == this.values.length;
+    //@   ensures func instanceof java.util.function.Function.NoNulls ==> \forall int i; 0 <= i < values.length; \result.values[i] != null;
+    //@   // ensures \forall int i; 0 <= i < values.length; \result.values[i] == func.apply(values[i]); // FIXME - not translated properly yet
     //@ pure
     <R> Stream<R> map(java.util.function.Function<? super T, ? extends R> func);
 
@@ -80,11 +112,13 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   requires collector != null;
     //@   assignable collector.content;
-    //@   ensures \result == collector;
-    //-RAC@   //ensures ((java.util.Collection)\result).content.owner == \result;
-    //-RAC@   ensures ((java.util.Collection)\result).values.length >= 0;
-    //@   ensures (\result instanceof java.util.List) ==> ((java.util.List)\result).size() == values.length;
-    //@   ensures (\result instanceof java.util.List) ==> (\forall int i; 0<=i && i<values.length; ((java.util.List)\result).get(i) == this.values[i]); 
+    //@   ensures \result != null;
+    //@   ensures \fresh(\result); // FIXME - not always true
+    // -RAC@ also public normal_behavior
+    // -RAC@   requires collector != null;
+    // -RAC@   requires collector == Collectors.toList();
+    // -RAC@   assignable collector.content;
+    //-RAC@   ensures ((java.util.List)\result).values == this.values; 
     <R, A> R collect(Collector<? super T, A, R> collector);
     
     java.util.Optional<T> min(java.util.Comparator<? super T> comparator);
@@ -130,9 +164,9 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
-    //@   ensures (\result.value == null) <==> (values.length == 0); 
-    //@   ensures \result.value != null ==> (\exists int i; 0<=i && i <values.length; \result.value == values[i]);
+    //-RAC@   ensures \fresh(\result);
+    //-RAC@   ensures (\result.value == null) <==> (values.length == 0); 
+    //-RAC@   ensures \result.value != null ==> (\exists int i; 0<=i && i <values.length; \result.value == values[i]);
     //@ pure
     java.util.Optional<T> findAny();
     

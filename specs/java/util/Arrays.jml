@@ -993,7 +993,7 @@ public class Arrays {
       @*/
     public static /*@pure@*/ boolean equals(/*@ nullable */ float[] a, /*@ nullable */ float[] a2);
 
-// FIXME - Object comparions as well as equals comparison?
+// FIXME - Object comparisons as well as equals comparison?
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
       @   ensures \result <==> a == a2;
@@ -1004,7 +1004,7 @@ public class Arrays {
       @              (\forall int i; 0 <= i && i < a.length;
       @                a[i].equals(a2[i])));
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ Object[] a, /*@ nullable */ Object[] a2);
+    public static /*@pure helper@*/ boolean equals(/*@ nullable */ Object[] a, /*@ nullable */ Object[] a2);
 
     /*@
       @ public normal_behavior
@@ -2164,11 +2164,16 @@ public class Arrays {
 //    public static java.util.Spliterator$OfDouble spliterator(double[], int, int);
     
     //@ public normal_behavior
-    //@   ensures \result.values == array;
+    //@   ensures Arrays.equalElements(\result.values,array);
     //@ pure
     public static <T> java.util.stream.Stream<T> stream(T[] array);
+
 //    public static <T> java.util.stream.Stream<T> stream(T[], int, int);
-//    public static java.util.stream.IntStream stream(int[]);
+
+    //@ public normal_behavior
+    //@   ensures Arrays.equals(\result.intvalues,array);
+    //@ pure
+    public static java.util.stream.IntStream stream(int[] array);
 //    public static java.util.stream.IntStream stream(int[], int, int);
 //    public static java.util.stream.LongStream stream(long[]);
 //    public static java.util.stream.LongStream stream(long[], int, int);

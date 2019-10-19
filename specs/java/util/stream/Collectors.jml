@@ -12,12 +12,14 @@ public final class Collectors {
 //    public static <T, C extends java.util.Collection<T>> Collector<T, ?, C> toCollection(java.util.function.Supplier<C>);
 
     //@ public normal_behavior
+    //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@ pure
+    //@ pure function helper
     public static <T> Collector<T, ?, java.util.List<T>> toList();
     //@ public normal_behavior
+    //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@ pure
+    //@ pure function helper
     public static <T> Collector<T, ?, java.util.Set<T>> toSet();
 
     //    public static Collector<java.lang.CharSequence, ?, java.lang.String> joining();
