@@ -11,11 +11,17 @@ public final class Collectors {
 //    private static <I, R> java.util.function.Function<I, R> castingIdentity();
 //    public static <T, C extends java.util.Collection<T>> Collector<T, ?, C> toCollection(java.util.function.Supplier<C>);
 
+    /*@
+         model public static interface SimpleListCollector<T,A> extends Collector<T, A, java.util.List<T>> {
+         }
+      @*/
+      
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
     //@ pure function helper
-    public static <T> Collector<T, ?, java.util.List<T>> toList();
+    public static <T> /*@{ SimpleListCollector<T,?> }*/ Collector<T, ?, java.util.List<T>> toList();
+
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);

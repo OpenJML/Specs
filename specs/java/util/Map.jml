@@ -177,7 +177,7 @@ public interface Map<K,V> {
 
     /*-RAC@ public normal_behavior
       @    // requires containsNull || (key != null && value != null);
-      @    assignable objectState;
+      @    assignable modelMap;
       @    ensures modelMap == \old(modelMap).put(key,value);
       @    ensures hasKey(key);
       @    ensures modelMap.get(key) == value;
