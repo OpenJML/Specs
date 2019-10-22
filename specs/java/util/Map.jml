@@ -97,13 +97,13 @@ public interface Map<K,V> {
     
     /*@ public normal_behavior
           ensures \result <==> (\exists int i; 0<=i<keys.length; keys[i] == o);
-          pure
+          pure helper
         model public boolean hasKey(Object o);
       @*/
 
     /* @ public normal_behavior
           ensures \result <==> (\exists int i; 0<=i<v.length; v[i].getKey() == o);
-          pure
+          pure helper
         model public boolean hasKey(Entry<K,V>[] v, Object o);
       @*/
 
@@ -177,13 +177,11 @@ public interface Map<K,V> {
 
     /*-RAC@ public normal_behavior
       @    // requires containsNull || (key != null && value != null);
-      @    assignable modelMap;
+      @    assignable modelMap, keys;
       @    ensures modelMap == \old(modelMap).put(key,value);
       @    ensures hasKey(key);
       @    ensures modelMap.get(key) == value;
       @    ensures \result == \old(modelMap).get(key);
-      @    //ensures \forall int i; 0<=i<\old(values).length; hasKey(values[i].getKey());
-      @    ensures \forall int i; 0<=i<keys.length; keys[i] == key || hasKey(\old(keys));
       @     // FIXME: Need to state that the map values are unchanged
       @*/
     /* FIXME @
