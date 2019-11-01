@@ -16,7 +16,7 @@ public abstract class EnumSet<E extends java.lang.Enum<E>> extends AbstractSet<E
     public static <E extends java.lang.Enum<E>> EnumSet<E> noneOf(java.lang.Class<E> clazz);
 
     //@ public normal_behavior
-    //-RAC@   ensures \fresh(\result) && \fresh(\result.values);
+    //-RAC@   ensures \fresh(\result);
     //@ pure
     public static <E extends java.lang.Enum<E>> EnumSet<E> allOf(java.lang.Class<E> clazz);
 

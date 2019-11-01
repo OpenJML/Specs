@@ -6,7 +6,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   requires true;
     /*@   { 
-            //@ loop_invariant i == \count && 0 <= i && i <= values.length;
+            //@ loop_invariant i == \count && 0 <= i <= values.length;
             //@ decreases values.length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
             for (int i=0; i < values.length; i++) {
                 consumer.accept(values[i]); 
@@ -14,7 +14,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
           }
      */
     void forEachOrdered(java.util.function.Consumer<? super T> consumer);
-    // Linne 9 appears in error messages so we put it near the top of this file, so it does not change often
+    // Line 9 appears in error messages so we put it near the top of this file, so it does not change often
     
     //@ public normal_behavior
     //@   ensures \result == (\forall int i; 0<=i && i<values.length; values[i] != null);
@@ -99,8 +99,20 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
      */
     void forEach(java.util.function.Consumer<? super T> consumer);
 
-    java.lang.Object[] toArray();
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //@   ensures \result.length == values.length;
+    //@   ensures java.util.Arrays.equalArrays(\result,0,values,0,values.length);
+    //@ pure
+    Object[] toArray();
+    
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //@   ensures \result.length == values.length;
+    //@   ensures java.util.Arrays.equalArrays(\result,0,values,0,values.length);
+    //@ pure
     <A> A[] toArray(java.util.function.IntFunction<A[]> func);
+
     T reduce(T t, java.util.function.BinaryOperator<T> op);
     java.util.Optional<T> reduce(java.util.function.BinaryOperator<T> op);
     <U> U reduce(U u, java.util.function.BiFunction<U, ? super T, U> func, java.util.function.BinaryOperator<U> op);
