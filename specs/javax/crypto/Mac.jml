@@ -1,5 +1,7 @@
 package javax.crypto;
 
+//@ model import java.util.Arrays;
+
 // FIXME _ this all needs review, as I don't know anything about MAC algorithsm of implementation
 //@ non_null_by_default
 public class Mac implements Cloneable {
@@ -31,8 +33,8 @@ public class Mac implements Cloneable {
       // @   requires (offa) >= 0 && offa <= (a.length) - len;
       // @   requires (offb) >= 0 && offb <= (b.length) - len;
       // @   ensures \result == (\forall int i; offa<=i && i<offa+len; a[i] == b[i-offa+offb]);
-      //@ pure helper inline
-      /*@ model public static boolean equalArrays(byte[] a, int offa, byte[] b, int offb, int len) {
+      // @ pure helper inline
+      /* @ model public static boolean equalArrays(byte[] a, int offa, byte[] b, int offb, int len) {
           return (\forall int i; offa<=i && i<offa+len; a[i] == b[i-offa+offb]);
        }
        */
@@ -55,7 +57,7 @@ public class Mac implements Cloneable {
       // the hash acting on the 'info' material, according to https://tools.ietf.org/html/rfc5869
       //@ public normal_behavior
       //@   ensures \result.length == MAXBL*SIZE;
-      //@   ensures (\forall int i; 1<=i && i<=MAXBL; equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
+      //@   ensures (\forall int i; 1<=i && i<=MAXBL; Arrays.equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
       //@   ensures (\forall int k; 0<=k && k < MAXBL*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]);
       //@ pure helper function
       //@ model public static byte[] concatenatedIteratedHash(byte[] info);
@@ -165,7 +167,7 @@ public class Mac implements Cloneable {
       //-H1@   requires buf[offset+len-1] == 1;
       //-H1@   requires this.savedInfo != null && this.savedInfo.length == len - 1;
       //-H1@   requires (\forall int k; k>=0 && k<len-1; this.savedInfo[k] == buf[offset+k]);
-      //-H1   @   requires equalArrays(this.savedInfo,0,buf,offset,len-1);
+      //-H1   @   requires Arrays.equalArrays(this.savedInfo,0,buf,offset,len-1);
       //-H1@   assignable this.currentHash;
       //-H1@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,(byte)1);
       //-H2@ also public normal_behavior
@@ -174,9 +176,9 @@ public class Mac implements Cloneable {
       //-H2@   requires this.savedInfo != null ;//&& this.savedInfo.length == len - 1 - SIZE;
       //-H2@   old byte n = buf[offset+len-1];
       //-H2@   requires buf[offset+len-1] > 1;
-      //-H2@   requires equalArrays(buf,offset,this.savedInfo,0,SIZE);
-      //-H2@   requires equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,buf[offset+len-1]-1),0,SIZE);
-      //-H2@   requires equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
+      //-H2@   requires Arrays.equalArrays(buf,offset,this.savedInfo,0,SIZE);
+      //-H2@   requires Arrays.equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,buf[offset+len-1]-1),0,SIZE);
+      //-H2@   requires Arrays.equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
       //-H2@   assignable this.currentHash;
       //-H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
       
@@ -199,7 +201,7 @@ public class Mac implements Cloneable {
       //@ public normal_behavior
       //@   requires outOffset >= 0 && outOffset + SIZE <= out.length;
       //@   assignable out[outOffset .. outOffset + SIZE -1];
-      //@   ensures equalArrays(out,outOffset,currentHash,0,SIZE);
+      //@   ensures Arrays.equalArrays(out,outOffset,currentHash,0,SIZE);
       public final void doFinal(byte[] out, int outOffset) throws ShortBufferException, java.lang.IllegalStateException;
 
       //@ public normal_behavior

@@ -125,6 +125,7 @@ public final class System {
 
     //@// The most recently read time
     //@ public static model long time;
+    //@ public static model long nexttime;
 
     // OPENJML - modeling the behavior as that on a call of currentTimeMillis()
     // the field time gets a new value, such that 'time' always has the value
@@ -134,9 +135,10 @@ public final class System {
     // few hundred million years.
     /*-RAC@
       @ public normal_behavior
-      @   assignable time;
-      @   reads time;
+      @   assignable time, nexttime;
+      @   reads time, nexttime;
       @   ensures time >= \old(time);
+      @   ensures time == nexttime;
       @   ensures \result == time;
       @   ensures \result >= 0;
       @*/
