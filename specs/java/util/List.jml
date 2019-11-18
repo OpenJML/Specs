@@ -84,23 +84,23 @@ public interface List<E> extends Collection<E> {
 
     /*-RAC@ also
       @ public normal_behavior
+      @   requires a != null; 
       @   old int arrSize = a.length;
       @   old int colSize = size();
-      @   requires a!= null; 
       @   {|
       @     requires colSize <= arrSize;
       @     assignable a[*];
       @     ensures \result == a;
       @     ensures (\forall int k; 0 <= k && k < colSize;
-      @                 values[k] == \result[k]);
+      @                             \result[k] == values[k]);
       @     ensures (\forall int i; colSize <= i && i < arrSize;
-      @                            \result[i] == null);
+      @                             \result[i] == null);
       @   also
       @     requires colSize > arrSize;
       @     assignable \nothing;
       @     ensures \fresh(\result) && \result.length == colSize;
       @     ensures (\forall int k; 0 <= k && k < colSize;
-      @                            values[k] == \result[k]);
+      @                             \result[k] == values[k]);
       @   |}
       @ also public exceptional_behavior
       @   requires a == null;

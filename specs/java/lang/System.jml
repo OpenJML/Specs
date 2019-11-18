@@ -125,7 +125,7 @@ public final class System {
 
     //@// The most recently read time
     //@ public static model long time;
-    //@ public static model long nexttime;
+    //@ public static model long nexttime; in time;
 
     // OPENJML - modeling the behavior as that on a call of currentTimeMillis()
     // the field time gets a new value, such that 'time' always has the value

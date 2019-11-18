@@ -314,4 +314,8 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
     //@   ensures \result == (hi>=0?hi:hi+256)*256+(lo>=0?lo:lo+256);
     //@ model public static pure helper function int toUnsignedInt(byte hi, byte lo);
 
+    //@ public normal_behavior
+    //@   requires 0 <= i <= 255;
+    //@   ensures (byte)i == (byte)(i<128?i:i-256);
+    //@ model public static pure helper function void unsignedCastLemma(int i);
 }

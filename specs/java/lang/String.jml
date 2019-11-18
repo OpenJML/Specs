@@ -921,22 +921,31 @@ public final class String
                           /*@ non_null @*/ String replacement);
 
     /*@ public normal_behavior
+        model public static non_null pure helper function String split(String s, String regex, int position);
+     */
+        
+    /*@ public normal_behavior
+           ensures \result >= 0;
+        model public static pure helper function int numsplit(String s, String regex);
+     */
+        
+    /*@ public normal_behavior
       @   ensures \fresh(\result);
       @   //  ensures equals(\result,
           //                  Pattern.compile(regex).split(this, limit));
       @   ensures (* output strings correspond to input substrings *);
       @   ensures limit > 0 ==> \result.length == limit;
       @*/
-    //@ pure non_null function helper
+    //@ pure non_null helper
     public String[] split(/*@ non_null @*/ String regex, int limit);
 
     /*@ public normal_behavior
       @   ensures \fresh(\result);
-      @   ensures \result == split(this,0);
-      @   ensures (\forall int i; 0<=i && i<\result.length; \result[i] != null);
-      @   ensures (* output strings correspond to input substrings *);
+      @   ensures \result.length == numsplit(this,regex);
+      @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null); // Including this avoids the needs for an instantiation, which is not always triggered
+      @   ensures (\forall int i; 0 <= i < \result.length; \result[i] == split(this,regex,i));
       @*/
-    //@ pure non_null function helper
+    //@ pure non_null helper
     public String[] split(/*@ non_null @*/ String regex);
 
     /*@  public normal_behavior
