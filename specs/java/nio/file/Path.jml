@@ -50,6 +50,10 @@ public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Pat
 //    public abstract int compareTo(Path);
 //    public abstract boolean equals(java.lang.Object);
 //    public abstract int hashCode();
-//    public abstract java.lang.String toString();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public abstract java.lang.String toString();
+    
 //    public int compareTo(java.lang.Object);
 }

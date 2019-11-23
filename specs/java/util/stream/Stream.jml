@@ -20,6 +20,13 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   ensures \result == (\forall int i; 0<=i && i<values.length; values[i] != null);
     //@ pure
     //@ model public boolean isNonNull();
+
+    //@ public normal_behavior
+    //@   requires pred != null;
+    //@   ensures \result == this;
+    //@   ensures \forall int i; 0 <= i < \result.values.length; pred.test(\result.values[i]);
+    //@ pure
+    //@ model Stream<T> assume(java.util.function.Predicate<? super T> pred);
     
     //@ public normal_behavior
     //@   requires pred != null;

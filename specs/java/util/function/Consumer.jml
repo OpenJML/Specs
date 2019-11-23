@@ -5,7 +5,7 @@ public interface Consumer<T> {
 
     //@ public behavior
     //@   requires true;
-    //@ pure
+    //@   assignable \everything;
     void accept(T t);
     
     //@ public normal_behavior
@@ -17,6 +17,15 @@ public interface Consumer<T> {
            also public normal_behavior
               requires t != null;
               assignable t.*;
+           void accept(T t);
+        }
+    
+     @*/
+
+    /*@ model public static interface Pure<T> extends Consumer<T> {
+           also public normal_behavior
+              requires t != null;
+              assignable \nothing;
            void accept(T t);
         }
     
