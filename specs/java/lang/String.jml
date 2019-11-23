@@ -921,6 +921,7 @@ public final class String
                           /*@ non_null @*/ String replacement);
 
     /*@ public normal_behavior
+           ensures true;
         model public static non_null pure helper function String split(String s, String regex, int position);
      */
         
