@@ -23,11 +23,11 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@ pure
     public EnumMap(Class<K> clazz);
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures this.modelMap == map.modelMap;
     //@ pure
     public EnumMap(EnumMap<K, ? extends V> map);
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures this.modelMap == map.modelMap;
     //@ pure
     public EnumMap(Map<K, ? extends V> map);
     

@@ -9,17 +9,17 @@ public class map<K,V> implements IJmlPrimitiveType {
     model public function long size();
     
     public normal_behavior
-      ensures true;
+      ensures true; // Interpreted through other specs
     model public function boolean containsKey(K k);
 
     public normal_behavior
       requires containsKey(k);
-      ensures true;
+      ensures true; // Interpreted through other specs
     model public function V get(K k);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
-    model public boolean isEmpty();
+    model public function boolean isEmpty();
     
     public normal_behavior
       ensures \result.size() == 0;
@@ -29,7 +29,7 @@ public class map<K,V> implements IJmlPrimitiveType {
     public normal_behavior
       ensures \result ==> (s.size() == ss.size());
       ensures \result == (\forall K k;; s.containsKey(k) == ss.containsKey(k) && (s.containsKey(k) ==> s.get(k) == ss.get(k)));
-    model public static <K,V> boolean equals(map<K,V> s, map<K,V> ss);
+    model public function static <K,V> boolean equals(map<K,V> s, map<K,V> ss);
     
     public normal_behavior
       ensures \result == (this == s || equals(this,s));
@@ -42,7 +42,7 @@ public class map<K,V> implements IJmlPrimitiveType {
       ensures \result.get(k) == v;
       ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
       ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> (\result.get(kk) == this.get(kk)));
-    model public map<K,V> put(K k, V v);
+    model public function map<K,V> put(K k, V v);
     
     public normal_behavior
       ensures !\result.containsKey(k);
@@ -51,11 +51,11 @@ public class map<K,V> implements IJmlPrimitiveType {
       ensures !this.containsKey(k) ==> \result.size() == this.size();
       ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
       ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
-    model public map<K,V> remove(K k);
+    model public function map<K,V> remove(K k);
     
     public normal_behavior
       ensures (\forall K k;; \result.contains(k) <==> this.containsKey(k));
-    model public set<K> keySet();
+    model public function set<K> keySet();
 @*/
 }
 
