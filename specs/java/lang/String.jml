@@ -439,8 +439,8 @@ public final class String
     public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes();
 
     /*@ public normal_behavior
-      @   requires s2 != null && s1 != null;
-      @   ensures \result == equal(s1.charArray,s2.charArray);
+      @   requires s2 != null & s1 != null;
+      @   ensures s1.charArray != null & s2.charArray != null & \result == equal(s1.charArray,s2.charArray); // OPENJML: TODO Needs the invariant that charArray is not null
       @ also public normal_behavior
       @   requires s1 == s2;
       @   ensures \result;
@@ -450,7 +450,7 @@ public final class String
       @   ensures \result <==> (s1 == s2);
       @
       @ pure //+OPENJML@ function
-      @ public static helper model boolean equals(nullable String s1, nullable String s2);
+      @ public static model helper boolean equals(nullable String s1, nullable String s2);
       @*/
 
     //@ axiom (\forall String s,ss; s != null && ss != null; equals(s,ss) ==> s.length() == ss.length());
