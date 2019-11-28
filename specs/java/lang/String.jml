@@ -926,7 +926,7 @@ public final class String
      */
         
     /*@ public normal_behavior
-           ensures \result >= 0;
+           ensures \result >= 1;
         model public static pure helper function int numsplit(String s, String regex);
      */
         
@@ -942,6 +942,7 @@ public final class String
 
     /*@ public normal_behavior
       @   ensures \fresh(\result);
+      @   ensures \result.length >= 1;
       @   ensures \result.length == numsplit(this,regex);
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null); // Including this avoids the needs for an instantiation, which is not always triggered
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] == split(this,regex,i));
