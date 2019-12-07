@@ -21,7 +21,7 @@ public abstract class KeyPairGenerator {
       public java.lang.String getAlgorithm();
       
       //@ public normal_behavior
-      //@ pure
+      //@ pure function
       //@ model public static boolean algorithmIsSupported(String algorithm);
       
       //@ private behavior

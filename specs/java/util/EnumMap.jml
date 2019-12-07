@@ -7,9 +7,9 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
 //  private transient K[] keyUniverse;
 //  private transient java.lang.Object[] vals;
     
-    //@ spec_public
-    private transient int size;
-    //@ public invariant size >= 0;
+//    //@ spec_public
+//    private transient int size;
+//    //@ public invariant size >= 0;
     
 //  private static final java.lang.Object NULL;
 //  private static final java.lang.Enum<?>[] ZERO_LENGTH_ENUM_ARRAY;
@@ -31,8 +31,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@ pure
     public EnumMap(Map<K, ? extends V> map);
     
-    //@ also public normal_behavior
-    //@   ensures \result == size;
+    //@// Inherited
     public int size();
     
 //  public boolean containsValue(java.lang.Object);

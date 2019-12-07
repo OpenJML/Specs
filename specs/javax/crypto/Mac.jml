@@ -33,7 +33,7 @@ public class Mac implements Cloneable {
       //@   requires 0 <= offa <= a.length - len;
       //@   requires 0 <= offb <= b.length - len;
       //@   ensures \result == (\forall int i; offa <= i < offa+len; a[i] == b[i-offa+offb]);
-      //@ pure helper inline
+      //@ pure helper
       /*@ model public static boolean equalArrays(byte[] a, int offa, byte[] b, int offb, int len) {
           return (\forall int i; offa <= i < offa+len; a[i] == b[i-offa+offb]);
        }
