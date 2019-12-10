@@ -274,16 +274,16 @@ public /*@ pure @*/ final
 //    public int compareTo(Object o) throws ClassCastException;
 
     //@ public normal_behavior
-    //@   ensures \result == (short)(b0*256 + Byte.toUnsignedInt(b1));
+    //@   ensures \result == (b0*256 + Byte.toUnsignedInt(b1));
     //@ model public static pure helper function short asShort(byte b0, byte b1);
     
     //@ public normal_behavior
-    //@   ensures \result == (i < 0 ? (int)0x10000 + i : i); // The (int) is not necessary, but I add it for clarity
+    //@   ensures \result == (i < 0 ? 0x10000 + i : i);
     //@ pure helper function
     public static int toUnsignedInt(short i);
 
     //@ public normal_behavior
-    //@   ensures \result == (i < 0 ? (int)0x10000 + i : i); // The (int) is not necessary, but I add it for clarity
+    //@   ensures \result == (i < 0 ? 0x10000 + i : i);
     //@ pure helper function
     public static long toUnsignedLong(short i);
 

@@ -16,7 +16,7 @@ public final class Optional<T> {
 
   //@ public normal_behavior
   //-RAC@   ensures \result.value == null;
-  //@ pure function helper
+  //@ pure helper // Not a function, since may or may not be fresh
   public static <T> Optional<T> empty();
 
   //@ private normal_behavior
