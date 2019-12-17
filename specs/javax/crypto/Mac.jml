@@ -8,6 +8,7 @@ public class Mac implements Cloneable {
 
     //@ public model JMLDataGroup macContent;
     
+    //@ model public final static int MINSIZE = 16; // Minimum Mac size across all algorithms
     //@ model public final static int SIZE = 32; // TODO: Actually only true for specific algorithms
     
 //      private static final sun.security.util.Debug debug;
@@ -27,6 +28,7 @@ public class Mac implements Cloneable {
       
       //@ model nullable public byte[] savedInfo; //@ in macContent;
       //@ model public byte[] currentHash; //@ in macContent;
+      //@ public invariant currentHash.length >= MINSIZE;
       
       //@ public normal_behavior
       //@   requires len >= 0;
@@ -125,7 +127,7 @@ public class Mac implements Cloneable {
       
       //@ public normal_behavior
       //@   ensures \result == SIZE;
-      //@ pure helper // FIXME: static?
+      //@ pure helper // TODO: Length depends on algorithm
       public final int getMacLength();
 
       //@ public normal_behavior
@@ -201,7 +203,9 @@ public class Mac implements Cloneable {
       //@   assignable this.isReset;
       //@   ensures \fresh(\result);
       //@   ensures this.isReset;
-      //@   ensures \result.length >= 16;
+      //@   ensures \result.length >= MINSIZE;
+      //@   ensures \result.length == this.currentHash.length;
+      //@   ensures Mac.equalArrays(\result,0,this.currentHash,0,\result.length);
       public final byte[] doFinal() throws java.lang.IllegalStateException;
 
       //@ public normal_behavior

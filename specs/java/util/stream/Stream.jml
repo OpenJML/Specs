@@ -187,7 +187,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   ensures \result != null;
     //-RAC@   ensures \fresh(\result);
     //-RAC@   ensures (\result.value == null) <==> (values.length == 0); 
-    //-RAC@   ensures \result.value != null ==> (\exists int i; 0<=i && i <values.length; \result.value == values[i]);
+    //-RAC@   ensures \result.value != null ==> (\exists int i; 0 <= i < values.length; \result.value == values[i]);
     //@ pure
     java.util.Optional<T> findAny();
     

@@ -21,6 +21,7 @@ public class KeyFactory {
       //@ public normal_behavior
       //@   requires validAlgorithm(s);
       //@   ensures \result.algorithm == s;
+      //@   ensures s == "DH" ==> \result instanceof javax.crypto.interfaces.DHPublicKey;
       //@ also public exceptional_behavior
       //@   requires !validAlgorithm(s);
       //@   signals_only NoSuchAlgorithmException;
