@@ -125,7 +125,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     // inherited specification
     //+ESC@ also public normal_behavior
     //+ESC@   ensures \result == ( theBoolean ? TRUE_HC : FALSE_HC);
-    //@ pure helper function
+    //@ pure helper
     public int hashCode();
 
     /*@ also
