@@ -1044,8 +1044,8 @@ public class Arrays {
     // NOTE: These methods+specs do not always trigger well - hence they are not declared function
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
     //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
@@ -1054,8 +1054,8 @@ public class Arrays {
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
     //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
@@ -1080,8 +1080,8 @@ public class Arrays {
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
     //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
@@ -1093,7 +1093,7 @@ public class Arrays {
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i && i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(char[] arr1, char[] arr2);
 
     //@ public normal_behavior
