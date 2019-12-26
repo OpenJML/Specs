@@ -82,7 +82,7 @@ public interface Queue<E> extends Collection<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall int i; 0 < i & i < \old(values.length); _get(i-1) == \old(_get(i)));
+      @   ensures (\forall int i; 0 < i < \old(values.length); _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
       @   assignable values;
@@ -96,9 +96,10 @@ public interface Queue<E> extends Collection<E> {
       @ public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == \old(_get(0));
-      @   ensures (\forall int i; 0 < i & i < values.length; _get(i-1) == \old(_get(i)));
+      @   ensures (\forall int i; 0 < i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
+      @   ensures \nonnullelements(\old(values)) ==> \nonnullelements(values);
       @   assignable values;
       @*/
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
