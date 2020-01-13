@@ -151,6 +151,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //Static Factory Methods
 
     //@ public normal_behavior
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == val;
     public static /*@ pure helper @*/ BigInteger valueOf(long val);
 
@@ -166,22 +167,26 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value + val.value;
     public BigInteger add(BigInteger val);
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value - val.value;
     public BigInteger subtract(BigInteger val);
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value * val.value;
     public BigInteger multiply(BigInteger val);
 
     //-RAC@ public normal_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result != null;
     //-RAC@   ensures equals(\result.multiply(val).add(remainder(val)));
     //-RAC@   ensures \result.value == this.value / val.value;
     //-RAC@ also public exceptional_behavior
@@ -193,6 +198,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public normal_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result != null;
     //-RAC@ ensures \result[0].value == divide(val).value;
     //-RAC@ ensures \result[1].value == remainder(val).value;
     //-RAC@ also public exceptional_behavior
@@ -204,6 +210,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@ public normal_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value % val.value;
     //-RAC@ also public exceptional_behavior
     //-RAC@   requires val != null;
@@ -219,7 +226,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     static void primitiveLeftShift(int[] a, int len, int n);
 
-    //@ ensures signum() >= 0 ==> \result == this;
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //@   ensures signum() >= 0 ==> \result == this;
     //-RAC@ ensures signum() <  0 ==> \result.value == -this.value;
     //+RAC@ ensures signum() <  0 ==> \result == this.negate();
     public BigInteger abs();
@@ -373,19 +382,23 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures this.value < val.value <==> \result == -1;
+    //@   ensures this.value == val.value <==> \result == 0;
+    //@   ensures this.value > val.value <==> \result == 1;
     //@ pure
     public int compareTo(BigInteger val);
 
     /*@ also public normal_behavior
       @   requires x != null && x instanceof BigInteger;
       @   assignable \nothing;
-      @   ensures \result == x.equals(this);
+      @   ensures \result == (this.value == ((BigInteger)x).value);
       @*/
     public /*@ pure helper @*/ boolean equals(Object x);
 
     //@ public normal_behavior
     //@   requires val != null;
     //@   ensures \result != null;
+    //@   ensures \result.value == (this.value <= val.value ? this.value : val.value);
     //@ also public exceptional_behavior
     //@   requires val == null;
     //@   signals_only NullPointerException;
@@ -395,6 +408,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public normal_behavior
     //@   requires val != null;
     //@   ensures \result != null;
+    //@   ensures \result.value == (this.value >= val.value ? this.value : val.value);
     //@ also public exceptional_behavior
     //@   requires val == null;
     //@   signals_only NullPointerException;
