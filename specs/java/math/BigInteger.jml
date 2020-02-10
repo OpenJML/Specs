@@ -30,7 +30,7 @@ import java.util.Random;
  * @author Gary T. Leavens
  */
 //@ immutable nullable_by_default
-public /*@ pure @*/ class BigInteger extends Number implements Comparable {
+public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInteger> {
 
     //-RAC@ public model \bigint value;
 
@@ -380,7 +380,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Comparison Operations
 
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   requires val != null;
     //@   ensures this.value < val.value <==> \result == -1;
     //@   ensures this.value == val.value <==> \result == 0;

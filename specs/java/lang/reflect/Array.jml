@@ -186,11 +186,16 @@ public final class Array extends java.lang.Object {
     public static native void setBoolean(/*@ non_null */ java.lang.Object Param0, int Param1, boolean Param2)
         throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
 
-    /*@
+    /*@ public normal_behavior
+      @   requires size >= 0;
+      @   ensures \erasure(\elemtype(\typeof(\result))) == cls;
+      @ also public exceptional_behavior
+      @   requires size < 0;
+      @   signals_only java.lang.NegativeArraySizeException;
       @ 
       @*/
     //@ pure non_null
-    public static java.lang.Object newInstance(/*@ non_null */ java.lang.Class<?> Param0, int Param1)
+    public static java.lang.Object newInstance(/*@ non_null */ java.lang.Class<?> cls, int size)
         throws java.lang.NegativeArraySizeException;
 
     /*@

@@ -82,7 +82,7 @@ public class ArrayList<E> extends AbstractList<E>
     /*-RAC@  public normal_behavior
       @   assignable values;
       @   ensures \not_modified(containsNull,values.length,values,
-                                                   theString,theHashCode);
+                                                   theString); // ,theHashCode);
       @   ensures capacity == this.size();
       @*/
     public void trimToSize();
@@ -91,7 +91,7 @@ public class ArrayList<E> extends AbstractList<E>
       @   assignable values;
       @   ensures capacity >= minCapacity;
       @   ensures \not_modified(containsNull,values.length,values);
-      @   ensures \not_modified(theString,theHashCode);
+      @   ensures \not_modified(theString); // ,theHashCode);
       @*/
     public void ensureCapacity(int minCapacity);
 
@@ -119,7 +119,7 @@ public class ArrayList<E> extends AbstractList<E>
     //-RAC@   ensures ((ArrayList)\result).values.length == this.values.length;
     //-RAC@   ensures Arrays.equals(((List)\result).values,this.values);
     /*-RAC@ also public normal_behavior
-      @   ensures ((ArrayList)\result).theHashCode == this.theHashCode;
+      @   // ensures ((ArrayList)\result).theHashCode == this.theHashCode;
       @   ensures ((ArrayList)\result).theString == this.theString;
       @*/
     public /*@ pure @*/ Object clone();
