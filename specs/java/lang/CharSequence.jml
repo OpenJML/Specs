@@ -53,7 +53,7 @@ public interface CharSequence {
                  astart+len <= a.length && bstart + len <= b.length;
         ensures \result == ((a==b && astart == bstart) ||
                       (\forall int i; 0<=i && i<len; a[i+astart] == b[i+bstart])); 
-        public static pure helper model boolean equal(char[] a, int astart, char[] b, int bstart, int len);
+        public static pure helper model boolean equal(char[] a, \bigint astart, char[] b, \bigint bstart, \bigint len);
      */
 
     //@ axiom (\forall char[] a; a!=null ; equal(a,a));
@@ -62,23 +62,23 @@ public interface CharSequence {
 
     //@ public normal_behavior
     //@      ensures \result >= 0;
-    //@      ensures \result == charArray.length;
+    //@      ensures \result == (int)charArray.length; // FIXME - fix this
     //@ pure
     int length();
 
     /*@   public normal_behavior
-      @      requires 0 <= index && index < charArray.length;
+      @      requires 0 <= index < charArray.length;
       @      ensures  \result == charArray[index];
       @  also
       @    public exceptional_behavior
-      @      requires !(0 <= index && index < charArray.length);
+      @      requires !(0 <= index < charArray.length);
       @      signals_only IndexOutOfBoundsException;
       @*/
     //@ pure helper
     char charAt(int index) throws IndexOutOfBoundsException;
 
     /*@   public normal_behavior
-      @      requires 0 <= start && start <= end && end <= charArray.length;
+      @      requires 0 <= start <= end <= charArray.length;
       @      ensures \result != null;
       @      ensures \result.charArray.length == end-start;
       @      ensures equal(\result.charArray,0,charArray,start,end-start);

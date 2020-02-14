@@ -431,8 +431,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //@ public normal_behavior
     //@ ensures n <= 0 ==> \result == 1;
     //@ ensures n > 0 ==> \result == 256 * pow256(n-1);
-    //@ model public static \bigint pow256(int n);
-    //@ axiom (\forall int m, n; m > n && n >= 0; pow256(m) > pow256(n));
+    //@ model public static \bigint pow256(\bigint n);
+    //@ axiom (\forall \bigint m, n; m > n && n >= 0; pow256(m) > pow256(n));
 
     //@     public normal_behavior
     //@       requires this.signum() > 0;
@@ -456,13 +456,13 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     public byte[] toByteArray();
 
     //-RAC@ also
-    //-RAC@ requires this.value >= Integer.MIN_VALUE && this.value <= Integer.MAX_VALUE;
+    //-RAC@ requires Integer.MIN_VALUE <= this.value <= Integer.MAX_VALUE;
     //-RAC@ ensures \result == this.value;
     //@ pure helper
     public int intValue();
 
     //-RAC@ also
-    //-RAC@ requires this.value >= Long.MIN_VALUE && this.value <= Long.MAX_VALUE;
+    //-RAC@ requires Long.MIN_VALUE <= this.value <= Long.MAX_VALUE;
     //-RAC@ ensures \result == this.value;
     //@ pure helper
     public long longValue();

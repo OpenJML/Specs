@@ -255,11 +255,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public normal_behavior
     //@   requires position <= limit - buf.length;
     //@   requires !this.isReadOnly;
-    //@   old int moved = Math.min(buf.length, limit - position);
+    //@   old \bigint moved = Math.min(buf.length, limit - position);
     //@   assignable this.position, this.hb[this.offset+position .. (this.offset+position + (moved -1))];
     //@   ensures this.position == \old(this.position) + moved;
     //@   ensures java.util.Arrays.equalArrays(hb,\old(this.offset+position), buf, 0, moved);
-    //@  // ensures (\forall int i; 0<=i && i<moved; buf[i] == hb[i+\old(this.offset+position)]); // FIXME - check that this forall will reason correctly
+    //@  // ensures (\forall \bigint i; 0 <= i < moved; buf[i] == hb[i+\old(this.offset+position)]); // FIXME - check that this forall will reason correctly
     //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior

@@ -907,7 +907,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@pure@*/ boolean equals(long[] a, long[] a2);
 
@@ -918,7 +918,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@pure@*/ boolean equals(/*@ nullable */ int[] a, /*@ nullable */ int[] a2);
 
@@ -929,7 +929,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@pure@*/ boolean equals(/*@ nullable */ short[] a, /*@ nullable */ short[] a2);
 
@@ -940,7 +940,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@ pure @*/ boolean equals(/*@ nullable */ char[] a, /*@ nullable */ char[] a2);
 
@@ -952,7 +952,7 @@ public class Arrays {
       @   requires a != null && a2 != null;
       @   ensures \result <==> 
       @                 (a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]));
+      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]));
       @*/
     public static /*@ pure @*/ boolean equals(/*@ nullable */ byte[] a, /*@ nullable */ byte[] a2);
 
@@ -963,7 +963,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]));
+      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]));
       @*/
     public static /*@pure@*/ boolean equals(/*@ nullable */ boolean[] a, /*@ nullable */ boolean[] a2);
 
@@ -975,7 +975,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
-      @                    (\forall int i; 0 <= i < a.length;
+      @                    (\forall \bigint i; 0 <= i < a.length;
       @                     new Double(a[i]).equals(new Double(a2[i]))));
       @*/
     public static /*@pure@*/ boolean equals(/*@ nullable */ double[] a, /*@ nullable */ double[] a2);
@@ -1001,7 +1001,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
-      @              (\forall int i; 0 <= i < a.length;
+      @              (\forall \bigint i; 0 <= i < a.length;
       @                a[i].equals(a2[i])));
       @*/
     public static /*@pure helper@*/ boolean equals(/*@ nullable */ Object[] a, /*@ nullable */ Object[] a2);
@@ -1010,7 +1010,7 @@ public class Arrays {
       @ public normal_behavior
       @   ensures \result == ( o == oo ||
                  ( o != null && oo != null && o.length == oo.length &&
-                   (\forall int i; 0<= i < o.length; o[i] == oo[i])));
+                   (\forall \bigint i; 0<= i < o.length; o[i] == oo[i])));
       @
       @ public static pure model boolean equalElements(Object[] o, Object[] oo) {
           if (o == oo) return true;
@@ -1025,20 +1025,20 @@ public class Arrays {
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(boolean[] arr1, int index1, boolean[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(boolean[] arr1, \bigint index1, boolean[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(boolean[] arr1, boolean[] arr2);
 
     // NOTE: These methods+specs do not always trigger well - hence they are not declared function
@@ -1047,27 +1047,27 @@ public class Arrays {
     //@   requires 0 <= index1 <= arr1.length - len;
     //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper boolean equalArraysNF(byte[] arr1, int index1, byte[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper boolean equalArraysNF(byte[] arr1, \bigint index1, byte[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 <= arr1.length - len;
     //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(byte[] arr1, int index1, byte[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(byte[] arr1, \bigint index1, byte[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper boolean equalArraysNF(byte[] arr1, byte[] arr2);
 
     //@ public normal_behavior
@@ -1075,7 +1075,7 @@ public class Arrays {
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(byte[] arr1, byte[] arr2);
 
     //@ public normal_behavior
@@ -1083,100 +1083,100 @@ public class Arrays {
     //@   requires 0 <= index1 <= arr1.length - len;
     //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(char[] arr1, int index1, char[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(char[] arr1, \bigint index1, char[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(char[] arr1, char[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(short[] arr1, int index1, short[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(short[] arr1, \bigint index1, short[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(short[] arr1, short[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(int[] arr1, int index1, int[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(int[] arr1, \bigint index1, int[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(int[] arr1, int[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(long[] arr1, int index1, long[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(long[] arr1, \bigint index1, long[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(long[] arr1, long[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(float[] arr1, int index1, float[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(float[] arr1, \bigint index1, float[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(float[] arr1, float[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(double[] arr1, int index1, double[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(double[] arr1, \bigint index1, double[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1188,20 +1188,20 @@ public class Arrays {
 
     //@ public normal_behavior
     //@   requires len >= 0;
-    //@   requires 0 <= index1 && index1 <= arr1.length - len;
-    //@   requires 0 <= index2 && index2 <= arr2.length - len;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
-    //@   ensures \result == (\forall int i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
-    //@   ensures \result == (\forall int i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
-    //@   ensures \result == (\forall int i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(Object[] arr1, int index1, Object[] arr2, int index2, int len);
+    //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
+    //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
+    //@ model public static pure helper function boolean equalArrays(Object[] arr1, \bigint index1, Object[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
     //@   ensures \result == false;
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
-    //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
+    //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
     //@ model public static pure helper function boolean equalArrays(Object[] arr1, Object[] arr2);
 
     //-----------------------------------------------------------------------
@@ -1209,7 +1209,7 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null;
       @   assignable a[*];
-      @   ensures (\forall int i; 0 <= i < a.length; 
+      @   ensures (\forall \bigint i; 0 <= i < a.length; 
       @            a[i] == val);
       @ also
       @  public exceptional_behavior
