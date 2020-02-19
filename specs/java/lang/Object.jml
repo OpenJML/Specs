@@ -58,10 +58,10 @@ public class Object {
 
     //  -RAC@ public model int theHashCode; in objectState;
 
-    // @ public normal_behavior
-    // @     assignable privateState;
-    // -RAC@ ensures \result == theHashCode;  
-    //@ public code normal_behavior
+    //@ public normal_behavior
+    //@     assignable privateState;
+    //  -RAC@ ensures \result == theHashCode;  
+    //@ also public code normal_behavior
     //@     assignable privateState;
     //@     ensures \result == System.identityHashCode(this);
     public int hashCode();
@@ -92,8 +92,12 @@ public class Object {
       @   assignable \nothing;
       // FIXME - be sure \elemtype is defined on non-array types
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
-      @
-      @ also public code normal_behavior
+      @*/
+    //-RAC@ also public normal_behavior
+    //-RAC@    assignable \nothing;
+    //-RAC@    ensures \fresh(\result) && \result != this; // Assuming this is true for arrays
+
+    /*@ also public code normal_behavior
       @   requires this instanceof Cloneable;
       @   assignable \nothing;
         // Note: clone is magic.  Object.clone ensures the following
@@ -112,35 +116,30 @@ public class Object {
       @   requires !(this instanceof long[]);
       @   assignable \nothing;
       @   ensures \result instanceof Object[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((Object[])\result).length == ((Object[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((Object[])this).length; ((Object[])this)[i] == ((Object[])\result)[i]);
       @ also public behavior
       @   requires this instanceof int[];
       @   assignable \nothing;
       @   ensures \result instanceof int[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((int[])\result).length == ((int[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((int[])this).length; ((int[])this)[i] == ((int[])\result)[i]);
       @ also public behavior
       @   requires this instanceof long[];
       @   assignable \nothing;
       @   ensures \result instanceof long[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((long[])\result).length == ((long[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((long[])this).length; ((long[])this)[i] == ((long[])\result)[i]);
       @ also public behavior
       @   requires this instanceof short[];
       @   assignable \nothing;
       @   ensures \result instanceof short[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((short[])\result).length == ((short[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((short[])this).length; ((short[])this)[i] == ((short[])\result)[i]);
       @ also public behavior
       @   requires this instanceof byte[];
       @   assignable \nothing;
       @   ensures \result instanceof byte[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((byte[])\result).length == ((byte[])this).length;
       @   ensures java.util.Arrays.equalArrays((byte[])\result,(byte[])this);
       @   signals (Exception) false;
@@ -148,28 +147,24 @@ public class Object {
       @   requires this instanceof boolean[];
       @   assignable \nothing;
       @   ensures \result instanceof boolean[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((boolean[])\result).length == ((boolean[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((boolean[])this).length; ((boolean[])this)[i] == ((boolean[])\result)[i]);
       @ also public behavior
       @   requires this instanceof char[];
       @   assignable \nothing;
       @   ensures \result instanceof char[];
-      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
       @   ensures ((char[])\result).length == ((char[])this).length;
       @   ensures (\forall int i; 0 <= i && i < ((char[])this).length; ((char[])this)[i] == ((char[])\result)[i]);
 //      @ also public behavior
 //      @   requires this instanceof double[];
 //      @   assignable \nothing;
 //      @   ensures \result instanceof double[];
-//      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this; // Assuming this is true for arrays
 //      @   ensures ((double[])\result).length == ((double[])this).length;
 //      @   ensures (\forall int i; 0 <= i && i < ((double[])this).length; ((double[])this)[i] == ((double[])\result)[i]);
 //      @ also public behavior
 //      @   requires this instanceof float[];
 //      @   assignable \nothing;
 //      @   ensures \result instanceof float[];
-//      @   ensures (!\key("RAC") ==> \fresh(\result)) && \result != this;; // Assuming this is true for arrays
 //      @   ensures ((float[])\result).length == ((float[])this).length;
 //      @   ensures (\forall int i; 0 <= i && i < ((float[])this).length; ((float[])this)[i] == ((float[])\result)[i]);
       @

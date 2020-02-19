@@ -382,23 +382,22 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
 
     //@ also public normal_behavior
     //@   requires val != null;
-    //@   ensures this.value < val.value <==> \result == -1;
-    //@   ensures this.value == val.value <==> \result == 0;
-    //@   ensures this.value > val.value <==> \result == 1;
+    //-RAC@   ensures this.value < val.value <==> \result == -1;
+    //-RAC@   ensures this.value == val.value <==> \result == 0;
+    //-RAC@   ensures this.value > val.value <==> \result == 1;
     //@ pure
     public int compareTo(BigInteger val);
 
-    /*@ also public normal_behavior
-      @   requires x != null && x instanceof BigInteger;
-      @   assignable \nothing;
-      @   ensures \result == (this.value == ((BigInteger)x).value);
-      @*/
+    //@ also public normal_behavior
+    //@   requires x != null && x instanceof BigInteger;
+    //@   assignable \nothing;
+    //-RAC@   ensures \result == (this.value == ((BigInteger)x).value);
     public /*@ pure helper @*/ boolean equals(Object x);
 
     //@ public normal_behavior
     //@   requires val != null;
     //@   ensures \result != null;
-    //@   ensures \result.value == (this.value <= val.value ? this.value : val.value);
+    //-RAC@   ensures \result.value == (this.value <= val.value ? this.value : val.value);
     //@ also public exceptional_behavior
     //@   requires val == null;
     //@   signals_only NullPointerException;
@@ -408,7 +407,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //@ public normal_behavior
     //@   requires val != null;
     //@   ensures \result != null;
-    //@   ensures \result.value == (this.value >= val.value ? this.value : val.value);
+    //-RAC@   ensures \result.value == (this.value >= val.value ? this.value : val.value);
     //@ also public exceptional_behavior
     //@   requires val == null;
     //@   signals_only NullPointerException;

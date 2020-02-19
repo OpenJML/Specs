@@ -62,7 +62,7 @@ public interface CharSequence {
 
     //@ public normal_behavior
     //@      ensures \result >= 0;
-    //@      ensures \result == (int)charArray.length; // FIXME - fix this
+    //-RAC@  ensures \result == (int)charArray.length; // FIXME - fix this
     //@ pure
     int length();
 

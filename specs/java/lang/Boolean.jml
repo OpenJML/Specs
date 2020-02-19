@@ -46,6 +46,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@   ensures !FALSE.theBoolean;
     //@   ensures TYPE == boolean.class;
     //@ static_initializer
+    //@ public static final invariant TRUE != null && FALSE != null && TRUE != FALSE && TRUE.theBoolean && !FALSE.theBoolean;
 
     //@ public model boolean theBoolean; in objectState;
     //+RAC@ public represents theBoolean = booleanValue();
@@ -118,14 +119,14 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ pure helper function
     public String toString();
 
-    //+ESC@ public static model int TRUE_HC;
-    //+ESC@ public static model int FALSE_HC;
-    //+ESC@ axiom TRUE_HC != FALSE_HC;
+    //+ESC@ public static final model int TRUE_HC;
+    //+ESC@ public static final model int FALSE_HC;
+    //+ESC@ public static final invariant TRUE_HC != FALSE_HC;
 
     // inherited specification
     //+ESC@ also public normal_behavior
     //+ESC@   ensures \result == ( theBoolean ? TRUE_HC : FALSE_HC);
-    //@ pure helper
+    //@ pure
     public int hashCode();
 
     /*@ also
