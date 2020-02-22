@@ -1,0 +1,16 @@
+package java.util.function;
+
+public interface BiPredicate<T,U> {
+  //@ public normal_behavior
+  boolean test(T t, U u);
+ 
+ /* 
+  //@ public normal_behavior
+  public java.util.function.BiPredicate<T, U> and(java.util.function.BiPredicate<? super T, ? super U>);
+  public java.util.function.BiPredicate<T, U> negate();
+  public java.util.function.BiPredicate<T, U> or(java.util.function.BiPredicate<? super T, ? super U>);
+  private boolean lambda$or$2(java.util.function.BiPredicate, java.lang.Object, java.lang.Object);
+  private boolean lambda$negate$1(java.lang.Object, java.lang.Object);
+  private boolean lambda$and$0(java.util.function.BiPredicate, java.lang.Object, java.lang.Object);
+*/
+}
