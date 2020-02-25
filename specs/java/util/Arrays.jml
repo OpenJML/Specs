@@ -2220,6 +2220,12 @@ public class Arrays {
     //@   ensures true;
     //@ pure helper
     public static int deepHashCode(java.lang.Object[] b);
+    
+    //@ public normal_behavior
+    //@   requires b != null;
+    //@   ensures true;
+    //@ pure helper
+    public static java.lang.String deepToString(/*@ nullable */ java.lang.Object[] b);
 
 }
 
