@@ -40,6 +40,9 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ non_null
     public static final Class<Boolean>    TYPE;       // 1.5 DIFFERENCE
 
+    //@ model public static final String TRUE_S = "true";
+    //@ model public static final String FALSE_S = "false";
+    
     //@ public normal_behavior
     //@   ensures TRUE != null && FALSE != null && TRUE != FALSE;
     //@   ensures TRUE.theBoolean;  // FIXME - why does theBoolean work, but not booleanValue()
@@ -58,11 +61,11 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     public Boolean(boolean value);
 
     /*@ //public normal_behavior  // FIXME - the constants in these expressions do not translate well.
-      @ //  ensures \result <==> ("true".equalsIgnoreCase(s));
+      @ //  ensures \result <==> (TRUE_S.equalsIgnoreCase(s));
       @ public static pure helper function model boolean decode( nullable String s);
       @
       @ public normal_behavior
-      @   ensures \result == ( b ? "true" : "false" );
+      @   ensures \result == ( b ? TRUE_S : FALSE_S );
       @ public static pure helper function model String canonicalString(boolean b);
       @*/
 
@@ -70,10 +73,10 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ axiom decode(canonicalString(false)) == false;
     //@ axiom TRUE.theBoolean;
     //@ axiom !FALSE.theBoolean;
-    //@ axiom decode("true");
+    //@ axiom decode(TRUE_S);
     //@ axiom decode("True");
     //@ axiom decode("TRUE");
-    //@ axiom !decode("false");
+    //@ axiom !decode(FALSE_S);
     //@ axiom !decode("False");
     //@ axiom !decode("FALSE");
     //@ axiom !decode("");

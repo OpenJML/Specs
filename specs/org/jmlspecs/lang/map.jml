@@ -42,6 +42,7 @@ public class map<K,V> implements IJmlPrimitiveType {
       ensures \result.get(k) == v;
       ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
       ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> (\result.get(kk) == this.get(kk)));
+      ensures this.containsKey(k) && this.get(k) == v ==> \result == this;
     model public function map<K,V> put(K k, V v);
     
     public normal_behavior

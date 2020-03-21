@@ -26,7 +26,7 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //@ public instance model non_null char[] charArray;
+    //@ public instance model non_null char[] charArray; public final invariant charArray != null;
     
     //@ public normal_behavior ensures \result == c.owner; pure function
     //@ model public static Object owner(Object c);
