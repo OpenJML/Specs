@@ -60,13 +60,13 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ pure helper
     public Boolean(boolean value);
 
-    /*@ //public normal_behavior  // FIXME - the constants in these expressions do not translate well.
+    /*@ //public normal_behavior  // FIXME -
       @ //  ensures \result <==> (TRUE_S.equalsIgnoreCase(s));
-      @ public static pure helper function model boolean decode( nullable String s);
+      @ model public static pure helper function boolean decode( nullable String s);
       @
       @ public normal_behavior
       @   ensures \result == ( b ? TRUE_S : FALSE_S );
-      @ public static pure helper function model String canonicalString(boolean b);
+      @ model public static pure helper function String canonicalString(boolean b);
       @*/
 
     //@ axiom decode(canonicalString(true)) == true;
@@ -121,6 +121,10 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @*/
     //@ pure helper function
     public String toString();
+    
+    //@ public normal_behavior
+    //@   ensures \result == decode(s);
+    public static boolean parseBoolean(String s);
 
     //+ESC@ public static final model int TRUE_HC;
     //+ESC@ public static final model int FALSE_HC;

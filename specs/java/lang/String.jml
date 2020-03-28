@@ -461,7 +461,7 @@ public final class String
 
     /*@ also public normal_behavior
       @   requires anObject != null && (anObject instanceof String);
-      @   // ensures \result == equals(this,(String)anObject); // FIXME - causes many straightforward proofs to be incomplete
+      @   ensures \result == equals(this,(String)anObject); // FIXME - causes many straightforward proofs to be incomplete
       @ also public normal_behavior
       @   requires !(anObject instanceof String);
       @   ensures !\result;

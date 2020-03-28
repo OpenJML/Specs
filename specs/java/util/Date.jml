@@ -33,9 +33,9 @@ import java.lang.ref.SoftReference;
  * @version $Revision: 1599 $
  * @author Kristina Boysen
  */
-//@ non_null_by_default
+//@ non_null_by_default immutable
 public class Date implements java.io.Serializable, Cloneable, Comparable {
-    //@ public model Calendar cal;
+    //@ public model nullable Calendar cal;
     private /*@ spec_public */ transient long fastTime;
     
     /*@ public normal_behavior
@@ -227,4 +227,11 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
     /** @deprecated as of JDK 1.1 */
     @Deprecated
     public int getTimezoneOffset();
+    
+    //@ model public final non_null java.time.Instant instant;
+    
+    //@ public normal_behavior
+    //@   ensures \result == instant;
+    //@ pure function
+    public java.time.Instant toInstant();
 }
