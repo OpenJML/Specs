@@ -1,5 +1,6 @@
 package java.time;
 
+//@ immutable non_null_by_default
 public final class Instant implements java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster, Comparable<Instant>, java.io.Serializable {
  /*
   public static final java.time.Instant EPOCH;
@@ -8,8 +9,12 @@ public final class Instant implements java.time.temporal.Temporal, java.time.tem
   public static final java.time.Instant MIN;
   public static final java.time.Instant MAX;
   private static final long serialVersionUID;
+  */
+  //@ spec_public
   private final long seconds;
+  //@ spec_public
   private final int nanos;
+  /*
   public static java.time.Instant now();
   public static java.time.Instant now(java.time.Clock);
   public static java.time.Instant ofEpochSecond(long);
@@ -47,7 +52,20 @@ public final class Instant implements java.time.temporal.Temporal, java.time.tem
   private long secondsUntil(java.time.Instant);
   public java.time.OffsetDateTime atOffset(java.time.ZoneOffset);
   public java.time.ZonedDateTime atZone(java.time.ZoneId);
+  */
+  //@ public normal_behavior
+  //@   ensures \result == (Long.MIN_VALUE <= 1000*seconds <= (Long.MAX_VALUE-1000));
+  //@ model public static boolean okEpochMilliForLong(\bigint seconds, \bigint nanos);
+ 
+  //@ public normal_behavior
+  //@   ensures \result == okEpochMilliForLong(instant.seconds, instant.nanos);
+  //@ model public static boolean okEpochMilliForLong(Instant instant);
+  
+  //@ public normal_behavior
+  //@   requires okEpochMilliForLong(seconds,nanos);
+  //@   ensures \result == (nanos/1000000) + 1000*seconds; // TODO: Not sure this matches the implementation
   public long toEpochMilli();
+  /*
   public int compareTo(java.time.Instant);
   public boolean isAfter(java.time.Instant);
   public boolean isBefore(java.time.Instant);
