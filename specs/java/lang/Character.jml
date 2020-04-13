@@ -109,7 +109,7 @@ public /*@ pure @*/ final
     public static final class UnicodeBlock extends Subset {
 
         private UnicodeBlock(String name);
-
+        
         public static final UnicodeBlock
             BASIC_LATIN,
             LATIN_1_SUPPLEMENT,
@@ -198,7 +198,7 @@ public /*@ pure @*/ final
             CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A,
             YI_SYLLABLES,
             YI_RADICALS;
-
+    
         public static /*@ pure @*/ UnicodeBlock of(char c);
     }
 
