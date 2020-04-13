@@ -13,7 +13,7 @@ public interface Consumer<T> {
     //@ pure
     public java.util.function.Consumer<T> andThen(java.util.function.Consumer<? super T> f);
 
-    /*@ model public static interface Local<T> extends Consumer<T> {
+    /*@ model public interface Local<T> extends Consumer<T> {
            also public normal_behavior
               requires t != null;
               assignable t.*;
@@ -22,7 +22,7 @@ public interface Consumer<T> {
     
      @*/
 
-    /*@ model public static interface Pure<T> extends Consumer<T> {
+    /*@ model public interface Pure<T> extends Consumer<T> {
            also public normal_behavior
               requires t != null;
               assignable \nothing;

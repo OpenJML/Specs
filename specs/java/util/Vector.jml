@@ -108,7 +108,7 @@ public class Vector<E> extends AbstractList<E>
 
     /*-RAC@ public normal_behavior
       @    assignable values;
-      @    ensures \not_modified(theString,theHashCode);
+      @    ensures \not_modified(theString); // ,theHashCode);
                // theHashCode is not changed because the result does not
                // change equals
       @    ensures \not_modified(elementCount,containsNull);
@@ -126,7 +126,7 @@ public class Vector<E> extends AbstractList<E>
     //-RAC@  also
     //-RAC@    requires minCapacity > maxCapacity;
     //-RAC@    assignable values;
-    //-RAC@    ensures \not_modified(theString,theHashCode);
+    //-RAC@    ensures \not_modified(theString); // ,theHashCode);
     //-RAC@           // theHashCode is not changed because the result does not
     //-RAC@           // changes equals
     //-RAC@    ensures \not_modified(elementCount,containsNull);
@@ -153,7 +153,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires newSize <= elementCount;
       @    assignable values; 
       @    ensures elementCount == newSize; */
-    /*-RAC@    ensures \not_modified(theString,theHashCode);
+    /*-RAC@    ensures \not_modified(theString); // ,theHashCode);
       @    ensures \not_modified(containsNull);
       @   ensures (\forall int i; 0<=i && i<elementCount;
       @            elementData[i] == \old(elementData[i])); */
@@ -161,7 +161,7 @@ public class Vector<E> extends AbstractList<E>
     //-RAC@    old int oldSize = elementCount;
     //-RAC@    requires newSize > elementCount;
     //-RAC@    assignable values;
-    //-RAC@    ensures \not_modified(theString,theHashCode);
+    //-RAC@    ensures \not_modified(theString); // ,theHashCode);
     //-RAC@    ensures \not_modified(containsNull);
     /*-RAC@
       @    ensures (\forall int i; 0<=i && i<oldSize;

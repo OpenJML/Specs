@@ -650,6 +650,20 @@ public /*@ pure @*/ final class Math {
     /*@ public normal_behavior
       @ {|
       @   requires a <= b;
+      @   ensures \result == b;
+      @ also
+      @   requires b <= a;
+      @   ensures \result == a;
+      @ also
+      @   ensures_redundantly a <= \result && b <= \result;
+      @   ensures_redundantly \result == a || \result == b;
+      @ |}
+      @*/
+    //@ model public static pure \bigint max(\bigint a, \bigint b);
+
+    /*@ public normal_behavior
+      @ {|
+      @   requires a <= b;
       @   ensures \result == a;
       @ also
       @   requires b <= a;
@@ -709,6 +723,20 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double min(double a, double b);
     
+    /*@ public normal_behavior
+      @ {|
+      @   requires a <= b;
+      @   ensures \result == a;
+      @ also
+      @   requires b <= a;
+      @   ensures \result == b;
+      @ also
+      @   ensures_redundantly \result <= a && \result <= b;
+      @   ensures_redundantly \result == a || \result == b;
+      @ |}
+      @*/
+    //@ model public static pure \bigint min(\bigint a, \bigint b);
+
     // new for Java 5
     /*@ public normal_behavior
       @ {|

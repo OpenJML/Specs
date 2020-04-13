@@ -8,6 +8,7 @@ public class Mac implements Cloneable {
 
     //@ public model JMLDataGroup macContent;
     
+    //@ model public final static int MINSIZE = 16; // Minimum Mac size across all algorithms
     //@ model public final static int SIZE = 32; // TODO: Actually only true for specific algorithms
     
 //      private static final sun.security.util.Debug debug;
@@ -27,6 +28,7 @@ public class Mac implements Cloneable {
       
       //@ model nullable public byte[] savedInfo; //@ in macContent;
       //@ model public byte[] currentHash; //@ in macContent;
+      //@ public invariant currentHash.length >= MINSIZE;
       
       //@ public normal_behavior
       //@   requires len >= 0;
@@ -125,7 +127,7 @@ public class Mac implements Cloneable {
       
       //@ public normal_behavior
       //@   ensures \result == SIZE;
-      //@ pure helper // FIXME: static?
+      //@ pure helper // TODO: Length depends on algorithm
       public final int getMacLength();
 
       //@ public normal_behavior
@@ -151,7 +153,7 @@ public class Mac implements Cloneable {
       public final void update(byte b) throws java.lang.IllegalStateException;
 
       //@ public normal_behavior
-      //@   { update(buf, 0, buf.length); }
+      //@   { update(buf, 0, (int)buf.length); }
       public final void update(byte[] buf) throws java.lang.IllegalStateException;
 
       //@ public normal_behavior
@@ -183,7 +185,7 @@ public class Mac implements Cloneable {
       //-H2@   old int n = Byte.toUnsignedInt(buf[offset+len-1]);
       //-H2@   requires n > 1;
       //-H2@   requires Mac.equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,n-1),0,SIZE);
-      //-H2@   requires Mac.equalArrays(this.savedInfo, 0, buf, offset+SIZE, this.savedInfo.length);
+      //-H2@   requires Mac.equalArrays(this.savedInfo, 0, buf, offset+SIZE, (int)this.savedInfo.length);
       //-H2@   assignable this.currentHash, this.isReset;
       //-H2@   ensures !this.isReset;
       //-H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
@@ -201,7 +203,9 @@ public class Mac implements Cloneable {
       //@   assignable this.isReset;
       //@   ensures \fresh(\result);
       //@   ensures this.isReset;
-      //@   ensures \result.length >= 16;
+      //@   ensures \result.length >= MINSIZE;
+      //@   ensures \result.length == this.currentHash.length;
+      //@   ensures Mac.equalArrays(\result,0,this.currentHash,0,(int)\result.length);
       public final byte[] doFinal() throws java.lang.IllegalStateException;
 
       //@ public normal_behavior
@@ -213,7 +217,7 @@ public class Mac implements Cloneable {
       public final void doFinal(byte[] out, int outOffset) throws ShortBufferException, java.lang.IllegalStateException;
 
       //@ public normal_behavior
-      //@   { update(input,0,input.length); return doFinal(); }
+      //@   { update(input,0,(int)input.length); return doFinal(); }
       public final byte[] doFinal(byte[] input) throws java.lang.IllegalStateException;
 
       //@ public normal_behavior

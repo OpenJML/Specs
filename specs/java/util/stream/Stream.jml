@@ -29,11 +29,15 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ model Stream<T> assume(java.util.function.Predicate<? super T> pred);
     
     //@ public normal_behavior
+    //@// Does not specify preserving order
     //@   requires pred != null;
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
     //@   ensures \forall int i; 0 <= i < \result.values.length; pred.test(\result.values[i]);
+    //@   ensures \forall int i; 0 <= i < \result.values.length; (\exists int j; 0 <= j < this.values.length; \result.values[i] == this.values[j]);
+    //@   ensures \forall int i; 0 <= i < values.length; pred.test(this.values[i]) ==> (\exists int j; 0 <= j < \result.values.length; \result.values[j] == this.values[i]);
     //@ also public normal_behavior
+    //@// Special case for short streams
     //@   requires pred != null;
     //@   old boolean b0 = this.values.length > 0 && pred.test(this.values[0]);
     //@   old boolean b1 = this.values.length > 1 && pred.test(this.values[1]);
@@ -187,7 +191,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   ensures \result != null;
     //-RAC@   ensures \fresh(\result);
     //-RAC@   ensures (\result.value == null) <==> (values.length == 0); 
-    //-RAC@   ensures \result.value != null ==> (\exists int i; 0<=i && i <values.length; \result.value == values[i]);
+    //-RAC@   ensures \result.value != null ==> (\exists int i; 0 <= i < values.length; \result.value == values[i]);
     //@ pure
     java.util.Optional<T> findAny();
     

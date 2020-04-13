@@ -85,7 +85,8 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*@ pure @*/ boolean isEmpty();
     
-    //@ public behavior
+    //@ public normal_behavior
+    // @       requires \typeof(o) <:= \type(E);  // FIXME
     //-RAC@   ensures (!containsNull && o == null) ==> !\result;
     //@       ensures size() == 0 ==> !\result;
     //-RAC@   ensures (containsObject(o) ==> \result);
@@ -93,7 +94,7 @@ public interface Collection<E> extends Iterable<E> {
     //@   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
           // various exceptions may get thrown, but are optional,
           // so they are specified in the implementing classes
-    //@   signals_only ClassCastException,NullPointerException;
+    // @   signals_only ClassCastException,NullPointerException; // FIXME
     /*@ pure @*/ boolean contains(/*@nullable*/ Object o);
 
 

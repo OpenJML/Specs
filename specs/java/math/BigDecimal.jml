@@ -1,0 +1,231 @@
+package java.math;
+
+//@ immutable pure non_null_by_default
+public class BigDecimal extends Number implements Comparable<BigDecimal> {
+  //@ model public final \real value;
+
+  //@ spec_public
+  private final BigInteger intVal;
+  //@ spec_public
+  private final int scale;
+/*
+  private transient int precision;
+  private transient java.lang.String stringCache;
+  static final long INFLATED;
+  private static final java.math.BigInteger INFLATED_BIGINT;
+  private final transient long intCompact;
+  private static final int MAX_COMPACT_DIGITS;
+  private static final long serialVersionUID;
+  private static final java.lang.ThreadLocal<java.math.BigDecimal$StringBuilderHelper> threadLocalStringBuilderHelper;
+  private static final java.math.BigDecimal[] zeroThroughTen;
+  private static final java.math.BigDecimal[] ZERO_SCALED_BY;
+  private static final long HALF_LONG_MAX_VALUE;
+  private static final long HALF_LONG_MIN_VALUE;
+  public static final java.math.BigDecimal ZERO;
+  public static final java.math.BigDecimal ONE;
+  public static final java.math.BigDecimal TEN;
+  public static final int ROUND_UP;
+  public static final int ROUND_DOWN;
+  public static final int ROUND_CEILING;
+  public static final int ROUND_FLOOR;
+  public static final int ROUND_HALF_UP;
+  public static final int ROUND_HALF_DOWN;
+  public static final int ROUND_HALF_EVEN;
+  public static final int ROUND_UNNECESSARY;
+  private static final double[] double10pow;
+  private static final float[] float10pow;
+  private static final long[] LONG_TEN_POWERS_TABLE;
+  private static volatile java.math.BigInteger[] BIG_TEN_POWERS_TABLE;
+  private static final int BIG_TEN_POWERS_TABLE_INITLEN;
+  private static final int BIG_TEN_POWERS_TABLE_MAX;
+  private static final long[] THRESHOLDS_TABLE;
+  private static final long DIV_NUM_BASE;
+  private static final long[][] LONGLONG_TEN_POWERS_TABLE;
+  static final boolean $assertionsDisabled;
+  java.math.BigDecimal(java.math.BigInteger, long, int, int);
+  public java.math.BigDecimal(char[], int, int);
+  public java.math.BigDecimal(char[], int, int, java.math.MathContext);
+  private int adjustScale(int, long);
+  private static long parseExp(char[], int, int);
+  public java.math.BigDecimal(char[]);
+  public java.math.BigDecimal(char[], java.math.MathContext);
+  public java.math.BigDecimal(java.lang.String);
+  public java.math.BigDecimal(java.lang.String, java.math.MathContext);
+  */
+  //@ public normal_behavior
+  //@   ensures this.value == d;
+  public BigDecimal(double d);
+  /*
+  public java.math.BigDecimal(double, java.math.MathContext);
+  */
+  //@ public normal_behavior
+  //@   ensures this.value == i.value;
+  public BigDecimal(java.math.BigInteger i);
+  /*
+  public BigDecimal(java.math.BigInteger, MathContext);
+  public BigDecimal(java.math.BigInteger, int);
+  public BigDecimal(java.math.BigInteger, int, MathContext);
+  */
+  //@ public normal_behavior
+  //@   ensures this.value == i;
+  public BigDecimal(int i);
+  /*
+  public java.math.BigDecimal(int, MathContext);
+  */
+  //@ public normal_behavior
+  //@   ensures this.value == i;
+  public BigDecimal(long i);
+  /*
+  public java.math.BigDecimal(long, MathContext);
+  */
+  //@ public normal_behavior
+  //@   ensures \result.value == i;
+  //@ model public static BigDecimal valueOf(\bigint i);
+  /*
+  public static java.math.BigDecimal valueOf(long, int);
+  public static java.math.BigDecimal valueOf(long);
+  static java.math.BigDecimal valueOf(long, int, int);
+  static java.math.BigDecimal valueOf(java.math.BigInteger, int, int);
+  static java.math.BigDecimal zeroValueOf(int);
+  public static java.math.BigDecimal valueOf(double);
+  public java.math.BigDecimal add(java.math.BigDecimal);
+  public java.math.BigDecimal add(java.math.BigDecimal, java.math.MathContext);
+  private java.math.BigDecimal[] preAlign(java.math.BigDecimal, java.math.BigDecimal, long, java.math.MathContext);
+  public java.math.BigDecimal subtract(java.math.BigDecimal);
+  public java.math.BigDecimal subtract(java.math.BigDecimal, java.math.MathContext);
+  public java.math.BigDecimal multiply(java.math.BigDecimal);
+  public java.math.BigDecimal multiply(java.math.BigDecimal, java.math.MathContext);
+  public java.math.BigDecimal divide(java.math.BigDecimal, int, int);
+  public java.math.BigDecimal divide(java.math.BigDecimal, int, java.math.RoundingMode);
+  public java.math.BigDecimal divide(java.math.BigDecimal, int);
+  public java.math.BigDecimal divide(java.math.BigDecimal, java.math.RoundingMode);
+  public java.math.BigDecimal divide(java.math.BigDecimal);
+  public java.math.BigDecimal divide(java.math.BigDecimal, java.math.MathContext);
+  public java.math.BigDecimal divideToIntegralValue(java.math.BigDecimal);
+  public java.math.BigDecimal divideToIntegralValue(java.math.BigDecimal, java.math.MathContext);
+  public java.math.BigDecimal remainder(java.math.BigDecimal);
+  public java.math.BigDecimal remainder(java.math.BigDecimal, java.math.MathContext);
+  public java.math.BigDecimal[] divideAndRemainder(java.math.BigDecimal);
+  public java.math.BigDecimal[] divideAndRemainder(java.math.BigDecimal, java.math.MathContext);
+  public java.math.BigDecimal pow(int);
+  public java.math.BigDecimal pow(int, java.math.MathContext);
+  public java.math.BigDecimal abs();
+  public java.math.BigDecimal abs(java.math.MathContext);
+  public java.math.BigDecimal negate();
+  public java.math.BigDecimal negate(java.math.MathContext);
+  public java.math.BigDecimal plus();
+  public java.math.BigDecimal plus(java.math.MathContext);
+  public int signum();
+  public int scale();
+  public int precision();
+  public java.math.BigInteger unscaledValue();
+  public java.math.BigDecimal round(java.math.MathContext);
+  public java.math.BigDecimal setScale(int, java.math.RoundingMode);
+  public java.math.BigDecimal setScale(int, int);
+  public java.math.BigDecimal setScale(int);
+  public java.math.BigDecimal movePointLeft(int);
+  public java.math.BigDecimal movePointRight(int);
+  public java.math.BigDecimal scaleByPowerOfTen(int);
+  public java.math.BigDecimal stripTrailingZeros();
+  public int compareTo(java.math.BigDecimal);
+  private int compareMagnitude(java.math.BigDecimal);
+  public boolean equals(java.lang.Object);
+  public java.math.BigDecimal min(java.math.BigDecimal);
+  public java.math.BigDecimal max(java.math.BigDecimal);
+  public int hashCode();
+  public java.lang.String toString();
+  public java.lang.String toEngineeringString();
+  public java.lang.String toPlainString();
+  private java.lang.String getValueString(int, java.lang.String, int);
+  public java.math.BigInteger toBigInteger();
+  public java.math.BigInteger toBigIntegerExact();
+  public long longValue();
+  private boolean fractionOnly();
+  public long longValueExact();
+  public int intValue();
+  public int intValueExact();
+  public short shortValueExact();
+  public byte byteValueExact();
+  public float floatValue();
+  public double doubleValue();
+  public java.math.BigDecimal ulp();
+  private java.lang.String layoutChars(boolean);
+  private static java.math.BigInteger bigTenToThe(int);
+  private static java.math.BigInteger expandBigIntegerTenPowers(int);
+  private static long longMultiplyPowerTen(long, int);
+  private java.math.BigInteger bigMultiplyPowerTen(int);
+  private java.math.BigInteger inflated();
+  private static void matchScale(java.math.BigDecimal[]);
+  private void readObject(java.io.ObjectInputStream) throws java.io.IOException, java.lang.ClassNotFoundException;
+  private void writeObject(java.io.ObjectOutputStream) throws java.io.IOException;
+  static int longDigitLength(long);
+  private static int bigDigitLength(java.math.BigInteger);
+  private int checkScale(long);
+  private static long compactValFor(java.math.BigInteger);
+  private static int longCompareMagnitude(long, long);
+  private static int saturateLong(long);
+  private static void print(java.lang.String, java.math.BigDecimal);
+  private java.math.BigDecimal audit();
+  private static int checkScaleNonZero(long);
+  private static int checkScale(long, long);
+  private static int checkScale(java.math.BigInteger, long);
+  private static java.math.BigDecimal doRound(java.math.BigDecimal, java.math.MathContext);
+  private static java.math.BigDecimal doRound(long, int, java.math.MathContext);
+  private static java.math.BigDecimal doRound(java.math.BigInteger, int, java.math.MathContext);
+  private static java.math.BigInteger divideAndRoundByTenPow(java.math.BigInteger, int, int);
+  private static java.math.BigDecimal divideAndRound(long, long, int, int, int);
+  private static long divideAndRound(long, long, int);
+  private static boolean commonNeedIncrement(int, int, int, boolean);
+  private static boolean needIncrement(long, int, int, long, long);
+  private static java.math.BigInteger divideAndRound(java.math.BigInteger, long, int);
+  private static java.math.BigDecimal divideAndRound(java.math.BigInteger, long, int, int, int);
+  private static boolean needIncrement(long, int, int, java.math.MutableBigInteger, long);
+  private static java.math.BigInteger divideAndRound(java.math.BigInteger, java.math.BigInteger, int);
+  private static java.math.BigDecimal divideAndRound(java.math.BigInteger, java.math.BigInteger, int, int, int);
+  private static boolean needIncrement(java.math.MutableBigInteger, int, int, java.math.MutableBigInteger, java.math.MutableBigInteger);
+  private static java.math.BigDecimal createAndStripZerosToMatchScale(java.math.BigInteger, int, long);
+  private static java.math.BigDecimal createAndStripZerosToMatchScale(long, int, long);
+  private static java.math.BigDecimal stripZerosToMatchScale(java.math.BigInteger, long, int, int);
+  private static long add(long, long);
+  private static java.math.BigDecimal add(long, long, int);
+  private static java.math.BigDecimal add(long, int, long, int);
+  private static java.math.BigDecimal add(long, int, java.math.BigInteger, int);
+  private static java.math.BigDecimal add(java.math.BigInteger, int, java.math.BigInteger, int);
+  private static java.math.BigInteger bigMultiplyPowerTen(long, int);
+  private static java.math.BigInteger bigMultiplyPowerTen(java.math.BigInteger, int);
+  private static java.math.BigDecimal divideSmallFastPath(long, int, long, int, long, java.math.MathContext);
+  private static java.math.BigDecimal divide(long, int, long, int, long, java.math.MathContext);
+  private static java.math.BigDecimal divide(java.math.BigInteger, int, long, int, long, java.math.MathContext);
+  private static java.math.BigDecimal divide(long, int, java.math.BigInteger, int, long, java.math.MathContext);
+  private static java.math.BigDecimal divide(java.math.BigInteger, int, java.math.BigInteger, int, long, java.math.MathContext);
+  private static java.math.BigDecimal multiplyDivideAndRound(long, long, long, int, int, int);
+  private static java.math.BigDecimal divideAndRound128(long, long, long, int, int, int, int);
+  private static java.math.BigDecimal roundedTenPower(int, int, int, int);
+  static java.math.BigDecimal scaledTenPow(int, int, int);
+  private static long[] divRemNegativeLong(long, long);
+  private static long make64(long, long);
+  private static long mulsub(long, long, long, long, long);
+  private static boolean unsignedLongCompare(long, long);
+  private static boolean unsignedLongCompareEq(long, long);
+  private static int compareMagnitudeNormalized(long, int, long, int);
+  private static int compareMagnitudeNormalized(long, int, java.math.BigInteger, int);
+  private static int compareMagnitudeNormalized(java.math.BigInteger, int, java.math.BigInteger, int);
+  private static long multiply(long, long);
+  private static java.math.BigDecimal multiply(long, long, int);
+  private static java.math.BigDecimal multiply(long, java.math.BigInteger, int);
+  private static java.math.BigDecimal multiply(java.math.BigInteger, java.math.BigInteger, int);
+  private static java.math.BigDecimal multiplyAndRound(long, long, int, java.math.MathContext);
+  private static java.math.BigDecimal multiplyAndRound(long, java.math.BigInteger, int, java.math.MathContext);
+  private static java.math.BigDecimal multiplyAndRound(java.math.BigInteger, java.math.BigInteger, int, java.math.MathContext);
+  private static java.math.BigDecimal doRound128(long, long, int, int, java.math.MathContext);
+  private static int precision(long, long);
+  private static boolean longLongCompareMagnitude(long, long, long, long);
+  private static java.math.BigDecimal divide(long, int, long, int, int, int);
+  private static java.math.BigDecimal divide(java.math.BigInteger, int, long, int, int, int);
+  private static java.math.BigDecimal divide(long, int, java.math.BigInteger, int, int, int);
+  private static java.math.BigDecimal divide(java.math.BigInteger, int, java.math.BigInteger, int, int, int);
+  public int compareTo(java.lang.Object);
+  static java.math.BigInteger access$000(java.math.BigDecimal);
+  static {};
+  */
+}

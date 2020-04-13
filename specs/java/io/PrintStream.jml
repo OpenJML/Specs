@@ -149,7 +149,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     public void print(Object o);
 
     /*-RAC@ requires true;
-    @ modifies outputText, endsInNewLine;
+    @ assignable outputText, endsInNewLine;
     @ ensures endsInNewLine && isOpen;
     @ ensures outputText.startsWith(\old(outputText));
     @*/
@@ -171,9 +171,19 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @*/
     public PrintStream printf(String format, Object ... args);
 
-    public void print(boolean Param0);
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public void print(boolean b);
 
-    public void print(int Param0);
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public void print(int i);
 
     /*-RAC@ requires true;
     @ modifies outputText, endsInNewLine;
@@ -182,9 +192,19 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @*/
     public void println(int i);
 
-    public void print(long Param0);
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public void print(long i);
 
-    public void println(long Param0);
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public void println(long i);
 
     /*-RAC@ also
       @ public normal_behavior
@@ -198,12 +218,24 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
       @*/
     public void flush();
 
-    public void print(char[] Param0);
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public void print(char[] ca);
 
-    public void println(char[] Param0);
+    /*-RAC@
+    @ assignable outputText, endsInNewLine;
+    @ ensures endsInNewLine && isOpen;
+    @ ensures outputText.startsWith(\old(outputText));
+    @*/
+    public void println(char[] ca);
 
-    public void write(int i);
+    // inherits specs
+    public void write(int b);
 
+    // inherits specs
     public void write(byte[] b, int off, int len);
 
     /*-RAC@ also

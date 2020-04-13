@@ -30,7 +30,7 @@ import java.util.Random;
  * @author Gary T. Leavens
  */
 //@ immutable nullable_by_default
-public /*@ pure @*/ class BigInteger extends Number implements Comparable {
+public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInteger> {
 
     //-RAC@ public model \bigint value;
 
@@ -151,6 +151,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //Static Factory Methods
 
     //@ public normal_behavior
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == val;
     public static /*@ pure helper @*/ BigInteger valueOf(long val);
 
@@ -166,22 +167,26 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value + val.value;
     public BigInteger add(BigInteger val);
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value - val.value;
     public BigInteger subtract(BigInteger val);
 
     //@ public normal_behavior
     //@   requires val != null;
+    //@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value * val.value;
     public BigInteger multiply(BigInteger val);
 
     //-RAC@ public normal_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result != null;
     //-RAC@   ensures equals(\result.multiply(val).add(remainder(val)));
     //-RAC@   ensures \result.value == this.value / val.value;
     //-RAC@ also public exceptional_behavior
@@ -193,6 +198,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public normal_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result != null;
     //-RAC@ ensures \result[0].value == divide(val).value;
     //-RAC@ ensures \result[1].value == remainder(val).value;
     //-RAC@ also public exceptional_behavior
@@ -204,6 +210,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //-RAC@ public normal_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
+    //-RAC@   ensures \result != null;
     //-RAC@   ensures \result.value == this.value % val.value;
     //-RAC@ also public exceptional_behavior
     //-RAC@   requires val != null;
@@ -219,7 +226,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     static void primitiveLeftShift(int[] a, int len, int n);
 
-    //@ ensures signum() >= 0 ==> \result == this;
+    //@ public normal_behavior
+    //@   ensures \result != null;
+    //@   ensures signum() >= 0 ==> \result == this;
     //-RAC@ ensures signum() <  0 ==> \result.value == -this.value;
     //+RAC@ ensures signum() <  0 ==> \result == this.negate();
     public BigInteger abs();
@@ -231,7 +240,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     //@ public normal_behavior
     //-RAC@   ensures \result == (value > 0 ? 1 : value < 0 ? -1: 0);
-    //@ helper
+    //@ pure helper
     public int signum();
 
     // Modular Arithmetic Operations
@@ -371,21 +380,24 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
 
     // Comparison Operations
 
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   requires val != null;
+    //-RAC@   ensures this.value < val.value <==> \result == -1;
+    //-RAC@   ensures this.value == val.value <==> \result == 0;
+    //-RAC@   ensures this.value > val.value <==> \result == 1;
     //@ pure
     public int compareTo(BigInteger val);
 
-    /*@ also public normal_behavior
-      @   requires x != null && x instanceof BigInteger;
-      @   assignable \nothing;
-      @   ensures \result == x.equals(this);
-      @*/
+    //@ also public normal_behavior
+    //@   requires x != null && x instanceof BigInteger;
+    //@   assignable \nothing;
+    //-RAC@   ensures \result == (this.value == ((BigInteger)x).value);
     public /*@ pure helper @*/ boolean equals(Object x);
 
     //@ public normal_behavior
     //@   requires val != null;
     //@   ensures \result != null;
+    //-RAC@   ensures \result.value == (this.value <= val.value ? this.value : val.value);
     //@ also public exceptional_behavior
     //@   requires val == null;
     //@   signals_only NullPointerException;
@@ -395,6 +407,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public normal_behavior
     //@   requires val != null;
     //@   ensures \result != null;
+    //-RAC@   ensures \result.value == (this.value >= val.value ? this.value : val.value);
     //@ also public exceptional_behavior
     //@   requires val == null;
     //@   signals_only NullPointerException;
@@ -417,8 +430,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     //@ public normal_behavior
     //@ ensures n <= 0 ==> \result == 1;
     //@ ensures n > 0 ==> \result == 256 * pow256(n-1);
-    //@ model public static \bigint pow256(int n);
-    //@ axiom (\forall int m, n; m > n && n >= 0; pow256(m) > pow256(n));
+    //@ model public static \bigint pow256(\bigint n);
+    //@ axiom (\forall \bigint m, n; m > n && n >= 0; pow256(m) > pow256(n));
 
     //@     public normal_behavior
     //@       requires this.signum() > 0;
@@ -442,13 +455,13 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable {
     public byte[] toByteArray();
 
     //-RAC@ also
-    //-RAC@ requires this.value >= Integer.MIN_VALUE && this.value <= Integer.MAX_VALUE;
+    //-RAC@ requires Integer.MIN_VALUE <= this.value <= Integer.MAX_VALUE;
     //-RAC@ ensures \result == this.value;
     //@ pure helper
     public int intValue();
 
     //-RAC@ also
-    //-RAC@ requires this.value >= Long.MIN_VALUE && this.value <= Long.MAX_VALUE;
+    //-RAC@ requires Long.MIN_VALUE <= this.value <= Long.MAX_VALUE;
     //-RAC@ ensures \result == this.value;
     //@ pure helper
     public long longValue();

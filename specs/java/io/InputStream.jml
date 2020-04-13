@@ -184,7 +184,7 @@ public abstract class InputStream implements Closeable {
     @   old \bigint data = availableBytes;
     @   requires isOpen && availableBytes > 0;
     @   modifies objectState;
-    @   ensures \not_modified(theString,theHashCode);
+    @   //ensures \not_modified(theString,theHashCode);
     @   ensures \not_modified(_markSupported,markPosition,markLimit);
     @   ensures \not_modified(wasClosed);
     @   ensures isOpen;

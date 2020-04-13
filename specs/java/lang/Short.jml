@@ -284,6 +284,11 @@ public /*@ pure @*/ final
 
     //@ public normal_behavior
     //@   ensures \result == (i < 0 ? 0x10000 + i : i);
+    //@ pure helper
+    //@ model public static int toUnsignedIntNF(short i);
+
+    //@ public normal_behavior
+    //@   ensures \result == (i < 0 ? 0x10000 + i : i);
     //@ pure helper function
     public static long toUnsignedLong(short i);
 
