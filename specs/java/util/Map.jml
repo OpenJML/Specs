@@ -32,6 +32,7 @@ public interface Map<K,V> {
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
 
+    //@ model public instance boolean zzzzz;
     
     public static interface Entry<K,V> {
 
