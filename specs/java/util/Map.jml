@@ -32,8 +32,6 @@ public interface Map<K,V> {
       @ static public model pure boolean nullequals(Object o, Object oo);
       @*/
 
-    //@ model public instance boolean zzzzz;
-    
     public static interface Entry<K,V> {
 
         //@ public model instance K abstractKey;
@@ -98,6 +96,7 @@ public interface Map<K,V> {
     
     /*@ public normal_behavior
           ensures \result <==> (\exists int i; 0<=i<keys.length; keys[i] == o);
+          ensures \result <==> modelMap.containsKey(o);
           pure helper
         model public boolean hasKey(Object o);
       @*/
@@ -166,11 +165,11 @@ public interface Map<K,V> {
     /*@ pure @*/ boolean containsValue(Object value);
 
     /*-RAC@ public normal_behavior
-      @    requires !hasKey(key);
-      @    ensures \result == null;
-      @ also public normal_behavior
-      @    requires hasKey(key);
+      @    requires modelMap.containsKey(key);
       @    ensures \result == modelMap.get(key); //getmodel(key);
+      @ also public normal_behavior
+      @    requires \else;
+      @    ensures \result == null;
        
            // FIXME - exceptions?
       @*/

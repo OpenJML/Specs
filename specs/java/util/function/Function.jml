@@ -15,7 +15,7 @@ public interface Function<T,R> {
 
       default public <V> java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V> after);
 
-      /*@  @FunctionalInterface public static immutable model interface Pure<T,R> extends Function<T,R> {
+      /*@  @FunctionalInterface model public static immutable interface Pure<T,R> extends Function<T,R> {
       @   also public normal_behavior
       @     assignable \nothing;
       @   pure function
