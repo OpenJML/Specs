@@ -165,11 +165,7 @@ public interface Map<K,V> {
     /*@ pure @*/ boolean containsValue(Object value);
 
     /*-RAC@ public normal_behavior
-      @    requires modelMap.containsKey(key);
-      @    ensures \result == modelMap.get(key); //getmodel(key);
-      @ also public normal_behavior
-      @    requires \else;
-      @    ensures \result == null;
+      @    ensures \result == ( modelMap.containsKey(key) ? modelMap.get(key) : null); //getmodel(key);
        
            // FIXME - exceptions?
       @*/

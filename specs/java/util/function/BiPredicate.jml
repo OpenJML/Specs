@@ -1,6 +1,15 @@
 package java.util.function;
 
 public interface BiPredicate<T,U> {
+
+  /*@
+  model public static interface Pure<T,U> extends BiPredicate<T,U> {
+    //@ pure
+    boolean test(T t, U u);
+  
+  }
+  @*/
+  
   //@ public normal_behavior
   boolean test(T t, U u);
  
