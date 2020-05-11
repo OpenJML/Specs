@@ -105,8 +105,8 @@ public /*@ pure @*/ final
         public final int hashCode();
         public final String toString();
     }
-
-    public static final class UnicodeBlock extends Subset {
+/*
+    public static final class UnicodeBlock extends Character.Subset {
 
         private UnicodeBlock(String name);
         
@@ -199,9 +199,9 @@ public /*@ pure @*/ final
             YI_SYLLABLES,
             YI_RADICALS;
     
-        public static /*@ pure @*/ UnicodeBlock of(char c);
+        public static / *@ pure @* / UnicodeBlock of(char c);
     }
-
+*/
     //---------------------------------------------------------------------
     // Constructors
     //---------------------------------------------------------------------
