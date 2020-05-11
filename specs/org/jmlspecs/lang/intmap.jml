@@ -1,0 +1,27 @@
+package org.jmlspecs.lang;
+
+//@ immutable pure non_null_by_default
+public class intmap<V> implements IJmlPrimitiveType, IJmlIntArrayLike {
+/*@    
+
+    public normal_behavior
+      ensures \result == this[k];
+    model public function V get(\bigint k);
+
+    public normal_behavior
+      ensures \result == (\forall \bigint k;; s[k] == ss[k]);
+    model public function static <V> boolean equals(intmap<V> s, intmap<V> ss);
+    
+    public normal_behavior
+      ensures \result == (this == s || equals(this,s));
+    model public boolean equals(intmap<V> s);
+    
+    public normal_behavior
+      ensures \result != null;
+      ensures \result[k] == v;
+      ensures (\forall \bigint kk;; k != kk ==> (\result[kk] == this[kk]));
+      ensures this[k] == v ==> \result == this;
+    model public function intmap<V> put(\bigint k, V v);
+@*/
+}
+
