@@ -31,10 +31,10 @@ public class Object {
 
     /** A data group for the complete state of this object.  
      */
-    //@ public non_null model JMLDataGroup objectState;
+    //@ model public non_null JMLDataGroup objectState;
 
     /** Use this for the private state holding benevolent side effects */
-    //@ public non_null model JMLDataGroup privateState; in objectState;
+    //@ model public non_null JMLDataGroup privateState; in objectState;
 
     /** The Object that has a field pointing to this Object.
      * Used to specify (among other things) injectivity (see
@@ -44,7 +44,9 @@ public class Object {
         // NB It is inconvenient to include owner in objectState,
         // because generally we do not change the owner after initialization
 
-    //@ model public \bigint uniqueHash;
+    /** A (model) value unique to the equivalence class defined by equals().
+     *  Regular hashCode() might have conflicts. */
+    //@ model public \bigint uniqueHash; in objectState;
 
     /*@ public normal_behavior
       @   assignable \nothing;
@@ -73,6 +75,7 @@ public class Object {
     /*@  public code normal_behavior
       @     requires obj != null;
       @     ensures (* \result is true when obj is "equal to" this object *);
+      @     ensures \result <==> (uniqueHash == obj.uniqueHash);
       @  also
       @   public normal_behavior
       @     requires this == obj;

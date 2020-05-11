@@ -5,11 +5,15 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@ spec_public
     private final java.lang.Class<K> keyType;
 //  private transient K[] keyUniverse;
-//  private transient java.lang.Object[] vals;
+    //@ spec_public
+    private final transient V[] vals;
+    //@ model public final boolean keys[];
     
-//    //@ spec_public
-//    private transient int size;
-//    //@ public invariant size >= 0;
+    //@ spec_public
+    private transient int size;
+    //@ public invariant size >= 0;
+    //@ public final invariant vals.length == Integer.MAX_VALUE;
+    //@ public final invariant keys.length == Integer.MAX_VALUE;
     
 //  private static final java.lang.Object NULL;
 //  private static final java.lang.Enum<?>[] ZERO_LENGTH_ENUM_ARRAY;
@@ -34,22 +38,54 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@// Inherited
     public int size();
     
-//  public boolean containsValue(java.lang.Object);
-//  public boolean containsKey(java.lang.Object);
+    //@ also public normal_behavior
+    //@    ensures \result == \exists int i; 0 <= i; o == vals[i];
+    public boolean containsValue(java.lang.Object o);
+
+    //@ also public normal_behavior
+    //@    ensures \result == keys[k.ordinal()];
+    public boolean containsKey(K k);
+
 //  private boolean containsMapping(java.lang.Object, java.lang.Object);
 
+    //@ also public normal_behavior
+    //@   requires o != null;
+    //@   old int ord = o.ordinal();
+    //@   ensures keys[ord] ==> \result == vals[ord];
+    //@   ensures !keys[ord] ==> \result == null;
+    //@ pure
     @Override
-    public /*@ nullable */ V get(/*@ nullable */ java.lang.Object o);
+    public /*@ nullable */ V get(/*@ nullable */ K o);
 
     // spec inherited from Map
+    //@ also public normal_behavior
+    //@   requires k != null;
+    //@   old int ord = k.ordinal();
+    //@   assignable objectState, keys[ord], vals[ord];
+    //@   ensures (v == vals[ord]) & keys[k.ordinal()];
+    //@   ensures \forall int i; i >= 0 && i != ord; vals[i] == \old(vals[i]);
+    //@   ensures \forall int i; i >= 0 && i != ord; keys[i] == \old(keys[i]);
     @Override
     public /*@ nullable */ V put(/*@ nullable */ K k, /*@ nullable */ V v);
 
-//  public /*@ nullable */ V remove(/*@ nullable */ java.lang.Object);
+    //@ also public normal_behavior
+    //@   requires k != null;
+    //@   old int ord = k.ordinal();
+    //@   assignable objectState, keys[ord];
+    //@   ensures !keys[ord];
+    //@   ensures \forall int i; i != ord && i >= 0; keys[i] == \old(keys[i]);
+    //@   ensures \forall int i; i != ord && i >= 0; vals[i] == \old(vals[i]);
+    public /*@ nullable */ V remove(/*@ nullable */ K k);
+
 //  private boolean removeMapping(/*@ nullable */ java.lang.Object, /*@ nullable */ java.lang.Object);
 //  private boolean isValidKey(java.lang.Object);
 //  public void putAll(java.util.Map<? extends K, ? extends V>);
-//  public void clear();
+
+    //@ also public normal_behavior
+    //@   assignable objectState, keys[*];
+    //@   ensures \forall int i; i >= 0; !keys[i];
+    public void clear();
+
 //  public java.util.Set<K> keySet();
 //  public java.util.Collection<V> values();
 //  public java.util.Set<java.util.Map$Entry<K, V>> entrySet();

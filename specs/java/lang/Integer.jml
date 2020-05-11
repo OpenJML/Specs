@@ -32,6 +32,8 @@ public  /*@ pure @*/ final
 
     //@ public model int theInteger;  in objectState;
     //+RAC@ represents theInteger = intValue();
+    
+    //@ public represents uniqueHash = theInteger;
 
   /*-RAC@
     @   public normal_behavior
