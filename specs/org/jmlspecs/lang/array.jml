@@ -1,22 +1,30 @@
 package org.jmlspecs.lang;
 
 //@ immutable pure
-public class array<T> implements IJmlPrimitiveType {
+public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
  /*@   
+    model public \bigint length;
+    public invariant length >= 0;
+    
     public normal_behavior
-        ensures (\forall int i; 0<= i && i<a.length; \result.get(i) == a[i]);
+        ensures \result.length == a.length;
+        ensures (\forall int i; 0 <= i && i <a.length; \result.get(i) == a[i]);
     model public static <T> array<T> of(T[] a);
     
     public normal_behavior
+        ensures \result == this[i];
     model public T get(\bigint i);
     
     public normal_behavior
-       ensures \result.get(i) == t;
-       ensures (\forall \bigint j; j != i ==> get(j) == \result.get(j));
-    model public array<T> set(\bigint i, T t);
+       ensures \result != null;
+       ensures \result.length == this.length;
+       ensures \result[i] == t;
+       ensures (\forall \bigint j; j != i ==> this[j] == \result[j]);
+       ensures this[i] == t ==> \result == this;
+    model public array<T> put(\bigint i, T t);
     
     public normal_behavior
-       ensures \result == (\forall \bigint i;; s.get(i) == ss.get(i));
+       ensures \result == (s.length == ss.length && \forall \bigint i; 0 <= i && i < s.length; s[i] == ss[i]);
     model public static <T> boolean equals(array<T> s, array<T> ss);
     
     public normal_behavior

@@ -1,34 +1,16 @@
 package org.jmlspecs.lang;
 
 //@ immutable pure non_null_by_default
-public class map<K,V> implements IJmlPrimitiveType {
+public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
 /*@    
 
-    public normal_behavior
-      ensures \result >= 0;
-    model public function long size();
-    
-    public normal_behavior
-      ensures true; // Interpreted through other specs
-    model public function boolean containsKey(K k);
 
     public normal_behavior
-      requires containsKey(k);
-      ensures true; // Interpreted through other specs
-    model public function V get(K k);
+      ensures \result == this[k];
+    model public V get(K k);
 
     public normal_behavior
-      ensures \result == (this.size() == 0);
-    model public function boolean isEmpty();
-    
-    public normal_behavior
-      ensures \result.size() == 0;
-      ensures (\forall K x; ; !\result.containsKey(x));
-    model public static <K,V> map<K,V> empty();
-    
-    public normal_behavior
-      ensures \result ==> (s.size() == ss.size());
-      ensures \result == (\forall K k;; s.containsKey(k) == ss.containsKey(k) && (s.containsKey(k) ==> s.get(k) == ss.get(k)));
+      ensures \result == (\forall K k;; s[k] == ss[k]);
     model public function static <K,V> boolean equals(map<K,V> s, map<K,V> ss);
     
     public normal_behavior
@@ -36,27 +18,11 @@ public class map<K,V> implements IJmlPrimitiveType {
     model public boolean equals(map<K,V> s);
     
     public normal_behavior
-      ensures \result.containsKey(k);
-      ensures this.containsKey(k) ==> \result.size() == this.size();
-      ensures !this.containsKey(k) ==> \result.size() == this.size() + 1;
-      ensures \result.get(k) == v;
-      ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
-      ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> (\result.get(kk) == this.get(kk)));
-      ensures this.containsKey(k) && this.get(k) == v ==> \result == this;
-    model public function map<K,V> put(K k, V v);
-    
-    public normal_behavior
-      ensures !\result.containsKey(k);
-      ensures this.containsKey(k) ==> \result.size() == this.size() - 1;
-      ensures !this.containsKey(k) ==> \result == this;
-      ensures !this.containsKey(k) ==> \result.size() == this.size();
-      ensures (\forall K kk;; k != kk ==> (\result.containsKey(kk) == this.containsKey(kk)));
-      ensures (\forall K kk;; (k != kk && this.containsKey(kk)) ==> \result.get(kk) == this.get(kk));
-    model public function map<K,V> remove(K k);
-    
-    public normal_behavior
-      ensures (\forall K k;; \result.contains(k) <==> this.containsKey(k));
-    model public function set<K> keySet();
+      ensures \result != null; // TODO - needed, although it seems it should not be 
+      ensures \result[k] == v;
+      ensures (\forall K kk;; k != kk ==> (\result[kk] == this[kk]));
+      ensures this[k] == v ==> \result == this;
+    model public map<K,V> put(K k, V v);
 @*/
 }
 

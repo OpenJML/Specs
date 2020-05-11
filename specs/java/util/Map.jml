@@ -90,59 +90,26 @@ public interface Map<K,V> {
           @*/
     }
 
-    //@ model public instance map<Object,V> modelMap; in objectState;
-    // @ model public instance Entry<K,V>[] values; in objectState;
-    //@ model public instance K[] keys; in objectState;
+    //-RAC@ model public instance intmap<V> modelMap; in objectState;
+    //-RAC@ model public instance intset keys; in objectState;
+    //-RAC@ model public instance V nullValue;
+    //-RAC@ model public instance boolean nullPresent;
+    //-RAC@ model public instance \bigint size; in objectState;
     
-    /*@ public normal_behavior
-          ensures \result <==> (\exists int i; 0<=i<keys.length; keys[i] == o);
-          ensures \result <==> modelMap.containsKey(o);
-          pure helper
-        model public boolean hasKey(Object o);
-      @*/
-
-    /* @ public normal_behavior
-          ensures \result <==> (\exists int i; 0<=i<v.length; v[i].getKey() == o);
-          pure helper
-        model public boolean hasKey(Entry<K,V>[] v, Object o);
-      @*/
-
-    /* @ public normal_behavior
-          ensures \result <==> (\exists int i; 0<=i<values.length; values[i].getValue() == o);
-          pure
-        model public boolean hasValue(Object o);
-      @*/
-
-    /*@ public normal_behavior
-          ensures \result == modelMap.get(o);
-          //ensures (\forall int i; 0<=i<values.length; values[i].abstractKey != o) ==> \result == null;
-          //ensures (\forall int i; 0<=i<values.length; values[i].abstractKey == o ==> values[i].abstractValue == \result);
-          pure nullable
-        model public V getmodel(Object o);
-      @*/
-      
-    /*@
-        public normal_behavior
-          ensures \result <==> ( 
-             isEmpty() 
-             );
-        model pure public boolean initialMap();
-    @*/
-      
 
     //@ public normal_behavior
-    //-RAC@   ensures \result == keys.length;
+    //-RAC@   ensures \result == size;
     /*@ pure @*/
     int size();
 
     /*-RAC@ public normal_behavior
-      @    ensures \result <==> (keys.length == 0); 
+      @    ensures \result <==> (size == 0 && !nullPresent && (\forall \bigint i;; keys[i] == false)); 
       @*/
     /*@ pure @*/ boolean isEmpty();
     
     /*-RAC@ public behavior
-      @    ensures isEmpty() ==> !\result;
-      @    ensures hasKey(key) <==> \result;
+      @    ensures size==0 ==> !\result;
+      @    ensures keys[key.uniqueHash] <==> \result;
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -150,11 +117,11 @@ public interface Map<K,V> {
       @    signals (NullPointerException) key == null
       @         && (* this type doesn't permit null values *);
       @*/
-    /*@ pure @*/ boolean containsKey(Object key) throws RuntimeException;
+    /*@ pure @*/ boolean containsKey(/*@nullable*/ Object key) throws RuntimeException;
 
     /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
-      @    //ensures \result <==> hasValue(value);
+      @    ensures \result <==> ((nullPresent && nullValue.uniqueHash == value.uniqueHash) || \exists \bigint i;; keys[i] && modelMap[i].uniqueHash == value.uniqueHash);
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -165,20 +132,28 @@ public interface Map<K,V> {
     /*@ pure @*/ boolean containsValue(Object value);
 
     /*-RAC@ public normal_behavior
-      @    ensures \result == ( modelMap.containsKey(key) ? modelMap.get(key) : null); //getmodel(key);
-       
+      @    ensures key == null ==> \result == ( nullPresent ? nullValue : null);
+      @    ensures key != null ==> \result == ( keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);
            // FIXME - exceptions?
       @*/
     /*@ pure nullable @*/ V get(/*@ nullable */ Object key);
 
     /*-RAC@ public normal_behavior
+      @    requires key != null;
+      @    assignable objectState;
+      @    ensures modelMap == \old(modelMap).put(key.uniqueHash,value);
+      @    ensures keys[key.uniqueHash];
+      @    ensures modelMap[key.uniqueHash] == value;
+      @    ensures \result == \old(keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);
+      @    ensures size == \old(keys[key.uniqueHash] ? size : size+1 );
+      @ also public normal_behavior
+      @    requires key == null;
       @    // requires containsNull || (key != null && value != null);
-      @    assignable modelMap, keys;
-      @    ensures modelMap == \old(modelMap).put(key,value);
-      @    ensures hasKey(key);
-      @    ensures modelMap.get(key) == value;
-      @    ensures \result == \old(modelMap).get(key);
-      @     // FIXME: Need to state that the map values are unchanged
+      @    assignable objectState;
+      @    ensures nullValue == value;
+      @    ensures nullPresent;
+      @    ensures \result == \old(nullPresent ? nullValue : null);
+      @    ensures size == \old(nullPresent ? size : size+1 );
       @*/
     /* FIXME @
       @ also exceptional_behavior
@@ -195,12 +170,19 @@ public interface Map<K,V> {
       @*/
     /*@ nullable */V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
-    /*-RAC@ public behavior
+    /*-RAC@ 
+      @  public normal_behavior
+      @    requires key != null;
       @    assignable objectState;
-      @    ensures !hasKey(key);
-      @    // FIXME - rest is unchanged
+      @    ensures keys[key.uniqueHash] == false;
+      @    ensures size == \old(keys[key.uniqueHash] ? size-1 : size);
+      @  also public normal_behavior
+      @    requires key == null;
+      @    assignable objectState;
+      @    ensures nullPresent == false;
+      @    ensures size == \old(nullPresent ? size-1 : size);
       @*/
-    /*@ // FIXME
+    /* @ // FIXME
       @    signals_only ClassCastException, NullPointerException,
                                UnsupportedOperationException;
       @    signals (UnsupportedOperationException)
@@ -212,7 +194,7 @@ public interface Map<K,V> {
       @*/
     V remove(Object key);
 
-    /*@ public behavior
+    /*-RAC@ public behavior
            requires t != null;
            assignable objectState;
            //ensures \old(isEmpty() && t.isEmpty()) <==> isEmpty();
@@ -253,19 +235,19 @@ public interface Map<K,V> {
     //@    ensures \result != null;
     //@    ensures \result.size() >= 0; // FIXME - why needed?
     //@    ensures \result == _keySet;
-    //@    ensures \forall K k;; \result.contains(k) <==> this.hasKey(k) ;
+    //-RAC@    ensures \forall K k;; \result.contains(k) <==> this.containsKey(k) ;
     /*@ pure @*/ Set<K> keySet(); // FIXME - do two calls of keySet produce different objects or the same?
 
     /*-RAC@ public normal_behavior 
       @    ensures \result != null;
-      @    ensures \result.size() == keys.length;
+      @    ensures \result.size() == size;
            // FIXME
       @*/
     /*@ pure @*/ Collection<V> values();
 
     /*-RAC@ public normal_behavior
       @    ensures \result != null; 
-      @    ensures \result.size() == keys.length;
+      @    ensures \result.size() == size;
            // FIXME
       @*/
     /*@ pure @*/ Set<Entry<K,V>> entrySet();

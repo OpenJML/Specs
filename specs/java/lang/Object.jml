@@ -44,6 +44,7 @@ public class Object {
         // NB It is inconvenient to include owner in objectState,
         // because generally we do not change the owner after initialization
 
+    //@ model public \bigint uniqueHash;
 
     /*@ public normal_behavior
       @   assignable \nothing;

@@ -1,25 +1,29 @@
 package org.jmlspecs.lang;
 
 //@ immutable pure
-public class seq<T> implements IJmlPrimitiveType {
+public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
  /*@   
+    model public \bigint length;
+    public invariant length >= 0;
+    
     public normal_behavior
-      ensures \result >= 0;
+      ensures \result == length;
     model public \bigint size();
     
     public normal_behavior
+      ensures \result == this[i];
     model public T get(\bigint i);
 
     public normal_behavior
-      ensures \result == (this.size() == 0);
+      ensures \result == (length == 0);
     model public boolean isEmpty();
     
     public normal_behavior
-      ensures \result.size() == 0;
+      ensures \result.length == 0;
     model static public <T> seq<T> empty();
     
     public normal_behavior
-       ensures \result == (s.size() == ss.size() && (\forall \bigint i;; (0 <= i && i < s.size()) ==> (s.get(i) == ss.get(i)) ));
+       ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i && i < s.length) ==> (s[i] == ss[i]) ));
     model public static <T> boolean equals(seq<T> s, seq<T> ss);
     
     public normal_behavior
@@ -27,30 +31,39 @@ public class seq<T> implements IJmlPrimitiveType {
     model public boolean equals(seq<T> s);
     
     public normal_behavior
-      requires 0 <= j && j <= this.size();
-      ensures \result.size() == this.size() + 1;
-      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result.get(i) == this.get(i)));
-      ensures (\forall \bigint i;; (j+1 <= i && i < \result.size()) ==> (\result.get(i) == this.get(i-1)));
-      ensures \result.get(j) == v;
+      requires 0 <= j && j <= this.length;
+      ensures \result.length == this.length + 1;
+      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (j+1 <= i && i < \result.length) ==> (\result[i] == this[i-1]));
+      ensures \result[j] == v;
     model public seq<T> add(\bigint j, T v);
 
     public normal_behavior
-      ensures \result == add(size(),v);
+      ensures \result == add(length,v);
     model public seq<T> add(T v);
 
     public normal_behavior
-      ensures \result.size() == this.size() + s.size();
-      ensures (\forall \bigint i;; (0 <= i && i < this.size()) ==> (\result.get(i) == this.get(i)));
-      ensures (\forall \bigint i;; (this.size() <= i && i < \result.size()) ==> (\result.get(i) == this.get(i-this.size())));
+      ensures \result.length == this.length + s.length;
+      ensures (\forall \bigint i;; (0 <= i && i < this.length) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (this.length <= i && i < \result.length) ==> (\result[i] == this[i-this.length]));
     model public seq<T> append(seq<T> s);
 
     public normal_behavior
-      requires 0 <= j && j < this.size();
-      ensures \result.size() == this.size() - 1;
-      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result.get(i) == this.get(i)));
-      ensures (\forall \bigint i;; (j <= i && i < \result.size()) ==> (\result.get(i) == this.get(i+1)));
+      requires 0 <= j && j < this.length;
+      ensures \result.size() == this.length - 1;
+      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (j <= i && i < \result.length) ==> (\result[i] == this[i+1]));
     model public seq<T> remove(\bigint j);
-  
+
+    public normal_behavior
+        ensures \result != null;
+        ensures \result.length == this.length;
+        ensures \result[i] == c;
+        ensures \forall \bigint j; j != i; \result[j] == this[j];
+        ensures this[i] == c ==> \result == this;
+    model public seq<T> put(\bigint i, T c);
+
+
     @*/
 }
 

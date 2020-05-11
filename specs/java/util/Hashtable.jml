@@ -37,7 +37,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     
     /*-RAC@
       @ public normal_behavior
-      @   ensures \result <==> ( initialMap() &&
+      @   ensures \result <==> ( isEmpty() &&
       @                          mLoadFactor == f &&
       @                          initialCapacity == i);
       @ public pure model boolean initialHashtable(double f, int i);
