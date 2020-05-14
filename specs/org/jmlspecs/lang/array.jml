@@ -19,7 +19,7 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
        ensures \result != null;
        ensures \result.length == this.length;
        ensures \result[i] == t;
-       ensures (\forall \bigint j; j != i ==> this[j] == \result[j]);
+       ensures (\forall \bigint j; j != i ; this[j] == \result[j]);
        ensures this[i] == t ==> \result == this;
     model public array<T> put(\bigint i, T t);
     
