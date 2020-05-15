@@ -14,6 +14,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
 
     //@ public normal_behavior
     //@       ensures size() == 0;
+    //-RAC@   ensures modelMap != null; // TODO - should not be needed for a primitive type
     //-RAC@   ensures (\forall Object o; ; get(o) == null);
     //@ pure
     public HashMap();

@@ -17,7 +17,6 @@ public class intmap<V> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model public boolean equals(intmap<V> s);
     
     public normal_behavior
-      ensures \result != null;
       ensures \result[k] == v;
       ensures (\forall \bigint kk;; k != kk ==> (\result[kk] == this[kk]));
       ensures this[k] == v ==> \result == this;
