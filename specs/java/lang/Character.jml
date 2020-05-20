@@ -249,7 +249,8 @@ public /*@ pure @*/ final
 
     /*@ 
       @  public normal_behavior
-      @   ensures \result !=null && \result.equals(String.valueOf(c));
+      @   ensures \result != null && \result.equals(String.valueOf(c));
+      @   ensures \result.length() == 1;
       @   ensures \result.charAt(0) == c;
       @*/
     public static /*@ pure @*/ String toString(char c);

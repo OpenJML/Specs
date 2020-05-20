@@ -862,6 +862,8 @@ public final class String
                                                    int endIndex);
 
 
+    //@ public normal_behavior
+    //@   ensures \result.length() == s1.length() + s2.length();
     //@ public model static pure non_null String concat(String s1, String s2);
 
     /** This is the method version of the infix + operation */
@@ -1011,6 +1013,10 @@ public final class String
       @  also public normal_behavior
       @    requires obj instanceof String;
       @    ensures \result.equals(obj);   // \result == obj ??? FIXME
+      @  also public normal_behavior
+      @    requires obj instanceof Character;
+      @    ensures \result.length() == 1;
+      @    ensures \result.charAt(0) == (char)(Character)obj;
       @*//*-RAC@  also public behavior
       @    requires obj != null;
       @    ensures equals(\result,obj.theString); 
