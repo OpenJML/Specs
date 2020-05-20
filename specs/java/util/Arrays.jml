@@ -1053,9 +1053,9 @@ public class Arrays {
     //@ model public static pure helper boolean equalArraysNF(byte[] arr1, \bigint index1, byte[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
-    //@   requires (\lbl LEN len) >= 0;
-    //@   requires 0 <= (\lbl INDEX1 index1) <= (\lbl ARRLEN1 arr1.length) - (\lbl LENA len);
-    //@   requires 0 <= (\lbl INDEX2 index2) <= (\lbl ARRLEN2 arr2.length) - (\lbl LENB len);
+    //@   requires len >= 0;
+    //@   requires 0 <= index1 <= arr1.length - len;
+    //@   requires 0 <= index2 <= arr2.length - len;
     //@// All of these ensures are included because solvers have a hard time with index arithmetic
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
