@@ -920,7 +920,7 @@ public final class String
                           /*@ non_null @*/ String replacement);
 
     /*@ public normal_behavior
-           ensures true;
+           ensures !\fresh(\result); // TODO presuming interned for ease of proof
         model public static non_null pure helper function String split(String s, String regex, int position);
      */
         
