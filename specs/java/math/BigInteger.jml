@@ -430,7 +430,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //@ public normal_behavior
     //@ ensures n <= 0 ==> \result == 1;
     //@ ensures n > 0 ==> \result == 256 * pow256(n-1);
-    //@ model public static \bigint pow256(\bigint n);
+    //@ model public static function \bigint pow256(\bigint n);
+    
     //@ axiom (\forall \bigint m, n; m > n && n >= 0; pow256(m) > pow256(n));
 
     //@     public normal_behavior
