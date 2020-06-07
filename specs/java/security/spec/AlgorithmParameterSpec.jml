@@ -1,5 +1,6 @@
 package java.security.spec;
 
 public interface AlgorithmParameterSpec {
+    //@ model public instance int n;
     // no members
 }

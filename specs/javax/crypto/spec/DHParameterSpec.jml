@@ -2,6 +2,7 @@ package javax.crypto.spec;
 
 //@ non_null_by_default immutable
 public class DHParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+      //@ model public int n;
       //@ spec_public
       private java.math.BigInteger p;
       //@ spec_public

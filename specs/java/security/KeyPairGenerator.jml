@@ -1,7 +1,11 @@
 package java.security;
 
+import javax.crypto.interfaces.DHPublicKey;
+
 //@ non_null_by_default
 public abstract class KeyPairGenerator {
+
+    //@ model public int n;
 
 //      private static final sun.security.util.Debug pdebug;
 //      private static final boolean skipDebug;
@@ -33,6 +37,7 @@ public abstract class KeyPairGenerator {
       //@ public normal_behavior
       //@   requires algorithmIsSupported(algorithm);
       //@   ensures \fresh(\result);
+      //@   ensures \result.algorithm == algorithm;
       //@ also public exceptional_behavior
       //@   requires !algorithmIsSupported(algorithm);
       //@   signals_only NoSuchAlgorithmException;
@@ -46,19 +51,25 @@ public abstract class KeyPairGenerator {
       public void initialize(int n, SecureRandom random);
       
       //@ public normal_behavior
-      //@ model public pure boolean validParameterSpec(java.security.spec.AlgorithmParameterSpec alg);
+      //@   ensures \result ==> alg.n == n;
+      //@ model public pure boolean validParameterSpec(java.security.spec.AlgorithmParameterSpec alg, int n);
 
       //@ public normal_behavior
-      //@   requires validParameterSpec(alg);
+      //@   requires validParameterSpec(alg, alg.n);
+      //@   assignable this.*;
+      //@   ensures this.algorithm == \old(this.algorithm);
+      //@   ensures this.n == alg.n;
       //@ also public exceptional_behavior
-      //@   requires !validParameterSpec(alg);
+      //@   requires !validParameterSpec(alg, alg.n);
       //@   signals_only InvalidAlgorithmParameterException;
       public void initialize(java.security.spec.AlgorithmParameterSpec alg) throws InvalidAlgorithmParameterException;
       public void initialize(java.security.spec.AlgorithmParameterSpec alg, SecureRandom random) throws InvalidAlgorithmParameterException;
       public final KeyPair genKeyPair();
       
       //@ public normal_behavior
-      //@   ensures true;
+      //@   ensures \fresh(\result);
+      //@   ensures \result.getPublic() instanceof DHPublicKey ==> 0 <= ((DHPublicKey)\result.getPublic()).getY().value < java.math.BigInteger.pow256(this.n);
+      //@   ensures \result.getPublic().getEncoded() != null;
       //@ pure
       public KeyPair generateKeyPair();
 }

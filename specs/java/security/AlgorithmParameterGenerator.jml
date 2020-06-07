@@ -2,6 +2,8 @@ package java.security;
 
 //@ non_null_by_default
 public class AlgorithmParameterGenerator {
+
+    //@ model public int N;
     
 //      private Provider provider;
 //      private AlgorithmParameterGeneratorSpi paramGenSpi;
@@ -24,6 +26,7 @@ public class AlgorithmParameterGenerator {
       
       //@ public normal_behavior
       //@   assignable this.*;
+      //@   ensures N == n;
       public final void init(int n);
       
       //@ public normal_behavior
@@ -40,6 +43,7 @@ public class AlgorithmParameterGenerator {
 
       //@ public normal_behavior
       //@   ensures \fresh(\result);
+      //@   ensures \result.N == this.N;
       //@ pure
       public final AlgorithmParameters generateParameters();
 }
