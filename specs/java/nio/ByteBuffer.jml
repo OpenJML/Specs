@@ -189,6 +189,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires length >= 0 && offset >= 0;
     //@   requires offset <= buf.length - length;
     //@   requires this.position <= this.limit - length;
+    //@   requires this.hb != buf;
     //@   assignable buf[*], this.position;
     //@   ensures this.position == \old(this.position) + length;
     //@   ensures (\forall int i; 0 <= i && i < length; buf[offset + i] == this.hb[\old(this.offset+this.position) + i]);
@@ -205,6 +206,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     
     //@ public normal_behavior
     //@   requires position <= limit - buf.length;
+    //@   requires this.hb != buf;
     //@   assignable buf[*], this.position;
     //@   ensures this.position == \old(this.position) + buf.length;
     //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.offset+this.position) + i]) ;
@@ -221,6 +223,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   old int move = src.limit - src.position;
     //@   requires !this.isReadOnly;
     //@   requires src != this;
+    //@   requires src.hb != this.hb;
     //@   requires move <= this.limit - this.position;
     //@   assignable hb[this.offset+this.position .. this.offset+this.position + (move - 1)], this.position, src.position;
     //@   ensures position == \old(position) + move;
@@ -239,6 +242,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires offset >= 0 && length >= 0;
     //@   requires offset <= buf.length;
     //@   requires !this.isReadOnly;
+    //@   requires this.hb != buf;
     //@   requires length <= buf.length - offset;
     //@   assignable this.hb[this.offset+position..(this.offset+position+(length-1))], this.position;
     //@   ensures position == Math.min(limit, \old(position) + length);
