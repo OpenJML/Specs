@@ -228,7 +228,7 @@ public class GregorianCalendar extends Calendar {
       @ //    assignable \nothing;
       @ //    ensures dst == oldDSTOffset - newDSTOffset; 
       */
-    /*@ public pure model method int computeDST(boolean adjustDST, int oldDSTOffset, int newDSTOffset);
+    /*@ public pure model int computeDST(boolean adjustDST, int oldDSTOffset, int newDSTOffset);
       @ */
        
     /** This should compute the number of milliseconds in the entered field
@@ -265,7 +265,7 @@ public class GregorianCalendar extends Calendar {
       @               ensures delta == delta * 1000;
       @     |}
       */
-    //@ public pure model method long computeDelta(int field, int amount);
+    //@ public pure model long computeDelta(int field, int amount);
     
     /* Model methods used in getActualMaximum(int field)
      */
@@ -295,7 +295,7 @@ public class GregorianCalendar extends Calendar {
       @     assignable \nothing;
       @     ensures \result == newHour && getMinimum(HOUR) <= newHour
       @             && newHour <= getMaximum(HOUR); */
-    /*@ public pure model method int computeNewHour(int field, int amount,
+    /*@ public pure model int computeNewHour(int field, int amount,
       @                                       Date start, int oldHour);
       @*/
     
@@ -374,7 +374,7 @@ public class GregorianCalendar extends Calendar {
       @     ensures \result == value && getMinimum(field) <= fieldAmount + value
       @             && fieldAmount + value <+ getMaximum(field);
       @*/
-    //@ public pure model method int computeValue(int field, int amount);
+    //@ public pure model int computeValue(int field, int amount);
        
     /* Model methods used for computeFields()
      */
@@ -387,7 +387,7 @@ public class GregorianCalendar extends Calendar {
     /* FIXME @ public normal_behavior
       @         ensures 0 <= \result && \result < ONE_DAY;
       @*/
-    //@ public pure model method long computeMillisInDay(long millis);
+    //@ public pure model long computeMillisInDay(long millis);
        
     /** This should return the number of milliseconds past midnight for
      * for the date specified by millis.  This should take into account
@@ -398,7 +398,7 @@ public class GregorianCalendar extends Calendar {
       @     ensures -ONE_DAY <= \result[0] && \result[0] <= ONE_DAY
       @             && -ONE_DAY <= \result[1] && \result[1] <= ONE_DAY;
       @*/
-    //@ public pure model method int[] getOffsetsForComputeFields();
+    //@ public pure model int[] getOffsetsForComputeFields();
 
     /** This should return true if the isSet[field] methods all are true
      * and if calendarFieldsAreSet() also returns true.
@@ -411,7 +411,7 @@ public class GregorianCalendar extends Calendar {
       @            && isSet[WEEK_OF_YEAR] && isSet[WEEK_OF_MONTH] 
       @            && isSet[DAY_OF_WEEK_IN_MONTH] && calendarFieldsAreSet();
       @*/
-    //@ public pure model method boolean timeToFieldsVarsAreSet();
+    //@ public pure model boolean timeToFieldsVarsAreSet();
     
     /** Model methods used for computeTime()
      */
@@ -424,8 +424,8 @@ public class GregorianCalendar extends Calendar {
      * @return true if millis is less than or equal to the current system time
      *         in millis; false otherwise
      */
-    // FIXME +@ public pure model method boolean millisAreBeforeCurrent(long millis);
-    /* FIXME -@ public pure model method boolean millisAreBeforeCurrent(long millis) {
+    // FIXME +@ public pure model boolean millisAreBeforeCurrent(long millis);
+    /* FIXME -@ public pure model boolean millisAreBeforeCurrent(long millis) {
       @     return millis <= System.currentTimeMillis();
       @ }
       @*/
@@ -441,7 +441,7 @@ public class GregorianCalendar extends Calendar {
       @     ensures \result == millis && 0 <= millis
       @             && millisAreBeforeCurrent(millis);
       @*/
-    //@ public pure model method long computeMillis();
+    //@ public pure model long computeMillis();
 
     /** This should return the correct time zone offset for the current
      * time zone and the given time, specified by the argument millis.
@@ -452,7 +452,7 @@ public class GregorianCalendar extends Calendar {
     /* FIXME @ public normal_behavior
       @     ensures -ONE_DAY <= \result && \result <= ONE_DAY;
       @*/
-    //@ public pure model method int computeZoneOffset(long millis);
+    //@ public pure model int computeZoneOffset(long millis);
        
     //------------------------------------------------------------------------
     // Class Method Specifications
@@ -1180,7 +1180,7 @@ public class GregorianCalendar extends Calendar {
 //      @     ensures \result == (getMinimum(field) <= value
 //      @                         && value <= getMaximum(field));
 //      @*/
-    //@ model public pure final method boolean boundsCheck(int value, int field);
+    //@ model public pure final boolean boundsCheck(int value, int field);
     
     /*@ private normal_behavior
       @     requires isSet(ERA);
