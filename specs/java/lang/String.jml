@@ -440,7 +440,8 @@ public final class String
 
     /*@ public normal_behavior
       @   requires s2 != null & s1 != null;
-      @   ensures s1.charArray != null & s2.charArray != null & \result == equal(s1.charArray,s2.charArray); // OPENJML: TODO Needs the invariant that charArray is not null
+      @   requires s1.charArray != null & s2.charArray != null; // OPENJML: TODO Needs the invariant that charArray is not null
+      @   ensures \result == equal(s1.charArray,s2.charArray);
       @ also public normal_behavior
       @   requires s1 == s2;
       @   ensures \result;
@@ -863,8 +864,16 @@ public final class String
 
 
     //@ public normal_behavior
+    //@   requires s1 != null && s2 != null;
+    //@   requires s1.charArray.length + s2.charArray.length <= Integer.MAX_VALUE;
+    //@   ensures \result.charArray != null;
     //@   ensures \result.length() == s1.length() + s2.length();
-    //@ public model static pure non_null String concat(String s1, String s2);
+    //@   ensures java.util.Arrays.equalArrays(\result.charArray,0,s1.charArray,0,s1.length());
+    //@   ensures java.util.Arrays.equalArrays(\result.charArray,s1.length(),s2.charArray,0,s2.length());
+    //@ also public normal_behavior
+    //@   requires !(s1 != null && s2 != null && s1.charArray.length + s2.charArray.length <= Integer.MAX_VALUE);
+    //@   ensures \result.charArray != null;
+    //@ public model static pure non_null String concat(nullable String s1, nullable String s2);
 
     /** This is the method version of the infix + operation */
     //@ public normal_behavior
@@ -1019,6 +1028,7 @@ public final class String
       @    ensures \result.charAt(0) == (char)(Character)obj;
       @*//*-RAC@  also public behavior
       @    requires obj != null;
+      @    ensures obj.theString.charArray != null;
       @    ensures equals(\result,obj.theString); 
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(Object obj);
@@ -1095,21 +1105,25 @@ public final class String
 
     /*@  public normal_behavior
       @   ensures \result != null && equals(\result,Integer.toString(i));
+      @   ensures \result.length() <= 11;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(int i);
     
     /*@  public normal_behavior
       @   ensures \result != null && equals(\result,Long.toString(l));
+      @   ensures \result.length() <= 22;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(long l);
     
     /*@  public normal_behavior
       @   ensures \result != null && equals(\result,Float.toString(f));
+      @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(float f);
     
     /*@  public normal_behavior
       @   ensures \result != null && equals(\result,Double.toString(d));
+      @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(double d);
     

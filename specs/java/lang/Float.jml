@@ -79,6 +79,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     //@ static_initializer
 
     /*@ public normal_behavior
+      @   ensures \result.length() < 100; // FIXME - make this tighter
       @   ensures !isNaN(f) && !isInfinite(f) ==> parseable(\result);
       @   ensures !isNaN(f) && !isInfinite(f) ==> 
       @                              identical(f, parseFloat(\result));

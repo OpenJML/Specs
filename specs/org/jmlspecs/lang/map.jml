@@ -4,7 +4,10 @@ package org.jmlspecs.lang;
 public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
 /*@    
 
-
+    public normal_behavior
+      ensures (\forall K k; ; \result[k] == null);
+    model public static nullable <K,V> map<K,V> empty();
+    
     public normal_behavior
       ensures \result == this[k];
     model public V get(K k);

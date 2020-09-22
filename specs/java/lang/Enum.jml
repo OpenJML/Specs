@@ -18,7 +18,7 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.
       //-RAC@   ensures this.ordinal == ordinal;
       //@ pure
       protected Enum(String name, int ordinal);
-      //@ also public normal_behavior
+      //@ also public code normal_behavior
       //-RAC@   ensures \result == name;
       //@ pure
       public String toString();

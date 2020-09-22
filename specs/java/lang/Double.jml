@@ -79,6 +79,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     //@ static_initializer
 
     /*@ public normal_behavior
+      @   ensures \result.length() < 100; // FIXME - make this tighter
       @   ensures !isNaN(d) && !isInfinite(d) ==> parseable(\result);
       @   ensures !isNaN(d) && !isInfinite(d) ==> 
       @                                   identical(d, parseDouble(\result));

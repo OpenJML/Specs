@@ -80,13 +80,14 @@ public  /*@ pure @*/ final
       @   ensures i >  0 ==> \result.length() >= 1;
       @   ensures i <  0 ==> \result.length() >= 2;
       @   ensures i == 0 ==> \result.equals("0");
+      @   ensures radix >= 10 ==> \result.length() <= 11;
       @*/
     public static /*@ pure helper non_null @*/ String toString(int i,
                                                                   int radix);
 
     /*-RAC@ public normal_behavior
       @   ensures \result != null;
-      @   ensures \result.length() >= 1;
+      @   ensures 1 <= \result.length() <= 8;
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,16);
@@ -223,37 +224,37 @@ public  /*@ pure @*/ final
     //@ pure
     public Integer(String s) throws NumberFormatException ;
  
-    /*@ also  // FIXME - this is not correct
+    /*-RAC@ also 
       @   public normal_behavior
-      @     ensures \result == (byte) theInteger;
+      @     ensures \result == \java_math((byte) theInteger);
       @*/
     public /*@ pure helper @*/ byte byteValue();
     
-    /*@ also   // FIXME - this is not correct
+    /*-RAC@ also
       @   public normal_behavior
-      @     ensures \result == (short) theInteger;
+      @     ensures \result == \java_math((short) theInteger);
       @*/
     public /*@ pure helper @*/ short shortValue();
 
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == theInteger;
       @*/
     public /*@ pure helper @*/ int intValue();
     
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (long) theInteger;
       @*/
     public /*@ pure helper @*/ long longValue();
     
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @      ensures \result == (float) theInteger;
       @*/
     public /*@ pure helper @*/ float floatValue();
     
-    /*@ also
+    /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (double) theInteger;
       @*/
@@ -270,8 +271,13 @@ public  /*@ pure @*/ final
       @   public normal_behavior
       @     ensures \result == intValue();
       @*/
+    @Override
     public int hashCode();
    
+    //@ public normal_behavior
+    //@   ensures \result == i;
+    public static int hashCode(int i);
+
     /*-RAC@ 
       @   public normal_behavior
       @     requires i != null && ii != null;
@@ -408,4 +414,21 @@ public  /*@ pure @*/ final
     //@ public normal_behavior
     //@   ensures (0xFFFF_FFFFL & i) == Integer.toUnsignedLong(i);
     //@ model public static void lemmaToUnsignedLong(int i) {}
+    
+    
+    //@ public normal_behavior
+    //@   ensures \result == \java_math(i+j);
+    public static int sum(int i, int j);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (i>j?i:j);
+    public static int max(int i, int j);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (i<j?i:j);
+    public static int min(int i, int j);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (i>0? 1: i == 0? 0: -1);
+    public static int signum(int i);
 }
