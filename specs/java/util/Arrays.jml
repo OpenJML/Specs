@@ -562,15 +562,14 @@ public class Arrays {
       @            (\forall int i; 
       @             0 < i < a.length;
       @             a[i-1] <= a[i]); 
+      @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @  {| 
-      @     requires (\exists int j; 0 <= j < a.length; 
-      @               a[j] == key);
+      @     requires hasKey;
       @     assignable \nothing;
       @     ensures 0 <= \result && \result < a.length 
       @           && a[\result] == key;
       @    also
-      @     requires !(\exists int j; 0 <= j < a.length; 
-      @                a[j] == key);
+      @     requires !hasKey;
       @     assignable \nothing;
       @     ensures \result < 0;
       @     ensures (\exists int j; 0 <= j < a.length; 
@@ -596,12 +595,13 @@ public class Arrays {
       @            (\forall int i; 
       @             0 < i < a.length;
       @             a[i-1] <= a[i]); 
+      @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @  {| 
-      @     requires Arrays.contains(a,key);
+      @     requires hasKey;
       @     ensures 0 <= \result && \result < a.length 
       @           && a[\result] == key;
       @    also
-      @     requires !Arrays.contains(a,key);
+      @     requires !hasKey;
       @     ensures \result < 0 && (-a.length-1) <= \result;
       @     ensures (\forall int j; 0 <= j < (-1-\result); a[j] < key);
       @     ensures (\forall int j; (-1-\result) <= j < a.length; key < a[j]);
@@ -619,15 +619,14 @@ public class Arrays {
       @            (\forall int i; 
       @             0 < i < a.length;
       @             a[i-1] <= a[i]); 
+      @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @  {| 
-      @     requires (\exists int j; 0 <= j < a.length; 
-      @               a[j] == key);
+      @     requires hasKey;
       @     assignable \nothing;
       @     ensures 0 <= \result && \result < a.length 
       @           && a[\result] == key;
       @    also
-      @     requires !(\exists int j; 0 <= j < a.length; 
-      @                a[j] == key);
+      @     requires !hasKey;
       @     assignable \nothing;
       @     ensures \result < 0;
       @     ensures (\exists int j; 0 <= j < a.length; 
@@ -652,15 +651,14 @@ public class Arrays {
       @            (\forall int i; 
       @             0 < i < a.length;
       @             a[i-1] <= a[i]); 
+      @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @  {| 
-      @     requires (\exists int j; 0 <= j < a.length; 
-      @               a[j] == key);
+      @     requires hasKey;
       @     assignable \nothing;
       @     ensures 0 <= \result && \result < a.length 
       @           && a[\result] == key;
       @    also
-      @     requires !(\exists int j; 0 <= j < a.length; 
-      @                a[j] == key);
+      @     requires !hasKey;
       @     assignable \nothing;
       @     ensures \result < 0;
       @     ensures (\exists int j; 0 <= j < a.length; 
@@ -686,15 +684,14 @@ public class Arrays {
       @            (\forall int i; 
       @             0 < i < a.length;
       @             a[i-1] <= a[i]); 
+      @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @  {| 
-      @     requires (\exists int j; 0 <= j < a.length; 
-      @               a[j] == key);
+      @     requires hasKey;
       @     assignable \nothing;
       @     ensures 0 <= \result && \result < a.length 
       @           && a[\result] == key;
       @    also
-      @     requires !(\exists int j; 0 <= j < a.length; 
-      @                a[j] == key);
+      @     requires !hasKey;
       @     assignable \nothing;
       @     ensures \result < 0;
       @     ensures (\exists int j; 0 <= j < a.length; 
@@ -720,16 +717,15 @@ public class Arrays {
       @            (\forall int i;
       @             0 < i < a.length;
       @             new Double(a[i-1]).compareTo(new Double(a[i])) <= 0);
+      @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @   {| 
-      @      requires (\exists int j; 0 <= j < a.length;
-      @                new Double(a[j]).compareTo(new Double(key)) == 0);
+      @      requires hasKey;
       @      assignable \nothing;
       @      ensures 0 <= \result && \result < a.length 
       @              && new Double(a[\result]).compareTo(new Double(key))
       @                     == 0;
       @     also
-      @      requires !(\exists int j; 0 <= j < a.length; 
-      @                 new Double(a[j]).compareTo(new Double(key)) == 0);
+      @      requires !hasKey;
       @      assignable \nothing;
       @      ensures \result < 0;
       @      ensures (\exists int j; 0 <= j < a.length; 
@@ -758,16 +754,15 @@ public class Arrays {
       @            (\forall int i;
       @             0 < i < a.length;
       @             new Float(a[i-1]).compareTo(new Float(a[i])) <= 0);
+      @   old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @   {| 
-      @      requires (\exists int j; 0 <= j < a.length;
-      @                new Float(a[j]).compareTo(new Float(key)) == 0);
+      @      requires hasKey;
       @      assignable \nothing;
       @      ensures 0 <= \result && \result < a.length 
       @              && new Float(a[\result]).compareTo(new Float(key))
       @                     == 0;
       @     also
-      @      requires !(\exists int j; 0 <= j < a.length; 
-      @                 new Float(a[j]).compareTo(new Float(key)) == 0);
+      @      requires !hasKey;
       @      assignable \nothing;
       @      ensures \result < 0;
       @      ensures (\exists int j; 0 <= j < a.length; 
@@ -799,15 +794,16 @@ public class Arrays {
       @   requires (\forall int i;
       @             0 < i < a.length;
       @             ((Comparable<Object>)a[i-1]).compareTo(a[i]) <= 0);
-      @   {| 
-      @      requires (\exists int j; 0 <= j < a.length; 
+      @  old boolean hasKey = (\exists int j; 0 <= j < a.length; 
       @                ((Comparable<Object>)a[j]).compareTo(key) == 0);
+
+      @   {| 
+      @      requires hasKey;
       @      assignable \nothing;
       @      ensures 0 <= \result && \result < a.length 
       @              && ((Comparable<Object>)a[\result]).compareTo(key) == 0;
       @     also
-      @      requires !(\exists int j; 0 <= j < a.length; 
-      @                ((Comparable<Object>)a[j]).compareTo(key) == 0);
+      @      requires !hasKey;
       @      assignable \nothing;
       @      ensures \result < 0;
       @      ensures (\exists int j; 0 <= j < a.length; 
