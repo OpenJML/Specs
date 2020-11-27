@@ -49,6 +49,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
     @Override
     public /*@ nullable */ V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
+    //@ nullable
     public V remove(Object key);
     public void putAll(Map<? extends K,? extends V> t);
     public void clear();

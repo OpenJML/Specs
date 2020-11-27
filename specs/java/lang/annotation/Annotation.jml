@@ -1,0 +1,14 @@
+package java.lang.annotation;
+
+//@ non_null_by_default
+public interface Annotation {
+    
+    //@ pure
+    Class<? extends Annotation> annotationType();
+    
+//    boolean equals(Object o);
+//    
+//    int hashCode();
+//    
+//    String toString();
+}

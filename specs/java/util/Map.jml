@@ -95,15 +95,16 @@ public interface Map<K,V> {
     //-RAC@ model public instance V nullValue;
     //-RAC@ model public instance boolean nullPresent;
     //-RAC@ model public instance \bigint size; in objectState;
-    
+    //-RAC@ public represents size = size();
 
     //@ public normal_behavior
     //-RAC@   ensures \result == size;
-    /*@ pure @*/
+    /*@ pure helper @*/
     int size();
 
     /*-RAC@ public normal_behavior
-      @    ensures \result <==> (size == 0 && !nullPresent && (\forall \bigint i;; keys[i] == false)); 
+      @    //ensures \result <==> (size == 0 && !nullPresent && (\forall \bigint i;; keys[i] == false)); 
+      @    ensures \result <==> (size == 0); 
       @*/
     /*@ pure @*/ boolean isEmpty();
     
@@ -174,13 +175,13 @@ public interface Map<K,V> {
       @  public normal_behavior
       @    requires key != null;
       @    assignable objectState;
-      @    ensures keys[key.uniqueHash] == false;
-      @    ensures size == \old(keys[key.uniqueHash] ? size-1 : size);
+      @    ensures \result != null ==> keys[key.uniqueHash] == false;
+      @    ensures \result != null ==> size == \old(keys[key.uniqueHash] ? size-1 : size);
       @  also public normal_behavior
       @    requires key == null;
       @    assignable objectState;
       @    ensures nullPresent == false;
-      @    ensures size == \old(nullPresent ? size-1 : size);
+      @    ensures \result != null ==> size == \old(nullPresent ? size-1 : size);
       @*/
     /* @ // FIXME
       @    signals_only ClassCastException, NullPointerException,
@@ -192,6 +193,7 @@ public interface Map<K,V> {
       @    signals (NullPointerException) key == null
       @              && (* if this map doesn't support null keys *);
       @*/
+    //@ nullable
     V remove(Object key);
 
     /*-RAC@ public behavior
