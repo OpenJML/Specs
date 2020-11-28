@@ -961,6 +961,7 @@ public final class String
     /*@  public normal_behavior
       @   requires locale != null;
       @   ensures \fresh(\result) && \result.length() == length();
+      @   ensures \result.charArray != null; // TODO - Should be an invariant
       @   ensures (* \result == a lower case conversion of this using the 
       @                          rules of the given locale *);
       @*/
