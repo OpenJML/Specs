@@ -39,11 +39,11 @@ public class Arrays {
       @   assignable a[*];
       @   ensures (\forall int i,j;
       @           0 <= i < j < a.length; a[i] <= a[j]);
-      @   ensures (\forall int i; 0 <= i < a.length;
-      @           (\num_of int j; 0 <= j < a.length;
-      @            a[j] == a[i]) == 
-      @           (\num_of int k; 0 <= k < \old(a.length);
-      @                          \old(a[k]) == a[i]));
+      @   //ensures (\forall int i; 0 <= i < a.length; // num_of not yet supported
+      @   //        (\num_of int j; 0 <= j < a.length;
+      @   //         a[j] == a[i]) == 
+      @   //        (\num_of int k; 0 <= k < \old(a.length);
+      @   //                       \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null; 
@@ -63,12 +63,12 @@ public class Arrays {
       @            0 <= i < fromIndex  
       @            || toIndex <= i < a.length; 
       @                \old(a[i]) == a[i]);
-      @   ensures (\forall int i; 0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @              a[j] == a[i]) 
-      @              == 
-      @              (\num_of int k; 0 <= k < \old(a.length);
-      @                \old(a[k]) == a[i]));
+      @   //ensures (\forall int i; 0 <= i < a.length; // num_of not yet supported
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //           a[j] == a[i]) 
+      @   //           == 
+      @   //           (\num_of int k; 0 <= k < \old(a.length);
+      @   //             \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex 
@@ -86,15 +86,13 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null;
       @   assignable a[*];
-      @   ensures (\forall int i,j;
-      @           0 <= i < j < a.length; a[i] <= a[j]);
-      @   ensures (\forall int i; 0 <= i < a.length;
-      @           (\num_of int j; 0 <= j < a.length; 
-
-      @             a[j] == a[i])
-      @           == 
-      @           (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures (\forall int i,j; 0 <= i < j < a.length; a[i] <= a[j]);
+      @   //ensures (\forall int i; 0 <= i < a.length; // num_of not yet supported
+      @   //        (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //        == 
+      @   //        (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null;
@@ -107,15 +105,14 @@ public class Arrays {
       @   requires a != null;
       @   requires 0 <= fromIndex && fromIndex <= toIndex && toIndex < a.length;
       @   assignable a[fromIndex .. toIndex-1];
-      @   ensures (\forall int i; fromIndex < i < toIndex;
-      @             a[i-1] <= a[i]);
-      @   ensures (\forall int i;
-      @             0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @              a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @              \old(a[k]) == a[i]));
+      @   ensures (\forall int i; fromIndex < i < toIndex; a[i-1] <= a[i]);
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //          0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //           a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //           \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -136,15 +133,14 @@ public class Arrays {
       @   requires a != null;
       @   assignable a[*];
       @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i,j;
-      @           0 <= i < j < a.length; a[i] <= a[j]);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures (\forall int i,j; 0 <= i < j < a.length; a[i] <= a[j]);
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null; 
@@ -161,16 +157,14 @@ public class Arrays {
       @            || toIndex <= i < a.length; 
       @                \old(a[i]) == a[i]);
       @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            fromIndex < i < toIndex;
-      @            a[i-1] <= a[i]);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures (\forall int i; fromIndex < i < toIndex; a[i-1] <= a[i]);
+      @   //ensures (\forall int i;  // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -188,15 +182,14 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null;
       @   assignable a[*];
-      @   ensures (\forall int i,j;
-      @           0 <= i < j < a.length; a[i] <= a[j]);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures (\forall int i,j; 0 <= i < j < a.length; a[i] <= a[j]);
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null; 
@@ -213,16 +206,14 @@ public class Arrays {
       @            || toIndex <= i < a.length; 
       @                \old(a[i]) == a[i]);
       @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            fromIndex < i < toIndex;
-      @            a[i-1] <= a[i]);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures (\forall int i; fromIndex < i < toIndex; a[i-1] <= a[i]);
+      @   //ensures (\forall int i;  // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -240,15 +231,14 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null;
       @   assignable a[*];
-      @   ensures (\forall int i,j;
-      @           0 <= i < j < a.length; a[i] <= a[j]);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures (\forall int i,j; 0 <= i < j < a.length; a[i] <= a[j]);
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null; 
@@ -268,13 +258,13 @@ public class Arrays {
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
       @            a[i-1] <= a[i]);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          a[j] == a[i])
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -296,14 +286,14 @@ public class Arrays {
       @   ensures (\forall int i,j;
       @            0 <= i < j < a.length;
       @            new Double(a[i]).compareTo(new Double(a[j])) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @            new Double(a[j]).compareTo(new Double(a[i])) == 0)
-      @           == 
-      @           (\num_of int k; 0 <= k < \old(a.length);
-      @            \old(new Double(a[k])).compareTo(new Double(a[i])) 
-      @              == 0));
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //         new Double(a[j]).compareTo(new Double(a[i])) == 0)
+      @   //        == 
+      @   //        (\num_of int k; 0 <= k < \old(a.length);
+      @   //         \old(new Double(a[k])).compareTo(new Double(a[i])) 
+      @   //           == 0));
       @ also
       @  public exceptional_behavior
       @   requires a == null ;
@@ -323,14 +313,14 @@ public class Arrays {
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
       @            new Double(a[i-1]).compareTo(new Double(a[i])) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             new Double(a[j]).compareTo(new Double(a[i])) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(new Double(a[k])).compareTo(new Double(a[i])) 
-      @                == 0));
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          new Double(a[j]).compareTo(new Double(a[i])) == 0)
+      @   //         == 
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(new Double(a[k])).compareTo(new Double(a[i])) 
+      @   //             == 0));
       @ also
       @  public exceptional_behavior 
       @   requires a == null || fromIndex > toIndex ||
@@ -351,14 +341,14 @@ public class Arrays {
       @   ensures (\forall int i,j;
       @            0 <= i < j < a.length;
       @            new Double(a[i]).compareTo(new Double(a[j])) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             new Double(a[j]).compareTo(new Double(a[i])) == 0)
-      @            ==
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(new Double(a[k])).compareTo(new Double(a[i])) 
-      @               == 0));
+      @   //ensures (\forall int i; // num_of not yet supported
+      @   //         0 <= i < a.length;
+      @   //         (\num_of int j; 0 <= j < a.length; 
+      @   //          new Double(a[j]).compareTo(new Double(a[i])) == 0)
+      @   //         ==
+      @   //         (\num_of int k; 0 <= k < \old(a.length);
+      @   //          \old(new Double(a[k])).compareTo(new Double(a[i])) 
+      @   //            == 0));
       @ also
       @  public exceptional_behavior
       @   requires a == null ;
@@ -378,14 +368,6 @@ public class Arrays {
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
       @            new Float(a[i-1]).compareTo(new Float(a[i])) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             new Float(a[j]).compareTo(new Float(a[i])) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(new Float(a[k])).compareTo(new Float(a[i])) 
-      @                == 0));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -409,13 +391,6 @@ public class Arrays {
       @   ensures (\forall int i;
       @            0 < i < a.length;
       @            ((Comparable<Object>)a[i-1]).compareTo(a[i]) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             ((Comparable<Object>)a[j]).compareTo(a[i]) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old((Comparable<Object>)a[k]).compareTo(a[i]) == 0));
       @*/
     public static void sort(Object[] a);
 
@@ -432,13 +407,6 @@ public class Arrays {
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
       @            ((Comparable<Object>)a[i-1]).compareTo(a[i]) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             ((Comparable<Object>)a[j]).compareTo(a[i]) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old((Comparable<Object>)a[k]).compareTo(a[i]) == 0));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -459,17 +427,9 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null && c != null;
       @   assignable a[*];
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
       @   ensures (\forall int i;
       @            0 < i < a.length;
       @            c.compare(a[i-1],a[i]) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             c.compare(a[j],a[i]) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             c.compare(\old(a[k]),a[i]) == 0));
       @ also
       @  public normal_behavior
       @   requires a != null && c == null;
@@ -480,17 +440,10 @@ public class Arrays {
       @   ensures (\forall int i;
       @            0 < i < a.length;
       @            ((Comparable<T>)a[i-1]).compareTo(a[i]) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             ((Comparable<T>)a[j]).compareTo(a[i]) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old((Comparable<T>)a[k]).compareTo(a[i]) == 0));
       @ also
       @  public exceptional_behavior
       @   requires a == null || 
-      @     (* array contains elements not mutually comparable *);
+      @     !(* array elements are all mutually comparable *);
       @   assignable \nothing;
       @   signals_only NullPointerException, ClassCastException;
       @   signals (NullPointerException) a == null;
@@ -510,13 +463,6 @@ public class Arrays {
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
       @            c.compare(a[i-1],a[i]) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             c.compare(a[j],a[i]) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             c.compare(\old(a[k]),a[i]) == 0));
       @ also
       @  public normal_behavior
       @   requires a != null && c == null;
@@ -531,13 +477,6 @@ public class Arrays {
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
       @            ((Comparable<T>)a[i-1]).compareTo(a[i]) <= 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             ((Comparable<T>)a[j]).compareTo(a[i]) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old((Comparable<T>)a[k]).compareTo(a[i]) == 0));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1231,13 +1170,6 @@ public class Arrays {
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
       @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @      (\num_of int j; 0 <= j < a.length; 
-      @       a[j] == a[i])
-      @      == 
-      @      (\num_of int k; 0 <= k < \old(a.length);
-      @       \old(a[k]) == a[i]));
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1280,14 +1212,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @      (\num_of int j; 0 <= j < a.length; 
-      @       a[j] == a[i])
-      @      == 
-      @      (\num_of int k; 0 <= k < \old(a.length);
-      @       \old(a[k]) == a[i]));
+      @   ensures_redundantly a != null && a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1330,14 +1255,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @      (\num_of int j; 0 <= j < a.length; 
-      @       a[j] == a[i])
-      @      == 
-      @      (\num_of int k; 0 <= k < \old(a.length);
-      @       \old(a[k]) == a[i]));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1380,14 +1298,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @      (\num_of int j; 0 <= j < a.length; 
-      @       a[j] == a[i])
-      @      == 
-      @      (\num_of int k; 0 <= k < \old(a.length);
-      @       \old(a[k]) == a[i]));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1419,7 +1330,7 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null && fromIndex < toIndex;
       @   assignable a[fromIndex .. toIndex-1];
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
+      @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; 
       @            a[i] == val);
       @   ensures_redundantly (\forall int i;
@@ -1430,14 +1341,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @      (\num_of int j; 0 <= j < a.length; 
-      @       a[j] == a[i])
-      @      == 
-      @      (\num_of int k; 0 <= k < \old(a.length);
-      @       \old(a[k]) == a[i]));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1469,7 +1373,7 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null && fromIndex < toIndex;
       @   assignable a[fromIndex .. toIndex-1];
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
+      @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; 
       @            a[i] == val);
       @   ensures_redundantly (\forall int i;
@@ -1480,14 +1384,7 @@ public class Arrays {
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @      (\num_of int j; 0 <= j < a.length; 
-      @       a[j] == a[i])
-      @      == 
-      @      (\num_of int k; 0 <= k < \old(a.length);
-      @       \old(a[k]) == a[i]));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1520,35 +1417,14 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null && fromIndex < toIndex;
       @   assignable a[*];
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
+      @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; 
       @            new Double(a[i]).compareTo(new Double(val)) == 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < fromIndex; 
-      @             new Double(a[j]).compareTo(new Double(a[i])) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < fromIndex;
-      @      new Double(\old(a[k])).compareTo(new Double(a[i])) == 0));
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; toIndex <= j < a.length; 
-      @             new Double(a[j]).compareTo(new Double(a[i])) == 0)
-      @            == 
-      @            (\num_of int k; toIndex <= k < \old(a.length);
-      @       new Double(\old(a[k])).compareTo(new Double(a[i])) == 0));
       @ also
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length;
-      @             new Double(a[j]).compareTo(new Double(a[i])) == 0)
-      @            ==
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @       new Double(\old(a[k])).compareTo(new Double(a[i])) == 0));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1581,35 +1457,14 @@ public class Arrays {
     /*@  public normal_behavior
       @   requires a != null && fromIndex < toIndex;
       @   assignable a[*];
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
+      @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; 
       @            new Float(a[i]).compareTo(new Float(val)) == 0);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < fromIndex; 
-      @             new Float(a[j]).compareTo(new Float(a[i])) == 0)
-      @            == 
-      @            (\num_of int k; 0 <= k < fromIndex;
-      @      new Float(\old(a[k])).compareTo(new Float(a[i])) == 0));
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; toIndex <= j < a.length; 
-      @             new Float(a[j]).compareTo(new Float(a[i])) == 0)
-      @            == 
-      @            (\num_of int k; toIndex <= k < \old(a.length);
-      @       new Float(\old(a[k])).compareTo(new Float(a[i])) == 0));
       @ also
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length;
-      @             new Float(a[j]).compareTo(new Float(a[i])) == 0)
-      @            ==
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @       new Float(\old(a[k])).compareTo(new Float(a[i])) == 0));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also
       @  public exceptional_behavior
       @   requires a == null || fromIndex > toIndex ||
@@ -1649,35 +1504,13 @@ public class Arrays {
       @   requires a != null && fromIndex < toIndex;
       @   requires ( \typeof(val) <: \elemtype(\typeof(a)) );
       @   assignable a[*];
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i; fromIndex <= i < toIndex; 
-      @            a[i] == val);
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @           (\num_of int j; 0 <= j < fromIndex; 
-      @            a[j] == a[i])
-      @           ==
-      @           (\num_of int k; 0 <= k < fromIndex;
-      @            \old(a[k]) == a[i]));
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; toIndex <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; toIndex <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures_redundantly a.length == \old(a.length);
+      @   ensures (\forall int i; fromIndex <= i < toIndex; a[i] == val);
       @ also
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
       @   assignable \nothing;
-      @   ensures_redundantly a.length == \old(a.length) && a != null;
-      @   ensures (\forall int i;
-      @            0 <= i < a.length;
-      @            (\num_of int j; 0 <= j < a.length; 
-      @             a[j] == a[i])
-      @            == 
-      @            (\num_of int k; 0 <= k < \old(a.length);
-      @             \old(a[k]) == a[i]));
+      @   ensures_redundantly a.length == \old(a.length);
       @ also public exceptional_behavior
       @   requires a != null;
       @   requires !( \typeof(val) <: \elemtype(\typeof(a)) );
