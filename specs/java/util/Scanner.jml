@@ -1,0 +1,94 @@
+package java.util;
+
+//@ non_null_by_default
+public final class Scanner implements Iterator<java.lang.String>, java.io.Closeable {
+  //int modCount;
+  //static final boolean $assertionsDisabled;
+    
+  //@ public model Object _$scannerState;
+    // FIXME - the state should include istream.streamState or the channel state
+    /*
+  public Scanner(java.lang.Readable);
+  */
+  //@ public normal_behavior
+  //@   writes istream.streamState;
+  public Scanner(java.io.InputStream istream);
+  /*
+  public Scanner(java.io.InputStream, java.lang.String);
+  public Scanner(java.io.InputStream, java.nio.charset.Charset);
+  public Scanner(java.io.File) throws java.io.FileNotFoundException;
+  public Scanner(java.io.File, java.lang.String) throws java.io.FileNotFoundException;
+  public Scanner(java.io.File, java.nio.charset.Charset) throws java.io.IOException;
+  public Scanner(java.nio.file.Path) throws java.io.IOException;
+  public Scanner(java.nio.file.Path, java.lang.String) throws java.io.IOException;
+  public Scanner(java.nio.file.Path, java.nio.charset.Charset) throws java.io.IOException;
+  public Scanner(java.lang.String);
+  public Scanner(java.nio.channels.ReadableByteChannel);
+  public Scanner(java.nio.channels.ReadableByteChannel, java.lang.String);
+  public Scanner(java.nio.channels.ReadableByteChannel, java.nio.charset.Charset);
+  public void close();
+  public java.io.IOException ioException();
+  public java.util.regex.Pattern delimiter();
+  public Scanner useDelimiter(java.util.regex.Pattern);
+  public Scanner useDelimiter(java.lang.String);
+  public Locale locale();
+  public Scanner useLocale(Locale);
+  public int radix();
+  public Scanner useRadix(int);
+  public java.util.regex.MatchResult match();
+  public java.lang.String toString();
+  public boolean hasNext();
+  public java.lang.String next();
+  public void remove();
+  public boolean hasNext(java.lang.String);
+  public java.lang.String next(java.lang.String);
+  public boolean hasNext(java.util.regex.Pattern);
+  public java.lang.String next(java.util.regex.Pattern);
+  public boolean hasNextLine();
+  public java.lang.String nextLine();
+  public java.lang.String findInLine(java.lang.String);
+  public java.lang.String findInLine(java.util.regex.Pattern);
+  public java.lang.String findWithinHorizon(java.lang.String, int);
+  public java.lang.String findWithinHorizon(java.util.regex.Pattern, int);
+  public Scanner skip(java.util.regex.Pattern);
+  public Scanner skip(java.lang.String);
+  public boolean hasNextBoolean();
+  public boolean nextBoolean();
+  public boolean hasNextByte();
+  public boolean hasNextByte(int);
+  public byte nextByte();
+  public byte nextByte(int);
+  public boolean hasNextShort();
+  public boolean hasNextShort(int);
+  public short nextShort();
+  public short nextShort(int);
+  public boolean hasNextInt();
+  public boolean hasNextInt(int);
+  public int nextInt();
+  public int nextInt(int);
+  public boolean hasNextLong();
+  public boolean hasNextLong(int);
+  public long nextLong();
+  public long nextLong(int);
+  public boolean hasNextFloat();
+  */
+  //@ public normal_behavior
+  //@   writes _$scannerState;
+  public float nextFloat();
+  /*
+  public boolean hasNextDouble();
+  public double nextDouble();
+  public boolean hasNextBigInteger();
+  public boolean hasNextBigInteger(int);
+  public java.math.BigInteger nextBigInteger();
+  public java.math.BigInteger nextBigInteger(int);
+  public boolean hasNextBigDecimal();
+  public java.math.BigDecimal nextBigDecimal();
+  public Scanner reset();
+  public java.util.stream.Stream<java.lang.String> tokens();
+  public java.util.stream.Stream<java.util.regex.MatchResult> findAll(java.util.regex.Pattern);
+  public java.util.stream.Stream<java.util.regex.MatchResult> findAll(java.lang.String);
+  public java.lang.Object next();
+  static {};
+  */
+}

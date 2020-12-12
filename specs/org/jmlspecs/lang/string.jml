@@ -2,8 +2,7 @@ package org.jmlspecs.lang;
 
 //@ immutable pure
 public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
-    //@ spec_public 
-    private String racValue;
+    //@ ghost public String racValue;
 
     //@ model public \bigint length;
     //@ public represents length = racValue.length();

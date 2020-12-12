@@ -816,13 +816,10 @@ public final class String
 
     /*@  public normal_behavior
       @   requires 0 <= beginIndex <= length();
-      @   ensures equals(\result, substring(beginIndex, length()));
-      @   ensures \fresh(\result);
-      @            && \result.length() == this.length() - beginIndex
-      @            && equal(\result.charArray,0,charArray,beginIndex,
-                                                    \result.length());
-      @   ensures beginIndex ==0 && endIndex == length() ==>
-                                        equals(this,\result);
+      @   ensures \result.length() == this.length() - beginIndex
+      @        && equal(\result.charArray,0,charArray,beginIndex,
+                                                    length()-beginIndex);
+      @   ensures beginIndex == 0 ==> equals(this,\result);
       @ also
       @  public exceptional_behavior
       @   requires beginIndex < 0 || beginIndex > length();
@@ -832,15 +829,11 @@ public final class String
       throws StringIndexOutOfBoundsException;
 
     /*@  public normal_behavior
-      @   requires 0 <= beginIndex
-      @             && beginIndex <= endIndex
-      @             && (endIndex <= length());
-      @   ensures \result != null
-      @            && \fresh(\result)
-      @            && \result.length() == endIndex - beginIndex
-      @            && equal(\result.charArray,0,charArray,beginIndex,
+      @   requires 0 <= beginIndex <= endIndex <= length();
+      @   ensures \result.length() == endIndex - beginIndex
+      @        && equal(\result.charArray,0,charArray,beginIndex,
                                                     endIndex-beginIndex);
-      @   ensures beginIndex ==0 && endIndex == length() ==>
+      @   ensures beginIndex == 0 && endIndex == length() ==>
                                         equals(this,\result);
       @ also
       @  public exceptional_behavior
