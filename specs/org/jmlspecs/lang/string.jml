@@ -2,19 +2,38 @@ package org.jmlspecs.lang;
 
 //@ immutable pure
 public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
+    //@ spec_public 
+    private String racValue;
+
+    //@ model public \bigint length;
+    //@ public represents length = racValue.length();
+    //@ public invariant length >= 0;
+
+    //@ public normal_behavior
+    //@   ensures \result.length == s.length();
+    //@   ensures (\forall \bigint i; 0 <= i < \result.size(); \result[i] == s.charAt((int)i));
+    static public string string(/*@ non_null */String s);
+  
+    //@ public normal_behavior
+    //@   ensures \result.size() == 0;
+    static public string empty();
+
+    //@ public normal_behavior
+    //@   ensures \result == (this.size() == 0);
+    public boolean isEmpty();
+  
+
 /*@   
-    model public \bigint length;
-    public invariant length >= 0;
     
     public normal_behavior
       ensures \result == length;
     model public \bigint size();
     
     public normal_behavior
+      ensures \result == this[i];
     model public char get(\bigint i);
 
     public normal_behavior
-        ensures \result != null;
         ensures \result.length == this.length;
         ensures \result[i] == c;
         ensures \forall \bigint j; j != i; \result[j] == this[j];
@@ -22,20 +41,7 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
     model public string put(\bigint i, char c);
 
     public normal_behavior
-      ensures \result == (this.length == 0);
-    model public boolean isEmpty();
-    
-    public normal_behavior
-      ensures \result.length == 0;
-    model static public string empty();
-    
-    public normal_behavior
-      ensures \result.length == s.length();
-      ensures (\forall \bigint i; 0 <= i && i < \result.length; \result[i] == s.charAt((int)i));
-    model static public string string(String s);
-    
-    public normal_behavior
-       ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i && i < s.length) ==> (s[i] == ss[i]) ));
+       ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
     model public static boolean equals(string s, string ss);
     
     public normal_behavior
@@ -43,32 +49,35 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
     model public boolean equals(string s);
     
     public normal_behavior
-      requires 0 <= j && j <= this.length;
+      requires 0 <= j <= this.length;
       ensures \result.length == this.length + 1;
-      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
-      ensures (\forall \bigint i;; (j+1 <= i && i < \result.length) ==> (\result[i] == this[i-1]));
+      ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (j+1 <= i < \result.length) ==> (\result[i] == this[i-1]));
       ensures \result[j] == v;
     model public string add(\bigint j, char v);
 
     public normal_behavior
       ensures \result == add(length,v);
+      ensures \result.length == this.length + 1;
+      ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
+      ensures \result[this.length] == v;
     model public string add(char v);
 
     public normal_behavior
       ensures \result.length == this.length + s.length;
-      ensures (\forall \bigint i;; (0 <= i && i < this.length) ==> (\result[i] == this[i]));
-      ensures (\forall \bigint i;; (0 <= i && i < s.length) ==> (\result[i+this.length] == this[i-1]));
+      ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (0 <= i < s.length) ==> (\result[i+this.length] == this[i-1]));
     model public string append(string s);
 
     public normal_behavior
-      requires 0 <= j && j < this.length;
+      requires 0 <= j < this.length;
       ensures \result.length == this.length - 1;
-      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
-      ensures (\forall \bigint i;; (j <= i && i < \result.length) ==> (\result[i] == this[i+1]));
+      ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (j <= i < \result.length) ==> (\result[i] == this[i+1]));
     model public string remove(\bigint j);
     
     public normal_behavior
-      requires 0 <= start && start <= this.length && 0 <= length && length <= this.length - start;
+      requires 0 <= start <= this.length && 0 <= length <= this.length - start;
       ensures \result.length == length;
       ensures (\forall \bigint i;; (0 <= i && i < \result.length) ==> \result[i] == this[i+start]);
     model public string substring(\bigint start, \bigint length);

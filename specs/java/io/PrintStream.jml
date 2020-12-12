@@ -31,6 +31,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     //-RAC@ model public non_null String outputText; in outputBytes;
     //-RAC@ model public boolean endsInNewLine; in outputText;
     //-RAC@ ghost public non_null static final String eol;
+    //-RAC@ public static invariant \invariant_for(eol) && eol.length() > 0;
 
     //-RAC@ public model boolean error;
     
@@ -118,6 +119,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
+    @   ensures endsInNewLine && isOpen;
     @   //ensures s != null ==> outputText.equals(\old(outputText) + s);
     @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s;
     @*/

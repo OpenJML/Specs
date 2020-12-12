@@ -815,11 +815,14 @@ public final class String
 
 
     /*@  public normal_behavior
-      @   requires 0 <= beginIndex;
-      @   requires beginIndex <= length();
+      @   requires 0 <= beginIndex <= length();
       @   ensures equals(\result, substring(beginIndex, length()));
       @   ensures \fresh(\result);
-      @   ensures_redundantly (beginIndex == 0) ==> equals(\result, this);
+      @            && \result.length() == this.length() - beginIndex
+      @            && equal(\result.charArray,0,charArray,beginIndex,
+                                                    \result.length());
+      @   ensures beginIndex ==0 && endIndex == length() ==>
+                                        equals(this,\result);
       @ also
       @  public exceptional_behavior
       @   requires beginIndex < 0 || beginIndex > length();

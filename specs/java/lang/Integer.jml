@@ -145,6 +145,7 @@ public  /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   ensures \result != null;
+      @   ensures \invariant_for(\result);
       @   ensures parseable(\result, 10);
       @   ensures \result.equals(toString(i, 10));
       @   ensures i == parseInt(\result, 10);
@@ -265,6 +266,7 @@ public  /*@ pure @*/ final
     //-RAC@   ensures parseable(\result, 10);
     //@   ensures Integer.parseInt(\result,10) == intValue();
     //@   ensures \result.equals(toString(intValue()));
+    //@   ensures \invariant_for(\result);
     public /*@ non_null @*/ String toString();
             
     /*@ also
