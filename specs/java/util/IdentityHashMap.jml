@@ -1,0 +1,140 @@
+package java.util;
+
+public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, java.io.Serializable, java.lang.Cloneable {
+  private static final int DEFAULT_CAPACITY;
+  private static final int MINIMUM_CAPACITY;
+  private static final int MAXIMUM_CAPACITY;
+  static final java.lang.Object NULL_KEY;
+  private static final long serialVersionUID;
+  
+  //@ model public JMLDataGroup content;
+  //@ model public map<K,V> _map; //@ in content;
+  //@ model public set<K> _keyset; //@ in content;
+  //@ spec_public
+  int size; //@ in content;
+  
+  //@ public normal_behavior
+  //@   ensures size == 0;
+  //@   ensures _keyset.isEmpty();
+  //@ pure
+  public IdentityHashMap();
+  
+  //@ public normal_behavior
+  //@   ensures size == 0;
+  //@   ensures _keyset.isEmpty();
+  //@ pure
+  public IdentityHashMap(int i);
+
+  //@ also public normal_behavior
+  //@   ensures \result == size;
+  //@ pure
+  public int size();
+
+  //@ also public normal_behavior
+  //@   ensures \result == (size == 0);
+  //@ pure
+  public boolean isEmpty();
+  
+  //@ public normal_behavior
+  //@ pure
+  public IdentityHashMap(Map<? extends K, ? extends V> m); // TODO
+  
+  //@ also public normal_behavior
+  //@   requires o == null || \typeof(o) <: \type(K);
+  //@   ensures \result == (_keyset.contains((K)o) ? _map.get((K)o) : null);
+  //@ pure nullable
+  public V get(Object o);
+  
+  //@ also public normal_behavior
+  //@   requires o == null || \typeof(o) <: \type(K);
+  //@   ensures \result == _keyset.contains((K)o);
+  //@ pure
+  public boolean containsKey(/*(@ nullable */ Object o);
+
+  //@ also public normal_behavior
+  //@   ensures \result == \exists K k; _keyset.contains(k); o == _map[k];
+  //@ pure
+  public boolean containsValue(/* nullable */ Object o);
+
+  //@ also public normal_behavior
+  //@   writes content;
+  //@   ensures _map == \old(_map).put(k,v);
+  //@   ensures _keyset == \old(_keyset).add(k);
+  //@   ensures size == (\old(_keyset).contains(k) ? \old(size) : \old(size)+1);
+  public V put(/*@ nullable */K k, /*@ nullable */V v);
+
+  //@ also public normal_behavior
+  //@   writes content;
+  public void putAll(Map<? extends K, ? extends V> m); // TODO
+
+  //@ also public normal_behavior
+  //@   requires _keyset.contains((K)o);
+  //@   writes content;
+  //@   ensures size == \old(size) - 1;
+  //@   ensures _keyset == \old(_keyset).remove((K)o);
+  //@   ensures _map == \old(_map);
+  //@ also public normal_behavior
+  //@   requires !_keyset.contains((K)o);
+  //@   writes \nothing;
+  public V remove(Object o);
+  
+  //@ also public normal_behavior
+  //@   writes content;
+  //@   ensures size == 0 && _keyset.isEmpty();
+  public void clear();
+  
+  //@ also public normal_behavior
+  //@   old IdentityHashMap<K,V> m = (IdentityHashMap)o;
+  //@   ensures \result == (this.size == m.size && this._keyset == m._keyset && (\forall K k; _keyset.contains(k); this._map.get(k) == m._map.get(k)));
+  //@ pure
+  public boolean equals(Object o); // TODO
+  
+  //@ also public normal_behavior
+  //@ pure // No additional specs needed
+  public int hashCode();
+  
+  //@ also public normal_behavior
+  //@   ensures \result instanceof IdentityHashMap;
+  //@   ensures ((IdentityHashMap)\result).size == this.size;
+  //@   ensures ((IdentityHashMap)\result)._keyset == this._keyset;
+  //@   ensures ((IdentityHashMap)\result)._map == this._map;
+  public Object clone();
+  
+  //@ also public normal_behavior
+  //@ pure
+  public Set<K> keySet();   // TODO
+  
+  //@ also public normal_behavior
+  //@ pure
+  public Collection<V> values(); // TODO
+  
+  //@ also public normal_behavior
+  //@ pure
+  public Set<Map.Entry<K, V>> entrySet();  // TODO
+
+  //@ also public normal_behavior
+  //@   writes \everything; // Whatever f does to each of the pairs in the map
+  public void forEach(java.util.function.BiConsumer<? super K, ? super V> f);  // TODO
+
+  //@ also public normal_behavior
+  //@   writes content;
+  public void replaceAll(java.util.function.BiFunction<? super K, ? super V, ? extends V> f); // TODO
+
+  //private void closeDeletion(int);
+  //private boolean resize(int);
+  //private void writeObject(java.io.ObjectOutputStream) throws java.io.IOException;
+  //private void readObject(java.io.ObjectInputStream) throws java.io.IOException, java.lang.ClassNotFoundException;
+  //private void putForCreate(K, V) throws java.io.StreamCorruptedException;
+  //private boolean removeMapping(java.lang.Object, java.lang.Object);
+  //private boolean containsMapping(java.lang.Object, java.lang.Object);
+  //private static int hash(java.lang.Object, int);
+  //private static int nextKeyIndex(int, int);
+  //private static java.lang.Object maskNull(java.lang.Object);
+  //static final java.lang.Object unmaskNull(java.lang.Object);
+  //private void init(int);
+  //private static int capacity(int);
+  //private transient Set<Map$Entry<K, V>> entrySet;
+  //transient java.lang.Object[] table;
+  //transient int modCount;
+
+}

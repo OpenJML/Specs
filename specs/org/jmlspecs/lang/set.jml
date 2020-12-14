@@ -14,7 +14,7 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     public normal_behavior
       ensures \result == (this.size() == 0);
     pure
-    model public boolean empty();
+    model public boolean isEmpty();
     
     public normal_behavior
       ensures \result.size() == 0;

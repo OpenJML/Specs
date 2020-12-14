@@ -133,7 +133,7 @@ public /*@ pure @*/ final class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @   requires !isFinite(a) && a <= 1 && a >= -1;
+      @   requires isFinite(a) && a <= 1 && a >= -1;
       @   ensures -PI/2 <= \result && \result <= PI/2;
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
@@ -256,8 +256,9 @@ public /*@ pure @*/ final class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @      requires a > 0.0 && a < Double.POSITIVE_INFINITY;
-      @   ensures close(a, \result * \result, 2.0E-16);
+      @   requires a > 0.0 && a < Double.POSITIVE_INFINITY;
+      @   ensures \result >= 0;
+      @   ensures close(a, \result * \result, 2.0E-6);
       @ |}
       @*/
     public static /*@ pure @*/ double sqrt(double a);
