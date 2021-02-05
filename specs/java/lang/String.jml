@@ -1110,19 +1110,19 @@ public final class String
       @   ensures \result != null && equals(\result,Long.toString(l));
       @   ensures \result.length() <= 22;
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(long l);
+    public static /*@ pure helper non_null @*/ String valueOf(long l);
     
     /*@  public normal_behavior
       @   ensures \result != null && equals(\result,Float.toString(f));
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(float f);
+    public static /*@ pure helper non_null @*/ String valueOf(float f);
     
     /*@  public normal_behavior
       @   ensures \result != null && equals(\result,Double.toString(d));
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(double d);
+    public static /*@ pure helper non_null @*/ String valueOf(double d);
     
     /*@  public normal_behavior
       @   ensures isInterned(\result);

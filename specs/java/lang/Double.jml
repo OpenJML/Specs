@@ -59,7 +59,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     @                      by the IEEE 754 standards *);
     @        ensures !\result;
     @      |}
-    @  public static pure model boolean parseable( String s ) {
+    @  public static pure model function boolean parseable( String s ) {
         try { Double d = Double.valueOf(s); return true; }
         catch (Exception e) { return false; }
     }
@@ -103,13 +103,13 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
 
     /*@ public normal_behavior
       @    requires s != null && parseable(s);
-      @    ensures true;  // FIXME - put some conditions on the result
+      @    ensures Double.isFinite(\result);
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ pure @*/ double parseDouble(/*@ non_null @*/ String s)
+    public static /*@ pure function @*/ double parseDouble(/*@ non_null @*/ String s)
         throws NumberFormatException;
 
     //@ public normal_behavior
@@ -134,6 +134,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
 
     /*@ public normal_behavior
       @   requires parseable(s);
+      @   ensures isFinite();
       @   ensures identical(theDouble, parseDouble(s));
       @ also
       @ public exceptional_behavior
@@ -154,6 +155,10 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @*/
     public boolean isInfinite();
 
+    //@ public normal_behavior
+    //@   ensures \result == Double.isFinite(theDouble);
+    //@ model public boolean isFinite();
+    
     // specification inherited from java.lang.Object
     //@ also ensures \result.equals(toString(doubleValue()));
     public String toString();
@@ -335,7 +340,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     /** Returns true if the argument is a negative (and not positive) zero;
         the usual == returns true for comparing positive and negative zero.
     */  
-    /*@ public static model pure boolean isNegativeZero( double a) {
+    /*@ public static model pure helper function boolean isNegativeZero( double a) {
           if (a != 0) return false;
           return (new java.lang.Double(a)).equals(new java.lang.Double("-0.0"));
         } 
@@ -343,8 +348,9 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       
     /** Returns true if the argument is a positive (and not negative) zero;
         the usual == returns true for comparing positive and negative zero.
-    */  
-    /*@ public static model pure boolean isPositiveZero( double a) {
+    */ 
+
+    /*@ public static model pure helper function boolean isPositiveZero( double a) {
           if (a != 0) return false;
           return (new java.lang.Double(a)).equals(new java.lang.Double("+0.0"));
         }    
@@ -354,7 +360,14 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
         the usual == does not work to distinguish positive and negative
         zeros or to identify two NaN values as equal.
     */
-    /*@ public static model pure boolean identical(double a, double b) {
+    /*@ public normal_behavior
+          ensures \result == ((isNaN(a) == isNaN(b)) &&
+                              (isPositiveZero(a) == isPositiveZero(b)) &&
+                              (isNegativeZero(a) == isNegativeZero(b)) &&
+                              (isNaN(a) || isNaN(b) || (a==b))
+                              );
+     */
+    /*@ public static model pure helper boolean identical(double a, double b) {
       return (isNaN(a) == isNaN(b)) &&
                  (isPositiveZero(a) == isPositiveZero(b)) &&
          (isNegativeZero(a) == isNegativeZero(b)) &&
