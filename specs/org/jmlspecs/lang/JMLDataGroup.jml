@@ -28,47 +28,46 @@ import org.jmlspecs.annotation.*;
  * @version $Revision: 1.4 $
  * @author Gary T. Leavens, based on an idea of Rustan Leino
  */
-public @Pure final class JMLDataGroup implements Cloneable {
+public @Pure final class JMLDataGroup {
 
-    /** Initialize this object.
-     * @see #IT
+    /** No objects of this type may be created
      */
     /*@ private normal_behavior
-      @   assignable owner;
+      @   requires false;
       @   ensures owner == null;
       @*/
     private JMLDataGroup();
 
-    /** The only object of this type.
-     */
-    public static final @NonNull JMLDataGroup IT;
-
-    /** Return this object.
-     */
-    @NonNull
-    public Object clone();
-
-    /** Test whether the given argument is a non-null object of type
-     *  JMLDataGroup.
-     */
-    /*@ also
-      @   public normal_behavior
-      @     ensures \result <==> oth != null && oth instanceof JMLDataGroup;
-      @*/
-    public boolean equals(@Nullable Object oth); 
-    
-    /** Return a hash code for this object.
-     */
-    public int hashCode();
-
-    /** Return a string representation of this object.
-     */
-    /*@ also
-      @   public normal_behavior
-      @     ensures \result != null
-      @          && (* result is a string representation of this *);
-      @*/
-    @NonNull
-    public String toString();
+//    /** The only object of this type.
+//     */
+//    public static final JMLDataGroup IT;
+//
+//    /** Return this object.
+//     */
+//    @NonNull
+//    public Object clone();
+//
+//    /** Test whether the given argument is a non-null object of type
+//     *  JMLDataGroup.
+//     */
+//    /*@ also
+//      @   public normal_behavior
+//      @     ensures \result <==> oth != null && oth instanceof JMLDataGroup;
+//      @*/
+//    public boolean equals(@Nullable Object oth); 
+//    
+//    /** Return a hash code for this object.
+//     */
+//    public int hashCode();
+//
+//    /** Return a string representation of this object.
+//     */
+//    /*@ also
+//      @   public normal_behavior
+//      @     ensures \result != null
+//      @          && (* result is a string representation of this *);
+//      @*/
+//    @NonNull
+//    public String toString();
     
 }
