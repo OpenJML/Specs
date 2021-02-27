@@ -9,8 +9,8 @@ public class NoSuchFieldException extends Exception {
     public NoSuchFieldException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public NoSuchFieldException(String s);
+    public NoSuchFieldException(String message);
 }

@@ -227,4 +227,10 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     public static <T> Stream<T> concat(Stream<? extends T> first, Stream<? extends T> last);
+
+    public static interface Builder<T> {
+      public abstract void accept(T t);
+      public default java.util.stream.Stream.Builder<T> add(T t);
+      public abstract java.util.stream.Stream<T> build();
+    }
 }

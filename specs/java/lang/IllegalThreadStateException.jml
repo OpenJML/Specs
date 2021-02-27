@@ -9,8 +9,8 @@ public class IllegalThreadStateException extends IllegalArgumentException {
     public IllegalThreadStateException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public IllegalThreadStateException(String s);
+    public IllegalThreadStateException(String message);
 }

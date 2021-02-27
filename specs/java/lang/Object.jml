@@ -19,6 +19,7 @@
 // the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 
 package java.lang;
+import org.jmlspecs.annotation.*;
 
 /** JML's specification of java.lang.Object.
  *
@@ -89,7 +90,7 @@ public class Object {
       @     requires obj == null;
       @     ensures !\result;
       @*/
-    public /*@ pure @*/ boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
+    public @Pure boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
 
     /*@ public normal_behavior
       @   requires this instanceof Cloneable;

@@ -11,8 +11,8 @@ public class IndexOutOfBoundsException extends java.lang.RuntimeException {
     public IndexOutOfBoundsException();
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public IndexOutOfBoundsException(String s);
+    public IndexOutOfBoundsException(String message);
 }

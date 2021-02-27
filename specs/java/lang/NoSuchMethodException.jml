@@ -9,8 +9,8 @@ public class NoSuchMethodException extends Exception {
     public NoSuchMethodException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public NoSuchMethodException(String s);
+    public NoSuchMethodException(String message);
 }

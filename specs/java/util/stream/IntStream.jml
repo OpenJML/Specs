@@ -15,6 +15,8 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       public abstract IntStream peek(java.util.function.IntConsumer consumer);
       public abstract IntStream limit(long limit);
       public abstract IntStream skip(long n);
+      // Since 1.9: public default IntStream takeWhile(java.util.function.IntPredicate i);
+      // Since 1.9: public default IntStream dropWhile(java.util.function.IntPredicate i);
       public abstract void forEach(java.util.function.IntConsumer consumer);
       public abstract void forEachOrdered(java.util.function.IntConsumer consumer);
       public abstract int[] toArray();
@@ -45,10 +47,10 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       //@ also public normal_behavior
       //@   ensures true;
       //@ pure
-      public abstract IntStream sequential();
-      public abstract IntStream parallel();
-      public abstract java.util.PrimitiveIterator.OfInt iterator();
-      public abstract java.util.Spliterator.OfInt spliterator();
+      public default IntStream sequential();
+      public default IntStream parallel();
+      public default java.util.PrimitiveIterator.OfInt iterator();
+      public default java.util.Spliterator.OfInt spliterator();
       public static IntStream.Builder builder();
       
       //@ public normal_behavior
@@ -66,6 +68,7 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       //@ pure helper function
       public static IntStream of(int... ints);
       public static IntStream iterate(int i, java.util.function.IntUnaryOperator op);
+      // Since 1.9: public static IntStream iterate(int i, java.util.function.IntPredicate p, java.util.function.IntUnaryOperator op);
       public static IntStream generate(java.util.function.IntSupplier supplier);
       //@ public normal_behavior
       //@   requires to >= from;
@@ -80,12 +83,11 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       //@ pure helper function
       public static IntStream rangeClosed(int from, int to);
       public static IntStream concat(IntStream first, IntStream last);
-      public BaseStream parallel();
 
-      //@ also public normal_behavior
-      //@   ensures true;
-      //@ pure
-      public BaseStream sequential();
-      public java.util.Spliterator spliterator();
-      public java.util.Iterator iterator();
+      public static interface Builder {
+        public abstract void accept(int i);
+        public default java.util.stream.IntStream.Builder add(int i);
+        public abstract java.util.stream.IntStream build();
+      }
+
 }

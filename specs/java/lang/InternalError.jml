@@ -28,7 +28,7 @@ public class InternalError extends VirtualMachineError {
     public /*@ pure @*/ InternalError();
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(s);
-    public /*@ pure @*/ InternalError(String s);
+    //@   ensures standardThrowable(message);
+    public /*@ pure @*/ InternalError(String message);
 }
 

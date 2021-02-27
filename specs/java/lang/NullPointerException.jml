@@ -8,9 +8,9 @@ public class NullPointerException extends RuntimeException {
     public NullPointerException();
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public NullPointerException(String s);
+    public NullPointerException(String message);
 }
 

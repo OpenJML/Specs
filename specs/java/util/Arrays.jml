@@ -2046,17 +2046,17 @@ public class Arrays {
     //@ public normal_behavior
     //@   ensures true;
     //@ pure helper
-    public static int hashCode(java.lang.Object[] b);
+    public static int hashCode(Object[] b);
     //@ public normal_behavior
     //@   ensures true;
     //@ pure helper
-    public static int deepHashCode(java.lang.Object[] b);
+    public static int deepHashCode(Object[] b);
     
     //@ public normal_behavior
     //@   requires b != null;
     //@   ensures true;
     //@ pure helper
-    public static java.lang.String deepToString(/*@ nullable */ java.lang.Object[] b);
+    public static java.lang.String deepToString(/*@ nullable */ Object[] b);
 
 }
 

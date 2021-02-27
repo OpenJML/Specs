@@ -9,8 +9,8 @@ public class IllegalMonitorStateException extends RuntimeException {
     public IllegalMonitorStateException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public IllegalMonitorStateException(String s);
+    public IllegalMonitorStateException(String message);
 }

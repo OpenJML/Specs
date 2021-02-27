@@ -39,12 +39,6 @@ public class SecurityManager {
 
     // METHODS AND CONSTRUCTORS
 
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated public boolean getInCheck();
-
     /*@
       @ 
       @*/
@@ -257,9 +251,5 @@ public class SecurityManager {
       @*/
     public ThreadGroup getThreadGroup();
 
-    // FIELDS
-
-    /** @deprecated */
-    @Deprecated protected boolean inCheck;
 }
 

@@ -28,7 +28,7 @@ import java.io.InputStream;
 public final class Class<T> implements java.io.Serializable,
     AnnotatedElement, GenericDeclaration, Type {
 
-    private Class(ClassLoader classLoader);
+    private Class(ClassLoader classLoader, Class<?> arrayComponentType);
 
 
     /*@ also public normal_behavior

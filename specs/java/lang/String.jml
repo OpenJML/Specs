@@ -428,7 +428,7 @@ public final class String
       @   requires !(* (charset is a supporting encoding) *);
       @   signals_only UnsupportedEncodingException;
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(java.nio.charset.Charset charset)
+    public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(Charset charset)
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior
@@ -769,11 +769,11 @@ public final class String
       @*/
     public /*@ pure @*/ int indexOf(String str, int fromIndex);
 
-    // a package-visible method - not specified
-    static /*@ pure @*/
-        int indexOf(char[] source, int sourceOffset, int sourceCount,
-                    char[] target, int targetOffset, int targetCount,
-                    int fromIndex);
+//    // a package-visible method - not specified
+//    static /*@ pure @*/
+//        int indexOf(char[] source, int sourceOffset, int sourceCount,
+//                    char[] target, int targetOffset, int targetCount,
+//                    int fromIndex);
       
     /*@  public normal_behavior
       @   requires str != null;
@@ -807,11 +807,11 @@ public final class String
       @*/
     public /*@ pure @*/ int lastIndexOf(String str, int fromIndex);
       
-    // a package-visible method not specified
-    static /*@ pure @*/
-        int lastIndexOf(char[] source, int sourceOffset, int sourceCount,
-                        char[] target, int targetOffset, int targetCount,
-                        int fromIndex);
+//    // a package-visible method not specified
+//    static /*@ pure @*/
+//        int lastIndexOf(char[] source, int sourceOffset, int sourceCount,
+//                        char[] target, int targetOffset, int targetCount,
+//                        int fromIndex);
 
 
     /*@  public normal_behavior
