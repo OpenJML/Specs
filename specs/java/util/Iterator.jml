@@ -43,7 +43,7 @@ public interface Iterator<E> {
     /*-ESC@ public model instance boolean moreElements;
     @                               in objectState;
     @*/
-    //-ESC@ public represents moreElements = hasNext(); // FIXME - does this recursive definition work for RAC?
+    //+RAC@ public represents moreElements = hasNext(); // FIXME - does this recursive definition work for RAC?
                                                         // FIXME - should have a warning for ESC
 
     /** Do we ever return null as an element?

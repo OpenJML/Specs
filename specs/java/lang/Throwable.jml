@@ -36,6 +36,8 @@
 
 package java.lang;
 // @ model import java.util.Arrays;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 
 public class Throwable extends Object implements java.io.Serializable
 {
@@ -48,16 +50,15 @@ public class Throwable extends Object implements java.io.Serializable
     //@ public model nullable Throwable _cause; in objectState;
     //@ public model boolean _causeSet;         in _cause;
 
-    //@ public model non_null StackTraceElement[/*#@non_null*/] _stackTrace; in objectState;
+    //@ public model non_null StackTraceElement[] _stackTrace; in objectState;
 
-    //. FIXME @ public invariant \nonnullelements(_stackTrace);
+    //  FIXME @ public invariant \nonnullelements(_stackTrace);
 
-    /*@
-      @ public normal_behavior
+    /*@ public normal_behavior
       @   ensures \result == (_message == null && _cause == null && _causeSet == false);
       @   ensures \nonnullelements(_stackTrace);
       @   ensures _throwables.length == 0;
-        public pure helper model boolean standardThrowable();
+      @ public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
       @   ensures \result == (_cause == null && _causeSet == false);
@@ -205,13 +206,13 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   requires s.isOpen;
     //-RAC@   assignable s.outputText;
     //-RAC@   ensures s.isOpen;
-    public void printStackTrace(/*@non_null*/java.io.PrintStream s);
+    public void printStackTrace(/*@non_null*/PrintStream s);
 
     //-RAC@ public normal_behavior
     //-RAC@   //requires s.isOpen;
     //-RAC@   assignable s.outputText;
     //-RAC@   //ensures s.isOpen;
-    public void printStackTrace(/*@non_null*/java.io.PrintWriter s);
+    public void printStackTrace(/*@non_null*/PrintWriter s);
 
     /*@ public normal_behavior
       @   assignable _stackTrace;
@@ -246,12 +247,12 @@ public class Throwable extends Object implements java.io.Serializable
     //@  assignable _throwables;
     //@  ensures _throwables.length == \old(_throwables).length + 1;
     //@  ensures (* content is what it should be *);
-    public final synchronized void addSuppressed(java.lang.Throwable t);
+    public final synchronized void addSuppressed(Throwable t);
     
     //@ public normal_behavior
     //@    requires true;
     //-RAC@   ensures \result == _throwables; // FIXME - is the result the same array on every call?
     //@ pure helper
-    public final synchronized java.lang.Throwable[] getSuppressed();
+    public final synchronized Throwable[] getSuppressed();
 
 }

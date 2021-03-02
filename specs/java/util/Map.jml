@@ -94,22 +94,22 @@ public interface Map<K,V> {
     //-RAC@ model public instance non_null intset keys; in objectState;
     //-RAC@ model public instance V nullValue;
     //-RAC@ model public instance boolean nullPresent;
-    //-RAC@ model public instance \bigint size; in objectState;
-    //-RAC@ public represents size = size();
+    //-RAC@ model public instance \bigint _size; in objectState;
+    //-RAC@ public represents _size = size();
 
     //@ public normal_behavior
-    //-RAC@   ensures \result == size;
+    //-RAC@   ensures \result == _size;
     /*@ pure helper @*/
     int size();
 
     /*-RAC@ public normal_behavior
-      @    //ensures \result <==> (size == 0 && !nullPresent && (\forall \bigint i;; keys[i] == false)); 
-      @    ensures \result <==> (size == 0); 
+      @    //ensures \result <==> (_size == 0 && !nullPresent && (\forall \bigint i;; keys[i] == false)); 
+      @    ensures \result <==> (_size == 0); 
       @*/
     /*@ pure @*/ boolean isEmpty();
     
     /*-RAC@ public behavior
-      @    ensures size==0 ==> !\result;
+      @    ensures _size==0 ==> !\result;
       @    ensures keys[key.uniqueHash] <==> \result;
       @
       @    signals_only ClassCastException, NullPointerException;
@@ -146,7 +146,7 @@ public interface Map<K,V> {
       @    ensures keys[key.uniqueHash];
       @    ensures modelMap[key.uniqueHash] == value;
       @    ensures \result == \old(keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);
-      @    ensures size == \old(keys[key.uniqueHash] ? size : size+1 );
+      @    ensures _size == \old(keys[key.uniqueHash] ? _size : _size+1 );
       @ also public normal_behavior
       @    requires key == null;
       @    // requires containsNull || (key != null && value != null);
@@ -154,7 +154,7 @@ public interface Map<K,V> {
       @    ensures nullValue == value;
       @    ensures nullPresent;
       @    ensures \result == \old(nullPresent ? nullValue : null);
-      @    ensures size == \old(nullPresent ? size : size+1 );
+      @    ensures _size == \old(nullPresent ? _size : _size+1 );
       @*/
     /* FIXME @
       @ also exceptional_behavior
@@ -176,12 +176,12 @@ public interface Map<K,V> {
       @    requires key != null;
       @    assignable objectState;
       @    ensures \result != null ==> keys[key.uniqueHash] == false;
-      @    ensures \result != null ==> size == \old(keys[key.uniqueHash] ? size-1 : size);
+      @    ensures \result != null ==> _size == \old(keys[key.uniqueHash] ? _size-1 : _size);
       @  also public normal_behavior
       @    requires key == null;
       @    assignable objectState;
       @    ensures nullPresent == false;
-      @    ensures \result != null ==> size == \old(nullPresent ? size-1 : size);
+      @    ensures \result != null ==> _size == \old(nullPresent ? _size-1 : _size);
       @*/
     /* @ // FIXME
       @    signals_only ClassCastException, NullPointerException,
@@ -242,14 +242,14 @@ public interface Map<K,V> {
 
     /*-RAC@ public normal_behavior 
       @    ensures \result != null;
-      @    ensures \result.size() == size;
+      @    ensures \result.size() == _size;
            // FIXME
       @*/
     /*@ pure @*/ Collection<V> values();
 
     /*-RAC@ public normal_behavior
       @    ensures \result != null; 
-      @    ensures \result.size() == size;
+      @    ensures \result.size() == _size;
            // FIXME
       @*/
     /*@ pure @*/ Set<Entry<K,V>> entrySet();

@@ -9,8 +9,8 @@ public class NegativeArraySizeException extends RuntimeException {
     public NegativeArraySizeException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public NegativeArraySizeException(String message);
+    public NegativeArraySizeException(String s);
 }

@@ -10,34 +10,34 @@ public final class Objects {
   //@   ensures (obj1 == null && obj2 != null || obj1 != null && obj2 == null) ==> !\result;
   //@   ensures (obj1 != null && obj2 != null) ==> \result == obj1.equals(obj2);
   //@ pure
-  public static boolean equals(/*@ nullable */java.lang.Object obj1, /*@ nullable */java.lang.Object obj2);
+  public static boolean equals(/*@ nullable */Object obj1, /*@ nullable */Object obj2);
   // FIXME - more to specify
-  public static boolean deepEquals(/*@ nullable */java.lang.Object obj1, /*@ nullable */java.lang.Object obj2);
+  public static boolean deepEquals(/*@ nullable */Object obj1, /*@ nullable */Object obj2);
   
   //@ public normal_behavior
   //@   ensures \result == (obj == null ? 0 : obj.hashCode());
   //@ pure function
-  public static int hashCode(/*@ nullable */java.lang.Object obj);
+  public static int hashCode(/*@ nullable */Object obj);
   
   //@ public normal_behavior
   //@   ensures \result == Arrays.hashCode(objs);
   //@ pure function
-  public static int hash(java.lang.Object... objs);
+  public static int hash(Object... objs);
   
   //@ public normal_behavior
   //@   ensures \result == (obj == null ? "null" : obj.toString());
   //@ pure function
-  public static java.lang.String toString(/*@ nullable */java.lang.Object obj);
+  public static String toString(/*@ nullable */Object obj);
   
   //@ public normal_behavior
   //@   ensures \result == (obj == null ? msg : obj.toString());
   //@ pure function
-  public static /*@ nullable */ java.lang.String toString(/*@ nullable */java.lang.Object obj, /*@ nullable */java.lang.String msg);
+  public static /*@ nullable */ String toString(/*@ nullable */Object obj, /*@ nullable */String msg);
 
   //@ public normal_behavior
   //@   ensures (* FIXME - what result; check nullity *);
   //@ pure
-  public static <T> int compare(T lhs, T rhs, java.util.Comparator<? super T> cmp);
+  public static <T> int compare(T lhs, T rhs, Comparator<? super T> cmp);
 
   //@ public normal_behavior
   //@   requires obj != null;
@@ -53,17 +53,17 @@ public final class Objects {
   //@ also public exceptional_behavior
   //@   requires obj == null;  // TODO - specify the use of msg
   //@ pure function
-  public static <T> T requireNonNull(/*@ nullable */ T obj, java.lang.String msg);
+  public static <T> T requireNonNull(/*@ nullable */ T obj, String msg);
   
   //@ public normal_behavior
   //@   ensures \result == (obj == null);
   //@ pure
-  public static boolean isNull(/*@ nullable */ java.lang.Object obj);
+  public static boolean isNull(/*@ nullable */ Object obj);
 
   //@ public normal_behavior
   //@   ensures \result == (obj != null);
   //@ pure
-  public static boolean nonNull(/*@ nullable */ java.lang.Object obj);
+  public static boolean nonNull(/*@ nullable */ Object obj);
 
   //@ public normal_behavior
   //@   requires obj != null;
@@ -71,5 +71,5 @@ public final class Objects {
   //@ also public exceptional_behavior
   //@   requires obj == null;  // TODO: specify the use of msg
   //@ pure function
-public static <T> T requireNonNull(T obj, java.util.function.Supplier<java.lang.String> msg);
+public static <T> T requireNonNull(T obj, java.util.function.Supplier<String> msg);
 }

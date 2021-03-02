@@ -1,7 +1,7 @@
 package java.lang;
 //@ non_null_by_default // NOTE: This is not publicly visible
 abstract class AbstractStringBuilder implements Appendable,CharSequence {
-    char[] value; //@ in _value;
+    byte[] value; //@ in _value;
     int count; //@ in _value;
     
     // Present in some but not all Java builds

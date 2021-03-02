@@ -192,10 +192,10 @@ public interface List<E> extends Collection<E> {
       @   assignable objectState;
       @   ensures \not_modified(containsNull,values.length);
       @   ensures \result == (\old(get(index)));
-      @   ensures get(index) == element; */
-    /*  @   ensures (\forall \bigint i; 0<=i && i<content.theSize && i != index;  FIXME - fix the use of get(content,i)
-      @               get(content,i) == \old(get(content,i))); */
-    /*-RAC@   signals_only UnsupportedOperationException, ClassCastException,
+      @   ensures get(index) == element;
+      @   //  ensures (\forall \bigint i; 0<=i && i<content.theSize && i != index;  FIXME - fix the use of get(content,i)
+      @   //            get(content,i) == \old(get(content,i)));
+      @   signals_only UnsupportedOperationException, ClassCastException,
                          NullPointerException, IllegalArgumentException;
       @   signals (UnsupportedOperationException)
       @           (* set method not supported by list *);

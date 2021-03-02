@@ -29,8 +29,8 @@ public abstract class VirtualMachineError extends Error {
     public /*@ pure @*/ VirtualMachineError();
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
-    public /*@ pure @*/ VirtualMachineError(String s);
+    public /*@ pure @*/ VirtualMachineError(String message);
 }
 

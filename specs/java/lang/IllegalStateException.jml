@@ -18,7 +18,7 @@ public class IllegalStateException extends RuntimeException {
       @   ensures cause == null ==> standardThrowable();
       @*/
     //@ pure
-    public IllegalStateException(/*@ nullable */ Throwable cause;
+    public IllegalStateException(/*@ nullable */ Throwable cause);
 
     /*@ public normal_behavior
       @   ensures cause != null ==> standardThrowable(message,cause);

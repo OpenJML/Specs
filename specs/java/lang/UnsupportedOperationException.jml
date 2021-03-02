@@ -9,8 +9,8 @@ public class UnsupportedOperationException extends RuntimeException {
     public UnsupportedOperationException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public UnsupportedOperationException(String s);
+    public UnsupportedOperationException(String message);
 }

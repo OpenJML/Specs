@@ -21,7 +21,7 @@
 
 package java.lang.reflect;
 
-public final class Array extends java.lang.Object {
+public final class Array extends Object {
 
     //@ axiom (\forall Object o; \elemtype(\typeof(o)) == \type(int) ==> o instanceof int[]);
 
@@ -39,8 +39,8 @@ public final class Array extends java.lang.Object {
 
       @*/
     //@ pure
-    public static native int getLength(/*@ non_null */ java.lang.Object Param0)
-        throws java.lang.IllegalArgumentException;
+    public static native int getLength(/*@ non_null */ Object Param0)
+        throws IllegalArgumentException;
 
     /*@
       @ public behavior
@@ -66,29 +66,29 @@ public final class Array extends java.lang.Object {
       @ 
       @*/
     //@ pure
-    public static native byte getByte(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native byte getByte(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
     //@ pure
-    public static native char getChar(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native char getChar(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
     //@ pure
-    public static native double getDouble(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native double getDouble(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
     //@ pure
-    public static native float getFloat(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native float getFloat(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ public behavior
@@ -114,96 +114,96 @@ public final class Array extends java.lang.Object {
       @ 
       @*/
     //@ pure
-    public static native int getInt(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native int getInt(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
     //@ pure
-    public static native long getLong(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native long getLong(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
     //@ pure
-    public static native short getShort(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native short getShort(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
     //@ pure
-    public static native boolean getBoolean(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native boolean getBoolean(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setByte(/*@ non_null */ java.lang.Object Param0, int Param1, byte Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setByte(/*@ non_null */ Object Param0, int Param1, byte Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setChar(/*@ non_null */ java.lang.Object Param0, int Param1, char Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setChar(/*@ non_null */ Object Param0, int Param1, char Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setDouble(/*@ non_null */ java.lang.Object Param0, int Param1, double Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setDouble(/*@ non_null */ Object Param0, int Param1, double Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setFloat(/*@ non_null */ java.lang.Object Param0, int Param1, float Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setFloat(/*@ non_null */ Object Param0, int Param1, float Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setInt(/*@ non_null */ java.lang.Object Param0, int Param1, int Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setInt(/*@ non_null */ Object Param0, int Param1, int Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setLong(/*@ non_null */ java.lang.Object Param0, int Param1, long Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setLong(/*@ non_null */ Object Param0, int Param1, long Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setShort(/*@ non_null */ java.lang.Object Param0, int Param1, short Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setShort(/*@ non_null */ Object Param0, int Param1, short Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void setBoolean(/*@ non_null */ java.lang.Object Param0, int Param1, boolean Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void setBoolean(/*@ non_null */ Object Param0, int Param1, boolean Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@ public normal_behavior
       @   requires size >= 0;
       @   ensures \erasure(\elemtype(\typeof(\result))) == cls;
       @ also public exceptional_behavior
       @   requires size < 0;
-      @   signals_only java.lang.NegativeArraySizeException;
+      @   signals_only NegativeArraySizeException;
       @ 
       @*/
     //@ pure non_null
-    public static java.lang.Object newInstance(/*@ non_null */ java.lang.Class<?> cls, int size)
-        throws java.lang.NegativeArraySizeException;
+    public static Object newInstance(/*@ non_null */ Class<?> cls, int size)
+        throws NegativeArraySizeException;
 
     /*@
       @ 
       @*/
     //@ pure non_null
-    public static java.lang.Object newInstance(/*@ non_null */ java.lang.Class<?> Param0, int[] Param1)
-        throws java.lang.IllegalArgumentException, java.lang.NegativeArraySizeException;
+    public static Object newInstance(/*@ non_null */ Class<?> Param0, int[] Param1)
+        throws IllegalArgumentException, NegativeArraySizeException;
 
     /*@
       @ public behavior
@@ -233,12 +233,12 @@ public final class Array extends java.lang.Object {
       @ 
       @*/
     //@ pure
-    public static native /*@nullable*/ java.lang.Object get(/*@ non_null */ java.lang.Object Param0, int Param1)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native /*@nullable*/ Object get(/*@ non_null */ Object Param0, int Param1)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 
     /*@
       @ 
       @*/
-    public static native void set(/*@ non_null */ java.lang.Object Param0, int Param1, java.lang.Object Param2)
-        throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException;
+    public static native void set(/*@ non_null */ Object Param0, int Param1, Object Param2)
+        throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
 }
