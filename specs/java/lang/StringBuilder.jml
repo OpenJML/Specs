@@ -15,9 +15,9 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     public StringBuilder(int k);
  
     //@ public normal_behavior
-    //@   ensures _value == s;
+    //@   ensures _value == str;
     //@ pure
-    public StringBuilder(String s);
+    public StringBuilder(String str);
 
     //@ public normal_behavior
     //@   ensures (* _value == cs *);

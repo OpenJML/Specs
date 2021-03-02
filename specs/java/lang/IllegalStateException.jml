@@ -8,10 +8,10 @@ public class IllegalStateException extends RuntimeException {
     public IllegalStateException();
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public IllegalStateException(String message);
+    public IllegalStateException(String s);
 
     /*@ public normal_behavior
       @   ensures cause != null ==> standardThrowable(cause);

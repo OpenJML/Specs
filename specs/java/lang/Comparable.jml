@@ -63,7 +63,7 @@ public interface Comparable<T> {
      */
     //@ public behavior
     //@    signals (Exception) false;
-    //@ pure public model boolean consistentWithEquals();
+    //@ pure public model boolean consistentWithEquals() { return true; }
     
     /** This declares that the value of consistentWithEquals() is the same for all members of a class.
      * (We don't make consistentWithEquals static so it can be overridden and dynamically dispatched.)

@@ -8,14 +8,14 @@ public class ExecutionException extends Exception {
     protected ExecutionException();
 
     //@ protected normal_behavior
-    //@   ensures standardThrowable(msg);
+    //@   ensures standardThrowable(message);
     //@ pure
-    protected ExecutionException(String msg);
+    protected ExecutionException(String message);
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(msg,cause);
+    //@   ensures standardThrowable(message,cause);
     //@ pure
-    public ExecutionException(String msg, Throwable cause);
+    public ExecutionException(String message, Throwable cause);
 
     //@ public normal_behavior
     //@   ensures standardThrowable(cause);

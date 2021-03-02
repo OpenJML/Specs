@@ -79,7 +79,7 @@ public final class String
       @   ensures this.length() == value.length;
       @   ensures this.charArray.length == value.length;
       @   ensures initialCharSequence();
-      @   ensures equal(charArray,value);
+      @   ensures CharSequence.equal(charArray,value);
       @   ensures (\forall int i; 0<=i && i<value.length; this.charAt(i) == value[i]);
       @
       @ also public exceptional_behavior
@@ -347,7 +347,7 @@ public final class String
       @             && dst != null
       @             && dst.length >= dstBegin + (srcEnd - srcBegin);
       @   modifies dst[dstBegin .. dstBegin+srcEnd-srcBegin-1];
-      @   ensures equal(charArray,srcBegin,dst,dstBegin,srcEnd-srcBegin);
+      @   ensures CharSequence.equal(charArray,srcBegin,dst,dstBegin,srcEnd-srcBegin);
       @ also
       @  public exceptional_behavior
       @   requires (srcBegin < 0

@@ -9,8 +9,8 @@ public class MalformedURLException extends java.io.IOException {
     public MalformedURLException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(msg);
       @*/
     //@ pure
-    public MalformedURLException(String s);
+    public MalformedURLException(String msg);
 }

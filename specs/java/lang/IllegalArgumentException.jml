@@ -8,9 +8,9 @@ public class IllegalArgumentException extends RuntimeException {
     public IllegalArgumentException();
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public IllegalArgumentException(String message);
+    public IllegalArgumentException(String s);
 }
 

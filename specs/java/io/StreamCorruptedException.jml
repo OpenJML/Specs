@@ -9,8 +9,8 @@ public class StreamCorruptedException extends ObjectStreamException {
     public StreamCorruptedException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(reason);
       @*/
     //@ pure
-    public StreamCorruptedException(String s);
+    public StreamCorruptedException(String reason);
 }

@@ -9,8 +9,8 @@ public class UnknownServiceException extends java.io.IOException {
     public UnknownServiceException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(msg);
       @*/
     //@ pure
-    public UnknownServiceException(String s);
+    public UnknownServiceException(String msg);
 }
