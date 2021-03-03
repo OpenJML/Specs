@@ -7,6 +7,12 @@ public class NoSuchAlgorithmException extends GeneralSecurityException {
       @*/
     //@ pure
     public NoSuchAlgorithmException();
+    
+    /*@ public normal_behavior
+      @   ensures standardThrowable(msg);
+      @*/
+    //@ pure
+    public NoSuchAlgorithmException(String msg);
   
     /*@ public normal_behavior
       @   ensures standardThrowable(cause);
@@ -15,8 +21,8 @@ public class NoSuchAlgorithmException extends GeneralSecurityException {
     public NoSuchAlgorithmException(Throwable cause);
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s,cause);
+      @   ensures standardThrowable(message,cause);
       @*/
     //@ pure
-    public NoSuchAlgorithmException(String s, Throwable cause);
+    public NoSuchAlgorithmException(String message, Throwable cause);
 }

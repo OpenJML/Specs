@@ -49,42 +49,6 @@ public class SecurityManager {
       @*/
     protected Class[] getClassContext();
 
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated protected ClassLoader currentClassLoader();
-
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated protected Class<?> currentLoadedClass(); // 1.5 DIFFERENCE
-
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated protected int classDepth(String name);
-
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated protected int classLoaderDepth();
-
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated protected boolean inClass(String name);
-
-    /** @deprecated */
-    /*@
-      @ 
-      @*/
-    @Deprecated protected boolean inClassLoader();
-
     /*@
       @ 
       @*/
@@ -204,22 +168,7 @@ public class SecurityManager {
     /*@
       @ 
       @*/
-    @Deprecated public boolean checkTopLevelWindow(Object window);
-
-    /*@
-      @ 
-      @*/
     public void checkPrintJobAccess();
-
-    /*@
-      @ 
-      @*/
-    @Deprecated public void checkSystemClipboardAccess();
-
-    /*@
-      @ 
-      @*/
-    @Deprecated public void checkAwtEventQueueAccess();
 
     /*@
       @ 
@@ -235,11 +184,6 @@ public class SecurityManager {
       @ 
       @*/
     public void checkSetFactory();
-
-    /*@
-      @ 
-      @*/
-    @Deprecated public void checkMemberAccess(Class<?> clazz, int which); // 1.5 DIFFERENCE
 
     /*@
       @ 

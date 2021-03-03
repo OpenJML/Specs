@@ -497,11 +497,11 @@ public class GregorianCalendar extends Calendar {
       @         && locale.equals(Locale.getDefault());
       @ ensures_redundantly fields[YEAR] == year 
       @                     && fields[MONTH] == month
-      @                     && fields[DATE] == date
+      @                     && fields[DATE] == dayOfMonth
       @                     && isSet[YEAR] && isSet[MONTH]
       @                     && isSet[DATE] && calendarFieldsAreSet();
       @*/
-    public GregorianCalendar(int year, int month, int date);
+    public GregorianCalendar(int year, int month, int dayOfMonth);
 
     /*@ public normal_behavior
       @ assignable zone, locale;
@@ -512,14 +512,14 @@ public class GregorianCalendar extends Calendar {
       @         locale.equals(Locale.getDefault());
       @ ensures_redundantly fields[YEAR] == year
       @                     && fields[MONTH] == month
-      @                     && fields[DATE] == date
-      @                     && fields[HOUR_OF_DAY] == hour
+      @                     && fields[DATE] == dayOfMonth
+      @                     && fields[HOUR_OF_DAY] == hourOfDay
       @                     && fields[MINUTE] == minute
       @                     && isSet[YEAR] && isSet[MONTH]
       @                     && isSet[DATE] && isSet[HOUR_OF_DAY]
       @                     && isSet[MINUTE] && calendarFieldsAreSet();
       @*/
-    public GregorianCalendar(int year, int month, int date, int hour,
+    public GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay,
                              int minute);
 
     /*@ public normal_behavior
@@ -532,8 +532,8 @@ public class GregorianCalendar extends Calendar {
       @         && locale.equals(Locale.getDefault());
       @ ensures_redundantly fields[YEAR] == year
       @                     && fields[MONTH] == month
-      @                     && fields[DATE] == date
-      @                     && fields[HOUR_OF_DAY] == hour
+      @                     && fields[DATE] == dayOfMonth
+      @                     && fields[HOUR_OF_DAY] == hourOfDay
       @                     && fields[MINUTE] == minute
       @                     && fields[SECOND] == second
       @                     && isSet[YEAR] && isSet[MONTH]
@@ -541,7 +541,7 @@ public class GregorianCalendar extends Calendar {
       @                     && isSet[MINUTE] && isSet[SECOND]
       @                     && calendarFieldsAreSet();
       @*/
-    public GregorianCalendar(int year, int month, int date, int hour,
+    public GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay,
                              int minute, int second);
 
     /*@ public normal_behavior
@@ -777,11 +777,11 @@ public class GregorianCalendar extends Calendar {
       @    assignable fields[*];
       @ also
       @  public model_program {
-      @      if (up) { roll(fld, 1); }
-      @      else { roll(fld, -1); }
+      @      if (up) { roll(field, 1); }
+      @      else { roll(field, -1); }
       @  }
       @*/
-    public void roll(int fld, boolean up);
+    public void roll(int field, boolean up);
 
     /*@ also
       @   public normal_behavior

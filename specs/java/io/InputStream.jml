@@ -225,9 +225,9 @@ public abstract class InputStream implements Closeable {
     @   requires _markSupported;
     @   modifies markPosition, markLimit;
     @   ensures markPosition == readPosition;
-    @   ensures markLimit >= readPosition + readLimit;
+    @   ensures markLimit >= readPosition + readlimit;
     @*/
-    public synchronized void mark(int readLimit);
+    public synchronized void mark(int readlimit);
 
     //-RAC@ public normal_behavior
     //-RAC@   ensures \result == _markSupported;

@@ -12,15 +12,15 @@ public class OptionalDataException extends ObjectStreamException {
     
     /*@ normal_behavior
       @   ensures standardThrowable();
-      @   ensures length == i;
+      @   ensures length == len;
       @*/
     //@ pure
-    OptionalDataException(int i);
+    OptionalDataException(int len);
   
     /*@ normal_behavior
       @   ensures standardThrowable();
-      @   ensures eof == b;
+      @   ensures eof == end;
       @*/
     //@ pure
-    OptionalDataException(boolean b);
+    OptionalDataException(boolean end);
 }

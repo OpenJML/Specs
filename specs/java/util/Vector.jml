@@ -204,18 +204,18 @@ public class Vector<E> extends AbstractList<E>
     public /*@ pure @*/ boolean contains(Object elem);
 
     // specification inherited
-    public synchronized /*@ pure @*/ int indexOf(Object elem);
+    public synchronized /*@ pure @*/ int indexOf(Object o);
 
     /*-RAC@  public normal_behavior
-      @    requires 0 <= index && index < elementCount;
+      @    requires 0 <= index < elementCount;
       @    ensures \result == -1 || ( index <= \result && \result < elementCount);
       @    ensures !\key("RAC") ==> \result == -1 <==> (\forall int i; index<=i && i<size(); 
-                                                !nullequals(elem,get(i)));
-      @    ensures !\key("RAC") ==> \result != -1 ==> nullequals(elem,get(\result));
-      @    ensures !\key("RAC") ==> (\forall int i; index<=i && i<\result; !nullequals(elem,get(i)));
+                                                !nullequals(o,get(i)));
+      @    ensures !\key("RAC") ==> \result != -1 ==> nullequals(o,get(\result));
+      @    ensures !\key("RAC") ==> (\forall int i; index<=i && i<\result; !nullequals(o,get(i)));
              // FIXME - exceptions
       @*/
-    public synchronized /*@ pure @*/ int indexOf(Object elem, int index);
+    public synchronized /*@ pure @*/ int indexOf(Object o, int index);
 
     // inherits specification
     public /*@ pure @*/ synchronized int lastIndexOf (Object elem);

@@ -21,11 +21,11 @@ public class FileInputStream extends InputStream {
 
     /*@
       @ public behavior
-      @   requires fd != null;
+      @   requires fdObj != null;
       @   assignable \not_specified;
       @   ensures initialInputStream();
       @*/
-    public FileInputStream(FileDescriptor fd);
+    public FileInputStream(FileDescriptor fdObj);
 
     /*@
       @ public behavior

@@ -9,10 +9,10 @@ public class GeneralSecurityException extends Exception {
     public GeneralSecurityException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(msg);
       @*/
     //@ pure
-    public GeneralSecurityException(String s);
+    public GeneralSecurityException(String msg);
 
     /*@ public normal_behavior
       @   ensures standardThrowable(cause);
@@ -21,8 +21,8 @@ public class GeneralSecurityException extends Exception {
     public GeneralSecurityException(Throwable cause);
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s,cause);
+      @   ensures standardThrowable(message,cause);
       @*/
     //@ pure
-    public GeneralSecurityException(String s, Throwable cause);
+    public GeneralSecurityException(String message, Throwable cause);
 }

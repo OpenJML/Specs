@@ -42,14 +42,14 @@ public class Hashtable<K,V> extends Dictionary<K,V>
       @                          initialCapacity == i);
       @ public pure model boolean initialHashtable(double f, int i);
       @
-      @ public normal_behavior
-      @   ensures initialHashtable(.75,11);
-      @ public pure model boolean initialHashtable();
+      @ //public normal_behavior
+      @ //  ensures initialHashtable(.75,11);
+      @ //public pure model boolean initialHashtable();
       @*/
 
     /*-RAC@ public normal_behavior
       @   requires initialCapacity >= 0;
-      @   ensures initialHashtable(mLoadFactor, initialCapacity);
+      @   ensures initialHashtable((double)mLoadFactor, initialCapacity);
       @*/           
     //@ pure
     public Hashtable(int initialCapacity, float mLoadFactor); 

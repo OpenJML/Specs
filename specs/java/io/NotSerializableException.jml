@@ -9,8 +9,8 @@ public class NotSerializableException extends ObjectStreamException {
     public NotSerializableException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(classname);
       @*/
     //@ pure
-    public NotSerializableException(String s);
+    public NotSerializableException(String classname);
 }

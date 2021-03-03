@@ -25,7 +25,7 @@ public abstract class Buffer {
     //@ public invariant limit <= capacity;
 
     long address;
-    Buffer(int i, int j, int k, int m);
+    //Buffer(int mark, int pos, int lim, int cap, MemorySegmentProxy segment);
 
     //@ public normal_behavior
     //@   ensures \result == capacity;
@@ -135,7 +135,5 @@ public abstract class Buffer {
     final int checkIndex(int i);
     final int checkIndex(int i, int j);
     final int markValue();
-    final void truncate();
     final void discardMark();
-    static void checkBounds(int i, int j, int k);
 }

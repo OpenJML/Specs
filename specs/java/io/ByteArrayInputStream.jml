@@ -25,9 +25,9 @@ public class ByteArrayInputStream extends InputStream {
 
     /*@
       @ public normal_behavior
-      @    requires bytes != null;
+      @    requires buf != null;
       @    ensures initialInputStream();
-      @    ensures buf == bytes;
+      @    ensures this.buf == buf;
       @    ensures pos == 0;
       @    ensures count == buf.length;
       @    ensures mark == 0;
@@ -35,21 +35,21 @@ public class ByteArrayInputStream extends InputStream {
       @    ensures valid();
       @ pure
       @*/
-    public ByteArrayInputStream(byte[] bytes);
+    public ByteArrayInputStream(byte[] buf);
 
     /*@
       @ public normal_behavior
-      @    requires bytes != null;
+      @    requires buf != null;
       @    ensures initialInputStream();
-      @    ensures buf == bytes;
-      @    ensures pos == off;
-      @    ensures count == Math.min(bytes.length,off+len);
-      @    ensures mark == off;
+      @    ensures this.buf == buf;
+      @    ensures pos == offset;
+      @    ensures count == Math.min(buf.length,offset+length);
+      @    ensures mark == offset;
       @    ensures markPosition == mark && markLimit == buf.length;
       @    ensures valid();
       @ pure
       @*/
-    public ByteArrayInputStream(byte[] bytes, int off, int len);
+    public ByteArrayInputStream(byte[] buf, int offset, int length);
 
     // METHODS
 
@@ -104,21 +104,21 @@ public class ByteArrayInputStream extends InputStream {
 
     /*-RAC@
       @ also public normal_behavior
-      @   requires len <= 0;
+      @   requires n <= 0;
       @   modifies \nothing;
       @   ensures \result == 0;
       @ also public normal_behavior
-      @   requires len > 0;
+      @   requires n > 0;
       @   modifies streamState;
       @   ensures \not_modified(isOpen,wasClosed);
-      @   ensures \result == \old(Math.min(len, count-pos));
+      @   ensures \result == \old(Math.min(n, count-pos));
       @   ensures pos == \old(pos) + \result;
       @   ensures valid();
       @*/
-    public synchronized long skip(long len);
+    public synchronized long skip(long n);
 
     /*-RAC@ also public behavior
-      @   requires bytes != null;
+      @   requires b != null;
       @   requires isOpen;
       @   requires len <= 0 && pos < count;
       @   modifies \nothing;
@@ -130,21 +130,21 @@ public class ByteArrayInputStream extends InputStream {
       @   ensures \result == -1;
       @ also public normal_behavior
       @   requires isOpen;
-      @   requires bytes != null;
-      @   requires off >= 0 && off + len <= bytes.length;
+      @   requires b != null;
+      @   requires off >= 0 && off + len <= b.length;
       @   requires len > 0;
       @   requires pos < count;
-      @   modifies streamState, bytes[off .. off+len-1];
+      @   modifies streamState, b[off .. off+len-1];
       @   ensures \not_modified(isOpen,wasClosed);
       @   ensures \result == \old(Math.min(len, count - pos));
       @   ensures pos == \old(pos) + \result;
                      // These quantified equalities work better if one of the
                      // array arguments is a simple variable.
       @   ensures (\forall int i; 0 <= off+i && i < off+\result;
-                        bytes[i] == buf[\old(pos) + i-off]);
+                        b[i] == buf[\old(pos) + i-off]);
       @   ensures (\forall int i; off+\result <= i && i < off+len;
-                        bytes[i] == \old(bytes[i]));
+                        b[i] == \old(b[i]));
       @   ensures valid();
       @*/
-    public synchronized int read(byte[] bytes, int off, int len);
+    public synchronized int read(byte[] b, int off, int len);
 }

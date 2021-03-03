@@ -271,28 +271,28 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
 
    /*@ public normal_behavior
       @         requires 0 <= year && 0 <= month && 1 <= date &&
-      @                  0 <= hour && 0 <= minute;
+      @                  0 <= hourOfDay && 0 <= minute;
       @         assignable \nothing;
       @         ensures_redundantly fields[YEAR] == year && 
       @                 fields[MONTH] == month && 
       @                 fields[DATE] == date &&
-      @                 fields[HOUR_OF_DAY] == hour && 
+      @                 fields[HOUR_OF_DAY] == hourOfDay && 
       @                 fields[MINUTE] == minute;
       @*/
-    public /*@ pure @*/ final void set(int year, int month, int date, int hour, int minute);
+    public /*@ pure @*/ final void set(int year, int month, int date, int hourOfDay, int minute);
 
    /*@ public normal_behavior
       @         requires 0 <= year && 0 <= month && 1 <= date &&
-      @                  0 <= hour && 0 <= minute && 0 <= second;
+      @                  0 <= hourOfDay && 0 <= minute && 0 <= second;
       @         assignable \nothing;
       @         ensures_redundantly fields[YEAR] == year && 
       @                 fields[MONTH] == month && 
       @                 fields[DATE] == date &&
-      @                 fields[HOUR_OF_DAY] == hour && 
+      @                 fields[HOUR_OF_DAY] == hourOfDay && 
       @                 fields[MINUTE] == minute &&
       @                 fields[SECOND] == second;
       @*/
-    public /*@ pure @*/ final void set(int year, int month, int date, int hour, int minute,
+    public /*@ pure @*/ final void set(int year, int month, int date, int hourOfDay, int minute,
                           int second);
 
     /*@ public normal_behavior

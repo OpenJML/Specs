@@ -301,14 +301,14 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
     public int compareTo(/*@ non_null */ Byte anotherByte);
 
     //@ public normal_behavior
-    //@   ensures \result == (b >= 0 ? b: b+256);
+    //@   ensures \result == (x >= 0 ? x: x+256);
     //@ pure helper function
-    public static int toUnsignedInt(byte b);
+    public static int toUnsignedInt(byte x);
     
     //@ public normal_behavior
-    //@   ensures \result == (b >= 0 ? b: b+256);
+    //@   ensures \result == (x >= 0 ? x: x+256);
     //@ pure helper function
-    public static long toUnsignedLong(byte b);
+    public static long toUnsignedLong(byte x);
     
     //@ public normal_behavior
     //@   ensures \result == (hi>=0?hi:hi+256)*256+(lo>=0?lo:lo+256);

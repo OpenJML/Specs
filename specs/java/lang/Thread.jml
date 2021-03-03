@@ -99,8 +99,9 @@ public class Thread implements Runnable {
   //@   requires true;
   public void run();
 //  private void exit();
+  
+  @Deprecated(since="1.2")
   public final void stop();
-  public final synchronized void stop(Throwable t);
 
   //@ public normal_behavior
   //@   ensures true;
@@ -117,11 +118,6 @@ public class Thread implements Runnable {
   //@ pure
   public boolean isInterrupted();
 
-  //@ public normal_behavior
-  //@   assignable dead;  // FIXME - check this
-  //@   ensures dead;
-  public void destroy();
-  
   //@ public normal_behavior
   //@   requires true;
   //@   ensures \result == !dead;
@@ -153,8 +149,8 @@ public class Thread implements Runnable {
   
   //@ public normal_behavior
   //@   assignable _isDaemon;
-  //@   ensures _isDaemon == b;
-  public final void setDaemon(boolean b);
+  //@   ensures _isDaemon == on;
+  public final void setDaemon(boolean on);
   //@ public normal_behavior
   //@   ensures _isDaemon == \result;
   //@ pure

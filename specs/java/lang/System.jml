@@ -77,43 +77,43 @@ public final class System {
     //-RAC@   ensures err.isOpen;
     //-RAC@ static_initializer
     
-    //@ requires allowNullStreams || i != null;
+    //@ requires allowNullStreams || in != null;
     //@ reads \nothing;
-    //@ assignable in;  // strangely enough, in is like a read-only var.
-    //@ ensures in == i;
+    //@ assignable System.in;
+    //@ ensures System.in == in;
     //@ helper
-    public static void setIn(InputStream i);
+    public static void setIn(InputStream in);
 
-    //@ requires allowNullStreams || o != null;
+    //@ requires allowNullStreams || out != null;
     //@ reads \nothing;
-    //@ assignable out;
-    //@ ensures out == o;
+    //@ assignable System.out;
+    //@ ensures System.out == out;
     //@ helper
-    public static void setOut(PrintStream o);
+    public static void setOut(PrintStream out);
 
-    //@ requires allowNullStreams || e != null;
+    //@ requires allowNullStreams || err != null;
     //@ reads \nothing;
-    //@ assignable err;
-    //@ ensures err == e;
+    //@ assignable System.err;
+    //@ ensures System.err == err;
     //@ helper
-    public static void setErr(PrintStream e);
+    public static void setErr(PrintStream err);
 
 
     //@ public model static nullable SecurityManager systemSecurityManager;
 
     /*@  public normal_behavior
-      @    requires s == null;
+      @    requires sm == null;
       @    assignable \nothing;
       @    ensures \not_modified(systemSecurityManager);
       @ also
       @  public behavior
-      @    requires s != null;
+      @    requires sm != null;
       @    assignable systemSecurityManager;
-      @    ensures  systemSecurityManager == s;
+      @    ensures  systemSecurityManager == sm;
       @    signals (SecurityException) (* if the change is not permitted *);
       @*/
     //@ helper
-    public static void setSecurityManager(/*@nullable*/ SecurityManager s) throws SecurityException;
+    public static void setSecurityManager(/*@nullable*/ SecurityManager sm) throws SecurityException;
 
     //@ public normal_behavior
     //@   reads systemSecurityManager;

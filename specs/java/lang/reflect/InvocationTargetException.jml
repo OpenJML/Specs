@@ -11,16 +11,16 @@ public class InvocationTargetException extends Exception {
     protected InvocationTargetException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(t);
+      @   ensures standardThrowable(target);
       @*/
     //@ pure
-    public InvocationTargetException(Throwable t);
+    public InvocationTargetException(Throwable target);
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s,t);
+      @   ensures standardThrowable(s,target);
       @*/
     //@ pure
-    public InvocationTargetException(Throwable t, String s);
+    public InvocationTargetException(Throwable target, String s);
 
     //@ pure
     public Throwable getCause();

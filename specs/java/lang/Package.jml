@@ -1,11 +1,14 @@
 package java.lang;
+import java.net.URL;
 
 // TODO - This is not complete
-// 1.5 Differences: 2 constructor signatures, 4 methods relating to annotations
 
 public class Package implements java.lang.reflect.AnnotatedElement {
 
-    private Package(java.lang.String s,java.util.jar.Manifest m,java.net.URL u,java.lang.ClassLoader c);
-
-    Package(java.lang.String s,java.lang.String ss,java.lang.String s3,java.lang.String s4,java.lang.String s5,java.lang.String s6,java.lang.String s7,java.net.URL url,java.lang.ClassLoader cl);
+    Package(String name,
+            String spectitle, String specversion, String specvendor,
+            String impltitle, String implversion, String implvendor,
+            URL sealbase, ClassLoader loader);
+    
+    Package(String name, Module module);
 }

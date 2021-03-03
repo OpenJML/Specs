@@ -56,6 +56,14 @@ public interface CharSequence {
         public static pure helper model boolean equal(char[] a, \bigint astart, char[] b, \bigint bstart, \bigint len);
      */
 
+    /*@ public normal_behavior
+    ensures \result == (a != null && b != null &&
+                  (\exists \bigint j; 0<=j<=a.length && j<=b.length; 
+                     ((\forall \bigint k; 0<=k<j; a[k]==b[k]) && ((j==a.length && j<b.length) || (j<a.length && j < b.length && a[j] < b[j])))
+                  ));
+    public static pure helper model boolean lessThan(char[] a, char[] b);
+ */
+
     //@ axiom (\forall char[] a; a!=null ; equal(a,a));
     //@ axiom (\forall char[] a,b; a!=null && b !=null; equal(a,b) <==> equal(b,a));
     //@ axiom (\forall char[] a,b,c; a!=null && b !=null && c != null; (equal(a,b) && equal(b,c))==>equal(a,c)); 

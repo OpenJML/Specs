@@ -108,9 +108,9 @@ public final class String
       @             && (offset + count) <= value.length
       @             && 0 <= count;
       @   ensures charArray != null;
-      @   ensures equal(charArray,0,value,offset,count);
+      @   ensures CharSequence.equal(charArray,0,value,offset,count);
       @   ensures charArray.length == count;
-      @   ensures (offset == 0 && count == value.length) ==> equal(charArray,value);
+      @   ensures (offset == 0 && count == value.length) ==> CharSequence.equal(charArray,value);
       @*/
     public /*@ pure @*/ String(char[] value, int offset, int count)
         throws StringIndexOutOfBoundsException, NullPointerException;
@@ -581,14 +581,14 @@ public final class String
     /*@ also public normal_behavior
       @   requires anotherString != null;
       @   {|
-      @       requires  equal(charArray,anotherString.charArray);
+      @       requires  CharSequence.equal(charArray,anotherString.charArray);
       @       ensures \result == 0;
       @     also
-      @       requires  lessThan(charArray,anotherString.charArray);
+      @       requires  CharSequence.lessThan(charArray,anotherString.charArray);
       @       ensures \result < 0;
       @     also
-      @       requires  !lessThan(charArray,anotherString.charArray);
-      @       requires  !equal(charArray,anotherString.charArray);
+      @       requires  !CharSequence.lessThan(charArray,anotherString.charArray);
+      @       requires  !CharSequence.equal(charArray,anotherString.charArray);
       @       ensures \result > 0;
       @   |}
       @*/
@@ -645,7 +645,7 @@ public final class String
 
     /*@  public normal_behavior
       @   requires prefix != null && 0 <= toffset && toffset + prefix.length() <= length();
-      @   ensures \result ==  equal(charArray,toffset,prefix.charArray,0,prefix.charArray.length);
+      @   ensures \result ==  CharSequence.equal(charArray,toffset,prefix.charArray,0,prefix.charArray.length);
       @  also
       @   requires prefix != null && toffset + prefix.length() >= length();
       @   ensures !\result;
@@ -757,14 +757,14 @@ public final class String
       @     ensures \result == -1 <==>
       @               (\forall int i; 
       @                      fromIndex <= i &&  i + str.length() < length();
-      @                      ! equal(charArray,i,str.charArray,0,str.length()));
+      @                      ! CharSequence.equal(charArray,i,str.charArray,0,str.length()));
       @     ensures \result != -1 <==> 
       @            (fromIndex <= \result && \result + str.length() <= length());
       @     ensures \result != -1 <==>
-      @              (equal(charArray,\result,str.charArray,0,str.length()) &&
+      @              (CharSequence.equal(charArray,\result,str.charArray,0,str.length()) &&
       @               (\forall int i; 
       @                      fromIndex <= i &&  i + str.length() < length();
-      @                      !equal(charArray,i,str.charArray,0,str.length())));
+      @                      !CharSequence.equal(charArray,i,str.charArray,0,str.length())));
       @   |}
       @*/
     public /*@ pure @*/ int indexOf(String str, int fromIndex);
@@ -786,23 +786,23 @@ public final class String
     /*@  public normal_behavior
       @   requires str != null;
       @   {|
-      @     requires fromIndex >= length();
+      @     requires length() <= fromIndex;
       @     ensures \result == lastIndexOf(str, (int)(length() - 1));
       @   also
       @     requires fromIndex < 0;
       @     ensures \result == -1;
       @   also
-      @     requires 0 <= fromIndex && fromIndex < length();
+      @     requires 0 <= fromIndex < length();
       @     ensures \result == -1 <==>
       @               (\forall int i; 
       @                      0 <= i &&  i <= fromIndex;
-      @                      ! equal(charArray,i,str.charArray,0,str.length()));
+      @                      ! CharSequence.equal(charArray,i,str.charArray,0,str.length()));
       @     ensures \result != -1 <==> (0 <= \result && \result <= fromIndex);
       @     ensures \result != -1 <==>
-      @              (equal(charArray,\result,str.charArray,0,str.length()) &&
+      @              (CharSequence.equal(charArray,\result,str.charArray,0,str.length()) &&
       @               (\forall int i; 
       @                      0 <= i &&  i <= fromIndex;
-      @                      !equal(charArray,i,str.charArray,0,str.length())));
+      @                      !CharSequence.equal(charArray,i,str.charArray,0,str.length())));
       @   |}
       @*/
     public /*@ pure @*/ int lastIndexOf(String str, int fromIndex);
@@ -817,7 +817,7 @@ public final class String
     /*@  public normal_behavior
       @   requires 0 <= beginIndex <= length();
       @   ensures \result.length() == this.length() - beginIndex
-      @        && equal(\result.charArray,0,charArray,beginIndex,
+      @        && CharSequence.equal(\result.charArray,0,charArray,beginIndex,
                                                     length()-beginIndex);
       @   ensures beginIndex == 0 ==> equals(this,\result);
       @ also
@@ -831,7 +831,7 @@ public final class String
     /*@  public normal_behavior
       @   requires 0 <= beginIndex <= endIndex <= length();
       @   ensures \result.length() == endIndex - beginIndex
-      @        && equal(\result.charArray,0,charArray,beginIndex,
+      @        && CharSequence.equal(\result.charArray,0,charArray,beginIndex,
                                                     endIndex-beginIndex);
       @   ensures beginIndex == 0 && endIndex == length() ==>
                                         equals(this,\result);
@@ -1006,7 +1006,7 @@ public final class String
       @    assignable \nothing;
       @    ensures \result.length == length();
       @    ensures \fresh(\result);
-      @    ensures equal(\result,charArray);
+      @    ensures CharSequence.equal(\result,charArray);
       @*/
     public /*@ pure @*/ /*@ non_null @*/ char[] toCharArray();
 

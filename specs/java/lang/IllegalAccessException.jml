@@ -9,8 +9,8 @@ public class IllegalAccessException extends Exception {
     public IllegalAccessException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public IllegalAccessException(String message);
+    public IllegalAccessException(String s);
 }

@@ -9,8 +9,8 @@ public class InstantiationException extends Exception {
     public InstantiationException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public InstantiationException(String message);
+    public InstantiationException(String s);
 }

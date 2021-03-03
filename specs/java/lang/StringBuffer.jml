@@ -44,10 +44,10 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public StringBuffer(int i);
 
     //@ public normal_behavior
-    //-RAC@   ensures this.accumulatedString.equals(s);
+    //-RAC@   ensures this.accumulatedString.equals(str);
     //+RAC@   ensures true;
     //@ pure
-    public StringBuffer(/*@non_null*/String s);
+    public StringBuffer(/*@non_null*/String str);
 
     /*-RAC@ also public normal_behavior
       @   modifies accumulatedString;
@@ -72,14 +72,14 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized StringBuffer append(boolean b);
 
     /*-RAC@ also public normal_behavior
-      @   requires s != null;
+      @   requires str != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,s)));
+      @           .equals(\old(String.concat(accumulatedString,str)));
       @   ensures \result == this;
       @ also
       @ public normal_behavior
-      @   requires s == null;
+      @   requires str == null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(String.concat(accumulatedString,"null")));
@@ -89,59 +89,59 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     /*+RAC@ also public normal_behavior
       @   assignable accumulatedString;
       @*/
-    public synchronized StringBuffer append(String s);
+    public synchronized StringBuffer append(String str);
 
     /*-RAC@ also public normal_behavior
-      @     requires o != null;
+      @     requires obj != null;
       @     assignable accumulatedString;
       @     ensures accumulatedString
-      @            .equals(\old(String.concat(accumulatedString,o.theString)));
+      @            .equals(\old(String.concat(accumulatedString,obj.theString)));
       @     ensures \result == this;
       @ also
       @ public normal_behavior
-      @   requires o == null;
+      @   requires obj == null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(String.concat(accumulatedString,"null")));
       @   ensures \result == this;
       @ implies_that
       @   public normal_behavior
-      @     requires o != null;
+      @     requires obj != null;
       @     assignable accumulatedString;
-      @     ensures accumulatedString.equals(\old(String.concat(accumulatedString,o.theString)));
+      @     ensures accumulatedString.equals(\old(String.concat(accumulatedString,obj.theString)));
       @     ensures \result == this;
       @*/
     // The following is needed because AbstractStringBuilder is not a public class
     /*+RAC@ also public normal_behavior
       @   assignable accumulatedString;
       @*/
-    public synchronized StringBuffer append(Object o);
+    public synchronized StringBuffer append(Object obj);
 
     /*-RAC@ also public normal_behavior
-      @   requires s != null;
+      @   requires sb != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,s.accumulatedString)));
+      @           .equals(\old(String.concat(accumulatedString,sb.accumulatedString)));
       @   ensures \result == this;
       @ also
       @ public normal_behavior
-      @   requires s == null;
+      @   requires sb == null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(String.concat(accumulatedString,"null")));
       @   ensures \result == this;
       @*/
-    public synchronized StringBuffer append(StringBuffer s);
+    public synchronized StringBuffer append(StringBuffer sb);
 
     /*-RAC@ also public normal_behavior
-      @   requires ca != null;
+      @   requires str != null;
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(String.concat(accumulatedString,
-      @                        String.valueOf(ca, i, j))));
+      @                        String.valueOf(str, offset, len))));
       @   ensures \result == this;
       @*/
-    public synchronized StringBuffer append(char[] ca, int i, int j);
+    public synchronized StringBuffer append(char[] str, int offset, int len);
 
     /*-RAC@ also public normal_behavior
       @   assignable accumulatedString;
@@ -165,25 +165,25 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized StringBuffer append(double d);
 
     /*-RAC@ also public normal_behavior
-      @   requires ca != null;
+      @   requires str != null;
       @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(ca))));
+      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(str))));
       @   ensures \result == this;
       @ also public normal_behavior
-      @   requires ca == null;
+      @   requires str == null;
       @   assignable accumulatedString;
       @   ensures accumulatedString.equals(\old(accumulatedString.concat("null")));
       @   ensures \result == this;
       @
       @*/
-    public synchronized StringBuffer append(char[] ca);
+    public synchronized StringBuffer append(char[] str);
 
     /*-RAC@ also public normal_behavior
       @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(l))));
+      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(lng))));
       @   ensures \result == this;
       @*/
-    public synchronized StringBuffer append(long l);
+    public synchronized StringBuffer append(long lng);
 
     /*@ also
       @ public normal_behavior
@@ -293,7 +293,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized void ensureCapacity(int minimumCapacity);
 
     /*@ also public normal_behavior
-      @   requires 0 <= index && index < accumulatedString.length();
+      @   requires 0 <= index < accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString.subSequence(0,index).equals(
       @                  \old(accumulatedString.subSequence(0,index)));
@@ -306,7 +306,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized StringBuffer deleteCharAt(int index);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
@@ -318,7 +318,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized StringBuffer insert(int offset ,char[] ca, int offset2, int len);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
@@ -328,7 +328,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public StringBuffer insert(int offset, double d);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
@@ -338,7 +338,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized StringBuffer insert(int offset, char c);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
@@ -348,18 +348,18 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public StringBuffer insert(int offset, int i);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + String.valueOf(ca)
+      @                        + String.valueOf(str)
       @                        + accumulatedString.substring(offset)));
       @   ensures \result == this;   
       @*/
-    public synchronized StringBuffer insert(int offset, char[] ca);
+    public synchronized StringBuffer insert(int offset, char[] str);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
@@ -369,27 +369,27 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public StringBuffer insert(int offset, boolean b);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + o + accumulatedString.substring(offset)));
+      @                        + obj + accumulatedString.substring(offset)));
       @   ensures \result == this;   
       @*/
-    public synchronized StringBuffer insert(int offset, Object o);
+    public synchronized StringBuffer insert(int offset, Object obj);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + s + accumulatedString.substring(offset)));
+      @                        + str + accumulatedString.substring(offset)));
       @   ensures \result == this;   
       @*/
-    public synchronized StringBuffer insert(int offset, String s);
+    public synchronized StringBuffer insert(int offset, String str);
 
     /*@ also public normal_behavior
-      @   requires 0 <= offset && offset <= accumulatedString.length();
+      @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,offset)
@@ -409,24 +409,24 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
 
     /*@ also public normal_behavior
-      @   requires 0 <= index && index < accumulatedString.length();
+      @   requires 0 <= index < accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
       @           .equals(\old(accumulatedString.substring(0,index)
-      @                        + c + accumulatedString.substring(index+1)));
+      @                        + ch + accumulatedString.substring(index+1)));
       @ implies_that
       @ public normal_behavior
-      @   requires 0 <= index && index < accumulatedString.length();
+      @   requires 0 <= index < accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString.length()
       @           == \old(accumulatedString.length())
-      @        && (\forall int i; 0 <= i && i < accumulatedString.length()
+      @        && (\forall int i; 0 <= i < accumulatedString.length()
       @                                  && i != index;
       @                           accumulatedString.charAt(i)
       @                           == \old(accumulatedString.charAt(i)))
-      @        && accumulatedString.charAt(index) == c;
+      @        && accumulatedString.charAt(index) == ch;
       @*/
-    public synchronized void setCharAt(int index, char c);
+    public synchronized void setCharAt(int index, char ch);
 
     //@ also
     //@  public normal_behavior

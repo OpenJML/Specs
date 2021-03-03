@@ -7,9 +7,9 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
   /*@ spec_public */ private volatile int value;
 
   //@ public normal_behavior
-  //@   ensures value == v;
+  //@   ensures value == initialValue;
   //@ pure
-  public AtomicInteger(int v);
+  public AtomicInteger(int initialValue);
 
   //@ public normal_behavior
   //@   ensures value == 0;
@@ -23,41 +23,41 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
 
   //@ public normal_behavior
   //@   assignable value;
-  //@   ensures get() == v;
-  public final void set(int v);
+  //@   ensures get() == newValue;
+  public final void set(int newValue);
   
   //@ public normal_behavior
   //@   ensures true; // FIXME - when is this set?
-  public final void lazySet(int v);
+  public final void lazySet(int newValue);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
-  //-RAC@   ensures value == v;
+  //-RAC@   ensures value == newValue;
   //-RAC@   ensures \result == \old(value);
-  public final int getAndSet(int v);
+  public final int getAndSet(int newValue);
 
   //-RAC@ public normal_behavior
-  //-RAC@   requires value == v;
+  //-RAC@   requires value == expectedValue;
   //-RAC@   assignable value;
   //-RAC@   ensures \result;
-  //-RAC@   ensures value == vv;
+  //-RAC@   ensures value == newValue;
   //-RAC@ also public normal_behavior
-  //-RAC@   requires value != v;
+  //-RAC@   requires value != expectedValue;
   //-RAC@   assignable \nothing;
   //-RAC@   ensures !\result;
-  public final boolean compareAndSet(int v, int vv);
+  public final boolean compareAndSet(int expectedValue, int newValue);
 
   //-RAC@ public normal_behavior
-  //-RAC@   requires value == v;
+  //-RAC@   requires value == expectedValue;
   //-RAC@   assignable value;
   //-RAC@   ensures \result;
-  //-RAC@   ensures value == vv;
+  //-RAC@   ensures value == newValue;
   //-RAC@ also public normal_behavior
-  //-RAC@   requires value != v;
+  //-RAC@   requires value != expectedValue;
   //-RAC@   assignable \nothing;
   //-RAC@   ensures !\result;
   // FIXME - documentation is weak on this method - not sure of its behavior
-  public final boolean weakCompareAndSet(int v, int vv);
+  public final boolean weakCompareAndSet(int expectedValue, int newValue);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
@@ -73,9 +73,9 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
-  //-RAC@   ensures value == v;
-  //-RAC@   ensures \result == \old(value) + v;
-  public final int getAndAdd(int v);
+  //-RAC@   ensures value == \old(value) + delta;
+  //-RAC@   ensures \result == \old(value);
+  public final int getAndAdd(int delta);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
@@ -91,35 +91,35 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
-  //-RAC@   ensures value == v + \old(value);
+  //-RAC@   ensures value == delta + \old(value);
   //-RAC@   ensures \result == value;
-  public final int addAndGet(int v);
+  public final int addAndGet(int delta);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures (* value is the result of op *);
-  //-RAC@   ensures \result == value;
+  //-RAC@   ensures \result == \old(value);
   // FIXME - do something with the op
-  public final int getAndUpdate(java.util.function.IntUnaryOperator op);
+  public final int getAndUpdate(java.util.function.IntUnaryOperator updateFunction);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures \result == value;
   // FIXME - do something with the op
-  public final int updateAndGet(java.util.function.IntUnaryOperator op);
+  public final int updateAndGet(java.util.function.IntUnaryOperator updateFunction);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   //-RAC@   ensures \result == \old(value);
   // FIXME - do something with the op
-  public final int getAndAccumulate(int v, java.util.function.IntBinaryOperator op);
+  public final int getAndAccumulate(int x, java.util.function.IntBinaryOperator accumulatorFunction);
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
   // FIXME @   ensures value == v;
-  //-RAC@   ensures \result == \old(value);
+  //-RAC@   ensures \result == value;
   // FIXME - do something with the op
-  public final int accumulateAndGet(int v, java.util.function.IntBinaryOperator op);
+  public final int accumulateAndGet(int x, java.util.function.IntBinaryOperator accumulatorFunction);
 
   //@ also public normal_behavior
   //@   assignable \nothing;

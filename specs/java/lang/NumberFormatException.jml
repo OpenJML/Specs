@@ -11,8 +11,8 @@ public class NumberFormatException extends IllegalArgumentException {
     public NumberFormatException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public NumberFormatException(String message);
+    public NumberFormatException(String s);
 }

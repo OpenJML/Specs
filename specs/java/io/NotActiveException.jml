@@ -9,8 +9,8 @@ public class NotActiveException extends ObjectStreamException {
     public NotActiveException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(reason);
       @*/
     //@ pure
-    public NotActiveException(String s);
+    public NotActiveException(String reason);
 }

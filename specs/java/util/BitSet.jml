@@ -35,11 +35,11 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures size(content) >= i;
+    //-RAC@   ensures size(content) >= nbits;
     //-RAC@   ensures cardinality(content) == 0;
     //-RAC@   ensures (\forall int i; 0 <= i; !isSet(content,i));
     //@ pure
-    public BitSet(int i);
+    public BitSet(int nbits);
 
     // number of set bits
     //@ public normal_behavior
@@ -157,41 +157,41 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     // FIXME - review
     /* @ public normal_behavior
-      @   requires 0 <= i;
+      @   requires 0 <= bitIndex;
       @   assignable content;
-      @   ensures isSet(content,i) == true;
-      @   ensures (\forall int j; 0<=j && j != i;
+      @   ensures isSet(content,bitIndex) == true;
+      @   ensures (\forall int j; 0 <= j && j != bitIndex;
       @                        isSet(content,j) == \old(isSet(content,j)));
-      @   ensures size(content) >= Math.max(\old(size(content)),i+1);
-      @   ensures \old(!isSet(content,i)) ==>
+      @   ensures size(content) >= Math.max(\old(size(content)),bitIndex+1);
+      @   ensures \old(!isSet(content,bitIndex)) ==>
                           cardinality() == \old(cardinality() + 1);
-      @   ensures \old(isSet(content,i)) ==>
+      @   ensures \old(isSet(content,bitIndex)) ==>
                           cardinality() == \old(cardinality());
       @ also public exceptional_behavior
-      @   requires i < 0;
+      @   requires bitIndex < 0;
       @   assignable \nothing;
       @   signals_only IndexOutOfBoundsException;
       @*/
-    public void set(int i);
+    public void set(int bitIndex);
 
     /*-RAC@ public normal_behavior
-      @   requires 0 <= i;
-      @   ensures \result == isSet(content,i);
+      @   requires 0 <= bitIndex;
+      @   ensures \result == isSet(content,bitIndex);
       @ also public exceptional_behavior
-      @   requires i < 0;
+      @   requires bitIndex < 0;
       @   signals_only IndexOutOfBoundsException;
       @*/
     //@ pure
-    public boolean get(int i);
+    public boolean get(int bitIndex);
 
     // FIXME - review
     /* @ public normal_behavior
-      @   requires 0 <= i;
+      @   requires 0 <= bitIndex;
       @   assignable content;
-      @   ensures isSet(content,i) == v;
-      @   ensures (\forall int j; 0<=j && j != i;
+      @   ensures isSet(content,bitIndex) == v;
+      @   ensures (\forall int j; 0 <= j && j != bitIndex;
       @                        isSet(content,j) == \old(isSet(content,j)));
-      @   ensures v ==> size(content) >= Math.max(\old(size(content)),i+1);
+      @   ensures v ==> size(content) >= Math.max(\old(size(content)),bitIndex+1);
       @   ensures (\old(isSet(content,i)) && !v) ==>
                           cardinality() == \old(cardinality() - 1);
       @   ensures (\old(!isSet(content,i)) && v) ==>
@@ -201,11 +201,11 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @   ensures (\old(!isSet(content,i)) && !v) ==>
                           cardinality() == \old(cardinality());
       @ also public exceptional_behavior
-      @   requires i < 0;
+      @   requires bitIndex < 0;
       @   assignable \nothing;
       @   signals_only IndexOutOfBoundsException;
       @*/
-    public void set(int i,boolean v);
+    public void set(int bitIndex, boolean v);
 
     // FIXME - review
     /* @ public normal_behavior
@@ -299,18 +299,18 @@ public class BitSet implements Cloneable, java.io.Serializable{
     public Object clone();
 
     /*@ also public normal_behavior
-      @   requires o != null && o instanceof BitSet; */
+      @   requires obj != null && obj instanceof BitSet; */
     /*-RAC@  ensures \result <==> (\forall int i; 
       @            0<=i;
-      @                 isSet(content,i) == isSet(((BitSet)o).content,i)); 
+      @                 isSet(content,i) == isSet(((BitSet)obj).content,i)); 
       @*/
-    /*@   ensures \result ==> (cardinality() == ((BitSet)o).cardinality());
+    /*@   ensures \result ==> (cardinality() == ((BitSet)obj).cardinality());
       @ also public normal_behavior
-      @   requires o == null || !(o instanceof BitSet);
+      @   requires obj == null || (obj instanceof BitSet);
       @   ensures !\result;
       @*/
     //@ pure
-    public boolean equals(/*@nullable*/Object o);
+    public boolean equals(/*@nullable*/Object obj);
 
     // FIXME - review
     /* @ also public normal_behavior
@@ -325,87 +325,90 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     // FIXME - review
     /*@ public normal_behavior
-      @   requires 0 <= fromIndex && 0 <= toIndex;
-      @   requires fromIndex <= toIndex;
+      @   requires 0 <= fromIndex <= toIndex;
       @   ensures \result != null; */
-    /*-RAC@  ensures (\forall int i; 0<=i && i<fromIndex; !isSet(\result.content,i));
-      @   ensures (\forall int i; toIndex<=i; !isSet(\result.content,i));
-      @   ensures (\forall int i; fromIndex <= i && i < toIndex;
+    /*-RAC@  ensures (\forall int i; 0 <= i < fromIndex; !isSet(\result.content,i));
+      @   ensures (\forall int i; toIndex <= i; !isSet(\result.content,i));
+      @   ensures (\forall int i; fromIndex <= i < toIndex;
       @                       isSet(\result.content,i) == isSet(content,i));
       @   ensures size(\result.content) >= toIndex; */
     /*@   ensures cardinality() >= \result.cardinality();
       @*/
     //@ pure
-    public BitSet get(int fromIndex,int toIndex);
+    public BitSet get(int fromIndex, int toIndex);
 
     // FIXME - review
     /* @ public normal_behavior
-      @   requires b != null;
+      @   requires set != null;
+      @   old int sz = size(content);
+      @   old int ssz = size(set.content);
       @   assignable content;
-      @   ensures size(content) >=\old(Math.min(size(content),size(b.content)));
+      @   ensures size(content) >= (sz<=ssz?ssz);
       @   ensures (\forall int i; 0<=i;
       @              isSet(content,i) <==>
-      @                \old(isSet(content,i) && isSet(b.content,i)));
+      @                \old(isSet(content,i) && isSet(set,i)));
       @   ensures cardinality() <= \old(cardinality());
-      @   ensures cardinality() <= \old(b.cardinality());
+      @   ensures cardinality() <= \old(set());
       @ 
       @ also public exceptional_behavior
-      @   requires b == null;
+      @   requires set == null;
       @   signals_only NullPointerException;
       @*/
-    public void and(BitSet b);
+    public void and(BitSet set);
 
     /*@ public normal_behavior
-      @   requires b != null;
+      @   requires set != null;
       @   assignable content;
       @   ensures size(content) >= \old(size(content));
       @   ensures (\forall int i; 0<=i;
       @              isSet(content,i) <==>
-      @                \old(isSet(content,i) && !isSet(b.content,i)));
+      @                \old(isSet(content,i) && !isSet(set.content,i)));
       @   ensures cardinality() <= \old(cardinality());
       @ also public exceptional_behavior
-      @   requires b == null;
+      @   requires set == null;
       @   signals_only NullPointerException;
       @*/
-    public void andNot(BitSet b);
+    public void andNot(BitSet set);
 
     /*@ public normal_behavior
-      @   requires b != null;
+      @   requires set != null;
+      @   old int sz = size(content);
+      @   old int ssz = size(set.content);
       @   assignable content;
-      @   ensures size(content) >=\old(Math.max(size(content),size(b.content))); 
+      @   ensures size(content) >= (sz>=ssz?sz:ssz); 
       @   ensures (\forall int i; 0<=i;
       @              isSet(content,i) <==>
-      @                \old(isSet(content,i) || isSet(b.content,i)));
+      @                \old(isSet(content,i) || isSet(set.content,i)));
       @   ensures cardinality() >= \old(cardinality());
-      @   ensures cardinality() >= \old(b.cardinality());
+      @   ensures cardinality() >= \old(set.cardinality());
       @ also public exceptional_behavior
-      @   requires b == null;
+      @   requires set == null;
       @   signals_only NullPointerException;
       @*/
-    public void or(BitSet b);
+    public void or(BitSet set);
 
     /*@ public normal_behavior
-      @   requires b != null;
+      @   requires set != null;
       @   assignable content;
       @   ensures (\forall int i; 0<=i;
       @              isSet(content,i) <==>
-      @                \old(isSet(content,i) != isSet(b.content,i)));
+      @                \old(isSet(content,i) != isSet(set.content,i)));
       @ also public exceptional_behavior
-      @   requires b == null;
+      @   requires set == null;
       @   signals_only NullPointerException;
       @*/
-    public void xor(BitSet b);
+    public void xor(BitSet set);
 
     // FIXME - for all of these specs, if there is to be a exceptional_behavior clause, then the argumente cannot be by default NonNull
     /*@ public normal_behavior
-      @   requires b != null;
+      @   requires set != null;
       @   ensures \result <==> (\exists int i; 0<=i ;
-      @                isSet(content,i) && isSet(b.content,i));
+      @                isSet(content,i) && isSet(set.content,i));
       @ also public exceptional_behavior
-      @   requires b == null;
+      @   requires set == null;
       @   signals_only NullPointerException;
       @*/
     //@ pure
-    public boolean intersects(BitSet b);
+    public boolean intersects(BitSet set);
 }
 

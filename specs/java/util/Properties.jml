@@ -21,9 +21,9 @@ public class Properties extends Hashtable{
     public Properties();
 
     //@ public normal_behavior
-    //@   ensures initialProperties(p);
+    //@   ensures initialProperties(defaults);
     //@ pure
-    public Properties(Properties p);
+    public Properties(Properties defaults);
 
     public synchronized void load(java.io.InputStream in)
        throws java.io.IOException;
@@ -41,54 +41,54 @@ public class Properties extends Hashtable{
 
 
     /*@ public normal_behavior
-      @   requires name != null;
+      @   requires key != null;
       @*/
     /*  @ also public normal_behavior
-      @   requires name != null;
+      @   requires key != null;
       @   ensures (!content.hasMap(name) && defaults == null) ==> 
                                         \result == null;
-      @   ensures (!content.hasMap(name) && defaults != null) ==> 
-                                        \result == defaults.getProperty(name);
-      @   ensures content.hasMap(name) ==> \result == content.maps(name);
+      @   ensures (!content.hasMap(key) && defaults != null) ==> 
+                                        \result == defaults.getProperty(key);
+      @   ensures content.hasMap(key) ==> \result == content.maps(key);
       @*/
     /*@ also public exceptional_behavior
-      @   requires name == null;
+      @   requires key == null;
       @   signals_only NullPointerException;
       @*/
     //@ pure
-    public String getProperty(String name) throws NullPointerException;
+    public String getProperty(String key) throws NullPointerException;
 
     /*@ public normal_behavior
-      @   requires name != null && value != null;
+      @   requires key != null && value != null;
       @   assignable objectState;
       @*/
     /*  @ also public normal_behavior
-      @   requires name != null && value != null;
+      @   requires key != null && value != null;
       @   assignable objectState;
-      @   ensures content.hasMap(name);
-      @   ensures !\old(content.hasMap(name)) ==> 
+      @   ensures content.hasMap(key);
+      @   ensures !\old(content.hasMap(key)) ==> 
                               content.theSize == \old(content.theSize + 1);
       @   ensures \old(content.hasMap(name)) ==> 
                               content.theSize == \old(content.theSize);
-      @   ensures content.maps(name) == value;
-      @   ensures (\forall String s; !name.equals(s) ==> 
+      @   ensures content.maps(key) == value;
+      @   ensures (\forall String s; !key.equals(s) ==> 
                            (content.hasMap(s) <==> \old(content.hasMap(s)))); 
             // FIXME - likely needs more, but cleanup Map first
       @*/
     /*@ also public exceptional_behavior
-      @   requires name == null || value == null;
+      @   requires key == null || value == null;
       @   assignable \not_specified;
       @   signals_only NullPointerException;
       @*/
-    public synchronized Object setProperty(String name, String value) throws NullPointerException;
+    public synchronized Object setProperty(String key, String value) throws NullPointerException;
 
     //@ public normal_behavior
-    //@   requires name != null;
-    //@   ensures !containsKey(name) ==> \result == def;
-    //@   ensures containsKey(name) ==> \result == get(name);
+    //@   requires key != null;
+    //@   ensures !containsKey(key) ==> \result == defaultValue;
+    //@   ensures containsKey(key) ==> \result == get(key);
     //@ also public exceptional_behavior
-    //@   requires name == null;
+    //@   requires key == null;
     //@   signals_only NullPointerException;
     //@ pure
-    public String getProperty(String name, String def) throws NullPointerException;
+    public String getProperty(String key, String defaultValue) throws NullPointerException;
 }

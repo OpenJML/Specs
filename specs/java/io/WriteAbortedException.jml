@@ -11,8 +11,8 @@ public class WriteAbortedException extends ObjectStreamException {
     public Throwable getCause();
     
     /*@ public normal_behavior
-      @   ensures standardThrowable(msg);
+      @   ensures standardThrowable(s,ex);
       @*/
     //@ pure
-    public WriteAbortedException(String msg, Exception cause);
+    public WriteAbortedException(String s, Exception ex);
 }

@@ -35,13 +35,13 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, java.io.
 //      public final Class<E> getDeclaringClass();
 
       //@ public behavior 
-      //@   ensures \result.name().equals(v);
-      //@   ensures \result.getClass() == clazz;
+      //@   ensures \result.name().equals(name);
+      //@   ensures \result.getClass() == enumClass;
       //@   signals_only IllegalArgumentException, NullPointerException;
-      //@   signals (NullPointerException) v == null;
+      //@   signals (NullPointerException) name == null;
       //@   signals (IllegalArgumentException) true; // FIXME - no matching name
       //@ pure 
-      public static <T extends Enum<T>> T valueOf(Class<T> clazz, /*@ nullable */ String v);
+      public static <T extends Enum<T>> T valueOf(Class<T> enumClass, /*@ nullable */ String name);
 
 //      protected final void finalize();
 //      private void readObject(java.io.ObjectInputStream) throws java.io.IOException, ClassNotFoundException;

@@ -90,7 +90,8 @@ public class Object {
       @     requires obj == null;
       @     ensures !\result;
       @*/
-    public @Pure boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
+    //@ pure
+    public boolean equals(/*@\readonly*//*@ nullable*/ Object obj);
 
     /*@ public normal_behavior
       @   requires this instanceof Cloneable;
@@ -226,26 +227,26 @@ public class Object {
     public final void notifyAll();
 
     //@ public behavior
-    //@   requires timeout >= 0L;
+    //@   requires timeoutMillis >= 0L;
           // FIXME also check thread ownership - IllegalMonitorStateException
     //@   assignable \nothing;
     //@ also public exceptional_behavior
-    //@   requires timeout < 0;
+    //@   requires timeoutMillis < 0;
     //@   assignable \nothing;
     //@   signals_only IllegalArgumentException;
-    public final void wait(long timeout) throws InterruptedException;
+    public final void wait(long timeoutMillis) throws InterruptedException;
 
     //@ public behavior
-    //@   requires timeout >= 0L;
+    //@   requires timeoutMillis >= 0L;
     //@   requires 0 <= nanos;
     //@   requires nanos < 1000000;
     //@   assignable \not_specified;
           // FIXME also check thread ownership - IllegalMonitorStateException
     //@ also public exceptional_behavior
-    //@   requires timeout < 0 || nanos < 0 || nanos >= 1000000;
+    //@   requires timeoutMillis < 0 || nanos < 0 || nanos >= 1000000;
     //@   assignable \not_specified;
     //@   signals_only IllegalArgumentException;
-    public final void wait(long timeout, int nanos)
+    public final void wait(long timeoutMillis, int nanos)
         throws InterruptedException;
 
     //@ public behavior

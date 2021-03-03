@@ -77,8 +77,8 @@ public class FilterInputStream extends java.io.InputStream {
         throws java.io.IOException;
 
     /*-RAC@
-      @ requires stream != null ==> stream.isOpen;
+      @ requires in != null ==> in.isOpen;
       @ ensures initialInputStream();
       @*/
-    protected FilterInputStream(InputStream stream);
+    protected FilterInputStream(InputStream in);
 }

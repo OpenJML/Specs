@@ -9,8 +9,8 @@ public class UnknownHostException extends java.io.IOException {
     public UnknownHostException();
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(s);
+      @   ensures standardThrowable(message);
       @*/
     //@ pure
-    public UnknownHostException(String s);
+    public UnknownHostException(String message);
 }
