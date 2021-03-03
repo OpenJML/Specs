@@ -11,8 +11,8 @@ public class InterruptedException extends java.lang.Exception {
     public InterruptedException();
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public InterruptedException(java.lang.String message);
+    public InterruptedException(String s);
 }

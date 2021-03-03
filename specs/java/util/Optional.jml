@@ -1,4 +1,5 @@
 package java.util;
+import java.util.function.*;
 
 //@ non_null_by_default immutable
 public final class Optional<T> {
@@ -9,11 +10,6 @@ public final class Optional<T> {
   //@ spec_public nullable
   private final T value;
   
-  //@ private normal_behavior
-  //@   ensures this.value == null;
-  //@ pure
-  private Optional();
-
   //@ public normal_behavior
   //-RAC@   ensures \result.value == null;
   //@ pure helper // Not a function, since may or may not be fresh
@@ -64,23 +60,23 @@ public final class Optional<T> {
   
   //-RAC@ public model_program { if (value != null) consumer.accept(value); }
   //+RAC@ public model_program { if (get() != null) consumer.accept(value); }
-  public void ifPresent(java.util.function.Consumer<? super T> consumer);
+  public void ifPresent(Consumer<? super T> action);
 
   /*@ public model_program 
   @   { if (predicate == null) throw new NullPointerException(); return Optional.ofNullable( value == null || !predicate.test(value) ? null : value); }
   @*/
   //@ pure helper
-  public Optional<T> filter(java.util.function.Predicate<? super T> predicate);
+  public Optional<T> filter(Predicate<? super T> predicate);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
     @   { if (f==null) throw new NullPointerException(); return !isPresent() ? Optional.<U>empty() : Optional.<U>ofNullable( f.apply(value) ) ; }
     @*/
-  public <U> Optional<U> map(java.util.function.Function<? super T, ? extends U> f);
+  public <U> Optional<U> map(Function<? super T, ? extends U> f);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
   @   { if (f==null) throw new NullPointerException(); if (!isPresent()) return Optional.<U>empty(); ghost Optional<U> r = f.apply(value); if (r == null) throw new NullPointerException(); return r; }
   @*/
-  public <U> Optional<U> flatMap(java.util.function.Function<? super T, Optional<U>> f);
+  public <U> Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> f);
 
   //@ public normal_behavior
   //@   { return isPresent() ? this.get() : t; }
@@ -91,13 +87,13 @@ public final class Optional<T> {
     @   { return (value != null ? value : supplier.get() ); }
     @*/
   //@ pure
-  public T orElseGet(java.util.function.Supplier<? extends T> supplier);
+  public T orElseGet(Supplier<? extends T> supplier);
   
   /*-RAC@ public behavior 
     @    { if (value!=null) return value; else throw supplier.get(); }
     @*/
   //@ pure  // FIXME - really only pure if the lambda expression is pure
-  public <X extends java.lang.Throwable> T orElseThrow( java.util.function.Supplier<? extends X> supplier) throws X;
+  public <X extends java.lang.Throwable> T orElseThrow( Supplier<? extends X> supplier) throws X;
 
   public boolean equals(java.lang.Object o);
   public int hashCode();

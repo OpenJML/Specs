@@ -42,7 +42,6 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
     public boolean isEmpty();
     public boolean containsValue(Object value);
     public boolean containsKey(Object key);
-    public /*@ nullable */ V get(/*@ nullable */ java.lang.Object o);
     public /*@ nullable */ V get(/*@ nullable */ Object key);   // OPENJML FIXME: K key ?
     
     // specs inherited from Map

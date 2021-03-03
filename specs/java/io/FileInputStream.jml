@@ -55,11 +55,6 @@ public class FileInputStream extends InputStream {
     /*@
       @ 
       @*/
-    protected void finalize() throws IOException;
-
-    /*@
-      @ 
-      @*/
     public native long skip(long bytes) throws IOException;
 
     /*@

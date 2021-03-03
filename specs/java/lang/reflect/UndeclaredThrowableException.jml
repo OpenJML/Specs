@@ -6,11 +6,6 @@ import org.jmlspecs.annotation.*;
  
 public class UndeclaredThrowableException extends RuntimeException {
 
-    //@ also
-    //@ public normal_behavior
-    //@   ensures \result == super.getCause();
-    public /*@pure*/ /*@nullable*/ Throwable getCause();
-    
     //@ public normal_behavior
     //@   ensures \result == getCause();
     public /*@pure*/ /*@nullable*/ Throwable getUndeclaredThrowable();
@@ -23,9 +18,9 @@ public class UndeclaredThrowableException extends RuntimeException {
     public UndeclaredThrowableException(/*@nullable*/ Throwable undeclaredThrowable);
   
     /*@ public normal_behavior
-      @   ensures standardThrowable(detail,undeclaredThrowable);
+      @   ensures standardThrowable(s,undeclaredThrowable);
       @   ensures getCause() == undeclaredThrowable;
       @*/
     //@ pure
-    public UndeclaredThrowableException(/*@nullable*/ Throwable undeclaredThrowable, String detail);
+    public UndeclaredThrowableException(/*@nullable*/ Throwable undeclaredThrowable, String s);
 }

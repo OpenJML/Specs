@@ -71,5 +71,5 @@ public final class Objects {
   //@ also public exceptional_behavior
   //@   requires obj == null;  // TODO: specify the use of msg
   //@ pure function
-public static <T> T requireNonNull(T obj, java.util.function.Supplier<String> msg);
+public static <T> T requireNonNull(T obj, java.util.function.Supplier<String> messageSupplier);
 }

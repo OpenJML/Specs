@@ -121,11 +121,5 @@ public class FileOutputStream extends OutputStream {
       @ 
       @*/
     public FileChannel getChannel();
-
-    /*@
-      @ 
-      @*/
-    protected void finalize() throws IOException;
-
 }
 

@@ -18,8 +18,8 @@ public class StringIndexOutOfBoundsException extends IndexOutOfBoundsException {
     public StringIndexOutOfBoundsException(int index);
 
     /*@ public normal_behavior
-      @   ensures standardThrowable(message);
+      @   ensures standardThrowable(s);
       @*/
     //@ pure
-    public StringIndexOutOfBoundsException(java.lang.String message);
+    public StringIndexOutOfBoundsException(String s);
 }

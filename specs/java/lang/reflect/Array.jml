@@ -202,7 +202,7 @@ public final class Array extends Object {
       @ 
       @*/
     //@ pure non_null
-    public static Object newInstance(/*@ non_null */ Class<?> Param0, int[] Param1)
+    public static Object newInstance(/*@ non_null */ Class<?> componentType, int... dimensions)
         throws IllegalArgumentException, NegativeArraySizeException;
 
     /*@
