@@ -34,7 +34,7 @@ public @Pure final class JMLDataGroup {
      */
     /*@ private normal_behavior
       @   requires false;
-      @   ensures owner == null;
+      @   ensures __owner == null;
       @*/
     private JMLDataGroup();
 

@@ -5,7 +5,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@ spec_public
     private final java.lang.Class<K> keyType;
     
-    //@ axiom \forall K k; k != null; 0 <= k.ordinal & (k.uniqueHash == k.ordinal);
+    //@ axiom \forall K k; k != null; 0 <= k.ordinal() & (k.uniqueHash == k.ordinal());
     
     //@ spec_public
     private transient int size;
@@ -35,43 +35,43 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     public int size();
     
     //@ also public normal_behavior
-    //@    ensures \result == \exists int i; 0 <= i; o == modelMap[i];
-    public boolean containsValue(java.lang.Object o);
+    //@    ensures \result == \exists int i; 0 <= i; value == modelMap[i];
+    public boolean containsValue(Object value);
 
     //@ also public normal_behavior
-    //@    ensures \result == keys[k.ordinal];
-    public boolean containsKey(K k);
+    //@    ensures \result == keys[key.ordinal];
+    public boolean containsKey(Object key);
 
-//  private boolean containsMapping(java.lang.Object, java.lang.Object);
-
+    private boolean containsMapping(Object key, Object value);
+ 
     //@ also public normal_behavior
-    //@   requires o != null;
-    //@   old int ord = o.ordinal();
+    //@   requires key != null;
+    //@   old int ord = key.ordinal();
     //@   ensures keys[ord] ==> \result == modelMap[ord];
     //@   ensures !keys[ord] ==> \result == null;
     //@ pure
     @Override
-    public /*@ nullable */ V get(/*@ nullable */ K o);
+    public /*@ nullable */ V get(/*@ nullable */ Object key);
 
     // spec inherited from Map
     //@ also public normal_behavior
-    //@   requires k != null;
-    //@   old int ord = k.ordinal;
+    //@   requires key != null;
+    //@   old int ord = key.ordinal;
     //@   assignable objectState;
-    //@   ensures (v == modelMap[ord]) & keys[k.ordinal];
+    //@   ensures (value == modelMap[ord]) & keys[key.ordinal];
     //@   ensures \forall int i; i >= 0 && i != ord; modelMap[i] == \old(modelMap[i]);
     //@   ensures \forall int i; i >= 0 && i != ord; keys[i] == \old(keys[i]);
     @Override
-    public /*@ nullable */ V put(/*@ nullable */ K k, /*@ nullable */ V v);
+    public /*@ nullable */ V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
     //@ also public normal_behavior
-    //@   requires k != null;
-    //@   old int ord = k.ordinal();
+    //@   requires key != null;
+    //@   old int ord = key.ordinal();
     //@   assignable objectState;
     //@   ensures !keys[ord];
     //@   ensures \forall int i; i != ord && i >= 0; keys[i] == \old(keys[i]);
     //@   ensures \forall int i; i != ord && i >= 0; modelMap[i] == \old(modelMap[i]);
-    public /*@ nullable */ V remove(/*@ nullable */ K k);
+    public /*@ nullable */ V remove(/*@ nullable */ Object key);
 
 //  private boolean removeMapping(/*@ nullable */ java.lang.Object, /*@ nullable */ java.lang.Object);
 //  private boolean isValidKey(java.lang.Object);

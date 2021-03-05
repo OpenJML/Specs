@@ -41,9 +41,9 @@ public class Object {
      * Used to specify (among other things) injectivity (see
      * the ESC/Java User's Manual).
      */
-    //@ ghost public nullable Object owner;
-        // NB It is inconvenient to include owner in objectState,
-        // because generally we do not change the owner after initialization
+    //@ ghost public nullable Object __owner;
+        // NB It is inconvenient to include __owner in objectState,
+        // because generally we do not change the __owner after initialization
 
     /** A (model) value unique to the equivalence class defined by equals().
      *  Regular hashCode() might have conflicts. */

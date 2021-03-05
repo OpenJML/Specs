@@ -39,7 +39,7 @@ public abstract class InputStream implements Closeable {
     // It is not modified - i.e., it is an oracle of sorts
     //-RAC@ public model final non_null byte[] inputBytes;
     //-RAC@ public constraint inputBytes == \old(inputBytes);
-    //-RAC@ public invariant inputBytes.owner == this;
+    //-RAC@ public invariant inputBytes.__owner == this;
 
     // readPosition is the location within the inputBytes array that
     // corresponds to what has been read so far
@@ -64,7 +64,7 @@ public abstract class InputStream implements Closeable {
     /*-RAC@ public normal_behavior
       @   ensures \result <==> (
       @       isOpen && !wasClosed && availableBytes >= 0 && readPosition == 0 
-      @       && inputBytes != null && inputBytes.owner == this);
+      @       && inputBytes != null && inputBytes.__owner == this);
       @ pure public model boolean initialInputStream();
       @*/
 

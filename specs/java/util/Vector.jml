@@ -50,7 +50,7 @@ public class Vector<E> extends AbstractList<E>
     protected Object[] elementData; //@ in objectState; 
     //@                   maps elementData[*] \into objectState;
 
-    //-RAC@ public invariant elementData.owner == this; 
+    //-RAC@ public invariant elementData.__owner == this; 
     //-RAC@ public invariant elementData.length >= maxCapacity;
 
     protected /*@ spec_public @*/ int elementCount; //@ in objectState;
@@ -210,9 +210,9 @@ public class Vector<E> extends AbstractList<E>
       @    requires 0 <= index < elementCount;
       @    ensures \result == -1 || ( index <= \result && \result < elementCount);
       @    ensures !\key("RAC") ==> \result == -1 <==> (\forall int i; index<=i && i<size(); 
-                                                !nullequals(o,get(i)));
-      @    ensures !\key("RAC") ==> \result != -1 ==> nullequals(o,get(\result));
-      @    ensures !\key("RAC") ==> (\forall int i; index<=i && i<\result; !nullequals(o,get(i)));
+                                                !Collection.nullequals(o,get(i)));
+      @    ensures !\key("RAC") ==> \result != -1 ==> Collection.nullequals(o,get(\result));
+      @    ensures !\key("RAC") ==> (\forall int i; index<=i && i<\result; !nCollection.ullequals(o,get(i)));
              // FIXME - exceptions
       @*/
     public synchronized /*@ pure @*/ int indexOf(Object o, int index);
@@ -224,10 +224,10 @@ public class Vector<E> extends AbstractList<E>
       @    requires 0 <= index && index < elementCount;
       @    ensures -1 <= \result &&  \result <= index;
       @    ensures !\key("RAC") ==> \result == -1 <==> (\forall int i; 0<=i && i<=index; 
-                                                !nullequals(elem,get(i)));
+                                                !Collection.nullequals(elem,get(i)));
       @    ensures \result != -1 ==> get(\result).equals(elem);
       @    ensures !\key("RAC") ==> (\forall int i; \result<i && i<=index; 
-                                                !nullequals(elem,get(i)));
+                                                !Collection.nullequals(elem,get(i)));
              // FIXME - exceptions
       @*/
     public /*@ pure @*/ synchronized int lastIndexOf(Object elem, int index);
@@ -274,7 +274,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires containsNull || obj != null;
       @    assignable values;
       @    ensures elementCount == \old(elementCount);
-      @    ensures !\key("RAC") ==> nullequals(obj, get(index));
+      @    ensures !\key("RAC") ==> Collection.nullequals(obj, get(index));
       @    ensures (\forall int i; 0<=i && i<elementCount && i != index;
                            get(i) == \old(get(i)));
       @ also

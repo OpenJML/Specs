@@ -168,7 +168,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
 
     //@ public invariant_redundantly isEmpty() ==> !containsNull;
 
-    //@ public invariant owner == null;
+    //@ public invariant __owner == null;
 
     //************************* Constructors ********************************
 
@@ -176,7 +176,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
      *  @see #EMPTY
      */
     /*@ public normal_behavior
-      @    assignable objectState, elementType, containsNull, owner;
+      @    assignable objectState, elementType, containsNull, __owner;
       @    ensures this.isEmpty();
       @    ensures_redundantly (* this is an empty bag *);
       @
@@ -184,7 +184,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
       @    ensures elementType <: \type(_ElemType_) && !containsNull;
       @*/
     public JML_Elem_Bag() {
-        //@ set owner = null;
+        //@ set __owner = null;
         the_list = null;
         size = 0;
         //@ set elementType = \type(_NormParameter_);
@@ -192,7 +192,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
     }  
 
     /*@ public normal_behavior
-      @    assignable objectState, elementType, containsNull, owner;
+      @    assignable objectState, elementType, containsNull, __owner;
       @    ensures count(elem) == 1 && int_size() == 1;
       @    ensures_redundantly (* this is a singleton bag containing elem *);_Singleton_Constructor_Spec_End_
       @
@@ -206,7 +206,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
      *  @see #singleton
      */
     public JML_Elem_Bag (_NormParameter_ elem) {
-        //@ set owner = null;
+        //@ set __owner = null;
         // cons() clones if necessary
         the_list = JML_Elem_BagEntryNode.cons(new JML_Elem_BagEntry<_NormParameter_>(elem),
                                               null);
@@ -220,14 +220,14 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
      */
     /*@  requires ls == null <==> sz == 0;
       @  requires sz >= 0;
-      @  assignable objectState, elementType, containsNull, owner;
+      @  assignable objectState, elementType, containsNull, __owner;
       @  ensures elementType
       @          == (ls == null ? \type(_ElemType_) : ls.entryElementType);
       @  ensures containsNull
       @          == (ls == null ? false : ls.containsNullElements);
       @*/
     protected JML_Elem_Bag (JML_Elem_BagEntryNode<_NormParameter_> ls, int sz) {
-        //@ set owner = null;
+        //@ set __owner = null;
         the_list = ls;
         size = sz;
         /*@ set elementType
@@ -1124,16 +1124,16 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
       @          && (theElem != null ==> elementType == \typeof(theElem));
       @*/
 
-    //@ public invariant owner == null;
+    //@ public invariant __owner == null;
 
     /** Initialize this object to be a singleton entry.
      */
     /*@ public normal_behavior
-      @   assignable theElem, count, elementType, owner;
+      @   assignable theElem, count, elementType, __ower;
       @   ensures theElem == e && count == 1;
       @*/
     public JML_Elem_BagEntry(_NormParameter_ e) {
-        //@ set owner = null;
+        //@ set __ower = null;
         theElem = e;
         count = 1;
         /*@ set elementType
@@ -1146,12 +1146,12 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
      */
     /*@ public normal_behavior
       @    requires cnt > 0;
-      @   assignable theElem, count, elementType, owner;
+      @   assignable theElem, count, elementType, __ower;
       @    ensures count == cnt && (e == null ==> theElem == null);
       @   ensures (e != null ==> e _elem_equality_ (theElem));
       @*/
     public JML_Elem_BagEntry(_NormParameter_ e, int cnt) {
-        //@ set owner = null;
+        //@ set __ower = null;
         theElem = e;
         count = cnt;
         /*@ set elementType
@@ -1276,7 +1276,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
      */
     /*@  public normal_behavior
       @    requires entry != null;
-      @    assignable val, next, elementType, containsNull, owner;
+      @    assignable val, next, elementType, containsNull, __ower;
       @    assignable entryElementType, containsNullElements;
       @    ensures val _elem_equality_ (entry);
       @*/
@@ -1298,7 +1298,7 @@ public /*@ pure @*/ class JML_Elem_Bag<_ClassParameter_>
                                  JML_Elem_BagEntryNode<_NormParameter_> nxt) {
         super(entry, nxt);
         //@ assume elementType == \type(JML_Elem_BagEntry) && !containsNull;
-        //@ assert owner == null;
+        //@ assert __ower == null;
         /*@ set entryElementType
           @      = (nxt == null ? entry.elementType
           @           : (nxt.entryElementType <: entry.elementType

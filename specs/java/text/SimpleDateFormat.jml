@@ -22,7 +22,7 @@ public class SimpleDateFormat extends DateFormat {
       private transient int defaultCenturyStartYear;
       private static final int MILLIS_PER_MINUTE;
       private static final String GMT;
-      private static final concurrent.ConcurrentMap<Locale, NumberFormat> cachedNumberFormatData;
+      private static final java.util.concurrent.ConcurrentMap<Locale, NumberFormat> cachedNumberFormatData;
       private Locale locale;
       transient boolean useDateFormatSymbols;
       private static final int[] PATTERN_INDEX_TO_CALENDAR_FIELD;

@@ -441,7 +441,7 @@ public final class String
     /*@ public normal_behavior
       @   requires s2 != null & s1 != null;
       @   requires s1.charArray != null & s2.charArray != null; // OPENJML: TODO Needs the invariant that charArray is not null
-      @   ensures \result == equal(s1.charArray,s2.charArray);
+      @   ensures \result == CharSequence.equal(s1.charArray,s2.charArray);
       @ also public normal_behavior
       @   requires s1 == s2;
       @   ensures \result;
@@ -575,7 +575,7 @@ public final class String
                                               char[] s2);  @*/
 
     /*@ axiom (\forall char[] s1, s2; s1 != null && s2 != null;
-                   !equal(s1,s2) ==> (lessThan(s1,s2) <=!=> lessThan(s2,s1)));
+                   !CharSequence.equal(s1,s2) ==> (CharSequence.lessThan(s1,s2) <=!=> CharSequence.lessThan(s2,s1)));
      */
 
     /*@ also public normal_behavior
@@ -880,7 +880,7 @@ public final class String
     public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*@  public normal_behavior
-      @   ensures \result.charArray.owner == \result;
+      @   ensures \result.charArray.__owner == \result;
       @   ensures \result.length() == length()
       @            && (\forall int i; 0 <= i && i < length();
       @                  \result.charAt(i) 
