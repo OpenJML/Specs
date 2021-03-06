@@ -1630,360 +1630,360 @@ public class Arrays {
      */
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from <= to <= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= original.length && original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == 0);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static byte[] copyOfRange(/*@ nullable @*/ byte[] src, int from, int to);
+    public static byte[] copyOfRange(/*@ nullable @*/ byte[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= to && to <= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= original.length && original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == false);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == false);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static boolean[] copyOfRange(/*@ nullable @*/ boolean[] src, int from, int to);
+    public static boolean[] copyOfRange(/*@ nullable @*/ boolean[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= to && to <= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= original.length && original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == 0);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static short[] copyOfRange(/*@ nullable @*/ short[] src, int from, int to);
+    public static short[] copyOfRange(/*@ nullable @*/ short[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= to && to <= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= original.length && original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == 0);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static int[] copyOfRange(/*@ nullable @*/ int[] src, int from, int to);
+    public static int[] copyOfRange(/*@ nullable @*/ int[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= to && to <= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from && from <= original.length && original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == 0);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static long[] copyOfRange(/*@ nullable @*/ long[] src, int from, int to);
+    public static long[] copyOfRange(/*@ nullable @*/ long[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from <= to <= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from <= original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == 0);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static float[] copyOfRange(/*@ nullable @*/ float[] src, int from, int to);
+    public static float[] copyOfRange(/*@ nullable @*/ float[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to && to <= src.length;
+    //@   requires original != null;
+    //@   requires 0 <= from <= to<= original.length;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < to; \result[i-from] == src[i]);
+    //@   ensures (\forall int i; from <= i < to; \result[i-from] == original[i]);
     //@ also public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= src.length && src.length < to;
+    //@   requires original != null;
+    //@   requires 0 <= from <= original.length < to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
-    //@   ensures (\forall int i; from <= i < src.length; \result[i-from] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < to; \result[i-from] == 0);
+    //@   ensures (\forall int i; from <= i < original.length; \result[i-from] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < to; \result[i-from] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static double[] copyOfRange(/*@ nullable @*/ double[] src, int from, int to);
+    public static double[] copyOfRange(/*@ nullable @*/ double[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to;
+    //@   requires original != null;
+    //@   requires 0 <= from <= to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
     //@   ensures \elemtype(\typeof(\result)) == \type(char);
     //@   {|
-    //@       requires to <= src.length;
-    //@       ensures (\forall int i; 0 <= i < to-from; \result[i] == src[i+from]);
+    //@       requires to <= original.length;
+    //@       ensures (\forall int i; 0 <= i < to-from; \result[i] == original[i+from]);
     //@   also 
-    //@       requires src.length < to;
-    //@       ensures (\forall int i; 0 <= i < src.length - from; \result[i] == src[i+from]);
-    //@       ensures (\forall int i; 0 <= i < to - src.length; \result[i+src.length-from] == 0);
+    //@       requires original.length < to;
+    //@       ensures (\forall int i; 0 <= i < original.length - from; \result[i] == original[i+from]);
+    //@       ensures (\forall int i; 0 <= i < to - original.length; \result[i+original.length-from] == 0);
     //@   |}
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static char[] copyOfRange(/*@ nullable @*/ char[] src, int from, int to);
+    public static char[] copyOfRange(/*@ nullable @*/ char[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to;
+    //@   requires original != null;
+    //@   requires 0 <= from <= to;
     //-RAC@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
     //@   ensures \elemtype(\typeof(\result)) == \type(T);
     //@   {|
-    //@       requires to <= src.length;
-    //@       ensures (\forall int i; 0 <= i < to-from; \result[i] == src[i+from]);
+    //@       requires to <= original.length;
+    //@       ensures (\forall int i; 0 <= i < to-from; \result[i] == original[i+from]);
     //@   also 
-    //@       requires src.length < to;
-    //@       ensures (\forall int i; 0 <= i < src.length - from; \result[i] == src[i+from]);
-    //@       ensures (\forall int i; 0 <= i < to - src.length; \result[i+src.length-from] == null);
+    //@       requires original.length < to;
+    //@       ensures (\forall int i; 0 <= i < original.length - from; \result[i] == original[i+from]);
+    //@       ensures (\forall int i; 0 <= i < to - original.length; \result[i+original.length-from] == null);
     //@   |}
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static <T> T[] copyOfRange(/*@ nullable @*/ T[] src, int from, int to);
+    public static <T> T[] copyOfRange(/*@ nullable @*/ T[] original, int from, int to);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires 0 <= from && from <= to;
+    //@   requires original != null;
+    //@   requires 0 <= from <= to;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == to - from;
     //@   ensures \elemtype(\typeof(\result)) == \type(T);
     //@   {|
-    //@       requires to <= src.length;
-    //@       ensures (\forall int i; 0 <= i < to-from; \result[i] == src[i+from]);
+    //@       requires to <= original.length;
+    //@       ensures (\forall int i; 0 <= i < to-from; \result[i] == original[i+from]);
     //@   also 
-    //@       requires src.length < to;
-    //@       ensures (\forall int i; 0 <= i < src.length - from; \result[i] == src[i+from]);
-    //@       ensures (\forall int i; 0 <= i < to - src.length; \result[i+src.length-from] == null);
+    //@       requires original.length < to;
+    //@       ensures (\forall int i; 0 <= i < original.length - from; \result[i] == original[i+from]);
+    //@       ensures (\forall int i; 0 <= i < to - original.length; \result[i+original.length-from] == null);
     //@   |}
     //@ // FIXME another exceptional case: if T and U are not compatible types. Not clear how to specify it
     //@ also private exceptional_behavior
-    //@   requires src == null || from < 0 || from > src.length || from > to;
-    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (src != null && from > src.length);
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || from < 0 || from > original.length || from > to;
+    //@   signals (ArrayIndexOutOfBoundsException) from < 0 || (original != null && from > original.length);
+    //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static <T,U> T[] copyOfRange(/*@ nullable @*/ U[] src, int from, int to, Class<? extends T[]> newType);
+    public static <T,U> T[] copyOfRange(/*@ nullable @*/ U[] original, int from, int to, Class<? extends T[]> newType);
     
     //@ public normal_behavior
-    //@   requires src != null;
-    //@   requires newLength >= 0  && newLength <= Integer.MAX_VALUE;
+    //@   requires original != null;
+    //@   requires 0 <= newLength <= Integer.MAX_VALUE;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static byte[] copyOf(/*@ nullable @*/ byte[] src, int newLength);
+    public static byte[] copyOf(/*@ nullable @*/ byte[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == false);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == false);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static boolean[] copyOf(/*@ nullable @*/ boolean[] src, int newLength);
+    public static boolean[] copyOf(/*@ nullable @*/ boolean[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static char[] copyOf(/*@ nullable @*/ char[] src, int newLength);
+    public static char[] copyOf(/*@ nullable @*/ char[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static short[] copyOf(/*@ nullable @*/ short[] src, int newLength);
+    public static short[] copyOf(/*@ nullable @*/ short[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static int[] copyOf(/*@ nullable @*/ int[] src, int newLength);
+    public static int[] copyOf(/*@ nullable @*/ int[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static long[] copyOf(/*@ nullable @*/ long[] src, int newLength);
+    public static long[] copyOf(/*@ nullable @*/ long[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static float[] copyOf(/*@ nullable @*/ float[] src, int newLength);
+    public static float[] copyOf(/*@ nullable @*/ float[] original, int newLength);
     
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == 0);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == 0);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static double[] copyOf(/*@ nullable @*/ double[] src, int newLength);
+    public static double[] copyOf(/*@ nullable @*/ double[] original, int newLength);
     
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == null);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == null);
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static <T> T[] copyOf(/*@ nullable @*/ T[] src, int newLength);
+    public static <T> T[] copyOf(/*@ nullable @*/ T[] original, int newLength);
 
     //@ public normal_behavior
-    //@   requires src != null;
+    //@   requires original != null;
     //@   requires newLength >= 0;
     //@   ensures \fresh(\result);
     //@   ensures \result.length == newLength;
-    //@   ensures (\forall int i; 0 <= i < src.length && i < newLength; \result[i] == src[i]);
-    //@   ensures (\forall int i; src.length <= i < newLength; \result[i] == null);
+    //@   ensures (\forall int i; 0 <= i < original.length && i < newLength; \result[i] == original[i]);
+    //@   ensures (\forall int i; original.length <= i < newLength; \result[i] == null);
     //@   ensures \elemtype(\typeof(\result)) == \type(T);
     //@ // FIXME another exceptional case: if T and U are not compatible types. Not clear how to specify it
     //@ also private exceptional_behavior
-    //@   requires src == null || newLength < 0;
-    //@   signals (NullPointerException) src == null;
+    //@   requires original == null || newLength < 0;
+    //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static <T,U> T[] copyOf(/*@ nullable @*/ U[] src, int newLength, Class<? extends T[]> newType);
+    public static <T,U> T[] copyOf(/*@ nullable @*/ U[] original, int newLength, Class<? extends T[]> newType);
     
 //    public static <T> java.util.Spliterator<T> spliterator(T[]);
 //    public static <T> java.util.Spliterator<T> spliterator(T[], int, int);
@@ -2053,10 +2053,10 @@ public class Arrays {
     public static int deepHashCode(Object[] b);
     
     //@ public normal_behavior
-    //@   requires b != null;
+    //@   requires a != null;
     //@   ensures true;
     //@ pure helper
-    public static java.lang.String deepToString(/*@ nullable */ Object[] b);
+    public static java.lang.String deepToString(/*@ nullable */ Object[] a);
 
 }
 

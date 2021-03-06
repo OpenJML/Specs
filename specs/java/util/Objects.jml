@@ -6,33 +6,33 @@ public final class Objects {
   private Objects();
   
   //@ public normal_behavior
-  //@   ensures (obj1 == null && obj2 == null) ==> \result;
-  //@   ensures (obj1 == null && obj2 != null || obj1 != null && obj2 == null) ==> !\result;
-  //@   ensures (obj1 != null && obj2 != null) ==> \result == obj1.equals(obj2);
+  //@   ensures (a == null && b == null) ==> \result;
+  //@   ensures (a == null && b != null || a != null && b == null) ==> !\result;
+  //@   ensures (a != null && b != null) ==> \result == a.equals(b);
   //@ pure
-  public static boolean equals(/*@ nullable */Object obj1, /*@ nullable */Object obj2);
+  public static boolean equals(/*@ nullable */Object a, /*@ nullable */Object b);
   // FIXME - more to specify
   public static boolean deepEquals(/*@ nullable */Object obj1, /*@ nullable */Object obj2);
   
   //@ public normal_behavior
-  //@   ensures \result == (obj == null ? 0 : obj.hashCode());
+  //@   ensures \result == (o == null ? 0 : o.hashCode());
   //@ pure function
-  public static int hashCode(/*@ nullable */Object obj);
+  public static int hashCode(/*@ nullable */Object o);
   
   //@ public normal_behavior
-  //@   ensures \result == Arrays.hashCode(objs);
+  //@   ensures \result == Arrays.hashCode(values);
   //@ pure function
-  public static int hash(Object... objs);
+  public static int hash(Object... values);
   
   //@ public normal_behavior
-  //@   ensures \result == (obj == null ? "null" : obj.toString());
+  //@   ensures \result == (o == null ? "null" : o.toString());
   //@ pure function
-  public static String toString(/*@ nullable */Object obj);
+  public static String toString(/*@ nullable */Object o);
   
   //@ public normal_behavior
-  //@   ensures \result == (obj == null ? msg : obj.toString());
+  //@   ensures \result == (o == null ? nullDefault : o.toString());
   //@ pure function
-  public static /*@ nullable */ String toString(/*@ nullable */Object obj, /*@ nullable */String msg);
+  public static /*@ nullable */ String toString(/*@ nullable */Object o, /*@ nullable */String nullDefault);
 
   //@ public normal_behavior
   //@   ensures (* FIXME - what result; check nullity *);

@@ -277,8 +277,8 @@ public  /*@ pure @*/ final
     public int hashCode();
    
     //@ public normal_behavior
-    //@   ensures \result == i;
-    public static int hashCode(int i);
+    //@   ensures \result == value;
+    public static int hashCode(int value);
 
     /*-RAC@ 
       @   public normal_behavior
@@ -379,39 +379,39 @@ public  /*@ pure @*/ final
     
     /*@ public normal_behavior
       @     // We enumerate some cases that we need to avoid using bit arithmetic
-      @   ensures (\result == 0) <==> (k == 0);
-      @   ensures (\result == 1) <==> (k == 1 || k == 2 || k == 4 || k == 8 
-      @                             || k == 16 || k == 32 || k == 64 || k == 128 
-      @                             || k == 256 || k == 512 || k == 1024 || k == 0x800 
-      @                             || k == 0x1000 || k == 0x2000 || k == 0x4000 || k == 0x8000 
-      @                             || k == 0x1_0000 || k == 0x2_0000 || k == 0x4_0000 || k == 0x8_0000 
-      @                             || k == 0x10_0000 || k == 0x20_0000 || k == 0x40_0000 || k == 0x80_0000 
-      @                             || k == 0x100_0000 || k == 0x200_0000 || k == 0x400_0000 || k == 0x800_0000 
-      @                             || k == 0x1000_0000 || k == 0x2000_0000 || k == 0x4000_0000 || k == 0x8000_0000 
+      @   ensures (\result == 0) <==> (i == 0);
+      @   ensures (\result == 1) <==> (i == 1 || i == 2 || i == 4 || i == 8 
+      @                             || i == 16 || i == 32 || i == 64 || i == 128 
+      @                             || i == 256 || i == 512 || i == 1024 || i == 0x800 
+      @                             || i == 0x1000 || i == 0x2000 || i == 0x4000 || i == 0x8000 
+      @                             || i == 0x1_0000 || i == 0x2_0000 || i == 0x4_0000 || i == 0x8_0000 
+      @                             || i == 0x10_0000 || i == 0x20_0000 || i == 0x40_0000 || i == 0x80_0000 
+      @                             || i == 0x100_0000 || i == 0x200_0000 || i == 0x400_0000 || i == 0x800_0000 
+      @                             || i == 0x1000_0000 || i == 0x2000_0000 || i == 0x4000_0000 || i == 0x8000_0000 
       @                             );
       @ //   ensures \result == (
-      @ //         (k&1) + ((k>>1)&1) + ((k>>2)&1) + ((k>>3)&1) +
-      @ //         ((k>>4)&1) + ((k>>5)&1) + ((k>>6)&1) + ((k>>7)&1) +
-      @ //         ((k>>8)&1) + ((k>>9)&1) + ((k>>10)&1) + ((k>>11)&1) +
-      @ //         ((k>>12)&1) + ((k>>13)&1) + ((k>>14)&1) + ((k>>15)&1) +
-      @ //         ((k>>16)&1) + ((k>>17)&1) + ((k>>18)&1) + ((k>>19)&1) +
-      @ //         ((k>>20)&1) + ((k>>21)&1) + ((k>>22)&1) + ((k>>23)&1) +
-      @ //         ((k>>24)&1) + ((k>>25)&1) + ((k>>26)&1) + ((k>>27)&1) +
-      @ //         ((k>>28)&1) + ((k>>29)&1) + ((k>>30)&1) + ((k>>31)&1) );
+      @ //         (i&1) + ((i>>1)&1) + ((i>>2)&1) + ((i>>3)&1) +
+      @ //         ((i>>4)&1) + ((i>>5)&1) + ((i>>6)&1) + ((i>>7)&1) +
+      @ //         ((i>>8)&1) + ((i>>9)&1) + ((i>>10)&1) + ((i>>11)&1) +
+      @ //         ((i>>12)&1) + ((i>>13)&1) + ((i>>14)&1) + ((i>>15)&1) +
+      @ //         ((i>>16)&1) + ((i>>17)&1) + ((i>>18)&1) + ((i>>19)&1) +
+      @ //         ((i>>20)&1) + ((i>>21)&1) + ((i>>22)&1) + ((i>>23)&1) +
+      @ //         ((i>>24)&1) + ((i>>25)&1) + ((i>>26)&1) + ((i>>27)&1) +
+      @ //         ((i>>28)&1) + ((i>>29)&1) + ((i>>30)&1) + ((i>>31)&1) );
       @*/ // OPENJML TODO - one could also add up table lookups on 4-bit quantities
           // OPENJML TODO - perhaps should implement using different specs when in 
           // OPENJML TODO - bitvector mode vs. not
     //@ pure function
-    public static int bitCount(int k);
+    public static int bitCount(int i);
 
     //@ public normal_behavior
     //@   ensures \result == (b0*(0x100_0000) + Byte.toUnsignedInt(b1)*(0x1_0000) + Byte.toUnsignedInt(b2)*(0x100) + Byte.toUnsignedInt(b3));
     //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
 
     //@ public normal_behavior // Avoids bit arithmetic
-    //@   ensures \result == \bigint_math(i < 0 ? ((long)i - Integer.MIN_VALUE - Integer.MIN_VALUE) : i) && 0 <= \result && \result <= MAX_UNSIGNED_INT;
+    //@   ensures \result == \bigint_math(x < 0 ? ((long)x - Integer.MIN_VALUE - Integer.MIN_VALUE) : x) && (0 <= \result <= MAX_UNSIGNED_INT);
     //@ pure helper function
-    public static long toUnsignedLong(int i);
+    public static long toUnsignedLong(int x);
     
     //@ public normal_behavior
     //@   ensures (0xFFFF_FFFFL & i) == Integer.toUnsignedLong(i);
@@ -419,16 +419,16 @@ public  /*@ pure @*/ final
     
     
     //@ public normal_behavior
-    //@   ensures \result == \java_math(i+j);
-    public static int sum(int i, int j);
+    //@   ensures \result == \java_math(a+b);
+    public static int sum(int a, int b);
     
     //@ public normal_behavior
-    //@   ensures \result == (i>j?i:j);
-    public static int max(int i, int j);
+    //@   ensures \result == (a>b?a:b);
+    public static int max(int a, int b);
     
     //@ public normal_behavior
-    //@   ensures \result == (i<j?i:j);
-    public static int min(int i, int j);
+    //@   ensures \result == (a<b?a:b);
+    public static int min(int a, int b);
     
     //@ public normal_behavior
     //@   ensures \result == (i>0? 1: i == 0? 0: -1);

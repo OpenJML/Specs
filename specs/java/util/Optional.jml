@@ -16,31 +16,31 @@ public final class Optional<T> {
   public static <T> Optional<T> empty();
 
   //@ private normal_behavior
-  //@   requires t != null;
-  //@   ensures this.value == t;
+  //@   requires value != null;
+  //@   ensures this.value == value;
   //@ also private exceptional_behavior
-  //@   requires t == null;
+  //@   requires value == null;
   //@   signals_only NullPointerException;
   //@ pure
-  private Optional(T t); // non-null required
+  private Optional(T value); // non-null required
 
   //@ public normal_behavior
-  //@   requires t != null;
+  //@   requires value != null;
   //-RAC@   ensures \fresh(\result);
-  //-RAC@   ensures \result.value == t;
-  //+RAC@   ensures \result.get() == t;
+  //-RAC@   ensures \result.value == value;
+  //+RAC@   ensures \result.get() == value;
   //@ also public exceptional_behavior
-  //@   requires t == null;
+  //@   requires value == null;
   //@   signals_only NullPointerException;
   //@ pure function helper
-  public static <T> Optional<T> of(T t); // non-null required
+  public static <T> Optional<T> of(T value); // non-null required
 
   //@ public normal_behavior
   //-RAC@   ensures \fresh(\result);
-  //-RAC@   ensures \result.value == t;
-  //+RAC@   ensures \result.get() == t;
+  //-RAC@   ensures \result.value == value;
+  //+RAC@   ensures \result.get() == value;
   //@ pure helper
-  public static <T> Optional<T> ofNullable(/*@ nullable */ T t);
+  public static <T> Optional<T> ofNullable(/*@ nullable */ T value);
   
   //-RAC@ public normal_behavior
   //-RAC@   requires value != null;
@@ -58,8 +58,8 @@ public final class Optional<T> {
   public boolean isPresent();
   
   
-  //-RAC@ public model_program { if (value != null) consumer.accept(value); }
-  //+RAC@ public model_program { if (get() != null) consumer.accept(value); }
+  //-RAC@ public model_program { if (value != null) action.accept(value); }
+  //+RAC@ public model_program { if (get() != null) action.accept(value); }
   public void ifPresent(Consumer<? super T> action);
 
   /*@ public model_program 
@@ -69,31 +69,39 @@ public final class Optional<T> {
   public Optional<T> filter(Predicate<? super T> predicate);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
-    @   { if (f==null) throw new NullPointerException(); return !isPresent() ? Optional.<U>empty() : Optional.<U>ofNullable( f.apply(value) ) ; }
+    @   { if (mapper==null) throw new NullPointerException(); return !isPresent() ? Optional.<U>empty() : Optional.<U>ofNullable( mapper.apply(value) ) ; }
     @*/
-  public <U> Optional<U> map(Function<? super T, ? extends U> f);
+  public <U> Optional<U> map(Function<? super T, ? extends U> mapper);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
-  @   { if (f==null) throw new NullPointerException(); if (!isPresent()) return Optional.<U>empty(); ghost Optional<U> r = f.apply(value); if (r == null) throw new NullPointerException(); return r; }
+  @   //{ if (mapper==null) throw new NullPointerException(); if (!isPresent()) return Optional.<? extends U>empty(); ghost Optional<? extends U> r = mapper.apply(value); if (r == null) throw new NullPointerException(); return r; }
   @*/
-  public <U> Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> f);
+  public <U> Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> mapper);
 
   //@ public normal_behavior
-  //@   { return isPresent() ? this.get() : t; }
+  //@   { return isPresent() ? this.get() : other; }
   //@ pure
-  public T orElse(T t);
+  public T orElse(T other);
 
-  /*-RAC@ public behavior
-    @   { return (value != null ? value : supplier.get() ); }
-    @*/
+  //@ public behavior
+  //@   { return (value != null ? value : supplier.get() ); }
   //@ pure
   public T orElseGet(Supplier<? extends T> supplier);
   
+  //@ public normal_behavior 
+  //@   requires value != null;
+  //@   ensures \result == value;
+  //@ also public exceptional_behavior
+  //@   requires value == null;
+  //@   signals_only NoSuchElementException;
+  //@ pure
+  public T orElseThrow() throws NoSuchElementException;
+  
   /*-RAC@ public behavior 
-    @    { if (value!=null) return value; else throw supplier.get(); }
+    @    { if (value!=null) return value; else throw exceptionSupplier.get(); }
     @*/
   //@ pure  // FIXME - really only pure if the lambda expression is pure
-  public <X extends java.lang.Throwable> T orElseThrow( Supplier<? extends X> supplier) throws X;
+  public <X extends java.lang.Throwable> T orElseThrow( Supplier<? extends X> exceptionSupplier) throws X;
 
   public boolean equals(java.lang.Object o);
   public int hashCode();

@@ -211,9 +211,9 @@ public /*@ pure @*/ final
         throws NumberFormatException;
 
   /*@ public normal_behavior
-    @   ensures \result.longValue() == i;
+    @   ensures \result.longValue() == l;
     @*/
-   public static /*@ pure @*/ /*@ non_null @*/ Long valueOf(long i);
+   public static /*@ pure @*/ /*@ non_null @*/ Long valueOf(long l);
 
    /*-RAC@
       @ public normal_behavior

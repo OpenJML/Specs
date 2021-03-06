@@ -19,18 +19,18 @@ public class Runtime {
     private Runtime();
     //@ public behavior   // Does not return either normally or with exception
     //@   assignable systemExitValue;
-    //@   diverges systemExitValue == n;
+    //@   diverges systemExitValue == status;
     //@   ensures false;
     //@   signals (Exception e) false;
-    public void exit(int n);
+    public void exit(int status);
     public void addShutdownHook(Thread thread);
     public boolean removeShutdownHook(Thread thread);
     //@ public behavior   // Does not return either normally or with exception
     //@   assignable systemExitValue;
-    //@   diverges systemExitValue == n;
+    //@   diverges systemExitValue == status;
     //@   ensures false;
     //@   signals (Exception e) false;
-    public void halt(int n);
+    public void halt(int status);
     public Process exec(String cmd) throws java.io.IOException;
     public Process exec(String cmd, String[] args) throws java.io.IOException;
     public Process exec(String cmd, String[] args, java.io.File file) throws java.io.IOException;

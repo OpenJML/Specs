@@ -214,10 +214,10 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures \result.values.length == ts.length;
-    //@   ensures (\forall int i; 0<=i && i<ts.length; \result.values[i] == ts[i]);
+    //@   ensures \result.values.length == values.length;
+    //@   ensures (\forall int i; 0 <= i < values.length; \result.values[i] == values[i]);
     //@ pure
-    public static <T> Stream<T> of(T... ts);
+    public static <T> Stream<T> of(T... values);
     
     //@ public normal_behavior
     //@   ensures \result != null;
