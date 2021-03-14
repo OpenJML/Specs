@@ -9,7 +9,7 @@ import org.jmlspecs.annotation.*;
  * @author David R. Cok
  *
  */
-@Pure
+//@ pure
 public interface IJMLTYPE {
 
     /*@ public normal_behavior

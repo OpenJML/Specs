@@ -34,14 +34,16 @@ class Method extends AccessibleObject implements Member, GenericDeclaration {
       @*/
     public /*@ pure non_null @*/ Class<?> getReturnType();
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @   ensures \result != null;
       @*/
+    @Override
     public /*@ pure @*/ Class<?>[] getParameterTypes();
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @   ensures \result != null;
       @*/
+    @Override
     public /*@ pure @*/  Class<?>[] getExceptionTypes();
 
     public /*@ pure @*/ boolean equals(/*@\readonly*//*@nullable*/Object obj);

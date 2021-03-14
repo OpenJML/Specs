@@ -322,7 +322,7 @@ t *);
     //@ public normal_behavior
     //@  requires \invariant_for(x);
     //@ helper
-    public /*@ pure function @*/ static native int identityHashCode(/*@nullable*/ Object x);
+    public /* @ pure function @*/ static native int identityHashCode(/*@nullable*/ Object x);
 
     //-RAC@ public model static non_null Properties systemProperties;
     //-RAC@    initially systemProperties.containsKey("java.home");

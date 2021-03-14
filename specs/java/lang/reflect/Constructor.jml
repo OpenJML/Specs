@@ -24,14 +24,16 @@ final public class Constructor<T> extends AccessibleObject
 
     public /*@ pure @*/ int getModifiers();
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @   ensures \result != null;
       @*/
+    @Override
     public /*@ pure @*/ Class<?>[] getParameterTypes();
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @   ensures \result != null;
       @*/
+    @Override
     public /*@ pure @*/ Class<?>[] getExceptionTypes();
 
     public /*@ pure @*/ boolean equals(/*@nullable*/Object obj);

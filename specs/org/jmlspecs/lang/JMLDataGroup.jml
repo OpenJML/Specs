@@ -28,7 +28,7 @@ import org.jmlspecs.annotation.*;
  * @version $Revision: 1.4 $
  * @author Gary T. Leavens, based on an idea of Rustan Leino
  */
-public @Pure final class JMLDataGroup {
+public /*@ pure */ final class JMLDataGroup {
 
     /** No objects of this type may be created
      */
