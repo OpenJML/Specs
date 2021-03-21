@@ -72,9 +72,9 @@ public final class System {
         //@ public static invariant \invariant_for(System.err);
 
     //-RAC@ public normal_behavior
-    //-RAC@   ensures in.isOpen;
-    //-RAC@   ensures out.isOpen;
-    //-RAC@   ensures err.isOpen;
+    //-RAC@   ensures (allowNullStreams || in != null) && (in == null || in.isOpen);
+    //-RAC@   ensures (allowNullStreams || out != null) && (out == null || out.isOpen);
+    //-RAC@   ensures (allowNullStreams || err != null) && (err == null || err.isOpen);
     //-RAC@ static_initializer
     
     //@ requires allowNullStreams || in != null;

@@ -1,6 +1,6 @@
 package java.util;
 
-public class HashSet<E> extends AbstractCollection<E> implements Set<E>, Cloneable, java.io.Serializable {
+public class HashSet<E> extends AbstractSet<E> implements Set<E>, Cloneable, java.io.Serializable {
 
     //@ public normal_behavior 
     //@   ensures isEmpty();

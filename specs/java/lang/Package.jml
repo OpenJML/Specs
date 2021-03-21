@@ -3,7 +3,7 @@ import java.net.URL;
 
 // TODO - This is not complete
 
-public class Package implements java.lang.reflect.AnnotatedElement {
+public class Package extends java.lang.NamedPackage implements java.lang.reflect.AnnotatedElement {
 
     Package(String name,
             String spectitle, String specversion, String specvendor,

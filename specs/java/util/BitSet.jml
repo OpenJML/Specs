@@ -11,7 +11,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     /*@
       @ immutable 
-      @ model class Content {}
+      @ model static class Content {}
       @ public non_null model Content content;
       @
       @ public normal_behavior

@@ -56,7 +56,7 @@ public interface List<E> extends Collection<E> {
     //+RAC@   ensures \result == !(\forall int i; 0<=i && i<size(); get(i) != null);
     //@ also public behavior
     //@   requires o != null;
-    //-RAC@   ensures (\result <==> (\exists int i; 0<=i && i<size(); nullequals(o,values[i])));
+    //-RAC@   ensures (\result <==> (\exists int i; 0<=i && i<size(); Collection.nullequals(o,values[i])));
     //@ pure
     boolean contains(/*@nullable*/ Object o);
 
@@ -130,7 +130,7 @@ public interface List<E> extends Collection<E> {
       @   ensures !\result ==> values.length == \old(values.length);
       @   ensures \result ==> values.length == \old(values.length-1);
       @*/
-    /* FIXME @ ensures (\exists \bigint j; 0<=j && j<\old(size()) && nullequals(o,get(content,j));
+    /* FIXME @ ensures (\exists \bigint j; 0<=j && j<\old(size()) && Collection.nullequals(o,get(content,j));
               (\forall \bigint k; 0<=k && k<j; get(content,k) == \old(get(content,k)))
           &&  (\forall \bigint k; j<k && k<content.theSize; get(content,k-1)==\old(get(content,k+1)))); */
     /*-RAC@ also public exceptional_behavior
@@ -163,7 +163,7 @@ public interface List<E> extends Collection<E> {
       @ public normal_behavior
       @   requires o instanceof List && size() == ((List) o).size(); 
       @   ensures \result <==> (\forall int i; 0<=i && i < values.length; // FIXME:  \bigint instead of int
-      @       nullequals(values[i],((List)o).values[i])); 
+      @       Collection.nullequals(values[i],((List)o).values[i])); 
       @ also public normal_behavior
       @   requires !(o instanceof List && size() == ((List) o).size());
       @   ensures !\result;
@@ -297,10 +297,10 @@ public interface List<E> extends Collection<E> {
       @            (* element is null and null elements are not
       @               supported by this *);
       @*/
-    /*-RAC@   ensures \result != -1 ==> nullequals(o,values[\result]);
-      @   // ensures (\forall int i; (0<=i && i < \result) ==> !nullequals(o,get(content,i)));
+    /*-RAC@   ensures \result != -1 ==> Collection.nullequals(o,values[\result]);
+      @   // ensures (\forall int i; (0<=i && i < \result) ==> !Collection.nullequals(o,get(content,i)));
       @   //ensures \result == -1 <==>
-          //   (\forall int i; (0<=i && i < content.theSize) ==> !nullequals(o,get(content,i)));
+          //   (\forall int i; (0<=i && i < content.theSize) ==> !Collection.nullequals(o,get(content,i)));
       @   //ensures \result == -1 <==> !contains(o);
       @*/
     /*@ pure @*/ int indexOf(Object o);
@@ -316,8 +316,8 @@ public interface List<E> extends Collection<E> {
       @               supported by this *);
       @*/
     /*-RAC@
-      @   ensures \result != -1 ==> nullequals(o,values[\result]);
-      @   ensures (\forall int i; \result<i && i < size(); !nullequals(o,values[i]));
+      @   ensures \result != -1 ==> Collection.nullequals(o,values[\result]);
+      @   ensures (\forall int i; \result<i && i < size(); !Collection.nullequals(o,values[i]));
       @*/
     /*@ pure @*/ int lastIndexOf(Object o);
 

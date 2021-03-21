@@ -1,7 +1,7 @@
 package java.lang.reflect;
 
 public final
-class Method extends AccessibleObject implements Member, GenericDeclaration {
+class Method extends Executable implements Member, GenericDeclaration {
 
     //@ public model Class returntype;
 

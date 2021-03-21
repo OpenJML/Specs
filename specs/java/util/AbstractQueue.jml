@@ -20,8 +20,8 @@
 
 package java.util;
 
-public abstract class AbstractQueue<E>
- implements Iterable<E>, Collection<E>, Queue<E> {
+public abstract class AbstractQueue<E> extends AbstractCollection<E>
+ implements Queue<E> {
 
     // public java.util.Collection<E>.Content x;
     // /*@ public static model class IndexedContent<E>
