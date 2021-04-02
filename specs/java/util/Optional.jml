@@ -7,8 +7,8 @@ public final class Optional<T> {
 //  private static final Optional<?> EMPTY;
 //  //@ public static final invariant EMPTY.value == null;
   
-  //@ spec_public nullable
-  private final T value;
+  //@ spec_public
+  private final nullable T value;
   
   //@ public normal_behavior
   //-RAC@   ensures \result.value == null;

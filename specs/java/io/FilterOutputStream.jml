@@ -3,6 +3,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public class FilterOutputStream extends java.io.OutputStream {
 
     // FIELDS
@@ -34,7 +35,7 @@ public class FilterOutputStream extends java.io.OutputStream {
 
     // Inherits specs
     // Writes bytes verbatim
-    public void write(/*@ non_null */ byte[] ba)
+    public void write(byte[] ba)
       throws IOException;
 
     // Inherits specs

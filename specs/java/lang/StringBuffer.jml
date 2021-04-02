@@ -29,7 +29,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
 // FIXME - should we use charArray instead of accumulatedString?
 
-    //@ public non_null model String accumulatedString;
+    //@ model public non_null String accumulatedString;
 
     //@ public normal_behavior
     //-RAC@   ensures this.accumulatedString.equals("");
@@ -47,7 +47,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     //-RAC@   ensures this.accumulatedString.equals(str);
     //+RAC@   ensures true;
     //@ pure
-    public StringBuffer(/*@non_null*/String str);
+    public StringBuffer(/*@ non_null*/String str);
 
     /*-RAC@ also public normal_behavior
       @   modifies accumulatedString;
@@ -218,7 +218,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @                               accumulatedString.startsWith(str, k));
       @     ensures \result == -1;
       @*/
-    public /*@ pure @*/ int indexOf(/*@non_null*/String str);
+    public /*@ pure @*/ int indexOf(/*@ non_null*/String str);
 
     /*@ also public normal_behavior
       @    requires (\exists int k; 0 <= k && k < accumulatedString.length();
@@ -236,7 +236,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @                               && k >= Math.min(fromIndex, str.length()));
       @     ensures \result == -1;
       @*/
-    public /*@ pure @*/ synchronized int indexOf(/*@non_null*/String str, int fromIndex);
+    public /*@ pure @*/ synchronized int indexOf(/*@ non_null*/String str, int fromIndex);
 
     /*@ also public normal_behavior
       @     requires (\exists int k; 0 <= k && k < accumulatedString.length();
@@ -253,7 +253,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @     //assignable \nothing;
       @     ensures \result == -1;
       @*/
-    public /*@ pure @*/ synchronized int lastIndexOf(/*@non_null*/String str);
+    public /*@ pure @*/ synchronized int lastIndexOf(/*@ non_null*/String str);
 
     /*@ also public normal_behavior
       @     requires (\exists int k; 0 <= k && k < accumulatedString.length();
@@ -272,7 +272,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @     //assignable \nothing;
       @     ensures \result == -1;
       @*/
-    public /*@ pure @*/ synchronized int lastIndexOf(/*@non_null*/String str, int fromIndex);
+    public /*@ pure @*/ synchronized int lastIndexOf(/*@ non_null*/String str, int fromIndex);
 
     /*@ also
       @ public normal_behavior

@@ -31,13 +31,13 @@ package java.lang;
 //@ non_null_by_default
 public final /*@ pure @*/ class Boolean implements java.io.Serializable, Comparable<Boolean> {
 
-    //@ non_null
+
     public static final Boolean TRUE;
 
-    //@ non_null
+
     public static final Boolean FALSE;
 
-    //@ non_null
+
     public static final Class<Boolean>    TYPE;       // 1.5 DIFFERENCE
 
     //@ model public static final String TRUE_S = "true";

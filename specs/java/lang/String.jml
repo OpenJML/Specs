@@ -519,7 +519,7 @@ public final class String
     public /*@ pure @*/ boolean equalsIgnoreCase(String anotherString);
 
     // FIXME - overly complicated for esc?
-    /* @  public normal_behavior
+    /*@  public normal_behavior
       @   requires s1 != null && s2 != null;
       @   {|
       @     requires s2.length == 0 && s1.length == 0;
@@ -534,12 +534,12 @@ public final class String
       @     requires s1.length > 0 && s2.length > 0 && s1[0] != s2[0];
       @     ensures \result == (s1[0] < s2[0]);
       @   also
-//      @     ensures \result == (
-//      @               (\exists int i; 0 <= i && i < s1.length && i < s2.length;
-//      @                        s1[i] < s2[i] && CharSequence.equal(s1,0,s2,0,i))
-//      @               || 
-//      @                 (s1.length < s2.length && CharSequence.equal(s1,0,s2,0,s1.length))
-//      @               );
+      @     ensures \result == (
+      @               (\exists int i; 0 <= i && i < s1.length && i < s2.length;
+      @                        s1[i] < s2[i] && CharSequence.equal(s1,0,s2,0,i))
+      @               || 
+      @                 (s1.length < s2.length && CharSequence.equal(s1,0,s2,0,s1.length))
+      @               );
       @   |}
       @*//*@
     public static pure model boolean lessThan(char[] s1,
@@ -927,7 +927,7 @@ public final class String
 
     /*@ public normal_behavior
            ensures !\fresh(\result); // TODO presuming interned for ease of proof
-        model public static non_null pure helper function String split(String s, String regex, int position);
+        model public static pure helper function non_null String split(String s, String regex, int position);
      */
         
     /*@ public normal_behavior
@@ -942,7 +942,7 @@ public final class String
       @   ensures (* output strings correspond to input substrings *);
       @   ensures limit > 0 ==> \result.length == limit;
       @*/
-    //@ pure non_null helper
+    //@ pure helper
     public String[] split(/*@ non_null @*/ String regex, int limit);
 
     /*@ public normal_behavior
@@ -952,7 +952,7 @@ public final class String
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null); // Including this avoids the needs for an instantiation, which is not always triggered
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] == split(this,regex,i));
       @*/
-    //@ pure non_null helper
+    //@ pure helper
     public String[] split(/*@ non_null @*/ String regex);
 
     /*@  public normal_behavior
@@ -962,7 +962,7 @@ public final class String
       @   ensures (* \result == a lower case conversion of this using the 
       @                          rules of the given locale *);
       @*/
-    public /*@ pure @*/ /*@ non_null @*/
+    public /*@ pure @*/
         String toLowerCase(/*@ non_null @*/ Locale locale);
 
     /*@  public normal_behavior
@@ -970,7 +970,7 @@ public final class String
       @   ensures \result != null
       @            && equals(\result,toLowerCase(Locale.getDefault()));
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ String toLowerCase();
+    public /*@ pure @*/ String toLowerCase();
 
     /*@  public normal_behavior
       @   requires locale != null;

@@ -845,7 +845,7 @@ public class Arrays {
       @   ensures \result <==> a.length == a2.length && 
       @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
-    public static /*@pure@*/ boolean equals(long[] a, long[] a2);
+    public static /*@ pure@*/ boolean equals(long[] a, long[] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
@@ -856,7 +856,7 @@ public class Arrays {
       @   ensures \result <==> a.length == a2.length && 
       @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ int[] a, /*@ nullable */ int[] a2);
+    public static /*@ pure@*/ boolean equals(int /*@ nullable */ [] a, int /*@ nullable */ [] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
@@ -867,7 +867,7 @@ public class Arrays {
       @   ensures \result <==> a.length == a2.length && 
       @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ short[] a, /*@ nullable */ short[] a2);
+    public static /*@ pure@*/ boolean equals(short /*@ nullable */ [] a, short /*@ nullable */[] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
@@ -878,7 +878,7 @@ public class Arrays {
       @   ensures \result <==> a.length == a2.length && 
       @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
-    public static /*@ pure @*/ boolean equals(/*@ nullable */ char[] a, /*@ nullable */ char[] a2);
+    public static /*@ pure @*/ boolean equals(char /*@ nullable */ [] a, char /*@ nullable */ [] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
@@ -890,7 +890,7 @@ public class Arrays {
       @                 (a.length == a2.length && 
       @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]));
       @*/
-    public static /*@ pure @*/ boolean equals(/*@ nullable */ byte[] a, /*@ nullable */ byte[] a2);
+    public static /*@ pure @*/ boolean equals(byte /*@ nullable */ [] a, byte /*@ nullable */[] a2);
 
     /*@  public normal_behavior
       @   requires a == null || a2 == null;
@@ -901,7 +901,7 @@ public class Arrays {
       @   ensures \result <==> (a.length == a2.length && 
       @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]));
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ boolean[] a, /*@ nullable */ boolean[] a2);
+    public static /*@ pure@*/ boolean equals(boolean /*@ nullable */ [] a, boolean /*@ nullable */[] a2);
 
 // FIXME - better comparison
     /*@  public normal_behavior
@@ -914,7 +914,7 @@ public class Arrays {
       @                    (\forall \bigint i; 0 <= i < a.length;
       @                     new Double(a[i]).equals(new Double(a2[i]))));
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ double[] a, /*@ nullable */ double[] a2);
+    public static /*@ pure@*/ boolean equals(double /*@ nullable */ [] a, double /*@ nullable */[] a2);
 
 // FIXME - better comparison
     /*@  public normal_behavior
@@ -927,7 +927,7 @@ public class Arrays {
       @                    (\forall int i; 0 <= i < a.length;
       @                     new Float(a[i]).equals(new Float(a2[i]))));
       @*/
-    public static /*@pure@*/ boolean equals(/*@ nullable */ float[] a, /*@ nullable */ float[] a2);
+    public static /*@ pure@*/ boolean equals(float /*@ nullable */ [] a, float /*@ nullable */ [] a2);
 
 // FIXME - Object comparisons as well as equals comparison?
     /*@  public normal_behavior
@@ -940,7 +940,7 @@ public class Arrays {
       @              (\forall \bigint i; 0 <= i < a.length;
       @                a[i].equals(a2[i])));
       @*/
-    public static /*@pure helper@*/ boolean equals(/*@ nullable */ Object[] a, /*@ nullable */ Object[] a2);
+    public static /*@ pure helper@*/ boolean equals(Object /*@ nullable */ [] a, Object /*@ nullable */[] a2);
 
     /*@
       @ public normal_behavior
@@ -1153,7 +1153,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ long[] a, long val) throws NullPointerException;
+    public static void fill(long /*@ nullable */ [] a, long val) throws NullPointerException;
 
 // FIXME - check this
     /*@  public normal_behavior
@@ -1183,7 +1183,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ long[] a, int fromIndex, int toIndex, long val);
+    public static void fill(long /*@ nullable */ [] a, int fromIndex, int toIndex, long val);
 
     /*@  public normal_behavior
       @   requires a != null;
@@ -1196,7 +1196,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ int[] a, int val) throws NullPointerException;
+    public static void fill(int /*@ nullable */ [] a, int val) throws NullPointerException;
 
 // CHECK THIS - FIXME
     /*@  public normal_behavior
@@ -1226,7 +1226,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ int[] a, int fromIndex, int toIndex, int val);
+    public static void fill(int /*@ nullable */ [] a, int fromIndex, int toIndex, int val);
 
     /*@  public normal_behavior
       @   requires a != null;
@@ -1239,7 +1239,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ short[] a, short val) throws NullPointerException;
+    public static void fill(short /*@ nullable */ [] a, short val) throws NullPointerException;
 
 // FIXME - checkthis
     /*@  public normal_behavior
@@ -1269,7 +1269,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ short[] a, int fromIndex, int toIndex, short val);
+    public static void fill(short /*@ nullable */ [] a, int fromIndex, int toIndex, short val);
 
     /*@  public normal_behavior
       @   requires a != null;
@@ -1282,7 +1282,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ char[] a, char val) throws NullPointerException;
+    public static void fill(char /*@ nullable */ [] a, char val) throws NullPointerException;
 
 // FIXME - check this
     /*@  public normal_behavior
@@ -1312,7 +1312,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ char[] a, int fromIndex, int toIndex, char val);
+    public static void fill(char /*@ nullable */ [] a, int fromIndex, int toIndex, char val);
 
     /*@  public normal_behavior
       @   requires a != null;
@@ -1325,7 +1325,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ byte[] a, byte val);
+    public static void fill(byte /*@ nullable */ [] a, byte val);
 
 // FIXME - check this
     /*@  public normal_behavior
@@ -1355,7 +1355,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ byte[] a, int fromIndex, int toIndex, byte val);
+    public static void fill(byte /*@ nullable */[] a, int fromIndex, int toIndex, byte val);
 
     /*@  public normal_behavior
       @   requires a != null;
@@ -1368,7 +1368,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ boolean[] a, boolean val) throws NullPointerException;
+    public static void fill(boolean /*@ nullable */[] a, boolean val) throws NullPointerException;
 
 // CHECK THIS = FIXME
     /*@  public normal_behavior
@@ -1398,7 +1398,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ boolean[] a, int fromIndex, int toIndex, boolean val);
+    public static void fill(boolean /*@ nullable */ [] a, int fromIndex, int toIndex, boolean val);
 
 // FIXME - better comparison
     /*@  public normal_behavior
@@ -1412,7 +1412,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ double[] a, double val) throws NullPointerException;
+    public static void fill(double /*@ nullable */ [] a, double val) throws NullPointerException;
 
 // FIXME - check this
     /*@  public normal_behavior
@@ -1438,7 +1438,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ double[] a, int fromIndex, int toIndex, double val);
+    public static void fill(double /*@ nullable */ [] a, int fromIndex, int toIndex, double val);
 
 // FIXME - better comparison
     /*@  public normal_behavior
@@ -1452,7 +1452,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ float[] a, float val) throws NullPointerException;
+    public static void fill(float /*@ nullable */ [] a, float val) throws NullPointerException;
 
 // FIXME - check this
     /*@  public normal_behavior
@@ -1478,7 +1478,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ float[] a, int fromIndex, int toIndex, float val);
+    public static void fill(float /*@ nullable */ [] a, int fromIndex, int toIndex, float val);
 
     /*@  public normal_behavior
       @   requires a != null;
@@ -1497,7 +1497,7 @@ public class Arrays {
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public static void fill(/*@ nullable */ Object[] a, Object val) 
+    public static void fill(Object /*@ nullable */ [] a, Object val) 
                          throws NullPointerException, ArrayStoreException;
 
 // FIXME - check this
@@ -1529,7 +1529,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
-    public static void fill(/*@ nullable */ Object[] a, int fromIndex, int toIndex, Object val);
+    public static void fill(Object /*@ nullable */[] a, int fromIndex, int toIndex, Object val);
 
     //-----------------------------------------------------------------------
 
@@ -1547,7 +1547,7 @@ public class Arrays {
     //@ pure
     @java.lang.SafeVarargs
     @SuppressWarnings("varargs-unchecked")
-    public static /*@ non_null @*/ <T> List<T> asList(/*@ nullable @*/T[] a) throws NullPointerException;
+    public static <T> /*@ non_null @*/ List<T> asList(T /*@ nullable @*/[] a) throws NullPointerException;
 
     //-----------------------------------------------------------------------
 
@@ -1648,7 +1648,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static byte[] copyOfRange(/*@ nullable @*/ byte[] original, int from, int to);
+    public static byte[] copyOfRange(byte /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1669,7 +1669,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static boolean[] copyOfRange(/*@ nullable @*/ boolean[] original, int from, int to);
+    public static boolean[] copyOfRange(boolean /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1690,7 +1690,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static short[] copyOfRange(/*@ nullable @*/ short[] original, int from, int to);
+    public static short[] copyOfRange(short /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1711,7 +1711,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static int[] copyOfRange(/*@ nullable @*/ int[] original, int from, int to);
+    public static int[] copyOfRange(int /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1732,7 +1732,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static long[] copyOfRange(/*@ nullable @*/ long[] original, int from, int to);
+    public static long[] copyOfRange(long /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1753,7 +1753,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static float[] copyOfRange(/*@ nullable @*/ float[] original, int from, int to);
+    public static float[] copyOfRange(float /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1774,7 +1774,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static double[] copyOfRange(/*@ nullable @*/ double[] original, int from, int to);
+    public static double[] copyOfRange(double /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1796,7 +1796,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static char[] copyOfRange(/*@ nullable @*/ char[] original, int from, int to);
+    public static char[] copyOfRange(char /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1818,7 +1818,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static <T> T[] copyOfRange(/*@ nullable @*/ T[] original, int from, int to);
+    public static <T> T[] copyOfRange(T /*@ nullable @*/ [] original, int from, int to);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1841,7 +1841,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
-    public static <T,U> T[] copyOfRange(/*@ nullable @*/ U[] original, int from, int to, Class<? extends T[]> newType);
+    public static <T,U> T[] copyOfRange(U /*@ nullable @*/ [] original, int from, int to, Class<? extends T[]> newType);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1855,7 +1855,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static byte[] copyOf(/*@ nullable @*/ byte[] original, int newLength);
+    public static byte[] copyOf(byte /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1869,7 +1869,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static boolean[] copyOf(/*@ nullable @*/ boolean[] original, int newLength);
+    public static boolean[] copyOf(boolean /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1883,7 +1883,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static char[] copyOf(/*@ nullable @*/ char[] original, int newLength);
+    public static char[] copyOf(char /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1897,7 +1897,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static short[] copyOf(/*@ nullable @*/ short[] original, int newLength);
+    public static short[] copyOf(short /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1911,7 +1911,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static int[] copyOf(/*@ nullable @*/ int[] original, int newLength);
+    public static int[] copyOf(int /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1925,7 +1925,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static long[] copyOf(/*@ nullable @*/ long[] original, int newLength);
+    public static long[] copyOf(long /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1939,7 +1939,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static float[] copyOf(/*@ nullable @*/ float[] original, int newLength);
+    public static float[] copyOf(float /*@ nullable @*/ [] original, int newLength);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1953,7 +1953,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static double[] copyOf(/*@ nullable @*/ double[] original, int newLength);
+    public static double[] copyOf(double /*@ nullable @*/ [] original, int newLength);
     
     //@ public normal_behavior
     //@   requires original != null;
@@ -1967,7 +1967,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static <T> T[] copyOf(/*@ nullable @*/ T[] original, int newLength);
+    public static <T> T[] copyOf(T /*@ nullable @*/ [] original, int newLength);
 
     //@ public normal_behavior
     //@   requires original != null;
@@ -1983,7 +1983,7 @@ public class Arrays {
     //@   signals (NullPointerException) original == null;
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
-    public static <T,U> T[] copyOf(/*@ nullable @*/ U[] original, int newLength, Class<? extends T[]> newType);
+    public static <T,U> T[] copyOf(U /*@ nullable @*/ [] original, int newLength, Class<? extends T[]> newType);
     
 //    public static <T> java.util.Spliterator<T> spliterator(T[]);
 //    public static <T> java.util.Spliterator<T> spliterator(T[], int, int);
@@ -2056,7 +2056,7 @@ public class Arrays {
     //@   requires a != null;
     //@   ensures true;
     //@ pure helper
-    public static java.lang.String deepToString(/*@ nullable */ Object[] a);
+    public static java.lang.String deepToString(Object /*@ nullable */ [] a);
 
 }
 

@@ -6,31 +6,29 @@ import java.util.function.Consumer;
 //@ non_null_by_default
 public interface Iterable<T> {
 
-    //-RAC@ model public non_null instance T[] values; in objectState;
+    //-RAC@ model public instance @org.jmlspecs.annotation.NonNull array<T> values; in objectState;
 
     /**
      * True iff we are allowed to contain null (not whether we do in fact
      * contain null).
      **/
-    //-RAC@ instance ghost public boolean containsNull; in objectState;
+    //-RAC@ model public instance boolean containsNull; in objectState; // FIXME - get rid of this
 
     //@ public normal_behavior
-    //-RAC@   ensures values.length == 0 ==> !\result;
-    //-RAC@   ensures !containsNull && o == null ==> !\result;
     //-RAC@   ensures \result <==> (\exists int i; 0 <= i < values.length; values[i] == o);
-    //@ public model pure boolean containsObject(nullable Object o);
+    //@ public model pure helper boolean containsObject(nullable Object o);
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= n < values.length;
       @   ensures \result == values[(int)n];
-      @   ensures containsObject((Object)\result);
+      @   ensures containsObject(\result);
       @ model public pure T _get(\bigint n);
       @*/
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= n < values.length;
       @   ensures \result == values[n];
-      @   ensures containsObject((Object)\result);
+      @   ensures containsObject(\result);
       @ model public pure T _get(int n);
       @*/
     

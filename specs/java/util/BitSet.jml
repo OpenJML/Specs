@@ -3,7 +3,7 @@
 // @author David R. Cok
 
 package java.util;
-
+//@ non_null_by_default
 public class BitSet implements Cloneable, java.io.Serializable{
     // The logical representation is as an array of booleans.
     // One could also model this as a Set of ints.
@@ -12,17 +12,17 @@ public class BitSet implements Cloneable, java.io.Serializable{
     /*@
       @ immutable 
       @ model static class Content {}
-      @ public non_null model Content content;
+      @ model public Content content;
       @
       @ public normal_behavior
       @   ensures \result >= 0;
-      @ public function static pure model int size(Content content);
+      @ model public function static pure int size(Content content);
       @
       @ public normal_behavior
       @   ensures \result >= 0;
-      @ public function static pure model int cardinality(Content content);
+      @ model public function static pure int cardinality(Content content);
       @
-      @ public function static pure model boolean isSet(Content c, int index);
+      @ model public function static pure boolean isSet(Content c, int index);
       @*/
 
     //@ normal_behavior

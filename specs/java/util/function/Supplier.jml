@@ -3,7 +3,7 @@ package java.util.function;
 @FunctionalInterface
 public interface Supplier<T> {
 
-    //-RAC@ model public nullable instance T value;
+    //-RAC@ model public instance nullable T value;
     
     //@ public behavior 
     //@     requires true; 

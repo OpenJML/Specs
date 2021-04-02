@@ -8,8 +8,7 @@ public interface Function<T,R> {
       
       //@ public normal_behavior
       //@   assignable applyFrame;
-      //@ nullable
-      public abstract R apply(/*@ nullable */ T t);
+      public abstract R apply(T t);
       
       default public <V> Function<V, R> compose(Function<? super V, ? extends T> before);
 

@@ -4,9 +4,9 @@ package java.security;
 public interface Key extends java.io.Serializable {
   //public static final long serialVersionUID;
     
-    //@ model non_null public instance String algorithm;
-    //@ model non_null public instance String format;
-    //@ model nullable public instance byte[] encoding;
+    //@ model public instance String algorithm;
+    //@ model public instance String format;
+    //@ model public instance byte nullable [] encoding;
  
   //@ public normal_behavior
   //@   ensures \result == algorithm;
@@ -15,11 +15,11 @@ public interface Key extends java.io.Serializable {
   
   //@ public normal_behavior
   //@   ensures \result == format;
-  //@ pure nullable
-  public abstract java.lang.String getFormat();
+  //@ pure
+  public abstract /*@ nullable*/ java.lang.String getFormat();
   
   //@ public normal_behavior
   //@   ensures \result == encoding;
-  //@ pure nullable  // Can return null if the Key does not support encoding
-  public abstract byte[] getEncoded();
+  //@ pure  // Can return null if the Key does not support encoding
+  public abstract byte /*@ nullable*/ [] getEncoded();
 }

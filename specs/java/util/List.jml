@@ -112,7 +112,6 @@ public interface List<E> extends Collection<E> {
     <T> T[] toArray(T[] a) throws NullPointerException;
 
     /*-RAC@ also public normal_behavior
-      @   requires !containsNull ==> o != null;
       @   assignable values;
       @   ensures values.length == \old(values.length+1); 
       @   ensures values[values.length-1] == o;
@@ -120,7 +119,7 @@ public interface List<E> extends Collection<E> {
       @   //                 values[i] == \old(values[i]); 
       @   ensures \result;
       @*/
-    boolean add(/*@ nullable*/ E o);
+    boolean add(E o);
 
 
     /*-RAC@

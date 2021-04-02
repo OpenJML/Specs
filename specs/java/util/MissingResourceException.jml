@@ -5,8 +5,8 @@ package java.util;
 
 public class MissingResourceException extends RuntimeException {
 
-    //@ public non_null model String theKey;
-    //@ public non_null model String theClass;
+    //@ model public non_null String theKey;
+    //@ model public non_null String theClass;
     
     /*@ public normal_behavior
       @   ensures standardThrowable(s);

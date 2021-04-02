@@ -2,14 +2,13 @@ package org.jmlspecs.lang;
 
 //@ immutable pure non_null_by_default
 public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
-    //@ non_null 
-    public String racValue;
+
+    //+RAC@ ghost public String racValue;
     
-    // @ model public int length; // FIXME - change to \bigint
-    //@ model public \bigint length; // FIXME - change to \bigint
+    //@ model public \bigint length;
 
     //@ public invariant 0 <= length;
-    //@ public represents length = racValue.length();
+    //+RAC@ public represents length = racValue.length();
     
     //@ public normal_behavior
     //@     ensures \result.length == s.length();

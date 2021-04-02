@@ -53,7 +53,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
         //@   ensures (\result < 0) <==> (val.length >= 1 && val[0] < 0);
         //@   ensures (val.length >= 1 && val[0] >= 0) ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME 
         //@ pure helper
-        public static model \bigint convert(non_null byte[] val) {
+        public static model \bigint convert(byte non_null [] val) {
         // !FIXME! - should put in a non-circular computation for RAC
             return new BigInteger(val);
         }
@@ -88,7 +88,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //@    signals (NullPointerException) magnitude == null;
     //@    signals_only NullPointerException, NumberFormatException;
     //@ pure
-    public BigInteger(int signum, /*@ nullable @*/ byte[] magnitude);
+    public BigInteger(int signum, byte /*@ nullable @*/ [] magnitude);
 
     /*-RAC@  public normal_behavior
      @     requires val != null && Number.parseable(val,radix);
@@ -436,6 +436,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
 
     //@     public normal_behavior
     //@       requires this.signum() > 0;
+    //@       ensures \result != null;
     //@       ensures \result.length > 0;
     //-RAC@   ensures convert(\result) == this.value;
     //-RAC@   ensures (pow256(\result.length-1)/2 <= this.value && this.value < pow256(\result.length-1)) ==> \result[0] == 0;
@@ -443,16 +444,18 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //-RAC@   ensures (pow256(\result.length-1)/2 <= this.value && this.value < pow256(\result.length)/2);
     //@     also public normal_behavior
     //@       requires this.signum() < 0;
+    //@       ensures \result != null;
     //@       ensures \result.length > 0;
     //@       ensures \result[0] < 0;
     //-RAC@   ensures convert(\result) == this.value;
     //-RAC@   ensures pow256(\result.length-1)/2 < -this.value && -this.value <= pow256(\result.length)/2;
     //@     also public normal_behavior
     //@       requires this.signum() == 0;
+    //@       ensures \result != null;
     //@       ensures \result.length == 1;
     //@       ensures \result[0] == 0;
     //-RAC@   ensures convert(\result) == this.value;
-    //@ pure helper non_null
+    //@ pure helper
     public byte[] toByteArray();
 
     //-RAC@ also

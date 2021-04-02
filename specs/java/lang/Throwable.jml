@@ -38,7 +38,7 @@ package java.lang;
 // @ model import java.util.Arrays;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-
+//@ non_null_by_default
 public class Throwable extends Object implements java.io.Serializable
 {
     
@@ -206,13 +206,13 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   requires s.isOpen;
     //-RAC@   assignable s.outputText;
     //-RAC@   ensures s.isOpen;
-    public void printStackTrace(/*@non_null*/PrintStream s);
+    public void printStackTrace(/*@ non_null*/PrintStream s);
 
     //-RAC@ public normal_behavior
     //-RAC@   //requires s.isOpen;
     //-RAC@   assignable s.outputText;
     //-RAC@   //ensures s.isOpen;
-    public void printStackTrace(/*@non_null*/PrintWriter s);
+    public void printStackTrace(/*@ non_null*/PrintWriter s);
 
     /*@ public normal_behavior
       @   assignable _stackTrace;
@@ -240,7 +240,7 @@ public class Throwable extends Object implements java.io.Serializable
       @*/
     public void setStackTrace(/*@non_null*/StackTraceElement[/*#@non_null*/] stackTrace);
 
-    //@ model non_null public Throwable[] _throwables;
+    //@ model public Throwable[] _throwables;
     //+RAC@ public represents _throwables = getSuppressed();
     
     //@ public normal_behavior

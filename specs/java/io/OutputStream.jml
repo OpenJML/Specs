@@ -27,6 +27,7 @@ package java.io;
 /** JML's specification of OutputStream.
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public abstract class OutputStream extends Object implements Closeable, Flushable {
 
     // FIELDS
@@ -94,7 +95,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
       @   signals (IOException) (* an IO error occured *);
       @   signals (NullPointerException) b == null;
       @   signals_only IOException, NullPointerException; */
-    public void write(/*@ non_null*/ byte[] b) throws IOException;
+    public void write(byte[] b) throws IOException;
 
 // FIXME - record what was written
     /*-RAC@ public behavior
@@ -115,5 +116,5 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
       @   requires !isOpen;
       @   assignable \nothing;
       @*/
-    public void write(/*@ non_null*/ byte[] b, int off, int len) throws IOException;
+    public void write(byte[] b, int off, int len) throws IOException;
 }

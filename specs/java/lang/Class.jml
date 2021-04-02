@@ -222,16 +222,13 @@ public final class Class<T> implements java.io.Serializable,
     public /*@ pure @*/ Constructor<?>[] getDeclaredConstructors() throws SecurityException; // CHANGED in 1.6
 
 
-    //@ non_null
-    public /*@ pure @*/ Field getDeclaredField(String name)
+    public /*@ pure non_null @*/ Field getDeclaredField(String name)
         throws NoSuchFieldException, SecurityException;
 
-    //@ non_null
-    public /*@ pure @*/ Method getDeclaredMethod(String name, Class<?>[] parameterTypes)
+    public /*@ pure non_null @*/ Method getDeclaredMethod(String name, Class<?>[] parameterTypes)
         throws NoSuchMethodException, SecurityException;
 
-    //@ non_null
-    public /*@ pure @*/ Constructor<T> getDeclaredConstructor(Class<?>[] parameterTypes)
+    public /*@ pure non_null @*/ Constructor<T> getDeclaredConstructor(Class<?>[] parameterTypes)
         throws NoSuchMethodException, SecurityException;
 
     public /*@ pure @*/ InputStream getResourceAsStream(String name);
