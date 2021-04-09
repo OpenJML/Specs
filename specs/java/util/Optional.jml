@@ -74,6 +74,7 @@ public final class Optional<T> {
   public <U> Optional<U> map(Function<? super T, ? extends U> mapper);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
+  @   requires true;
   @   //{ if (mapper==null) throw new NullPointerException(); if (!isPresent()) return Optional.<? extends U>empty(); ghost Optional<? extends U> r = mapper.apply(value); if (r == null) throw new NullPointerException(); return r; }
   @*/
   public <U> Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> mapper);
