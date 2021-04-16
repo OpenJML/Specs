@@ -34,7 +34,7 @@ public interface CharSequence {
     //@ public normal_behavior ensures \result == c.charArray; pure function
     //@ model public static Object content(CharSequence c);
     
-    //@ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
+    // FIXME @ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
 
     /*@ public normal_behavior
       @   ensures \result <==> ( charArray != null && charArray.__owner == this);

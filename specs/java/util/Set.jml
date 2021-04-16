@@ -50,7 +50,7 @@ public interface Set<E> extends Collection<E> {
     /*@non_null*/ Object[] toArray();
 
     // specification inherited
-    /*@non_null*/ <T> T[] toArray(/*@non_null*/ T[] a) throws NullPointerException;
+    <T> T /*@non_null*/[] toArray(T /*@non_null*/ [] a) throws NullPointerException;
 
     // specification inherited
     boolean add(/*@nullable*/ E o);
