@@ -144,7 +144,7 @@ public final class Class<T> implements java.io.Serializable,
     //@ ensures \elemtype(\typeof(this)) == \type(boolean) ==> \result;
     // FIXME - really need a better way to express this
      * */
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   requires true;
     //@ pure helper
     public boolean isArray();

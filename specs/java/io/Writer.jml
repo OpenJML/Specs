@@ -16,9 +16,9 @@ public abstract class Writer extends Object implements Appendable, Closeable, Fl
 
     public void write(int Param0) throws java.io.IOException;
 
-    public void write(/*@non_null*/char[] Param0) throws java.io.IOException;
+    public void write(char /*@non_null*/ [] Param0) throws java.io.IOException;
 
-    public abstract void write(/*@non_null*/char[] Param0, int Param1, int Param2) throws java.io.IOException;
+    public abstract void write(char /*@non_null*/ [] Param0, int Param1, int Param2) throws java.io.IOException;
 
     protected Writer(/*@non_null*/Object Param0);
 

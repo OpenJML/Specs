@@ -1797,7 +1797,7 @@ public class Arrays {
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
     public static char[] copyOfRange(char /*@ nullable @*/ [] original, int from, int to);
-    
+
     //@ public normal_behavior
     //@   requires original != null;
     //@   requires 0 <= from <= to;
@@ -1842,7 +1842,7 @@ public class Arrays {
     //@   signals (IllegalArgumentException) from > to;
     //@ pure
     public static <T,U> T[] copyOfRange(U /*@ nullable @*/ [] original, int from, int to, Class<? extends T[]> newType);
-    
+
     //@ public normal_behavior
     //@   requires original != null;
     //@   requires 0 <= newLength <= Integer.MAX_VALUE;
@@ -1954,7 +1954,7 @@ public class Arrays {
     //@   signals (NegativeArraySizeException) newLength < 0;
     //@ pure
     public static double[] copyOf(double /*@ nullable @*/ [] original, int newLength);
-    
+
     //@ public normal_behavior
     //@   requires original != null;
     //@   requires newLength >= 0;

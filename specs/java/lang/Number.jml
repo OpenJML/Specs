@@ -168,11 +168,11 @@ public abstract class Number implements java.io.Serializable {
       @   ensures (* \result is an byte approximation
       @              to the value of this object *);
       @*/
-    public abstract /*@ pure helper @*/ byte byteValue();
+    public /*@ pure helper @*/ byte byteValue();
 
     /*@ public normal_behavior
       @   ensures (* \result is an short approximation
       @              to the value of this object *);
       @*/
-    public abstract /*@ pure helper @*/ short shortValue();
+    public /*@ pure helper @*/ short shortValue();
 }

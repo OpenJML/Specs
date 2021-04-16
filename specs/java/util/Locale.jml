@@ -64,11 +64,11 @@ public final class Locale implements Cloneable, Serializable {
     //@ ensures getDefault() == newLocale;
     public static synchronized void setDefault(/*@non_null*/ Locale newLocale);
 
-    public static /*@pure*/ /*@non_null*/ Locale[] getAvailableLocales();
+    public static /*@pure*/ Locale /*@non_null*/ [] getAvailableLocales();
 
-    public static /*@pure*/ /*@non_null*/ String[] getISOCountries();
+    public static /*@pure*/ String /*@non_null*/ [] getISOCountries();
 
-    public static /*@pure*/ /*@non_null*/ String[] getISOLanguages();
+    public static /*@pure*/ String /*@non_null*/ [] getISOLanguages();
 
     public /*@pure*/ /*@non_null*/ String getLanguage();
 
@@ -76,7 +76,7 @@ public final class Locale implements Cloneable, Serializable {
 
     public /*@pure*/ /*@non_null*/ String getVariant();
 
-    public /*@pure*/ /*@non_null*/ final String toString();
+    public /*@pure*/ final /*@non_null*/ String toString();
 
     public /*@pure*/ /*@non_null*/ String getISO3Language()
         throws MissingResourceException;

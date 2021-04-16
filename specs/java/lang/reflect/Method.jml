@@ -46,7 +46,7 @@ class Method extends Executable implements Member, GenericDeclaration {
     @Override
     public /*@ pure @*/  Class<?>[] getExceptionTypes();
 
-    public /*@ pure @*/ boolean equals(/*@\readonly*//*@nullable*/Object obj);
+    public /*@ pure @*/ boolean equals(/* FIXME @\readonly*//*@nullable*/Object obj);
 
     public /*@ pure @*/ int hashCode();
 

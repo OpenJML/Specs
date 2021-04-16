@@ -218,7 +218,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   assignable _stackTrace;
       @   ensures \result == this;
       @*/
-    public synchronized /*@non_null*/ Throwable fillInStackTrace();
+    public synchronized /*@ non_null*/ Throwable fillInStackTrace();
 
     /*@ public normal_behavior  // FIXME - this crashes Simplify
       @   ensures \result != null;
@@ -226,7 +226,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   //ensures (\forall int i; 0 <= i && i < _stackTrace.length;
       @   //                        _stackTrace[i].equals(\result[i]));
       @*/
-    public /*@ pure helper non_null*/ StackTraceElement[/*#@non_null*/] getStackTrace();
+    public /*@ pure helper non_null*/ StackTraceElement /* FIXME non_null */ [] getStackTrace();
 
     /*@ public normal_behavior
       @   requires \nonnullelements(stackTrace);
@@ -238,7 +238,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
-    public void setStackTrace(/*@non_null*/StackTraceElement[/*#@non_null*/] stackTrace);
+    public void setStackTrace(/*@ non_null*/ StackTraceElement /*@ non_null*/[] stackTrace);
 
     //@ model public Throwable[] _throwables;
     //+RAC@ public represents _throwables = getSuppressed();
