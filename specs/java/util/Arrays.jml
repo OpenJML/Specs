@@ -1537,7 +1537,6 @@ public class Arrays {
     //@       requires a != null;
     //-RAC@   ensures \fresh(\result);
     //-RAC@   ensures \result.values.length == a.length;
-    //-RAC@   ensures \result.values == a;
     //@       ensures \result.size() == a.length;
     //-RAC@  ensures (\forall int i; 0 <= i < a.length; \result.values[i] == a[i]);
     //        ensures \nonnullelements(a) ==> \nonnullelements(\result.values);

@@ -46,7 +46,7 @@ public class SecurityManager {
     /*@
       @ 
       @*/
-    protected Class[] getClassContext();
+    protected Class<?>[] getClassContext();
 
     /*@
       @ 

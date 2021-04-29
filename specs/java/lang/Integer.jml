@@ -301,7 +301,7 @@ public  /*@ pure @*/ final
       @     requires obj == null || !(obj instanceof Integer);
       @     ensures !\result;
       @*/
-    public boolean equals(Object obj);
+    public boolean equals(/*@ nullable*/Object obj);
   
     /*@ public normal_behavior
       @   ensures (\result == null && getInteger(nm,null) == null) ||

@@ -5,7 +5,8 @@ public class JML {
 
     // Some methods are model methods because they have a JML-only argument
     
-    //@ ensures \result == \erasure(t);
+	//@ public normal_behavior
+    //@   ensures \result == \erasure(t);
     //@ model pure public static Class<?> erasure(\TYPE t); // { return Utils.erasure(t); }
     
     //@ model pure public static \TYPE[] typeargs(\TYPE t); // { return Utils.typeargs(t); } // FIXME for rac

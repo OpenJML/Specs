@@ -64,7 +64,7 @@ public final class System {
         //@ public static invariant \invariant_for(System.in);
     public final static /*@non_null*//*see note above*/ PrintStream out;
         /*@ public static initially System.out != null; @*/ 
-        //@ public invariant !allowNullStreams ==> System.out != null;
+        //@ public static invariant !allowNullStreams ==> System.out != null;
     //@ public static invariant \invariant_for(System.out);
     public final static /*@non_null*//*see note above*/ PrintStream err;
         /*@ public static initially System.err != null; @*/ 
@@ -154,9 +154,10 @@ public final class System {
       @ also public exceptional_behavior
            requires (src instanceof byte[]) &&
                  (dest instanceof byte[]) &&
-                 ( length < 0 || srcPos < 0 || destPos < 0 ||
-                     ((byte[])src).length - srcPos < length ||
-                     ((byte[])dest).length - destPos < length);
+                 ( length_ < 0 || srcPos < 0 || destPos < 0 ||
+                     ((byte[])src).length - srcPos < length_ ||
+                     ((byte[])dest).length - destPos < length_);
+           assignable \nothing;
            signals_only ArrayIndexOutOfBoundsException;
         also
       @*/
@@ -164,9 +165,9 @@ public final class System {
       @  public exceptional_behavior
       @    // requires !(src == null || dest == null);
       @    requires !(!(src.getClass().isArray()) || !(dest.getClass().isArray()));
-      @    requires (srcPos < 0 || destPos < 0 || length < 0
-      @                  || srcPos + length > ((Object[])src).length
-      @                  || destPos + length > ((Object[])dest).length);
+      @    requires (srcPos < 0 || destPos < 0 || length_ < 0
+      @                  || srcPos + length_ > ((Object[])src).length
+      @                  || destPos + length_ > ((Object[])dest).length);
               // FIXME - need the length restriction for primitive type arrays also
       @    reads \nothing;
       @    assignable \nothing;
@@ -202,85 +203,85 @@ t *);
       @   signals_only ArrayStoreException;
       @ also
       */
-    /*@  public normal_behavior
-    @    requires !(    srcPos < 0 || destPos < 0 || length < 0 );
+    /*@   public normal_behavior
+    @    requires !(    srcPos < 0 || destPos < 0 || length_ < 0 );
       {|
         requires (src instanceof Object[]) &&
                  (dest instanceof Object[]) &&
                  \elemtype(\typeof(src)) <: \elemtype(\typeof(dest)) &&
-    @                 srcPos + length <= ((Object[])src).length
-    @                && destPos + length <= ((Object[])dest).length;
+    @                 srcPos + length_ <= ((Object[])src).length
+    @                && destPos + length_ <= ((Object[])dest).length;
     @   {|
     @      old Object [] sa = (Object[]) src;
     @      old Object [] da = (Object[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
        also
         requires (src instanceof int[]) &&
                  (dest instanceof int[]) &&
-    @                 srcPos + length <= ((int[])src).length
-    @                && destPos + length <= ((int[])dest).length;
+    @                 srcPos + length_ <= ((int[])src).length
+    @                && destPos + length_ <= ((int[])dest).length;
     @   {|
     @      old int [] sa = (int[]) src;
     @      old int [] da = (int[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
        also
         requires (src instanceof long[]) &&
                  (dest instanceof long[]) &&
-    @                 srcPos + length <= ((long[])src).length
-    @                && destPos + length <= ((long[])dest).length;
+    @                 srcPos + length_ <= ((long[])src).length
+    @                && destPos + length_ <= ((long[])dest).length;
     @   {|
     @      old long [] sa = (long[]) src;
     @      old long [] da = (long[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
        also
         requires (src instanceof char[]) &&
                  (dest instanceof char[]) &&
-    @                 srcPos + length <= ((char[])src).length
-    @                && destPos + length <= ((char[])dest).length;
+    @                 srcPos + length_ <= ((char[])src).length
+    @                && destPos + length_ <= ((char[])dest).length;
     @   {|
     @      old char [] sa = (char[]) src;
     @      old char [] da = (char[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
        also
         requires (src instanceof boolean[]) &&
                  (dest instanceof boolean[]) &&
-    @                 srcPos + length <= ((boolean[])src).length
-    @                && destPos + length <= ((boolean[])dest).length;
+    @                 srcPos + length_ <= ((boolean[])src).length
+    @                && destPos + length_ <= ((boolean[])dest).length;
     @   {|
     @      old boolean [] sa = (boolean[]) src;
     @      old boolean [] da = (boolean[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
        also
         requires (src instanceof short[]) &&
                  (dest instanceof short[]) &&
-    @                 srcPos + length <= ((short[])src).length
-    @                && destPos + length <= ((short[])dest).length;
+    @                 srcPos + length_ <= ((short[])src).length
+    @                && destPos + length_ <= ((short[])dest).length;
     @   {|
     @      old short [] sa = (short[]) src;
     @      old short [] da = (short[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
        also
         requires (src instanceof byte[]) &&
                  (dest instanceof byte[]) &&
-    @                 srcPos + length <= ((byte[])src).length
-    @                && destPos + length <= ((byte[])dest).length;
+    @                 srcPos + length_ <= ((byte[])src).length
+    @                && destPos + length_ <= ((byte[])dest).length;
     @   {|
     @      old byte [] sa = (byte[]) src;
     @      old byte [] da = (byte[]) dest;
-    @      assignable da[destPos .. destPos + length - 1];
-    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length);
+    @      assignable da[destPos .. destPos + length_ - 1];
+    @      ensures java.util.Arrays.equalArrays(da,destPos,sa,srcPos,length_);
     @   |}
     @*//* @
 
@@ -315,7 +316,7 @@ t *);
                                         int srcPos,
                                         /*@nullable*/ Object dest,
                                         int destPos,
-                                        int length);
+                                        int length_);
 
     //@ axiom (\forall Object x, y; identityHashCode(x) != identityHashCode(y); x != y);
     

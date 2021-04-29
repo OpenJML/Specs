@@ -10,16 +10,19 @@ public interface Supplier<T> {
     //-RAC@ ensures \result == value;
     /*@ nullable */ T get();
     
+    
+    // FIXME - OpenJDK does not seem to recognize that Pure and PureNonNul extend Supplier
+    // amnd so complain when the specs below begin with 'also'
     /*@
 
     model public static interface Pure<T> extends Supplier<T> {
-         also public normal_behavior requires true;
+         public normal_behavior requires true;
          pure nullable T get();
     }
 
     model public static interface PureNonNull<T> extends Supplier<T> {
          //0-RAC@ public invariant value != null;
-         also public normal_behavior requires true;
+         public normal_behavior requires true;
          pure non_null T get();
     }
 
