@@ -280,7 +280,8 @@ public /*@ pure @*/ final
     //@ axiom isDigit('7');
     //@ axiom isDigit('8');
     //@ axiom isDigit('9');
-    //@ axiom (\forall char c;; (c!='0' && c!='1' && c!='2' && c!='3' && c!='4' && c!='5' && c!='6' && c!='7' && c!='8' && c!='9') ==> !isDigit(c));
+    //@ axiom (\forall char c;; ('0' <= c <= '9') ==> isDigit(c));
+    //@ axiom (\forall char c;; (!('0' <= c <= '9') && (int)c <= 255) ==> !isDigit(c));
 
     /*@  public normal_behavior
       @   ensures \result <==> getType(ch) == DECIMAL_DIGIT_NUMBER;
@@ -577,11 +578,9 @@ public /*@ pure @*/ final
     public static /*@ pure helper function @*/ boolean isMirrored(char c);
 
     /*@ also public normal_behavior
-      @   requires equals(anotherCharacter);
-      @   ensures \result == 0;
-      @ also public normal_behavior
-      @   requires !equals(anotherCharacter);
-      @   ensures \result != 0;
+      @   ensures (int)this == (int)anotherCharacter ==> \result == 0;
+      @   ensures (int)this  > (int)anotherCharacter ==> \result  > 0;
+      @   ensures (int)this  < (int)anotherCharacter ==> \result  < 0;
       @*/
     public int compareTo(Character anotherCharacter);
 

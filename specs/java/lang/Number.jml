@@ -38,7 +38,7 @@ public abstract class Number implements java.io.Serializable {
       @   requires Character.MIN_RADIX <= radix <= Character.MAX_RADIX;
       @   ensures \result == (val != null && val.length() > 0);
       @ pure
-      @ public static model function boolean parseable(nullable String val, int radix);
+      @ public static model helper function boolean parseable(nullable String val, int radix);
      */
 
   /* FIXME - include this when we can reason about characters @
