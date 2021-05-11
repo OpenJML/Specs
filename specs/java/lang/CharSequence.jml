@@ -28,11 +28,11 @@ package java.lang;
 public interface CharSequence {
     //@ public instance model non_null char[] charArray; public final invariant charArray != null;
     
-    //@ public normal_behavior ensures \result == c.__owner; pure function
-    //@ model public static Object owner(Object c);
+    //@ public normal_behavior ensures \result == c.__owner;
+    //@ model pure function public static Object owner(Object c);
     
-    //@ public normal_behavior ensures \result == c.charArray; pure function
-    //@ model public static Object content(CharSequence c);
+    //@ public normal_behavior ensures \result == c.charArray;
+    //@ model pure function public static Object content(CharSequence c);
     
     // FIXME @ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
 

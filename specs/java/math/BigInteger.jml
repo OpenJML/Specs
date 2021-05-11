@@ -428,11 +428,10 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     public String toString();
     
     //@ public normal_behavior
-    //@   ensures n <= 0 ==> \result == 1;
-    //@   ensures n > 0 ==> \result == 256 * pow256(n-1);
+    //@   ensures \result == (n <= 0 ? 1 : 256 * pow256(n-1));
     //@ model public static function helper \bigint pow256(\bigint n);
     
-    // @ axiom (\forall \bigint n; n >= 0; pow256(n+1) > pow256(n)); // FIXME - this axiom causes infeasibility (cf. gitbug578)
+    // @ axiom (\forall \bigint n; n >= 0 ==> pow256(n+1) > pow256(n)); // FIXME - this axiom causes infeasibility (cf. gitbug578)
     // @ axiom (\forall \bigint m, n; m > n && n >= 0; pow256(m) > pow256(n)); // FIXME - this axiom causes infeasibility (cf. gitbug578)
 
     //@     public normal_behavior

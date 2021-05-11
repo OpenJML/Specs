@@ -81,7 +81,7 @@ public interface Queue<E> extends Collection<E> {
       @   assignable \nothing;
       @ also
       @ public normal_behavior
-      @   requires !isEmpty();
+      @   requires !isEmpty(); requires values.length > 0;
       @   ensures \result == \old(_get(0));
       @   ensures (\forall int i; 0 < i < \old(values.length); _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;

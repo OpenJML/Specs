@@ -115,8 +115,8 @@ public interface List<E> extends Collection<E> {
       @   assignable values;
       @   ensures values.length == \old(values.length+1); 
       @   ensures values[values.length-1] == o;
-      @   //ensures (\forall \bigint i; 0 <= i < values.length-1; 
-      @   //                 values[i] == \old(values[i]); 
+      @   ensures \forall \bigint i; 0 <= i < values.length-1; 
+      @                    values[i] == \old(values[i]); 
       @   ensures \result;
       @*/
     boolean add(E o);
@@ -297,9 +297,9 @@ public interface List<E> extends Collection<E> {
       @               supported by this *);
       @*/
     /*-RAC@   ensures \result != -1 ==> Collection.nullequals(o,values[\result]);
-      @   // ensures (\forall int i; (0<=i && i < \result) ==> !Collection.nullequals(o,get(content,i)));
-      @   //ensures \result == -1 <==>
-          //   (\forall int i; (0<=i && i < content.theSize) ==> !Collection.nullequals(o,get(content,i)));
+      @       ensures (\forall \bigint i; (0 <= i < \result) ==> !Collection.nullequals(o,values[i]): Collection.nullequals(o, values[i]));
+      @       ensures \result == -1 <==>
+                      (\forall \bigint i; (0 <= i < size()) ==> !Collection.nullequals(o, values[i]): Collection.nullequals(o, values[i]));
       @   //ensures \result == -1 <==> !contains(o);
       @*/
     /*@ pure @*/ int indexOf(Object o);
