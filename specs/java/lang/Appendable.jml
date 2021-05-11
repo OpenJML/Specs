@@ -5,13 +5,15 @@ public interface Appendable {
 
     //@ model public instance String _value;
     
-    //@ public normal_behavior
+    //@ public behavior
     //@   assignable _value;
-    public abstract Appendable append(CharSequence cs) throws java.io.IOException;
-    //@ public normal_behavior // FIXME - precndition on offset and length?
+    public abstract Appendable append(/*@ nullable @*/ CharSequence cs) throws java.io.IOException;
+
+    //@ public behavior // FIXME - precndition on offset and length?
     //@   assignable _value;
-    public abstract Appendable append(CharSequence cs, int offset, int length) throws java.io.IOException;
-    //@ public normal_behavior
+    public abstract Appendable append(/*@ nullable @*/ CharSequence cs, int offset, int length) throws java.io.IOException;
+
+    //@ public behavior
     //@   assignable _value;
     public abstract Appendable append(char c) throws java.io.IOException;
 
