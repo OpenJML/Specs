@@ -30,7 +30,7 @@ package java.lang;
 public  /*@ pure @*/ final
     class Integer extends Number implements Comparable {
 
-    //@ public model int theInteger;  in objectState;
+    //@ public model int theInteger;  in uniqueHash, objectState;
     //+RAC@ represents theInteger = intValue();
     
     //@ public represents uniqueHash = theInteger;
@@ -227,36 +227,42 @@ public  /*@ pure @*/ final
  
     /*-RAC@ also 
       @   public normal_behavior
+      @     reads theInteger;
       @     ensures \result == \java_math((byte) theInteger);
       @*/
     public /*@ pure helper @*/ byte byteValue();
     
     /*-RAC@ also
       @   public normal_behavior
+      @     reads theInteger;
       @     ensures \result == \java_math((short) theInteger);
       @*/
     public /*@ pure helper @*/ short shortValue();
 
     /*-RAC@ also
       @   public normal_behavior
+      @     reads theInteger;
       @     ensures \result == theInteger;
       @*/
     public /*@ pure helper @*/ int intValue();
     
     /*-RAC@ also
       @   public normal_behavior
+      @     reads theInteger;
       @     ensures \result == (long) theInteger;
       @*/
     public /*@ pure helper @*/ long longValue();
     
     /*-RAC@ also
       @   public normal_behavior
-      @      ensures \result == (float) theInteger;
+      @     reads theInteger;
+      @     ensures \result == (float) theInteger;
       @*/
     public /*@ pure helper @*/ float floatValue();
     
     /*-RAC@ also
       @   public normal_behavior
+      @     reads theInteger;
       @     ensures \result == (double) theInteger;
       @*/
     public /*@ pure helper @*/ double doubleValue();
@@ -271,6 +277,7 @@ public  /*@ pure @*/ final
             
     /*@ also
       @   public normal_behavior
+      @     reads theInteger;
       @     ensures \result == intValue();
       @*/
     @Override

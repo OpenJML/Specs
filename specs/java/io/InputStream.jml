@@ -47,7 +47,7 @@ public abstract class InputStream implements Closeable {
     //@    public initially readPosition == 0;
 
     //-RAC@ public model int availableBytes; in streamState;
-    //-RAC@ public model boolean isOpen; in streamState;
+    //-RAC@ public model boolean isOpen; in wasClosed;
     //-RAC@ public model boolean wasClosed; in streamState;
     //-RAC@ public represents wasClosed = !isOpen;
 
