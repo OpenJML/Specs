@@ -23,7 +23,7 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model static public <T> seq<T> empty();
     
     public normal_behavior
-       ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i && i < s.length) ==> (s[i] == ss[i]) ));
+       ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
     model public static <T> boolean equals(seq<T> s, seq<T> ss);
     
     public normal_behavior
@@ -31,14 +31,15 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model public boolean equals(seq<T> s);
     
     public normal_behavior
-      requires 0 <= j && j <= this.length;
-      ensures \result.length == this.length + 1;
-      ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
-      ensures (\forall \bigint i;; (j+1 <= i && i < \result.length) ==> (\result[i] == this[i-1]));
+      requires 0 <= j <= this.length;
+      ensures \result.length == 1 + this.length;
+      ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
+      ensures (\forall \bigint i;; (j < i <= this.length) ==> (\result[i] == this[i-1]));
       ensures \result[j] == v;
     model public seq<T> add(\bigint j, T v);
 
     public normal_behavior
+      ensures \result.length == 1 + this.length; // FIXME - needed to prove valuetypes Seq.addBumpsSize, but why?
       ensures \result == add(length,v);
     model public seq<T> add(T v);
 
