@@ -8,8 +8,18 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     
     public normal_behavior
         ensures \result.length == a.length;
-        ensures (\forall int i; 0 <= i && i <a.length; \result.get(i) == a[i]);
+        ensures (\forall int i; 0 <= i < a.length; \result.get(i) == a[i]);
     model public static <T> array<T> of(T[] a);
+    
+    public normal_behavior
+        ensures \result.length == a.length;
+        ensures (\forall int i; 0 <= i < a.length; \result.get(i) == a[i]);
+    model public static <T,U> array<T> ofx(U[] a);  // U must be assignable to T
+    
+    public normal_behavior
+        ensures \result.length == a.length;
+        ensures (\forall int i; 0 <= i < a.length; \result.get(i) == a[i]);
+    model public static array<Integer> of(int[] a);
     
     public normal_behavior
         ensures \result == this[i];
@@ -25,7 +35,7 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     
     public normal_behavior
        ensures \result == (s.length == ss.length && \forall \bigint i; 0 <= i && i < s.length; s[i] == ss[i]);
-    model public static <T> boolean equals(array<T> s, array<T> ss);
+    model public static <U,T> boolean equals(array<U> s, array<T> ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));

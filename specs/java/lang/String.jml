@@ -726,12 +726,11 @@ public final class String
       @   //  requires charAt(fromIndex) != ch;
       @   //  ensures \result == lastIndexOf(ch, (int)(fromIndex - 1)); // FIXME - no recursive use
       @   also
-      @     ensures \result == -1 <==> (\forall int i; 0<=i && i <= fromIndex; charArray[i] != ch);
-      @     ensures \result != -1 <==> (0 <= \result && \result < fromIndex);
+      @     ensures \result == -1 <==> (\forall int i; 0 <= i <= fromIndex; charArray[i] != ch);
+      @     ensures \result != -1 <==> (0 <= \result < fromIndex);
       @     ensures \result != -1 <==> (
       @                charArray[\result] == ch &&
-      @                (\forall int i; \result < i && i <= fromIndex;
-      @                     charArray[i] != ch));
+      @                (\forall int i; \result < i <= fromIndex; charArray[i] != ch));
       @   |}
       @ |}
       @*/
@@ -762,7 +761,7 @@ public final class String
       @     ensures \result != -1 <==> 
       @            (fromIndex <= \result && \result + str.length() <= length());
       @     ensures \result != -1 <==>
-      @              (equal(charArray,\result,str.charArray,0,str.length()) &&
+      @              (CharSequence.equal(charArray,\result,str.charArray,0,str.length()) &&
       @               (\forall int i; 
       @                      fromIndex <= i &&  i + str.length() < length();
       @                      !CharSequence.equal(charArray,i,str.charArray,0,str.length())));
@@ -800,7 +799,7 @@ public final class String
       @                      ! CharSequence.equal(charArray,i,str.charArray,0,str.length()));
       @     ensures \result != -1 <==> (0 <= \result && \result <= fromIndex);
       @     ensures \result != -1 <==>
-      @              (equal(charArray,\result,str.charArray,0,str.length()) &&
+      @              (CharSequence.equal(charArray,\result,str.charArray,0,str.length()) &&
       @               (\forall int i; 
       @                      0 <= i &&  i <= fromIndex;
       @                      !CharSequence.equal(charArray,i,str.charArray,0,str.length())));

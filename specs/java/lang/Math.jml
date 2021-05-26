@@ -217,7 +217,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double log(double a);
 
-    // new for Java 5
     // the calculation of log10 should be exact for integral powers of 10
     // between -6 and 23, based on the characteristics of IEEE double-
     // precision arithmetic
@@ -263,7 +262,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double sqrt(double a);
 
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(a);
@@ -621,10 +619,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Float.isNaN(a) && !Float.isNaN(b);
       @   {|
-      @     requires new Float(a).compareTo(new Float(b)) <= 0.0;
+      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) <= 0.0;
       @     ensures \result == b;
       @   also
-      @     requires 0.0 <= new Float(a).compareTo(new Float(b));
+      @     requires 0.0 <= Float.valueOf(a).compareTo(Float.valueOf(b));
       @     ensures \result == a;
       @   |}
       @ |}
@@ -638,10 +636,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Double.isNaN(a) && !Double.isNaN(b);
       @   {|
-      @     requires new Double(a).compareTo(new Double(b)) <= 0.0;
+      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) <= 0.0;
       @     ensures \result == b;
       @   also
-      @     requires 0.0 <= new Double(a).compareTo(new Double(b));
+      @     requires 0.0 <= Double.valueOf(a).compareTo(Double.valueOf(b));
       @     ensures \result == a;
       @   |}
       @ |}
@@ -697,10 +695,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Float.isNaN(a) && !Float.isNaN(b);
       @   {|
-      @     requires new Float(a).compareTo(new Float(b)) <= 0.0;
+      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) <= 0.0;
       @     ensures \result == a;
       @   also
-      @     requires 0.0 <= new Float(a).compareTo(new Float(b));
+      @     requires 0.0 <= Float.valueOf(a).compareTo(Float.valueOf(b));
       @     ensures \result == b;
       @   |}
       @ |}
@@ -714,10 +712,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Double.isNaN(a) && !Double.isNaN(b);
       @   {|
-      @     requires new Double(a).compareTo(new Double(b)) <= 0.0;
+      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) <= 0.0;
       @     ensures \result == a;
       @   also
-      @     requires 0.0 <= new Double(a).compareTo(new Double(b));
+      @     requires 0.0 <= Double.valueOf(a).compareTo(Double.valueOf(b));
       @     ensures \result == b;
       @   |}
       @ |}
@@ -738,7 +736,6 @@ public /*@ pure @*/ final class Math {
       @*/
     //@ model public static pure \bigint min(\bigint a, \bigint b);
 
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(d);
@@ -759,7 +756,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double ulp(double d);
     
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(f);
@@ -780,7 +776,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ float ulp(float f);    
     
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(d);
@@ -798,7 +793,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double signum(double d);
     
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(f);
@@ -816,7 +810,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ float signum(float f);
         
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(x);
@@ -831,7 +824,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double sinh(double x);
     
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(x);
@@ -849,7 +841,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double cosh(double x);
     
-     // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(x);
@@ -871,7 +862,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double tanh(double x);
            
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires !isFinite(x) || !isFinite(y);
@@ -886,7 +876,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double hypot(double x, double y);
     
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(x);
@@ -908,7 +897,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double expm1(double x);
     
-    // new for Java 5
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(x) || x < -1.0;
@@ -929,7 +917,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double log1p(double x);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {| 
       @   requires Double.isNaN(magnitude);
@@ -945,7 +932,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double copySign(double magnitude, double sign);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {| 
       @   requires Float.isNaN(magnitude);
@@ -961,7 +947,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ float copySign(float magnitude, float sign);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(f) || Float.isInfinite(f);
@@ -978,7 +963,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ int getExponent(float f);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(d) || Double.isInfinite(d);
@@ -995,7 +979,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ int getExponent(double d);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(start) || Double.isNaN(direction);
@@ -1041,7 +1024,6 @@ public /*@ pure @*/ final class Math {
       @*/     
     public static /*@ pure @*/ double nextAfter(double start, double direction);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(start) || Double.isNaN(direction);
@@ -1087,15 +1069,12 @@ public /*@ pure @*/ final class Math {
       @*/     
     public static /*@ pure @*/ float nextAfter(float start, double direction);
     
-    // new for Java 6
     //@ ensures \result == nextAfter(d, Double.POSITIVE_INFINITY);
     public static /*@ pure @*/ double nextUp(double d);
     
-    // new for Java 6
     //@ ensures \result == nextAfter(f, Float.POSITIVE_INFINITY);
     public static /*@ pure @*/ float nextUp(float f);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(d);
@@ -1117,7 +1096,6 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double scalb(double d, int scaleFactor);
     
-    // new for Java 6
     /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(f);

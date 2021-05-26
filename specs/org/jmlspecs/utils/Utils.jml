@@ -46,6 +46,6 @@ public class Utils {
     // FIXME @ axiom (\forall \TYPE t,tt; (t != null && tt != null && t <: tt) ==> t.erasure() <: tt.erasure());
 
     //@ ensures \result == v;
-    public static @Nullable <T> T nonNullCheck(@Nullable String message, @Nullable T v);
+    public static <T> @Nullable T nonNullCheck(@Nullable String message, @Nullable T v);
 
 }

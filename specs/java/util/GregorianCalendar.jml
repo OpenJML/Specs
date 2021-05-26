@@ -104,7 +104,7 @@ public class GregorianCalendar extends Calendar {
       @        \old(LEAST_MAX_VALUES).equals(LEAST_MAX_VALUES);
       @*/
 
-    private /*@ spec_public*/ long gregorianCutover; 
+    private /*@ spec_public*/ long gregorianCutover; //@ in normalizedGregorianCutover;
     // FIXME //@ public represents gregorianCutover = -12219292800000L;
     //@ public model long normalizedGregorianCutover;
     //@ public represents normalizedGregorianCutover = gregorianCutover;

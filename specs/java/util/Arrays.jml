@@ -270,7 +270,7 @@ public class Arrays {
       @   assignable a[*], perm[*];
       @   ensures (\forall int i,j;
       @            0 <= i < j < a.length;
-      @            new Double(a[i]).compareTo(new Double(a[j])) <= 0);
+      @            Double.valueOf(a[i]).compareTo(Double.valueOf(a[j])) <= 0);
       @   ensures \forall int i; 0 <= i < a.length; 
       @            0 <= perm[i] < a.length && a[i] == \old(a[perm[i]]);
       @   ensures \forall int i; 0 <= i < a.length; 
@@ -295,7 +295,7 @@ public class Arrays {
       @   ensures_redundantly a.length == \old(a.length) && a != null;
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
-      @            new Double(a[i-1]).compareTo(new Double(a[i])) <= 0);
+      @            Double.valueOf(a[i-1]).compareTo(Double.valueOf(a[i])) <= 0);
       @   ensures \forall int i; fromIndex < i < toIndex; 
       @            fromIndex <= perm[i] < toIndex && a[i] == \old(a[perm[i]]);
       @   ensures \forall int i; fromIndex < i < toIndex; 
@@ -320,7 +320,7 @@ public class Arrays {
       @   assignable a[*], perm[*];
       @   ensures (\forall int i,j;
       @            0 <= i < j < a.length;
-      @            new Double(a[i]).compareTo(new Double(a[j])) <= 0);
+      @            Double.valueOf(a[i]).compareTo(Double.valueOf(a[j])) <= 0);
       @   ensures \forall int i; 0 <= i < a.length; 
       @            0 <= perm[i] < a.length && a[i] == \old(a[perm[i]]);
       @   ensures \forall int i; 0 <= i < a.length; 
@@ -344,7 +344,7 @@ public class Arrays {
       @                \old(a[i]) == a[i]);
       @   ensures (\forall int i;
       @            fromIndex < i < toIndex;
-      @            new Float(a[i-1]).compareTo(new Float(a[i])) <= 0);
+      @            Float.valueOf(a[i-1]).compareTo(Float.valueOf(a[i])) <= 0);
       @   ensures \forall int i; fromIndex < i < toIndex; 
       @            fromIndex <= perm[i] < toIndex && a[i] == \old(a[perm[i]]);
       @   ensures \forall int i; fromIndex < i < toIndex; 
@@ -656,30 +656,30 @@ public class Arrays {
       @   requires a != null &&
       @            (\forall int i;
       @             0 < i < a.length;
-      @             new Double(a[i-1]).compareTo(new Double(a[i])) <= 0);
+      @             Double.valueOf(a[i-1]).compareTo(Double.valueOf(a[i])) <= 0);
       @  old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @   {| 
       @      requires hasKey;
       @      assignable \nothing;
       @      ensures 0 <= \result && \result < a.length 
-      @              && new Double(a[\result]).compareTo(new Double(key))
+      @              && Double.valueOf(a[\result]).compareTo(Double.valueOf(key))
       @                     == 0;
       @     also
       @      requires !hasKey;
       @      assignable \nothing;
       @      ensures \result < 0;
       @      ensures (\exists int j; 0 <= j < a.length; 
-      @               new Double(a[j]).compareTo(new Double(key)) < 0)
+      @               Double.valueOf(a[j]).compareTo(Double.valueOf(key)) < 0)
       @            ==> 
-      @           new Double(a[(\result*-1)-2]).compareTo(new Double(key))
+      @           Double.valueOf(a[(\result*-1)-2]).compareTo(Double.valueOf(key))
       @                < 0;
       @      ensures ((\result*-1)-1 < a.length && 
-      @      new Double(a[(\result*-1)-1]).compareTo(new Double(key)) > 0)
+      @      Double.valueOf(a[(\result*-1)-1]).compareTo(Double.valueOf(key)) > 0)
       @              || (\result*-1)-1 == a.length; 
       @      ensures_redundantly (\exists int j; 0 <= j < a.length;
-      @                   new Double(a[j]).compareTo(new Double(key)) > 0)
+      @                   Double.valueOf(a[j]).compareTo(Double.valueOf(key)) > 0)
       @       ==> 
-      @      new Double(a[(\result*-1)-1]).compareTo(new Double(key)) > 0;
+      @      Double.valueOf(a[(\result*-1)-1]).compareTo(Double.valueOf(key)) > 0;
       @    |}
       @ also
       @  public exceptional_behavior
@@ -693,30 +693,30 @@ public class Arrays {
       @   requires a != null &&
       @            (\forall int i;
       @             0 < i < a.length;
-      @             new Float(a[i-1]).compareTo(new Float(a[i])) <= 0);
+      @             Float.valueOf(a[i-1]).compareTo(Float.valueOf(a[i])) <= 0);
       @   old boolean hasKey = (\exists int i; 0 <= i < a.length; a[i] == key);
       @   {| 
       @      requires hasKey;
       @      assignable \nothing;
       @      ensures 0 <= \result && \result < a.length 
-      @              && new Float(a[\result]).compareTo(new Float(key))
+      @              && Float.valueOf(a[\result]).compareTo(Float.valueOf(key))
       @                     == 0;
       @     also
       @      requires !hasKey;
       @      assignable \nothing;
       @      ensures \result < 0;
       @      ensures (\exists int j; 0 <= j < a.length; 
-      @               new Float(a[j]).compareTo(new Float(key)) < 0)
+      @               Float.valueOf(a[j]).compareTo(Float.valueOf(key)) < 0)
       @            ==> 
-      @           new Float(a[(\result*-1)-2]).compareTo(new Float(key))
+      @           Float.valueOf(a[(\result*-1)-2]).compareTo(Float.valueOf(key))
       @                < 0;
       @      ensures ((\result*-1)-1 < a.length && 
-      @      new Float(a[(\result*-1)-1]).compareTo(new Float(key)) > 0)
+      @      Float.valueOf(a[(\result*-1)-1]).compareTo(Float.valueOf(key)) > 0)
       @              || (\result*-1)-1 == a.length; 
       @      ensures_redundantly (\exists int j; 0 <= j < a.length;
-      @                   new Float(a[j]).compareTo(new Float(key)) > 0)
+      @                   Float.valueOf(a[j]).compareTo(Float.valueOf(key)) > 0)
       @       ==> 
-      @      new Float(a[(\result*-1)-1]).compareTo(new Float(key)) > 0;
+      @      Float.valueOf(a[(\result*-1)-1]).compareTo(Float.valueOf(key)) > 0;
       @    |}
       @ also
       @  public exceptional_behavior
@@ -912,7 +912,7 @@ public class Arrays {
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
       @                    (\forall \bigint i; 0 <= i < a.length;
-      @                     new Double(a[i]).equals(new Double(a2[i]))));
+      @                     Double.valueOf(a[i]).equals(Double.valueOf(a2[i]))));
       @*/
     public static /*@ pure@*/ boolean equals(double /*@ nullable */ [] a, double /*@ nullable */[] a2);
 
@@ -925,7 +925,7 @@ public class Arrays {
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
       @                    (\forall int i; 0 <= i < a.length;
-      @                     new Float(a[i]).equals(new Float(a2[i]))));
+      @                     Float.valueOf(a[i]).equals(Float.valueOf(a2[i]))));
       @*/
     public static /*@ pure@*/ boolean equals(float /*@ nullable */ [] a, float /*@ nullable */ [] a2);
 
@@ -1405,7 +1405,7 @@ public class Arrays {
       @   requires a != null;
       @   assignable a[*];
       @   ensures (\forall int i; 0 <= i < a.length; 
-      @            new Double(a[i]).compareTo(new Double(val)) == 0);
+      @            Double.valueOf(a[i]).compareTo(Double.valueOf(val)) == 0);
       @ also
       @  public exceptional_behavior
       @   requires a == null;
@@ -1420,7 +1420,7 @@ public class Arrays {
       @   assignable a[*];
       @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; 
-      @            new Double(a[i]).compareTo(new Double(val)) == 0);
+      @            Double.valueOf(a[i]).compareTo(Double.valueOf(val)) == 0);
       @ also
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
@@ -1445,7 +1445,7 @@ public class Arrays {
       @   requires a != null;
       @   assignable a[*];
       @   ensures (\forall int i; 0 <= i < a.length; 
-      @            new Float(a[i]).compareTo(new Float(val)) == 0);
+      @            Float.valueOf(a[i]).compareTo(Float.valueOf(val)) == 0);
       @ also
       @  public exceptional_behavior
       @   requires a == null;
@@ -1460,7 +1460,7 @@ public class Arrays {
       @   assignable a[*];
       @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; 
-      @            new Float(a[i]).compareTo(new Float(val)) == 0);
+      @            Float.valueOf(a[i]).compareTo(Float.valueOf(val)) == 0);
       @ also
       @  public normal_behavior
       @   requires a != null && fromIndex == toIndex;
@@ -1994,16 +1994,16 @@ public class Arrays {
 //    public static java.util.Spliterator$OfDouble spliterator(double[], int, int);
     
     //@ public normal_behavior
-    //@   ensures Arrays.equalElements(\result.values,array);
+    //@   ensures array.equals(\result.values,array.<T>of(arr));
     //@ pure
-    public static <T> java.util.stream.Stream<T> stream(T[] array);
+    public static <T> java.util.stream.Stream<T> stream(T[] arr);
 
 //    public static <T> java.util.stream.Stream<T> stream(T[], int, int);
 
     //@ public normal_behavior
-    //@   ensures Arrays.equals(\result.intvalues,array);
+    //@   ensures array.equals(\result.values,array.<Integer>of(arr));
     //@ pure
-    public static java.util.stream.IntStream stream(int[] array);
+    public static java.util.stream.IntStream stream(int[] arr);
 //    public static java.util.stream.IntStream stream(int[], int, int);
 //    public static java.util.stream.LongStream stream(long[]);
 //    public static java.util.stream.LongStream stream(long[], int, int);

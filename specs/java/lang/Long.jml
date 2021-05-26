@@ -340,7 +340,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ /*@ non_null @*/
         Long getLong(String nm, Long val);
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @ requires anotherLong != null;
       @ {|
       @   requires theLong == anotherLong.longValue();

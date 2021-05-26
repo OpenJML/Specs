@@ -45,7 +45,7 @@ public class SimpleDateFormat extends DateFormat {
       public StringBuffer format(Date date, StringBuffer sb, FieldPosition fp);
       private StringBuffer format(Date date, StringBuffer sb, Format.FieldDelegate fd);
       public AttributedCharacterIterator formatToCharacterIterator(Object o);
-      private void subFormat(int a, int b, Format.FieldDelegate fd, StringBuffer sb, boolean b);
+      private void subFormat(int a, int k, Format.FieldDelegate fd, StringBuffer sb, boolean b);
       private void zeroPaddingNumber(int a, int b, int c, StringBuffer sb);
       public Date parse(String s, ParsePosition pp);
       private int matchString(String s, int a, int b, String[] sa, CalendarBuilder cb);

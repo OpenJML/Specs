@@ -52,8 +52,6 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import jdk.internal.util.ArraysSupport;
-import sun.nio.ch.FileChannelImpl;
-import sun.nio.cs.UTF_8;
 import sun.nio.fs.AbstractFileSystemProvider;
 
 //@ non_null_by_default

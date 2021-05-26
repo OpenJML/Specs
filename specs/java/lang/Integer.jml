@@ -352,7 +352,7 @@ public  /*@ pure @*/ final
         Integer decode(/*@ non_null @*/ String nm)
         throws NumberFormatException;
 
-    /*-RAC@ public normal_behavior
+    /*-RAC@ also public normal_behavior
       @ requires anotherInteger != null;
       @ {|
       @   requires theInteger == anotherInteger.intValue();

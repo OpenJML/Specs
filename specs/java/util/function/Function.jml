@@ -19,18 +19,18 @@ public interface Function<T,R> {
       @     assignable \nothing;
       @   pure function
       @   @Override
-      @   public nullable R apply(nullable T t);
+      @   public R apply(T t);
       @ }
       @*/
       
 
     
-      /*@ public static immutable model interface Identity<T> extends Function<T,T> {
+      /*@ public static immutable model interface Identity<X> extends Function<X,X> {
       @   also public model_program {
       @      return t;
       @   }
       @   pure function
-      @   public nullable T apply(nullable T t);
+      @   public X apply(X t);
       @ }
       @*/
     
@@ -40,7 +40,7 @@ public interface Function<T,R> {
       public static <T> Function<T, T> identity();
       
       /*@
-      static model interface NoNulls<T,R> extends Function<T,R> {
+      model public static interface NoNulls<T,R> extends Function<T,R> {  // FIXME - should be public by default???
         
         also public normal_behavior
           ensures \result != null;

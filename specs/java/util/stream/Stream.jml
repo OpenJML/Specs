@@ -114,16 +114,16 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \result.length == values.length;
-    //@   ensures java.util.Arrays.equalArrays(\result,0,values,0,values.length);
+    //@   ensures array.equals(array.<Object>of(\result),values);
     //@ pure
     Object[] toArray();
     
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \result.length == values.length;
-    //@   ensures java.util.Arrays.equalArrays(\result,0,values,0,values.length);
+    //@   ensures array.equals(array.<A>of(\result),values); 
     //@ pure
-    <A> A[] toArray(IntFunction<A[]> func);
+    <A> A[] toArray(IntFunction<A[]> generator);
 
     T reduce(T t, BinaryOperator<T> op);
     java.util.Optional<T> reduce(BinaryOperator<T> op);

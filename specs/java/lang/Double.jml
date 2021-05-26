@@ -281,7 +281,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ double longBitsToDouble(long bits);
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @     requires anotherDouble != null;
       @     {|
       @       requires anotherDouble.isNaN() && this.isNaN();

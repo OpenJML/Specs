@@ -3,7 +3,6 @@ package java.security;
 //@ non_null_by_default
 public class KeyFactory {
 
-      private static final sun.security.util.Debug debug;
       //@ spec_public
       private final java.lang.String algorithm;
       private Provider provider;

@@ -13,12 +13,11 @@ public class ByteArrayInputStream extends InputStream {
     // Hence all sorts of errors can occur in the various methods.
 
     /*@ public normal_behavior
-      @   assignable \not_specified;
       @   ensures \result == (
-      @              buf != null && pos >= 0 && pos <= count && 
+      @              buf != null && (0 <= pos <= count) && 
       @              count <= buf.length &&
-      @              mark >= 0 && mark <= count);
-      @ public model boolean valid();
+      @              (0 <= mark <= count));
+      @ model pure public boolean valid();
       @*/
 
     // CONSTRUCTORS

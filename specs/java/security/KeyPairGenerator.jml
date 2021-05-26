@@ -3,7 +3,7 @@ package java.security;
 import javax.crypto.interfaces.DHPublicKey;
 
 //@ non_null_by_default
-public abstract class KeyPairGenerator {
+public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
 
     //@ model public int n;
 

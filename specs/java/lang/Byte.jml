@@ -283,7 +283,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable
       @*/
     public /*@ pure @*/ boolean equals(Object obj);
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @ {|
       @   requires theByte == anotherByte.byteValue();
       @   assignable \nothing;

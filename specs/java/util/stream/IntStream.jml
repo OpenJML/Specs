@@ -2,7 +2,7 @@ package java.util.stream;
 
 //@ non_null_by_default
 public interface IntStream extends BaseStream<Integer,IntStream> {
-    //@ model public final instance int[] intvalues;
+    //  @ model public final instance array<Integer> intvalues;
 
       public abstract IntStream filter(java.util.function.IntPredicate pred);
       public abstract IntStream map(java.util.function.IntUnaryOperator op);
@@ -54,17 +54,17 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       public static IntStream.Builder builder();
       
       //@ public normal_behavior
-      //@   ensures \result.intvalues.length == 0;
+      //@   ensures \result.values.length == 0;
       //@ pure helper function
       public static IntStream empty();
       //@ public normal_behavior
-      //@   ensures \result.intvalues.length == 1;
-      //@   ensures \result.intvalues[0] == i;
+      //@   ensures \result.values.length == 1;
+      //@   ensures \result.values[0] == i;
       //@ pure helper function
       public static IntStream of(int i);
       //@ public normal_behavior
-      //@   ensures \result.intvalues.length == ints.length;
-      //@   ensures java.util.Arrays.equals(\result.intvalues,ints);
+      //@   ensures \result.values.length == ints.length;
+      //@   ensures array.equals(\result.values,array.<Integer>of(ints));
       //@ pure helper function
       public static IntStream of(int... ints);
       public static IntStream iterate(int i, java.util.function.IntUnaryOperator op);
@@ -72,14 +72,14 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       public static IntStream generate(java.util.function.IntSupplier supplier);
       //@ public normal_behavior
       //@   requires to >= from;
-      //@   ensures \result.intvalues.length == to - from;
-      //@   ensures \forall int k; 0 <= k < to-from; \result.intvalues[k] == from + k;
+      //@   ensures \result.values.length == to - from;
+      //@   ensures \forall int k; 0 <= k < to-from; \result.values[k] == from + k;
       //@ pure helper function
       public static IntStream range(int from, int to);
       //@ public normal_behavior
       //@   requires to >= from;
-      //@   ensures \result.intvalues.length == to - from + 1;
-      //@   ensures \forall int k; 0 <= k <= to-from; \result.intvalues[k] == from + k;
+      //@   ensures \result.values.length == to - from + 1;
+      //@   ensures \forall int k; 0 <= k <= to-from; \result.values[k] == from + k;
       //@ pure helper function
       public static IntStream rangeClosed(int from, int to);
       public static IntStream concat(IntStream first, IntStream last);

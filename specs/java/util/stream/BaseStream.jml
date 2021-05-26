@@ -4,7 +4,7 @@ package java.util.stream;
 public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.AutoCloseable {
 
     //@ model public instance boolean _isParallel;
-    //@ model public final instance T[] values;
+    //@ model public final instance array<T> values;
     
     
     //@ public normal_behavior

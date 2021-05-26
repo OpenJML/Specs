@@ -248,7 +248,7 @@ public /*@ pure @*/ final
       @*/
     public boolean equals(Object obj) ;
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @ {|
       @   requires theShort == anotherShort.shortValue();
       @   ensures \result == 0;

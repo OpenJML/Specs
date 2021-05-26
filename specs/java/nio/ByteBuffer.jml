@@ -4,7 +4,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ model public instance boolean _isDirect;
     
     //@ spec_public  
-    final byte[] hb;  // FIXME _ perhaps this should be model?
+    final byte[] hb; //@ in _hasBackingArray;  // FIXME _ perhaps this should be model?
     //@ public represents _hasBackingArray = (hb != null);
     
     //@ public invariant 0 <= offset;
@@ -13,11 +13,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public invariant hb.length-offset >= capacity;
     
     //@ spec_public  
-    final int offset;
+    final int offset; //@ in _offset;
     //@ public represents _offset = offset;
 
     //@ spec_public  
-    boolean isReadOnly;
+    boolean isReadOnly; //@ in _isReadOnly;
     //@ public represents _isReadOnly = isReadOnly;
     
     //@ spec_public  
@@ -97,7 +97,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ pure
     public static ByteBuffer wrap(byte[] b);
     
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   ensures \fresh(\result);
     //@   ensures \result.offset == position;
     //@   // \result.mark is undefined
@@ -109,7 +109,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ pure
     public abstract ByteBuffer slice();
     
-    //@ public normal_behavior
+    //@ also public normal_behavior
     //@   ensures \fresh(\result);
     //@   ensures \result.offset == offset;
     //@   ensures \result.mark == mark;
@@ -173,8 +173,8 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public normal_behavior
     //@   requires 0 <= index < this.limit;
     //@   requires !this.isReadOnly;
-    //@   assignable hb[offset+i];
-    //@   ensures hb[offset+i] == b;
+    //@   assignable hb[offset+index];
+    //@   ensures hb[offset+index] == b;
     //@   ensures \result == this;
     //@ also
     //@ private exceptional_behavior
@@ -192,9 +192,9 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires this.hb != buf;
     //@   assignable buf[*], this.position;
     //@   ensures this.position == \old(this.position) + length;
-    //@   ensures (\forall int i; 0 <= i && i < length; buf[offset + i] == this.hb[\old(this.offset+this.position) + i]);
-    //@   ensures (\forall int i; 0 <= i && i < offset; buf[i] == \old(buf[i]));
-    //@   ensures (\forall int i; offset + length <= i && i < buf.length; buf[i] == \old(buf[i]));
+    //@   ensures (\forall int i; 0 <= i < length; buf[offset + i] == this.hb[\old(this.offset+this.position) + i]);
+    //@   ensures (\forall int i; 0 <= i < offset; buf[i] == \old(buf[i]));
+    //@   ensures (\forall int i; offset + length <= i < buf.length; buf[i] == \old(buf[i]));
     //@   ensures \result == this;
     //@ also
     //@ public exceptional_behavior
@@ -209,7 +209,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   requires this.hb != buf;
     //@   assignable buf[*], this.position;
     //@   ensures this.position == \old(this.position) + buf.length;
-    //@   ensures (\forall int i; 0 <= i && i < buf.length; buf[i] == this.hb[\old(this.offset+this.position) + i]) ;
+    //@   ensures (\forall int i; 0 <= i < buf.length; buf[i] == this.hb[\old(this.offset+this.position) + i]) ;
     //@   ensures java.util.Arrays.equalArrays(buf, 0, this.hb, \old(this.position), buf.length);
     //@   ensures \result == this;
     //@ also

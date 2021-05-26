@@ -284,7 +284,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ float intBitsToFloat(int bits);
 
-    /*@ public normal_behavior
+    /*@ also public normal_behavior
       @   requires anotherFloat != null;
       @   {|
       @     requires this.isNaN() && anotherFloat.isNaN();
