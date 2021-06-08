@@ -536,10 +536,10 @@ public /*@ pure @*/ final class StrictMath {
       @   ensures \result == Float.POSITIVE_INFINITY;
       @ also
       @   requires a > 0;
-      @   ensures \result == a;
+      @   ensures \result == a && !Float.isNaN(\result);
       @ also
       @   requires a < 0;
-      @   ensures \result == -a;
+      @   ensures \result == -a && !Float.isNaN(\result);
        @ |}
       @*/
     //@ implies_that
@@ -558,10 +558,10 @@ public /*@ pure @*/ final class StrictMath {
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires a > 0;
-      @   ensures \result == a;
+      @   ensures \result == a && !Double.isNaN(\result);
       @ also
       @   requires a < 0;
-      @   ensures \result == -a;
+      @   ensures \result == -a && !Double.isNaN(\result);
       @ |}
       @*/
     //@ implies_that

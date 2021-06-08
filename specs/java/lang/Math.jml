@@ -555,8 +555,8 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == -a;
       @ also
       @   ensures_redundantly !Float.isNaN(a) ==> 0.0f <= \result;
-      @   ensures_redundantly 
-      @     \result == Float.intBitsToFloat(0x7fffffff & Float.floatToIntBits(a));
+      @   //ensures_redundantly // Do not use because it forces bit-vector
+      @   //  \result == Float.intBitsToFloat(0x7fffffff & Float.floatToIntBits(a));
       @ |}
       @*/
     public static /*@ pure @*/ float abs(float a);
@@ -621,10 +621,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Float.isNaN(a) && !Float.isNaN(b);
       @   {|
-      @     requires new Float(a).compareTo(new Float(b)) <= 0.0;
+      @     requires a <= b;
       @     ensures \result == b;
       @   also
-      @     requires 0.0 <= new Float(a).compareTo(new Float(b));
+      @     requires b <= a;
       @     ensures \result == a;
       @   |}
       @ |}
@@ -638,10 +638,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Double.isNaN(a) && !Double.isNaN(b);
       @   {|
-      @     requires new Double(a).compareTo(new Double(b)) <= 0.0;
+      @     requires a <= b;
       @     ensures \result == b;
       @   also
-      @     requires 0.0 <= new Double(a).compareTo(new Double(b));
+      @     requires b <= a;
       @     ensures \result == a;
       @   |}
       @ |}
@@ -697,10 +697,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Float.isNaN(a) && !Float.isNaN(b);
       @   {|
-      @     requires new Float(a).compareTo(new Float(b)) <= 0.0;
+      @     requires a <= b;
       @     ensures \result == a;
       @   also
-      @     requires 0.0 <= new Float(a).compareTo(new Float(b));
+      @     requires b <= a;
       @     ensures \result == b;
       @   |}
       @ |}
@@ -714,10 +714,10 @@ public /*@ pure @*/ final class Math {
       @ also
       @   requires !Double.isNaN(a) && !Double.isNaN(b);
       @   {|
-      @     requires new Double(a).compareTo(new Double(b)) <= 0.0;
+      @     requires a <= b;
       @     ensures \result == a;
       @   also
-      @     requires 0.0 <= new Double(a).compareTo(new Double(b));
+      @     requires b <= a;
       @     ensures \result == b;
       @   |}
       @ |}
@@ -786,14 +786,17 @@ public /*@ pure @*/ final class Math {
       @   requires Double.isNaN(d);
       @   ensures Double.isNaN(\result);
       @ also
+      @   requires !Double.isNaN(d);
       @   requires d == 0.0;
-      @   ensures \result == d;
+      @   ensures \result == d && !Double.isNaN(\result);
       @ also
+      @   requires !Double.isNaN(d);
       @   requires d < 0.0;
-      @   ensures \result == -1.0;
+      @   ensures \result == -1.0 && !Double.isNaN(\result);
       @ also
+      @   requires !Double.isNaN(d);
       @   requires 0.0 < d;
-      @   ensures \result == 1.0;
+      @   ensures \result == 1.0 && !Double.isNaN(\result);
       @ |}
       @*/
     public static /*@ pure @*/ double signum(double d);
@@ -804,14 +807,17 @@ public /*@ pure @*/ final class Math {
       @   requires Float.isNaN(f);
       @   ensures Float.isNaN(\result);
       @ also
+      @   requires !Float.isNaN(f);
       @   requires f == 0.0;
-      @   ensures \result == f;
+      @   ensures \result == f && !Float.isNaN(\result);
       @ also
+      @   requires !Float.isNaN(f);
       @   requires f < 0.0;
-      @   ensures \result == -1.0;
+      @   ensures \result == -1.0 && !Float.isNaN(\result);
       @ also
+      @   requires !Float.isNaN(f);
       @   requires 0.0 < f;
-      @   ensures \result == 1.0;
+      @   ensures \result == 1.0 && !Float.isNaN(\result);
       @ |}
       @*/
     public static /*@ pure @*/ float signum(float f);
@@ -939,8 +945,13 @@ public /*@ pure @*/ final class Math {
       @   ensures abs(\result) == abs(magnitude);
       @ also
       @   requires !Double.isNaN(magnitude) && !Double.isNaN(sign);
+      @   ensures !Double.isNaN(\result);
+      @   ensures magnitude >= 0.0 && sign > 0.0 ==> \result == magnitude;
+      @   ensures magnitude >= 0.0 && sign < 0.0 ==> \result == -magnitude;
+      @   ensures magnitude <= 0.0 && sign < 0.0 ==> \result == magnitude;
+      @   ensures magnitude <= 0.0 && sign > 0.0 ==> \result == -magnitude;
       @   ensures abs(\result) == abs(magnitude);
-      @   ensures signum(\result) == signum(sign);
+      @   ensures signum(sign) != 0 && magnitude != 0 ==> signum(\result) == signum(sign);
       @ |}
       @*/
     public static /*@ pure @*/ double copySign(double magnitude, double sign);
@@ -955,8 +966,13 @@ public /*@ pure @*/ final class Math {
       @   ensures abs(\result) == abs(magnitude);
       @ also
       @   requires !Float.isNaN(magnitude) && !Float.isNaN(sign);
+      @   ensures magnitude >= 0.0f && sign > 0.0f ==> \result == magnitude;
+      @   ensures magnitude >= 0.0f && sign < 0.0f ==> \result == -magnitude;
+      @   ensures magnitude <= 0.0f && sign < 0.0f ==> \result == magnitude;
+      @   ensures magnitude <= 0.0f && sign > 0.0f ==> \result == -magnitude;
       @   ensures abs(\result) == abs(magnitude);
-      @   ensures signum(\result) == signum(sign);
+      @   ensures signum(sign) != 0 && magnitude != 0 ==> signum(\result) == signum(sign);
+      @   ensures !Float.isNaN(\result);
       @ |}
       @*/
     public static /*@ pure @*/ float copySign(float magnitude, float sign);
