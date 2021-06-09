@@ -65,8 +65,10 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     @*/
         
     public static final float POSITIVE_INFINITY;
+    //@ axiom \forall float d;; !isNaN(d) ==> d <= POSITIVE_INFINITY;
 
     public static final float NEGATIVE_INFINITY;
+    //@ axiom \forall float d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
     public static final float NaN;
 
@@ -93,13 +95,13 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
 
     /*@ public normal_behavior
       @   requires s != null && parseable(s);
-      @   ensures  \result.equals(new Float(parseFloat(s)));
+      @   ensures  \result == parseFloat(s);
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ Float valueOf(
+    public static /*@ function pure @*/ /*@ non_null @*/ Float valueOf(
         /*@ non_null @*/ String s)
         throws NumberFormatException;
 
@@ -111,11 +113,11 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ pure @*/ float parseFloat(/*@ non_null @*/ String s)
+    public static /*@ function pure @*/ float parseFloat(/*@ non_null @*/ String s)
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   ensures \result ==  !(v == v);
+      @   ensures true; // \result ==  !(v == v);
       @*/
     public static /*@ pure helper @*/ boolean isNaN(float v);
 
@@ -151,8 +153,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     public Float(String s) throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   requires true;
-      @   ensures \result == !(theFloat == theFloat);
+      @   ensures \result == Float.isNaN(theFloat);
       @*/
     public boolean isNaN();
 
@@ -228,18 +229,14 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @     requires value == NEGATIVE_INFINITY;
       @     ensures \result == 0xff800000;
       @   also
-      @     requires new Float(value).isNaN();
+      @     requires isNaN(value);
       @     ensures \result == 0x7fc00000;
       @   also
       @     ensures (* \result is the bits that represent
       @                the floating-point number *);
       @   also
-      @     ensures identical(value, intBitsToFloat(floatToIntBits(value)));
+      @     ensures identical(value, intBitsToFloat(\result));
       @ |}
-      @ implies_that
-      @   public normal_behavior
-      @     requires !isNaN(value);
-      @     ensures intBitsToFloat(\result) == value;
       @*/
     public static /*@ pure @*/ int floatToIntBits(float value);
 
@@ -276,7 +273,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @ also
       @   requires ( 0x7f800001 <= bits && bits <= 0x7fffffff )
       @     || ( 0xff800001 <= bits && bits <= 0xffffffff );
-      @   ensures new Float(\result).isNaN();
+      @   ensures isNaN(\result);
       @ also
       @   ensures (* \result is floating-point value with
       @              the same bit pattern as bits *);
@@ -284,7 +281,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ float intBitsToFloat(int bits);
 
-    /*@ also public normal_behavior
+    /*@ public normal_behavior
       @   requires anotherFloat != null;
       @   {|
       @     requires this.isNaN() && anotherFloat.isNaN();
@@ -336,7 +333,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
 
     /*@ public normal_behavior
       @    assignable \nothing;
-      @    ensures \result == new Float(f1).compareTo(new Float(f2));
+      @    ensures \result == Float.valueOf(f1).compareTo(Float.valueOf(f2));
       @*/
     public static /*@ pure @*/ int compare(float f1, float f2);
 

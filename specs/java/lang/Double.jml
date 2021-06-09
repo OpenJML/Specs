@@ -66,13 +66,17 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     @*/
     
     public static final double POSITIVE_INFINITY;
+    //@ axiom \forall double d;; !isNaN(d) ==> d <= POSITIVE_INFINITY;
 
     public static final double NEGATIVE_INFINITY;
+    //@ axiom \forall double d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
     public static final double NaN;
 
     public static final double MAX_VALUE;
     public static final double MIN_VALUE;
+    // FIXME - the following axiom causes simple assertions to time out
+    // @ axiom isFinite(MAX_VALUE) && isFinite(MIN_VALUE);
 
     public static final Class<Double> TYPE;
     //@ ensures TYPE == double.class;
@@ -97,10 +101,15 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @     requires s != null && !parseable(s);
       @     signals(NumberFormatException);
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ Double valueOf(
+    public static /*@ function pure @*/ /*@ non_null @*/ Double valueOf(
         /*@ non_null @*/ String s)
         throws NumberFormatException;
 
+    /*@ public normal_behavior
+      @   ensures identical(\result.theDouble, d);
+      @*/
+    public static /*@ function pure @*/ /*@ non_null @*/ Double valueOf(double d);
+    
     /*@ public normal_behavior
       @    requires s != null && parseable(s);
       @    ensures Double.isFinite(\result);
@@ -118,9 +127,9 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     public static boolean isFinite(double v);
     
     /*@ public normal_behavior
-      @   ensures \result == !(v == v);
+      @   ensures true; // \result == !(v == v);
       @*/
-    public static /*@ pure helper @*/ boolean isNaN(double v);
+    public static /*@ pure function  @*/ boolean isNaN(double v);
 
     /*@ public normal_behavior
       @   ensures \result <==>
@@ -145,7 +154,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   ensures \result == !(theDouble == theDouble);
+      @   ensures \result == Double.isNaN(theDouble);
       @*/
     public boolean isNaN();
 
@@ -281,7 +290,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ double longBitsToDouble(long bits);
 
-    /*@ also public normal_behavior
+    /*@ public normal_behavior
       @     requires anotherDouble != null;
       @     {|
       @       requires anotherDouble.isNaN() && this.isNaN();
@@ -367,7 +376,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
                               (isNaN(a) || isNaN(b) || (a==b))
                               );
      */
-    /*@ public static model pure helper boolean identical(double a, double b) {
+    /*@ public static model pure function helper boolean identical(double a, double b) {
       return (isNaN(a) == isNaN(b)) &&
                  (isPositiveZero(a) == isPositiveZero(b)) &&
          (isNegativeZero(a) == isNegativeZero(b)) &&

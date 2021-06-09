@@ -536,10 +536,10 @@ public /*@ pure @*/ final class StrictMath {
       @   ensures \result == Float.POSITIVE_INFINITY;
       @ also
       @   requires a > 0;
-      @   ensures \result == a;
+      @   ensures \result == a && !Float.isNaN(\result);
       @ also
       @   requires a < 0;
-      @   ensures \result == -a;
+      @   ensures \result == -a && !Float.isNaN(\result);
        @ |}
       @*/
     //@ implies_that
@@ -558,10 +558,10 @@ public /*@ pure @*/ final class StrictMath {
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires a > 0;
-      @   ensures \result == a;
+      @   ensures \result == a && !Double.isNaN(\result);
       @ also
       @   requires a < 0;
-      @   ensures \result == -a;
+      @   ensures \result == -a && !Double.isNaN(\result);
       @ |}
       @*/
     //@ implies_that
@@ -731,22 +731,22 @@ public /*@ pure @*/ final class StrictMath {
     public static /*@ pure @*/ double min(double a, double b);
     
     /*@ public static model pure boolean isPositiveZero( double a) {
-      return Double.valueOf(a).equals(Double.valueOf("+0.0"));
+      return new Double(a).equals(new Double("+0.0"));
       //return java.lang.Double.isPositiveZero(a);
         }
     
         public static model pure boolean isNegativeZero( double a) {
-      return Double.valueOf(a).equals(Double.valueOf("-0.0"));
+      return new Double(a).equals(new Double("-0.0"));
       //return java.lang.Double.isNegativeZero(a);
         }
     
         public static model pure boolean isPositiveZero( float a) {
-      return Float.valueOf(a).equals(Float.valueOf("+0.0"));
+      return new Float(a).equals(new Float("+0.0"));
       //return java.lang.Float.isPositiveZero(a);
         }
     
         public static model pure boolean isNegativeZero( float a) {
-      return Float.valueOf(a).equals(Float.valueOf("-0.0"));
+      return new Float(a).equals(new Float("-0.0"));
       //return java.lang.Float.isNegativeZero(a);
         }
     
