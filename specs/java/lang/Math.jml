@@ -314,8 +314,11 @@ public /*@ pure @*/ final class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(a) || Double.isInfinite(a) || a == 0.0;
+      @   requires Double.isInfinite(a) || a == 0.0;
       @   ensures \result == a;
+      @ also
+      @   requires Double.isNaN(a);
+      @   ensures Double.isNaN(\result);
       @ also
       @   requires -1.0 < a && a < 0.0;
       @   ensures isNegativeZero(\result);
@@ -335,8 +338,11 @@ public /*@ pure @*/ final class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(a) || Double.isInfinite(a) || a == 0.0;
+      @   requires Double.isInfinite(a) || a == 0.0;
       @   ensures \result == a;
+      @ also
+      @   requires Double.isNaN(a);
+      @   ensures Double.isNaN(\result);
       @ also 
       @   requires a == rint(a);
       @   ensures \result == a;
@@ -352,8 +358,11 @@ public /*@ pure @*/ final class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isNaN(a) || Double.isInfinite(a) || a == 0.0;
+      @   requires Double.isInfinite(a) || a == 0.0;
       @   ensures \result == a;
+      @ also
+      @   requires Double.isNaN(a);
+      @   ensures Double.isNaN(\result);
       @ also
       @   requires isFinite(a) && a != 0.0;
       @   ensures isFinite(\result);
