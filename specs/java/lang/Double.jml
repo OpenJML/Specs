@@ -73,6 +73,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
 
     public static final double MAX_VALUE = 0x1.fffffffffffffP+1023;
     public static final double MIN_VALUE = 0x0.0000000000001P-1022;
+    public static final double MIN_NORMAL = 0x1.0p-1022;
     
     // FIXME - the following axiom causes simple assertions to time out
     // @ axiom isFinite(MAX_VALUE) && isFinite(MIN_VALUE);
