@@ -42,11 +42,11 @@ public interface Collection<E> extends Iterable<E> {
         also used to help proofs along.
      */
     /*@ public normal_behavior
-      @   ensures \result <==> ( o==oo || (o != null && o.equals(oo)));  // FIXME - but equals is not necessarily pure
+      @   ensures \result <==> ( o==oo || (o != null && oo != null && (o.uniqueHash == oo.uniqueHash || o.equals(oo))));  // FIXME - but equals is not necessarily pure
+      @   //ensures \result <==> ( o==oo || (o != null && oo != null && (o.equals(oo))));  // FIXME - but equals is not necessarily pure
       @ static public model pure helper function boolean nullequals(nullable Object o, nullable Object oo);
       @*/
     
-
 
 
 

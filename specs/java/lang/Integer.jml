@@ -53,12 +53,12 @@ public  /*@ pure @*/ final
 
     public static final int   MAX_VALUE = 0x7FFFFFFF;
 
-    public static final Class<Integer> TYPE = int.class;  // 1.5 DIFFERENCE
+    //public static final Class<Integer> TYPE = int.class;  // 1.5 DIFFERENCE
     
     //@ model public static final long MAX_UNSIGNED_INT = 0xffff_ffffL;
     
-    //@ ensures TYPE == int.class;
-    //@ static_initializer
+    // @ ensures TYPE == int.class;
+    // @ static_initializer
 
     public static final int   SIZE = 32; // Number of bits in an int representation
     public static final int   BYTES = 4; // Number of bytes in an int representation
@@ -79,10 +79,10 @@ public  /*@ pure @*/ final
       @   ensures i == 0 ==> \result.length() == 1;
       @   ensures i >  0 ==> \result.length() >= 1;
       @   ensures i <  0 ==> \result.length() >= 2;
-      @   ensures i == 0 ==> \result.equals("0");
+      @   ensures i == 0 ==> String.equals(\result,"0");
       @   ensures radix >= 10 ==> \result.length() <= 11;
       @*/
-    public static /*@ pure helper non_null @*/ String toString(int i,
+    public static /*@ pure non_null @*/ String toString(int i,
                                                                   int radix);
 
     /*-RAC@ public normal_behavior
@@ -145,9 +145,8 @@ public  /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   ensures \result != null;
-      @   ensures \invariant_for(\result);
       @   ensures parseable(\result, 10);
-      @   ensures \result.equals(toString(i, 10));
+      @   ensures \result == toString(i, 10);
       @   ensures i == parseInt(\result, 10);
       @   ensures i == 0 ==> \result.length() == 1;
       @   ensures i >  0 ==> \result.length() >= 1;
@@ -272,7 +271,6 @@ public  /*@ pure @*/ final
     //-RAC@   ensures parseable(\result, 10);
     //@   ensures Integer.parseInt(\result,10) == intValue();
     //@   ensures \result.equals(toString(intValue()));
-    //@   ensures \invariant_for(\result);
     public /*@ non_null @*/ String toString();
             
     /*@ also

@@ -241,17 +241,19 @@ public /*@ pure @*/ final
 
     /*@ also
       @  public normal_behavior
-      @   ensures \result !=null && \result.equals(String.valueOf(theCharacter));
+      @   ensures \result !=null;
       @   ensures \result.length() == 1;
       @   ensures \result.charAt(0) == theCharacter;
+      @   ensures String.equals(\result,String.valueOf(theCharacter));
       @*/
     public String toString();
 
     /*@ 
       @  public normal_behavior
-      @   ensures \result != null && \result.equals(String.valueOf(c));
+      @   ensures \result != null;
       @   ensures \result.length() == 1;
       @   ensures \result.charAt(0) == c;
+      @   ensures String.equals(\result,String.valueOf(c));
       @*/
     public static /*@ pure @*/ String toString(char c);
 

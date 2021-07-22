@@ -304,13 +304,13 @@ public class BitSet implements Cloneable, java.io.Serializable{
       @            0<=i;
       @                 isSet(content,i) == isSet(((BitSet)obj).content,i)); 
       @*/
-    /*@   ensures \result ==> (cardinality() == ((BitSet)obj).cardinality());
+    /*@   ensures (cardinality() != ((BitSet)obj).cardinality()) ==> !\result;
       @ also public normal_behavior
-      @   requires obj == null || (obj instanceof BitSet);
+      @   requires obj == null || !(obj instanceof BitSet);
       @   ensures !\result;
       @*/
     //@ pure
-    public boolean equals(/*@nullable*/Object obj);
+    public boolean equals(/*@ nullable*/Object obj);
 
     // FIXME - review
     /* @ also public normal_behavior

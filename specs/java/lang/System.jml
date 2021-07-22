@@ -58,18 +58,15 @@ public final class System {
     annotations of in, out and err to be nullable.
     */
 
-    public final static /*@non_null*//*see note above*/ InputStream in;
-        /*@ public static initially System.in != null; @*/ 
-        //@ public static invariant !allowNullStreams ==> System.in != null;
-        //@ public static invariant \invariant_for(System.in);
-    public final static /*@non_null*//*see note above*/ PrintStream out;
-        /*@ public static initially System.out != null; @*/ 
-        //@ public static invariant !allowNullStreams ==> System.out != null;
-    //@ public static invariant \invariant_for(System.out);
-    public final static /*@non_null*//*see note above*/ PrintStream err;
-        /*@ public static initially System.err != null; @*/ 
-        //@ public static invariant !allowNullStreams ==> System.err != null;
-        //@ public static invariant \invariant_for(System.err);
+    public final static /*@ non_null*//*see note above*/ InputStream in;
+    //@ public static invariant !allowNullStreams ==> System.in != null;
+    //@ public static invariant System.in == null || \invariant_for(System.in);
+    public final static /*@ non_null*//*see note above*/ PrintStream out;
+    //@ public static invariant !allowNullStreams ==> System.out != null;
+    //@ public static invariant System.out == null || \invariant_for(System.out);
+    public final static /*@ non_null*//*see note above*/ PrintStream err;
+    //@ public static invariant !allowNullStreams ==> System.err != null;
+    //@ public static invariant System.err == null || \invariant_for(System.err);
 
     //-RAC@ public normal_behavior
     //-RAC@   ensures (allowNullStreams || in != null) && (in == null || in.isOpen);
@@ -321,7 +318,7 @@ t *);
     //@ axiom (\forall Object x, y; identityHashCode(x) != identityHashCode(y); x != y);
     
     //@ public normal_behavior
-    //@  requires \invariant_for(x);
+    //@  requires \invariant_for(x); // FIXME - should not be needed?
     //@ pure helper
     public /*@ function @*/ static native int identityHashCode(/*@nullable*/ Object x);
 
