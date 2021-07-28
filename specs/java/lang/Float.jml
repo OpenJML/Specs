@@ -28,10 +28,10 @@ package java.lang;
  */
 //+OPENJML@ immutable
 public /*@ pure @*/ final class Float extends Number implements Comparable {
-    
+
     //@ public model float theFloat;
     //+RAC@ public represents theFloat = floatValue();
-    
+
     /** Returns true if the string is parseable as a float value (but not
     an infinite or NaN value).
     */
@@ -49,7 +49,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     @      also
     @       requires s.equals("0.0") || s.equals("-0.0");
     @       ensures \result;
-    @     also 
+    @     also
     @       requires (* s is parseable to a float
     @                     by the IEEE 754 standards *);
     @       ensures \result;
@@ -63,7 +63,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
         catch (Exception e) { return false; }
     }
     @*/
-        
+
     public static final float POSITIVE_INFINITY;
     //@ axiom \forall float d;; !isNaN(d) ==> d <= POSITIVE_INFINITY;
 
@@ -83,13 +83,13 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     /*@ public normal_behavior
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @   ensures !isNaN(f) && !isInfinite(f) ==> parseable(\result);
-      @   ensures !isNaN(f) && !isInfinite(f) ==> 
+      @   ensures !isNaN(f) && !isInfinite(f) ==>
       @                              identical(f, parseFloat(\result));
       @   ensures isNaN(f) ==> \result.equals("NaN");
       @   ensures (f == Float.POSITIVE_INFINITY) ==>\result.equals("Infinity");
       @   ensures (f == Float.NEGATIVE_INFINITY) ==>\result.equals("-Infinity");
       @*/
-    // Note - I don't know of any parseable representation for 
+    // Note - I don't know of any parseable representation for
     // NaN or infinite values
     public static /*@ pure @*/ /*@ non_null @*/ String toString(float f);
 
@@ -131,7 +131,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     //@   ensures \result <==> (v <= MAX_VALUE && v >= -MAX_VALUE);
     //@ pure helper
     public static boolean isFinite(float v);
-    
+
     /*@ public normal_behavior
       @   ensures identical(theFloat, value);
       @*/
@@ -162,7 +162,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @                       || theFloat == NEGATIVE_INFINITY );
       @*/
     public boolean isInfinite();
-        
+
     // specification inherited from java.lang.Object
     //@  also ensures \result.equals(toString(floatValue()));
     public String toString();
@@ -293,11 +293,11 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @     requires this.isNaN() && !anotherFloat.isNaN();
       @     ensures \result > 0;
       @   also
-      @     requires isPositiveZero(theFloat) && 
+      @     requires isPositiveZero(theFloat) &&
       @                          isNegativeZero(anotherFloat.floatValue());
       @     ensures \result > 0;
       @   also
-      @     requires isNegativeZero(theFloat) && 
+      @     requires isNegativeZero(theFloat) &&
       @                          isPositiveZero(anotherFloat.floatValue());
       @     ensures \result < 0;
       @   also
@@ -353,7 +353,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @ |}
       @*/
     public static /*@ pure @*/ float max(float a, float b);
-    
+
     /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(a) || Float.isNaN(b);
@@ -370,29 +370,29 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @ |}
       @*/
     public static /*@ pure @*/ float min(float a, float b);
-    
+
     //@ ensures \result == a + b;
-    public static /*@ pure @*/ double sum(float a, float b);
+    public static /*@ pure @*/ float sum(float a, float b);
 
 
     /** Returns true if the argument is a negative (and not positive) zero;
-        the usual == returns true for comparing positive and negative zero. 
+        the usual == returns true for comparing positive and negative zero.
     */
     /*@ public static model pure boolean isNegativeZero( float a) {
           if (a != 0) return false;
           return (new java.lang.Float(a)).equals(new java.lang.Float("-0.0f"));
-        } 
-      @*/          
-      
+        }
+      @*/
+
     /** Returns true if the argument is a positive (and not negative) zero;
-        the usual == returns true for comparing positive and negative zero. 
+        the usual == returns true for comparing positive and negative zero.
     */
     /*@ public static model pure boolean isPositiveZero( float a) {
           if (a != 0) return false;
           return (new java.lang.Float(a)).equals(new java.lang.Float("+0.0f"));
-        }    
-      @*/ 
-              
+        }
+      @*/
+
     /** Returns true if a and b represent the same double value;
         the usual == does not work to distinguish positive and negative
         zeros or to identify two NaN values as equal.
@@ -402,6 +402,6 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
                  (isPositiveZero(a) == isPositiveZero(b)) &&
                  (isNegativeZero(a) == isNegativeZero(b)) &&
                  (isNaN(a) || isNaN(b) || (a==b));
-        }        
-    */           
+        }
+    */
 }
