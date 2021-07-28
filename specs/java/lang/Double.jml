@@ -329,6 +329,44 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
       @     |}
       @*/
     public int compareTo(/*@ non_null @*/ Double anotherDouble);
+    
+    /*@ public normal_behavior
+      @ {|
+      @   requires Double.isNaN(a) || Double.isNaN(b);
+      @   ensures Double.isNaN(\result);
+      @ also
+      @   requires !Double.isNaN(a) && !Double.isNaN(b);
+      @   {|
+      @     requires a <= b;
+      @     ensures \result == b;
+      @   also
+      @     requires b <= a;
+      @     ensures \result == a;
+      @   |}
+      @ |}
+      @*/
+    public static /*@ pure @*/ double max(double a, double b);
+    
+    /*@ public normal_behavior
+      @ {|
+      @   requires Double.isNaN(a) || Double.isNaN(b);
+      @   ensures Double.isNaN(\result);
+      @ also
+      @   requires !Double.isNaN(a) && !Double.isNaN(b);
+      @   {|
+      @     requires a <= b;
+      @     ensures \result == a;
+      @   also
+      @     requires b <= a;
+      @     ensures \result == b;
+      @   |}
+      @ |}
+      @*/
+    public static /*@ pure @*/ double min(double a, double b);
+    
+    //@ ensures \result == a + b;
+    public static /*@ pure @*/ double sum(double a, double b);
+    
 
 //    /*@ also
 //      @     public normal_behavior
