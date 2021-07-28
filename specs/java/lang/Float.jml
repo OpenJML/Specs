@@ -337,6 +337,44 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @*/
     public static /*@ pure @*/ int compare(float f1, float f2);
 
+    /*@ public normal_behavior
+      @ {|
+      @   requires Float.isNaN(a) || Float.isNaN(b);
+      @   ensures Float.isNaN(\result);
+      @ also
+      @   requires !Float.isNaN(a) && !Float.isNaN(b);
+      @   {|
+      @     requires a <= b;
+      @     ensures \result == b;
+      @   also
+      @     requires b <= a;
+      @     ensures \result == a;
+      @   |}
+      @ |}
+      @*/
+    public static /*@ pure @*/ float max(float a, float b);
+    
+    /*@ public normal_behavior
+      @ {|
+      @   requires Float.isNaN(a) || Float.isNaN(b);
+      @   ensures Float.isNaN(\result);
+      @ also
+      @   requires !Float.isNaN(a) && !Float.isNaN(b);
+      @   {|
+      @     requires a <= b;
+      @     ensures \result == a;
+      @   also
+      @     requires b <= a;
+      @     ensures \result == b;
+      @   |}
+      @ |}
+      @*/
+    public static /*@ pure @*/ float min(float a, float b);
+    
+    //@ ensures \result == a + b;
+    public static /*@ pure @*/ double sum(float a, float b);
+
+
     /** Returns true if the argument is a negative (and not positive) zero;
         the usual == returns true for comparing positive and negative zero. 
     */
