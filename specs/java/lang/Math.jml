@@ -280,16 +280,14 @@ public /*@ pure @*/ final class Math {
       @   requires a == Double.NEGATIVE_INFINITY;
       @   ensures \result == Double.NEGATIVE_INFINITY;
       @ also
-      @   requires Double.isFinite(a);
-      @   ensures Double.isFinite(\result);
-      @ also
       @   requires isPositiveZero(a);
       @   ensures isPositiveZero(\result);
       @ also
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @      requires a > 0.0 && a < Double.POSITIVE_INFINITY;
+      @   requires Double.isFinite(a);
+      @   ensures Double.isFinite(\result);
       @   ensures close(a, \result * \result * \result, 3.0E-16);
       @ |}
       @*/
