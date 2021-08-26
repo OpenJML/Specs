@@ -321,7 +321,7 @@ public final class String
       @   ensures \result == (this.charArray.length == 0);
       @*/
     @Override
-    public /*@ pure helper @*/ boolean isEmpty();
+    public /*@ pure @*/ boolean isEmpty();
 
     /*@ // Inherited from CharSequence:
       @ //also public normal_behavior
@@ -1018,7 +1018,7 @@ public final class String
       @    ensures obj.theString.charArray != null; // FIXME - should this be needed?
       @    ensures equals(\result,obj.theString); 
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(Object obj);
+    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(/*@ nullable @*/Object obj);
 
     /*@ public normal_behavior
       @   requires data != null;
@@ -1078,8 +1078,7 @@ public final class String
         /*@ non_null @*/ String copyValueOf(char[] data);
         
     /*@  public normal_behavior
-      @   ensures \result != null
-      @            && equals(\result, Boolean.toString(b));
+      @   ensures \result == Boolean.toString(b);
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(boolean b);
 
@@ -1091,25 +1090,26 @@ public final class String
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(char c);
 
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Integer.toString(i));
+      @   ensures \result == Integer.toString(i,10);
+      @   //ensures String.equals(\result, Integer.toString(i,10)); // FIXME - feasibility probloem with gitbug467
       @   ensures \result.length() <= 11;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(int i);
     
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Long.toString(l));
+      @   ensures \result == Long.toString(l);
       @   ensures \result.length() <= 22;
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(long l);
     
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Float.toString(f));
+      @   ensures \result == Float.toString(f);
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(float f);
     
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Double.toString(d));
+      @   ensures \result == Double.toString(d);
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(double d);

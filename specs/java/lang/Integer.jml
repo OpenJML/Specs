@@ -64,14 +64,12 @@ public  /*@ pure @*/ final
     public static final int   BYTES = 4; // Number of bytes in an int representation
     
     /*-RAC@ public normal_behavior
-      @   requires (Character.MIN_RADIX <= radix
-      @             && radix <= Character.MAX_RADIX);
+      @   requires (Character.MIN_RADIX <= radix <= Character.MAX_RADIX);
       @   ensures \result != null;
       @   ensures parseable(\result,radix);
       @   ensures i == parseInt(\result, radix);
       @ also public normal_behavior
-      @   requires !(Character.MIN_RADIX <= radix
-      @             && radix <= Character.MAX_RADIX) 
+      @   requires !(Character.MIN_RADIX <= radix <= Character.MAX_RADIX) 
       @            || radix == 10;
       @   ensures \result != null;
       @   ensures parseable(\result,10);
@@ -82,8 +80,7 @@ public  /*@ pure @*/ final
       @   ensures i == 0 ==> String.equals(\result,"0");
       @   ensures radix >= 10 ==> \result.length() <= 11;
       @*/
-    public static /*@ pure non_null @*/ String toString(int i,
-                                                                  int radix);
+    public static /*@ pure non_null @*/ String toString(int i, int radix);
 
     /*-RAC@ public normal_behavior
       @   ensures \result != null;
@@ -91,7 +88,7 @@ public  /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,16);
-      @   ensures \result.equals(toString(i, 16));
+      @   ensures \result == toString(i, 16);
       @   ensures parseInt(\result,16) == i;
       @ also public normal_behavior
           // toHexString produces a hex string of the unsigned argument
@@ -110,7 +107,7 @@ public  /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,8);
-      @   ensures \result.equals(toString(i, 8));
+      @   ensures \result == toString(i, 8);
       @   ensures parseInt(\result,8) == i;
       @ also public normal_behavior
           // toOctalString produces a octal string of the unsigned argument
@@ -129,7 +126,7 @@ public  /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,2);
-      @   ensures \result.equals(toString(i, 2));
+      @   ensures \result == toString(i, 2);
       @   ensures parseInt(\result,2) == i;
       @ also public normal_behavior
           // toBinaryString produces a binary string of the unsigned argument
@@ -144,14 +141,13 @@ public  /*@ pure @*/ final
             
 
     /*-RAC@ public normal_behavior
-      @   ensures \result != null;
-      @   ensures parseable(\result, 10);
       @   ensures \result == toString(i, 10);
-      @   ensures i == parseInt(\result, 10);
-      @   ensures i == 0 ==> \result.length() == 1;
-      @   ensures i >  0 ==> \result.length() >= 1;
-      @   ensures i <  0 ==> \result.length() >= 2;
-      @   ensures i == 0 ==> \result.equals("0");
+      @   //ensures parseable(\result, 10);
+      @   //ensures i == parseInt(\result, 10);
+      @   //ensures i == 0 ==> \result.length() == 1;
+      @   //ensures i >  0 ==> \result.length() >= 1;
+      @   //ensures i <  0 ==> \result.length() >= 2;
+      @   //ensures i == 0 ==> \result.equals("0");
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toString(int i);
 
