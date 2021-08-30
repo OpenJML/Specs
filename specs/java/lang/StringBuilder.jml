@@ -145,7 +145,7 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
 //  public StringBuilder delete(int, int);
 //  public StringBuilder deleteCharAt(int);
 //  public StringBuilder replace(int, int, String);
-    @Override
+
     public StringBuilder insert(int index, char /*@ nullable @*/[] ca, int offset, int len);
     @Override
     public StringBuilder insert(int index, /*@ nullable @*/Object obj);

@@ -110,16 +110,16 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ public normal_behavior
     @   requires true;
-    @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine && isOpen;
+    @   modifies outputText;
+    @   ensures endsInNewLine & isOpen;
     @   ensures x != null ==> outputText.equals(\old(outputText) + x + eol);
     @*/
     public void println(String x);
 
     /*-RAC@ public normal_behavior
     @   requires true;
-    @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine && isOpen;
+    @   modifies outputText;
+    @   ensures isOpen;
     @   //ensures s != null ==> outputText.equals(\old(outputText) + s);
     @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s;
     @*/
