@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 //@ non_null_by_default
 public interface Iterable<T> {
 
-    //-RAC@ model public instance @org.jmlspecs.annotation.NonNull array<T> values; in objectState;
+	//-RAC@ model public instance @org.jmlspecs.annotation.NonNull array<T> values; in objectState;
     //-RAC@ public invariant values.length >= 0;  // FIXME - should be implicit? (cf. gitbug686)
 
     /**
@@ -36,7 +36,8 @@ public interface Iterable<T> {
 
     public Iterator<T> iterator();
     
-    /*@ public model_program {
+    /*@ public behavior
+      @ {
       @   for (T t: this) action.accept(t);
       @ }
       @*/

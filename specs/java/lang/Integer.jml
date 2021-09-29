@@ -53,12 +53,12 @@ public  /*@ pure @*/ final
 
     public static final int   MAX_VALUE = 0x7FFFFFFF;
 
-    //public static final Class<Integer> TYPE = int.class;  // 1.5 DIFFERENCE
+    public static final Class<Integer> TYPE = int.class;  // 1.5 DIFFERENCE
     
     //@ model public static final long MAX_UNSIGNED_INT = 0xffff_ffffL;
     
-    // @ ensures TYPE == int.class;
-    // @ static_initializer
+    //@ ensures TYPE == int.class;
+    //@ static_initializer
 
     public static final int   SIZE = 32; // Number of bits in an int representation
     public static final int   BYTES = 4; // Number of bytes in an int representation
