@@ -43,7 +43,7 @@ public interface List<E> extends Collection<E> {
 //    //-RAC@ public pure static model boolean equals(Content c, Content cc);
 
     // specification inherited
-    //@ pure
+    //@ pure helper
     int size();
 
     // specification inherited

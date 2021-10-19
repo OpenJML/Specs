@@ -5,11 +5,11 @@ public interface Appendable {
 
     //@ model public instance String _value;
     
-    //@ public behavior
+    //@ public behavior  // appends "null" if cs is null
     //@   assignable _value;
     public abstract Appendable append(/*@ nullable @*/ CharSequence cs) throws java.io.IOException;
 
-    //@ public behavior // FIXME - precndition on offset and length?
+    //@ public behavior // FIXME - precondition on offset and length?
     //@   assignable _value;
     public abstract Appendable append(/*@ nullable @*/ CharSequence cs, int offset, int length) throws java.io.IOException;
 

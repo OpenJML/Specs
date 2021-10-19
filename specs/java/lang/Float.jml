@@ -65,14 +65,17 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     @*/
         
     public static final float POSITIVE_INFINITY;
+    //@ axiom \forall float d;; !isNaN(d) ==> d <= POSITIVE_INFINITY;
 
     public static final float NEGATIVE_INFINITY;
+    //@ axiom \forall float d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
-    public static final float NaN;
+    public static final float NaN = 0x7fc00000; // This is not the only NaN value
+    //@ axiom Float.isNaN(NaN);
 
-    public static final float MAX_VALUE;
-
-    public static final float MIN_VALUE;
+    public static final float MAX_VALUE = 0x1.fffffeP+127f;
+    public static final float MIN_VALUE = 0x0.000002P-126f;
+    public static final float MIN_NORMAL = 0x1.0p-126f;
 
     public static final Class<Float> TYPE;
     //@ ensures TYPE == float.class;
@@ -89,17 +92,17 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @*/
     // Note - I don't know of any parseable representation for 
     // NaN or infinite values
-    public static /*@ pure @*/ /*@ non_null @*/ String toString(float f);
+    public static /*@ non_null @*/ String toString(float f);
 
     /*@ public normal_behavior
       @   requires s != null && parseable(s);
-      @   ensures  \result.equals(new Float(parseFloat(s)));
+      @   ensures  \result == parseFloat(s);
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ Float valueOf(
+    public static /*@ function @*/ /*@ non_null @*/ Float valueOf(
         /*@ non_null @*/ String s)
         throws NumberFormatException;
 
@@ -111,23 +114,23 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ pure @*/ float parseFloat(/*@ non_null @*/ String s)
+    public static /*@ function @*/ float parseFloat(/*@ non_null @*/ String s)
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   ensures \result ==  !(v == v);
+      @   ensures \result == (!isFinite(v) & !isFinite(v));
       @*/
-    public static /*@ pure helper @*/ boolean isNaN(float v);
+    public static /*@ helper @*/ boolean isNaN(float v);
 
     /*@ public normal_behavior
       @   ensures \result == ( v == POSITIVE_INFINITY
-      @                       || v == NEGATIVE_INFINITY );
+      @                      | v == NEGATIVE_INFINITY );
       @*/
-    public static /*@ pure helper @*/ boolean isInfinite(float v);
+    public static /*@ helper @*/ boolean isInfinite(float v);
 
     //@ public normal_behavior
-    //@   ensures \result <==> (!isNaN(v) && !isInfinite(v));
-    //@ pure helper
+    //@   ensures true;
+    //@ helper
     public static boolean isFinite(float v);
     
     /*@ public normal_behavior
@@ -151,14 +154,12 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     public Float(String s) throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   requires true;
-      @   ensures \result == !(theFloat == theFloat);
+      @   ensures \result == Float.isNaN(theFloat);
       @*/
     public boolean isNaN();
 
     /*@ public normal_behavior
-      @   ensures \result == ( theFloat == POSITIVE_INFINITY
-      @                       || theFloat == NEGATIVE_INFINITY );
+      @   ensures \result == Float.isInfinite(theDouble);
       @*/
     public boolean isInfinite();
         
@@ -228,18 +229,14 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @     requires value == NEGATIVE_INFINITY;
       @     ensures \result == 0xff800000;
       @   also
-      @     requires new Float(value).isNaN();
+      @     requires isNaN(value);
       @     ensures \result == 0x7fc00000;
       @   also
       @     ensures (* \result is the bits that represent
       @                the floating-point number *);
       @   also
-      @     ensures identical(value, intBitsToFloat(floatToIntBits(value)));
+      @     ensures identical(value, intBitsToFloat(\result));
       @ |}
-      @ implies_that
-      @   public normal_behavior
-      @     requires !isNaN(value);
-      @     ensures intBitsToFloat(\result) == value;
       @*/
     public static /*@ pure @*/ int floatToIntBits(float value);
 
@@ -276,7 +273,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @ also
       @   requires ( 0x7f800001 <= bits && bits <= 0x7fffffff )
       @     || ( 0xff800001 <= bits && bits <= 0xffffffff );
-      @   ensures new Float(\result).isNaN();
+      @   ensures isNaN(\result);
       @ also
       @   ensures (* \result is floating-point value with
       @              the same bit pattern as bits *);
@@ -336,9 +333,47 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
 
     /*@ public normal_behavior
       @    assignable \nothing;
-      @    ensures \result == new Float(f1).compareTo(new Float(f2));
+      @    ensures \result == Float.valueOf(f1).compareTo(Float.valueOf(f2));
       @*/
     public static /*@ pure @*/ int compare(float f1, float f2);
+
+    /*@ public normal_behavior
+      @ {|
+      @   requires Float.isNaN(a) || Float.isNaN(b);
+      @   ensures Float.isNaN(\result);
+      @ also
+      @   requires !Float.isNaN(a) && !Float.isNaN(b);
+      @   {|
+      @     requires a <= b;
+      @     ensures \result == b;
+      @   also
+      @     requires b <= a;
+      @     ensures \result == a;
+      @   |}
+      @ |}
+      @*/
+    public static /*@ pure @*/ float max(float a, float b);
+
+    /*@ public normal_behavior
+      @ {|
+      @   requires Float.isNaN(a) || Float.isNaN(b);
+      @   ensures Float.isNaN(\result);
+      @ also
+      @   requires !Float.isNaN(a) && !Float.isNaN(b);
+      @   {|
+      @     requires a <= b;
+      @     ensures \result == a;
+      @   also
+      @     requires b <= a;
+      @     ensures \result == b;
+      @   |}
+      @ |}
+      @*/
+    public static /*@ pure @*/ float min(float a, float b);
+
+
+    //@ ensures \result == a + b;
+    public static /*@ pure @*/ float sum(float a, float b);
 
     /** Returns true if the argument is a negative (and not positive) zero;
         the usual == returns true for comparing positive and negative zero. 

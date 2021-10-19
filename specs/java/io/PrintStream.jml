@@ -29,7 +29,7 @@ package java.io;
 //@ non_null_by_default
 public class PrintStream extends FilterOutputStream implements Closeable, Appendable {
 
-    //-RAC@ model public String outputText; in outputBytes;
+    //-RAC@ model public String outputText; in outputBytes, _value;
     //-RAC@ model public boolean endsInNewLine; in outputText;
     //-RAC@ ghost public static final String eol;
     //-RAC@ public static invariant \invariant_for(eol) && eol.length() > 0;
@@ -110,16 +110,16 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ public normal_behavior
     @   requires true;
-    @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine && isOpen;
+    @   modifies outputText;
+    @   ensures endsInNewLine & isOpen;
     @   ensures x != null ==> outputText.equals(\old(outputText) + x + eol);
     @*/
     public void println(String x);
 
     /*-RAC@ public normal_behavior
     @   requires true;
-    @   modifies outputText, endsInNewLine;
-    @   ensures endsInNewLine && isOpen;
+    @   modifies outputText;
+    @   ensures isOpen;
     @   //ensures s != null ==> outputText.equals(\old(outputText) + s);
     @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s;
     @*/

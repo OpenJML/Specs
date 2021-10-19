@@ -96,7 +96,7 @@ public class ArrayList<E> extends AbstractList<E>
     public void ensureCapacity(int minCapacity);
 
     // specification inherited from List
-    public /*@ pure @*/ int size();
+    public /*@ pure helper @*/ int size();
 
     // specification inherited from List
     public /*@ pure @*/ boolean isEmpty();

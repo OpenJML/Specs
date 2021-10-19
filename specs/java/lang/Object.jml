@@ -196,7 +196,6 @@ public class Object {
     /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
       @     requires toStringDefined;
       @     ensures \result == theString;
-      @     ensures \invariant_for(\result);
       @     ensures (* \result is a string representation of this object *);
       @ also public code normal_behavior
       @     requires toStringDefined;

@@ -26,7 +26,7 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //@ public instance model non_null char[] charArray; public final invariant charArray != null;
+    //@ public instance model char non_null [] charArray; public invariant charArray != null; // FIXME - why this when there is a non_null declaration
     
     //@ public normal_behavior ensures \result == c.__owner;
     //@ model pure function public static Object owner(Object c);
@@ -70,7 +70,7 @@ public interface CharSequence {
 
     //@ public normal_behavior
     //@      ensures \result >= 0;
-    //-RAC@  ensures \result == (int)charArray.length; // FIXME - fix this
+    //-RAC@  ensures \result == (int)charArray.length;
     //@ pure
     int length();
 

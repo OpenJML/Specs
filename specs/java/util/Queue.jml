@@ -100,7 +100,6 @@ public interface Queue<E> extends Collection<E> {
       @   ensures (\forall int i; 0 < i < values.length; _get(i-1) == \old(_get(i)));
       @   ensures size() == \old(size()) -1;
       @   ensures \result == null ==> containsNull;
-      @   ensures \nonnullelements(\old(values)) ==> \nonnullelements(values);
       @   assignable values;
       @*/
     public /*@ nullable @*/ E remove() throws NoSuchElementException;

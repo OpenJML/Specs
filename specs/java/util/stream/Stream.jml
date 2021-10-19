@@ -8,8 +8,8 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   requires true;
     /*@   { 
             //@ loop_invariant i == \count && 0 <= i <= values.length;
-            //@ decreases values.length - i;  // OPENJML FIXME - allow the decreases to be a \bigint
-            for (int i=0; i < values.length; i++) {
+            //@ decreases values.length - i;
+            for (\bigint i=0; i < values.length; i++) {
                 consumer.accept(values[i]); 
             }
           }

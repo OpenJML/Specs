@@ -107,7 +107,7 @@ public final class String
       @             && 0 <= offset 
       @             && (offset + count) <= value.length
       @             && 0 <= count;
-      @   ensures charArray != null;
+      @   //ensures charArray != null;
       @   ensures CharSequence.equal(charArray,0,value,offset,count);
       @   ensures charArray.length == count;
       @   ensures (offset == 0 && count == value.length) ==> CharSequence.equal(charArray,value);
@@ -125,7 +125,6 @@ public final class String
       @             && 0 <= offset 
       @             && (offset + count) < ascii.length
       @             && 0 <= count;
-      @   ensures charArray != null;
       @   ensures charArray.length == count;
       @   ensures (\forall int i; 0 <= i && i < count;
       @               (charArray[i]
@@ -150,7 +149,6 @@ public final class String
     /** @deprecated as of 1.1 */
     /*@  public normal_behavior
       @   requires ascii != null;
-      @   ensures charArray != null;
       @   ensures charArray.length == ascii.length;
       @   ensures (\forall int i;  0 <= i && i < ascii.length;
       @             charArray[i] == byteToChar(hibyte, ascii[i]));
@@ -174,7 +172,6 @@ public final class String
       @             && (offset + length) <= bytes.length
       @             && 0 <= length;
       @     requires supportedEncoding(charsetName);
-      @     ensures charArray != null;
       @     ensures charArray.length <= length;
       @     ensures 
       @            (\forall int i; 0 <= i && i < length;
@@ -206,7 +203,6 @@ public final class String
       @             && (offset + length) <= bytes.length
       @             && 0 <= length;
       @     requires supportedEncoding(charsetName);
-      @     ensures charArray != null;
       @     ensures charArray.length <= length;
       @     ensures 
       @            (\forall int i; 0 <= i && i < length;
@@ -254,7 +250,6 @@ public final class String
       @ public behavior
       @   requires bytes != null && charsetName != null;
       @   requires supportedEncoding(charsetName);
-      @   ensures charArray != null;
       @   ensures charArray.length <= bytes.length;
       @   // ensures charArray is the translation of bytes
       @*/
@@ -266,7 +261,6 @@ public final class String
       @             && 0 <= offset 
       @             && (offset + length) <= bytes.length
       @             && 0 <= length;
-      @   ensures charArray != null;
       @   ensures charArray.length <= length;
       @   // ensures charArray is the translation of bytes with the 
       @   // default file encoding System.getProperty("file.encoding")
@@ -287,7 +281,6 @@ public final class String
 
     /*@  public normal_behavior
       @   requires bytes != null;
-      @   ensures charArray != null;
       @   ensures charArray.length <= bytes.length;
       @   // ensures charArray is the translation of bytes with the 
       @   // default file encoding System.getProperty("file.encoding")
@@ -328,7 +321,7 @@ public final class String
       @   ensures \result == (this.charArray.length == 0);
       @*/
     @Override
-    public /*@ pure helper @*/ boolean isEmpty();
+    public /*@ pure @*/ boolean isEmpty();
 
     /*@ // Inherited from CharSequence:
       @ //also public normal_behavior
@@ -440,7 +433,7 @@ public final class String
     public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes();
 
     /*@ public normal_behavior
-      @   requires s2 != null & s1 != null;
+      @   requires s1 != null & s2 != null;
       @   requires s1.charArray != null & s2.charArray != null; // OPENJML: TODO Needs the invariant that charArray is not null
       @   ensures \result == CharSequence.equal(s1.charArray,s2.charArray);
       @ also public normal_behavior
@@ -457,7 +450,7 @@ public final class String
 
     //@ axiom (\forall String s,ss; s != null && ss != null; equals(s,ss) ==> s.length() == ss.length());
 
-    //@ axiom (\forall String s,ss; equals(s,ss) ==> equals(ss,s));
+    // @ axiom (\forall String s,ss; equals(s,ss) ==> equals(ss,s));  // FIXME - causes matching loop?
 
     //@ axiom (\forall String s1,s2,s3; equals(s1,s2) ==> (equals(s1,s3) <==> equals(s2,s3)));
 
@@ -862,13 +855,11 @@ public final class String
     //@ public normal_behavior
     //@   requires s1 != null && s2 != null;
     //@   requires s1.charArray.length + s2.charArray.length <= Integer.MAX_VALUE;
-    //@   ensures \result.charArray != null;
     //@   ensures \result.length() == s1.length() + s2.length();
     //@   ensures java.util.Arrays.equalArrays(\result.charArray,0,s1.charArray,0,s1.length());
     //@   ensures java.util.Arrays.equalArrays(\result.charArray,s1.length(),s2.charArray,0,s2.length());
     //@ also public normal_behavior
     //@   requires !(s1 != null && s2 != null && s1.charArray.length + s2.charArray.length <= Integer.MAX_VALUE);
-    //@   ensures \result.charArray != null;
     //@ public model static pure non_null String concat(nullable String s1, nullable String s2);
 
     /** This is the method version of the infix + operation */
@@ -957,7 +948,6 @@ public final class String
     /*@  public normal_behavior
       @   requires locale != null;
       @   ensures \fresh(\result) && \result.length() == length();
-      @   ensures \result.charArray != null; // TODO - Should be an invariant
       @   ensures (* \result == a lower case conversion of this using the 
       @                          rules of the given locale *);
       @*/
@@ -1025,10 +1015,10 @@ public final class String
       @    ensures \result.charAt(0) == (char)(Character)obj;
       @*//*-RAC@  also public behavior
       @    requires obj != null;
-      @    ensures obj.theString.charArray != null;
+      @    ensures obj.theString.charArray != null; // FIXME - should this be needed?
       @    ensures equals(\result,obj.theString); 
       @*/
-    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(Object obj);
+    public static /*@ pure @*/ /*@ non_null @*/ String valueOf(/*@ nullable @*/Object obj);
 
     /*@ public normal_behavior
       @   requires data != null;
@@ -1088,8 +1078,7 @@ public final class String
         /*@ non_null @*/ String copyValueOf(char[] data);
         
     /*@  public normal_behavior
-      @   ensures \result != null
-      @            && equals(\result, Boolean.toString(b));
+      @   ensures \result == Boolean.toString(b);
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(boolean b);
 
@@ -1101,25 +1090,26 @@ public final class String
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(char c);
 
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Integer.toString(i));
+      @   ensures \result == Integer.toString(i,10);
+      @   //ensures String.equals(\result, Integer.toString(i,10)); // FIXME - feasibility probloem with gitbug467
       @   ensures \result.length() <= 11;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(int i);
     
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Long.toString(l));
+      @   ensures \result == Long.toString(l);
       @   ensures \result.length() <= 22;
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(long l);
     
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Float.toString(f));
+      @   ensures \result == Float.toString(f);
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(float f);
     
     /*@  public normal_behavior
-      @   ensures \result != null && equals(\result,Double.toString(d));
+      @   ensures \result == Double.toString(d);
       @   ensures \result.length() < 100; // FIXME - make this tighter
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(double d);
