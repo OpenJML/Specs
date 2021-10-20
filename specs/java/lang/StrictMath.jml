@@ -732,13 +732,11 @@ public /*@ pure @*/ final class StrictMath {
         }
     
         public static model pure boolean isPositiveZero( float a) {
-      return new Float(a).equals(new Float("+0.0"));
-      //return java.lang.Float.isPositiveZero(a);
+          return Float.valueOf(a).equals(Float.parseFloat("+0.0"));
         }
     
         public static model pure boolean isNegativeZero( float a) {
-      return new Float(a).equals(new Float("-0.0"));
-      //return java.lang.Float.isNegativeZero(a);
+          return Float.valueOf(a).equals(Float.parseFloat("-0.0"));
         }
     
     // FIXME - can't seem to reference model methods in other specs
