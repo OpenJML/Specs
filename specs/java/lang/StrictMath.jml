@@ -724,13 +724,11 @@ public /*@ pure @*/ final class StrictMath {
     public static /*@ pure @*/ double min(double a, double b);
     
     /*@ public static model pure boolean isPositiveZero( double a) {
-      return new Double(a).equals(new Double("+0.0"));
-      //return java.lang.Double.isPositiveZero(a);
+          return Double.valueOf(a).equals(Double.parseDouble("+0.0"));
         }
     
         public static model pure boolean isNegativeZero( double a) {
-      return new Double(a).equals(new Double("-0.0"));
-      //return java.lang.Double.isNegativeZero(a);
+          return Double.valueOf(a).equals(Double.parseDoulbe("-0.0"));
         }
     
         public static model pure boolean isPositiveZero( float a) {
