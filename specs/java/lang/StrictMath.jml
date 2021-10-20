@@ -46,6 +46,9 @@ public /*@ pure @*/ final class StrictMath {
 
     private StrictMath();
 
+    //@ axiom \forall double f; true; f == 0 <==> (Double.isPositiveZero(f) || Double.isNegativeZero(f));
+    //@ axiom \forall float f; true; f == 0 <==> (Float.isPositiveZero(f) || Float.isNegativeZero(f));
+
     public static final double E;
     //@ axiom E > 0.0;
 
@@ -613,14 +616,9 @@ public /*@ pure @*/ final class StrictMath {
       @              || (isPositiveZero(b) && a == 0);
       @     ensures isPositiveZero(\result);
       @   also
-      @     requires new Float(a).compareTo(new Float(b)) == 0;
-      @     ensures \result == a;
-      @   also
-      @     requires new Float(a).compareTo(new Float(b)) <= 0;
-      @     ensures \result == b;
-      @   also
-      @     requires new Float(a).compareTo(new Float(b)) >= 0;
-      @     ensures \result == a;
+      @     requires !(isPositiveZero(a) && b == 0)
+      @              || (isPositiveZero(b) && a == 0);
+      @     ensures \result == ( Float.valueOf(a).compareTo(Float.valueOf(b)) >= 0 ? a : b);
       @   |}
       @ |}
       @*/
@@ -637,14 +635,9 @@ public /*@ pure @*/ final class StrictMath {
       @              || (isPositiveZero(b) && a == 0);
       @      ensures isPositiveZero(\result);
       @   also
-      @      requires new Double(a).compareTo(new Double(b)) == 0;
-      @      ensures \result == a;
-      @   also
-      @      requires new Double(a).compareTo(new Double(b)) <= 0;
-      @      ensures \result == b;
-      @    also
-      @      requires new Double(a).compareTo(new Double(b)) >= 0;
-      @      ensures \result == a;
+      @     requires !(isPositiveZero(a) && b == 0)
+      @              || (isPositiveZero(b) && a == 0);
+      @      ensures \result == (Double.valueOf(a).compareTo(Double.valueOf(b)) >= 0 ? a : b);
       @   |}
       @ |}
       @*/
@@ -694,13 +687,13 @@ public /*@ pure @*/ final class StrictMath {
       @     requires (isNegativeZero(a) && b == 0) || (isNegativeZero(b) && a == 0);
       @     ensures isNegativeZero(\result);
       @   also
-      @     requires new Float(a).compareTo(new Float(b)) == 0;
+      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) == 0;
       @     ensures \result == a;
       @   also
-      @     requires new Float(a).compareTo(new Float(b)) <= 0;
+      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) <= 0;
       @     ensures \result == a;
       @   also
-      @     requires new Float(a).compareTo(new Float(b)) >= 0;
+      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) >= 0;
       @     ensures \result == b;
       @   |}
       @ |}
@@ -717,13 +710,13 @@ public /*@ pure @*/ final class StrictMath {
       @     requires (isNegativeZero(a) && b == 0) || (isNegativeZero(b) && a == 0);
       @     ensures isNegativeZero(\result);
       @   also
-      @     requires new Double(a).compareTo(new Double(b)) == 0;
+      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) == 0;
       @     ensures \result == a;
       @   also
-      @     requires new Double(a).compareTo(new Double(b)) <= 0;
+      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) <= 0;
       @     ensures \result == a;
       @   also
-      @     requires new Double(a).compareTo(new Double(b)) >= 0;
+      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) >= 0;
       @     ensures \result == b;
       @   |}
       @ |}
