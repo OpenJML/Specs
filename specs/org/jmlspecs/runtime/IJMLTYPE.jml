@@ -1,4 +1,4 @@
-package org.jmlspecs.utils;
+package org.jmlspecs.runtime;
 
 import org.jmlspecs.annotation.*;
 

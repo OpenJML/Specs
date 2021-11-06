@@ -26,7 +26,8 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //@ public instance model char non_null [] charArray; public invariant charArray != null; // FIXME - why this when there is a non_null declaration
+    //@ public instance model char non_null [] charArray; 
+	//-RAC@ public invariant charArray != null; // FIXME - why this when there is a non_null declaration
     
     //@ public normal_behavior ensures \result == c.__owner;
     //@ model pure function public static Object owner(Object c);
