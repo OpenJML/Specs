@@ -110,69 +110,64 @@ public class Throwable extends Object implements java.io.Serializable
         public pure helper model boolean initMessage(nullable Throwable c);
       @*/
 
-    /*@ public normal_behavior
-      @   ensures _message == null;
-      @   ensures _cause == null;
-      @   ensures !_causeSet;
-      @   ensures_redundantly standardThrowable();
-      @*/
-    public /*@pure*/ Throwable();
-
-    /*@ public normal_behavior
-      @   ensures _message == message;
-      @   ensures _cause == null;
-      @   ensures !_causeSet;
-      @   ensures_redundantly standardThrowable(message);
-      @*/
-    public /*@pure*/ Throwable(/*@non_null*/String message);
+    //@ public normal_behavior
+    //-RAC@   ensures _message == null;
+	//-RAC@   ensures _cause == null;
+	//-RAC@   ensures !_causeSet;
+	//-RAC@   ensures_redundantly standardThrowable();
+    public /*@ pure*/ Throwable();
 
     //@ public normal_behavior
-    //@   ensures _message == message;
-    //@   ensures _cause == cause;
-    //@   ensures _causeSet;
-    //@   ensures standardThrowable(message, cause);
+    //-RAC@   ensures _message == message;
+    //-RAC@   ensures _cause == null;
+    //-RAC@   ensures !_causeSet;
+    //-RAC@   ensures_redundantly standardThrowable(message);
+    public /*@ pure*/ Throwable(/*@non_null*/String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures _message == message;
+    //-RAC@   ensures _cause == cause;
+    //-RAC@   ensures _causeSet;
+    //-RAC@   ensures standardThrowable(message, cause);
     //@ pure
     public Throwable(/*@non_null*/String message, /*@nullable*/Throwable cause);
 
     //@ public normal_behavior
-    //@   ensures initMessage(cause);
-    //@   ensures _cause == cause;
-    //@   ensures _causeSet;
-    //@   ensures_redundantly standardThrowable(cause);
+    //-RAC@   ensures initMessage(cause);
+    //-RAC@   ensures _cause == cause;
+    //-RAC@   ensures _causeSet;
+    //-RAC@   ensures_redundantly standardThrowable(cause);
     //@ pure
     public Throwable(/*@nullable*/Throwable cause);
     
     //@ protected normal_behavior
-    //@   ensures _message == message;
-    //@   ensures _cause == cause;
-    //@   ensures _causeSet;
-    //@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
+    //-RAC@   ensures _message == message;
+    //-RAC@   ensures _cause == cause;
+    //-RAC@   ensures _causeSet;
+    //-RAC@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
     //@// TODO - say more about the boolean arguments
     //@ pure
     protected Throwable(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
     
 
-    /*@ public normal_behavior
-      @   ensures \result == _message;
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _message;
     public /*@ pure helper nullable*/ String getMessage();
 
-    /*@ public normal_behavior
-      @   requires _message == null;
-      @   ensures  \result == null;
-      @ also public normal_behavior
-      @   requires _message != null;
-      @   ensures  \result != null;
-      @   ensures  (* \result is a localized version of _message *);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   requires _message == null;
+    //-RAC@   ensures  \result == null;
+    //-RAC@ also public normal_behavior
+    //-RAC@   requires _message != null;
+    //-RAC@   ensures  \result != null;
+    //-RAC@   ensures  (* \result is a localized version of _message *);
     public /*@ pure helper nullable*/ String getLocalizedMessage();
 
-    /*@ public normal_behavior
-      @  ensures \result == _cause;
-      @*/
-    synchronized public /*@pure helper nullable*/ Throwable getCause();
+    //@ public normal_behavior
+    //-RAC@  ensures \result == _cause;
+    synchronized public /*@ pure helper nullable*/ Throwable getCause();
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires !_causeSet;
       @   assignable _cause;
       @   ensures _causeSet;
@@ -185,7 +180,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   signals (IllegalStateException e) _causeSet && e._message != null && !e._causeSet;  // FIXME - check this
       @   signals (IllegalArgumentException e) cause == this && e._message != null && !e._causeSet;   // FIXME - check this
       @*/
-    public synchronized /*@non_null*/ Throwable initCause(/*@non_null*/Throwable cause);
+    public synchronized /*@ non_null*/ Throwable initCause(/*@non_null*/Throwable cause);
 
     /*-RAC@ also public normal_behavior
       @   requires \typeof(this) == \type(Throwable);
@@ -214,30 +209,27 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   //ensures s.isOpen;
     public void printStackTrace(/*@ non_null*/PrintWriter s);
 
-    /*@ public normal_behavior
-      @   assignable _stackTrace;
-      @   ensures \result == this;
-      @*/
+    //@ public normal_behavior
+    //-RAC@   assignable _stackTrace;
+    //@   ensures \result == this;
     public synchronized /*@ non_null*/ Throwable fillInStackTrace();
 
-    /*@ public normal_behavior  // FIXME - this crashes Simplify
-      @   ensures \result != null;
-      @   ensures \result == _stackTrace;
-      @   //ensures (\forall int i; 0 <= i && i < _stackTrace.length;
-      @   //                        _stackTrace[i].equals(\result[i]));
-      @*/
+    //@ public normal_behavior  // FIXME - this crashes Simplify
+    //@   ensures \result != null;
+    //-RAC@   ensures \result == _stackTrace;
+    //@   //ensures (\forall int i; 0 <= i && i < _stackTrace.length;
+    //@   //                        _stackTrace[i].equals(\result[i]));
     public /*@ pure helper non_null*/ StackTraceElement /* FIXME non_null */ [] getStackTrace();
 
-    /*@ public normal_behavior
-      @   requires \nonnullelements(stackTrace);
-      @   assignable _stackTrace;
-      @   ensures _stackTrace.equals(stackTrace);
-      @ also
-      @ public exceptional_behavior
-      @   requires !\nonnullelements(stackTrace);
-      @   assignable \nothing;
-      @   signals_only NullPointerException;
-      @*/
+    //@ public normal_behavior
+    //@   requires \nonnullelements(stackTrace);
+    //-RAC@   assignable _stackTrace;
+    //-RAC@   ensures _stackTrace.equals(stackTrace);
+    //@ also
+    //@ public exceptional_behavior
+    //@   requires !\nonnullelements(stackTrace);
+    //@   assignable \nothing;
+    //@   signals_only NullPointerException;
     public void setStackTrace(/*@ non_null*/ StackTraceElement /*@ non_null*/[] stackTrace);
 
     //@ model public Throwable[] _throwables;

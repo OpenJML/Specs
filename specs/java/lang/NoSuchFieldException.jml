@@ -2,15 +2,13 @@ package java.lang;
  
 public class NoSuchFieldException extends ReflectiveOperationException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public NoSuchFieldException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public NoSuchFieldException(String s);
 }

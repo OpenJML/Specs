@@ -2,15 +2,13 @@ package java.lang;
  
 public class UnsupportedOperationException extends RuntimeException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public UnsupportedOperationException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(message);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
     //@ pure
     public UnsupportedOperationException(String message);
 }

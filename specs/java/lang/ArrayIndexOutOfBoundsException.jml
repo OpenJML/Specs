@@ -2,21 +2,18 @@ package java.lang;
  
 public class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public ArrayIndexOutOfBoundsException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(); // FIXME - what should this be
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     //@ pure
     public ArrayIndexOutOfBoundsException(int index);
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public ArrayIndexOutOfBoundsException(String s);
 }

@@ -2,15 +2,13 @@ package java.lang;
  
 public class NegativeArraySizeException extends RuntimeException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public NegativeArraySizeException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public NegativeArraySizeException(String s);
 }

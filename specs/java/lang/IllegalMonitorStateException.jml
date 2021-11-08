@@ -2,15 +2,13 @@ package java.lang;
  
 public class IllegalMonitorStateException extends RuntimeException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public IllegalMonitorStateException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public IllegalMonitorStateException(String s);
 }

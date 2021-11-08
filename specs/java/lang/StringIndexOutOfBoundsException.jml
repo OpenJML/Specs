@@ -4,22 +4,18 @@ package java.lang;
 
 public class StringIndexOutOfBoundsException extends IndexOutOfBoundsException {
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public StringIndexOutOfBoundsException();
 
-    /*@ public normal_behavior
-      @  ensures _cause == null;
-      @  ensures _message != null; // FIXME - more info using the index
-      @*/
+    //@ public normal_behavior
+    //-RAC@  ensures standardThrowableUnspecifiedMessage();
     //@ pure
     public StringIndexOutOfBoundsException(int index);
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public StringIndexOutOfBoundsException(String s);
 }

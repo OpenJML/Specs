@@ -4,15 +4,13 @@ package java.lang;
 
 public class IndexOutOfBoundsException extends java.lang.RuntimeException {
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public IndexOutOfBoundsException();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public IndexOutOfBoundsException(String s);
 }

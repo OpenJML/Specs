@@ -23,14 +23,14 @@ package java.lang;
 /** JML's specification of java.lang.VirtualMachineError */
 public abstract class VirtualMachineError extends Error {
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    //@ pure
     public /*@ pure @*/ VirtualMachineError();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(message);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
+    //@ pure
     public /*@ pure @*/ VirtualMachineError(String message);
 }
 
