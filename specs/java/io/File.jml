@@ -100,8 +100,8 @@ public class File implements Serializable, Comparable {
     //@ also public normal_behavior
     //@   requires pathname instanceof File && definedComparison(pathname);
     //@   // FIXME - recursive ensures \result == this.compareTo(pathname);
-    //@ pure
-    public int compareTo(/*@non_null*/ File pathname);
+   //@ pure
+    public int compareTo(/*@ nullable*/ File pathname);
 
     public boolean equals(/*@nullable*/ Object obj);
     public boolean renameTo(/*@non_null*/ File dest);

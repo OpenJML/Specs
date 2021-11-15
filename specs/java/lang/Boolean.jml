@@ -43,17 +43,17 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     
     //@ public normal_behavior
     //@   ensures TRUE != null && FALSE != null && TRUE != FALSE;
-    //@   ensures TRUE.theBoolean;  // FIXME - why does theBoolean work, but not booleanValue()
-    //@   ensures !FALSE.theBoolean;
+    //-RAC@   ensures TRUE.theBoolean;  // FIXME - why does theBoolean work, but not booleanValue()
+    //-RAC@   ensures !FALSE.theBoolean;
     //@   ensures TYPE == boolean.class;
     //@ static_initializer
-    //@ public static final invariant TRUE != null && FALSE != null && TRUE != FALSE && TRUE.theBoolean && !FALSE.theBoolean;
+    //-RAC@ public static final invariant TRUE != null && FALSE != null && TRUE != FALSE && TRUE.theBoolean && !FALSE.theBoolean;
 
-    //@ public model boolean theBoolean; in objectState;
-    //+RAC@ public represents theBoolean = booleanValue();
+    //-RAC@ public model boolean theBoolean; in objectState;
+    //  FIXME: +RAC@ public represents theBoolean = booleanValue();
 
     /*@ public normal_behavior
-      @   ensures theBoolean == value;
+      @   //-RAC@ ensures theBoolean == value;
       @*/
     //@ pure helper
     public Boolean(boolean value);
@@ -69,8 +69,8 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
 
     //@ axiom decode(canonicalString(true)) == true;
     //@ axiom decode(canonicalString(false)) == false;
-    //@ axiom TRUE.theBoolean;
-    //@ axiom !FALSE.theBoolean;
+    //-RAC@ axiom TRUE.theBoolean;
+    //-RAC@ axiom !FALSE.theBoolean;
     //@ axiom decode(TRUE_S);
     //@ axiom decode("True");
     //@ axiom decode("TRUE");
@@ -87,7 +87,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     public /*@ pure @*/ Boolean(/*@ nullable */ String s);
     
     /*@ public normal_behavior
-      @   ensures \result == theBoolean;
+      @   //-RAC@ ensures \result == theBoolean;
       @*/
     public /*@ pure helper function @*/ boolean booleanValue();
 

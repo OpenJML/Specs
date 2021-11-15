@@ -114,6 +114,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   ensures endsInNewLine & isOpen;
     @   ensures x != null ==> outputText.equals(\old(outputText) + x + eol);
     @*/
+    //+RAC@ assigns objectState;
     public void println(/*@ nullable */String x);
 
     /*-RAC@ public normal_behavior

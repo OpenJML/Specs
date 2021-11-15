@@ -74,14 +74,17 @@ public interface Comparable<T> {
     // FIXME @ public invariant consistentWithEquals() ==> (\forall T o; equals(o) <==> compareTo(o) == 0);
 
     /*@ public normal_behavior
-      @      requires \typeof(o) <: \typeof(this);
+      @      requires o != null;
+      @      //-RAC@ requires \typeof(o) <: \typeof(this);
       @      ensures  o == this ==> \result == 0; // reflexive
       @ //also public normal_behavior
       @ //   requires (\typeof(o) <: \type(Comparable<T>)) && \typeof(this) <: \type(T);
       @ //   ensures sgn(\result) == - sgn(((Comparable<T>)o).compareTo((T)this)); // antisymmetric
       @ also public exceptional_behavior
-      @       requires !(\typeof(o) <: \typeof(this));
+      @       requires o == null;
+      @       signals_only NullPointerException;
+      @ //also public exceptional_behavior
+      @ //      requires o != null && !(\typeof(o) <: \typeof(this));  FIXME
       @*/
-    // A null argument is supposed to throw a NullPointerException
-    /*@ pure @*/ int compareTo(/*@ non_null */ T o); // FIXME - change pure to query?
+    /*@ pure @*/ int compareTo(/*@ nullable */ T o); // FIXME - change pure to query?
 }
