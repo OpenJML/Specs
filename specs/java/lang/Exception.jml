@@ -27,25 +27,21 @@ package java.lang;
 
 public class Exception extends Throwable
 {
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     public /*@ pure @*/ Exception();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(message);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
     public /*@ pure @*/ Exception(String message);
 
-    /*@ public normal_behavior
-      @   //requires cause != this;
-      @   ensures standardThrowable(null,cause);
-      @*/
-    public /*@ pure @*/ Exception(/*@nullable*/Throwable cause);
+    //@ public normal_behavior
+    //@   //requires cause != this;
+    //-RAC@   ensures standardThrowable(null,cause);
+    public /*@ pure @*/ Exception(/*@ nullable*/Throwable cause);
 
-    /*@ public normal_behavior
-      @   //requires cause != this;
-      @   ensures standardThrowable(message,cause);
-      @*/
-    public /*@ pure @*/ Exception(String message, /*@nullable*/Throwable cause);
+    //@ public normal_behavior
+    //@   //requires cause != this;
+    //-RAC@   ensures standardThrowable(message,cause);
+    public /*@ pure @*/ Exception(String message, /*@ nullable*/Throwable cause);
 }

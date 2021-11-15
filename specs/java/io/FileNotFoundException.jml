@@ -2,15 +2,13 @@ package java.io;
  
 public class FileNotFoundException extends IOException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public FileNotFoundException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public FileNotFoundException(String s);
 }

@@ -948,8 +948,7 @@ public /*@ pure @*/ final class Math {
       @   ensures abs(\result) == abs(magnitude);
       @ also
       @   requires !Double.isNaN(magnitude) && !Double.isNaN(sign);
-      @   ensures abs(\result) == abs(magnitude);
-      @   ensures signum(\result) == signum(sign);
+      @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
       @ |}
       @*/
     public static /*@ pure @*/ double copySign(double magnitude, double sign);
@@ -964,8 +963,7 @@ public /*@ pure @*/ final class Math {
       @   ensures abs(\result) == abs(magnitude);
       @ also
       @   requires !Float.isNaN(magnitude) && !Float.isNaN(sign);
-      @   ensures abs(\result) == abs(magnitude);
-      @   ensures signum(\result) == signum(sign);
+      @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
       @ |}
       @*/
     public static /*@ pure @*/ float copySign(float magnitude, float sign);

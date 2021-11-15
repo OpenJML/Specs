@@ -2,15 +2,13 @@ package java.lang;
  
 public class SecurityException extends RuntimeException {
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public SecurityException();
   
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public SecurityException(String s);
 }

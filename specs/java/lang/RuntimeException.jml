@@ -30,27 +30,27 @@ public class RuntimeException
 {
 
     //@ public normal_behavior
-    //@   ensures standardThrowable();
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public RuntimeException();
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(message);
+    //-RAC@   ensures standardThrowable(message);
     //@ pure
     public RuntimeException(String message);
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(message,cause);
+    //-RAC@   ensures standardThrowable(message,cause);
     //@ pure
     public RuntimeException(String message, Throwable cause);
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(cause);
+    //-RAC@   ensures standardThrowable(cause);
     //@ pure
     public RuntimeException(Throwable cause);
     
     //@ protected normal_behavior
-    //@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
+    //-RAC@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
     //@ pure
     protected RuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
 }

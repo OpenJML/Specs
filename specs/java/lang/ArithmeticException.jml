@@ -1,15 +1,13 @@
 package java.lang;
 
 public class ArithmeticException extends RuntimeException {
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public ArithmeticException();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public ArithmeticException(String s);
 }

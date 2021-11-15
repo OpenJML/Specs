@@ -24,11 +24,11 @@ package java.lang;
 public class InternalError extends VirtualMachineError {
 
     //@ public normal_behavior
-    //@   ensures standardThrowable();
+    //-RAC@   ensures standardThrowable();
     public /*@ pure @*/ InternalError();
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(message);
+    //-RAC@   ensures standardThrowable(message);
     public /*@ pure @*/ InternalError(String message);
 }
 

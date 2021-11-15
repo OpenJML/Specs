@@ -55,30 +55,29 @@ public final class String
 
     //@ initially !isInterned(this);
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @      ensures initialCharSequence();
       @      ensures charArray.length == 0;
       @      ensures String.equals(this,"");
       @*/
     public /*@ pure @*/ String();
 
-    /*@  public normal_behavior
-      @   requires original != null;
-      @   ensures initialCharSequence();
-      @   ensures equals(this,original);
-      @
-      @ also public exceptional_behavior
-      @   requires original == null;
-      @   assignable \nothing;
-      @   signals_only NullPointerException;
-      @*/
+    //@  public normal_behavior
+    //@   requires original != null;
+    //-RAC@   ensures initialCharSequence();
+    //-RAC@   ensures equals(this,original);
+    //@
+    //@ also public exceptional_behavior
+    //@   requires original == null;
+    //@   assignable \nothing;
+    //@   signals_only NullPointerException;
     public /*@ pure @*/ String(String original) throws NullPointerException;
 
     /*@  public normal_behavior
       @   requires value != null;
       @   ensures this.length() == value.length;
       @   ensures this.charArray.length == value.length;
-      @   ensures initialCharSequence();
+      @   //-RAC@ ensures initialCharSequence();
       @   ensures CharSequence.equal(charArray,value);
       @   ensures (\forall int i; 0<=i && i<value.length; this.charAt(i) == value[i]);
       @
@@ -448,30 +447,27 @@ public final class String
       @ public static model helper boolean equals(nullable String s1, nullable String s2);
       @*/
 
-    //@ axiom (\forall String s,ss; s != null && ss != null; equals(s,ss) ==> s.length() == ss.length());
+    //-RAC@ axiom (\forall String s,ss; s != null && ss != null; equals(s,ss) ==> s.length() == ss.length());
 
     // @ axiom (\forall String s,ss; equals(s,ss) ==> equals(ss,s));  // FIXME - causes matching loop?
 
-    //@ axiom (\forall String s1,s2,s3; equals(s1,s2) ==> (equals(s1,s3) <==> equals(s2,s3)));
+    //-RAC@ axiom (\forall String s1,s2,s3; equals(s1,s2) ==> (equals(s1,s3) <==> equals(s2,s3)));
 
-    /*@ also public normal_behavior
-      @   requires anObject != null && (anObject instanceof String);
-      @   ensures \result == equals(this,(String)anObject); // FIXME - causes many straightforward proofs to be incomplete
-      @ also public normal_behavior
-      @   requires !(anObject instanceof String);
-      @   ensures !\result;
-      @
-      @*/
+    //@ also public normal_behavior
+    //@   requires anObject != null && (anObject instanceof String);
+    //-RAC@   ensures \result == equals(this,(String)anObject); // FIXME - causes many straightforward proofs to be incomplete
+    //@ also public normal_behavior
+    //@   requires !(anObject instanceof String);
+    //@   ensures !\result;
     public /*@ pure @*/ boolean equals(/*@ nullable */ Object anObject);
 
-    /*@ public normal_behavior
-      @   requires sb != null;
-      @   ensures \result <==> String.equals(this,sb.accumulatedString);
-      @
-      @ also public exceptional_behavior
-      @   requires sb == null;
-      @   signals_only NullPointerException;
-      @*/
+    //@ public normal_behavior
+    //@   requires sb != null;
+    //-RAC@   ensures \result <==> String.equals(this,sb.accumulatedString);
+    //@
+    //@ also public exceptional_behavior
+    //@   requires sb == null;
+    //@   signals_only NullPointerException;
     public /*@ pure @*/ boolean contentEquals(StringBuffer sb);
 
     /*@  public normal_behavior
@@ -512,7 +508,8 @@ public final class String
     public /*@ pure @*/ boolean equalsIgnoreCase(String anotherString);
 
     // FIXME - overly complicated for esc?
-    /*@  public normal_behavior
+    /*-RAC@
+      @ public normal_behavior
       @   requires s1 != null && s2 != null;
       @   {|
       @     requires s2.length == 0 && s1.length == 0;
@@ -534,11 +531,13 @@ public final class String
       @                 (s1.length < s2.length && CharSequence.equal(s1,0,s2,0,s1.length))
       @               );
       @   |}
-      @*//*@
+      @
     public static pure model boolean lessThan(char[] s1,
-                                              char[] s2);  @*/
+                                              char[] s2);  
+      @*/
 
-    /*@  public normal_behavior
+    /*-RAC@
+      @  public normal_behavior
       @   requires s1 != null && s2 != null;
       @   {|
       @     requires s2.length == 0 && s1.length == 0;
@@ -568,7 +567,7 @@ public final class String
     public static pure model boolean lessThanIgnoreCase(char[] s1,
                                               char[] s2);  @*/
 
-    /*@ axiom (\forall char[] s1, s2; s1 != null && s2 != null;
+    /*-RAC@ axiom (\forall char[] s1, s2; s1 != null && s2 != null;
                    !CharSequence.equal(s1,s2) ==> (lessThan(s1,s2) <=!=> lessThan(s2,s1)));
      */
 
@@ -1114,7 +1113,7 @@ public final class String
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(double d);
     
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @   ensures isInterned(\result);
       @   ensures equals(\result,this);
       @   ensures isInterned(this) ==> (\result == this);

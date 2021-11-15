@@ -4,15 +4,13 @@ package java.lang;
 
 public class InterruptedException extends java.lang.Exception {
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public InterruptedException();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public InterruptedException(String s);
 }

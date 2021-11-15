@@ -5,11 +5,11 @@ package java.lang;
 public class AbstractMethodError extends IncompatibleClassChangeError {
 
     //@ public normal_behavior
-    //@   ensures standardThrowable();
+    //-RAC@   ensures standardThrowable();
     public /*@ pure @*/ AbstractMethodError();
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(s);
+    //-RAC@   ensures standardThrowable(s);
     public /*@ pure @*/ AbstractMethodError(String s);
 }
 

@@ -1,29 +1,25 @@
 package java.lang;
-
+// FIXME for rac
 public class IllegalStateException extends RuntimeException {
-    /*@ public normal_behavior
-      @   ensures standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
     //@ pure
     public IllegalStateException();
 
-    /*@ public normal_behavior
-      @   ensures standardThrowable(s);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
     //@ pure
     public IllegalStateException(String s);
 
-    /*@ public normal_behavior
-      @   ensures cause != null ==> standardThrowable(cause);
-      @   ensures cause == null ==> standardThrowable();
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures cause != null ==> standardThrowable(cause);
+    //-RAC@   ensures cause == null ==> standardThrowable();
     //@ pure
     public IllegalStateException(/*@ nullable */ Throwable cause);
 
-    /*@ public normal_behavior
-      @   ensures cause != null ==> standardThrowable(message,cause);
-      @   ensures cause == null ==> standardThrowable(message);
-      @*/
+    //@ public normal_behavior
+    //-RAC@   ensures cause != null ==> standardThrowable(message,cause);
+    //-RAC@   ensures cause == null ==> standardThrowable(message);
     //@ pure
     public IllegalStateException(String message, /*@ nullable */ Throwable cause);
 }
