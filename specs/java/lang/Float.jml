@@ -71,6 +71,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     //@ axiom \forall float d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
     public static final float NaN;
+    //@ axiom isNaN(NaN);
 
     public static final float MAX_VALUE = 0x1.fffffeP+127f;
     public static final float MIN_VALUE = 0x0.000002P-126f;
@@ -117,7 +118,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   ensures true; // \result ==  !(v == v);
+      @   ensures \result == (!isFinite(v) && !isInfinite(v));
       @*/
     public static /*@ pure helper @*/ boolean isNaN(float v);
 
@@ -128,7 +129,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     public static /*@ pure helper @*/ boolean isInfinite(float v);
 
     //@ public normal_behavior
-    //@   ensures \result <==> (v <= MAX_VALUE && v >= -MAX_VALUE);
+    //@   ensures true;
     //@ pure helper
     public static boolean isFinite(float v);
 

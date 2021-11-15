@@ -3,7 +3,7 @@ package org.jmlspecs.lang;
 //@ immutable pure non_null_by_default
 public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
     //@ non_null 
-    public String racValue;
+    public String racValue; //@ in length;
     
     // @ model public int length; // FIXME - change to \bigint
     //@ model public \bigint length; // FIXME - change to \bigint
