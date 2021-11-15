@@ -30,7 +30,7 @@ package java.lang;
 public  /*@ pure @*/ final
     class Integer extends Number implements Comparable {
 
-    //@ public model int theInteger;  in objectState;
+    //@ public model int theInteger;  in objectState, uniqueHash;
     //+RAC@ represents theInteger = intValue();
     
     //@ public represents uniqueHash = theInteger;

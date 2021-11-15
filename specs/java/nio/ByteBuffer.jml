@@ -4,7 +4,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ model public instance boolean _isDirect;
     
     //@ spec_public  
-    final byte[] hb;  // FIXME _ perhaps this should be model?
+    final byte[] hb; //@ in _hasBackingArray; // FIXME _ perhaps this should be model?
     //@ public represents _hasBackingArray = (hb != null);
     
     //@ public invariant 0 <= offset;
@@ -13,11 +13,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@ public invariant hb.length-offset >= capacity;
     
     //@ spec_public  
-    final int offset;
+    final int offset; //@ in _offset;
     //@ public represents _offset = offset;
 
     //@ spec_public  
-    boolean isReadOnly;
+    boolean isReadOnly; //@ in _isReadOnly;
     //@ public represents _isReadOnly = isReadOnly;
     
     //@ spec_public  

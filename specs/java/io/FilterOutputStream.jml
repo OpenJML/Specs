@@ -7,7 +7,7 @@ public class FilterOutputStream extends java.io.OutputStream {
 
     // FIELDS
 
-    protected /*@ non_null */ OutputStream out;
+    protected /*@ non_null */ OutputStream out; //@ in underlyingStream;
     //@ public model OutputStream underlyingStream;
     //@ protected represents underlyingStream = out;
 
