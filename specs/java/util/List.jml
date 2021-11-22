@@ -115,8 +115,8 @@ public interface List<E> extends Collection<E> {
       @   assignable values;
       @   ensures values.length == \old(values.length+1); 
       @   ensures values[values.length-1] == o;
-      @   ensures \forall \bigint i; 0 <= i < values.length-1; 
-      @                    values[i] == \old(values[i]); 
+//      @   ensures \forall \bigint i; 0 <= i < values.length-1; 
+//      @                    values[i] == \old(values[i]); 
       @   ensures \result;
       @*/
     boolean add(E o);

@@ -29,14 +29,16 @@ package java.util;
 public interface Queue<E> extends Collection<E> {
     
     /*-RAC@ also public behavior
+      @   requires e != null | containsNull;
+      @   assignable values;
       @   ensures size() == \old(size())+1;
       @   ensures values[values.length-1] == e;
       @   ensures (\forall int i; 0 <= i & i < values.length-1; values[i] == \old(values[i]));
       @   ensures \result;
-      @   assignable values;
       @ also
       @ public exceptional_behavior
       @   requires e == null & !containsNull;
+      @   assignable \nothing;
       @   signals_only NullPointerException;
       @*/
     public boolean add(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;

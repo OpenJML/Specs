@@ -136,7 +136,7 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     <T> T[] toArray(T[] a) throws NullPointerException, ArrayStoreException;
 
-    /*-RAC@ public normal_behavior
+    /*-RAC@ public behavior
       @   assignable values; 
       @   ensures \result == false ==> values == \old(values);
       @   ensures \result == true ==> values.length == \old(values.length+1);
@@ -145,6 +145,8 @@ public interface Collection<E> extends Iterable<E> {
       @   // ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
       @   // ensures \old(containsObject(null)) ==> containsObject(null);
       @   // ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
+      @   signals (Exception) values == \old(values);
+      @   signals_only Exception;
       @*/
 
            // Various unspecified exceptions may be thrown if the element
