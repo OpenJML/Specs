@@ -34,6 +34,12 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model public array<T> put(\bigint i, T t);
     
     public normal_behavior
+       ensures \result.length == this.length + 1;
+       ensures \result[this.length] == t;
+       ensures (\forall \bigint j; j != this.length ; this[j] == \result[j]);
+    model public array<T> add(T t);
+    
+    public normal_behavior
        ensures \result == (s.length == ss.length && \forall \bigint i; 0 <= i && i < s.length; s[i] == ss[i]);
     model public static <U,T> boolean equals(array<U> s, array<T> ss);
     

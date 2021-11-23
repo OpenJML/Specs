@@ -50,13 +50,6 @@ public interface List<E> extends Collection<E> {
     //@ pure
     boolean isEmpty();
 
-    //@ also public normal_behavior
-    //@   requires o == null;
-    //-RAC@   ensures \result == !(\forall int i; 0<=i && i<size(); values[i] != null);
-    //+RAC@   ensures \result == !(\forall int i; 0<=i && i<size(); get(i) != null);
-    //@ also public behavior
-    //@   requires o != null;
-    //-RAC@   ensures (\result <==> (\exists int i; 0<=i && i<size(); Collection.nullequals(o,values[i])));
     //@ pure
     boolean contains(/*@nullable*/ Object o);
 
@@ -111,13 +104,14 @@ public interface List<E> extends Collection<E> {
       @*/
     <T> T[] toArray(T[] a) throws NullPointerException;
 
-    /*-RAC@ also public normal_behavior
+    /*-RAC@ also public behavior
       @   assignable values;
-      @   ensures values.length == \old(values.length+1); 
-      @   ensures values[values.length-1] == o;
-//      @   ensures \forall \bigint i; 0 <= i < values.length-1; 
-//      @                    values[i] == \old(values[i]); 
       @   ensures \result;
+      @   ensures values == \old(values).add(o); 
+      @   ensures values[values.length-1] == o;
+      @   ensures \forall \bigint i; 0 <= i < values.length-1; 
+      @                    values[i] == \old(values[i]); 
+      @   ensures contains(o);
       @*/
     boolean add(E o);
 

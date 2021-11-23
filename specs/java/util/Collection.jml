@@ -68,13 +68,13 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*@ pure @*/ boolean isEmpty();
     
-    //@ public normal_behavior
-    //@       ensures size() == 0 ==> !\result;
-    //-RAC@   ensures (containsObject(o) ==> \result);
-    //@   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
+    /*-RAC@ public behavior
+    //@   ensures values.length == 0 ==> !\result;
+    //@   ensures \result <==> (\exists int i; 0 <= i < values.length; Collection.nullequals(o,values[i]));
           // various exceptions may get thrown, but are optional,
           // so they are specified in the implementing classes
-    // @   signals_only ClassCastException,NullPointerException; // FIXME
+    //@   signals (NullPointerException) o == null;
+    //@   signals_only ClassCastException,NullPointerException;
     /*@ pure @*/ boolean contains(/*@ nullable */ Object o);
 
 
@@ -140,6 +140,7 @@ public interface Collection<E> extends Iterable<E> {
       @   assignable values; 
       @   ensures \result == false ==> values == \old(values);
       @   ensures \result == true ==> values.length == \old(values.length+1);
+      @   ensures \exists \bigint i; 0 <= i < values.length; values[i] == o;
       @   // ensures containsObject(o);  // FIXME - adjust for equals -- createsinefasibility
       @   // ensures (\forall Object _o; \old(containsObject(_o)) ==> containsObject(_o));
       @   // ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
