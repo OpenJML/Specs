@@ -1,60 +1,61 @@
 package org.jmlspecs.lang;
 
-//@ immutable pure
+//@ immutable pure nullable_by_default
 public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
 /*@    
     public normal_behavior
       ensures \result >= 0;
-    model public \bigint size();
+    model function public \bigint size();  // FIXME - not much is said about size -- can't reason about it 
     
     public normal_behavior
-       requires true;
-    model public boolean contains(T x);
+       ensures \result == this[x];
+    model function public boolean contains(T x);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
     pure
-    model public boolean isEmpty();
+    model function public boolean isEmpty();
     
     public normal_behavior
       ensures \result.size() == 0;
       ensures (\forall T x; ; !\result.contains(x));
-    model static public <T> set<T> set();
+    model function static public <T> set<T> set();
     
     public normal_behavior
       ensures \result.size() == 1;
       ensures \result.contains(t);
       ensures (\forall T x; ; x != t ==> !\result.contains(x));
-    model static public <T> set<T> set(T t);
+    model function static public <T> set<T> set(T t);
     
     public normal_behavior
        ensures \result == (\forall T t;; s.contains(t) == ss.contains(t));
-    model public static <T> boolean equals(set<T> s, set<T> ss);
+    model function public static <T> boolean equals(set<T> s, set<T> ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model public boolean equals(set<T> s);
+    model function public boolean equals(set<T> s);
     
     public normal_behavior
       ensures this.contains(x) ==> \result == this;
       ensures !this.contains(x) ==> \result.size() == this.size() + 1;
       ensures \result.contains(x);
       ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
-    model public set<T> add(T x);
+    model function public set<T> add(T x);
     
     public normal_behavior
       ensures !this.contains(x) ==> \result == this;
       ensures this.contains(x) ==> \result.size() == this.size() - 1;
       ensures !\result.contains(x);
       ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
-    model public set<T> remove(T x);
+    model function public set<T> remove(T x);
 
     public normal_behavior
-        ensures \result != null;
-        ensures \result[i] == c;
-        ensures \forall T j; j != i; \result[j] == this[j];
-        ensures this[i] == c ==> \result == this;
-    model public set<T> put(T i, boolean c);
+      ensures \result[i] == c;
+      ensures \forall T j; j != i; \result[j] == this[j];
+      ensures this[i] == c ==> \result == this;
+      ensures this[i] & !c ==> \result.size() == this.size() - 1;
+      ensures !this[i] & c ==> \result.size() == this.size() + 1;
+    model function public set<T> put(T i, boolean c);
 
 
 @*/

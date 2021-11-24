@@ -105,6 +105,7 @@ public interface List<E> extends Collection<E> {
     <T> T[] toArray(T[] a) throws NullPointerException;
 
     /*-RAC@ also public behavior
+      @   requires containsNull || o != null;
       @   assignable values;
       @   ensures \result;
       @   ensures values == \old(values).add(o); 

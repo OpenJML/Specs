@@ -9,43 +9,42 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     public normal_behavior
         ensures \result.length == a.length;
         ensures (\forall int i; 0 <= i < a.length; \result.get(i) == a[i]);
-    model public static <T> array<T> of(T[] a);
+    model function public static <T> array<T> of(T[] a);
     
     public normal_behavior
         ensures \result.length == a.length;
         ensures (\forall int i; 0 <= i < a.length; \result.get(i) == a[i]);
-    model public static <T,U> array<T> ofx(U[] a);  // U must be assignable to T
+    model function public static <T,U> array<T> ofx(U[] a);  // U must be assignable to T
     
     public normal_behavior
         ensures \result.length == a.length;
         ensures (\forall int i; 0 <= i < a.length; \result.get(i) == a[i]);
-    model public static array<Integer> of(int[] a);
+    model function public static array<Integer> of(int[] a);
     
     public normal_behavior
         ensures \result == this[i];
-    model public T get(\bigint i);
+    model function public T get(\bigint i);
     
     public normal_behavior
-       ensures \result != null;
        ensures \result.length == this.length;
        ensures \result[i] == t;
        ensures (\forall \bigint j; j != i ; this[j] == \result[j]);
        ensures this[i] == t ==> \result == this;
-    model public array<T> put(\bigint i, T t);
+    model function public array<T> put(\bigint i, T t);
     
     public normal_behavior
        ensures \result.length == this.length + 1;
        ensures \result[this.length] == t;
        ensures (\forall \bigint j; j != this.length ; this[j] == \result[j]);
-    model public array<T> add(T t);
+    model function public array<T> add(T t);
     
     public normal_behavior
        ensures \result == (s.length == ss.length && \forall \bigint i; 0 <= i && i < s.length; s[i] == ss[i]);
-    model public static <U,T> boolean equals(array<U> s, array<T> ss);
+    model function public static <U,T> boolean equals(array<U> s, array<T> ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model public boolean equals(array<T> s);
+    model function public boolean equals(array<T> s);
     
     @*/
 }

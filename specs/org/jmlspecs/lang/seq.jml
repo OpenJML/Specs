@@ -8,27 +8,27 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     
     public normal_behavior
       ensures \result == length;
-    model public \bigint size();
+    model function public \bigint size();
     
     public normal_behavior
       ensures \result == this[i];
-    model public T get(\bigint i);
+    model function public T get(\bigint i);
 
     public normal_behavior
       ensures \result == (length == 0);
-    model public boolean isEmpty();
+    model function public boolean isEmpty();
     
     public normal_behavior
       ensures \result.length == 0;
-    model static public <T> seq<T> empty();
+    model function static public <T> seq<T> empty();
     
     public normal_behavior
        ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
-    model public static <T> boolean equals(seq<T> s, seq<T> ss);
+    model function public static <T> boolean equals(seq<T> s, seq<T> ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model public boolean equals(seq<T> s);
+    model function public boolean equals(seq<T> s);
     
     public normal_behavior
       requires 0 <= j <= this.length;
@@ -36,33 +36,32 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
       ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
       ensures (\forall \bigint i;; (j < i <= this.length) ==> (\result[i] == this[i-1]));
       ensures \result[j] == v;
-    model public seq<T> add(\bigint j, T v);
+    model function public seq<T> add(\bigint j, T v);
 
     public normal_behavior
       ensures \result.length == 1 + this.length; // FIXME - needed to prove valuetypes Seq.addBumpsSize, but why?
       ensures \result == add(length,v);
-    model public seq<T> add(T v);
+    model function public seq<T> add(T v);
 
     public normal_behavior
       ensures \result.length == this.length + s.length;
       ensures (\forall \bigint i;; (0 <= i && i < this.length) ==> (\result[i] == this[i]));
       ensures (\forall \bigint i;; (this.length <= i && i < \result.length) ==> (\result[i] == this[i-this.length]));
-    model public seq<T> append(seq<T> s);
+    model function public seq<T> append(seq<T> s);
 
     public normal_behavior
       requires 0 <= j && j < this.length;
       ensures \result.size() == this.length - 1;
       ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
       ensures (\forall \bigint i;; (j <= i && i < \result.length) ==> (\result[i] == this[i+1]));
-    model public seq<T> remove(\bigint j);
+    model function public seq<T> remove(\bigint j);
 
     public normal_behavior
-        ensures \result != null;
         ensures \result.length == this.length;
         ensures \result[i] == c;
         ensures \forall \bigint j; j != i; \result[j] == this[j];
         ensures this[i] == c ==> \result == this;
-    model public seq<T> put(\bigint i, T c);
+    model function public seq<T> put(\bigint i, T c);
 
 
     @*/

@@ -137,15 +137,11 @@ public interface Collection<E> extends Iterable<E> {
     <T> T[] toArray(T[] a) throws NullPointerException, ArrayStoreException;
 
     /*-RAC@ public behavior
+      @   requires containsNull || o != null;
       @   assignable values; 
       @   ensures \result == false ==> values == \old(values);
       @   ensures \result == true ==> values.length == \old(values.length+1);
       @   ensures \exists \bigint i; 0 <= i < values.length; values[i] == o;
-      @   // ensures containsObject(o);  // FIXME - adjust for equals -- createsinefasibility
-      @   // ensures (\forall Object _o; \old(containsObject(_o)) ==> containsObject(_o));
-      @   // ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
-      @   // ensures \old(containsObject(null)) ==> containsObject(null);
-      @   // ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
       @   signals (Exception) values == \old(values);
       @   signals_only Exception;
       @*/
@@ -161,8 +157,6 @@ public interface Collection<E> extends Iterable<E> {
       @   ensures \not_modified(containsNull);
       @   ensures \result ==> values.length == \old(values.length-1);
       @   ensures !\result ==> values.length == \old(values.length);
-      @   //ensures (\forall Object oo; !oo.equals(o); \old(containsObject(oo)) ==> containsObject(oo));
-      @   //ensures (\forall Object oo; containsObject(oo) ==> \old(containsObject(oo)));
 
           // Various unspecified exceptions may be thrown if the element
           // is not allowed to be removed from the Collection, or the remove

@@ -26,28 +26,28 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
 /*-RAC@   
     //-RAC@ public normal_behavior
     //-RAC@   ensures \result == length;
-    //-RAC@ model public \bigint size();
+    //-RAC@ model function public \bigint size();
     
     //@ public normal_behavior
     //@   ensures \result == this[i];
-    //@ model public char get(\bigint i);
+    //@ model function public char get(\bigint i);
 
     //@ public normal_behavior
     //@     ensures \result.length == this.length;
     //@     ensures \result[i] == c;
     //-RAC@ ensures \forall \bigint j; j != i; \result[j] == this[j];
     //@     ensures this[i] == c ==> \result == this;
-    //@ model public string put(\bigint i, char c) { return string(""); }
+    //@ model function public string put(\bigint i, char c) { return string(""); }
 
     public normal_behavior
        //-RAC@ ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
-    model public static boolean equals(string s, string ss) {
+    model function public static boolean equals(string s, string ss) {
         return (s.length == ss.length); // FIXME
     }
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model public boolean equals(string s);
+    model function public boolean equals(string s);
     
     public normal_behavior
       requires 0 <= j <= this.length;
@@ -55,7 +55,7 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
       //-RAC@ ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
       //-RAC@ ensures (\forall \bigint i;; (j+1 <= i < \result.length) ==> (\result[i] == this[i-1]));
       ensures \result[j] == v;
-    model public string add(\bigint j, char v) {
+    model function public string add(\bigint j, char v) {
       return string(""); // FIXME
     }
 
@@ -64,7 +64,7 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
       ensures \result.length == this.length + 1;
       //-RAC@ ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
       ensures \result[this.length] == v;
-    model public string add(char v) {
+    model function public string add(char v) {
       return add(length, v);
     }
 
@@ -72,20 +72,20 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
       ensures \result.length == this.length + s.length;
       ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
       ensures (\forall \bigint i;; (0 <= i < s.length) ==> (\result[i+this.length] == this[i-1]));
-    model public string append(string s);
+    model function public string append(string s);
 
     public normal_behavior
       requires 0 <= j < this.length;
       ensures \result.length == this.length - 1;
       ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
       ensures (\forall \bigint i;; (j <= i < \result.length) ==> (\result[i] == this[i+1]));
-    model public string remove(\bigint j);
+    model function public string remove(\bigint j);
     
     public normal_behavior
       requires 0 <= start <= this.length && 0 <= length <= this.length - start;
       ensures \result.length == length;
       ensures (\forall \bigint i;; (0 <= i && i < \result.length) ==> \result[i] == this[i+start]);
-    model public string substring(\bigint start, \bigint length);
+    model function public string substring(\bigint start, \bigint length);
   
 @*/
 }
