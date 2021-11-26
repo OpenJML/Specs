@@ -940,16 +940,16 @@ public /*@ pure @*/ final class Math {
     
     // new for Java 6
     /*@ public normal_behavior
-      @ {| 
-      @   requires Double.isNaN(magnitude);
-      @   ensures Double.isNaN(\result);
-      @ also
-      @   requires !Double.isNaN(magnitude) && Double.isNaN(sign);
-      @   ensures abs(\result) == abs(magnitude);
-      @ also
-      @   requires !Double.isNaN(magnitude) && !Double.isNaN(sign);
+//      @ {| 
+//      @   requires Double.isNaN(magnitude);
+//      @   ensures Double.isNaN(\result);
+//      @ also
+//      @   requires !Double.isNaN(magnitude) && Double.isNaN(sign);
+//      @   ensures abs(\result) == abs(magnitude);
+//      @ also
+      @   requires (Double.isFinite(magnitude) || Double.isInfinite(magnitude)) && !Double.isNaN(sign);
       @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
-      @ |}
+//      @ |}
       @*/
     public static /*@ pure @*/ double copySign(double magnitude, double sign);
     
@@ -962,7 +962,7 @@ public /*@ pure @*/ final class Math {
       @   requires !Float.isNaN(magnitude) && Float.isNaN(sign);
       @   ensures abs(\result) == abs(magnitude);
       @ also
-      @   requires !Float.isNaN(magnitude) && !Float.isNaN(sign);
+      @   requires (Float.isFinite(magnitude) || Float.isInfinite(magnitude)) && !Float.isNaN(sign);
       @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
       @ |}
       @*/
