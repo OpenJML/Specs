@@ -97,7 +97,6 @@ public interface List<E> extends Collection<E> {
       @   |}
       @ also public exceptional_behavior
       @   requires a == null;
-      @   assignable \not_specified;
       @   signals_only NullPointerException;
 
               // FIXME - spec the exceptions

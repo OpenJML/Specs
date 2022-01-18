@@ -128,10 +128,9 @@ public abstract class Number implements java.io.Serializable {
     @      ensures \result == parseable(nm, 10, bits);
     @    |}
     @*/
-  /*-RAC@ 
-    @   public normal_behavior
-    @     requires bits > 0;
-    @     // String nm is non-null by default
+  //-RAC@   public normal_behavior
+  //-RAC@     requires bits > 0;
+  //-RAC@     // String nm is non-null by default
   //-RAC@   model public helper function static pure boolean decodable( String nm, int bits );
 
 

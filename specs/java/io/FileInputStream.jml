@@ -14,7 +14,6 @@ public class FileInputStream extends InputStream {
     /*@
       @ public behavior
       @   requires file != null;
-      @   assignable \not_specified;
       @   ensures initialInputStream();
       @*/
     public FileInputStream(File file) throws FileNotFoundException;
@@ -22,7 +21,6 @@ public class FileInputStream extends InputStream {
     /*@
       @ public behavior
       @   requires fdObj != null;
-      @   assignable \not_specified;
       @   ensures initialInputStream();
       @*/
     public FileInputStream(FileDescriptor fdObj);
@@ -30,7 +28,6 @@ public class FileInputStream extends InputStream {
     /*@
       @ public behavior
       @   requires name != null;
-      @   assignable \not_specified;
       @   ensures initialInputStream();
       @*/
     public FileInputStream(String name) throws FileNotFoundException;

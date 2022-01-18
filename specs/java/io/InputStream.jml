@@ -146,7 +146,7 @@ public abstract class InputStream implements Closeable {
       @   requires len > 0 ==> isOpen;
       @   requires availableBytes > 0;
       @   requires b != null && off >=0 && len >=0 && off+len <= b.length;
-      @   modifies streamState, b[off .. off+len-1];
+      @   assigns streamState, b[off .. off+len-1];
       @   ensures isOpen && \not_modified(wasClosed);
       @   ensures \result >= 0;
       @   ensures \result <= len;
@@ -163,7 +163,7 @@ public abstract class InputStream implements Closeable {
       @ also public exceptional_behavior
       @   requires (len > 0 && !isOpen) || b == null || off < 0 || 
                               len < 0 || off+len > b.length;
-      @   modifies \nothing;
+      @   assigns \nothing;
       @   signals_only IOException, NullPointerException, IllegalArgumentException;
       @   signals (IOException e) len > 0 && !isOpen;
       @   signals (NullPointerException) b == null;

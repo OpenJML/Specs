@@ -50,6 +50,12 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model function public seq<T> append(seq<T> s);
 
     public normal_behavior
+      ensures \result.length == this.length + 1;
+      ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i+1] == this[i]));
+      ensures \result[0] == t;
+    model function public seq<T> prepend(T t);
+
+    public normal_behavior
       requires 0 <= j && j < this.length;
       ensures \result.size() == this.length - 1;
       ensures (\forall \bigint i;; (0 <= i && i < j) ==> (\result[i] == this[i]));
@@ -62,6 +68,11 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
         ensures \forall \bigint j; j != i; \result[j] == this[j];
         ensures this[i] == c ==> \result == this;
     model function public seq<T> put(\bigint i, T c);
+
+    public normal_behavior
+        ensures \result.length == j-i;
+        ensures \forall \bigint k; 0<=k<j-i; \result[k] == this[k+i];
+    model function public seq<T> sub(\bigint i, \bigint j);
 
 
     @*/

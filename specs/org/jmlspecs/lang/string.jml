@@ -51,6 +51,7 @@ public class string implements IJmlPrimitiveType, IJmlIntArrayLike {
     
     public normal_behavior
       requires 0 <= j <= this.length;
+      old int JJJJJJ = 0;
       ensures \result.length == this.length + 1;
       //-RAC@ ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
       //-RAC@ ensures (\forall \bigint i;; (j+1 <= i < \result.length) ==> (\result[i] == this[i-1]));

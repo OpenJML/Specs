@@ -289,7 +289,6 @@ public class BitSet implements Cloneable, java.io.Serializable{
 
     // FIXME - review
     /* @ also public normal_behavior
-      @   assignable \not_specified;
       @   ensures \typeof(\result) == \type(BitSet);
       @   ensures \result != null; */
     /* @   ensures (\forall int i; 0<=i; isSet(((BitSet)\result).content,i) ==
