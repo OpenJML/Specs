@@ -3,6 +3,8 @@ package org.jmlspecs.lang;
 //@ immutable pure
 public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
  /*@   
+    axiom \forall seq<T> s, ss;; s == ss <==> (s.length == ss.length && \forall int i; 0<=i<s.length; s[i] == ss[i]);
+
     model public \bigint length;
     public invariant length >= 0;
     
@@ -21,6 +23,11 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     public normal_behavior
       ensures \result.length == 0;
     model function static public <T> seq<T> empty();
+    
+    public normal_behavior
+      ensures \result.length == 1;
+      ensures \result[0] == t;
+    model function static public <T> seq<T> of(T t);
     
     public normal_behavior
        ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
