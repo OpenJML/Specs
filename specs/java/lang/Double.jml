@@ -96,7 +96,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
 
     /*@ public normal_behavior
       @     requires s != null && parseable(s);
-      @     ensures  \result.equals(new Double(parseDouble(s)));
+      @     ensures  \result.equals(Double.valueOf(parseDouble(s)));
       @ also
       @   public exceptional_behavior
       @     requires s != null && !parseable(s);
@@ -383,7 +383,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
     
     /*@ public normal_behavior
       @    assignable \nothing;
-      @    ensures \result == new Double(d1).compareTo(new Double(d2));
+      @    ensures \result == Double.valueOf(d1).compareTo(Double.valueOf(d2));
       @*/
     public static /*@ pure @*/ int compare(double d1, double d2);
 
@@ -424,4 +424,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable {
          (isNaN(a) || isNaN(b) || (a==b));
     }
     */
+    
+    //@ pure model public static boolean isFiniteOdd(double d);
+    //@ pure model public static boolean isFiniteEvend(double d);
 }

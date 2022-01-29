@@ -312,7 +312,7 @@ public  /*@ pure @*/ final
         Integer getInteger(String nm);
 
     /*@ public normal_behavior
-      @   ensures \result.equals(getInteger(nm, new Integer(val)));
+      @   ensures \result.equals(getInteger(nm, Integer.valueOf(val)));
       @*/
     public static /*@ pure @*/ 
         Integer getInteger(String nm, int val);

@@ -1546,7 +1546,7 @@ public class Arrays {
     //@ pure
     @java.lang.SafeVarargs
     @SuppressWarnings("varargs-unchecked")
-    public static <T> /*@ non_null @*/ List<T> asList(T /*@ nullable @*/[] a) throws NullPointerException;
+    public static <T> /*@ non_null @*/ List<T> asList(/*@ nullable @*/T ... a) throws NullPointerException;
 
     //-----------------------------------------------------------------------
 

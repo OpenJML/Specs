@@ -114,7 +114,7 @@ public final class Class<T> implements java.io.Serializable,
     public /*@ pure @*/ boolean isAssignableFrom(Class<?> cls);
 
     //@ public model boolean _isInterface; // cf. _isArray
-    //@        represents _isInterface = isInterface();
+    // @        represents _isInterface = isInterface();
 
     //@ ensures \result == _isInterface;
     public /*@ pure helper @*/ boolean isInterface();
@@ -129,7 +129,7 @@ public final class Class<T> implements java.io.Serializable,
       * Similar specs could be added to all other pure methods in this Class.
       */
     //@ public model boolean _isArray;
-    //@        represents _isArray = isArray();
+    // @        represents _isArray = isArray();
 
     /*
     //@ ensures \result == _isArray;
@@ -165,7 +165,7 @@ public final class Class<T> implements java.io.Serializable,
     public /*@ pure helper @*/ boolean isPrimitive();
 
     //@ public model String _getName;
-    //@        represents _getName = getName();
+    // @        represents _getName = getName();
 
     //@ ensures \result == _getName;
     public /*@ pure helper @*/ /*@ non_null @*/ String getName();

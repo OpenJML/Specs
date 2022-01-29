@@ -14,11 +14,11 @@ public interface Function<T,R> {
 
       default public <V> Function<T, V> andThen(Function<? super R, ? extends V> after);
 
+
       /*@  @FunctionalInterface model public static immutable interface Pure<T,R> extends Function<T,R> {
       @   also public normal_behavior
       @     assignable \nothing;
       @   pure function
-      @   @Override
       @   public R apply(T t);
       @ }
       @*/

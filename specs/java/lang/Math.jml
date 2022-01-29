@@ -320,7 +320,7 @@ public /*@ pure @*/ final class Math {
       @   requires Double.isNaN(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires -Double.isFinite(a) && 1.0 < a < 0.0;
+      @   requires Double.isFinite(a) && 1.0 < a < 0.0;
       @   ensures isNegativeZero(\result);
       @ also 
       @   requires a == rint(a);
@@ -753,7 +753,7 @@ public /*@ pure @*/ final class Math {
       @   requires Double.isNaN(d);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !isFinite(d);
+      @   requires !Double.isFinite(d);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires d == 0.0;
@@ -774,7 +774,7 @@ public /*@ pure @*/ final class Math {
       @   requires Float.isNaN(f);
       @   ensures Float.isNaN(\result);
       @ also
-      @   requires !isFinite(f);
+      @   requires !Float.isFinite(f);
       @   ensures \result == Float.POSITIVE_INFINITY;
       @ also
       @   requires f == 0.0;
@@ -831,7 +831,7 @@ public /*@ pure @*/ final class Math {
       @   requires Double.isNaN(x);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !isFinite(x) || x == 0.0;
+      @   requires !Double.isFinite(x) || x == 0.0;
       @   ensures \result == x;
       @ also
       @   requires Double.isFinite(x);
@@ -846,7 +846,7 @@ public /*@ pure @*/ final class Math {
       @   requires Double.isNaN(x);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !isFinite(x);
+      @   requires !Double.isFinite(x);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires x == 0.0;
@@ -883,7 +883,7 @@ public /*@ pure @*/ final class Math {
     // new for Java 5
     /*@ public normal_behavior
       @ {|
-      @   requires !isFinite(x) || !isFinite(y);
+      @   requires !Double.isFinite(x) || !Double.isFinite(y);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires Double.isNaN(x) || Double.isNaN(y);

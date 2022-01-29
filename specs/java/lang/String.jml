@@ -1065,7 +1065,7 @@ public final class String
 
     /*@ public normal_behavior
       @   requires data != null;
-      @   ensures \result != null && equals(\result,new String(data));
+      @   ensures \result != null && equals(\result, String.valueOf(data));
       @   ensures \fresh(\result);
       @   ensures \result.charArray.length == data.length;
       @   ensures CharSequence.equal(\result.charArray,data);

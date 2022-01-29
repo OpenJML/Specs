@@ -159,7 +159,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     public boolean isNaN();
 
     /*@ public normal_behavior
-      @   ensures \result == Float.isInfinite(theDouble);
+      @   ensures \result == Float.isInfinite(theFloat);
       @*/
     public boolean isInfinite();
         

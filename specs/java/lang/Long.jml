@@ -318,7 +318,7 @@ public /*@ pure @*/ final
     public static /*@ pure @*/ Long getLong(String nm);
 
     /*@ public normal_behavior
-      @   ensures \result.equals(getLong(nm, new Long(val)));
+      @   ensures \result.equals(getLong(nm, Long.valueOf(val)));
       @*/
     public static /*@ pure @*/ 
         Long getLong(String nm, long val);

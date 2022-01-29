@@ -16,13 +16,13 @@ public interface Supplier<T> {
     /*@
 
     model public static interface Pure<T> extends Supplier<T> {
-         public normal_behavior requires true;
+         also public normal_behavior requires true;
          pure nullable T get();
     }
 
     model public static interface PureNonNull<T> extends Supplier<T> {
          //0-RAC@ public invariant value != null;
-         public normal_behavior requires true;
+         also public normal_behavior requires true;
          pure non_null T get();
     }
 
