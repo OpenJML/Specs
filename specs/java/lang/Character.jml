@@ -30,7 +30,7 @@ package java.lang;
 //+OPENJML@ immutable
 //@ non_null_by_default
 public /*@ pure @*/ final 
-    class Character extends Object implements java.io.Serializable, Comparable
+    class Character extends Object implements java.io.Serializable, Comparable<Character>
 {
 
     //@ public model char theCharacter;

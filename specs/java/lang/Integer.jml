@@ -28,7 +28,7 @@ package java.lang;
  */
 //@ immutable
 public  /*@ pure @*/ final
-    class Integer extends Number implements Comparable {
+    class Integer extends Number implements Comparable<Integer> {
 
     //@ public model int theInteger;  in uniqueHash, objectState;
     //+RAC@ represents theInteger = intValue();
@@ -364,19 +364,19 @@ public  /*@ pure @*/ final
       @*/
     public int compareTo(Integer anotherInteger);
             
-//    /*@ also
-//      @   public normal_behavior
-//      @     requires o != null && (o instanceof Integer);
-//      @     ensures \result == compareTo((Integer) o);
-//      @ also
-//      @   public exceptional_behavior
-//      @     requires o != null && !(o instanceof Integer);
-//      @     signals_only ClassCastException;
-//      @ also public exceptional_behavior
-//      @   requires o == null;
-//      @   signals_only NullPointerException;
-//      @*/
-//    public int compareTo(Object o);
+    /*@ 
+      @   public normal_behavior
+      @     requires o != null && (o instanceof Integer);
+      @     ensures \result == compareTo((Integer) o);
+      @ also
+      @   public exceptional_behavior
+      @     requires o != null && !(o instanceof Integer);
+      @     signals_only ClassCastException;
+      @ also public exceptional_behavior
+      @   requires o == null;
+      @   signals_only NullPointerException;
+      @*/
+    public int compareTo(Object o);
     
     /*@ public normal_behavior
       @     // We enumerate some cases that we need to avoid using bit arithmetic

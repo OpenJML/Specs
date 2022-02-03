@@ -26,7 +26,7 @@ package java.lang;
  * @author Gary T. Leavens
  */
 //+OPENJML@ immutable
-public /*@ pure @*/ final class Byte extends Number implements Comparable
+public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
 {
 
     //@ public model byte theByte;

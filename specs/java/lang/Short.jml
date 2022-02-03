@@ -27,7 +27,7 @@ package java.lang;
  */
 //+OPENJML@ immutable
 public /*@ pure @*/ final
-    class Short extends Number implements Comparable {
+    class Short extends Number implements Comparable<Short> {
 
     //@ public model short theShort;
     //+RAC@ represents theShort = shortValue();
@@ -262,16 +262,16 @@ public /*@ pure @*/ final
       @*/
     public int compareTo(/*@ non_null @*/ Short anotherShort) ;
 
-//    /*@ also
-//      @     public normal_behavior
-//      @       requires o != null && (o instanceof Short);
-//      @       ensures \result == compareTo((Short) o);
-//      @   also
-//      @     public exceptional_behavior
-//      @       requires o == null && !(o instanceof Short);
-//      @       signals(ClassCastException);
-//      @*/
-//    public int compareTo(Object o) throws ClassCastException;
+    /*@ 
+      @     public normal_behavior
+      @       requires o != null && (o instanceof Short);
+      @       ensures \result == compareTo((Short) o);
+      @   also
+      @     public exceptional_behavior
+      @       requires o == null && !(o instanceof Short);
+      @       signals(ClassCastException);
+      @*/
+    public int compareTo(Object o) throws ClassCastException;
 
     //@ public normal_behavior
     //@   ensures \result == (b0*256 + Byte.toUnsignedInt(b1));

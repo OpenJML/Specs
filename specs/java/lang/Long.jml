@@ -28,7 +28,7 @@ package java.lang;
  */
 //+OPENJML@ immutable
 public /*@ pure @*/ final
-    class Long extends Number implements Comparable {
+    class Long extends Number implements Comparable<Long> {
 
     //@ public model long theLong;
     //+RAC@ represents theLong = longValue();
@@ -358,20 +358,20 @@ public /*@ pure @*/ final
       @*/
     public int compareTo(Long anotherLong);
 
-//    /*@ also
-//      @   public normal_behavior
-//      @     requires o != null && (o instanceof Long);
-//      @     ensures \result == compareTo((Long) o);
-//      @ also
-//      @   public exceptional_behavior
-//      @     requires o != null && !(o instanceof Long);
-//      @     signals_only ClassCastException;
-//      @ also
-//      @   public exceptional_behavior
-//      @     requires o == null;
-//      @     signals_only NullPointerException;
-//      @*/
-//    public int compareTo(Object o);
+    /*@ 
+      @   public normal_behavior
+      @     requires o != null && (o instanceof Long);
+      @     ensures \result == compareTo((Long) o);
+      @ also
+      @   public exceptional_behavior
+      @     requires o != null && !(o instanceof Long);
+      @     signals_only ClassCastException;
+      @ also
+      @   public exceptional_behavior
+      @     requires o == null;
+      @     signals_only NullPointerException;
+      @*/
+    public int compareTo(Object o);
 
     //@ public normal_behavior
     //@   ensures \result == (b0*(0x100_0000_0000_0000L) + Byte.toUnsignedLong(b1)*(0x1_0000_0000_0000L) + Byte.toUnsignedLong(b2)*(0x100_0000_0000L) + Byte.toUnsignedLong(b3)*(0x1_0000_0000L) + Byte.toUnsignedLong(b4)*(0x100_0000L) + Byte.toUnsignedLong(b5)*(0x1_0000L) + Byte.toUnsignedLong(b6)*(0x100L) + Byte.toUnsignedLong(b7));

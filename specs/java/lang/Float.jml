@@ -27,7 +27,7 @@ package java.lang;
  * @author Gary T. Leavens
  */
 //+OPENJML@ immutable
-public /*@ pure @*/ final class Float extends Number implements Comparable {
+public /*@ pure @*/ final class Float extends Number implements Comparable<Float> {
     
     //@ public model float theFloat;
     //+RAC@ public represents theFloat = floatValue();
@@ -320,16 +320,16 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
       @*/
     public int compareTo(/*@ non_null @*/ Float anotherFloat);
 
-//    /*@ also
-//      @   public normal_behavior
-//      @     requires o != null && (o instanceof Float);
-//      @     ensures \result == compareTo((Float) o);
-//      @  also
-//      @   public exceptional_behavior
-//      @     requires o == null || !(o instanceof Float);
-//      @     signals_only ClassCastException;
-//      @*/
-//    public int compareTo(Object o);
+    /*@ 
+      @   public normal_behavior
+      @     requires o != null && (o instanceof Float);
+      @     ensures \result == compareTo((Float) o);
+      @  also
+      @   public exceptional_behavior
+      @     requires o == null || !(o instanceof Float);
+      @     signals_only ClassCastException;
+      @*/
+    public int compareTo(Object o);
 
     /*@ public normal_behavior
       @    assignable \nothing;
@@ -380,7 +380,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     */
     /*@ public static model pure boolean isNegativeZero( float a) {
           if (a != 0) return false;
-          return (new java.lang.Float(a)).equals(new java.lang.Float("-0.0f"));
+          return (java.lang.Float.valueOf(a)).equals(java.lang.Float.valueOf("-0.0f"));
         } 
       @*/          
       
@@ -389,7 +389,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable {
     */
     /*@ public static model pure boolean isPositiveZero( float a) {
           if (a != 0) return false;
-          return (new java.lang.Float(a)).equals(new java.lang.Float("+0.0f"));
+          return (java.lang.Float.valueOf(a)).equals(java.lang.Float.valueOf("+0.0f"));
         }    
       @*/ 
               

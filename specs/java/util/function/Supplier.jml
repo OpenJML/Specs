@@ -3,16 +3,14 @@ package java.util.function;
 @FunctionalInterface
 public interface Supplier<T> {
 
-    //-RAC@ model public instance nullable T value;
+    //-RAC@ model public instance nullable T valuex;
     
     //@ public behavior 
     //@     requires true; 
-    //-RAC@ ensures \result == value;
+    //-RAC@ ensures \result == valuex;
     /*@ nullable */ T get();
     
     
-    // FIXME - OpenJDK does not seem to recognize that Pure and PureNonNul extend Supplier
-    // amnd so complain when the specs below begin with 'also'
     /*@
 
     model public static interface Pure<T> extends Supplier<T> {
@@ -21,7 +19,7 @@ public interface Supplier<T> {
     }
 
     model public static interface PureNonNull<T> extends Supplier<T> {
-         //0-RAC@ public invariant value != null;
+         // -RAC@ public invariant valuex != null; // FIXME - Resolve gives a static misuse error on this use of valuex
          also public normal_behavior requires true;
          pure non_null T get();
     }
