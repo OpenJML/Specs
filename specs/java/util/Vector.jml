@@ -212,7 +212,7 @@ public class Vector<E> extends AbstractList<E>
       @    ensures !\key("RAC") ==> \result == -1 <==> (\forall int i; index<=i && i<size(); 
                                                 !Collection.nullequals(o,get(i)));
       @    ensures !\key("RAC") ==> \result != -1 ==> Collection.nullequals(o,get(\result));
-      @    ensures !\key("RAC") ==> (\forall int i; index<=i && i<\result; !nCollection.ullequals(o,get(i)));
+      @    ensures !\key("RAC") ==> (\forall int i; index<=i && i<\result; !Collection.nullequals(o,get(i)));
              // FIXME - exceptions
       @*/
     public synchronized /*@ pure @*/ int indexOf(Object o, int index);

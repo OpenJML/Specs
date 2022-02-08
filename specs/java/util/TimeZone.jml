@@ -6,8 +6,8 @@ public abstract class TimeZone implements java.io.Serializable,java.lang.Cloneab
   static final long serialVersionUID;
   static final java.util.TimeZone NO_TIMEZONE;
   static final java.lang.String GMT_ID;
-  static final boolean $assertionsDisabled;
-  public java.util.TimeZone();
+
+  public TimeZone();
   //public abstract int getOffset(int, int, int, int, int, int);
   //public int getOffset(long);
   //int getOffsets(long, int[]);
@@ -24,7 +24,8 @@ public abstract class TimeZone implements java.io.Serializable,java.lang.Cloneab
   public boolean observesDaylightTime();
   //public abstract boolean inDaylightTime(java.util.Date);
   //public static synchronized java.util.TimeZone getTimeZone(java.lang.String);
-  public static java.util.TimeZone getTimeZone(java.time.ZoneId);
+  public static java.util.TimeZone getTimeZone(java.time.ZoneId zone);
+
   public java.time.ZoneId toZoneId();
   //public static synchronized java.lang.String[] getAvailableIDs(int);
   public static synchronized java.lang.String[] getAvailableIDs();

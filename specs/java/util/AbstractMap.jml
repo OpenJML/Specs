@@ -24,8 +24,6 @@ package java.util;
 //@ non_null_by_default
 public abstract class AbstractMap<K,V> implements Map<K,V> {
     /*-RAC@ public normal_behavior
-      @   ensures modelMap != null; // TODO - should not be needed
-      @   ensures keys != null; // TODO - should not be needed
       @   ensures \result <==> isEmpty();
       @ public pure model boolean initialAbstractMap();
       @*/

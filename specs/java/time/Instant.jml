@@ -55,6 +55,7 @@ public final class Instant implements java.time.temporal.Temporal, java.time.tem
   */
   //@ public normal_behavior
   //@   ensures \result == (Long.MIN_VALUE <= 1000*seconds <= (Long.MAX_VALUE-1000));
+  //@ pure
   //@ model public static boolean okEpochMilliForLong(\bigint seconds, \bigint nanos);
  
   //@ public normal_behavior

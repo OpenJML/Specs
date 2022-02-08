@@ -854,23 +854,29 @@ public final class String
     //@ public normal_behavior
     //@   requires s1 != null && s2 != null;
     //@   requires s1.charArray.length + s2.charArray.length <= Integer.MAX_VALUE;
+    //@   ensures \result.charArray != null; // FIXME - should be implict because of invariants?
     //@   ensures \result.length() == s1.length() + s2.length();
     //@   ensures java.util.Arrays.equalArrays(\result.charArray,0,s1.charArray,0,s1.length());
     //@   ensures java.util.Arrays.equalArrays(\result.charArray,s1.length(),s2.charArray,0,s2.length());
     //@ also public normal_behavior
     //@   requires !(s1 != null && s2 != null && s1.charArray.length + s2.charArray.length <= Integer.MAX_VALUE);
+    //@   ensures \result.charArray != null; // FIXME - should be implict because of invariants?
     //@ public model static pure non_null String concat(nullable String s1, nullable String s2);
 
     /** This is the method version of the infix + operation */
     //@ public normal_behavior
     //@     requires str == null; 
+    //@     ensures \result.charArray != null; // FIXME - should be implict because of invariants?
+    //@     ensures \result.length() == length() + 4;
     //@ also public normal_behavior
     //@     requires str != null; 
+    //@     ensures \result.charArray != null; // FIXME - should be implict because of invariants?
+    //@     ensures \result.length() == length() + str.length();
     //-RAC@ ensures \result.equals(concat(this,str));
     public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*@  public normal_behavior
-      @   ensures \result.charArray.__owner == \result;
+      @   ensures ((Object)\result.charArray).__owner == \result;
       @   ensures \result.length() == length()
       @            && (\forall int i; 0 <= i && i < length();
       @                  \result.charAt(i) 

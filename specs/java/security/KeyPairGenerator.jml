@@ -66,7 +66,7 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       public void initialize(java.security.spec.AlgorithmParameterSpec alg, SecureRandom random) throws InvalidAlgorithmParameterException;
       public final KeyPair genKeyPair();
       
-      //@ public normal_behavior
+      //@ also public normal_behavior
       //@   ensures \fresh(\result);
       //@   ensures \result.getPublic() instanceof DHPublicKey ==> 0 <= ((DHPublicKey)\result.getPublic()).getY().value < java.math.BigInteger.pow256(this.n);
       //@   ensures \result.getPublic().getEncoded() != null;

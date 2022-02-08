@@ -1,8 +1,8 @@
 package java.lang;
 //@ non_null_by_default // NOTE: This is not publicly visible
 abstract class AbstractStringBuilder implements Appendable,CharSequence {
-    byte[] value; //@ in _value;
-    int count; //@ in _value;
+    public byte[] value; //@ in _value;
+    public int count; //@ in _value;
     
     // Present in some but not all Java builds
     //private static final int MAX_ARRAY_SIZE;

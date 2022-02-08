@@ -49,13 +49,13 @@ public interface Comparable<T> {
       @ model static pure int sgn(int i);
       @*/
 
-//    /*@ public normal_behavior
-//      @    requires true;
-//      @    ensures \result ==> \typeof(o) <: \type(T);
-//      @ // subclasses may strengthen this contract.
-//      @ public model pure boolean
-//      @ definedComparison(non_null Object o);
-//      @*/
+    /*@ public normal_behavior
+      @    requires true;
+      @    ensures \result ==> \typeof(o) <: \type(T);
+      @ // subclasses may strengthen this contract.
+      @ public model pure boolean
+      @ definedComparison(non_null Object o);
+      @*/
     
     /** Override consistentWithEquals to indicate whether a given class's compareTo ordering
      * is consistent with equals: a.equals(b) <==> a.compareTo(b) ==0.  

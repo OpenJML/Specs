@@ -728,7 +728,7 @@ public /*@ pure @*/ final class StrictMath {
         }
     
         public static model pure boolean isNegativeZero( double a) {
-          return Double.valueOf(a).equals(Double.parseDoulbe("-0.0"));
+          return Double.valueOf(a).equals(Double.parseDouble("-0.0"));
         }
     
         public static model pure boolean isPositiveZero( float a) {

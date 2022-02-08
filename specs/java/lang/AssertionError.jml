@@ -8,30 +8,30 @@ public class AssertionError extends java.lang.Error {
     /*@ pure */ public AssertionError();
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(java.lang.Object o);
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(boolean b);
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(char c);
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(int i);
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(long l);
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(float f);
 
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowableUnspecifiedMessage;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
     /*@ pure */ public AssertionError(double d);
 }
