@@ -2,14 +2,14 @@ package java.util.concurrent;
 // SInce 1.5
 
 //@ immutable
-public enum TimeUnit { // FIXME - change to enum?
-     NANOSECONDS,
-     MICROSECONDS,
-     MILLISECONDS,
-     SECONDS,
-     MINUTES,
-     HOURS,
-     DAYS;
+public enum TimeUnit {
+     NANOSECONDS(1L),
+     MICROSECONDS(1000L),
+     MILLISECONDS(1000000L),
+     SECONDS(1000000000L),
+     MINUTES(60*1000000000L),
+     HOURS(60*60*1000000000L),
+     DAYS(24*60*60*1000000000L);
 
     //@ model public long _scale;
     //@ public final static invariant NANOSECONDS._scale == 1L;
@@ -28,61 +28,80 @@ public enum TimeUnit { // FIXME - change to enum?
   //@  requires u._scale <= this._scale;
   //@  ensures \result == t / (this._scale / u._scale);
   //@ also public normal_behavior
-  //@  requires u._scale > this._scale && t <= Long.MAX_VALUE / (u._scale / this._scale) && t >= Long.MIN_VALUE / (u._scale / this._scale);
+  //@  requires u._scale > this._scale && Long.MIN_VALUE <= t * (u._scale / this._scale) <= Long.MAX_VALUE;
   //@  ensures \result == t * (u._scale / this._scale);
   //@ also public normal_behavior
-  //@  requires u._scale > this._scale && t > Long.MAX_VALUE / (u._scale / this._scale);
+  //@  requires u._scale > this._scale && t * (u._scale / this._scale) > Long.MAX_VALUE;
   //@  ensures \result == Long.MAX_VALUE;
   //@ also public normal_behavior
-  //@  requires u._scale > this._scale && t < Long.MIN_VALUE / (u._scale / this._scale);
+  //@  requires u._scale > this._scale && t * (u._scale / this._scale) < Long.MIN_VALUE;
   //@  ensures \result == Long.MIN_VALUE;
   //@ pure function
   public long convert(long t, TimeUnit u);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
+  //@  requires t <= Long.MAX_VALUE/_scale;
   //@  ensures \result == t * this._scale / NANOSECONDS._scale;
   //@ pure function
   public long toNanos(long t);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * this._scale / MICROSECONDS._scale;
+  //@   requires this._scale >= MICROSECONDS._scale;
+  //@   requires Long.MIN_VALUE <= t * (this._scale / MICROSECONDS._scale) <= Long.MAX_VALUE;
+  //@   ensures \result == t * (this._scale / MICROSECONDS._scale);
+  //@ also public normal_behavior
+  //@   requires this._scale < MICROSECONDS._scale;
+  //@   ensures \result == t / (MICROSECONDS._scale / this._scale);
   //@ pure function
   public long toMicros(long t);
   
   //@ public normal_behavior
   //@   requires this._scale >= MILLISECONDS._scale;
-  //@   requires t <= Long.MAX_VALUE/(this._scale / MILLISECONDS._scale);
+  //@   requires Long.MIN_VALUE <= t * (this._scale / MILLISECONDS._scale) <= Long.MAX_VALUE;
   //@   ensures \result == t * (this._scale / MILLISECONDS._scale);
   //@ also public normal_behavior
   //@   requires this._scale < MILLISECONDS._scale;
   //@   ensures \result == t / (MILLISECONDS._scale / this._scale);
-  
   //@ pure function
   public long toMillis(long t);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * this._scale / SECONDS._scale;
+  //@   requires this._scale >= SECONDS._scale;
+  //@   requires Long.MIN_VALUE <= t * (this._scale / SECONDS._scale) <= Long.MAX_VALUE;
+  //@   ensures \result == t * (this._scale / SECONDS._scale);
+  //@ also public normal_behavior
+  //@   requires this._scale < SECONDS._scale;
+  //@   ensures \result == t / (SECONDS._scale / this._scale);
   //@ pure function
   public long toSeconds(long t);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * this._scale / MINUTES._scale;
+  //@   requires this._scale >= MINUTES._scale;
+  //@   requires Long.MIN_VALUE <= t * (this._scale / MINUTES._scale) <= Long.MAX_VALUE;
+  //@   ensures \result == t * (this._scale / MINUTES._scale);
+  //@ also public normal_behavior
+  //@   requires this._scale < MINUTES._scale;
+  //@   ensures \result == t / (MINUTES._scale / this._scale);
   //@ pure function
   public long toMinutes(long t);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * this._scale / HOURS._scale;
+  //@   requires this._scale >= HOURS._scale;
+  //@   requires Long.MIN_VALUE <= t * (this._scale / HOURS._scale) <= Long.MAX_VALUE;
+  //@   ensures \result == t * (this._scale / HOURS._scale);
+  //@ also public normal_behavior
+  //@   requires this._scale < HOURS._scale;
+  //@   ensures \result == t / (HOURS._scale / this._scale);
   //@ pure function
   public long toHours(long t);
   
   //@ public normal_behavior
-  //@  requires t <= Long.MAX_VALUE/scale;
-  //@  ensures \result == t * this._scale / DAYS._scale;
+  //@   requires this._scale >= DAYS._scale;
+  //@   requires Long.MIN_VALUE <= t * (this._scale / DAYS._scale) <= Long.MAX_VALUE;
+  //@   ensures \result == t * (this._scale / DAYS._scale);
+  //@ also public normal_behavior
+  //@   requires this._scale < DAYS._scale;
+  //@   ensures \result == t / (DAYS._scale / this._scale);
   //@ pure function
   public long toDays(long t);
 
@@ -90,7 +109,8 @@ public enum TimeUnit { // FIXME - change to enum?
  // public void timedWait(java.lang.Object, long) throws java.lang.InterruptedException;
 //  public void timedJoin(java.lang.Thread, long) throws java.lang.InterruptedException;
 //  public void sleep(long) throws java.lang.InterruptedException;
-// FIXME  TimeUnit(java.lang.String, int, TimeUnit$1);
+
+  private TimeUnit(long v);
 
 //  static {};
 }

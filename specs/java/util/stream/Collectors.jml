@@ -20,7 +20,7 @@ public final class Collectors {
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
     //@ pure function helper
-    public static <T> /*@{ SimpleListCollector<T,?> }*/ Collector<T, ?, java.util.List<T>> toList();
+    public static <T> /*@[ SimpleListCollector<T,?> ]*/ Collector<T, ?, java.util.List<T>> toList();
 
     //@ public normal_behavior
     //@   ensures \result != null;
