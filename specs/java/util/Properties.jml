@@ -14,7 +14,7 @@ public class Properties extends Hashtable<Object,Object> {
       @*/
 
     //@ spec_public
-    protected Properties defaults;
+    volatile protected Properties defaults;
 
     //@ public normal_behavior
     //@    ensures initialProperties(null);
