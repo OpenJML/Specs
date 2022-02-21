@@ -26,11 +26,11 @@ public abstract class VirtualMachineError extends Error {
     //@ public normal_behavior
     //-RAC@   ensures standardThrowable();
     //@ pure
-    public /*@ pure @*/ VirtualMachineError();
+    public VirtualMachineError();
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowable(message);
     //@ pure
-    public /*@ pure @*/ VirtualMachineError(String message);
+    public VirtualMachineError(String message);
 }
 

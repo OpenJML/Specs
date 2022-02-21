@@ -49,13 +49,13 @@ public interface Comparable<T> {
       @ model static pure int sgn(int i);
       @*/
 
-//    /*@ public normal_behavior
-//      @    requires true;
-//      @    ensures \result ==> \typeof(o) <: \type(T);
-//      @ // subclasses may strengthen this contract.
-//      @ public model pure boolean
-//      @ definedComparison(non_null Object o);
-//      @*/
+    /*@ public normal_behavior
+      @    requires true;
+      @    ensures \result ==> \typeof(o) <: \type(T);
+      @ // subclasses may strengthen this contract.
+      @ public model pure boolean
+      @ definedComparison(non_null Object o);
+      @*/
     
     /** Override consistentWithEquals to indicate whether a given class's compareTo ordering
      * is consistent with equals: a.equals(b) <==> a.compareTo(b) ==0.  
@@ -68,7 +68,7 @@ public interface Comparable<T> {
     /** This declares that the value of consistentWithEquals() is the same for all members of a class.
      * (We don't make consistentWithEquals static so it can be overridden and dynamically dispatched.)
      */
-    // the variable in a forall is not null
+    // the variable in a \forall is not null
     // FIXME @ public invariant (\forall Comparable<T> o; \typeof(o) == \typeof(this) ==> o.consistentWithEquals() == this.consistentWithEquals());
 
     // FIXME @ public invariant consistentWithEquals() ==> (\forall T o; equals(o) <==> compareTo(o) == 0);

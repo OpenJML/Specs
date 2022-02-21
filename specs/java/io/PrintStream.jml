@@ -112,7 +112,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText;
     @   ensures endsInNewLine & isOpen;
-    @   ensures x != null ==> outputText.equals(\old(outputText) + x + eol);
+    @   ensures x != null ==> outputText == String.concat(String.concat(\old(outputText), x), eol);
     @*/
     //+RAC@ assigns objectState;
     public void println(/*@ nullable */String x);
@@ -121,7 +121,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText;
     @   ensures isOpen;
-    @   //ensures s != null ==> outputText.equals(\old(outputText) + s);
+    @   ensures s != null ==> outputText == String.concat(\old(outputText),s);
     @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s;
     @*/
     public void print(/*@ nullable */String s);

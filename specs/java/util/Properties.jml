@@ -14,7 +14,7 @@ public class Properties extends Hashtable<Object,Object> {
       @*/
 
     //@ spec_public
-    protected Properties defaults;
+    volatile protected Properties defaults;
 
     //@ public normal_behavior
     //@    ensures initialProperties(null);
@@ -78,7 +78,6 @@ public class Properties extends Hashtable<Object,Object> {
       @*/
     /*@ also public exceptional_behavior
       @   requires key == null || value == null;
-      @   assignable \not_specified;
       @   signals_only NullPointerException;
       @*/
     public synchronized Object setProperty(String key, String value) throws NullPointerException;

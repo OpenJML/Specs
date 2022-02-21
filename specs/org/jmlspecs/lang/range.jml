@@ -1,0 +1,16 @@
+package org.jmlspecs.lang;
+
+//@ immutable pure 
+public class range implements IJmlPrimitiveType {
+	
+	private range();
+	
+	//@ public normal_behavior
+	//@   ensures this.lo == lo;
+	//@   ensures this.hi == hi;
+	//@ model pure function helper public range range(\bigint lo, \bigint hi);
+	
+	//@ ghost public \bigint lo;
+	//@ ghost public \bigint hi;
+	
+}

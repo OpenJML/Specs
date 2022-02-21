@@ -7,6 +7,6 @@ public interface FileFilter {
     // only a default specification - no exceptions though
     //@ public normal_behavior
     //@   requires true;
-    //@   assignable \not_specified;
+    //@   assignable \everything;
     public boolean accept(java.io.File file);
 }

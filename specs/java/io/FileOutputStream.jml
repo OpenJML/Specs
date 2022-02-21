@@ -40,7 +40,6 @@ public class FileOutputStream extends OutputStream {
     /*-RAC@
       @ public normal_behavior
       @   requires name != null;
-      @   assignable \not_specified;
       @   ensures !wasClosed && isOpen && outputBytes.length == 0 
       @           && this.append_flag == append;
       @ also
@@ -54,7 +53,6 @@ public class FileOutputStream extends OutputStream {
     /*-RAC@
       @ public normal_behavior
       @   requires file != null;
-      @   assignable \not_specified;
       @   ensures !wasClosed && isOpen && outputBytes.length == 0 
       @           && this.append_flag == false;
       @ also
@@ -68,7 +66,6 @@ public class FileOutputStream extends OutputStream {
     /*-RAC@
       @ public normal_behavior
       @   requires file != null;
-      @   assignable \not_specified;
       @   ensures !wasClosed && isOpen && outputBytes.length == 0 
       @           && this.append_flag == append;
       @ also
@@ -81,7 +78,6 @@ public class FileOutputStream extends OutputStream {
 
     /*-RAC@
       @ public normal_behavior
-      @   assignable \not_specified;
       @   ensures !wasClosed && isOpen && outputBytes.length == 0 
       @           && this.append_flag == false && fd == fdObj;
       @ also

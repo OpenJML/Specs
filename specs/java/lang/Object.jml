@@ -240,11 +240,9 @@ public class Object {
     //@   requires timeoutMillis >= 0L;
     //@   requires 0 <= nanos;
     //@   requires nanos < 1000000;
-    //@   assignable \not_specified;
           // FIXME also check thread ownership - IllegalMonitorStateException
     //@ also public exceptional_behavior
     //@   requires timeoutMillis < 0 || nanos < 0 || nanos >= 1000000;
-    //@   assignable \not_specified;
     //@   signals_only IllegalArgumentException;
     public final void wait(long timeoutMillis, int nanos)
         throws InterruptedException;

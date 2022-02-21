@@ -36,14 +36,13 @@ public interface Collection<E> extends Iterable<E> {
 
     //-RAC@ model public instance JMLDataGroup localState; in objectState;
 
-    /** A utility method that compares possibly-null objects with equals,
+    /** A utility method that compares possibly-null objects,
         according to how the Collection classes do the comparison. 
         The presumption that o==oo ==> o.equals(oo) for non-null o,oo is
         also used to help proofs along.
      */
     /*@ public normal_behavior
-      @   ensures \result <==> ( o==oo || (o != null && oo != null && (o.uniqueHash == oo.uniqueHash || o.equals(oo))));  // FIXME - but equals is not necessarily pure
-      @   //ensures \result <==> ( o==oo || (o != null && oo != null && (o.equals(oo))));  // FIXME - but equals is not necessarily pure
+      @   ensures \result == ( o==oo || (o != null && oo != null && (o.uniqueHash == oo.uniqueHash)));
       @ static public model pure helper function boolean nullequals(nullable Object o, nullable Object oo);
       @*/
     
@@ -68,13 +67,14 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     /*@ pure @*/ boolean isEmpty();
     
-    //@ public normal_behavior
-    //@       ensures size() == 0 ==> !\result;
-    //-RAC@   ensures (containsObject(o) ==> \result);
-    //@   //ensures \result <==> (\exists Object oo; containsObject(oo) &&  oo.equals(o)); // FIXME - this crashes Simplify
+    /*-RAC@ public behavior
+      @   ensures values.length == 0 ==> !\result;
+      @   ensures \result == (\exists int i; 0 <= i < values.length; Collection.nullequals(o,values[i]));
           // various exceptions may get thrown, but are optional,
           // so they are specified in the implementing classes
-    // @   signals_only ClassCastException,NullPointerException; // FIXME
+      @   signals (NullPointerException) o == null;   // but o==null might be allowed also
+      @   signals_only ClassCastException,NullPointerException;
+      @*/
     /*@ pure @*/ boolean contains(/*@ nullable */ Object o);
 
 
@@ -136,15 +136,14 @@ public interface Collection<E> extends Iterable<E> {
       @*/
     <T> T[] toArray(T[] a) throws NullPointerException, ArrayStoreException;
 
-    /*-RAC@ public normal_behavior
+    /*-RAC@ public behavior
+      @   requires containsNull || o != null;
       @   assignable values; 
       @   ensures \result == false ==> values == \old(values);
       @   ensures \result == true ==> values.length == \old(values.length+1);
-      @   // ensures containsObject(o);  // FIXME - adjust for equals -- createsinefasibility
-      @   // ensures (\forall Object _o; \old(containsObject(_o)) ==> containsObject(_o));
-      @   // ensures (\forall Object oo; o != oo; containsObject(oo) ==> \old(containsObject(oo)));
-      @   // ensures \old(containsObject(null)) ==> containsObject(null);
-      @   // ensures o != null ==> (containsObject(null) ==> \old(containsObject(null)));
+      @   ensures \exists \bigint i; 0 <= i < values.length; values[i] == o;
+      @   signals (Exception) values == \old(values);
+      @   signals_only Exception;
       @*/
 
            // Various unspecified exceptions may be thrown if the element
@@ -158,8 +157,6 @@ public interface Collection<E> extends Iterable<E> {
       @   ensures \not_modified(containsNull);
       @   ensures \result ==> values.length == \old(values.length-1);
       @   ensures !\result ==> values.length == \old(values.length);
-      @   //ensures (\forall Object oo; !oo.equals(o); \old(containsObject(oo)) ==> containsObject(oo));
-      @   //ensures (\forall Object oo; containsObject(oo) ==> \old(containsObject(oo)));
 
           // Various unspecified exceptions may be thrown if the element
           // is not allowed to be removed from the Collection, or the remove

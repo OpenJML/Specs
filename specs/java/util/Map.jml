@@ -90,8 +90,8 @@ public interface Map<K,V> {
           @*/
     }
 
-    //-RAC@ model public instance non_null intmap<V> modelMap; in objectState;
-    //-RAC@ model public instance non_null intset keys; in objectState;
+    //-RAC@ model public instance intmap<V> modelMap; in objectState;
+    //-RAC@ model public instance intset keys; in objectState;
     //-RAC@ model public instance V nullValue;
     //-RAC@ model public instance boolean nullPresent;
     //-RAC@ model public instance \bigint _size; in objectState;

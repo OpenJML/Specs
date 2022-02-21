@@ -50,14 +50,7 @@ public interface List<E> extends Collection<E> {
     //@ pure
     boolean isEmpty();
 
-    //@ also public normal_behavior
-    //@   requires o == null;
-    //-RAC@   ensures \result == !(\forall int i; 0<=i && i<size(); values[i] != null);
-    //+RAC@   ensures \result == !(\forall int i; 0<=i && i<size(); get(i) != null);
-    //@ also public behavior
-    //@   requires o != null;
-    //-RAC@   ensures (\result <==> (\exists int i; 0<=i && i<size(); Collection.nullequals(o,values[i])));
-    //@ pure
+    // specification inherited
     boolean contains(/*@nullable*/ Object o);
 
     /*@ also
@@ -104,20 +97,21 @@ public interface List<E> extends Collection<E> {
       @   |}
       @ also public exceptional_behavior
       @   requires a == null;
-      @   assignable \not_specified;
       @   signals_only NullPointerException;
 
               // FIXME - spec the exceptions
       @*/
     <T> T[] toArray(T[] a) throws NullPointerException;
 
-    /*-RAC@ also public normal_behavior
+    /*-RAC@ also public behavior
+      @   requires containsNull || o != null;
       @   assignable values;
-      @   ensures values.length == \old(values.length+1); 
+      @   ensures \result;
+      @   ensures values == \old(values).add(o); 
       @   ensures values[values.length-1] == o;
       @   ensures \forall \bigint i; 0 <= i < values.length-1; 
       @                    values[i] == \old(values[i]); 
-      @   ensures \result;
+      @   ensures contains(o);
       @*/
     boolean add(E o);
 
@@ -286,9 +280,10 @@ public interface List<E> extends Collection<E> {
 
     /*@ public behavior
       @   ensures -1 <= \result < size();
-      @   //-RAC@ ensures \result >= 0 ==> o.equals(values[\result]);
-      @   //-RAC@ ensures (\forall int i; 0 <= i < \result; !o.equals(values[i]));
-      @   //-RAC@ ensures \result == -1 ==> (\forall int i; 0 <= i < size(); !o.equals(values[i]));
+      @   ensures \result == -1 <==> !contains(o);
+      @   //-RAC@ ensures \result >= 0 ==> Collection.nullequals(o, values[\result]);
+      @   //-RAC@ ensures (\forall int i; 0 <= i < \result; !Collection.nullequals(o, values[i]));
+      @   //-RAC@ ensures \result == -1 <==> (\forall int i; 0 <= i < size(); !Collection.nullequals(o, values[i]));
       @   signals_only ClassCastException, NullPointerException;
       @   signals (ClassCastException)
       @           (* class of specified element is incompatible with this *);
@@ -296,13 +291,7 @@ public interface List<E> extends Collection<E> {
       @            (* element is null and null elements are not
       @               supported by this *);
       @*/
-    /*-RAC@   ensures \result != -1 ==> Collection.nullequals(o,values[\result]);
-      @       ensures (\forall \bigint i; (0 <= i < \result) ==> !Collection.nullequals(o,values[i]): Collection.nullequals(o, values[i]));
-      @       ensures \result == -1 <==>
-                      (\forall \bigint i; (0 <= i < size()) ==> !Collection.nullequals(o, values[i]): Collection.nullequals(o, values[i]));
-      @   //ensures \result == -1 <==> !contains(o);
-      @*/
-    /*@ pure @*/ int indexOf(Object o);
+    /*@ pure @*/ int indexOf(/*@ nullable*/Object o);
 
     /*@ public behavior
       @   ensures \result >= -1 && \result < size();

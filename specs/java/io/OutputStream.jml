@@ -37,7 +37,7 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     //-RAC@ public model JMLDataGroup output; in objectState;
 
     /** The bytes that are to be (or have been) output. */
-    //-RAC@ public model non_null byte[] outputBytes; in output;
+    //-RAC@ public model non_null byte[] outputBytes; in output; // FIXME - fix position of non_null
 
     
     /** Is this file open? */

@@ -47,10 +47,10 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       //@ also public normal_behavior
       //@   ensures true;
       //@ pure
-      public default BaseStream sequential();
-      public default BaseStream parallel();
-      public default java.util.Iterator iterator();
-      public default java.util.Spliterator spliterator();
+      public default IntStream sequential();
+      public default IntStream parallel();
+      public default java.util.PrimitiveIterator.OfInt iterator();
+      public default java.util.Spliterator.OfInt spliterator();
       public static IntStream.Builder builder();
       
       //@ public normal_behavior

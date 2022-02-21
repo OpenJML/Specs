@@ -1,0 +1,9 @@
+package java.security;
+
+public abstract class KeyPairGeneratorSpi {
+  public KeyPairGeneratorSpi();
+  public abstract void initialize(int seed, SecureRandom random);
+  public void initialize(java.security.spec.AlgorithmParameterSpec spec, SecureRandom random) throws InvalidAlgorithmParameterException;
+  public abstract KeyPair generateKeyPair();
+}
+

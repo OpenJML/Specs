@@ -25,7 +25,7 @@ public final class Objects {
   public static int hash(Object... values);
   
   //@ public normal_behavior
-  //@   ensures \result == (o == null ? "null" : o.toString());
+  //@   ensures \result == (o == null ? "null" : o.ptoString());
   //@ pure function
   public static String toString(/*@ nullable */Object o);
   
