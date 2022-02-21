@@ -29,7 +29,7 @@ package java.util;
  * @author David Cok
  * @author Erik Poll
  * @author Mikolas Janota
- */
+ */ //@ non_null_by_default
 public class Vector<E> extends AbstractList<E>
        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 {

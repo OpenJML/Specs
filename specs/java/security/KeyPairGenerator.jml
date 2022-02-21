@@ -28,12 +28,13 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       //@ pure function
       //@ model public static boolean algorithmIsSupported(String algorithm);
       
+/*
       //@ private behavior
       //@   ensures \fresh(\result);
       //@   signals_only NoSuchAlgorithmException;
       //@ pure
       private static KeyPairGenerator getInstance(sun.security.jca.GetInstance.Instance inst, java.lang.String s);
-      
+ */     
       //@ public normal_behavior
       //@   requires algorithmIsSupported(algorithm);
       //@   ensures \fresh(\result);
