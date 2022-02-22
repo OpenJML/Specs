@@ -26,19 +26,19 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //@ public instance model char non_null [] charArray; 
+    //-RAC@ public instance model char non_null [] charArray; 
 	//-RAC@ public invariant charArray != null; // FIXME - why this when there is a non_null declaration
     
     //@ public normal_behavior ensures \result == c.__owner;
     //@ model pure function public static Object owner(Object c);
     
-    //@ public normal_behavior ensures \result == c.charArray;
-    //@ model pure function public static Object content(CharSequence c);
+    //-RAC@ public normal_behavior ensures \result == c.charArray;
+    //-RAC@ model pure function public static Object content(CharSequence c);
     
     // FIXME @ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
 
     /*@ public normal_behavior
-      @   ensures \result <==> ( charArray != null && charArray.__owner == this);
+      @   //-RAC@ ensures \result <==> ( charArray != null && charArray.__owner == this);
       @ public pure helper model boolean initialCharSequence();
       @*/
 
@@ -75,7 +75,7 @@ public interface CharSequence {
     //@ pure
     int length();
 
-    /*@   public normal_behavior
+    /*-RAC@   public normal_behavior
       @      requires 0 <= index < charArray.length;
       @      ensures  \result == charArray[index];
       @  also
@@ -86,7 +86,7 @@ public interface CharSequence {
     //@ pure helper
     char charAt(int index) throws IndexOutOfBoundsException;
 
-    /*@   public normal_behavior
+    /*-RAC@   public normal_behavior
       @      requires 0 <= start <= end <= charArray.length;
       @      ensures \result != null;
       @      ensures \result.charArray.length == end-start;
@@ -102,7 +102,7 @@ public interface CharSequence {
     CharSequence subSequence(int start, int end)
         throws IndexOutOfBoundsException;
 
-    /*@ also
+    /*-RAC@ also
       @    public normal_behavior
       @      ensures \result != null
       @           && equal(\result.charArray,charArray);

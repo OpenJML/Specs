@@ -48,7 +48,7 @@ public final class Optional<T> {
   //-RAC@ also public exceptional_behavior
   //-RAC@   requires value == null;
   //-RAC@   signals_only NoSuchElementException;
-  //-RAC@ pure function helper
+  //@ pure function helper
   public T get();
   
   //@ public normal_behavior
@@ -104,7 +104,12 @@ public final class Optional<T> {
   //@ pure  // FIXME - really only pure if the lambda expression is pure
   public <X extends java.lang.Throwable> T orElseThrow( Supplier<? extends X> exceptionSupplier) throws X;
 
+  // inherited
   public boolean equals(java.lang.Object o);
+  
+  // inherited
   public int hashCode();
+  
+  // inherited
   public java.lang.String toString();
 }
