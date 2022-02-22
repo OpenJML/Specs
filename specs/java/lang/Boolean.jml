@@ -82,7 +82,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ axiom (\forall String s,ss; s.equals(ss); decode(s) == decode(ss));
 
     /*@ public normal_behavior
-      @   ensures theBoolean == decode(s);
+      @   //-RAC@ ensures theBoolean == decode(s);
       @*/
     public /*@ pure @*/ Boolean(/*@ nullable */ String s);
     
@@ -114,8 +114,8 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
 
     /*@ also
       @ public normal_behavior
-      @   ensures decode(\result) == theBoolean;
-      @   ensures \result == canonicalString(theBoolean);
+      @   //-RAC@ ensures decode(\result) == theBoolean;
+      @   //-RAC@ensures \result == canonicalString(theBoolean);
       @*/
     //@ pure helper function
     public String toString();
