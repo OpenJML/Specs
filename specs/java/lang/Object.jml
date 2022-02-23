@@ -61,11 +61,11 @@ public class Object {
       @*/
     public final /*@ pure non_null */ Class<?> getClass();
 
-    //  -RAC@ public model int theHashCode; in objectState;
+    //-RAC@ public model int theHashCode; in objectState;
 
     //@ public normal_behavior
     //@     assignable privateState;
-    //  -RAC@ ensures \result == theHashCode;  
+    //-RAC@ ensures \result == theHashCode;  
     //@ also public code normal_behavior
     //@     assignable privateState;
     //@     ensures \result == System.identityHashCode(this);

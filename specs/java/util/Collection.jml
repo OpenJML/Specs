@@ -45,7 +45,7 @@ public interface Collection<E> extends Iterable<E> {
       @   ensures \result == ( o==oo || (o != null && oo != null && (o.uniqueHash == oo.uniqueHash)));
       @ static public model pure helper function boolean nullequals(nullable Object o, nullable Object oo);
       @*/
-    
+        // FIXME - use Objects.equals for the above?
 
 
 

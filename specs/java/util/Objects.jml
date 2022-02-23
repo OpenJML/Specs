@@ -15,7 +15,7 @@ public final class Objects {
   public static boolean deepEquals(/*@ nullable */Object obj1, /*@ nullable */Object obj2);
   
   //@ public normal_behavior
-  //@   ensures \result == (o == null ? 0 : o.hashCode());
+  //@   //-RAC@ ensures \result == (o == null ? 0 : o.theHashCode);
   //@ pure function
   public static int hashCode(/*@ nullable */Object o);
   
@@ -25,12 +25,12 @@ public final class Objects {
   public static int hash(Object... values);
   
   //@ public normal_behavior
-  //@   ensures \result == (o == null ? "null" : o.ptoString());
+  //@   //-RAC@ ensures \result == (o == null ? "null" : o.ptoString());
   //@ pure function
   public static String toString(/*@ nullable */Object o);
   
   //@ public normal_behavior
-  //@   ensures \result == (o == null ? nullDefault : o.toString());
+  //@   //-RAC@ ensures \result == (o == null ? nullDefault : o.ptoString());
   //@ pure function
   public static /*@ nullable */ String toString(/*@ nullable */Object o, /*@ nullable */String nullDefault);
 
