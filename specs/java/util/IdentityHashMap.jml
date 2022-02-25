@@ -43,12 +43,14 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@   requires o == null || \typeof(o) <: \type(K);
   //@   ensures \result == (_keyset.contains((K)o) ? _map.get((K)o) : null);
   //@ pure nullable
+  @SuppressWarnings("unchecked")
   public V get(Object o);
   
   //@ also public normal_behavior
   //@   requires o == null || \typeof(o) <: \type(K);
   //@   ensures \result == _keyset.contains((K)o);
   //@ pure
+  @SuppressWarnings("unchecked")
   public boolean containsKey(/*(@ nullable */ Object o);
 
   //@ also public normal_behavior
@@ -76,6 +78,7 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@ also public normal_behavior
   //@   requires !_keyset.contains((K)o);
   //@   writes \nothing;
+  @SuppressWarnings("unchecked")
   public V remove(Object o);
   
   //@ also public normal_behavior
@@ -87,6 +90,7 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@   old IdentityHashMap<K,V> m = (IdentityHashMap)o;
   //@   ensures \result == (this.size == m.size && this._keyset == m._keyset && (\forall K k; _keyset.contains(k); this._map.get(k) == m._map.get(k)));
   //@ pure
+  @SuppressWarnings("unchecked")
   public boolean equals(Object o); // TODO
   
   //@ also public normal_behavior

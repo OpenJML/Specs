@@ -378,6 +378,7 @@ public class Arrays {
       @            \exists int j; 0 <= j < a.length; i == perm[j];
       @
       @*/
+    @SuppressWarnings("unchecked")
     public static void sort(Object[] a);
 
     /*@  public normal_behavior
@@ -413,6 +414,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
+    @SuppressWarnings("unchecked")
     public static void sort(Object[] a, int fromIndex, int toIndex);
 
     /*@  public normal_behavior
@@ -441,6 +443,7 @@ public class Arrays {
       @   signals (ClassCastException)
       @     (* array contains elements not mutually comparable *);
       @*/
+    @SuppressWarnings("unchecked")
     public static <T>void sort(T[] a, /*@nullable*/ Comparator<? super T> c);
 
     /*@  public normal_behavior
@@ -493,6 +496,7 @@ public class Arrays {
       @   signals (ArrayIndexOutOfBoundsException) 
       @            fromIndex < 0 || toIndex > a.length;
       @*/
+    @SuppressWarnings("unchecked")
     public static <T> void sort(T[] a, int fromIndex, int toIndex, /*@nullable*/ Comparator<? super T> c);
 
     //------------------------------------------------------------------------
@@ -766,6 +770,7 @@ public class Arrays {
       @   signals (ClassCastException) 
       @            (* array contains elements not comparable to key *);
       @*/
+    @SuppressWarnings("unchecked")
     public static int binarySearch(Object[] a, Object key);
 
 //    /*@  public normal_behavior
@@ -1540,11 +1545,12 @@ public class Arrays {
     //@       ensures \result.size() == a.length;
     //-RAC@  ensures (\forall int i; 0 <= i < a.length; \result.values[i] == a[i]);
     //        ensures \nonnullelements(a) ==> \nonnullelements(\result.values);
+
     //@ also public exceptional_behavior
     //@   requires a == null;
     //@   signals_only NullPointerException;
     //@ pure
-    @SuppressWarnings("varargs-unchecked")
+    @SuppressWarnings({"unchecked","varargs-unchecked"})
     public static <T> /*@ non_null @*/ List<T> asList(/*@ nullable @*/T ... a) throws NullPointerException;
 
     //-----------------------------------------------------------------------

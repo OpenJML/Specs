@@ -217,6 +217,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   ensures \result.values.length == values.length;
     //@   ensures (\forall int i; 0 <= i < values.length; \result.values[i] == values[i]);
     //@ pure
+    @SuppressWarnings("unchecked")
     public static <T> Stream<T> of(T... values);
     
     //@ public normal_behavior

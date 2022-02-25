@@ -32,7 +32,8 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     public normal_behavior
       ensures \result.size == t.length;
       ensures \forall int i; 0<=i<t.length; \result[i] == t[i];
-    model function static public <T> seq<T> of(T ... t);
+    model function  @SuppressWarnings("unchecked")
+    static public <T> seq<T> of(T ... t);
     
     public normal_behavior
        ensures \result == (s.size == ss.size && (\forall \bigint i;; (0 <= i < s.size) ==> (s[i] == ss[i]) ));

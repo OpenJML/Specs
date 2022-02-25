@@ -161,6 +161,7 @@ public interface List<E> extends Collection<E> {
       @   requires !(o instanceof List && size() == ((List<E>) o).size());
       @   ensures !\result;
       @*/
+    @SuppressWarnings("unchecked")
     /*@ pure @*/ boolean equals(Object o);
 
     // specification inherited
