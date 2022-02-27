@@ -4,7 +4,7 @@ package java.util;
 public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements java.io.Serializable, Cloneable {
     //@ spec_public
     private final java.lang.Class<K> keyType;
-    
+        
     //@ axiom \forall K k; k != null; 0 <= k.ordinal() & (k.uniqueHash == k.ordinal());
     
     //@ spec_public
@@ -39,38 +39,43 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     public boolean containsValue(Object value);
 
     //@ also public normal_behavior
-    //@    ensures \result == keys[key.ordinal];
+    //@    requires key != null && \typeof(key) <: \type(Enum<K>);
+    //@    ensures \result == keys[((Enum)key).ordinal()];
+    @SuppressWarnings("unchecked")
     public boolean containsKey(Object key);
 
     private boolean containsMapping(Object key, Object value);
  
     //@ also public normal_behavior
-    //@   requires key != null;
-    //@   old int ord = key.ordinal();
-    //@   ensures keys[ord] ==> \result == modelMap[ord];
-    //@   ensures !keys[ord] ==> \result == null;
+    //@    requires key != null && \typeof(key) <: \type(Enum<K>);
+    //@    old int ord = ((Enum)key).ordinal();
+    //@    ensures keys[ord] ==> \result == modelMap[ord];
+    //@    ensures !keys[ord] ==> \result == null;
     //@ pure
     @Override
+    @SuppressWarnings("unchecked")
     public /*@ nullable */ V get(/*@ nullable */ Object key);
 
     // spec inherited from Map
     //@ also public normal_behavior
-    //@   requires key != null;
-    //@   old int ord = key.ordinal;
-    //@   assignable objectState;
-    //@   ensures (value == modelMap[ord]) & keys[key.ordinal];
-    //@   ensures \forall int i; i >= 0 && i != ord; modelMap[i] == \old(modelMap[i]);
-    //@   ensures \forall int i; i >= 0 && i != ord; keys[i] == \old(keys[i]);
+    //@    requires key instanceof Enum;
+    //@    old int ord = ((Enum<K>)key).ordinal();
+    //@    assignable objectState;
+    //@    ensures (value == modelMap[ord]) & keys[ord];
+    //@    ensures \forall int i; i >= 0 && i != ord; modelMap[i] == \old(modelMap[i]);
+    //@    ensures \forall int i; i >= 0 && i != ord; keys[i] == \old(keys[i]);
     @Override
+    @SuppressWarnings("unchecked")
     public /*@ nullable */ V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
     //@ also public normal_behavior
-    //@   requires key != null;
-    //@   old int ord = key.ordinal();
-    //@   assignable objectState;
-    //@   ensures !keys[ord];
-    //@   ensures \forall int i; i != ord && i >= 0; keys[i] == \old(keys[i]);
-    //@   ensures \forall int i; i != ord && i >= 0; modelMap[i] == \old(modelMap[i]);
+    //@    requires key != null && key instanceof Enum;
+    //@    old int ord = ((Enum<K>)key).ordinal();
+    //@    assignable objectState;
+    //@    ensures !keys[ord];
+    //@    ensures \forall int i; i != ord && i >= 0; keys[i] == \old(keys[i]);
+    //@    ensures \forall int i; i != ord && i >= 0; modelMap[i] == \old(modelMap[i]);
+    @SuppressWarnings("unchecked")
     public /*@ nullable */ V remove(/*@ nullable */ Object key);
 
 //  private boolean removeMapping(/*@ nullable */ java.lang.Object, /*@ nullable */ java.lang.Object);
@@ -78,8 +83,8 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
 //  public void putAll(java.util.Map<? extends K, ? extends V>);
 
     //@ also public normal_behavior
-    //@   assignable objectState;
-    //@   ensures \forall int i; i >= 0; !keys[i];
+    //@    assignable objectState;
+    //@    ensures \forall int i; i >= 0; !keys[i];
     public void clear();
 
 //  public java.util.Set<K> keySet();

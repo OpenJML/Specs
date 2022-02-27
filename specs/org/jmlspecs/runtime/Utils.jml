@@ -27,7 +27,7 @@ public class Utils {
 
     //@ public normal_behavior
     //@   ensures \result.erasure() == base;
-    //-RAC@   ensures  JML.typeargs(\result).length == 0;
+    //-RAC@   ensures  JML.typeargs((\TYPE)\result).length == 0;
     static public @NonNull IJMLTYPE makeTYPE0(@NonNull Class<?> base);
 
     //@ public normal_behavior

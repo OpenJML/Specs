@@ -36,6 +36,5 @@ public abstract class TimeZone implements java.io.Serializable,java.lang.Cloneab
   //public static void setDefault(java.util.TimeZone);
   //public boolean hasSameRules(java.util.TimeZone);
   public java.lang.Object clone();
-  static {};
 }
 

@@ -544,7 +544,7 @@ public class GregorianCalendar extends Calendar {
     public GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay,
                              int minute, int second);
 
-    /*@ public normal_behavior
+    /* FIXME @ public normal_behavior
       @ old long cutoverDay = floorDivide(gregorianCutover, ONE_DAY);
       @ old GregorianCalendar cal = new GregorianCalendar(getTimeZone());
       @ {|
