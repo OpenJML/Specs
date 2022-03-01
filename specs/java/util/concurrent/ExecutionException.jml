@@ -1,5 +1,6 @@
 package java.util.concurrent;
 
+//@ nullable_by_default
 public class ExecutionException extends Exception {
     
     //@ protected normal_behavior

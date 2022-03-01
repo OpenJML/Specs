@@ -21,6 +21,7 @@
 package java.lang;
 
 /** JML's specification of java.lang.VirtualMachineError */
+//@ nullable_by_default
 public abstract class VirtualMachineError extends Error {
 
     //@ public normal_behavior

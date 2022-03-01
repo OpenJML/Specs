@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ nullable_by_default
 public class IOException extends java.lang.Exception {
 
     /*@ public normal_behavior

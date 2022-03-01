@@ -1,5 +1,6 @@
 package java.net;
  
+//@ nullable_by_default
 public class UnknownServiceException extends java.io.IOException {
   
     /*@ public normal_behavior

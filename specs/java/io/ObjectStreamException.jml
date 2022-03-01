@@ -1,5 +1,6 @@
 package java.io;
  
+//@ nullable_by_default
 abstract public class ObjectStreamException extends IOException {
   
     /*@ protected normal_behavior

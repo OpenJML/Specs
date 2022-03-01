@@ -2,7 +2,7 @@ package org.junit.rules;
 
 import org.hamcrest.Matcher;
 
-//@ non_null_by_default
+//@ non_null_by_default // FIXME - verify this
 public class ExpectedException {
     
     //@ model public JMLDataGroup expectedExceptions;

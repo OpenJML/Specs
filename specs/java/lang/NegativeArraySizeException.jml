@@ -1,5 +1,6 @@
 package java.lang;
  
+//@ nullable_by_default
 public class NegativeArraySizeException extends RuntimeException {
   
     //@ public normal_behavior

@@ -1,5 +1,6 @@
 package java.lang;
  
+//@ nullable_by_default
 public class IllegalThreadStateException extends IllegalArgumentException {
   
     //@ public normal_behavior

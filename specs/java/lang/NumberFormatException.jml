@@ -2,6 +2,7 @@ package java.lang;
 
 // FIXME - needs completion
  
+//@ nullable_by_default
 public class NumberFormatException extends IllegalArgumentException {
   
     //@ public normal_behavior

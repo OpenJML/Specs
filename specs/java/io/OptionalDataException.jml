@@ -2,6 +2,7 @@ package java.io;
 
 // FIXME - needs completion
  
+//@ nullable_by_default
 public class OptionalDataException extends ObjectStreamException {
 
     /** Number of bytes available to be read */

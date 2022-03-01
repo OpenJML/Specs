@@ -2,6 +2,7 @@
 
 package java.lang;
 
+//@ nullable_by_default
 public class IndexOutOfBoundsException extends java.lang.RuntimeException {
 
     //@ public normal_behavior

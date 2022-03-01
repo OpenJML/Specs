@@ -1,5 +1,6 @@
 package java.io;
  
+//@ nullable_by_default
 public class StreamCorruptedException extends ObjectStreamException {
   
     /*@ public normal_behavior

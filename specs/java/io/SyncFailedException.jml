@@ -1,5 +1,6 @@
 package java.io;
  
+//@ nullable_by_default
 public class SyncFailedException extends IOException {
   
     /*@ public normal_behavior

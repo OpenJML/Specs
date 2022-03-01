@@ -1,5 +1,6 @@
 package java.security;
  
+//@ nullable_by_default
 public class InvalidKeyException extends KeyException {
   
     /*@ public normal_behavior

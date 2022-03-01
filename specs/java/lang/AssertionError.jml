@@ -1,6 +1,7 @@
 package java.lang;
 
 // FIXME - what are the arguments of the constructors for?
+//@ nullable_by_default
 public class AssertionError extends java.lang.Error {
 
     //@ public normal_behavior

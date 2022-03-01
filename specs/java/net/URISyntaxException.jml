@@ -2,6 +2,7 @@ package java.net;
 
 // FIXME - needs completion
  
+//@ nullable_by_default
 public class URISyntaxException extends Exception {
   
 }

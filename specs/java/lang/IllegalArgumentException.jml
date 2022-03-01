@@ -1,5 +1,6 @@
 package java.lang;
 
+//@ nullable_by_default
 public class IllegalArgumentException extends RuntimeException {
     //@ public normal_behavior
     //-RAC@   ensures standardThrowable();

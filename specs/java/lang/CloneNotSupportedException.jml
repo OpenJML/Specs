@@ -2,6 +2,7 @@
 
 package java.lang;
 
+//@ nullable_by_default
 public class CloneNotSupportedException extends java.lang.Exception {
 
     //@ public normal_behavior

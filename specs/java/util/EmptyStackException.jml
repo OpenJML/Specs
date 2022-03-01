@@ -1,5 +1,6 @@
 package java.util;
  
+//@ nullable_by_default
 public class EmptyStackException extends RuntimeException {
   
     /*@ public normal_behavior

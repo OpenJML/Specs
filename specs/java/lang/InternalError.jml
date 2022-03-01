@@ -21,6 +21,7 @@
 package java.lang;
 
 /** JML's specification of java.lang.InternalError */
+//@ nullable_by_default
 public class InternalError extends VirtualMachineError {
 
     //@ public normal_behavior

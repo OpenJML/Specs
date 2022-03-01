@@ -1,5 +1,6 @@
 package java.lang;
  
+//@ nullable_by_default
 public class IllegalAccessException extends ReflectiveOperationException {
   
     //@ public normal_behavior

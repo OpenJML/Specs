@@ -1,5 +1,6 @@
 package java.io;
  
+//@ nullable_by_default
 public class EOFException extends IOException {
   
     /*@ public normal_behavior

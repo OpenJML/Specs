@@ -1,6 +1,7 @@
 package javax.crypto;
 import java.security.GeneralSecurityException;
  
+//@ nullable_by_default
 public class ShortBufferException extends GeneralSecurityException {
   
     /*@ public normal_behavior

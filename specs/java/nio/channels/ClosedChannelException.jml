@@ -1,5 +1,6 @@
 package java.nio.channels;
 
+//@ nullable_by_default
 public class ClosedChannelException extends java.io.IOException {
       //private static final long serialVersionUID;
 

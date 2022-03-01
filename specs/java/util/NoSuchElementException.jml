@@ -1,5 +1,6 @@
 package java.util;
 
+//@ nullable_by_default
 public class NoSuchElementException extends RuntimeException {
     /*@ public normal_behavior
       @   ensures standardThrowable();

@@ -1,5 +1,6 @@
 package java.security;
  
+//@ nullable_by_default
 public class GeneralSecurityException extends Exception {
   
     /*@ public normal_behavior

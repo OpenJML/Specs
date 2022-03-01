@@ -2,6 +2,7 @@
 
 package java.lang;
 
+//@ nullable_by_default
 public class AbstractMethodError extends IncompatibleClassChangeError {
 
     //@ public normal_behavior

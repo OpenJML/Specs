@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ nullable_by_default
 public class UnsupportedEncodingException extends java.io.IOException {
 
     /*@ public normal_behavior

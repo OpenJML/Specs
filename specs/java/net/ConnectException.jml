@@ -1,5 +1,6 @@
 package java.net;
  
+//@ nullable_by_default
 public class ConnectException extends SocketException {
   
     /*@ public normal_behavior

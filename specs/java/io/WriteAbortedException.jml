@@ -2,6 +2,7 @@ package java.io;
 
 // FIXME - needs completion
  
+//@ nullable_by_default
 public class WriteAbortedException extends ObjectStreamException {
 
     public Exception detail;

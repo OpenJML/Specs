@@ -1,5 +1,6 @@
 package java.lang;
  
+//@ nullable_by_default
 public class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {
   
     //@ public normal_behavior

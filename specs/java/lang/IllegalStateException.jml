@@ -1,5 +1,6 @@
 package java.lang;
 // FIXME for rac
+//@ nullable_by_default
 public class IllegalStateException extends RuntimeException {
     //@ public normal_behavior
     //-RAC@   ensures standardThrowable();

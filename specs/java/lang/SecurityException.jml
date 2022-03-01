@@ -1,5 +1,6 @@
 package java.lang;
  
+//@ nullable_by_default
 public class SecurityException extends RuntimeException {
   
     //@ public normal_behavior

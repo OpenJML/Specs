@@ -1,5 +1,6 @@
 package java.net;
  
+//@ nullable_by_default
 public class SocketTimeoutException extends java.io.InterruptedIOException {
   
     /*@ public normal_behavior

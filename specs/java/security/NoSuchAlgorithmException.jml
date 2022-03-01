@@ -1,5 +1,6 @@
 package java.security;
  
+//@ nullable_by_default
 public class NoSuchAlgorithmException extends GeneralSecurityException {
   
     /*@ public normal_behavior

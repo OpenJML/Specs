@@ -1,5 +1,6 @@
 package java.util;
  
+//@ nullable_by_default
 public class TooManyListenersException extends Exception {
   
     /*@ public normal_behavior
