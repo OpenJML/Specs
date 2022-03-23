@@ -297,7 +297,7 @@ public /*@ pure @*/ final
       @     requires i == null || ii == null;
       @     ensures \result <==> ( i == ii );
       @*/
-    /*@ public pure function static model boolean equalsLong(Long i, Long ii);
+    /*@ public pure heap_free static model boolean equalsLong(Long i, Long ii);
       @*/
 
     /*-RAC@ also
@@ -375,13 +375,13 @@ public /*@ pure @*/ final
 
     //@ public normal_behavior
     //@   ensures \result == (b0*(0x100_0000_0000_0000L) + Byte.toUnsignedLong(b1)*(0x1_0000_0000_0000L) + Byte.toUnsignedLong(b2)*(0x100_0000_0000L) + Byte.toUnsignedLong(b3)*(0x1_0000_0000L) + Byte.toUnsignedLong(b4)*(0x100_0000L) + Byte.toUnsignedLong(b5)*(0x1_0000L) + Byte.toUnsignedLong(b6)*(0x100L) + Byte.toUnsignedLong(b7));
-    //@ model public static pure helper function long asLong(byte b0, byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7);
+    //@ model public static pure helper heap_free long asLong(byte b0, byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7);
 
     //@// Equivalent to a (int) cast for a long value in range, but with safe, no-bit-vector arithmetic
     //@ public normal_behavior
     //@   requires 0 <= i <= 0xffff_ffffL;
     //@   ensures \result == (i <= Integer.MAX_VALUE ? (int)i : (int)(i - Integer.MAX_VALUE - Integer.MAX_VALUE));
     //@ pure helper
-    //@ model public static function int asSignedInt(long i);
+    //@ model public static heap_free int asSignedInt(long i);
     
 }

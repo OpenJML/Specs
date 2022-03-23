@@ -972,7 +972,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(boolean[] arr1, \bigint index1, boolean[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(boolean[] arr1, \bigint index1, boolean[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -980,9 +980,9 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(boolean[] arr1, boolean[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(boolean[] arr1, boolean[] arr2);
 
-    // NOTE: These methods+specs do not always trigger well - hence they are not declared function
+    // NOTE: These methods+specs do not always trigger well - hence they are not declared heap_free
     //@ public normal_behavior
     //@   requires len >= 0;
     //@   requires 0 <= index1 <= arr1.length - len;
@@ -1001,7 +1001,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(byte[] arr1, \bigint index1, byte[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(byte[] arr1, \bigint index1, byte[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1017,7 +1017,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(byte[] arr1, byte[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(byte[] arr1, byte[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1027,7 +1027,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(char[] arr1, \bigint index1, char[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(char[] arr1, \bigint index1, char[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1035,7 +1035,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(char[] arr1, char[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(char[] arr1, char[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1045,7 +1045,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(short[] arr1, \bigint index1, short[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(short[] arr1, \bigint index1, short[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1053,7 +1053,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(short[] arr1, short[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(short[] arr1, short[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1063,7 +1063,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(int[] arr1, \bigint index1, int[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(int[] arr1, \bigint index1, int[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1071,7 +1071,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(int[] arr1, int[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(int[] arr1, int[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1081,7 +1081,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(long[] arr1, \bigint index1, long[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(long[] arr1, \bigint index1, long[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1089,7 +1089,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(long[] arr1, long[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(long[] arr1, long[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1099,7 +1099,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(float[] arr1, \bigint index1, float[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(float[] arr1, \bigint index1, float[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1107,7 +1107,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(float[] arr1, float[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(float[] arr1, float[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1117,7 +1117,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(double[] arr1, \bigint index1, double[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(double[] arr1, \bigint index1, double[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1125,7 +1125,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall int i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(double[] arr1, double[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(double[] arr1, double[] arr2);
 
     //@ public normal_behavior
     //@   requires len >= 0;
@@ -1135,7 +1135,7 @@ public class Arrays {
     //@   ensures \result == (\forall \bigint i; index1 <= i < index1 + len; arr1[i] == arr2[i-index1+index2]);
     //@   ensures \result == (\forall \bigint i; index2 <= i < index2 + len; arr2[i] == arr1[i-index2+index1]);
     //@   ensures \result == (\forall \bigint i; 0 <= i < len; arr1[i+index1] == arr2[i+index2]);
-    //@ model public static pure helper function boolean equalArrays(Object[] arr1, \bigint index1, Object[] arr2, \bigint index2, \bigint len);
+    //@ model public static pure helper heap_free boolean equalArrays(Object[] arr1, \bigint index1, Object[] arr2, \bigint index2, \bigint len);
 
     //@ public normal_behavior
     //@   requires arr1.length != arr2.length;
@@ -1143,7 +1143,7 @@ public class Arrays {
     //@ also public normal_behavior
     //@   requires arr1.length == arr2.length;
     //@   ensures \result == (\forall \bigint i; 0 <= i < arr1.length; arr1[i] == arr2[i]);
-    //@ model public static pure helper function boolean equalArrays(Object[] arr1, Object[] arr2);
+    //@ model public static pure helper heap_free boolean equalArrays(Object[] arr1, Object[] arr2);
 
     //-----------------------------------------------------------------------
 
@@ -1560,76 +1560,76 @@ public class Arrays {
           requires array != null;
           ensures \result <==> (\exists int i; 0 <= i < array.length; 
                                                         array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model <T> boolean contains(T[] array, Object o);
 
         public normal_behavior
           requires array != null;
           requires len <= array.length;
           ensures \result <==> (\exists \bigint i; 0 <= i < len; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model <T> boolean contains(T[] array, \bigint len, 
                                                                    Object o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(int[] array, int o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(boolean[] array, boolean o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(char[] array, char o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(byte[] array, byte o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(short[] array, short o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(long[] array, long o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(float[] array, float o);
 
         public normal_behavior
           requires array != null;
           ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-        //+OPENJML@ function
+        //+OPENJML@ heap_free
         static pure public model boolean contains(double[] array, double o);
 
 // FIXME _ need to implement bigint and real
 //        public normal_behavior
 //          requires array != null;
 //          ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-//        //+OPENJML@ function
+//        //+OPENJML@ heap_free
 //        static pure public model boolean contains(\bigint[] array, \bigint o);
 
 //        public normal_behavior
 //          requires array != null;
 //          ensures (\exists int i; 0 <= i < array.length; array[i] == o);
-//        //+OPENJML@ function
+//        //+OPENJML@ heap_free
 //        static pure public model boolean contains(\real[] array, \real o);
      */
     

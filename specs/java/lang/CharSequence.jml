@@ -30,10 +30,10 @@ public interface CharSequence {
 	//-RAC@ public invariant charArray != null; // FIXME - why this when there is a non_null declaration
     
     //@ public normal_behavior ensures \result == c.__owner;
-    //@ model pure function public static Object owner(Object c);
+    //@ model pure heap_free public static Object owner(Object c);
     
     //-RAC@ public normal_behavior ensures \result == c.charArray;
-    //-RAC@ model pure function public static Object content(CharSequence c);
+    //-RAC@ model pure heap_free public static Object content(CharSequence c);
     
     // FIXME @ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
 

@@ -5,7 +5,7 @@ public class Cipher {
     
     //@ model public instance JMLDataGroup content;
     
-    //@ model public static pure function boolean validAlgorithm(String algorithm);
+    //@ model public static pure heap_free boolean validAlgorithm(String algorithm);
     
 //      private static final sun.security.util.Debug debug;
 //      private static final sun.security.util.Debug pdebug;

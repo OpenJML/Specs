@@ -41,7 +41,7 @@ public /*@ pure @*/ final
       @       (s.charAt(0) == '-' || Character.digit(s.charAt(0), r) != -1) &&
       @          (\forall int i; 1 <= i && i < s.length(); 
       @               Character.digit(s.charAt(i), r) != -1));
-      @   model public static pure function boolean parseable( String s, int r ){
+      @   model public static pure heap_free boolean parseable( String s, int r ){
         try { Short ss = Short.valueOf(s,r); return true; }
         catch (Exception e) { return false; }
           @   }
@@ -275,11 +275,11 @@ public /*@ pure @*/ final
 
     //@ public normal_behavior
     //@   ensures \result == (b0*256 + Byte.toUnsignedInt(b1));
-    //@ model public static pure helper function short asShort(byte b0, byte b1);
+    //@ model public static pure helper heap_free short asShort(byte b0, byte b1);
     
     //@ public normal_behavior
     //@   ensures \result == (i < 0 ? 0x10000 + i : i);
-    //@ pure helper function
+    //@ pure helper heap_free
     public static int toUnsignedInt(short i);
 
     //@ public normal_behavior
@@ -289,7 +289,7 @@ public /*@ pure @*/ final
 
     //@ public normal_behavior
     //@   ensures \result == (i < 0 ? 0x10000 + i : i);
-    //@ pure helper function
+    //@ pure helper heap_free
     public static long toUnsignedLong(short i);
 
     /*@

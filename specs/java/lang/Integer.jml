@@ -289,7 +289,7 @@ public  /*@ pure @*/ final
       @   public normal_behavior
       @     requires i == null || ii == null;
       @     ensures \result <==> (i == ii);
-      @ pure function
+      @ pure heap_free
       @ public model static boolean equalsInteger(Integer i, Integer ii);
       @*/
 
@@ -402,16 +402,16 @@ public  /*@ pure @*/ final
       @*/ // OPENJML TODO - one could also add up table lookups on 4-bit quantities
           // OPENJML TODO - perhaps should implement using different specs when in 
           // OPENJML TODO - bitvector mode vs. not
-    //@ pure function
+    //@ pure heap_free
     public static int bitCount(int i);
 
     //@ public normal_behavior
     //@   ensures \result == (b0*(0x100_0000) + Byte.toUnsignedInt(b1)*(0x1_0000) + Byte.toUnsignedInt(b2)*(0x100) + Byte.toUnsignedInt(b3));
-    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
+    //@ model public static pure helper heap_free int asInt(byte b0, byte b1, byte b2, byte b3);
 
     //@ public normal_behavior // Avoids bit arithmetic
     //@   ensures \result == \bigint_math(x < 0 ? ((long)x - Integer.MIN_VALUE - Integer.MIN_VALUE) : x) && (0 <= \result <= MAX_UNSIGNED_INT);
-    //@ pure helper function
+    //@ pure helper heap_free
     public static long toUnsignedLong(int x);
     
     //@ public normal_behavior

@@ -378,7 +378,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
     //@ public normal_behavior
     //@   ensures \result == (b0*(0x100) + Byte.toUnsignedInt(b1));
-    //@ model public static pure helper function short asShort(byte b0, byte b1);
+    //@ model public static pure helper heap_free short asShort(byte b0, byte b1);
 
     //@ public normal_behavior
     //@   ensures \result == (b0*(0x100_0000) + Byte.toUnsignedInt(b1)*(0x1_0000) + Byte.toUnsignedInt(b2)*(0x100) + Byte.toUnsignedInt(b3));
@@ -387,7 +387,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     // @   ensures b2 == (byte)((\result/256)%256);
     // @   ensures b1 == (byte)((\result/65536)%256);
     // @   ensures b0 == (byte)(\result/(256*65536));
-    //@ model public static pure helper function int asInt(byte b0, byte b1, byte b2, byte b3);
+    //@ model public static pure helper heap_free int asInt(byte b0, byte b1, byte b2, byte b3);
 
     //@ public normal_behavior
     //@   requires position <= limit - Integer.BYTES;

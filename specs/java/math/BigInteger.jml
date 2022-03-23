@@ -41,7 +41,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
         public normal_behavior
           requires Character.MIN_RADIX <= radix <= Character.MAX_RADIX;
           requires Number.parseable(val,radix);
-        public static model pure function \bigint parse(String val, int radix) {
+        public static model pure heap_free \bigint parse(String val, int radix) {
         // !FIXME! - should put in a non-circular computation for RAC
             return new BigInteger(val,radix).value;
         }
@@ -347,7 +347,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //-RAC@   ensures value == 0 ==> \result == 0;
     //-RAC@   ensures value != 0 ==> \result > 0;
     //+RAC@   ensures \result >= 0;
-    //@ pure function
+    //@ pure heap_free
     public int bitLength();
 
     // static int bitLen(int w);   package-level method removed from specification (dmz, 2009-11-17)
@@ -358,7 +358,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //-RAC@   ensures value == 0 ==> \result == 0;
     //-RAC@   ensures value != 0 ==> \result > 0;
     //+RAC@   ensures \result >= 0;
-    //@ pure function
+    //@ pure heap_free
     public int bitCount();
 
     // static int bitCnt(int val);   package-level method removed from specification (dmz, 2009-11-17)
@@ -375,7 +375,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
 
     //@ public normal_behavior
     //@   requires certainty > 0;
-    //@ pure function
+    //@ pure heap_free
     //@ model public static boolean isProbablePrime(\bigint v, int certainty);
 
     // Comparison Operations
@@ -429,7 +429,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     
     //@ public normal_behavior
     //@   ensures \result == (n <= 0 ? 1 : 256 * pow256(n-1));
-    //@ model public static function helper \bigint pow256(\bigint n);
+    //@ model public static heap_free helper \bigint pow256(\bigint n);
     
     // @ axiom (\forall \bigint n; n >= 0 ==> pow256(n+1) > pow256(n)); // FIXME - this axiom causes infeasibility (cf. gitbug578)
     // @ axiom (\forall \bigint m, n; m > n && n >= 0; pow256(m) > pow256(n)); // FIXME - this axiom causes infeasibility (cf. gitbug578)

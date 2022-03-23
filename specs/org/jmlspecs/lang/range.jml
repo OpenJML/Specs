@@ -8,7 +8,7 @@ public class range implements IJmlPrimitiveType {
 	//@ public normal_behavior
 	//@   ensures this.lo == lo;
 	//@   ensures this.hi == hi;
-	//@ model pure function helper public range range(\bigint lo, \bigint hi);
+	//@ model pure heap_free helper public range range(\bigint lo, \bigint hi);
 	
 	//@ ghost public \bigint lo;
 	//@ ghost public \bigint hi;

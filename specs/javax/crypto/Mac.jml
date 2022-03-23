@@ -44,13 +44,13 @@ public class Mac implements Cloneable {
       //@ public normal_behavior
       //@   requires len > 0;
       //@   ensures \result.length == len;
-      //@ pure helper function non_null
+      //@ pure helper heap_free non_null
       //@ model public static byte[] hmacHash(byte[] input, int len); 
 
       //@ public normal_behavior
       //@   requires n >= 1;
       //@   ensures \result.length == SIZE;
-      //@ pure helper function non_null
+      //@ pure helper heap_free non_null
       //@ model public static byte[] hmacIteratedHash(byte[] info, int n);
       
       //@ model public static final int MAXBL = 255;
@@ -61,7 +61,7 @@ public class Mac implements Cloneable {
       //@   ensures \result.length == MAXBL*SIZE;
       //@   ensures (\forall int i; 1 <= i <= MAXBL; Mac.equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
       //@   ensures (\forall int k; 0 <= k < MAXBL*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]);
-      //@ pure helper function
+      //@ pure helper heap_free
       //@ model public static byte[] concatenatedIteratedHash(byte[] info);
       
 //      private java.security.Provider.Service firstService;
@@ -88,7 +88,7 @@ public class Mac implements Cloneable {
       public final java.lang.String getAlgorithm();
 
       //@ public normal_behavior
-      //@ model public static pure function boolean validAlgorithm(String algorithm);
+      //@ model public static pure heap_free boolean validAlgorithm(String algorithm);
       
       //@ public normal_behavior
       //@   requires validAlgorithm(algorithm);

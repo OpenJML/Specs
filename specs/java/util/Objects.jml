@@ -16,22 +16,22 @@ public final class Objects {
   
   //@ public normal_behavior
   //@   //-RAC@ ensures \result == (o == null ? 0 : o.theHashCode);
-  //@ pure function
+  //@ pure heap_free
   public static int hashCode(/*@ nullable */Object o);
   
   //@ public normal_behavior
   //@   ensures \result == Arrays.hashCode(values);
-  //@ pure function
+  //@ pure heap_free
   public static int hash(Object... values);
   
   //@ public normal_behavior
   //@   //-RAC@ ensures \result == (o == null ? "null" : o.ptoString());
-  //@ pure function
+  //@ pure heap_free
   public static String toString(/*@ nullable */Object o);
   
   //@ public normal_behavior
   //@   //-RAC@ ensures \result == (o == null ? nullDefault : o.ptoString());
-  //@ pure function
+  //@ pure heap_free
   public static /*@ nullable */ String toString(/*@ nullable */Object o, /*@ nullable */String nullDefault);
 
   //@ public normal_behavior
@@ -44,7 +44,7 @@ public final class Objects {
   //@   ensures \result == obj;
   //@ also public exceptional_behavior
   //@   requires obj == null;
-  //@ pure function
+  //@ pure heap_free
   public static <T> T requireNonNull(/*@ nullable */ T obj);
   
   //@ public normal_behavior
@@ -52,7 +52,7 @@ public final class Objects {
   //@   ensures \result == obj;
   //@ also public exceptional_behavior
   //@   requires obj == null;  // TODO - specify the use of msg
-  //@ pure function
+  //@ pure heap_free
   public static <T> T requireNonNull(/*@ nullable */ T obj, String msg);
   
   //@ public normal_behavior
@@ -70,6 +70,6 @@ public final class Objects {
   //@   ensures \result == obj;
   //@ also public exceptional_behavior
   //@   requires obj == null;  // TODO: specify the use of msg
-  //@ pure function
+  //@ pure heap_free
 public static <T> T requireNonNull(T obj, java.util.function.Supplier<String> messageSupplier);
 }

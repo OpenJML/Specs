@@ -10,7 +10,7 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.Aut
     //@ public normal_behavior
     //-RAC@   requires 0 <= i && i < values.length;
     //-RAC@   ensures \result == values[i];
-    //@ pure function
+    //@ pure heap_free
     //@ model public T get(int i);
     
     // FIXME - would like to make the length a \bigint, but then problems arise with bitvector computations
