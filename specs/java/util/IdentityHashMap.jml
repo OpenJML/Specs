@@ -59,30 +59,30 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   public boolean containsValue(/* nullable */ Object o);
 
   //@ also public normal_behavior
-  //@   writes content;
+  //@   assigns content;
   //@   ensures _map == \old(_map).put(k,v);
   //@   ensures _keyset == \old(_keyset).add(k);
   //@   ensures size == (\old(_keyset).contains(k) ? \old(size) : \old(size)+1);
   public V put(/*@ nullable */K k, /*@ nullable */V v);
 
   //@ also public normal_behavior
-  //@   writes content;
+  //@   assigns content;
   public void putAll(Map<? extends K, ? extends V> m); // TODO
 
   //@ also public normal_behavior
   //@   requires _keyset.contains((K)o);
-  //@   writes content;
+  //@   assigns content;
   //@   ensures size == \old(size) - 1;
   //@   ensures _keyset == \old(_keyset).remove((K)o);
   //@   ensures _map == \old(_map);
   //@ also public normal_behavior
   //@   requires !_keyset.contains((K)o);
-  //@   writes \nothing;
+  //@   assigns \nothing;
   @SuppressWarnings("unchecked")
   public V remove(Object o);
   
   //@ also public normal_behavior
-  //@   writes content;
+  //@   assigns content;
   //@   ensures size == 0 && _keyset.isEmpty();
   public void clear();
   
@@ -117,11 +117,11 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   public Set<Map.Entry<K, V>> entrySet();  // TODO
 
   //@ also public normal_behavior
-  //@   writes \everything; // Whatever f does to each of the pairs in the map
+  //@   assigns \everything; // Whatever f does to each of the pairs in the map
   public void forEach(java.util.function.BiConsumer<? super K, ? super V> f);  // TODO
 
   //@ also public normal_behavior
-  //@   writes content;
+  //@   assigns content;
   public void replaceAll(java.util.function.BiFunction<? super K, ? super V, ? extends V> f); // TODO
 
   //private void closeDeletion(int);

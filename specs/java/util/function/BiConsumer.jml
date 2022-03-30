@@ -1,6 +1,6 @@
 package java.util.function;
 
-//@ non_null_by_default immutable
+//@ non_null_by_default
 @FunctionalInterface
 public interface BiConsumer<T, U> {
     //@ model public instance JMLDataGroup acceptAssignable;

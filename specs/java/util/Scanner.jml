@@ -11,7 +11,7 @@ public final class Scanner implements Iterator<java.lang.String>, java.io.Closea
   public Scanner(java.lang.Readable);
   */
   //@ public normal_behavior
-  //@   writes istream.streamState;
+  //@   assigns istream.streamState;
   public Scanner(java.io.InputStream istream);
   /*
   public Scanner(java.io.InputStream, java.lang.String);
@@ -73,7 +73,7 @@ public final class Scanner implements Iterator<java.lang.String>, java.io.Closea
   public boolean hasNextFloat();
   */
   //@ public normal_behavior
-  //@   writes _$scannerState;
+  //@   assigns _$scannerState;
   public float nextFloat();
   /*
   public boolean hasNextDouble();
