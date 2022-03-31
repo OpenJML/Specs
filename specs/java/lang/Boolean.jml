@@ -60,11 +60,11 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
 
     /*@ //public normal_behavior  // FIXME -
       @ //  ensures \result <==> (TRUE_S.equalsIgnoreCase(s));
-      @ model public static pure helper function boolean decode( nullable String s);
+      @ model public static pure helper heap_free boolean decode( nullable String s);
       @
       @ public normal_behavior
       @   ensures \result == ( b ? TRUE_S : FALSE_S );
-      @ model public static pure helper function String canonicalString(boolean b);
+      @ model public static pure helper heap_free String canonicalString(boolean b);
       @*/
 
     //@ axiom decode(canonicalString(true)) == true;
@@ -89,20 +89,20 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     /*@ public normal_behavior
       @   //-RAC@ ensures \result == theBoolean;
       @*/
-    public /*@ pure helper function @*/ boolean booleanValue();
+    public /*@ pure helper heap_free @*/ boolean booleanValue();
 
     // NOTE: The result is not fresh
     /*@ public normal_behavior
       @   ensures \result != null && \result.booleanValue() == b;
       @   ensures \result == ( b ? TRUE : FALSE );
       @*/
-    public static /*@ pure helper function @*/ Boolean valueOf(boolean b);
+    public static /*@ pure helper heap_free @*/ Boolean valueOf(boolean b);
 
 
     /*@ public normal_behavior
       @   ensures \result == ( decode(s) ? TRUE : FALSE );
       @*/
-    public static /*@ pure helper function @*/ Boolean valueOf(/*@ nullable */ String s);
+    public static /*@ pure helper heap_free @*/ Boolean valueOf(/*@ nullable */ String s);
 
     // NOTE: The results are interned (not fresh) Strings.  // FIXME - is this actually certain to be the case
     /*@ public normal_behavior
@@ -110,14 +110,14 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @   ensures \result == (canonicalString(b));
       @   ensures String.isInterned(\result);
       @*/
-    public static /*@ pure helper function @*/ String toString(boolean b);
+    public static /*@ pure helper heap_free @*/ String toString(boolean b);
 
     /*@ also
       @ public normal_behavior
       @   //-RAC@ ensures decode(\result) == theBoolean;
       @   //-RAC@ensures \result == canonicalString(theBoolean);
       @*/
-    //@ pure helper function
+    //@ pure helper heap_free
     public String toString();
     
     //@ public normal_behavior
@@ -157,5 +157,5 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @   ensures \result <==> (name != null && 
                                 decode(System.getProperty(name)));
       @*/
-    public static /*@ pure helper function @*/ boolean getBoolean(/*@ nullable */ String name); 
+    public static /*@ pure helper heap_free @*/ boolean getBoolean(/*@ nullable */ String name); 
 }

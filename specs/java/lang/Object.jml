@@ -52,6 +52,7 @@ public class Object {
 
     /*@ public normal_behavior
       @   assignable \nothing;
+      @   reads \nothing;
       @*/
     public /*@ pure @*/ Object();
 

@@ -25,7 +25,7 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       public java.lang.String getAlgorithm();
       
       //@ public normal_behavior
-      //@ pure function
+      //@ pure heap_free
       //@ model public static boolean algorithmIsSupported(String algorithm);
       
 /*

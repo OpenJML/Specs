@@ -5,49 +5,49 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
 /*@    
     public normal_behavior
       ensures \result >= 0;
-    model function public \bigint size();  // FIXME - not much is said about size -- can't reason about it 
+    model heap_free public \bigint size();  // FIXME - not much is said about size -- can't reason about it 
     
     public normal_behavior
        ensures \result == this[x];
-    model function public boolean contains(T x);
+    model heap_free public boolean contains(T x);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
     pure
-    model function public boolean isEmpty();
+    model heap_free public boolean isEmpty();
     
     public normal_behavior
       ensures \result.size() == 0;
       ensures (\forall T x; ; !\result.contains(x));
-    model function static public <T> set<T> set();
+    model heap_free static public <T> set<T> set();
     
     public normal_behavior
       ensures \result.size() == 1;
       ensures \result.contains(t);
       ensures (\forall T x; ; x != t ==> !\result.contains(x));
-    model function static public <T> set<T> set(T t);
+    model heap_free static public <T> set<T> set(T t);
     
     public normal_behavior
        ensures \result == (\forall T t;; s.contains(t) == ss.contains(t));
-    model function public static <T> boolean equals(set<T> s, set<T> ss);
+    model heap_free public static <T> boolean equals(set<T> s, set<T> ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model function public boolean equals(set<T> s);
+    model heap_free public boolean equals(set<T> s);
     
     public normal_behavior
       ensures this.contains(x) ==> \result == this;
       ensures !this.contains(x) ==> \result.size() == this.size() + 1;
       ensures \result.contains(x);
       ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
-    model function public set<T> add(T x);
+    model heap_free public set<T> add(T x);
     
     public normal_behavior
       ensures !this.contains(x) ==> \result == this;
       ensures this.contains(x) ==> \result.size() == this.size() - 1;
       ensures !\result.contains(x);
       ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
-    model function public set<T> remove(T x);
+    model heap_free public set<T> remove(T x);
 
     public normal_behavior
       ensures \result[i] == c;
@@ -55,7 +55,7 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
       ensures this[i] == c ==> \result == this;
       ensures this[i] & !c ==> \result.size() == this.size() - 1;
       ensures !this[i] & c ==> \result.size() == this.size() + 1;
-    model function public set<T> put(T i, boolean c);
+    model heap_free public set<T> put(T i, boolean c);
 
 
 @*/

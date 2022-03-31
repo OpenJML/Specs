@@ -36,13 +36,13 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@  requires u._scale > this._scale && t * (u._scale / this._scale) < Long.MIN_VALUE;
   //@  ensures \result == Long.MIN_VALUE;
-  //@ pure function
+  //@ pure heap_free
   public long convert(long t, TimeUnit u);
   
   //@ public normal_behavior
   //@  requires t <= Long.MAX_VALUE/_scale;
   //@  ensures \result == t * this._scale / NANOSECONDS._scale;
-  //@ pure function
+  //@ pure heap_free
   public long toNanos(long t);
   
   //@ public normal_behavior
@@ -52,7 +52,7 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@   requires this._scale < MICROSECONDS._scale;
   //@   ensures \result == t / (MICROSECONDS._scale / this._scale);
-  //@ pure function
+  //@ pure heap_free
   public long toMicros(long t);
   
   //@ public normal_behavior
@@ -62,7 +62,7 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@   requires this._scale < MILLISECONDS._scale;
   //@   ensures \result == t / (MILLISECONDS._scale / this._scale);
-  //@ pure function
+  //@ pure heap_free
   public long toMillis(long t);
   
   //@ public normal_behavior
@@ -72,7 +72,7 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@   requires this._scale < SECONDS._scale;
   //@   ensures \result == t / (SECONDS._scale / this._scale);
-  //@ pure function
+  //@ pure heap_free
   public long toSeconds(long t);
   
   //@ public normal_behavior
@@ -82,7 +82,7 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@   requires this._scale < MINUTES._scale;
   //@   ensures \result == t / (MINUTES._scale / this._scale);
-  //@ pure function
+  //@ pure heap_free
   public long toMinutes(long t);
   
   //@ public normal_behavior
@@ -92,7 +92,7 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@   requires this._scale < HOURS._scale;
   //@   ensures \result == t / (HOURS._scale / this._scale);
-  //@ pure function
+  //@ pure heap_free
   public long toHours(long t);
   
   //@ public normal_behavior
@@ -102,7 +102,7 @@ public enum TimeUnit {
   //@ also public normal_behavior
   //@   requires this._scale < DAYS._scale;
   //@   ensures \result == t / (DAYS._scale / this._scale);
-  //@ pure function
+  //@ pure heap_free
   public long toDays(long t);
 
 //  abstract int excessNanos(long t1, long t2);

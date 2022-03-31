@@ -5,55 +5,55 @@ public class intset implements IJmlPrimitiveType, IJmlIntArrayLike {
 /*@    
     public normal_behavior
       ensures \result >= 0;
-    model function public \bigint size();
+    model heap_free public \bigint size();
     
     public normal_behavior
        ensures \result == this[x];
-    model function public boolean contains(\bigint x);
+    model heap_free public boolean contains(\bigint x);
 
     public normal_behavior
       ensures \result == (this.size() == 0);
     pure
-    model function public boolean empty();
+    model heap_free public boolean empty();
     
     public normal_behavior
       ensures \result.size() == 0;
       ensures (\forall \bigint x; ; !\result[x]);
-    model function static public intset intset();
+    model heap_free static public intset intset();
     
     public normal_behavior
       ensures \result.size() == 1;
       ensures \result[t];
       ensures (\forall \bigint x; ; x != t ==> !\result[x]);
-    model function static public intset set(\bigint t);
+    model heap_free static public intset set(\bigint t);
     
     public normal_behavior
        ensures \result == (\forall \bigint t;; s[t] == ss[t]);
-    model function public static boolean equals(intset s, intset ss);
+    model heap_free public static boolean equals(intset s, intset ss);
     
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
-    model function public boolean equals(intset s);
+    model heap_free public boolean equals(intset s);
     
     public normal_behavior
       ensures this[x] ==> \result == this;
       ensures !this[x] ==> \result.size() == this.size() + 1;
       ensures \result[x];
       ensures (\forall \bigint t; t != x; \result[t] == this[t]);
-    model function public intset add(\bigint x);
+    model heap_free public intset add(\bigint x);
     
     public normal_behavior
       ensures !this[x] ==> \result == this;
       ensures this[x] ==> \result.size() == this.size() - 1;
       ensures !\result[x];
       ensures (\forall \bigint t; t != x; \result[t] == this[t]);
-    model function public intset remove(\bigint x);
+    model heap_free public intset remove(\bigint x);
 
     public normal_behavior
         ensures \result[i] == c;
         ensures \forall \bigint j; j != i; \result[j] == this[j];
         ensures this[i] == c ==> \result == this;
-    model function public intset put(\bigint i, boolean c);
+    model heap_free public intset put(\bigint i, boolean c);
 
 
 @*/

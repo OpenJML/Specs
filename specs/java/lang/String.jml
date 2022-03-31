@@ -310,11 +310,11 @@ public final class String
     /*@ public normal_behavior
       @   //-RAC@ ensures \result == s.charArray.length;
       @
-      @ //+OPENJML@ function
+      @ //@ heap_free
       @ public static model pure helper int length(String s);
       @*/
     // inherits specs from CharSequence - \result == charArray.length
-    public /*@ pure helper function @*/ int length();
+    public /*@ pure helper heap_free @*/ int length();
     
     /*@ also public normal_behavior
       @   //-RAC@ ensures \result == (this.charArray.length == 0);
@@ -443,7 +443,7 @@ public final class String
                      (isInterned(s1) && isInterned(s2));
       @   ensures \result <==> (s1 == s2);
       @
-      @ pure //+OPENJML@ function
+      @ pure heap_free
       @ public static model helper boolean equals(nullable String s1, nullable String s2);
       @*/
 
@@ -504,8 +504,8 @@ public final class String
       @   requires anotherString == this;
       @   ensures \result;
       @*/
-    //+OPENJML@ function
-    public /*@ pure @*/ boolean equalsIgnoreCase(String anotherString);
+    //@ pure heap_free
+    public boolean equalsIgnoreCase(String anotherString);
 
     // FIXME - overly complicated for esc?
     /*-RAC@
@@ -920,12 +920,12 @@ public final class String
 
     /*@ public normal_behavior
            ensures !\fresh(\result); // TODO presuming interned for ease of proof
-        model public static pure helper function non_null String split(String s, String regex, int position);
+        model public static pure helper heap_free non_null String split(String s, String regex, int position);
      */
         
     /*@ public normal_behavior
            ensures \result >= 1;
-        model public static pure helper function int numsplit(String s, String regex);
+        model public static pure helper heap_free int numsplit(String s, String regex);
      */
         
     /*@ public normal_behavior
@@ -1127,7 +1127,7 @@ public final class String
 
     //@ public normal_behavior
     //@   ensures true; // No restriction on result
-    //+OPENJML@ function
+    //@ heap_free
     //@ public pure helper static model boolean isInterned(non_null String s);
 
     

@@ -32,7 +32,7 @@ public final class Optional<T> {
   //@ also public exceptional_behavior
   //@   requires value == null;
   //@   signals_only NullPointerException;
-  //@ pure function helper
+  //@ pure heap_free helper
   public static <T> Optional<T> of(T value); // non-null required
 
   //@ public normal_behavior
@@ -48,13 +48,13 @@ public final class Optional<T> {
   //-RAC@ also public exceptional_behavior
   //-RAC@   requires value == null;
   //-RAC@   signals_only NoSuchElementException;
-  //@ pure function helper
+  //@ pure heap_free helper
   public T get();
   
   //@ public normal_behavior
   //-RAC@   ensures \result == (value != null);
   //+RAC@   ensures \result == (get() != null);
-  //@ pure function helper
+  //@ pure heap_free helper
   public boolean isPresent();
   
   

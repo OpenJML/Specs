@@ -1,5 +1,5 @@
 package java.util.stream;
-
+import java.util.function.*;
 //@ non_null_by_default
 public interface IntStream extends BaseStream<Integer,IntStream> {
     //  @ model public final instance array<Integer> intvalues;
@@ -55,17 +55,17 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       
       //@ public normal_behavior
       //@   ensures \result.values.length == 0;
-      //@ pure helper function
+      //@ pure helper heap_free
       public static IntStream empty();
       //@ public normal_behavior
       //@   ensures \result.values.length == 1;
       //@   ensures \result.values[0] == i;
-      //@ pure helper function
+      //@ pure helper heap_free
       public static IntStream of(int i);
       //@ public normal_behavior
       //@   ensures \result.values.length == ints.length;
       //@   ensures array.equals(\result.values,array.<Integer>of(ints));
-      //@ pure helper function
+      //@ pure helper heap_free
       public static IntStream of(int... ints);
       public static IntStream iterate(int i, java.util.function.IntUnaryOperator op);
       // Since 1.9: public static IntStream iterate(int i, java.util.function.IntPredicate p, java.util.function.IntUnaryOperator op);
@@ -74,13 +74,13 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       //@   requires to >= from;
       //@   ensures \result.values.length == to - from;
       //@   ensures \forall int k; 0 <= k < to-from; \result.values[k] == from + k;
-      //@ pure helper function
+      //@ pure helper heap_free
       public static IntStream range(int from, int to);
       //@ public normal_behavior
       //@   requires to >= from;
       //@   ensures \result.values.length == to - from + 1;
       //@   ensures \forall int k; 0 <= k <= to-from; \result.values[k] == from + k;
-      //@ pure helper function
+      //@ pure helper heap_free
       public static IntStream rangeClosed(int from, int to);
       public static IntStream concat(IntStream first, IntStream last);
 

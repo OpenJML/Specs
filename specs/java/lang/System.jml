@@ -319,8 +319,8 @@ t *);
     
     //@ public normal_behavior
     //@  requires \invariant_for(x); // FIXME - should not be needed?
-    //@ pure helper
-    public /*@ function @*/ static native int identityHashCode(/*@nullable*/ Object x);
+    //@ pure helper heap_free
+    public static native int identityHashCode(/*@nullable*/ Object x);
 
     //-RAC@ public model static non_null Properties systemProperties;
     //-RAC@    initially systemProperties.containsKey("java.home");
@@ -339,7 +339,7 @@ t *);
       @    //signals (SecurityException) (* if access is not permitted *);
       @*/
     //@ helper // TODO - reads?
-    public /*@ pure function @*/ static /*@ non_null @*/ Properties getProperties();
+    public /*@ pure heap_free @*/ static /*@ non_null @*/ Properties getProperties();
 
     /*-RAC@ 
       @ public behavior

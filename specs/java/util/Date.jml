@@ -232,6 +232,6 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
     
     //@ public normal_behavior
     //@   ensures \result == instant;
-    //@ pure function
+    //@ pure heap_free
     public java.time.Instant toInstant();
 }

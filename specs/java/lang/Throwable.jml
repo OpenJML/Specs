@@ -52,52 +52,56 @@ public class Throwable extends Object implements java.io.Serializable
 
     //@ public model non_null StackTraceElement[] _stackTrace; in objectState;
 
+    //@ spec_public
+    private java.util.List<Throwable> suppressedExceptions;
+    
     //  FIXME @ public invariant \nonnullelements(_stackTrace);
 
     /*@ public normal_behavior
-      @   ensures \result == (_message == null && _cause == null && _causeSet == false);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;
+      @   ensures \result == (_message == null & _cause == null & _causeSet == false
+      @                        & \nonnullelements(_stackTrace)
+      @                        & suppressedExceptions.size() == 0);
       @ public pure helper model boolean standardThrowable();
 
       @ public normal_behavior
-      @   ensures \result == (_cause == null && _causeSet == false);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;
+      @   ensures \result == (_cause == null & _causeSet == false
+      @                      & \nonnullelements(_stackTrace)
+      @                      & suppressedExceptions.size() == 0);
         public pure model boolean standardThrowableUnspecifiedMessage();
 
       @ public normal_behavior
       @   requires c != this;
-      @   ensures \result == (_cause == c && _causeSet == true);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;
+      @   ensures \result == (_cause == c & _causeSet == true
+      @                       & \nonnullelements(_stackTrace)
+      @                       & suppressedExceptions.size() == 0);
         public pure model boolean standardThrowableUnspecifiedMessage(nullable Throwable c);
 
       @ public normal_behavior
-      @   ensures \result == (_message == s && _cause == null && _causeSet == false);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;
+      @   ensures \result == (_message == s & _cause == null & _causeSet == false
+      @                       & \nonnullelements(_stackTrace)
+      @                       & suppressedExceptions.size() == 0);
         public pure helper model boolean standardThrowable(nullable String s);
 
       @ public normal_behavior
       @   requires c != this;
-      @   ensures \result == (initMessage(c) && _cause == c && _causeSet == true);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;
+      @   ensures \result == (initMessage(c) & _cause == c & _causeSet == true
+      @                       & \nonnullelements(_stackTrace)
+      @                       & suppressedExceptions.size() == 0);
         public pure helper model boolean standardThrowable(nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != this;
-      @   ensures \result == (_message == s && _cause == c && _causeSet == true);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;
+      @   ensures \result == (_message == s & _cause == c & _causeSet == true
+      @                       & \nonnullelements(_stackTrace)
+      @                       & suppressedExceptions.size() == 0);
         public pure helper model boolean standardThrowable(nullable String s, nullable Throwable c);
 
       @ public normal_behavior
       @   requires c != this;
-      @   ensures \result == (_message == s && _cause == c && _causeSet == true);
-      @   ensures \nonnullelements(_stackTrace);
-      @   ensures _throwables.length == 0;  // TODO - say more about boolean arguments
+      @   ensures \result == (_message == s & _cause == c & _causeSet == true
+      @                       & \nonnullelements(_stackTrace)
+      @                       & suppressedExceptions.size() == 0);
+      // TODO - say more about boolean arguments
         public pure helper model boolean standardThrowable(nullable String s, nullable Throwable c, boolean enableSuppression, boolean writableStackTrace);
 
       @ public normal_behavior
@@ -140,14 +144,17 @@ public class Throwable extends Object implements java.io.Serializable
     
 
     //@ public normal_behavior
+    //@    reads _message;
     //-RAC@   ensures \result == _message;
     public /*@ pure helper nullable*/ String getMessage();
 
     //@ public normal_behavior
+    //@    reads _message;
     //-RAC@   ensures  \result == _message;
     public /*@ pure helper nullable*/ String getLocalizedMessage();
 
     //@ public normal_behavior
+    //@    reads _cause;
     //-RAC@  ensures \result == _cause;
     synchronized public /*@ pure helper nullable*/ Throwable getCause();
 
@@ -160,16 +167,17 @@ public class Throwable extends Object implements java.io.Serializable
       @   ensures \result == this;
       @ also
       @ public exceptional_behavior
-      @   requires _causeSet || cause == this;
+      @   requires _causeSet | cause == this;
       @   assignable \nothing;
       @   signals_only IllegalStateException, IllegalArgumentException;
-      @   signals (IllegalStateException e) _causeSet && !e._causeSet;
-      @   signals (IllegalArgumentException e) cause == this && !e._causeSet;
+      @   signals (IllegalStateException e) _causeSet & !e._causeSet;
+      @   signals (IllegalArgumentException e) cause == this & !e._causeSet;
       @*/
     public synchronized /*@ non_null*/ Throwable initCause(/*@ nullable*/Throwable cause);
 
     /*-RAC@ also public normal_behavior
       @   requires \typeof(this) == \type(Throwable);
+      @   reads _message, _message.*;
       @   ensures _message == null ==> \result.equals(this.getClass().toString());
       @   ensures _message != null ==> \result.equals(this.getClass().toString() + ": " + _message);
       @ 
@@ -190,7 +198,7 @@ public class Throwable extends Object implements java.io.Serializable
     public void printStackTrace(/*@ non_null*/PrintStream s);
 
     //-RAC@ public normal_behavior
-    //-RAC@   //requires s.isOpen;
+    //-RAC@   //requires s.isOpen;  // FIXME
     //-RAC@   assignable s.outputText;
     //-RAC@   //ensures s.isOpen;
     public void printStackTrace(/*@ non_null*/PrintWriter s);
@@ -201,6 +209,7 @@ public class Throwable extends Object implements java.io.Serializable
     public synchronized /*@ non_null*/ Throwable fillInStackTrace();
 
     //@ public normal_behavior  // FIXME - this crashes Simplify
+    //@   reads _stackTrace, _stackTrace[*];
     //@   ensures \result != null;
     //-RAC@   ensures \result == _stackTrace;
     //@   //ensures (\forall int i; 0 <= i && i < _stackTrace.length;
@@ -218,18 +227,23 @@ public class Throwable extends Object implements java.io.Serializable
     //@   signals_only NullPointerException;
     public void setStackTrace(/*@ non_null*/ StackTraceElement /*@ non_null*/[] stackTrace);
 
-    //@ model public Throwable[] _throwables;
-    //+RAC@ public represents _throwables = getSuppressed();
-    
     //@ public normal_behavior
-    //@  assignable _throwables;
-    //@  ensures _throwables.length == \old(_throwables).length + 1;
-    //@  ensures (* content is what it should be *);
-    public final synchronized void addSuppressed(Throwable t);
+    //@  requires t != null & t != this;
+    //@  assignable \everything; // _throwables;  // FIXME
+    // @  ensures suppressedExceptions.length == \old(suppressedExceptions.length+1);
+    //@ also public exceptional_behavior
+    //@  requires t == null | t == this;
+    //@  assignable \nothing;
+    //@  signals_only NullPointerException, IllegalArgumentException;
+    //@  signals (NullPointerException e) t == null;
+    //@  signals (IllegalArgumentException e) t == this;
+    //@  
+    public final synchronized void addSuppressed(/*@ nullable */ Throwable t);
     
     //@ public normal_behavior
     //@    requires true;
-    //-RAC@   ensures \result == _throwables; // FIXME - is the result the same array on every call?
+    //@    reads suppressedExceptions;
+    //-RAC @   ensures \result == suppressedExceptions; // FIXME - is the result the same array on every call?
     //@ pure helper
     public final synchronized Throwable[] getSuppressed();
 

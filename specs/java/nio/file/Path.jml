@@ -1,6 +1,6 @@
 package java.nio.file;
 
-//@ non_null_by_default immutable
+//@ non_null_by_default
 public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Path>, Watchable {
 //    public abstract FileSystem getFileSystem();
 //    public abstract boolean isAbsolute();
@@ -29,12 +29,12 @@ public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Pat
     //@   ensures \result.canonicalPath.length == this.canonicalPath.length + path.canonicalPath.length;
     //@   ensures java.util.Arrays.equalArrays(\result.canonicalPath, 0, this.canonicalPath, 0, this.canonicalPath.length);
     //@   ensures java.util.Arrays.equalArrays(\result.canonicalPath, this.canonicalPath.length, path.canonicalPath, 0, path.canonicalPath.length);
-    //@ pure function
+    //@ pure
     public abstract Path resolve(Path path);
     //@ public normal_behavior
     //@   requires true;
     //@   ensures true;
-    //@ pure function
+    //@ pure
     public abstract Path resolve(java.lang.String pathString);
     
 //    public abstract Path resolveSibling(Path);

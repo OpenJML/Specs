@@ -33,13 +33,13 @@ public interface List<E> extends Collection<E> {
       @ public pure model boolean initialList();
       @*/
 
-//    //@ model pure public static function helper Object get(Content c, \bigint i);
+//    //@ model pure public static heap_free helper Object get(Content c, \bigint i);
 
 //    /*-RAC@ public normal_behavior
 //      @   ensures \result <==> ( c.theSize == cc.theSize &&
 //      @     (\forall \bigint i; 0<=i && i<c.theSize; get(c,i) == get(cc,i)));
 //      @*/
-//    //-RAC@ function
+//    //-RAC@ heap_free
 //    //-RAC@ public pure static model boolean equals(Content c, Content cc);
 
     // specification inherited

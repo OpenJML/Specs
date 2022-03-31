@@ -1152,23 +1152,23 @@ public /*@ pure @*/ final class Math {
     
     // model methods to help make some of the special cases
     // easier to deal with
-    /*@ public static model pure function boolean isPositiveZero(double a) {
+    /*@ public static model pure heap_free boolean isPositiveZero(double a) {
           return java.lang.Double.isPositiveZero(a);
         }
     
-        public static model pure function boolean isNegativeZero(double a) {
+        public static model pure heap_free boolean isNegativeZero(double a) {
           return java.lang.Double.isNegativeZero(a);
         }
     
-        public static model pure function boolean isPositiveZero(float a) {
+        public static model pure heap_free boolean isPositiveZero(float a) {
           return java.lang.Float.isPositiveZero(a);
         }
     
-        public static model pure function boolean isNegativeZero(float a) {
+        public static model pure heap_free boolean isNegativeZero(float a) {
           return java.lang.Float.isNegativeZero(a);
         }
     
-        public static model pure function boolean isFiniteOdd(double a) {
+        public static model pure heap_free boolean isFiniteOdd(double a) {
           if ((a - 2.0 * floor(a / 2.0)) == 1.0 && Double.isFinite(a)) {
             return true;
           } else {
@@ -1176,7 +1176,7 @@ public /*@ pure @*/ final class Math {
           }
         }
      
-       public static model pure function boolean isFiniteEven(double a) {
+       public static model pure heap_free boolean isFiniteEven(double a) {
           if (IEEEremainder(a, 2.0) == 0.0 && Double.isFinite(a)) {
             return true;
           } else {
@@ -1184,7 +1184,7 @@ public /*@ pure @*/ final class Math {
           }
         }
 
-       public static model pure function boolean close(double a, double b,
+       public static model pure heap_free boolean close(double a, double b,
                                               double eps) {
          return abs(a - b) <= max(abs(a), abs(b)) * eps;
        }
