@@ -93,12 +93,14 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model heap_free public seq<T> sub(\bigint i, \bigint j);
 
     public normal_behavior
+        ensures i == 0 ==> \result == this;
         ensures \result.size == (0 <= i <= size ? i : size < i ? size : 0);
         ensures \forall \bigint k; 0<=k<\result.size; \result[k] == this[k];
     model heap_free public seq<T> head(\bigint i);
 
     public normal_behavior
         requires 0 <= i <= this.size;
+        ensures i == 0 ==> \result == this;
         ensures \result.size == this.size - i;
         ensures \forall \bigint k; 0<=k<\result.size; \result[k] == this[k+i];
     model heap_free public seq<T> tail(\bigint i);
