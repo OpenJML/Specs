@@ -2,10 +2,14 @@ package org.jmlspecs.lang;
 
 //@ immutable pure nullable_by_default
 public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
-/*@    
+/*@ 
+ 
+    model public final \bigint size;
+    
     public normal_behavior
+      ensures \result == size;
       ensures \result >= 0;
-    model heap_free public \bigint size();  // FIXME - not much is said about size -- can't reason about it 
+    model heap_free public \bigint size();
     
     public normal_behavior
        ensures \result == this[x];
@@ -34,6 +38,10 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     public normal_behavior
        ensures \result == (this == s || equals(this,s));
     model heap_free public boolean equals(set<T> s);
+    
+    public normal_behavior
+       ensures \result == (\forall T t; s.contains(t) ; ss.contains(t));
+    model heap_free public static <T> boolean subset(set<T> s, set<T> ss);
     
     public normal_behavior
       ensures this.contains(x) ==> \result == this;
