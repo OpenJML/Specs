@@ -241,10 +241,11 @@ public /*@ pure @*/ final
 
     /*@ also
       @  public normal_behavior
-      @   ensures \result !=null;
+      @   ensures \result != null;
+      @   //-RAC@ ensures \result.charArray != null;
       @   ensures \result.length() == 1;
       @   ensures \result.charAt(0) == theCharacter;
-      @   ensures String.equals(\result,String.valueOf(theCharacter));
+      @   //ensures String.equals(\result,String.valueOf(theCharacter));
       @*/
     public String toString();
 

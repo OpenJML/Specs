@@ -13,6 +13,10 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     model heap_free public \bigint size();
     
     public normal_behavior
+      ensures \result == size;
+    model heap_free public \bigint length();
+    
+    public normal_behavior
       ensures \result == this[i];
     model heap_free public T get(\bigint i);
 

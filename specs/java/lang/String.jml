@@ -1086,9 +1086,9 @@ public final class String
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(boolean b);
 
     /*@  public normal_behavior
-      @   ensures \result != null
-      @            && \result.length() == 1
-      @            && \result.charAt(0) == c;
+      @   ensures \result != null;
+      @   //-RAC@ ensures \result.charArray != null;
+      @   ensures \result.length() == 1 && \result.charAt(0) == c;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(char c);
 
