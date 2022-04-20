@@ -8,20 +8,20 @@ public class LockSupport {
 //      private static final long PROBE;
 //      private static final long SECONDARY;
 //      private java.util.concurrent.locks.LockSupport();
-//      private static void setBlocker(java.lang.Thread, java.lang.Object);
+//      private static void setBlocker(Thread t, Object object);
 
       //@ public normal_behavior
       //@   ensures true;
       //@ pure
-      public static void unpark(/*@ nullable */ java.lang.Thread thread);
+      public static void unpark(@org.jmlspecs.annotation.NonNull Thread thread);
 
       //@ public normal_behavior
       //@   ensures true;
       //@ pure
-      public static void park(java.lang.Object object);  // FIXME - nullable?
-//      public static void parkNanos(java.lang.Object, long);
-//      public static void parkUntil(java.lang.Object, long);
-//      public static java.lang.Object getBlocker(java.lang.Thread);
+      public static void park(Object object);  // FIXME - nullable?
+//      public static void parkNanos(Object, long);
+//      public static void parkUntil(Object, long);
+//      public static Object getBlocker(Thread t);
       
       //@ public normal_behavior
       //@   ensures true;

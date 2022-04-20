@@ -103,7 +103,7 @@ public interface List<E> extends Collection<E> {
       @*/
     <T> T[] toArray(T[] a) throws NullPointerException;
 
-    /*-RAC@ also public behavior
+    /*-RAC@ also public normal_behavior
       @   requires containsNull || o != null;
       @   assignable values;
       @   ensures \result;
@@ -111,14 +111,14 @@ public interface List<E> extends Collection<E> {
       @   ensures values[values.length-1] == o;
       @   ensures \forall \bigint i; 0 <= i < values.length-1; 
       @                    values[i] == \old(values[i]); 
-      @   ensures contains(o);
+      @   ensures values.contains(o);
       @*/
     boolean add(E o);
 
 
     /*-RAC@
       @ also public normal_behavior
-      @   requires contains(o);
+      @   requires values.contains(o);
       @   assignable values;
       @   ensures !\result ==> values.length == \old(values.length);
       @   ensures \result ==> values.length == \old(values.length-1);
@@ -127,7 +127,7 @@ public interface List<E> extends Collection<E> {
               (\forall \bigint k; 0<=k && k<j; get(content,k) == \old(get(content,k)))
           &&  (\forall \bigint k; j<k && k<content.theSize; get(content,k-1)==\old(get(content,k+1)))); */
     /*-RAC@ also public exceptional_behavior
-      @   requires !contains(o);
+      @   requires !values.contains(o);
       @   assignable \nothing;
       @   signals_only NoSuchElementException;
       @*/

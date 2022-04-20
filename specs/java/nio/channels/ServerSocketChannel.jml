@@ -1,5 +1,5 @@
 package java.nio.channels;
-
+import java.net.*;
 //@ non_null_by_default
 public abstract class ServerSocketChannel extends java.nio.channels.spi.AbstractSelectableChannel implements NetworkChannel {
     
@@ -21,7 +21,7 @@ public abstract class ServerSocketChannel extends java.nio.channels.spi.Abstract
     //@ also public exceptional_behavior
     //@   requires addr == null;
     //@   assignable \nothing;
-    public final ServerSocketChannel bind(/*@ nullable */java.net.SocketAddress addr) throws java.io.IOException;
+    public final ServerSocketChannel bind(/*@ nullable */SocketAddress addr) throws java.io.IOException;
     
     //@ public normal_behavior
     //@   requires addr != null;
@@ -30,7 +30,7 @@ public abstract class ServerSocketChannel extends java.nio.channels.spi.Abstract
     //@ also public exceptional_behavior
     //@   requires addr == null;
     //@   assignable \nothing;
-    public abstract ServerSocketChannel bind(/*@ nullable */java.net.SocketAddress addr, int n) throws java.io.IOException;
+    public abstract ServerSocketChannel bind(/*@ nullable */SocketAddress addr, int n) throws java.io.IOException;
 
     //public abstract <T> ServerSocketChannel setOption(java.net.SocketOption<T> opt, T t) throws java.io.IOException;
     

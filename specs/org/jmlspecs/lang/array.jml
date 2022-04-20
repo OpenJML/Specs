@@ -46,6 +46,10 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
        ensures \result == (this == s || equals(this,s));
     model heap_free public boolean equals(array<T> s);
     
+    public normal_behavior
+       ensures \result == (\exists \bigint i; 0 <= i < this.length; this[i] == v);
+    model heap_free public <T> boolean contains(T v);
+
     @*/
 }
 

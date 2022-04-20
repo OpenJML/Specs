@@ -110,8 +110,8 @@ public final class Class<T> implements java.io.Serializable,
     //@   signals_only ClassCastException;
     public /*@ pure nullable @*/ T cast(/*@ nullable */Object obj);
 
-
-    public /*@ pure @*/ boolean isAssignableFrom(Class<?> cls);
+    /*@ public normal_behavior ensures true; pure @*/
+    public boolean isAssignableFrom(Class<?> cls);
 
     //@ public model boolean _isInterface; // cf. _isArray
     // @        represents _isInterface = isInterface();

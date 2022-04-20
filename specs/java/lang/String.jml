@@ -677,17 +677,16 @@ public final class String
       @  // requires fromIndex < 0;
       @  // ensures \result == indexOf(ch, 0); // Note - can't use recursive
       @  also
-      @   old int fi = fromIndex < 0 ? 0 : fromIndex;
-      @   requires 0 <= fi < length();
+      @   requires fromIndex < length();
       @   {|
-      @     requires charAt(fi) == ch;
-      @     ensures \result == fi;
+      @     requires charAt((fromIndex < 0 ? 0 : fromIndex)) == ch;
+      @     ensures \result == (fromIndex < 0 ? 0 : fromIndex);
       @   also
-      @     //-RAC@ ensures \result == -1 <==> (\forall int i; fi <= i < charArray.length; charArray[i] != ch);
-      @     //-RAC@ ensures \result != -1 <==> (fi <= \result < charArray.length);
+      @     //-RAC@ ensures \result == -1 <==> (\forall int i; (fromIndex < 0 ? 0 : fromIndex) <= i < charArray.length; charArray[i] != ch);
+      @     //-RAC@ ensures \result != -1 <==> ((fromIndex < 0 ? 0 : fromIndex) <= \result < charArray.length);
       @     //-RAC@ ensures \result != -1  ==> (
       @     //-RAC@            charArray[\result] == ch &&
-      @     //-RAC@            (\forall int i; fi <= i < \result;
+      @     //-RAC@            (\forall int i; (fromIndex < 0 ? 0 : fromIndex) <= i < \result;
       @     //-RAC@                 charArray[i] != ch));
       @   |}
       @*/

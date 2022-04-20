@@ -58,7 +58,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ pure helper
     public Boolean(boolean value);
 
-    /*@ //public normal_behavior  // FIXME -
+    /*@ public normal_behavior  ensures true; // FIXME -
       @ //  ensures \result <==> (TRUE_S.equalsIgnoreCase(s));
       @ model public static pure helper heap_free boolean decode( nullable String s);
       @
