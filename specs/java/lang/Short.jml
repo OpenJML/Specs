@@ -29,7 +29,7 @@ package java.lang;
 public /*@ pure @*/ final
     class Short extends Number implements Comparable<Short> {
 
-    //@ public model short theShort;
+    //@ public model final short theShort;
     //+RAC@ represents theShort = shortValue();
 
     /*@

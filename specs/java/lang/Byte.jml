@@ -29,7 +29,7 @@ package java.lang;
 public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
 {
 
-    //@ public model byte theByte;
+    //@ public model final byte theByte;
     //+RAC@ represents theByte = byteValue();
 
     /*@ 

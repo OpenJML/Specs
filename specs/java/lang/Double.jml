@@ -29,7 +29,7 @@ package java.lang;
 //+OPENJML@ immutable
 public /*@ pure @*/ final class Double extends Number implements Comparable<Double> {
 
-    //@ public model double theDouble;
+    //@ public model final double theDouble;
     //+RAC@ represents theDouble = doubleValue();
 
     /** Returns true if the string is a parseable double value (but not

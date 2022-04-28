@@ -26,11 +26,11 @@ package java.lang;
  * @author Gary T. Leavens
  * @author David R. Cok
  */
-//@ immutable
+//+OPENJML@ immutable
 public  /*@ pure @*/ final
     class Integer extends Number implements Comparable<Integer> {
 
-    //@ public model int theInteger;  in uniqueHash, objectState;
+    //@ public model final int theInteger;  in uniqueHash, objectState;
     //+RAC@ represents theInteger = intValue();
     
     //-RAC@ public represents uniqueHash = theInteger;

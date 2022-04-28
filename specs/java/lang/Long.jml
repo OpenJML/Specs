@@ -30,7 +30,7 @@ package java.lang;
 public /*@ pure @*/ final
     class Long extends Number implements Comparable<Long> {
 
-    //@ public model long theLong;
+    //@ public model final long theLong;
     //+RAC@ represents theLong = longValue();
 
     // A String is parseable iff it is a sequence of characters legal for

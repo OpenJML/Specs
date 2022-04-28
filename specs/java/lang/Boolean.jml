@@ -49,7 +49,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@ static_initializer
     //-RAC@ public static final invariant TRUE != null && FALSE != null && TRUE != FALSE && TRUE.theBoolean && !FALSE.theBoolean;
 
-    //-RAC@ public model boolean theBoolean; in objectState;
+    //-RAC@ public model final boolean theBoolean; in objectState;
     //  FIXME: +RAC@ public represents theBoolean = booleanValue();
 
     /*@ public normal_behavior

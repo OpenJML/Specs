@@ -33,7 +33,7 @@ public /*@ pure @*/ final
     class Character extends Object implements java.io.Serializable, Comparable<Character>
 {
 
-    //@ public model char theCharacter;
+    //@ public model final char theCharacter;
     //+RAC@ public represents theCharacter = charValue();
     
     //@ public constraint theCharacter == \old(theCharacter);

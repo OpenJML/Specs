@@ -29,7 +29,7 @@ package java.lang;
 //+OPENJML@ immutable
 public /*@ pure @*/ final class Float extends Number implements Comparable<Float> {
     
-    //@ public model float theFloat;
+    //@ public model final float theFloat;
     //+RAC@ public represents theFloat = floatValue();
     
     /** Returns true if the string is parseable as a float value (but not
