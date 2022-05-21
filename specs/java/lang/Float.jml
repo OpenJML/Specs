@@ -70,12 +70,12 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     public static final float NEGATIVE_INFINITY;
     //@ axiom \forall float d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
-    public static final float NaN = 0x7fc00000; // This is not the only NaN value
+    public static final float NaN;// = Float.intBitsToFloat(0x7fc00000); // This is not the only NaN value
     //@ axiom Float.isNaN(NaN);
 
-    public static final float MAX_VALUE = 0x1.fffffeP+127f;
-    public static final float MIN_VALUE = 0x0.000002P-126f;
-    public static final float MIN_NORMAL = 0x1.0p-126f;
+    public static final float MAX_VALUE;// = 0x1.fffffeP+127f;
+    public static final float MIN_VALUE;// = 0x0.000002P-126f;
+    public static final float MIN_NORMAL;// = 0x1.0p-126f;
 
     public static final Class<Float> TYPE;
     //@ ensures TYPE == float.class;

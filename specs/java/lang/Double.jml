@@ -71,11 +71,11 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     public static final double NEGATIVE_INFINITY;
     //@ axiom \forall double d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
-    public static final double NaN = 0x7ff8000000000000L; // This is not the only NaN value
+    public static final double NaN;// = Double.longBitsToDouble(0x7ff8000000000000L); // This is not the only NaN value
     //@ axiom Double.isNaN(NaN);
 
-    public static final double MAX_VALUE = 0x1.fffffffffffffP+1023;
-    public static final double MIN_VALUE = 0x0.0000000000001P-1022;
+    public static final double MAX_VALUE;// = 0x1.fffffffffffffP+1023;
+    public static final double MIN_VALUE;// = 0x0.0000000000001P-1022;
     // FIXME - the following axiom causes simple assertions to time out
     // @ axiom isFinite(MAX_VALUE) && isFinite(MIN_VALUE);
 
