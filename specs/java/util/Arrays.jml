@@ -559,6 +559,33 @@ public class Arrays {
     public static int binarySearch(int[] a, int key) throws NullPointerException;
 
     /*@  public normal_behavior
+    @   requires a != null &&
+    @            (\forall int i; 
+    @             fromIndex < i < toIndex;
+    @             a[i-1] <= a[i]); 
+    @  old boolean hasKey = (\exists int i; fromIndex <= i < toIndex; a[i] == key);
+    @  {| 
+    @     requires hasKey;
+    @     ensures fromIndex <= \result && \result < toIndex 
+    @           && a[\result] == key;
+    @    also
+    @     requires !hasKey;
+    @     ensures fromIndex <= -1-\result <= toIndex;
+    @     ensures (\forall int j; fromIndex <= j < (-1-\result); a[j] < key);
+    @     ensures (\forall int j; (-1-\result) <= j < toIndex; key < a[j]);
+    @   |}
+    @ also
+    @  public exceptional_behavior
+    @   requires a == null || (fromIndex < 0 || toIndex < fromIndex || a.length < toIndex);
+    @   signals (NullPointerException) a == null;
+    @   signals (IllegalArgumentException) toIndex < fromIndex;
+    @   signals (ArrayIndexOutOfBoundsException) fromIndex < 0 || (a != null && a.length < toIndex);
+    @   signals_only NullPointerException, IllegalArgumentException, ArrayIndexOutOfBoundsException;
+    @*/
+    //@ pure
+    public static int binarySearch(int[] a, int fromIndex, int toIndex, int key) throws NullPointerException; // TODO - add this signature for all types
+
+    /*@  public normal_behavior
       @   requires a != null &&
       @            (\forall int i; 
       @             0 < i < a.length;
@@ -2061,6 +2088,20 @@ public class Arrays {
     //@   ensures true;
     //@ pure helper
     public static java.lang.String deepToString(Object /*@ nullable */ [] a);
+    
+    
+    //@ public behavior
+    //@   ensures a == b ==> \result == true;
+    //@   ensures a != null && b != null && a.length != b.length ==> \result == false;
+    // FIXME
+    // NOTE: Is not pure because equals is not pure
+    public static boolean deepEquals(Object[] a, Object[] b);
+
+//    //@ public normal_behavior
+//    //@   ensures a == b ==> \result == true;
+//    //@   ensures (a != null && b != null) ==> \result == (a.length == b.length && \forall int i; 0 <= i < a.length; a[i] == b[i]);
+//    //@ pure
+//    public static boolean deepEquals(int[] a, int[] b);
 
 }
 
