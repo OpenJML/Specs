@@ -84,6 +84,16 @@ public /*@ pure @*/ final class Math {
       @*/
     public static /*@ pure @*/ double sin(double a);
 
+    /*@ public normal_behavior 
+      @ {|
+      @   requires a == 0.0;
+      @   ensures \result == 0.0;
+      @ also
+      @   ensures \result <= 1.0 && \result >= -1.0;
+      @ |}
+      @*/
+    //@ model public static pure double sin(\real a);
+
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(a) || Double.isInfinite(a);
@@ -546,6 +556,11 @@ public /*@ pure @*/ final class Math {
     public static /*@ pure @*/ long abs(long a);
 
     /*@ public normal_behavior
+      @   ensures \result == ( 0 <= a ? a : -a);
+      @*/
+    //@ model public static pure long abs(\real a);
+
+    /*@ public normal_behavior
       @ {|
       @   requires Float.isNaN(a);
       @   ensures Float.isNaN(\result);
@@ -607,7 +622,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    public static /*@ pure @*/ int max(int a, int b);
+    public static /*@ pure helper @*/ int max(int a, int b);
 
     /*@ public normal_behavior
       @ {|
@@ -621,7 +636,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    public static /*@ pure @*/ long max(long a, long b);
+    public static /*@ pure helper @*/ long max(long a, long b);
 
     /*@ public normal_behavior
       @ {|
@@ -638,7 +653,7 @@ public /*@ pure @*/ final class Math {
       @   |}
       @ |}
       @*/
-    public static /*@ pure @*/ float max(float a, float b);
+    public static /*@ pure helper @*/ float max(float a, float b);
 
     /*@ public normal_behavior
       @ {|
@@ -655,7 +670,7 @@ public /*@ pure @*/ final class Math {
       @   |}
       @ |}
       @*/
-    public static /*@ pure @*/ double max(double a, double b);
+    public static /*@ pure helper @*/ double max(double a, double b);
 
     /*@ public normal_behavior
       @ {|
@@ -669,7 +684,21 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    //@ model public static pure \bigint max(\bigint a, \bigint b);
+    //@ model public static pure helper \bigint max(\bigint a, \bigint b);
+
+    /*@ public normal_behavior
+      @ {|
+      @   requires a <= b;
+      @   ensures \result == b;
+      @ also
+      @   requires b <= a;
+      @   ensures \result == a;
+      @ also
+      @   ensures_redundantly a <= \result && b <= \result;
+      @   ensures_redundantly \result == a || \result == b;
+      @ |}
+      @*/
+    //@ model public static pure helper \real max(\real a, \real b);
 
     /*@ public normal_behavior
       @ {|
@@ -746,6 +775,36 @@ public /*@ pure @*/ final class Math {
       @ |}
       @*/
     //@ model public static pure \bigint min(\bigint a, \bigint b);
+    
+    /*@ public normal_behavior
+      @ {|
+      @   requires a <= b;
+      @   ensures \result == a;
+      @ also
+      @   requires b <= a;
+      @   ensures \result == b;
+      @ also
+      @   ensures_redundantly a <= \result && b <= \result;
+      @   ensures_redundantly \result == a || \result == b;
+      @ |}
+      @*/
+    //@ model public static pure \real min(\real a, \real b);
+
+    /*@ public normal_behavior
+      @   requires a != 0 && b != 0;
+      @   ensures \result > 0 && \result <= a && \result <= b;
+      @   ensures a % \result == 0 && b % \result == 0; // TODO - needs more
+      @   ensures \forall int c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
+      @*/  
+    //@ model public static pure int gcd(int a, int b);
+
+    /*@ public normal_behavior
+      @   requires a != 0 && b != 0;
+      @   ensures \result > 0 && \result <= a && \result <= b;
+      @   ensures a % \result == 0 && b % \result == 0; // TODO - needs more
+      @   ensures \forall \bigint c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
+      @*/  
+    //@ model public static pure \bigint gcd(\bigint a, \bigint b);
 
     // new for Java 5
     /*@ public normal_behavior

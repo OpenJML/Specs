@@ -159,7 +159,7 @@ public /*@ pure @*/ final class StrictMath {
       @   requires Double.isNaN(angdeg);
       @   ensures Double.isNaN(\result);
       @*/
-    public static /*@ pure @*/ strictfp double toRadians(double angdeg);
+    public static /*@ pure @*/ double toRadians(double angdeg);
 
     /*@ public normal_behavior
       @   requires !Double.isNaN(angrad);
@@ -169,7 +169,7 @@ public /*@ pure @*/ final class StrictMath {
       @   requires Double.isNaN(angrad);
       @   ensures Double.isNaN(\result);
       @*/
-    public static /*@ pure @*/ strictfp double toDegrees(double angrad);
+    public static /*@ pure @*/ double toDegrees(double angrad);
 
     /*@ public normal_behavior
       @ {|

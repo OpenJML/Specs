@@ -11,9 +11,7 @@ public class Random implements java.io.Serializable {
   private static final long addend;
   private static final long mask;
   private static final double DOUBLE_UNIT;
-  static final java.lang.String BadBound;
-  static final java.lang.String BadRange;
-  static final java.lang.String BadSize;
+  private static final double FLOAT_UNIT;
   private static final java.util.concurrent.atomic.AtomicLong seedUniquifier;
   private double nextNextGaussian;
   private boolean haveNextNextGaussian;
@@ -49,10 +47,6 @@ public class Random implements java.io.Serializable {
   //@ public normal_behavior
   //@   assignable this.content, bytes[*];
   public void nextBytes(byte[] bytes);
-  
-  final long internalNextLong(long a, long b);
-  final int internalNextInt(int a, int b);
-  final double internalNextDouble(double a, double b);
   
   //@ public normal_behavior
   //@   assignable this.content;

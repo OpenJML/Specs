@@ -11,7 +11,7 @@ public interface Supplier<T> {
     /*@ nullable */ T get();
     
     
-    /*@
+    /* FIXME @
 
     model public static interface Pure<T> extends Supplier<T> {
          also public normal_behavior requires true;

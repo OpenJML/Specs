@@ -20,7 +20,7 @@ public class Utils {
     
     //@ public normal_behavior
     //@   requires (\forall int i; 0<=i && i<args.length; args[i] != null);
-    //@   ensures JML.erasure((\TYPE)\result) == base;
+    //q@   ensures JML.erasure((\TYPE)\result) == base;
     //-RAC@   ensures JML.typeargs((\TYPE)\result).length == args.length;
     //-RAC@   ensures (\forall int i; 0<=i && i<args.length; JML.typeargs((\TYPE)\result)[i] == (\TYPE)args[i]);
     static public @NonNull IJMLTYPE makeTYPE(@NonNull Class<?> base, @NonNull IJMLTYPE ... args);

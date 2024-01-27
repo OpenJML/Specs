@@ -27,7 +27,7 @@ package java.util;
  */
 //@ non_null_by_default
 @SuppressWarnings("unchecked")
-public class Arrays {
+public final class Arrays {
 
 
     //-----------------------------------------------------------------------

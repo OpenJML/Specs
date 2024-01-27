@@ -26,7 +26,7 @@ package java.util;
  * @author Gary T. Leavens
  * @author Erik Poll
  */
-public interface List<E> extends Collection<E> {
+public interface List<E> extends SequencedCollection<E> {
 
     /*@ public normal_behavior
       @   ensures \result;
@@ -50,7 +50,7 @@ public interface List<E> extends Collection<E> {
     //@ pure
     boolean isEmpty();
 
-    // specification inherited
+    //@ pure // FIXME - this ought to be simply inherited
     boolean contains(/*@nullable*/ Object o);
 
     /*@ also
@@ -149,6 +149,8 @@ public interface List<E> extends Collection<E> {
     // FIXME - retains order
     boolean retainAll(Collection<?> c) throws NullPointerException;
 
+    public default java.util.List<E> reversed();
+    
     // specification inherited
     void clear();
 

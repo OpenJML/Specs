@@ -12,7 +12,7 @@ public interface Predicate<T> {
 //    public Predicate<T> or(Predicate<? super T>);
 //    public static <T> Predicate<T> isEqual(java.lang.Object);
 
-    /*@
+    /* FIXME @
     model public static interface Pure<T> extends Predicate<T> {
 
         //@ also public normal_behavior

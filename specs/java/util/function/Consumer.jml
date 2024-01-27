@@ -13,20 +13,20 @@ public interface Consumer<T> {
     //@ pure
     public Consumer<T> andThen(Consumer<? super T> f);
 
-    /*@ model public interface Local<T> extends Consumer<T> {
+    /* FIXME @ model public interface Local<TT> extends Consumer<TT> {
            also public normal_behavior
               requires t != null;
               assignable t.*;
-           void accept(T t);
+           void accept(TT t);
         }
     
      @*/
 
-    /*@ model public interface Pure<T> extends Consumer<T> {
+    /* FIXME @ model public interface Pure<TT> extends Consumer<TT> {
            also public normal_behavior
               requires t != null;
               assignable \nothing;
-           void accept(T t);
+           void accept(TT t);
         }
     
      @*/

@@ -1,0 +1,13 @@
+package java.util;
+
+public interface SequencedCollection<E> extends Collection<E> {
+	
+	  public abstract java.util.SequencedCollection<E> reversed();
+	  public default void addFirst(E e);
+	  public default void addLast(E e);
+	  public default E getFirst();
+	  public default E getLast();
+	  public default E removeFirst();
+	  public default E removeLast();
+
+}

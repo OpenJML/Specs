@@ -6,7 +6,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     
     //@ public normal_behavior
     //@   requires true;
-    /*@   { 
+    /* FIXME @   { 
             //@ loop_invariant i == \count && 0 <= i <= values.length;
             //@ decreases values.length - i;
             for (\bigint i=0; i < values.length; i++) {
@@ -70,7 +70,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
     //@   ensures \result.values.length == this.values.length;
-    //@   ensures func instanceof Function.NoNulls ==> \forall int i; 0 <= i < values.length; \result.values[i] != null;
+    // FIXME @   ensures func instanceof Function.NoNulls ==> \forall int i; 0 <= i < values.length; \result.values[i] != null;
     //@   // ensures \forall int i; 0 <= i < values.length; \result.values[i] == func.apply(values[i]); // FIXME - not translated properly yet
     //@ pure
     <R> Stream<R> map(Function<? super T, ? extends R> func);
@@ -102,8 +102,9 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     Stream<T> skip(long n);
 
     // FIXME - clients should not be able to rely on the actions being ordered
-    //@ public normal_behavior
-    /*@   { 
+    //@ public normal_behavior 
+    //@  requires true;
+    /* FIXME @   { 
             //@ loop_invariant 0 <= i && i <= values.length;
             //@ decreases values.length - i;  // FIXME - allow the decreases to be a \bigint
             for (int i=0; i < values.length; i++) consumer.accept(get(i)); 

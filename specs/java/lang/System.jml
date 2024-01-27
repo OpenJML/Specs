@@ -96,27 +96,29 @@ public final class System {
     public static void setErr(PrintStream err);
 
 
-    //@ public model static nullable SecurityManager systemSecurityManager;
+// FIXME    //@ public model static nullable SecurityManager systemSecurityManager;
 
-    /*@  public normal_behavior
-      @    requires sm == null;
-      @    assignable \nothing;
-      @    ensures \not_modified(systemSecurityManager);
-      @ also
-      @  public behavior
-      @    requires sm != null;
-      @    assignable systemSecurityManager;
-      @    ensures  systemSecurityManager == sm;
-      @    signals (SecurityException) (* if the change is not permitted *);
-      @*/
-    //@ helper
-    public static void setSecurityManager(/*@nullable*/ SecurityManager sm) throws SecurityException;
+// Deprecated
+//    /*@  public normal_behavior
+//      @    requires sm == null;
+//      @    assignable \nothing;
+//      @    ensures \not_modified(systemSecurityManager);
+//      @ also
+//      @  public behavior
+//      @    requires sm != null;
+//      @    assignable systemSecurityManager;
+//      @    ensures  systemSecurityManager == sm;
+//      @    signals (SecurityException) (* if the change is not permitted *);
+//      @*/
+//    //@ helper
+//    public static void setSecurityManager(/*@nullable*/ SecurityManager sm) throws SecurityException;
 
-    //@ public normal_behavior
-    //@   reads systemSecurityManager;
-    //@   ensures \result == systemSecurityManager;
-    //@ helper
-    public /*@ pure @*/ static /*@nullable*/ SecurityManager getSecurityManager();
+// Deprecated
+//    //@ public normal_behavior
+//    //@   reads systemSecurityManager;
+//    //@   ensures \result == systemSecurityManager;
+//    //@ helper
+//    public /*@ pure @*/ static /*@nullable*/ SecurityManager getSecurityManager();
 
     /** The last value of currentTimeMillis() that was returned */
 

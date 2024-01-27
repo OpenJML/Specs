@@ -6,9 +6,9 @@ public final class KeyPair implements java.io.Serializable {
     
     private static final long serialVersionUID;
     //@ spec_public
-    private PrivateKey privateKey;
+    private final PrivateKey privateKey;
     //@ spec_public
-    private PublicKey publicKey;
+    private final PublicKey publicKey;
       
     //@ public normal_behavior
     //@   ensures this.publicKey == publickey;

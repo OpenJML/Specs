@@ -47,13 +47,13 @@ public interface Set<E> extends Collection<E> {
     Iterator<E> iterator();
 
     // specification inherited
-    /*@non_null*/ Object[] toArray();
+    /*@ non_null*/ Object[] toArray();
+
+//    // specification inherited  // FIXME 
+//    <T> T /*@ non_null*/[] toArray(T /*@ non_null*/ [] a) throws NullPointerException;
 
     // specification inherited
-    <T> T /*@non_null*/[] toArray(T /*@non_null*/ [] a) throws NullPointerException;
-
-    // specification inherited
-    boolean add(/*@nullable*/ E o);
+    boolean add(/*@ nullable*/ E o);
 
     /*-RAC@ also
        @ public normal_behavior
@@ -67,19 +67,19 @@ public interface Set<E> extends Collection<E> {
     //@   requires !contains(o);
     //@   assignable \nothing; 
     //@   ensures !\result;
-    boolean remove(/*@nullable*/ Object o);
+    boolean remove(/*@ nullable*/ Object o);
 
     // Bulk Operations
 
     // specs are inherited
     //@ pure
-    boolean containsAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
+    boolean containsAll(/*@ non_null*/ Collection<?> c) throws NullPointerException;
 
     // specs are inherited
-    boolean addAll(/*@non_null*/ Collection<? extends E> c) throws NullPointerException;
+    boolean addAll(/*@ non_null*/ Collection<? extends E> c) throws NullPointerException;
 
     // specs are inherited
-    boolean retainAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
+    boolean retainAll(/*@ non_null*/ Collection<?> c) throws NullPointerException;
 
     /*-RAC@ also public normal_behavior
        @   requires c != null;
@@ -90,7 +90,7 @@ public interface Set<E> extends Collection<E> {
        @   ensures size() <= \old(size());
        @   ensures \result <==> size() != \old(size());
        @*/
-    boolean removeAll(/*@non_null*/ Collection<?> c) throws NullPointerException;
+    boolean removeAll(/*@ non_null*/ Collection<?> c) throws NullPointerException;
 
     // specification inherited
     void clear();
@@ -104,7 +104,7 @@ public interface Set<E> extends Collection<E> {
                ((\forall Object oo; contains(oo) <==> ((Set)o).contains(oo))
              && contains(null) <==> ((Set)o).contains(null)); */
     //-RAC@   ensures  \result ==> (values.length == ((Set)o).values.length);
-    /*@ pure @*/ boolean equals(/*@nullable*/ Object o);
+    /*@ pure @*/ boolean equals(/*@ nullable*/ Object o);
 
     // specification inherited
     int hashCode();

@@ -13,7 +13,7 @@ public abstract class Buffer {
     private int limit;
 
     //@ spec_public
-    private int capacity;
+    private final int capacity;
 
     //@ model public boolean _isReadOnly;
     //@ model public boolean _hasBackingArray;
