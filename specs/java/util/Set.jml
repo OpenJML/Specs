@@ -108,4 +108,55 @@ public interface Set<E> extends Collection<E> {
 
     // specification inherited
     int hashCode();
+    
+    //@ public normal_behavior
+    //@ ensures \result.size() == 0;
+    //@ pure
+    public static <E> java.util.Set<E> of();
+    //@ public normal_behavior
+    //@ ensures \result.size() == 1;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 2;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 3;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 4;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 5;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3, E e4);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 6;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3, E e4, E e5);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 7;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3, E e4, E e5, E e6);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 8;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3, E e4, E e5, E e6, E e7);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 9;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8);
+    //@ public normal_behavior
+    //@ ensures \result.size() <= 10;
+    //@ pure
+    public static <E> java.util.Set<E> of(E e0, E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9);
+    //@ public normal_behavior
+    //@ ensures elements != null ==> \result.size() <= elements.length;
+    //@ pure
+    @SuppressWarnings("unchecked")
+    public static <E> java.util.Set<E> of(E... elements);
+
 }

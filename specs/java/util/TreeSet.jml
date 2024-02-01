@@ -1,0 +1,105 @@
+package java.util;
+public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.NavigableSet<E>, java.lang.Cloneable, java.io.Serializable {
+  private transient java.util.NavigableMap<E, java.lang.Object> m;
+  private static final java.lang.Object PRESENT;
+  private static final long serialVersionUID;
+
+  TreeSet(java.util.NavigableMap<E, java.lang.Object> m);
+  
+  //@ pure
+  public TreeSet();
+  
+  //@ pure
+  public TreeSet(java.util.Comparator<? super E> comp);
+  
+  //@ pure
+  public TreeSet(java.util.Collection<? extends E> c);
+  
+  //@ pure
+  public TreeSet(java.util.SortedSet<E>);
+  
+  //@ pure
+  public java.util.Iterator<E> iterator();
+  
+  //@ pure
+  public java.util.Iterator<E> descendingIterator();
+  
+  //@ pure
+  public java.util.NavigableSet<E> descendingSet();
+  
+  //@ pure
+  public int size();
+  
+  //@ pure
+  public boolean isEmpty();
+  
+  //@ pure
+  public boolean contains(java.lang.Object o);
+  
+  //@ pure
+  public boolean add(E);
+  
+  //@ pure
+  public boolean remove(java.lang.Object o);
+  
+  //@ pure
+  public void clear();
+  
+  //@ pure
+  public boolean addAll(java.util.Collection<? extends E> c);
+  
+  //@ pure
+  public java.util.NavigableSet<E> subSet(E e, boolean p, E ee, boolean pp);
+  
+  //@ pure
+  public java.util.NavigableSet<E> headSet(E e, boolean p);
+  
+  //@ pure
+  public java.util.NavigableSet<E> tailSet(E, boolean);
+  
+  //@ pure
+  public java.util.SortedSet<E> subSet(E e, E ee);
+  
+  //@ pure
+  public java.util.SortedSet<E> headSet(E e);
+  
+  //@ pure
+  public java.util.SortedSet<E> tailSet(E e);
+  
+  //@ pure
+  public java.util.Comparator<? super E> comparator();
+  
+  //@ pure
+  public E first();
+  
+  //@ pure
+  public E last();
+  
+  //@ pure
+  public E lower(E e);
+  
+  //@ pure
+  public E floor(E e);
+  
+  //@ pure
+  public E ceiling(E e);
+  
+  //@ pure
+  public E higher(E e);
+  
+  //@ pure
+  public E pollFirst();
+  
+  //@ pure
+  public E pollLast();
+
+  public void addFirst(E e);
+
+  public void addLast(E e);
+  
+  //@ pure
+  public java.lang.Object clone();
+  
+  //@ pure
+  public java.util.Spliterator<E> spliterator();
+}

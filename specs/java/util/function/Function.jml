@@ -15,7 +15,7 @@ public interface Function<T,R> {
       default public <V> Function<T, V> andThen(Function<? super R, ? extends V> after);
 
 
-      /* FIXME @  @FunctionalInterface model public static interface Pure<T,R> extends Function<T,R> {
+      /*@  @FunctionalInterface model public static interface Pure<T,R> extends Function<T,R> {
       @   also public normal_behavior
       @     assignable \nothing;
       @   pure
@@ -25,22 +25,22 @@ public interface Function<T,R> {
       
 
     
-      /* FIXME @ public static model interface Identity<X> extends Function<X,X> {
+      /*@ public static model interface Identity<XXX> extends Function<XXX,XXX> {
       @   also public model_program {
       @      return t;
       @   }
       @   pure
-      @   public X apply(X t);
+      @   public XXX apply(XXX t);
       @ }
       @*/
     
       //@ public normal_behavior
       //@  requires true;
-      // FIXME @   ensures \result instanceof Identity;
+      //@   ensures \result instanceof Identity;
       //@ pure
       public static <T> Function<T, T> identity();
       
-      /* FIXME @
+      /*@
       model public static interface NoNulls<T,R> extends Function<T,R> {  // FIXME - should be public by default???
         
         also public normal_behavior
