@@ -214,7 +214,7 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   ensures \result == _stackTrace;
     //@   //ensures (\forall int i; 0 <= i && i < _stackTrace.length;
     //@   //                        _stackTrace[i].equals(\result[i]));
-    public /*@ pure helper non_null*/ StackTraceElement /* FIXME non_null */ [] getStackTrace();
+    public /*@ pure helper non_null*/ StackTraceElement /*@ non_null */ [] getStackTrace();
 
     //@ public normal_behavior
     //@   requires \nonnullelements(stackTrace);
@@ -225,7 +225,7 @@ public class Throwable extends Object implements java.io.Serializable
     //@   requires !\nonnullelements(stackTrace);
     //@   assignable \nothing;
     //@   signals_only NullPointerException;
-    public void setStackTrace(/*@ non_null*/ StackTraceElement /*@ non_null*/[] stackTrace);
+    public void setStackTrace(/*@ non_null*/ StackTraceElement /*@ non_null */ [] stackTrace);
 
     //@ public normal_behavior
     //@  requires t != null & t != this;
