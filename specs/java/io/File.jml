@@ -98,7 +98,7 @@ public class File implements Serializable, Comparable<File> {
       @*/
 
     //@ also public normal_behavior
-    //@   requires pathname instanceof File && definedComparison(pathname);
+    //@   requires pathname == null || (pathname instanceof File && definedComparison(pathname));
     //@   // FIXME - recursive ensures \result == this.compareTo(pathname);
    //@ pure
     public int compareTo(/*@ nullable*/ File pathname);
