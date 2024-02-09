@@ -31,11 +31,11 @@ public abstract class Reader extends Object implements Readable, Closeable {
     public long skip(long Param0)
         throws IOException;
 
-    public int read(/*@non_null*/ char[] Param0)
+    public int read(char /*@non_null*/ [] Param0)
         throws IOException;
 
     //@ signals_only ArrayStoreException, IOException;
-    public abstract int read(/*@non_null*/ char[] Param0, int Param1, int Param2)
+    public abstract int read(char /*@non_null*/ [] Param0, int Param1, int Param2)
         throws IOException;
 
     protected Reader(/*@non_null*/ Object Param0);

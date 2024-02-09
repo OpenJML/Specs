@@ -1000,7 +1000,7 @@ public final class String
       @    ensures \fresh(\result);
       @    ensures CharSequence.equal(\result,charArray);
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ char[] toCharArray();
+    public /*@ pure @*/ char /*@ non_null @*/ [] toCharArray();
 
     /*@  public normal_behavior
       @    ensures \result != null;

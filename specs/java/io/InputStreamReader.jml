@@ -15,7 +15,7 @@ public class InputStreamReader extends Reader {
     public boolean ready()
         throws IOException;
 
-    public int read(/*@non_null*/ char[] Param0, int Param1, int Param2)
+    public int read(char /*@non_null*/ [] Param0, int Param1, int Param2)
         throws IOException;
 
     public InputStreamReader(/*@non_null*/ InputStream Param0);

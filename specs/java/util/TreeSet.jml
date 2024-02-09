@@ -16,7 +16,7 @@ public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.Na
   public TreeSet(java.util.Collection<? extends E> c);
   
   //@ pure
-  public TreeSet(java.util.SortedSet<E>);
+  public TreeSet(java.util.SortedSet<E> s);
   
   //@ pure
   public java.util.Iterator<E> iterator();
@@ -37,7 +37,7 @@ public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.Na
   public boolean contains(java.lang.Object o);
   
   //@ pure
-  public boolean add(E);
+  public boolean add(E e);
   
   //@ pure
   public boolean remove(java.lang.Object o);
@@ -55,7 +55,7 @@ public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.Na
   public java.util.NavigableSet<E> headSet(E e, boolean p);
   
   //@ pure
-  public java.util.NavigableSet<E> tailSet(E, boolean);
+  public java.util.NavigableSet<E> tailSet(E e, boolean b);
   
   //@ pure
   public java.util.SortedSet<E> subSet(E e, E ee);
