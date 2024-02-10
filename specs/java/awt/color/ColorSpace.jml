@@ -62,13 +62,13 @@ public abstract class ColorSpace extends Object implements java.io.Serializable 
 
     protected ColorSpace(int Param0, int Param1);
 
-    public abstract /*@non_null*/ float[] fromCIEXYZ(/*@non_null*/ float[] Param0);
+    public abstract float /*@non_null*/ [] fromCIEXYZ(float /*@non_null*/ [] Param0);
 
-    public abstract /*@non_null*/ float[] fromRGB(/*@non_null*/ float[] Param0);
+    public abstract float /*@non_null*/ [] fromRGB(float /*@non_null*/ [] Param0);
 
-    public abstract /*@non_null*/ float[] toCIEXYZ(/*@non_null*/ float[] Param0);
+    public abstract float /*@non_null*/ [] toCIEXYZ(float /*@non_null*/ [] Param0);
 
-    public abstract /*@non_null*/ float[] toRGB(/*@non_null*/ float[] Param0);
+    public abstract float /*@non_null*/ [] toRGB(float /*@non_null*/ [] Param0);
 
     public static /*@non_null*/ ColorSpace getInstance(int Param0);
 

@@ -71,8 +71,8 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     public static final double NEGATIVE_INFINITY;
     //@ axiom \forall double d;; !isNaN(d) ==> d >= NEGATIVE_INFINITY;
 
-    public static final double NaN;// = Double.longBitsToDouble(0x7ff8000000000000L); // This is not the only NaN value
-    //@ axiom Double.isNaN(NaN);
+    //public static final double NaN;// = Double.longBitsToDouble(0x7ff8000000000000L); // This is not the only NaN value
+    // @ axiom Double.isNaN(NaN);
 
     public static final double MAX_VALUE;// = 0x1.fffffffffffffP+1023;
     public static final double MIN_VALUE;// = 0x0.0000000000001P-1022;
@@ -123,7 +123,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
         throws NumberFormatException;
 
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures true; // uninterpreted
     //@ pure helper heap_free
     public static boolean isFinite(double v);
     

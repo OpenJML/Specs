@@ -45,7 +45,7 @@ public class Color implements Paint, java.io.Serializable {
     public Color(int Param0, boolean Param1);
     public Color(float Param0, float Param1, float Param2);
     public Color(float Param0, float Param1, float Param2, float Param3);
-    public Color(ColorSpace Param0, /*@non_null*/ float[] Param1, float Param2);
+    public Color(ColorSpace Param0, float /*@non_null*/ [] Param1, float Param2);
 
     public int getRed();
     public int getGreen();
@@ -71,18 +71,18 @@ public class Color implements Paint, java.io.Serializable {
 
     public static int HSBtoRGB(float Param0, float Param1, float Param2);
 
-    public static /*@non_null*/ float[] RGBtoHSB(int r, int g, int b, /*@nullable*/ float[] Param3);
+    public static float /*@non_null*/ [] RGBtoHSB(int r, int g, int b, float /*@nullable*/ [] Param3);
 
     public static /*@non_null*/ Color getHSBColor(float Param0, float Param1, float Param2);
 
-    public /*@non_null*/ float[] getRGBComponents(/*@nullable*/ float[] Param0);
-    public /*@non_null*/ float[] getRGBColorComponents(/*@nullable*/ float[] Param0);
-    public /*@non_null*/ float[] getComponents(/*@nullable*/ float[] Param0);
-    public /*@non_null*/ float[] getColorComponents(/*@nullable*/ float[] Param0);
-    public /*@non_null*/ float[] getComponents(/*@non_null*/ ColorSpace Param0, 
-                           /*@non_null*/ float[] Param1);
-    public /*@non_null*/ float[] getColorComponents(/*@non_null*/ ColorSpace Param0, 
-                            /*@nullable*/ float[] Param1);
+    public float /*@non_null*/ [] getRGBComponents(float /*@nullable*/ [] Param0);
+    public float /*@non_null*/ [] getRGBColorComponents(float /*@nullable*/ [] Param0);
+    public float /*@non_null*/ [] getComponents(float /*@nullable*/ [] Param0);
+    public float /*@non_null*/ [] getColorComponents(float /*@nullable*/ [] Param0);
+    public float /*@non_null*/ [] getComponents(/*@non_null*/ ColorSpace Param0, 
+                           float /*@non_null*/ [] Param1);
+    public float /*@non_null*/ [] getColorComponents(/*@non_null*/ ColorSpace Param0, 
+                            float /*@nullable*/ [] Param1);
 
     public /*@non_null*/ ColorSpace getColorSpace();
 
