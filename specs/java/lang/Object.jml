@@ -253,16 +253,8 @@ public class Object {
     //@   assignable \nothing;
     //@   signals_only InterruptedException;
     public final void wait() throws InterruptedException;
-
-    /*@ protected normal_behavior
-      @   requires objectTimesFinalized == 0 ; // FIXME && \lockset.isEmpty();
-      @   assignable objectTimesFinalized, objectState;
-      @   ensures objectTimesFinalized == 1;
-      @*/
-    protected void finalize() throws Throwable;
-
-    /** The number of times this object has been finalized.
-     */
-    //@ protected ghost int objectTimesFinalized = 0; // not part of objectState
+    
+    // finalize is deprecated
+    // protected void finalize();
 
 }

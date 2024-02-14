@@ -27,6 +27,7 @@ package java.util;
  * @author Brandon Shilling
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public interface Set<E> extends Collection<E> {
 
     /*@ public normal_behavior
