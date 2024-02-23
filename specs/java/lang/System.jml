@@ -310,7 +310,7 @@ t *);
       @*/
 //@       |}
     //@ helper
-    @org.jmlspecs.annotation.Options("-lang=jml+")
+    @org.jmlspecs.annotation.Options("--lang=openjml")
     public static native void arraycopy(/*@nullable*/ Object src,
                                         int srcPos,
                                         /*@nullable*/ Object dest,

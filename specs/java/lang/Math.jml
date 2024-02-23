@@ -484,8 +484,8 @@ public /*@ pure @*/ final class Math {
       @         || (a == Double.NEGATIVE_INFINITY && 0.0 < b && !isFiniteOdd(b));
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires (isNegativeZero(a) && b < 0.0 && Double.isFiniteOdd(b))
-      @         || (a == Double.NEGATIVE_INFINITY && 0.0 < b && Double.isFiniteOdd(b));
+      @   requires (isNegativeZero(a) && b < 0.0 && isFiniteOdd(b))
+      @         || (a == Double.NEGATIVE_INFINITY && 0.0 < b && isFiniteOdd(b));
       @   ensures \result == Double.NEGATIVE_INFINITY;
       @ also 
       @   requires !Double.isInfinite(a) && a < 0.0;

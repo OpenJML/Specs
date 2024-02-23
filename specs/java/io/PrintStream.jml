@@ -205,7 +205,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ public normal_behavior
     @ requires true;
-    @ modifies outputText, endsInNewLine;
+    @ assignable outputText, endsInNewLine;
     @ ensures endsInNewLine && isOpen;
     @ ensures outputText.startsWith(\old(outputText));
     @*/

@@ -3,12 +3,12 @@ package org.jmlspecs.lang;
 //@ immutable pure non_null_by_default
 public final class string implements IJmlPrimitiveType, IJmlIntArrayLike {
 
-    //+RAC@ ghost public String racValue;
+    public String racValue; //@ in length;
     
     //@ model public \bigint length;
+    //+RAC@ public represents length = racValue.length();
 
     //@ public invariant 0 <= length;
-    //+RAC@ public represents length = racValue.length();
     
     //@ public normal_behavior
     //@     ensures \result.length == s.length();
@@ -37,37 +37,36 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike {
     //@     ensures \result[i] == c;
     //-RAC@ ensures \forall \bigint j; j != i; \result[j] == this[j];
     //@     ensures this[i] == c ==> \result == this;
-    //@ model heap_free public string put(\bigint i, char c) { return string(""); }
+    //@ model heap_free public string put(\bigint i, char c) { return string(""); }  // FIXME - make an implementation
+*/
+    //@ public normal_behavior
+       //-RAC@ ensures \result == (s.length == ss.length && (\forall \bigint i; 0 <= i < s.length; s[i] == ss[i] ));
+    //@ heap_free
+    public static boolean equals(string s, string ss);
+    
+    //@ public normal_behavior
+    //@   ensures \result == (this == s || equals(this,s));
+    //@ heap_free
+    public boolean equals(string s);
 
-    public normal_behavior
-       //-RAC@ ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
-    model heap_free public static boolean equals(string s, string ss) {
-        return (s.length == ss.length); // FIXME
-    }
-    
-    public normal_behavior
-       ensures \result == (this == s || equals(this,s));
-    model heap_free public boolean equals(string s);
-    
+    /*-RAC@
     public normal_behavior
       requires 0 <= j <= this.length;
       ensures \result.length == this.length + 1;
       //-RAC@ ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
       //-RAC@ ensures (\forall \bigint i;; (j+1 <= i < \result.length) ==> (\result[i] == this[i-1]));
       ensures \result[j] == v;
-    model heap_free public string add(\bigint j, char v) {
+    model heap_free public string insert(\bigint j, char v) {
       return string(""); // FIXME
     }
-
-    public normal_behavior
-      ensures \result == add(length,v);
-      ensures \result.length == this.length + 1;
-      //-RAC@ ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
-      ensures \result[this.length] == v;
-    model heap_free public string add(char v) {
-      return add(length, v);
-    }
-
+*/
+    //@public normal_behavior
+    //@  ensures \result.length == this.length + 1;
+    //-RAC@ ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
+    //@  ensures \result[this.length] == v;
+    /*@ heap_free */ public string add(char v);
+    
+/*-RAC@
     public normal_behavior
       ensures \result.length == this.length + s.length;
       ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));

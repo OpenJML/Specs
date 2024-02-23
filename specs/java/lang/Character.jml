@@ -544,7 +544,7 @@ public /*@ pure @*/ final
       @                         ch == '\u001C' ||  // FILE SEPARATOR
       @                         ch == '\u001D' ||  // GROUP SEPARATOR
       @                         ch == '\u001E' ||  // RECORD SEPARATOR
-      @                         ch == '\u001F';    // UNIT SEPARATOR */
+      @                         ch == '\u001F';    // UNIT SEPARATOR 
       @*/
     public static /*@ pure helper heap_free @*/ boolean isWhitespace(char ch); 
 
