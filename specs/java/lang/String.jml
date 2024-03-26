@@ -480,6 +480,13 @@ public final class String
       @*/
     public /*@ pure @*/ boolean contentEquals(StringBuffer sb);
 
+    /*@ public normal_behavior
+      @   ensures \result == (\exists int i; 0 <= i && i < this.length();
+      @                        (\forall int j; 0 <= j && j < s.length();
+      @                           this.charAt(i+j) == s.charAt(i+j)));
+      @*/
+    public /*@ pure @*/ boolean contains(CharSequence s);
+
     /*@  public normal_behavior
       @    ensures \result <==> (c1 == c2)
       @                        || (Character.toUpperCase(c1) 
