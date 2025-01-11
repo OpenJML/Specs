@@ -500,7 +500,7 @@ public class Vector<E> extends AbstractList<E>
      // FIXME - all inherited?
     /*@ also
       @  public normal_behavior
-      @    assignable values;
+      @    //-RAC@ assignable values;
       @    ensures isEmpty();
       @*/
     public void clear();

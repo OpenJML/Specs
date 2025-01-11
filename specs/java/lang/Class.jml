@@ -167,10 +167,10 @@ public final class Class<T> implements java.io.Serializable,
       @*/
     public /*@ pure helper @*/ boolean isPrimitive();
 
-    //@ public model String _getName;
+    //-RAC@ public model String _getName;
     // @        represents _getName = getName();
 
-    //@ ensures \result == _getName;
+    //-RAC@ ensures \result == _getName;
     public /*@ pure helper @*/ /*@ non_null @*/ String getName();
 
     public /*@ pure nullable @*/ ClassLoader getClassLoader();

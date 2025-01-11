@@ -32,21 +32,21 @@ public interface Enumeration<E> {
 
     /** Do we have more elements?
      **/
-    /*@ public model instance boolean moreElements;
+    /*-RAC@ public model instance boolean moreElements;
       @                               in objectState;
       @*/
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    assignable \nothing;
-      @    ensures \result <==> moreElements;
+      @    /nsures \result <==> moreElements;
       @*/
     boolean hasMoreElements();
 
     /** Do we ever return null as an element?
      **/
-    //@ instance ghost public boolean returnsNull;
+    //-RAC@ instance ghost public boolean returnsNull;
 
-    /*@   public normal_behavior
+    /*-RAC@   public normal_behavior
       @     requires moreElements;
       @     assignable objectState;
       @     assignable moreElements;

@@ -293,7 +293,7 @@ public final class String
 
     /*@ public normal_behavior
       @   requires buffer != null;
-      @   ensures equals(this,buffer.accumulatedString);
+      @   //-RAC@ ensures equals(this,buffer.accumulatedString);
       @
       @ also public exceptional_behavior
       @   requires buffer == null;

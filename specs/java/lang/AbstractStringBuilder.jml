@@ -9,9 +9,9 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
  // FIXME - should we use charArray instead of accumulatedString?
     // FIXME - we don't need both
 
-    //@ model public non_null String accumulatedString;
+    //-RAC@ model public non_null String accumulatedString;
 
-    //@ model public \bigint capacity;
+    //-RAC@ model public \bigint capacity;
     
     // Present in some but not all Java builds
     //private static final int MAX_ARRAY_SIZE;
@@ -26,7 +26,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     AbstractStringBuilder(int size);
 //    public int length();
     
-    //@ ensures \result == capacity;
+    //-RAC@ ensures \result == capacity;
     //@ pure
     public int capacity();
 //    public void ensureCapacity(int);
@@ -41,7 +41,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 //    public int codePointCount(int, int);
 //    public int offsetByCodePoints(int, int);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= srcBegin && srcBegin <= srcEnd;
       @   requires srcEnd <= accumulatedString.length();
       @   requires 0 <= dstBegin && dstBegin + srcEnd - srcBegin <= dst.length;
@@ -52,7 +52,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     public synchronized void getChars(int srcBegin, int srcEnd,
                                     char[] dst, int dstBegin);
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
     @   requires 0 <= index < accumulatedString.length();
     @   assignable accumulatedString;
     @   ensures accumulatedString
@@ -159,7 +159,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 //    public AbstractStringBuilder delete(int, int);
 //    public AbstractStringBuilder appendCodePoint(int);
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= index < accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString.subSequence(0,index).equals(
@@ -177,7 +177,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 //    public CharSequence subSequence(int, int);
 //    public String substring(int, int);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
     @   requires 0 <= offset <= accumulatedString.length();
     @   assignable accumulatedString;
     @   ensures accumulatedString
@@ -187,7 +187,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @*/
     public synchronized AbstractStringBuilder insert(int offset, char c);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -197,7 +197,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @*/
     public AbstractStringBuilder insert(int offset, int i);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -207,7 +207,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @*/
     public AbstractStringBuilder insert(int offset, long l);
 
-  /*@ public normal_behavior
+  /*-RAC@ public normal_behavior
     @   requires 0 <= offset <= accumulatedString.length();
     @   assignable accumulatedString;
     @   ensures accumulatedString
@@ -218,7 +218,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @*/
     public synchronized AbstractStringBuilder insert(int offset, char[] str);
 
-  /*@  public normal_behavior
+  /*-RAC@  public normal_behavior
     @   requires 0 <= offset <= accumulatedString.length();
     @   assignable accumulatedString;
     @   ensures accumulatedString
@@ -228,7 +228,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @*/
     public AbstractStringBuilder insert(int offset, boolean b);
 
-  /*@ public normal_behavior
+  /*-RAC@ public normal_behavior
     @   requires 0 <= offset <= accumulatedString.length();
     @   assignable accumulatedString;
     @   ensures accumulatedString
@@ -238,7 +238,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @*/
     public synchronized AbstractStringBuilder insert(int offset, Object obj);
 
-  /*@ public normal_behavior
+  /*-RAC@ public normal_behavior
     @   requires 0 <= offset <= accumulatedString.length();
     @   assignable accumulatedString;
     @   ensures accumulatedString
@@ -248,7 +248,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @*/
     public synchronized AbstractStringBuilder insert(int offset, String str);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -258,7 +258,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @*/
     public AbstractStringBuilder insert(int offset, float f);
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires 0 <= offset <= accumulatedString.length();
       @   assignable accumulatedString;
       @   ensures accumulatedString
@@ -273,7 +273,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 //    public int lastIndexOf(String);
 //    public int lastIndexOf(String, int);
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @    assignable accumulatedString;
       @    ensures \result == this;
       @    ensures accumulatedString.length() == \old( accumulatedString.length() );
