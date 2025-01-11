@@ -38,7 +38,7 @@ public interface Enumeration<E> {
 
     /*-RAC@ public normal_behavior
       @    assignable \nothing;
-      @    /nsures \result <==> moreElements;
+      @    ensures \result <==> moreElements;
       @*/
     boolean hasMoreElements();
 
