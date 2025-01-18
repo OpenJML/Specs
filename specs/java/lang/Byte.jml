@@ -196,7 +196,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
     public static /*@ pure @*/ /*@ non_null @*/ Byte decode(String nm)
         throws NumberFormatException;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures theByte == value;
       @*/
     public Byte(byte value);

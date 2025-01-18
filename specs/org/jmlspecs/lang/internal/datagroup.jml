@@ -20,6 +20,7 @@
 
 package org.jmlspecs.lang.internal;
 import org.jmlspecs.annotation.*;
+import org.jmlspecs.lang.IJmlPrimitiveType;
 
 /** A type with one element, for use in declaring "data groups".
  *  Note that there is only one equivalence class of objects of this type;

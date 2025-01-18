@@ -133,17 +133,17 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     //@ helper
     public static boolean isFinite(float v);
     
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures identical(theFloat, value);
       @*/
     public Float(float value);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures identical(theFloat, (float)value);
       @*/
     public Float(double value);
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   requires parseable(s);
       @   ensures identical(theFloat, parseFloat(s));
       @ also
@@ -153,12 +153,12 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @*/
     public Float(String s) throws NumberFormatException;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result == Float.isNaN(theFloat);
       @*/
     public boolean isNaN();
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures \result == Float.isInfinite(theFloat);
       @*/
     public boolean isInfinite();

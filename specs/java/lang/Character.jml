@@ -216,7 +216,7 @@ public /*@ pure @*/ final
     // Constructors
     //---------------------------------------------------------------------
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @   ensures theCharacter == value;
       @*/
     public Character(char value);

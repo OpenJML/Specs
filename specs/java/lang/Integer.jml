@@ -55,7 +55,8 @@ public  /*@ pure @*/ final
 
     public static final Class<Integer> TYPE = int.class;  // 1.5 DIFFERENCE
     
-    //@ model public static final long MAX_UNSIGNED_INT = 0xffff_ffffL;
+    //@ model public static final long MAX_UNSIGNED_INT;
+    //@ static represents MAX_UNSIGNED_INT = 0xffff_ffffL;
     
     //@ ensures TYPE == int.class;
     //@ static_initializer
@@ -271,7 +272,7 @@ public  /*@ pure @*/ final
             
     /*@ also
       @   public normal_behavior
-      @     reads theInteger;
+      @     //-RAC@ reads theInteger;
       @     ensures \result == intValue();
       @*/
     @Override

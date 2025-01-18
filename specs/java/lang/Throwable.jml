@@ -51,6 +51,7 @@ public class Throwable extends Object implements java.io.Serializable
     //@ public model boolean _causeSet;         in _cause;
 
     //@ public model non_null StackTraceElement[] _stackTrace; in objectState;
+    //@ represents _stackTrace = getStackTrace();
 
     //@ spec_public
     private java.util.List<Throwable> suppressedExceptions;

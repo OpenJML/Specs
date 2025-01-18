@@ -172,7 +172,7 @@ public /*@ pure @*/ final
             Short decode(/*@ non_null @*/ String nm)
             throws NumberFormatException ;
 
-    /*@ public normal_behavior
+    /*-RAC@ public normal_behavior
       @   ensures theShort == value;
       @*/
     public Short(short value) ;
