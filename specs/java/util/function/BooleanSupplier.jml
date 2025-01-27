@@ -2,7 +2,7 @@ package java.util.function;
 
 public interface BooleanSupplier {
     
-    //@ model public nullable instance \datagroup state;
+    //@ model public instance \datagroup state;
     //@ model public instance boolean value;
     
     //@ public behavior

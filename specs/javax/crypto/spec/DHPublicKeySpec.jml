@@ -9,13 +9,13 @@ public class DHPublicKeySpec implements java.security.spec.KeySpec {
     //@ pure
     public DHPublicKeySpec(java.math.BigInteger a, java.math.BigInteger b, java.math.BigInteger c);
     //@ public normal_behavior
-    //@ pure
+    //@ spec_pure
     public java.math.BigInteger getY();
     //@ public normal_behavior
-    //@ pure
+    //@ spec_pure
     public java.math.BigInteger getP();
     //@ public normal_behavior
-    //@ pure
+    //@ spec_pure
     public java.math.BigInteger getG();
 
 }

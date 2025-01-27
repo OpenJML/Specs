@@ -7,6 +7,6 @@ public interface DHPublicKey extends DHKey,java.security.PublicKey {
     
     //@ public normal_behavior
     //@   ensures \result == yvalue;
-    //@ pure
+    //@ spec_pure
     public abstract java.math.BigInteger getY();
 }

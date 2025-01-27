@@ -11,23 +11,23 @@ public class DHParameterSpec implements java.security.spec.AlgorithmParameterSpe
       private final int l;
       //@ public normal_behavior
       //@   requires true;
-      //@ pure
+      //@ spec_pure
       public DHParameterSpec(java.math.BigInteger p, java.math.BigInteger q);
       //@ public normal_behavior
       //@   requires true;
-      //@ pure
+      //@ spec_pure
       public DHParameterSpec(java.math.BigInteger p, java.math.BigInteger q, int n);
       //@ public normal_behavior
       //@   ensures \result == p;
-      //@ pure
+      //@ spec_pure
       public java.math.BigInteger getP();
       //@ public normal_behavior
       //@   ensures \result == g;
-      //@ pure
+      //@ spec_pure
       public java.math.BigInteger getG();
       //@ public normal_behavior
       //@   ensures \result == l;
-      //@ pure
+      //@ spec_pure
       public int getL();
       
 }

@@ -19,7 +19,7 @@ public class KeyAgreement {
       public final java.lang.String getAlgorithm();
       
       //@ public normal_behavior
-      //@ model public static final pure no_state boolean validAlgorithm(java.lang.String algorithm);
+      //@ model public static final spec_pure boolean validAlgorithm(java.lang.String algorithm);
 
       //@ public normal_behavior
       //@   requires validAlgorithm(s);

@@ -12,7 +12,7 @@ public class X509EncodedKeySpec extends EncodedKeySpec {
     //@   requires bytes == null;
     //@   signals_only NullPointerException;
     //@ pure
-    public X509EncodedKeySpec(/*@ nullable */ byte[] bytes);
+    public X509EncodedKeySpec(byte /*@ nullable */ [] bytes);
 
     @Override
     public byte[] getEncoded();

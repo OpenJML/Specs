@@ -4,7 +4,7 @@ package java.security;
 public abstract class MessageDigest extends MessageDigestSpi {
   //private static final sun.security.util.Debug pdebug; // Non-public API
   private static final boolean skipDebug;
-  private java.lang.String algorithm;
+  final private java.lang.String algorithm;
   private static final int INITIAL;
   private static final int IN_PROGRESS;
   private int state;

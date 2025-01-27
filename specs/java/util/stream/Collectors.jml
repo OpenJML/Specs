@@ -19,13 +19,13 @@ public final class Collectors {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@ pure no_state helper
+    //@ pure helper
     public static <T> /*@[ SimpleListCollector<T,?> ]*/ Collector<T, ?, java.util.List<T>> toList();
 
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@ pure no_state helper
+    //@ pure helper
     public static <T> Collector<T, ?, java.util.Set<T>> toSet();
 
     //    public static Collector<java.lang.CharSequence, ?, java.lang.String> joining();

@@ -29,13 +29,13 @@ public class TYPE {
     
     //@ public normal_behavior
     //@   ensures \result == (t1.head == t2.head && t1.typeargs.size() == t2.typeargs.size()
-    //@      && (\foreall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i))));
+    //@      && (\forall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i))));
     //@ no_state
     //@ model public static boolean eq(TYPE t1, TYPE t2);
     
     //@ public normal_behavior
     //@   ensures \result == (t1.head <:= t2.head && t1.typeargs.size() == t2.typeargs.size()
-    //@      && (\foreall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i)));
+    //@      && (\forall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i)));
     //@ no_state
     //@ model public static boolean subtype(TYPE t1, TYPE t2);
     

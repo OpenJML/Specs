@@ -5,7 +5,7 @@ public class Cipher {
     
     //@ model public instance \datagroup content;
     
-    //@ model public static pure no_state boolean validAlgorithm(String algorithm);
+    //@ model public static spec_pure boolean validAlgorithm(String algorithm);
     
 //      private static final sun.security.util.Debug debug;
 //      private static final sun.security.util.Debug pdebug;

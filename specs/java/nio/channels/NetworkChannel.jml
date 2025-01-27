@@ -5,7 +5,6 @@ public interface NetworkChannel extends Channel {
     
     //@ public behavior
     //@   signals_only java.io.IOException, AlreadyBoundException, UnsupportedAddressTypeException, ClosedChannelException, SecurityException;
-    //@ pure
     public abstract java.nio.channels.NetworkChannel bind(java.net.SocketAddress addr) throws java.io.IOException;
     public abstract java.net.SocketAddress getLocalAddress() throws java.io.IOException;
     public abstract <T> java.nio.channels.NetworkChannel setOption(java.net.SocketOption<T> option, T t) throws java.io.IOException;

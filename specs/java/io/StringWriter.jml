@@ -16,13 +16,13 @@ public class StringWriter extends java.io.Writer {
 
     public void write(int Param0);
 
-    public void write(/*@non_null*/ char[] Param0, int Param1, int Param2);
+    public void write(char /*@ non_null*/ [] Param0, int Param1, int Param2);
 
-    public /*@non_null*/ String toString();
+    public /*@ non_null*/ String toString();
 
-    public void write(/*@non_null*/ String Param0);
+    public void write(/*@ non_null*/ String Param0);
 
-    public void write(/*@non_null*/ String Param0, int Param1, int Param2);
+    public void write(/*@ non_null*/ String Param0, int Param1, int Param2);
 
-    public /*@non_null*/ StringBuffer getBuffer();
+    public /*@ non_null*/ StringBuffer getBuffer();
 }
