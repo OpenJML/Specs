@@ -97,8 +97,8 @@ public class Object {
 
     /*@ public normal_behavior
       @   requires this instanceof Cloneable;
+      @   requires this instanceof Object[];
       @   assignable \nothing;
-      // FIXME - be sure \elemtype is defined on non-array types
       @   ensures \elemtype(\typeof(\result)) == \elemtype(\typeof(this));
       @*/
     //-RAC@ also public normal_behavior
@@ -109,7 +109,7 @@ public class Object {
       @   requires this instanceof Cloneable;
       @   assignable \nothing;
         // Note: clone is magic.  Object.clone ensures the following
-        // strict equality when it is called but only if subclasses are
+        // strict equality when it is called but only if subclasses
         // fulfill it by calling super.clone();
       @   ensures \typeof(\result) == \typeof(this);  // This is not a strict requirement, although generally expected
       @   ensures \result != this; // This is not a strict requirement, although generally expected

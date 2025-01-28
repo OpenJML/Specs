@@ -2,19 +2,19 @@ package org.jmlspecs.lang;
 public class TYPE {
 
     //@ model public Class<?> head;
-    //@ model public java.util.List<TYPE> args;
+    //@ model public java.util.List<TYPE> typeargs;
     
 
     //@ public normal_behavior
     //@   ensures \result.head == h;
     //@   ensures \result.typeargs == args; // FIXME - no aliasing?
     //@ no_state
-    //@ model public static TYPE of(Class<?> h, List<TYPE> args);
+    //@ model public static TYPE of(Class<?> h, java.util.List<TYPE> args);
     
     //@ public normal_behavior
     //@   ensures \result == head;
     //@ no_state
-    //@ model public TYPE erasure();
+    //@ model public Class<?> erasure();
     
     //@ public normal_behavior
     //@   ensures \result == typeargs.size();
@@ -35,7 +35,7 @@ public class TYPE {
     
     //@ public normal_behavior
     //@   ensures \result == (t1.head <:= t2.head && t1.typeargs.size() == t2.typeargs.size()
-    //@      && (\forall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i)));
+    //@      && (\forall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i))));
     //@ no_state
     //@ model public static boolean subtype(TYPE t1, TYPE t2);
     
