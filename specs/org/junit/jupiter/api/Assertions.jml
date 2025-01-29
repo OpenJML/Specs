@@ -1,5 +1,5 @@
 package org.junit.jupiter.api;
-//import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.function.Executable;
 
 //@ nullable_by_default
 public class Assertions {
@@ -19,8 +19,8 @@ public class Assertions {
     //@ pure
     public static void assertSame(Object act, Object exp);
     
-//    //@ public normal_behavior  // FIXME - including this causes failures relating to org.opentest4j.MultipleFailuresError
-//    //@   { try { exp.execute(); assert false; } catch (Exception e) { assert e.getClass() <: act; }}
-//    //@ pure
-//    public static <T extends Throwable> T assertThrows(Class<T> act, Executable exp);
+    //@ public normal_behavior  // FIXME - including this causes failures relating to org.opentest4j.MultipleFailuresError
+    //@   { try { exp.execute(); assert false; } catch (Exception e) { assert e.getClass() <: act; }}
+    //@ pure
+    public static <T extends Throwable> T assertThrows(Class<T> act, Executable exp);
 }
