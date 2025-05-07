@@ -1,6 +1,6 @@
 package org.hamcrest;
 
-public interface Matcher<T> {
-    
+public interface Matcher<T> extends org.hamcrest.SelfDescribing {
+
     //@ model public instance java.util.function.Function.Pure<T,Boolean> matches;
 }
