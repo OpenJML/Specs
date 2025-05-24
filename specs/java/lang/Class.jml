@@ -40,7 +40,7 @@ public final class Class<T> implements java.io.Serializable,
     
     //@ public normal_behavior
     //@    ensures true;
-    //@ pure
+    //@ spec_pure
     public String getSimpleName();
 
     // @ also public normal_behavior
@@ -67,7 +67,7 @@ public final class Class<T> implements java.io.Serializable,
       @     signals (ClassNotFoundException)
       @               (* if className can't be located *);
       @*/
-    //@ pure
+    //@ spec_pure
     public static /*@ non_null @*/
         Class<?> forName(/*@ non_null @*/ String className)
         throws ClassNotFoundException;
@@ -100,7 +100,7 @@ public final class Class<T> implements java.io.Serializable,
 
     //@ public normal_behavior
     //@   ensures \result <==> (obj != null && (obj.getClass() <: this)); // FIXME - should \typeof(obj) <: (\TYPE)this work? The cast gives error.
-    public /*@ pure @*/ boolean isInstance(/*@ nullable */Object obj);
+    public /*@ strictly_pure @*/ boolean isInstance(/*@ nullable */Object obj);
     
     //@ public normal_behavior
     //@   requires obj == null || isInstance(obj);
@@ -162,16 +162,16 @@ public final class Class<T> implements java.io.Serializable,
                    this == char.class ||
                    this == boolean.class ||
                    this == byte.class ||
-           this == void.class        // this case was missing --PC
+                   this == void.class
                   );
       @*/
-    public /*@ pure helper @*/ boolean isPrimitive();
+    public /*@ strictly_pure helper @*/ boolean isPrimitive();
 
     //-RAC@ public model String _getName;
     // @        represents _getName = getName();
 
     //-RAC@ ensures \result == _getName;
-    public /*@ pure helper @*/ /*@ non_null @*/ String getName();
+    public /*@ strictly_pure helper @*/ /*@ non_null @*/ String getName();  // FIXME - is this really == deterministic
 
     public /*@ pure nullable @*/ ClassLoader getClassLoader();
 
@@ -185,7 +185,7 @@ public final class Class<T> implements java.io.Serializable,
 
     public /*@ pure @*/ Class<?> getComponentType();
 
-    public /*@ pure @*/ int getModifiers();
+    public /*@ strictly_pure @*/ int getModifiers();
 
     public /*@ pure @*/ Object[] getSigners();
         

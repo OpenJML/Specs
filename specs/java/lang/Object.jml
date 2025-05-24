@@ -60,7 +60,7 @@ public class Object {
     /*+ESC@ public normal_behavior
       @   ensures \result == \erasure(\typeof(this));
       @*/
-    public final /*@ pure non_null */ Class<?> getClass();
+    public final /*@ strictly_pure non_null */ Class<?> getClass();
 
     //-RAC@ public model int theHashCode; in objectState;
 

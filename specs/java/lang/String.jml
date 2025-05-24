@@ -407,7 +407,7 @@ public final class String
       @   requires !(* (charsetName is the name of a supporting encoding) *);
       @   signals_only UnsupportedEncodingException;
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(String charsetName)
+    public /*@ pure @*/ byte  /*@ non_null @*/ [] getBytes(String charsetName)
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior
@@ -421,7 +421,7 @@ public final class String
       @   requires !(* (charset is a supporting encoding) *);
       @   signals_only UnsupportedEncodingException;
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes(Charset charset)
+    public /*@ pure @*/ byte /*@ non_null @*/ [] getBytes(Charset charset)
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior
@@ -429,7 +429,7 @@ public final class String
       @           && byteArraysEqual(\result, 
       @                       getBytes(System.getProperty("file.encoding")));
       @*/
-    public /*@ pure @*/ /*@ non_null @*/ byte[] getBytes();
+    public /*@ pure @*/ byte /*@ non_null @*/ [] getBytes();
 
     /*@ public normal_behavior
       @   requires s1 != null & s2 != null;

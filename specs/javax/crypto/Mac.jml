@@ -44,14 +44,14 @@ public class Mac implements Cloneable {
       //@ public normal_behavior
       //@   requires len > 0;
       //@   ensures \result.length == len;
-      //@ helper no_state non_null
-      //@ model public static byte[] hmacHash(byte[] input, int len); 
+      //@ helper no_state 
+      //@ model public static byte non_null [] hmacHash(byte[] input, int len); 
 
       //@ public normal_behavior
       //@   requires n >= 1;
       //@   ensures \result.length == SIZE;
-      //@ helper no_state non_null
-      //@ model public static byte[] hmacIteratedHash(byte[] info, int n);
+      //@ helper no_state 
+      //@ model public static byte non_null [] hmacIteratedHash(byte[] info, int n);
       
       //@ model public static final int MAXBL = 255;
       

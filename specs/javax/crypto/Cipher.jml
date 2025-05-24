@@ -130,8 +130,8 @@ public class Cipher {
     //@ also public exceptional_behavior
     //@   requires !isInitialized;
     //@   signals_only IllegalStateException;
-    //@ pure nullable
-    public final byte[] update(byte[] buf);
+    //@ pure 
+    public final byte /* nullable */ [] update(byte[] buf);
 
     //@ public normal_behavior
     //@   requires isInitialized;
@@ -147,8 +147,8 @@ public class Cipher {
     //@   requires !isInitialized;
     //@   requires inputLen < 0 || !(inputOffset >= 0 && inputOffset <= buf.length - inputLen);
     //@   signals_only ShortBufferException;
-    //@ pure nullable
-    public final byte[] update(byte[] buf, int inputOffset, int inputLen);
+    //@ pure 
+    public final byte /*@ nullable */ [] update(byte[] buf, int inputOffset, int inputLen);
 
     //@ public normal_behavior
     //@   requires isInitialized;
