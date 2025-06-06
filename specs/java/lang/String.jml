@@ -314,13 +314,13 @@ public final class String
       @*/
     
     // inherits specs from CharSequence - \result == charArray.length
-    public /*@ strictly_pure helper @*/ int length();
+    public /*@ spec_pure helper @*/ int length();
     
     /*@ also public normal_behavior
       @   //-RAC@ ensures \result == (this.charArray.length == 0);
       @*/
     @Override
-    public /*@ strictly_pure @*/ boolean isEmpty();
+    public /*@ spec_pure @*/ boolean isEmpty();
 
     /*@ // Inherited from CharSequence:
       @ //also public normal_behavior

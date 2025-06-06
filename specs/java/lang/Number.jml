@@ -37,7 +37,7 @@ public abstract class Number implements java.io.Serializable {
       @ public normal_behavior
       @   requires Character.MIN_RADIX <= radix <= Character.MAX_RADIX;
       @   ensures \result == (val != null && val.length() > 0);
-      @ strictly_pure
+      @ spec_pure
       @ public static model helper boolean parseable(nullable String val, int radix);
      */
 
@@ -68,7 +68,7 @@ public abstract class Number implements java.io.Serializable {
     // of a valid integral number - optional initial minus sign, then a
     // sequence of digits of the given radix, with the resulting signed
     // number fitting in the given number of bits.
-    @   model public no_state static boolean parseable( String s, int r, int bits );
+    @   model public spec_pure static boolean parseable( String s, int r, int bits );
     @*/
 
         // A String is decodable if it has a legitimate radix-indicating

@@ -38,13 +38,13 @@ public  /*@ pure @*/ final
   /*-RAC@
     @   public normal_behavior
     @     ensures \result <==> Number.parseable( s, r, Integer.SIZE);
-    @   model public helper static pure boolean parseable( String s, int r );
+    @   model public helper static spec_pure boolean parseable( String s, int r );
     @*/
 
   /*-RAC@
     @   public normal_behavior
     @     ensures \result <==> Number.decodable(nm, Integer.SIZE);
-    @   model public helper static pure boolean decodable( String nm );
+    @   model public helper static spec_pure boolean decodable( String nm );
     @*/
           
     // FIXME: problem with undefined preconditions when using this axiom: -RAC-ESC@ axiom (\forall int r; (\forall String s, ss; s.equals(ss) && parseable(s,r) && parseable(ss,r) ==> parseInt(s,r) == parseInt(ss,r)));
@@ -162,7 +162,7 @@ public  /*@ pure @*/ final
       @   requires !parseable(s, radix);
       @   signals_only NumberFormatException;
       @*/
-    public static /*@ pure @*/ int parseInt(String s, int radix)
+    public static /*@ spec_pure @*/ int parseInt(String s, int radix)
         throws NumberFormatException;
                 
     /*-RAC@    public normal_behavior
@@ -173,7 +173,7 @@ public  /*@ pure @*/ final
       @      requires !parseable(s, 10);
       @      signals_only NumberFormatException;
       @*/
-    public static /*@ pure @*/ int parseInt(String s)
+    public static /*@ spec_pure @*/ int parseInt(String s)
         throws NumberFormatException;
             
     /*-RAC@ public normal_behavior
@@ -226,42 +226,42 @@ public  /*@ pure @*/ final
       @     reads theInteger;
       @     ensures \result == \java_math((byte) theInteger);
       @*/
-    public /*@ pure helper @*/ byte byteValue();
+    public /*@ spec_pure helper @*/ byte byteValue();
     
     /*-RAC@ also
       @   public normal_behavior
       @     reads theInteger;
       @     ensures \result == \java_math((short) theInteger);
       @*/
-    public /*@ pure helper @*/ short shortValue();
+    public /*@ spec_pure helper @*/ short shortValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     reads theInteger;
       @     ensures \result == theInteger;
       @*/
-    public /*@ pure helper @*/ int intValue();
+    public /*@ spec_pure helper @*/ int intValue();
     
     /*-RAC@ also
       @   public normal_behavior
       @     reads theInteger;
       @     ensures \result == (long) theInteger;
       @*/
-    public /*@ pure helper @*/ long longValue();
+    public /*@ spec_pure helper @*/ long longValue();
     
     /*-RAC@ also
       @   public normal_behavior
       @     reads theInteger;
       @     ensures \result == (float) theInteger;
       @*/
-    public /*@ pure helper @*/ float floatValue();
+    public /*@ spec_pure helper @*/ float floatValue();
     
     /*-RAC@ also
       @   public normal_behavior
       @     reads theInteger;
       @     ensures \result == (double) theInteger;
       @*/
-    public /*@ pure helper @*/ double doubleValue();
+    public /*@ spec_pure helper @*/ double doubleValue();
     
     // specification inherited from Object
     //@ also public normal_behavior

@@ -100,7 +100,7 @@ public final class Class<T> implements java.io.Serializable,
 
     //@ public normal_behavior
     //@   ensures \result <==> (obj != null && (obj.getClass() <: this)); // FIXME - should \typeof(obj) <: (\TYPE)this work? The cast gives error.
-    public /*@ strictly_pure @*/ boolean isInstance(/*@ nullable */Object obj);
+    public /*@ spec_pure @*/ boolean isInstance(/*@ nullable */Object obj);
     
     //@ public normal_behavior
     //@   requires obj == null || isInstance(obj);
@@ -165,13 +165,13 @@ public final class Class<T> implements java.io.Serializable,
                    this == void.class
                   );
       @*/
-    public /*@ strictly_pure helper @*/ boolean isPrimitive();
+    public /*@ spec_pure helper @*/ boolean isPrimitive();
 
     //-RAC@ public model String _getName;
     // @        represents _getName = getName();
 
     //-RAC@ ensures \result == _getName;
-    public /*@ strictly_pure helper @*/ /*@ non_null @*/ String getName();  // FIXME - is this really == deterministic
+    public /*@ spec_pure helper @*/ /*@ non_null @*/ String getName();  // FIXME - is this really == deterministic
 
     public /*@ pure nullable @*/ ClassLoader getClassLoader();
 
@@ -185,7 +185,7 @@ public final class Class<T> implements java.io.Serializable,
 
     public /*@ pure @*/ Class<?> getComponentType();
 
-    public /*@ strictly_pure @*/ int getModifiers();
+    public /*@ spec_pure @*/ int getModifiers();
 
     public /*@ pure @*/ Object[] getSigners();
         

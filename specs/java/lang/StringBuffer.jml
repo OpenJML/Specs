@@ -194,7 +194,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   requires !(0<=index && index < accumulatedString.length());
       @   signals_only StringIndexOutOfBoundsException;
       @*/
-    public /*@ pure @*/ synchronized char charAt(int index);
+    public /*@ spec_pure @*/ synchronized char charAt(int index);
 
     @Override
     public synchronized void getChars(int srcBegin, int srcEnd,
@@ -272,7 +272,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @ public normal_behavior
       @   ensures \result == accumulatedString.length();
       @*/
-    public /*@ pure @*/ synchronized int length();
+    public /*@ spec_pure @*/ synchronized int length();
 
     public synchronized StringBuffer replace(int start, int end, String str);
 
@@ -280,7 +280,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
     //@ also public normal_behavior
     //@   requires true;
-    public /*@ pure @*/ synchronized int capacity();
+    public /*@ spec_pure @*/ synchronized int capacity();
 
     //@ also public normal_behavior
     //@   ensures capacity() >= minimumCapacity;

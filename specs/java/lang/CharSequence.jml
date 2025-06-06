@@ -39,14 +39,14 @@ public interface CharSequence {
 
     /*@ public normal_behavior
       @   //-RAC@ ensures \result <==> ( charArray != null && charArray.__owner == this);
-      @ public pure helper model boolean initialCharSequence();
+      @ public spec_pure helper model boolean initialCharSequence();
       @*/
 
     /*@ public normal_behavior
         ensures \result == ( a == b || (a != null && b != null &&
                       a.length == b.length && 
                       equal(a,0,b,0,a.length) ));
-        public static pure helper model boolean equal(char[] a, char[] b);
+        public static spec_pure helper model boolean equal(char[] a, char[] b);
      */
     /*@ public normal_behavior
         requires a != null && b!= null && astart >= 0 && bstart >= 0 &&
@@ -54,7 +54,7 @@ public interface CharSequence {
                  astart+len <= a.length && bstart + len <= b.length;
         ensures \result == ((a==b && astart == bstart) ||
                       (\forall int i; 0<=i && i<len; a[i+astart] == b[i+bstart])); 
-        public static pure helper model boolean equal(char[] a, \bigint astart, char[] b, \bigint bstart, \bigint len);
+        public static spec_pure helper model boolean equal(char[] a, \bigint astart, char[] b, \bigint bstart, \bigint len);
      */
 
     /*@ public normal_behavior
@@ -62,7 +62,7 @@ public interface CharSequence {
                   (\exists \bigint j; 0<=j<=a.length && j<=b.length; 
                      ((\forall \bigint k; 0<=k<j; a[k]==b[k]) && ((j==a.length && j<b.length) || (j<a.length && j < b.length && a[j] < b[j])))
                   ));
-    public static pure helper model boolean lessThan(char[] a, char[] b);
+    public static spec_pure helper model boolean lessThan(char[] a, char[] b);
  */
 
     //@ axiom (\forall char[] a; a!=null ; equal(a,a));
@@ -72,7 +72,7 @@ public interface CharSequence {
     //@ public normal_behavior
     //@      ensures \result >= 0;
     //-RAC@  ensures \result == (int)charArray.length;
-    //@ pure
+    //@ spec_pure
     int length();
 
     /*-RAC@   public normal_behavior
@@ -83,7 +83,7 @@ public interface CharSequence {
       @      requires !(0 <= index < charArray.length);
       @      signals_only IndexOutOfBoundsException;
       @*/
-    //@ pure helper
+    //@ spec_pure helper
     char charAt(int index) throws IndexOutOfBoundsException;
 
     /*-RAC@   public normal_behavior

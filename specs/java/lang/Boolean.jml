@@ -89,7 +89,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     /*@ public normal_behavior
       @   //-RAC@ ensures \result == theBoolean;
       @*/
-    public /*@ strictly_pure helper @*/ boolean booleanValue();
+    public /*@ spec_pure helper @*/ boolean booleanValue();
 
     // NOTE: The result is not fresh
     /*@ public normal_behavior
@@ -122,6 +122,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     
     //@ public normal_behavior
     //@   ensures \result == decode(s);
+    //@ spec_pure
     public static boolean parseBoolean(String s);
 
     //+ESC@ public static final model int TRUE_HC;
@@ -131,7 +132,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     // inherited specification
     //+ESC@ also public normal_behavior
     //+ESC@   ensures \result == ( theBoolean ? TRUE_HC : FALSE_HC);
-    //@ pure
+    //@ spec_pure
     public int hashCode();
 
     /*@ also
@@ -145,6 +146,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
     //@   ensures (this.booleanValue() == b.booleanValue()) ==> \result == 0;
     //@   ensures (this.booleanValue() && !b.booleanValue()) ==> \result > 0;
     //@   ensures (!this.booleanValue() && b.booleanValue()) ==> \result < 0;
+    //@ spec_pure
     public int compareTo(Boolean b); // null argument produces exception
     
     //@ public normal_behavior
