@@ -288,8 +288,8 @@ public interface Collection<E> extends Iterable<E> {
     // hence the use of ==> below instead of <==>.
     /*@ also public normal_behavior
       @   requires c != null && c instanceof Collection;
-      @   ensures \result ==> ( \forall Object oo; 
-      @                         contains(oo) <==> ((Collection)c).contains(oo));
+      @//-RAC@   ensures \result ==> ( \forall Object oo; 
+      @//-RAC@                         contains(oo) <==> ((Collection)c).contains(oo));
       @   ensures \result ==> (size() == ((Collection)c).size());
       @*/
     boolean equals(/*@ nullable*/ Object c);
