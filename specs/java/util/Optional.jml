@@ -69,7 +69,8 @@ public final class Optional<T> {
   public Optional<T> filter(Predicate<? super T> predicate);
   
   /*@ public behavior // TODO: Needed to workaround a problem matching types between the binary library and the JML model program code
-    @   { if (mapper==null) throw new NullPointerException(); return !isPresent() ? Optional.<U>empty() : Optional.<U>ofNullable( mapper.apply(value) ) ; }
+    @   requires true;
+    @   //{ if (mapper==null) throw new NullPointerException(); return !isPresent() ? Optional.<U>empty() : Optional.<U>ofNullable( mapper.apply(value) ) ; }
     @*/
   public <U> Optional<U> map(Function<? super T, ? extends U> mapper);
   

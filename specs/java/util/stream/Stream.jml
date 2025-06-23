@@ -15,7 +15,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
           }
      */
     void forEachOrdered(Consumer<? super T> consumer);
-    // Line 9 appears in error messages so we put it near the top of this file, so it does not change often
+    // The line above appears in error messages so we put it near the top of this file, so it does not change often
     
     //@ public normal_behavior
     //@   ensures \result == (\forall int i; 0<=i && i<values.length; values[i] != null);
@@ -215,11 +215,11 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \fresh(\result);
-    //@   ensures \result.values.length == values.length;
-    //@   ensures (\forall int i; 0 <= i < values.length; \result.values[i] == values[i]);
+    //@   ensures \result.values.length == elements.length;
+    //@   ensures (\forall int i; 0 <= i < elements.length; \result.values[i] == elements[i]);
     //@ pure
     @SuppressWarnings("unchecked")
-    public static <T> Stream<T> of(T... values);
+    public static <T> Stream<T> of(T... elements);
     
     //@ public normal_behavior
     //@   ensures \result != null;

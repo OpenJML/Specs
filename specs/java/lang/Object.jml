@@ -61,6 +61,7 @@ public class Object {
     // possibly unless they have never been peviously loaded by a ClassLoader.
     /*+ESC@ public normal_behavior
       @   ensures \result == \erasure(\typeof(this));
+      @   ensures \isarray(\typeof(this)) == \isarray(\result);
       @*/
     public final /*@ spec_pure non_null */ Class<?> getClass();
 
