@@ -366,7 +366,7 @@ public final class Arrays {
     /*@  public normal_behavior
       @   requires a != null;
       @   requires (\forall int i; 0 <= i < a.length; 
-      @             \typeof(a[i]) <: \type(Comparable<Object>));
+      @             \typeof(a[i]) <:= \type(Comparable<Object>));
       @   old int[] perm = new int[a.length];
       @   assignable a[*], perm[*];
       @   ensures (\forall int i;
@@ -385,7 +385,7 @@ public final class Arrays {
       @   requires a != null;
       @   requires 0 <= fromIndex <= toIndex <= a.length;
       @   requires (\forall int i; fromIndex <= i < toIndex; 
-      @              \typeof(a[i]) <: \type(Comparable<Object>));
+      @              \typeof(a[i]) <:= \type(Comparable<Object>));
       @   old int[] perm = new int[a.length];
       @   assignable a[fromIndex .. toIndex-1], perm[*];
       @   ensures_redundantly (\forall int i;
@@ -427,7 +427,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && c == null;
       @   requires (\forall int i; 0 <= i < a.length; 
-      @             \typeof(a[i]) <: \type(Comparable<T>));
+      @             \typeof(a[i]) <:= \type(Comparable<T>));
       @   assignable a[*];
       @   ensures_redundantly a.length == \old(a.length) && a != null;
       @   ensures (\forall int i;
@@ -467,7 +467,7 @@ public final class Arrays {
       @   requires a != null && c == null;
       @   requires 0 <= fromIndex <= toIndex <= a.length;
       @   requires (\forall int i; 0 <= i < a.length; 
-      @             \typeof(a[i]) <: \type(Comparable<T>));
+      @             \typeof(a[i]) <:= \type(Comparable<T>));
       @   old int[] perm = new int[a.length];
       @   assignable a[fromIndex .. toIndex-1], perm[*];
       @   ensures_redundantly (\forall int i;
@@ -760,8 +760,8 @@ public final class Arrays {
     /*@  public normal_behavior
       @   requires a != null; 
       @   requires (\forall int i; 0 <= i < a.length; 
-      @             \typeof(a[i]) <: \type(Comparable<Object>)) && 
-      @             \typeof(key) <: \type(Comparable<Object>);
+      @             \typeof(a[i]) <:= \type(Comparable<Object>)) && 
+      @             \typeof(key) <:= \type(Comparable<Object>);
       @   requires (\forall int i;
       @             0 < i < a.length;
       @             ((Comparable<Object>)a[i-1]).compareTo(a[i]) <= 0);
@@ -829,8 +829,8 @@ public final class Arrays {
 //      @  public normal_behavior
 //      @   requires a != null && c == null;
 //      @   requires (\forall int i; 0 <= i < a.length; 
-//      @             \typeof(a[i]) <: \type(Comparable<T>)) && 
-//      @             \typeof(key) <: \type(Comparable<T>));
+//      @             \typeof(a[i]) <:= \type(Comparable<T>)) && 
+//      @             \typeof(key) <:= \type(Comparable<T>));
 //      @   requires (\forall int i;
 //      @             0 < i < a.length;
 //      @             ((Comparable<T>)a[i-1]).compareTo(a[i]) <= 0);
@@ -1525,13 +1525,13 @@ public final class Arrays {
 
     /*@  public normal_behavior
       @   requires a != null;
-      @   requires val == null || ( \typeof(val) <: \elemtype(\typeof(a)) );
+      @   requires val == null || ( \typeof(val) <:= \elemtype(\typeof(a)) );
       @   assignable a[*];
       @   ensures (\forall int i; 0 <= i < a.length; 
       @            a[i] == val);
       @ also public exceptional_behavior
       @   requires a != null;
-      @   requires val != null && !( \typeof(val) <: \elemtype(\typeof(a)) );
+      @   requires val != null && !( \typeof(val) <:= \elemtype(\typeof(a)) );
       @   assignable \nothing;
       @   signals_only ArrayStoreException;
       @ also
@@ -1546,7 +1546,7 @@ public final class Arrays {
 // FIXME - check this
     /*@  public normal_behavior
       @   requires a != null && fromIndex < toIndex;
-      @   requires ( \typeof(val) <: \elemtype(\typeof(a)) );
+      @   requires ( \typeof(val) <:= \elemtype(\typeof(a)) );
       @   assignable a[*];
       @   ensures_redundantly a.length == \old(a.length);
       @   ensures (\forall int i; fromIndex <= i < toIndex; a[i] == val);
@@ -1557,7 +1557,7 @@ public final class Arrays {
       @   ensures_redundantly a.length == \old(a.length);
       @ also public exceptional_behavior
       @   requires a != null;
-      @   requires !( \typeof(val) <: \elemtype(\typeof(a)) );
+      @   requires !( \typeof(val) <:= \elemtype(\typeof(a)) );
       @   assignable \nothing;
       @   signals_only ArrayStoreException;
       @ also

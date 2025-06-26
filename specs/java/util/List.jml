@@ -178,7 +178,7 @@ public interface List<E> extends SequencedCollection<E> {
     //@   requires 0 <= index && index < size();
     //-RAC@   ensures \result == values[index];
     //-RAC@   ensures !containsNull ==> \result != null;
-    //-RAC@   ensures \typeof(\result) <:=\typearg0(\typeof(this));
+    //-RAC@   ensures \typeof(\result) <:= \typearg0(\typeof(this));
     //@ also
     //@ public exceptional_behavior
     //@   requires !(0 <= index && index < size());

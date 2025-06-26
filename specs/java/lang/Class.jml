@@ -99,7 +99,7 @@ public final class Class<T> implements java.io.Serializable,
         throws InstantiationException, IllegalAccessException;
 
     //@ public normal_behavior
-    //@   ensures \result <==> (obj != null && (obj.getClass() <: this)); // FIXME - should \typeof(obj) <: (\TYPE)this work? The cast gives error.
+    //@   ensures \result <==> (obj != null && (obj.getClass() <:= this)); // FIXME - should \typeof(obj) <:= (\TYPE)this work? The cast gives error.
     public /*@ spec_pure @*/ boolean isInstance(/*@ nullable */Object obj);
     
     //@ public normal_behavior
@@ -136,7 +136,7 @@ public final class Class<T> implements java.io.Serializable,
 
     /*
     //@ ensures \result == _isArray;
-    //@ ensures \elemtype(\typeof(this)) <: \type(Object) ==> \result;
+    //@ ensures \elemtype(\typeof(this)) <:= \type(Object) ==> \result;
     //@ ensures \elemtype(\typeof(this)) == \type(int) ==> \result;
     //@ ensures \elemtype(\typeof(this)) == \type(byte) ==> \result;
     //@ ensures \elemtype(\typeof(this)) == \type(short) ==> \result;

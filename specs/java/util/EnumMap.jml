@@ -39,7 +39,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     public boolean containsValue(Object value);
 
     //@ also public normal_behavior
-    //@    requires key != null && \typeof(key) <: \type(Enum<K>);
+    //@    requires key != null && \typeof(key) <:= \type(Enum<K>);
     //@    ensures \result == keys[((Enum)key).ordinal()];
     @SuppressWarnings("unchecked")
     public boolean containsKey(Object key);
@@ -47,7 +47,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     private boolean containsMapping(Object key, Object value);
  
     //@ also public normal_behavior
-    //@    requires key != null && \typeof(key) <: \type(Enum<K>);
+    //@    requires key != null && \typeof(key) <:= \type(Enum<K>);
     //@    old int ord = ((Enum)key).ordinal();
     //@    ensures keys[ord] ==> \result == modelMap[ord];
     //@    ensures !keys[ord] ==> \result == null;

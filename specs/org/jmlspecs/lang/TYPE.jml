@@ -1,20 +1,26 @@
 package org.jmlspecs.lang;
 public class TYPE {
-
+/*
     //@ model public Class<?> head;
     //@ model public java.util.List<TYPE> typeargs;
     
 
+    // @ public normal_behavior
+    // @   ensures \result.head == h;
+    // @   ensures \result.typeargs == args; // FIXME - no aliasing?
+    // @ no_state
+    // @ model public static TYPE of(Class<?> h, java.util.List<TYPE> args);
+    
     //@ public normal_behavior
     //@   ensures \result.head == h;
     //@   ensures \result.typeargs == args; // FIXME - no aliasing?
     //@ no_state
-    //@ model public static TYPE of(Class<?> h, java.util.List<TYPE> args);
+    public static TYPE of(Class<?> h, TYPE ... args);
     
     //@ public normal_behavior
     //@   ensures \result == head;
     //@ no_state
-    //@ model public Class<?> erasure();
+    public Class<?> erasure();
     
     //@ public normal_behavior
     //@   ensures \result == typeargs.size();
@@ -40,5 +46,5 @@ public class TYPE {
     //@ model public static boolean subtype(TYPE t1, TYPE t2);
     
     // FIXME - isPrimitive, array types and element types
-    
+ */   
 }

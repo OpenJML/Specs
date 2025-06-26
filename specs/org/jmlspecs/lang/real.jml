@@ -1,6 +1,6 @@
 package org.jmlspecs.lang;
 
-public class real implements IJmlPrimitiveType {
+public abstract class real extends Number implements IJmlPrimitiveType, Comparable<real>  {
     
     
     
