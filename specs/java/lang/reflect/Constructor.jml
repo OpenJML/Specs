@@ -1,7 +1,6 @@
 package java.lang.reflect;
 
-final public class Constructor<T> extends Executable 
-    implements Member, GenericDeclaration {
+final public class Constructor<T> extends Executable {
 
 //    @ pure
 //    Constructor(Class declaringClass,

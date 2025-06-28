@@ -231,7 +231,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   ensures \result != null;
     public static <T> Stream<T> concat(Stream<? extends T> first, Stream<? extends T> last);
 
-    public static interface Builder<T> {
+    public static interface Builder<T> extends java.util.function.Consumer<T> {
       public abstract void accept(T t);
       public default Builder<T> add(T t);
       public abstract Stream<T> build();

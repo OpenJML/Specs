@@ -84,7 +84,7 @@ public interface IntStream extends BaseStream<Integer,IntStream> {
       public static IntStream rangeClosed(int from, int to);
       public static IntStream concat(IntStream first, IntStream last);
 
-      public static interface Builder {
+      public static interface Builder extends java.util.function.IntConsumer {
         public abstract void accept(int i);
         public default java.util.stream.IntStream.Builder add(int i);
         public abstract java.util.stream.IntStream build();
