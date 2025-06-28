@@ -1,6 +1,45 @@
-package org.jmlspecs.lang;
+package org.jmlspecs.lang.internal;
+//@ spec_pure
 public class TYPE {
-/*
+    //@ spec_public
+    final private Class<?> base;
+    //@ spec_public
+    final private TYPE[] args;
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == \TYPEof(h);
+    // -RAC@   ensures \erasure(\result) == h;
+    //@ no_state
+    public static TYPE of(Class<?> h);
+    
+    //@ public normal_behavior
+    //-RAC@   ensures \result == \TYPEof(h, args);
+    // -RAC@   ensures \erasure(\result) == h;
+    // -RAC@   ensures \typeargs(\result) == args;
+    //@ no_state
+    public static TYPE of(Class<?> h, TYPE ... args);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == \erasure(this);
+    //@ no_state
+    public Class<?> erasure();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == \isarray(this);
+    //@ no_state
+    public boolean isArray();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == \arraytype(this);
+    //@ no_state
+    public TYPE arraytype();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == \elemtype(this);
+    //@ no_state
+    public TYPE getComponentType();
+
+    /*
     //@ model public Class<?> head;
     //@ model public java.util.List<TYPE> typeargs;
     

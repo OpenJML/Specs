@@ -179,6 +179,7 @@ public  /*@ pure @*/ final
     /*-RAC@ public normal_behavior
       @   requires parseable(s, radix);
       @   ensures \result.intValue() == parseInt(s,radix);
+      @   ensures \typeof(\result) == \type(Integer);
       @ also
       @ public exceptional_behavior
       @   requires !parseable(s, radix);
@@ -191,6 +192,7 @@ public  /*@ pure @*/ final
     /*-RAC@ public normal_behavior
     @   requires parseable(s, 10);
     @   ensures \result.intValue() == parseInt(s,10);
+    @   ensures \typeof(\result) == \type(Integer);
     @ also
     @ public exceptional_behavior
     @   requires !parseable(s, 10);
@@ -201,6 +203,7 @@ public  /*@ pure @*/ final
 
     /*@ public normal_behavior
      @   ensures \result.intValue() == i;
+     @   ensures \typeof(\result) == \type(Integer);
      @*/
     public static /*@ pure @*/ /*@ non_null @*/ Integer valueOf(int i);
 
