@@ -1,8 +1,59 @@
 package org.jmlspecs.lang.internal;
 
+//@ no_state
 public abstract class real extends Number implements org.jmlspecs.lang.IJmlPrimitiveType, Comparable<real>  {
     
+    // -RAC@ public normal_behavior ensures \result == (byte)value;
+    @Override
+    public byte byteValue();
+    // -RAC@ public normal_behavior ensures \result == (short)value;
+    @Override
+    public short shortValue();
     
+    // -RAC@ public normal_behavior ensures \result == (char)value;
+    public char charValue();
     
+    //-RAC@ public normal_behavior ensures \result == (int)this;
+    @Override
+    abstract public int intValue();
+    // -RAC@ public normal_behavior ensures \result == (long)value;
+    @Override
+    abstract public long longValue();
+    @Override
+    abstract public float floatValue();
+    @Override
+    abstract public double doubleValue();
+    
+    abstract public bigint bigintValue();
+    
+    //@ public normal_behavior
+    //-RAC@  ensures this == r ==> \result == 0;
+    //-RAC@  ensures this != r ==> \result != 0;
+    //-RAC@  ensures this >= r ==> \result >= 0;
+    //-RAC@  ensures this <= r ==> \result <= 0;
+    //-RAC@  ensures this >  r ==> \result >  0;
+    //-RAC@  ensures this <  r ==> \result <  0;
+    abstract public int compareTo(real r);
+    abstract public String toString();
+    
+    //@ public normal_behavior //-RAC@ ensures v == (double)\result;
+    public static real of(double v);
+    //@ public normal_behavior //-RAC@ ensures v == (float)\result;
+    public static real of(float v);
+    //@ public normal_behavior //-RAC@ ensures v == (long)\result;
+    public static real of(long v);
+    //@ public normal_behavior //-RAC@ ensures v == (int)\result;
+    public static real of(int v);
+    //@ public normal_behavior //-RAC@ ensures v == (char)\result;
+    public static real of(char v);
+    //@ public normal_behavior //-RAC@ ensures v == (short)\result;
+    public static real of(short v);
+    //@ public normal_behavior //-RAC@ ensures v == (byte)\result;
+    public static real of(byte v);
+    //@ public normal_behavior //-RAC@ ensures v == (bigint)\result;
+    public static real of(bigint v);
+    //@ public normal_behavior //-RAC-ESC@ ensures v == \result.bigintValue();  // FIXME
+    public static real of(java.math.BigInteger v);
+
     
 }
