@@ -1,6 +1,6 @@
 package org.jmlspecs.lang.internal;
 //@ spec_pure
-public class TYPE {
+public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //@ spec_public
     final private Class<?> base;
     //@ spec_public
