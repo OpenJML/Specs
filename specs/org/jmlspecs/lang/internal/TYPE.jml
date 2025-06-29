@@ -5,7 +5,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     final private Class<?> base;
     //@ spec_public
     final private TYPE[] args;
-
+    
     //@ public normal_behavior
     //-RAC@   ensures \result == \TYPEof(h);
     // -RAC@   ensures \erasure(\result) == h;

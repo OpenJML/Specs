@@ -26,12 +26,12 @@
 
 package java.util;
 
-public interface Deque<E> extends Queue<E> {
+public interface Deque<E> extends Queue<E> , SequencedCollection<E> {
  
     // specification inherited
     public boolean add(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
     
-    /*-RAC@ public behavior
+    /*-RAC@ also public behavior
       @   ensures _get(0) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 < i && i < values.length; values[i+1] == \old(values[i]));
       @   assignable values;
@@ -42,7 +42,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
     public void addFirst(/*@ nullable @*/ E e) throws IllegalStateException,ClassCastException, NullPointerException, IllegalArgumentException;
    
-    /*-RAC@ public behavior
+    /*-RAC@ also public behavior
       @   requires (* capacity restrictions respected *);
       @   ensures _get(size()-1) == e && size() == \old(size())+1;
       @   ensures (\forall int i; 0 <= i && i < values.length-1; values[i] == \old(values[i]));
@@ -81,7 +81,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public /*@ nullable @*/ E element() throws NoSuchElementException;
 
-    /*-RAC@ public normal_behavior
+    /*-RAC@ also public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == _get(0);
       @   ensures \result == null ==> containsNull;
@@ -89,9 +89,9 @@ public interface Deque<E> extends Queue<E> {
       @ public exceptional_behavior
       @   requires isEmpty();
       @*/
-    public /*@ pure nullable @*/ E getFirst() throws NoSuchElementException;
+    public /*@ spec_pure nullable @*/ E getFirst() throws NoSuchElementException;
     
-    /*-RAC@ public normal_behavior
+    /*-RAC@ also public normal_behavior
       @   requires !isEmpty();
       @   ensures \result == _get(size()-1);
       @   ensures \result == null ==> containsNull;
@@ -99,7 +99,7 @@ public interface Deque<E> extends Queue<E> {
       @ public exceptional_behavior
       @   requires isEmpty();
       @*/
-    public /*@ pure nullable @*/ E getLast() throws NoSuchElementException;
+    public /*@ spec_pure nullable @*/ E getLast() throws NoSuchElementException;
     
     /*-RAC@ also public normal_behavior
       @   ensures (\forall int i; 0 <= i && i < values.length;
@@ -222,7 +222,7 @@ public interface Deque<E> extends Queue<E> {
     // specification inherited
     public /*@ nullable @*/ E remove() throws NoSuchElementException;
     
-    /*-RAC@ public exceptional_behavior
+    /*-RAC@ also public exceptional_behavior
       @   requires isEmpty();
       @   assignable \nothing;
       @ also
@@ -270,7 +270,7 @@ public interface Deque<E> extends Queue<E> {
       @*/
   public boolean remove(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
 
-    /*-RAC@ public exceptional_behavior
+    /*-RAC@ also public exceptional_behavior
       @   requires isEmpty();
       @   assignable \nothing;
       @ also
