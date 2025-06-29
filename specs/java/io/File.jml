@@ -93,7 +93,7 @@ public class File implements Serializable, Comparable<File> {
     //public int compareTo(/*@ non_null*/ File pathname);
 
     /*@ also public normal_behavior
-      @    ensures \result == (\typeof(o) <: \typeof(this));
+      @    ensures \result == (\typeof(o) <:= \typeof(this));
       @ public model pure boolean definedComparison(non_null Object o);
       @*/
 

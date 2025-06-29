@@ -1,0 +1,62 @@
+package org.jmlspecs.lang.internal;
+
+//@ no_state
+public abstract class real extends Number implements org.jmlspecs.lang.IJmlPrimitiveType, Comparable<real>  {
+    
+    //@ public normal_behavior //-RAC@ ensures \result == (byte)this;
+    @Override
+    public byte byteValue();
+    //@ public normal_behavior //-RAC@ ensures \result == (short)this;
+    @Override
+    public short shortValue();
+    
+    //@ public normal_behavior //-RAC@ ensures \result == (char)this;
+    public char charValue();
+    
+    //@ public normal_behavior //-RAC@ ensures \result == (int)this;
+    @Override
+    abstract public int intValue();
+    //@ public normal_behavior //-RAC@ ensures \result == (long)this;
+    @Override
+    abstract public long longValue();
+    //@ public normal_behavior //-RAC@ ensures \result == (float)this;
+    @Override
+    abstract public float floatValue();
+    //@ public normal_behavior //-RAC@ ensures \result == (double)this;
+    @Override
+    abstract public double doubleValue();
+    
+    //@ public normal_behavior //-RAC@ ensures \result == (\bigint)this;
+    abstract public bigint bigintValue();
+    
+    //@ public normal_behavior
+    //-RAC@  ensures this == r ==> \result == 0;
+    //-RAC@  ensures this != r ==> \result != 0;
+    //-RAC@  ensures this >= r ==> \result >= 0;
+    //-RAC@  ensures this <= r ==> \result <= 0;
+    //-RAC@  ensures this >  r ==> \result >  0;
+    //-RAC@  ensures this <  r ==> \result <  0;
+    abstract public int compareTo(real r);
+    abstract public String toString();
+    
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(double v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(float v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(long v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(int v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(char v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(short v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(byte v);
+    //@ public normal_behavior //-RAC@ ensures \result == (\real)v;
+    public static real of(bigint v);
+    //@ public normal_behavior //-RAC-ESC@ ensures v == \result.bigintValue();  // FIXME
+    public static real of(java.math.BigInteger v);
+
+    
+}

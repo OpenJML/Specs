@@ -190,14 +190,14 @@ e primitive type, or
       @               one of them is a primitive type, but the other is an objec
 t *);
       @   requires !src.getClass().isArray() || !dest.getClass().isArray()
-      @            || (!(\elemtype(\typeof(src)) <: \type(Object))
-      @                && !(\elemtype(\typeof(dest)) <: \type(Object))
+      @            || (!(\elemtype(\typeof(src)) <:= \type(Object))
+      @                && !(\elemtype(\typeof(dest)) <:= \type(Object))
       @                && !(\elemtype(\typeof(src)) == \elemtype(\typeof(dest)))
 )
-      @            || (\elemtype(\typeof(src)) <: \type(Object)
-      @                && !(\elemtype(\typeof(dest)) <: \type(Object)))
-      @            || (!(\elemtype(\typeof(src)) <: \type(Object))
-      @                && \elemtype(\typeof(dest)) <: \type(Object));
+      @            || (\elemtype(\typeof(src)) <:= \type(Object)
+      @                && !(\elemtype(\typeof(dest)) <:= \type(Object)))
+      @            || (!(\elemtype(\typeof(src)) <:= \type(Object))
+      @                && \elemtype(\typeof(dest)) <:= \type(Object));
       @   assignable \nothing;
       @   signals_only ArrayStoreException;
       @ also
@@ -207,7 +207,7 @@ t *);
       {|
         requires (src instanceof Object[]) &&
                  (dest instanceof Object[]) &&
-                 \elemtype(\typeof(src)) <: \elemtype(\typeof(dest)) &&
+                 \elemtype(\typeof(src)) <:= \elemtype(\typeof(dest)) &&
     @                 srcPos + length_ <= ((Object[])src).length
     @                && destPos + length_ <= ((Object[])dest).length;
     @   {|

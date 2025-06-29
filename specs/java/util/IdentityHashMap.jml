@@ -40,14 +40,14 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   public IdentityHashMap(Map<? extends K, ? extends V> m); // TODO
   
   //@ also public normal_behavior
-  //@   requires o == null || \typeof(o) <: \type(K);
+  //@   requires o == null || \typeof(o) <:= \type(K);
   //@   ensures \result == (_keyset.contains((K)o) ? _map.get((K)o) : null);
   //@ pure nullable
   @SuppressWarnings("unchecked")
   public V get(Object o);
   
   //@ also public normal_behavior
-  //@   requires o == null || \typeof(o) <: \type(K);
+  //@   requires o == null || \typeof(o) <:= \type(K);
   //@   ensures \result == _keyset.contains((K)o);
   //@ pure
   @SuppressWarnings("unchecked")

@@ -51,7 +51,7 @@ public interface Comparable<T> {
 
     /*@ public normal_behavior
       @    requires true;
-      @    ensures \result ==> \typeof(o) <: \type(T);
+      @    ensures \result ==> \typeof(o) <:= \type(T);
       @ // subclasses may strengthen this contract.
       @ public model pure boolean
       @ definedComparison(non_null Object o);
@@ -75,10 +75,10 @@ public interface Comparable<T> {
 
     /*@ public normal_behavior
       @      requires o != null;
-      @      //-RAC@ requires \typeof(o) <: \typeof(this);
+      @      //-RAC@ requires \typeof(o) <:= \typeof(this);
       @      ensures  o == this ==> \result == 0; // reflexive
       @ //also public normal_behavior
-      @ //   requires (\typeof(o) <: \type(Comparable<T>)) && \typeof(this) <: \type(T);
+      @ //   requires (\typeof(o) <:= \type(Comparable<T>)) && \typeof(this) <:= \type(T);
       @ //   ensures sgn(\result) == - sgn(((Comparable<T>)o).compareTo((T)this)); // antisymmetric
       @ also public exceptional_behavior
       @       requires o == null;

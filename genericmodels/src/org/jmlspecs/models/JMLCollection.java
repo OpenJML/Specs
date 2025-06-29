@@ -75,7 +75,7 @@ public interface JMLCollection<E> extends JMLType, Iterable<E> {
       @                            in the collection. *);
       @    ensures_redundantly !containsNull && elem == null ==> !\result;
       @    ensures_redundantly 
-      @       elem != null && !(\typeof(elem) <: elementType) ==> !\result;
+      @       elem != null && !(\typeof(elem) <:= elementType) ==> !\result;
       @*/    
     /*@ pure @*/ boolean has(/*@ nullable @*/ Object elem);
 

@@ -26,7 +26,7 @@ public final class Array extends Object {
     //@ axiom (\forall Object o; \elemtype(\typeof(o)) == \type(int) ==> o instanceof int[]);
 
     /*@
-      @   requires \elemtype(\typeof(Param0)) <: \type(Object);
+      @   requires \elemtype(\typeof(Param0)) <:= \type(Object);
       @   ensures \result == ((Object[])Param0).length;
       @ also
       @   requires Param0 instanceof int[];
@@ -51,7 +51,7 @@ public final class Array extends Object {
       @ also public behavior
       @ requires 0 <= Param1 && Param1 < getLength(Param0);
       @ {|
-      @   requires \elemtype(\typeof(Param0)) <: \type(Object);
+      @   requires \elemtype(\typeof(Param0)) <:= \type(Object);
       @   ensures false;
       @ also
       @   requires \elemtype(\typeof(Param0)) == \type(int);
@@ -99,7 +99,7 @@ public final class Array extends Object {
       @ also public behavior
       @ requires 0 <= Param1 && Param1 < getLength(Param0);
       @ {|
-      @   requires \elemtype(\typeof(Param0)) <: \type(Object);
+      @   requires \elemtype(\typeof(Param0)) <:= \type(Object);
       @   ensures false;
       @ also
       @   requires \elemtype(\typeof(Param0)) == \type(int);
@@ -214,7 +214,7 @@ public final class Array extends Object {
       @ also public behavior
       @ requires 0 <= Param1 && Param1 < getLength(Param0);
       @ {|
-      @   requires \elemtype(\typeof(Param0)) <: \type(Object);
+      @   requires \elemtype(\typeof(Param0)) <:= \type(Object);
       @   ensures \result == ((Object[])Param0)[Param1];
       @ also
       @   requires \elemtype(\typeof(Param0)) == \type(int);
