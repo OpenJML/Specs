@@ -1,7 +1,7 @@
 package java.lang;
 
 //@ non_null_by_default
-public final class StringBuilder extends AbstractStringBuilder implements java.io.Serializable,CharSequence {
+public final class StringBuilder extends AbstractStringBuilder implements java.io.Serializable,CharSequence, Appendable, Comparable<StringBuilder> {
     static final long serialVersionUID;
     //@ ghost public final static int extraCapacity = 16;
   

@@ -3,7 +3,7 @@ package org.junit.rules;
 import org.hamcrest.Matcher;
 
 //@ non_null_by_default // FIXME - verify this
-public class ExpectedException {
+public class ExpectedException implements TestRule {
     
     //@ model public \datagroup expectedExceptions;
     //@ model public boolean exceptionAllowed; in expectedExceptions;
