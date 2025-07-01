@@ -142,7 +142,7 @@ public interface Map<K,V> {
     /*-RAC@ public normal_behavior
       @    requires key != null;
       @    assignable objectState;
-      @    ensures modelMap == \old(modelMap).put(key.uniqueHash,value);
+      @    // ensures modelMap == \old(modelMap).put(key.uniqueHash,value); // FIXME - put not found in modelMap
       @    ensures keys[key.uniqueHash];
       @    ensures modelMap[key.uniqueHash] == value;
       @    ensures \result == \old(keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);

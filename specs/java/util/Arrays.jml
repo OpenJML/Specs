@@ -2025,14 +2025,14 @@ public final class Arrays {
 //    public static java.util.Spliterator$OfDouble spliterator(double[], int, int);
     
     //@ public normal_behavior
-    //@   ensures \seq.equals(\result.values,\seq.<T>of(arr));
+    //@   ensures \result.values == \seq.<T>of(arr);
     //@ pure
     public static <T> java.util.stream.Stream<T> stream(T[] arr);
 
 //    public static <T> java.util.stream.Stream<T> stream(T[], int, int);
 
     //@ public normal_behavior
-    //@   ensures \seq.<Integer>equals(\result.values,\seq.<Integer>of(arr));
+    //@   requires true; // ensures \result.values == \seq.<Integer>of(arr); // FIXME - int[] does not convert to Integer[]
     //@ pure
     public static java.util.stream.IntStream stream(int[] arr);
 //    public static java.util.stream.IntStream stream(int[], int, int);

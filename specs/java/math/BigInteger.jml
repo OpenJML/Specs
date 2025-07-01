@@ -390,9 +390,11 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
 
     //@ also public normal_behavior
     //@   requires x != null && x instanceof BigInteger;
-    //@   assignable \nothing;
     //-RAC@   ensures \result == (this.value == ((BigInteger)x).value);
-    public /*@ spec_pure helper @*/ boolean equals(Object x);
+    //@ also
+    //@   requires !(x != null && x instanceof BigInteger);
+    //@   ensures \result == false;
+    public /*@ spec_pure helper @*/ boolean equals(/*@ nullable */ Object x);
 
     //@ public normal_behavior
     //@   requires val != null;

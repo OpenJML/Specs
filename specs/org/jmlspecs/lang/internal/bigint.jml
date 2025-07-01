@@ -2,100 +2,205 @@ package org.jmlspecs.lang.internal;
 
 import org.jmlspecs.lang.IJmlPrimitiveType;
 
-//@ no_state
-public class bigint implements IJmlPrimitiveType {
-    
+//@ no_state non_null_by_default
+public class bigint extends Number implements IJmlPrimitiveType {
+    //@ spec_public
+    final private java.math.BigInteger value;
+
     public static final bigint zero;
+    public static final bigint one;
     
     //@ static public final invariant zero == (\bigint)0;
+    //@ static public final invariant one == (\bigint)1;
+    
+    //@ public normal_behavior
+    //@   ensures zero == (\bigint)0;
+    //@   ensures one == (\bigint)1;
+    //@ static_initializer
 
     //@ public normal_behavior
-    //@  ensures zero == (\bigint)0;
-    //@ static_initializer
-    
+    //@   requires i != null;
     //@ helper
     public static bigint of(java.math.BigInteger i);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public static bigint of(long i);
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public static bigint of(int i);
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public static bigint of(short i);
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public static bigint of(char i);
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public static bigint of(byte i);
+
+    // FIXME - should the operator implementations be private
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint negate();
     
+    //@ public normal_behavior
+    //@   ensures \result == this + v;
     //@ helper
     public bigint add(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint subtract(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint multiply(bigint v);
     
+    //@ public normal_behavior
+    //@   requires v != zero;
     //@ helper
     public bigint divide(bigint v);
     
+    //@ public normal_behavior
+    //@   requires v != zero;
     //@ helper
     public bigint mod(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public boolean eq(bigint v);
     
     //@ helper
     public boolean ne(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public boolean lt(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public boolean le(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public boolean gt(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public boolean ge(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint and(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint or(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint xor(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint comp();
     
     // A negative shift is a positive shift in the other direction, at least in RAC
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint shiftLeft(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public bigint shiftRight(bigint v);
     
-    //@ helper pure
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
     public String toString();
     
+    //@ public normal_behavior
+    //@   ensures \result == value;
+    //-RAC@   ensures \result.value == this;
     //@ helper
     public java.math.BigInteger bigValue();
     
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
+    @Override
     public long longValue();
 
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
+    @Override
     public int intValue();
 
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public short shortValue();
 
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public byte byteValue();
 
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
     public char charValue();
 
+    //@ public normal_behavior
+    //@   requires true;
     //@ helper
-    public org.jmlspecs.lang.real realValue();
+    public real realValue();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public double doubleValue();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public float floatValue();
+        
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public int compareTo(bigint o);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    public int hashCode();
+    
+    // No 'also' and no Override because JML considers that JML primitive types do not inherit any specs
+    //@ requires false; // .equals may not be called -- use == instead
+    //@ helper
+    public boolean equals(/*@ nullable */ Object o);
 
 }
