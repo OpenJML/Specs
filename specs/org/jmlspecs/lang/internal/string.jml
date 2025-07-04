@@ -1,0 +1,180 @@
+package org.jmlspecs.lang.internal;
+
+import org.jmlspecs.lang.IJmlPrimitiveType;
+import org.jmlspecs.lang.IJmlIntArrayLike;
+
+
+//@ immutable no_state non_null_by_default
+public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Comparable<string> {
+
+    //@ spec_public
+    private final String value; //-RAC@ in length;
+    
+    //-RAC@ model public final \bigint length;
+    // -RAC@ private represents length = value.length();
+
+    // -RAC@ public invariant 0 <= length;
+    
+    //@ private normal_behavior
+    //@       requires true;
+    //-RAC@   ensures value == s;
+    private string(String s);
+
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result.length == 0;
+    public static string empty();
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result <==> this.length == 0;
+    public boolean isEmpty();
+    
+    // FIXME - which to use size or length?
+
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == length;
+    public bigint length();
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == length;
+    public bigint size();
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == value;
+    public String toString();
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result.value == s;
+    //-RAC@   ensures \result.length == s.length();
+    public static string of(String s);
+    
+    //@ public normal_behavior
+    //@   requires 0 <= i < length();
+    //-RAC@   ensures \result == this[i];
+    public char get(bigint i);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures 0 <= i < length() ==> \result == this[i];
+    public char getUnchecked(bigint i);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == (s == ss);
+    public static boolean eq(string s, string ss);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    // -RAC@   ensures this == s <==> \result == 0;  // FIXME - these need translations fixed for ESC
+    // -RAC@   ensures this != s <==> \result != 0;
+    // -RAC@   ensures this >= s <==> \result >= 0;
+    // -RAC@   ensures this <= s <==> \result <= 0;
+    // -RAC@   ensures this > s <==> \result > 0;
+    // -RAC@   ensures this < s <==> \result < 0;
+    public int compareTo(string s);
+ 
+    //-RAC@ public normal_behavior
+    //-RAC@   ensures \result == (this == s);
+    public boolean eq(string s);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == (this != s);
+    public boolean ne(string s);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == (this >= s);
+    public boolean ge(string s);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == (this > s);
+    public boolean gt(string s);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == (this <= s);
+    public boolean le(string s);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == (this < s);
+    public boolean lt(string s);
+    
+    //@ public normal_behavior
+    //@       requires length() > 0;
+    //-RAC@   ensures \result == this[0];
+    public char head();
+    
+    //@ public normal_behavior
+    //@       requires length() > 0;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < length-1; \result[i] == this[i+1];
+    //-RAC@   ensures 0 < this.length ==> \result.length == this.length-1;
+    public string tail();
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < length; \result[i] == this[i];
+    //-RAC@   ensures \result[length] == v;
+    //-RAC@   ensures \result.length == this.length+1;
+    public string add(char v);
+
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result.length == s.length + ss.length;
+//    //-RAC@   ensures \result == s + ss;  // FIXME ???
+    public static string concat(string s, string ss);
+ 
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result.length == this.length + s.length;
+    //-RAC@   ensures \result == this + s;  // FIXME ???
+    public string append(string s);
+
+    //@ public behavior
+    //@       requires 0 <= i & i <= length();
+    //-RAC@   ensures \result[i] == v;
+    //-RAC@   ensures \forall \bigint j; j != i; \result[j] == this[j];
+    //-RAC@   ensures \result.length == this.length;
+    public string put(bigint i, char v);
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < ii; \result[i] == this[i];
+    //-RAC@   ensures \result[ii] == v;
+    //-RAC@   ensures \forall \bigint i; ii < i < length+1; \result[i] == this[i-1];
+    //-RAC@   ensures 0<=ii<=this.length ==> \result.length == this.length+1;
+    public string insert(bigint ii, char v);
+
+    //@ public normal_behavior
+    //@       requires 0 <= ii < this.length();
+    //-RAC@   ensures \forall \bigint i; 0 <= i < ii; \result[i] == this[i];
+    //-RAC@   ensures \forall \bigint i; ii < i < length-1; \result[i] == this[i+1];
+    //-RAC@   ensures \result.length == this.length-1;
+    public string remove(bigint ii);
+
+    //@ public normal_behavior
+    //@       requires 0 <= start <= end <= length();
+    //-RAC@   ensures \result.length == end - start;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < end-start; \result[i] == this[i+start];
+    public string substring(bigint start, bigint end);
+    
+    //@ public normal_behavior
+    //@       requires 0 <= start <= length();
+    //-RAC@   ensures \result.length == length - start;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < length-start; \result[i] == this[i+start];
+    public string substring(bigint start);
+    
+    //@ requires false; // Not defined for JML primitive types. Use eq.
+    public boolean equals(Object o);
+
+    //@ public normal_behavior
+    //@   requires true;
+    public int hashCode();
+}

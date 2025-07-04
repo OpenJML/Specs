@@ -1,4 +1,7 @@
-package org.jmlspecs.lang;
+package org.jmlspecs.lang.internal;
+
+import org.jmlspecs.lang.IJmlPrimitiveType;
+import org.jmlspecs.lang.IJmlArrayLike;
 
 //@ immutable pure nullable_by_default
 public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
@@ -47,7 +50,7 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     public  boolean ne(set<T> s);
     
     //@ public normal_behavior
-    //@   ensures \result == (this == s || eq(s));
+    //@   requires false;
     //@ no_state
     public boolean equals(set<T> s);
     
@@ -64,11 +67,11 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     //@ no_state
     public set<T> add(T x);
     
-    //@ public normal_behavior
+    //@ private normal_behavior
     //@   ensures b ==> \result == add(x);
     //@   ensures !b ==> \result == remove(x);
     //@ no_state
-    //@ model public set<T> put(T x, boolean b);
+    private set<T> put(T x, boolean b);
     
     //@ public normal_behavior
     //@   ensures !this.contains(x) ==> \result == this;

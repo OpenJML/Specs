@@ -8,8 +8,8 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   private static final long serialVersionUID;
   
   //@ model public \datagroup content;
-  //@ model public map<K,V> _map; //@ in content;
-  //@ model public set<K> _keyset; //@ in content;
+  //@ model public \map<K,V> _map; //@ in content;
+  //@ model public \set<K> _keyset; //@ in content;
   //@ spec_public
   int size; //@ in content;
   

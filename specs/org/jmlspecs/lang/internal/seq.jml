@@ -1,14 +1,15 @@
-package org.jmlspecs.lang;
+package org.jmlspecs.lang.internal;
 
-import org.jmlspecs.lang.internal.*;
+import org.jmlspecs.lang.IJmlPrimitiveType;
+import org.jmlspecs.lang.IJmlIntArrayLike;
 
-//@ immutable pure 
+//@ immutable no_state 
 public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
    
     //@ axiom \forall seq<T> s, ss;; s == ss <==> (s.length == ss.length && \forall int i; 0<=i<s.length; s[i] == ss[i]);
 
-    //@ ghost public long length;
-    //@ public invariant length >= 0;
+    //@ ghost public final \bigint length;
+    //@ public final invariant length >= 0;
     
     //@ public normal_behavior
     //@   ensures \result == length;

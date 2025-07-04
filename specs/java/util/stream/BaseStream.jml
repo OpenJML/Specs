@@ -1,4 +1,5 @@
 package java.util.stream;
+import org.jmlspecs.lang.internal.*;
 
 //@ non_null_by_default
 public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.AutoCloseable {

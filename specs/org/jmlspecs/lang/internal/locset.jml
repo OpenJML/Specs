@@ -1,7 +1,9 @@
-package org.jmlspecs.lang;
+package org.jmlspecs.lang.internal;
+import org.jmlspecs.lang.IJmlPrimitiveType;
 
-//@ immutable pure
-abstract public class locset implements IJmlPrimitiveType {
+
+//@ immutable no_state
+public class locset implements IJmlPrimitiveType {
    
 //    public normal_behavior
 //      ensures \result >= 0;
@@ -15,7 +17,7 @@ abstract public class locset implements IJmlPrimitiveType {
     //@ public normal_behavior
     //@   ensures true;
     //@ no_state
-    public static boolean empty();
+    public static locset empty();
 /*    
     //@ public normal_behavior
     //@  //ensures \result.size() == 0;

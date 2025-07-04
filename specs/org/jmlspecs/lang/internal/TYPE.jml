@@ -1,5 +1,8 @@
 package org.jmlspecs.lang.internal;
-//@ spec_pure
+
+// FIXME - should require and test non-null entries in the argument list
+
+//@ no_state non_null_by_default
 public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //@ spec_public
     final private Class<?> base;
@@ -7,83 +10,85 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     final private TYPE[] args;
     
     //@ public normal_behavior
+    //@   ensures true;
+    public static TYPE empty();
+
+    //@ public normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result == \TYPEof(h);
-    // -RAC@   ensures \erasure(\result) == h;
+    //-RAC@   ensures \erasure(\result) == h;
+    //-RAC@   ensures \result.args.length == 0;
     //@ no_state
     public static TYPE of(Class<?> h);
     
     //@ public normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result == \TYPEof(h, args);
-    // -RAC@   ensures \erasure(\result) == h;
-    // -RAC@   ensures \typeargs(\result) == args;
+    //-RAC@   ensures \result.base == h;
+    //-RAC@   ensures \result.args == args;
     //@ no_state
     public static TYPE of(Class<?> h, TYPE ... args);
 
     //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures \result == (this == t);
+    //@ no_state
+    public boolean eq(TYPE t);
+
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures \result == (this != t);
+    //@ no_state
+    public boolean ne(TYPE t);
+
+    //@ public normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result == \erasure(this);
     //@ no_state
     public Class<?> erasure();
 
     //@ public normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result == \isarray(this);
     //@ no_state
     public boolean isArray();
 
     //@ public normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result == \arraytype(this);
     //@ no_state
     public TYPE arraytype();
 
     //@ public normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result == \elemtype(this);
     //@ no_state
     public TYPE getComponentType();
+    
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@ // FIXME ensures \result == (this <:= t);
+    public boolean isSubtypeOf(TYPE t);
+    
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@ // FIXME ensures \result == (this <: t);
+    public boolean isSubtypeOfProper(TYPE t);
+    
+    //@ public normal_behavior
+    //-RAC@   ensures true;
+    public String toString();
 
-    /*
-    //@ model public Class<?> head;
-    //@ model public java.util.List<TYPE> typeargs;
-    
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures true;
+    public int hashCode();
 
-    // @ public normal_behavior
-    // @   ensures \result.head == h;
-    // @   ensures \result.typeargs == args; // FIXME - no aliasing?
-    // @ no_state
-    // @ model public static TYPE of(Class<?> h, java.util.List<TYPE> args);
+    //@ public behavior
+    //@  requires true;
+    //-RAC@   requires false;
+    public boolean equals(Object o);
     
-    //@ public normal_behavior
-    //@   ensures \result.head == h;
-    //@   ensures \result.typeargs == args; // FIXME - no aliasing?
-    //@ no_state
-    public static TYPE of(Class<?> h, TYPE ... args);
-    
-    //@ public normal_behavior
-    //@   ensures \result == head;
-    //@ no_state
-    public Class<?> erasure();
-    
-    //@ public normal_behavior
-    //@   ensures \result == typeargs.size();
-    //@ no_state
-    //@ model public int numargs();
-    
-    //@ public normal_behavior
-    //@   requires 0 <= i < typeargs.size();
-    //@   ensures \result == typeargs.get(i);
-    //@ no_state
-    //@ model public TYPE typearg(int i);
-    
-    //@ public normal_behavior
-    //@   ensures \result == (t1.head == t2.head && t1.typeargs.size() == t2.typeargs.size()
-    //@      && (\forall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i))));
-    //@ no_state
-    //@ model public static boolean eq(TYPE t1, TYPE t2);
-    
-    //@ public normal_behavior
-    //@   ensures \result == (t1.head <:= t2.head && t1.typeargs.size() == t2.typeargs.size()
-    //@      && (\forall int i; 0 <= i < t1.typeargs.size(); eq(t1.typeargs.get(i), t2.typeargs.get(i))));
-    //@ no_state
-    //@ model public static boolean subtype(TYPE t1, TYPE t2);
-    
-    // FIXME - isPrimitive, array types and element types
- */   
+    // FIXME - typeargs(). typearg0, typearg
+
 }

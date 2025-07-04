@@ -1,4 +1,6 @@
-package org.jmlspecs.lang;
+package org.jmlspecs.lang.internal;
+import org.jmlspecs.lang.IJmlPrimitiveType;
+import org.jmlspecs.lang.IJmlIntArrayLike;
 
 /** value-based map from \bigint to V */
 //@ immutable pure non_null_by_default

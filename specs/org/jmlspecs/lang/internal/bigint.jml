@@ -7,67 +7,79 @@ public class bigint extends Number implements IJmlPrimitiveType {
     //@ spec_public
     final private java.math.BigInteger value;
 
-    public static final bigint zero;
-    public static final bigint one;
+    public static final bigint zero = 0;
+    public static final bigint one = 1;
     
-    //@ static public final invariant zero == (\bigint)0;
-    //@ static public final invariant one == (\bigint)1;
+    // @ static public final invariant zero == (\bigint)0;
+    // @ static public final invariant one == (\bigint)1;
     
     //@ public normal_behavior
     //@   ensures zero == (\bigint)0;
     //@   ensures one == (\bigint)1;
     //@ static_initializer
+    
+    //@ public normal_behavior
+    //@   ensures true;
+    public static bigint empty();
 
     //@ public normal_behavior
     //@   requires i != null;
+    //-RAC@   ensures \result == i.value && \result.bigValue() == i;
     //@ helper
     public static bigint of(java.math.BigInteger i);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == i & \result.longValue() == i;
     //@ helper
     public static bigint of(long i);
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == i & \result.intValue() == i;
     //@ helper
     public static bigint of(int i);
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == i & \result.shortValue() == i;
     //@ helper
     public static bigint of(short i);
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == i & \result.charValue() == i;
     //@ helper
     public static bigint of(char i);
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == i & \result.byteValue() == i;
     //@ helper
     public static bigint of(byte i);
 
-    // FIXME - should the operator implementations be private
-    
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (-this);
     //@ helper
     public bigint negate();
     
     //@ public normal_behavior
-    //@   ensures \result == this + v;
+    //-RAC@ ensures \result == (this + v);
     //@ helper
     public bigint add(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this - v);
     //@ helper
     public bigint subtract(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this * v);
     //@ helper
     public bigint multiply(bigint v);
     
     //@ public normal_behavior
     //@   requires v != zero;
+    //-RAC@ ensures \result == (this / v);
     //@ helper
     public bigint divide(bigint v);
     
@@ -78,60 +90,74 @@ public class bigint extends Number implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this == v);
     //@ helper
     public boolean eq(bigint v);
     
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@ ensures \result == (this != v);
     //@ helper
     public boolean ne(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this < v);
     //@ helper
     public boolean lt(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this <= v);
     //@ helper
     public boolean le(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this > v);
     //@ helper
     public boolean gt(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this >= v);
     //@ helper
     public boolean ge(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this & v);
     //@ helper
     public bigint and(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this | v);
     //@ helper
     public bigint or(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this ^ v);
     //@ helper
     public bigint xor(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (~this);
     //@ helper
     public bigint comp();
     
     // A negative shift is a positive shift in the other direction, at least in RAC
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this << v);
     //@ helper
     public bigint shiftLeft(bigint v);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (this >> v);
     //@ helper
     public bigint shiftRight(bigint v);
     
@@ -148,48 +174,62 @@ public class bigint extends Number implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (long)this;
     //@ helper
     @Override
     public long longValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (int)this;
     //@ helper
     @Override
     public int intValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (short)this;
     //@ helper
     public short shortValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (byte)this;
     //@ helper
     public byte byteValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (char)this;
     //@ helper
     public char charValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == (\real)this;
     //@ helper
     public real realValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == this.value.doubleValue();
     //@ helper
     public double doubleValue();
 
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result == this.value.floatValue();
     //@ helper
     public float floatValue();
         
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures this == o ==> \result == 0;
+    //-RAC@ ensures this != o ==> \result != 0;
+    //-RAC@ ensures this >= o ==> \result >= 0;
+    //-RAC@ ensures this <= o ==> \result <= 0;
+    //-RAC@ ensures this >  o ==> \result >  0;
+    //-RAC@ ensures this <  o ==> \result <  0;
     //@ helper
     public int compareTo(bigint o);
     
