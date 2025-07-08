@@ -3,49 +3,56 @@ package org.jmlspecs.lang.internal;
 import org.jmlspecs.lang.IJmlPrimitiveType;
 import org.jmlspecs.lang.IJmlArrayLike;
 
-//@ immutable pure nullable_by_default
+//@ immutable no_state non_null_by_default
 public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
-
- 
-    //@ model public final \bigint size;
+    
+    //@ spec_public
+    private bigint value;
     
     //@ public normal_behavior
-    //@   ensures \result == size;
-    //@   ensures \result >= 0;
+    //@   requires true;
+    //-RAC@   ensures \result == value.size();
+    //-RAC@   ensures \result >= 0;
     //@ no_state
-    public long size(); // FIXME - change to bigint eventually
+    public bigint size(); // FIXME - change to bigint eventually
     
     //@ public normal_behavior
-    //@   ensures \result == this[x];
+    //@   requires true;
+    //-RAC@   ensures \result == this[x];
     //@ no_state
     public boolean contains(T x);
 
     //@ public normal_behavior
-    //@   ensures \result == (this.size() == 0);
+    //@   requires true;
+    //-RAC@   ensures \result == (this.size() == 0);
     //@ no_state
     public boolean isEmpty();
     
     //@ public normal_behavior
-    //@   ensures \result.size() == 0;
-    //@   ensures (\forall T x; ; !\result.contains(x));
+    //@   requires true;
+    //-RAC@   ensures \result.size() == 0;
+    //-RAC@   ensures (\forall T x; ; !\result.contains(x));
     //@ no_state
     static public <T> set<T> empty();
     
     //@ public normal_behavior
-    //@   ensures \result.size() == 1;
-    //@  ensures \forall int i; 0 <= i < t.length; \result.contains(t[i]);
-    //@  ensures (\forall int i; 0 <= i < t.length; !\result.contains(t[i]));
+    //@   requires true;
+    //-RAC@  ensures \result.size() == 1;
+    //-RAC@  ensures \forall int i; 0 <= i < t.length; \result.contains(t[i]);
+    //-RAC@  ensures (\forall int i; 0 <= i < t.length; !\result.contains(t[i]));
     //@ no_state
-    @SafeVarargs
+    @SuppressWarnings("unchecked")
     static public <X> set<X> of(X ... t);
     
     //@ public normal_behavior
-    //@   ensures \result == (\forall T t;; s.contains(t) == this.contains(t));
+    //@   requires true;
+    //-RAC@   ensures \result == (\forall T t;; s.contains(t) == this.contains(t));
     //@ no_state
     public  boolean eq(set<T> s);
     
     //@ public normal_behavior
-    //@   ensures \result == !eq(s);
+    //@   requires true;
+    //-RAC@   ensures \result == !eq(s);
     //@ no_state
     public  boolean ne(set<T> s);
     
@@ -55,35 +62,63 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     public boolean equals(set<T> s);
     
     //@ public normal_behavior
-    //@   ensures \result == (\forall T t; this.contains(t) ; s.contains(t)); // FIXME - thinks T is non-static
+    //@   requires true;
+    //-RAC@   ensures \result == (\forall T t; this.contains(t) ; s.contains(t)); // FIXME - thinks T is non-static
     //@ no_state
     public boolean isSubsetOf(set<T> s);
     
     //@ public normal_behavior
-    //@   ensures this.contains(x) ==> \result == this;
-    //@   ensures !this.contains(x) ==> \result.size() == this.size() + 1;
-    //@   ensures \result.contains(x);
-    //@   ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
+    //@   requires true;
+    //-RAC@   ensures this.contains(x) ==> \result == this;
+    //-RAC@   ensures !this.contains(x) ==> \result.size() == this.size() + 1;
+    //-RAC@   ensures \result.contains(x);
+    //-RAC@   ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
     //@ no_state
     public set<T> add(T x);
     
     //@ private normal_behavior
-    //@   ensures b ==> \result == add(x);
-    //@   ensures !b ==> \result == remove(x);
+    //@   requires true;
+    //-RAC@   ensures b ==> \result == add(x);
+    //-RAC@   ensures !b ==> \result == remove(x);
     //@ no_state
     private set<T> put(T x, boolean b);
     
     //@ public normal_behavior
-    //@   ensures !this.contains(x) ==> \result == this;
-    //@   ensures this.contains(x) ==> \result.size() == this.size() - 1;
-    //@   ensures !\result.contains(x);
-    //@   ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
+    //@   requires true;
+    //-RAC@   ensures !this.contains(x) ==> \result == this;
+    //-RAC@   ensures this.contains(x) ==> \result.size() == this.size() - 1;
+    //-RAC@   ensures !\result.contains(x);
+    //-RAC@   ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
     //@ no_state
     public set<T> remove(T x);
 
-    // @ public normal_behavior
-    // @   ensures \forall T j; this.contains(j);  p.apply(j) ==> \result.contains(j);
-    // @   ensures \forall T j; \result.contains(j) ==> (this.contains(j) && p.apply(j));
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \forall T j; this.contains(j);  p.test(j) ==> \result.contains(j);
+    //-RAC@   ensures \forall T j; \result.contains(j); (this.contains(j) && p.test(j));
     //@ no_state
     public set<T> filter(java.util.function.Predicate<T> p);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures (\forall T t; this.contains(t); \result.contains(t));
+    //-RAC@   ensures (\forall T t; s.contains(t); \result.contains(t));
+    //-RAC@   ensures (\forall T t; \result.contains(t); this.contains(t) | s.contains(t));
+    //@ no_state
+    public set<T> union(set<T> s);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures (\forall T t; this.contains(t); s.contains(t) ==> \result.contains(t));
+    //-RAC@   ensures (\forall T t; \result.contains(t); this.contains(t) & s.contains(t));
+    //@ no_state
+    public set<T> intersect(set<T> s);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures (\forall T t; this.contains(t); !s.contains(t) ==> \result.contains(t));
+    //-RAC@   ensures (\forall T t; \result.contains(t); this.contains(t) & !s.contains(t));
+    //@ no_state
+    public set<T> subtract(set<T> s);
+
 }

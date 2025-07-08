@@ -8,133 +8,153 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
    
     //@ axiom \forall seq<T> s, ss;; s == ss <==> (s.length == ss.length && \forall int i; 0<=i<s.length; s[i] == ss[i]);
 
-    //@ ghost public final \bigint length;
+    //@ model public final \bigint length;
     //@ public final invariant length >= 0;
     
     //@ public normal_behavior
-    //@   ensures \result == length;
+    //@   requires true;
+    //-RAC@   ensures \result == length;
     //@ no_state
     public bigint size();
     
     //@ public normal_behavior
-    //@   ensures \result == length;
+    //@   requires true;
+    //-RAC@   ensures \result == length;
     //@ no_state 
     public bigint length();
     
     //@ public normal_behavior
+    //@   requires true;
     //-RAC@  ensures \result == this[i];
     //@ no_state
     public T get(bigint i);
 
     //@ public normal_behavior
-    //@   ensures \result == (length == 0);
+    //@   requires true;
+    //-RAC@   ensures \result == (length == 0);
     //@ no_state
     public boolean isEmpty();
     
     //@ public normal_behavior
-    //@   ensures \result.length == 0;
+    //@   requires true;
+    //-RAC@   ensures \result.length == 0;
     //@ no_state
     static public <T> seq<T> empty();
     
-    //@ public normal_behavior
-    //@   ensures \result.length == 1;
-    //@  ensures \result[0] == t;
-    //@ no_state
-    static public <T> seq<T> of(T t);
+//    //@ public normal_behavior
+//    //@   ensures \result.length == 1;
+//    //@  ensures \result[0] == t;
+//    //@ no_state
+//    static public <T> seq<T> of(T t);
     
     //@ public normal_behavior
-    //@   ensures \result.length == t.length;
-    //@   ensures \forall int k; 0 <= k < t.length; (int)\result[k] == t[k];
+    //@   requires true;
+    //-RAC@   ensures \result.length == t.length;
+    //-RAC@   ensures \forall int k; 0 <= k < t.length; (int)\result[k] == t[k];
     //@ no_state
     static public seq<Integer> of(int[] t);
     
     //@ public normal_behavior
-    //@   ensures \result.length == t.length;
-    //@   ensures \forall int i; 0<=i<t.length; \result[i] == t[i];
+    //@   requires true;
+    //-RAC@   ensures \result.length == t.length;
+    //-RAC@   ensures \forall int i; 0<=i<t.length; \result[i] == t[i];
     //@ no_state
     @SuppressWarnings("unchecked")
     static public <T> seq<T> of(T ... t);
     
     //@ public normal_behavior
-    //@   ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
+    //@   requires true;
+    //-RAC@   ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
     //@ no_state
     public static <T> boolean equals(seq<T> s, seq<T> ss);
     
     //@ public normal_behavior
-    //@   ensures \result == (\exists \bigint i; 0 <= i < this.length; this[i] == v);
-    //@   ensures \result == (length == 0 ? false : (this[0] == v || this.tail(1).contains(v)));
+    //@   requires true;
+    //-RAC@   ensures \result == (\exists \bigint i; 0 <= i < this.length; this[i] == v);
+    //-RAC@   ensures \result == (length == 0 ? false : (this[0] == v || this.tail(1).contains(v)));
     //@ no_state
     public <T> boolean contains(T v);
     
     //@ public normal_behavior
+    //@   requires true;
     //-RAC@   ensures \result == (this == s);
     //@ no_state
     public boolean eq(seq<T> s);
     
     //@ public normal_behavior
-    //@   requires 0 <= j <= this.length;
-    //@   ensures \result.length == 1 + this.length;
-    //@   ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
-    //@   ensures (\forall \bigint i;; (j < i <= this.length) ==> (\result[i] == this[i-1]));
-    //@   ensures \result[j] == v;
+    //@   requires true;
+    //-RAC@   requires 0 <= j <= this.length;
+    //-RAC@   ensures \result.length == 1 + this.length;
+    //-RAC@   ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
+    //-RAC@   ensures (\forall \bigint i;; (j < i <= this.length) ==> (\result[i] == this[i-1]));
+    //-RAC@   ensures \result[j] == v;
     //@ no_state
     public seq<T> insert(bigint j, T v);
 
     //@ public normal_behavior
-    //@  ensures \result.length == 1 + this.length; // FIXME - needed to prove valuetypes Seq.addBumpsSize, but why?
-    //@  ensures (\forall \bigint i; 0 <= i < this.length; \result[i] == this[i]);
-    //@  ensures \result[\result.length-1] == v;
+    //@   requires true;
+    //-RAC@  ensures \result.length == 1 + this.length; // FIXME - needed to prove valuetypes Seq.addBumpsSize, but why?
+    //-RAC@  ensures (\forall \bigint i; 0 <= i < this.length; \result[i] == this[i]);
+    //-RAC@  ensures \result[\result.length-1] == v;
     //@ no_state
     public seq<T> add(T v);
 
     //@ public normal_behavior
-    //@   ensures \result.length == this.length + s.length;
-    //@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
-    //@   ensures (\forall \bigint i;; (this.length <= i && i < \result.length) ==> (\result[i] == this[i-this.length]));
+    //@   requires true;
+    //-RAC@   ensures \result.length == this.length + s.length;
+    //-RAC@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
+    //-RAC@   ensures (\forall \bigint i;; (this.length <= i && i < \result.length) ==> (\result[i] == s[i-this.length]));
     //@ no_state
     public seq<T> append(seq<T> s);
 
     //@ public normal_behavior
-    //@   ensures \result.length == this.length + 1;
-    //@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i+1] == this[i]));
-    //@   ensures \result[0] == t;
+    //@   requires true;
+    //-RAC@   ensures \result.length == this.length + 1;
+    //-RAC@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i+1] == this[i]));
+    //-RAC@   ensures \result[0] == t;
     //@ no_state
     public seq<T> prepend(T t);
 
     //@ public normal_behavior
-    //@   requires 0 <= j && j < this.length;
-    //@   ensures \result.size() == this.length - 1;
-    //@   ensures \forall \bigint i; 0 <= i < j; \result[i] == this[i];
-    //@   ensures \forall \bigint i; j <= i < \result.length; \result[i] == this[i+1];
+    //@   requires true;
+    //-RAC@   requires 0 <= j && j < this.length;
+    //-RAC@   ensures \result.size() == this.length - 1;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < j; \result[i] == this[i];
+    //-RAC@   ensures \forall \bigint i; j <= i < \result.length; \result[i] == this[i+1];
     //@ no_state
     public seq<T> remove(long j);
 
     //@ public normal_behavior
-    //@   ensures \result.length == this.length;
-    //@   ensures \result[i] == c;
-    //@   ensures \forall \bigint j; j != i; \result[j] == this[j];
-    //@   ensures this[i] == c ==> \result == this;
+    //@   requires true;
+    //-RAC@   ensures \result.length == this.length;
+    //-RAC@   ensures \result[i] == c;
+    //-RAC@   ensures \forall \bigint j; j != i; \result[j] == this[j];
+    //-RAC@   ensures this[i] == c ==> \result == this;
     //@ no_state
     public seq<T> put(bigint i, T c);
 
     //@ public normal_behavior
-    //@   ensures \result.length == j-i;
-    //@   ensures \forall \bigint k; 0<=k<j-i; \result[k] == this[k+i];
+    //@   requires true;
+    //-RAC@   ensures \result.length == j-i;
+    //-RAC@   ensures \forall \bigint k; 0<=k<j-i; \result[k] == this[k+i];
     //@ no_state
     public seq<T> sub(bigint i, bigint j);
 
     //@ public normal_behavior
-    //@   ensures i == 0 ==> \result == this;
-    //@   ensures \result.length == (0 <= i <= length ? i : length < i ? length : 0);
-    //@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k];
+    //@   requires true;
+    //-RAC@   requires 0 <= i <= this.length;
+    //-RAC@   ensures i == 0 ==> \result == this;
+    //-RAC@   ensures \result.length == (0 <= i <= length ? i : length < i ? length : 0);
+    //-RAC@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k];
     //@ no_state
     public seq<T> head(bigint i);
 
     //@ public normal_behavior
-    //@   requires 0 <= i <= this.length;
-    //@   ensures i == 0 ==> \result == this;
-    //@   ensures \result.length == this.length - i;
-    //@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k+i];
+    //@   requires true;
+   //-RAC@   requires 0 <= i <= this.length;
+    //-RAC@   ensures i == 0 ==> \result == this;
+    //-RAC@   ensures \result.length == this.length - i;
+    //-RAC@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k+i];
     //@ no_state
     public seq<T> tail(bigint i);
 }

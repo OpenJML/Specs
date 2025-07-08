@@ -2,43 +2,93 @@ package org.jmlspecs.lang.internal;
 
 import org.jmlspecs.lang.IJmlPrimitiveType;
 import org.jmlspecs.lang.IJmlArrayLike;
+import java.util.HashMap;
+import java.util.Map;
 
-//@ immutable pure non_null_by_default
+//@ immutable no_state non_null_by_default
 public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
    
+    //@ spec_public
+    private final HashMap<K,V> value;
 
     //@ public normal_behavior
-    //@   ensures (\forall KK k; ; \result[k] == null && \result.has(k) == false);
+    //@   requires true;
+    //-RAC@   ensures (\forall KK k; ; \result[k] == null && \result.has(k) == false);
+    //-RAC@   ensures \result.isEmpty();
     //@ no_state
     public static <KK,VV> map<KK,VV> empty();
     
     //@ public normal_behavior
-    //@   ensures \result == this[k];
-    //@ no_state
-    public V get(K k);
-
+    //@   requires true;
+    //-RAC@   ensures \result == (value.size() == 0);
+    public boolean isEmpty();
+    
     //@ public normal_behavior
-    //@   ensures this[k] != null;
+    //@   requires true;
+    //-RSC@ ensures \result == value.size();
+    public bigint size();
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures this.value.keySet().contains(k);
     //@ no_state
     public boolean has(K k);
 
     //@ public normal_behavior
-    //@   ensures \result == (\forall K k;; s[k] == this[k]);
+    //@   requires true;
+    //-RAC@   ensures \result == this[k];
+    //@ no_state nullable
+    public V get(K k);
+
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures \result[k] == v;
+    //-RAC@   ensures \result.has(k);
+    //-RAC@   ensures (\forall K kk;; k != kk ==> (\result.has(kk) == this.has(kk)));
+    //-RAC@   ensures (\forall K kk;; k != kk ==> (\result[kk] == this[kk]));
+    //-RAC@   ensures this[k] == v ==> \result == this;
+    //-RAC@   ensures this.has(k) ==> \result.size() == this.size();
+    //-RAC@   ensures !this.has(k) ==> \result.size() == this.size()+1;
+    //@ no_state
+    public map<K,V> put(K k, /*@ nullable */ V v);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures !\result.has(k);
+    //-RAC@   ensures \forall K m;; this.has(m) && k != m ==> (\result.has(m) & \result[m] == this[m]);
+    //-RAC@   ensures \forall K m;; \result.has(m) ==> this.has(m) & \result[m] == this[m];
+    //-RAC@   ensures !this.has(k) ==> \result.size() == this.size();
+    //-RAC@   ensures this.has(k) ==> \result.size() == this.size()-1;
+    //@ no_state
+    public map<K,V> remove(K k);
+
+    //@ public normal_behavior    // FIXME - needs size
+    //@  requires true;
+    //-RAC@   ensures \forall K k; s.has(k); \result.has(k) & \result[k] == s[k];
+    //-RAC@   ensures \forall K k; this.has(k); !s.has(k) ==> \result.has(k) & \result[k] == this[k];
+    //-RAC@   ensures \forall K k; \result.has(k); this.has(k) | s.has(k);
+    //@ no_state
+    public map<K,V> combine(map<K,V> s);
+    
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures \result == (\forall K k;; s[k] == this[k]);
     //@ no_state
     public boolean eq(map<K,V> s);
     
     //@ public normal_behavior
-    //@   ensures !eq(s);
+    //@  requires true;
+    //-RAC@   ensures !eq(s);
     //@ no_state
     public boolean ne(map<K,V> s);
         
     //@ public normal_behavior
-    //@   ensures \result[k] == v;
-    //@   ensures \result.has(k);
-    //@   ensures (\forall K kk;; k != kk ==> (\result[kk] == this[kk]));
-    //@   ensures this[k] == v ==> \result == this;
-    //@ no_state
-    public map<K,V> put(K k, V v);
+    //@  requires true;
+    public int hashCode();
+    
+    //@ public normal_behavior
+    //@  requires false;
+    public boolean equals(Object o);
 
 }
 
