@@ -68,7 +68,7 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures \forall K k; this.has(k); !s.has(k) ==> \result.has(k) & \result[k] == this[k];
     //-RAC@   ensures \forall K k; \result.has(k); this.has(k) | s.has(k);
     //@ no_state
-    public map<K,V> combine(map<K,V> s);
+    public map<K,V> putAll(map<K,V> s);
     
     //@ public normal_behavior
     //@  requires true;
