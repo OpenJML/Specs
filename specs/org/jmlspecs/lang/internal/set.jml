@@ -4,29 +4,26 @@ import org.jmlspecs.lang.IJmlPrimitiveType;
 import org.jmlspecs.lang.IJmlArrayLike;
 
 //@ immutable no_state non_null_by_default
-public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
-    
-    //@ spec_public
-    private bigint value;
+abstract public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result == value.size();
     //-RAC@   ensures \result >= 0;
     //@ no_state
-    public bigint size(); // FIXME - change to bigint eventually
+    abstract public bigint size();
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result == this[x];
+    //-RAC-ESC@   ensures \result == this[x];
     //@ no_state
-    public boolean contains(T x);
+    abstract public boolean contains(T x);
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == (this.size() == 0);
+    //-RAC@   ensures \result <==> (\forall T t;; !contains(t));
     //@ no_state
-    public boolean isEmpty();
+    abstract public boolean isEmpty();
     
     //@ public normal_behavior
     //@   requires true;
@@ -37,51 +34,76 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@  ensures \result.size() == 1;
-    //-RAC@  ensures \forall int i; 0 <= i < t.length; \result.contains(t[i]);
-    //-RAC@  ensures (\forall int i; 0 <= i < t.length; !\result.contains(t[i]));
+    //-RAC@  ensures 0 <= \result.size() <= elements.length;
+    //-RAC@  ensures \forall int i; 0 <= i < elements.length; \result.contains(elements[i]);
+    //-RAC@  ensures \forall X t;; \result.contains(t) ==> (\exists int i; 0 <= i < elements.length; t == elements[i]);
     //@ no_state
     @SuppressWarnings("unchecked")
-    static public <X> set<X> of(X ... t);
+    static public <X> set<X> of(X ... elements);
+
+    // These alternate version of 'of' make for simpler reasoning about the method's effects,
+    // particularly relating to the resulting size of the set.
     
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \result.size() == \bigint.one;
+    //-RAC@   ensures \result == \set.<X>empty().add(e);
+    static public <X> set<X> of(X e);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \result.size() == (e == ee ? 1 : 2);
+    //-RAC@   ensures \result == \set.<X>empty().add(e).add(ee);
+    static public <X> set<X> of(X e, X ee);
+    
+    //@ public normal_behavior
+    //-RAC@   ensures \result.size() == (e == ee ? e == eee ? 1 : 2 : e == eee ? 2 : ee == eee ? 2 : 3);
+    //-RAC@   ensures \result == \set.<X>empty().add(e).add(ee).add(eee);
+    static public <X> set<X> of(X e, X ee, X eee);
+
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == (\forall T t;; s.contains(t) == this.contains(t));
     //@ no_state
-    public  boolean eq(set<T> s);
+    abstract public boolean eq(set<T> s);
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == !eq(s);
     //@ no_state
-    public  boolean ne(set<T> s);
+    public boolean ne(set<T> s);
     
     //@ public normal_behavior
-    //@   requires false;
+    //@   requires true;
+    //-RAC@   ensures \result == eq(s);
     //@ no_state
     public boolean equals(set<T> s);
     
     //@ public normal_behavior
-    //@   requires true;
-    //-RAC@   ensures \result == (\forall T t; this.contains(t) ; s.contains(t)); // FIXME - thinks T is non-static
+    //@   requires false;
     //@ no_state
-    public boolean isSubsetOf(set<T> s);
+    public boolean equals(Object o);
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures this.contains(x) ==> \result == this;
+    //-RAC@   ensures \result == (\forall T t; this.contains(t) ; s.contains(t));
+    //@ no_state
+    abstract public boolean isSubsetOf(set<T> s);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \result == (!eq(s) && isSubsetOf(s));
+    //@ no_state
+    abstract public boolean isProperSubsetOf(set<T> s);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures this.contains(x) ==> \result == this && \result.size() == this.size();
     //-RAC@   ensures !this.contains(x) ==> \result.size() == this.size() + 1;
     //-RAC@   ensures \result.contains(x);
     //-RAC@   ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
     //@ no_state
-    public set<T> add(T x);
-    
-    //@ private normal_behavior
-    //@   requires true;
-    //-RAC@   ensures b ==> \result == add(x);
-    //-RAC@   ensures !b ==> \result == remove(x);
-    //@ no_state
-    private set<T> put(T x, boolean b);
+    abstract public set<T> add(T x);
     
     //@ public normal_behavior
     //@   requires true;
@@ -90,14 +112,14 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures !\result.contains(x);
     //-RAC@   ensures (\forall T t; t != x; \result.contains(t) == this.contains(t));
     //@ no_state
-    public set<T> remove(T x);
+    abstract public set<T> remove(T x);
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \forall T j; this.contains(j);  p.test(j) ==> \result.contains(j);
     //-RAC@   ensures \forall T j; \result.contains(j); (this.contains(j) && p.test(j));
     //@ no_state
-    public set<T> filter(java.util.function.Predicate<T> p);
+    abstract public set<T> filter(java.util.function.Predicate<T> p);
     
     //@ public normal_behavior
     //@   requires true;
@@ -105,20 +127,31 @@ public class set<T> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures (\forall T t; s.contains(t); \result.contains(t));
     //-RAC@   ensures (\forall T t; \result.contains(t); this.contains(t) | s.contains(t));
     //@ no_state
-    public set<T> union(set<T> s);
+    abstract public set<T> union(set<T> s);
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures (\forall T t; this.contains(t); s.contains(t) ==> \result.contains(t));
     //-RAC@   ensures (\forall T t; \result.contains(t); this.contains(t) & s.contains(t));
     //@ no_state
-    public set<T> intersect(set<T> s);
+    abstract public set<T> intersect(set<T> s);
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures (\forall T t; this.contains(t); !s.contains(t) ==> \result.contains(t));
     //-RAC@   ensures (\forall T t; \result.contains(t); this.contains(t) & !s.contains(t));
     //@ no_state
-    public set<T> subtract(set<T> s);
+    abstract public set<T> subtract(set<T> s);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@ ensures \forall \set<T> t; t == this; t.hashCode() == this.hashCode();
+    abstract public int hashCode();
+    
+    //@ public normal_behavior
+    //@  requires true;
+    abstract public String toString();
 
+//    //@ immutable no_state non_null_by_default
+//    public static class UsingHashSet<T> extends set<T> {}  // FIXME - why do we need this declaration -- we don't in real.jml
 }

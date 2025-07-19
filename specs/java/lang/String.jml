@@ -255,42 +255,6 @@ public final class String
     public /*@ pure @*/ String(byte[] bytes, String charsetName)
         throws UnsupportedEncodingException;
 
-    /*@  public behavior
-      @   requires bytes != null
-      @             && 0 <= offset 
-      @             && (offset + length) <= bytes.length
-      @             && 0 <= length;
-      @   //-RAC@ ensures charArray.length <= length;
-      @   // ensures charArray is the translation of bytes with the 
-      @   // default file encoding System.getProperty("file.encoding")
-      @
-      @ also public exceptional_behavior
-      @   requires bytes == null;
-      @   assignable \nothing;
-      @   signals_only NullPointerException;
-      @
-      @ also public exceptional_behavior
-      @   requires bytes != null && 
-                 (offset < 0 || length < 0 || offset+length > bytes.length);
-      @   assignable \nothing;
-      @   signals_only StringIndexOutOfBoundsException;
-      @
-      @*/
-    public /*@ pure @*/ String(byte[] bytes, int offset, int length);
-
-    /*@  public normal_behavior
-      @   requires bytes != null;
-      @   //-RAC@ ensures charArray.length <= bytes.length;
-      @   // ensures charArray is the translation of bytes with the 
-      @   // default file encoding System.getProperty("file.encoding")
-      @
-      @ also public exceptional_behavior
-      @   requires bytes == null;
-      @   assignable \nothing;
-      @   signals_only NullPointerException;
-      @*/
-    public /*@ pure @*/ String(byte[] bytes);
-
     /*@ public normal_behavior
       @   requires buffer != null;
       @   //-RAC@ ensures equals(this,buffer.accumulatedString);

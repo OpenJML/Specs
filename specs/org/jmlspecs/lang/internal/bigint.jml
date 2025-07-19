@@ -10,16 +10,16 @@ public class bigint extends Number implements IJmlPrimitiveType {
     public static final bigint zero = 0;
     public static final bigint one = 1;
     
-    // @ static public final invariant zero == (\bigint)0;
+    // @ static public final invariant zero == (\bigint)0;  // FIXME - do we need these invariants?
     // @ static public final invariant one == (\bigint)1;
     
-    //@ public normal_behavior
+    //@ public normal_behavior   // FIXME - do we need this static initializer?
     //@   ensures zero == (\bigint)0;
     //@   ensures one == (\bigint)1;
     //@ static_initializer
     
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures \result == zero;
     public static bigint empty();
 
     //@ public normal_behavior
@@ -30,27 +30,27 @@ public class bigint extends Number implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.longValue() == i;
+    //-RAC@ ensures \result == i & \result.longValue() == i & Long.MIN_VALUE <= \result <= Long.MAX_VALUE;
     //@ helper
     public static bigint of(long i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.intValue() == i;
+    //-RAC@ ensures \result == i & \result.intValue() == i & Integer.MIN_VALUE <= \result <= Integer.MAX_VALUE;
     //@ helper
     public static bigint of(int i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.shortValue() == i;
+    //-RAC@ ensures \result == i & \result.shortValue() == i & Short.MIN_VALUE <= \result <= Short.MAX_VALUE;
     //@ helper
     public static bigint of(short i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.charValue() == i;
+    //-RAC@ ensures \result == i & \result.charValue() == i & Character.MIN_VALUE <= \result <= Character.MAX_VALUE;
     //@ helper
     public static bigint of(char i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.byteValue() == i;
+    //-RAC@ ensures \result == i & \result.byteValue() == i & Byte.MIN_VALUE <= \result <= Byte.MAX_VALUE;
     //@ helper
     public static bigint of(byte i);
 
@@ -85,6 +85,7 @@ public class bigint extends Number implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires v != zero;
+    //-RAC@ ensures \result == (this % v);
     //@ helper
     public bigint mod(bigint v);
     
@@ -144,6 +145,7 @@ public class bigint extends Number implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@ ensures \result.eq(this.negate().subtract(one));
     //-RAC@ ensures \result == (~this);
     //@ helper
     public bigint comp();
@@ -173,33 +175,33 @@ public class bigint extends Number implements IJmlPrimitiveType {
     public java.math.BigInteger bigValue();
     
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires Long.MIN_VALUE <= this <= Long.MAX_VALUE;
     //-RAC@ ensures \result == (long)this;
     //@ helper
     @Override
     public long longValue();
 
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires Integer.MIN_VALUE <= this <= Integer.MAX_VALUE;
     //-RAC@ ensures \result == (int)this;
     //@ helper
     @Override
     public int intValue();
 
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires Short.MIN_VALUE <= this <= Short.MAX_VALUE;
     //-RAC@ ensures \result == (short)this;
     //@ helper
     public short shortValue();
 
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires Byte.MIN_VALUE <= this <= Byte.MAX_VALUE;
     //-RAC@ ensures \result == (byte)this;
     //@ helper
     public byte byteValue();
 
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires Character.MIN_VALUE <= this <= Character.MAX_VALUE;
     //-RAC@ ensures \result == (char)this;
     //@ helper
     public char charValue();
@@ -242,5 +244,10 @@ public class bigint extends Number implements IJmlPrimitiveType {
     //@ requires false; // .equals may not be called -- use == instead
     //@ helper
     public boolean equals(/*@ nullable */ Object o);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \result == this.eq(b);
+    public boolean equals(bigint b);
 
 }

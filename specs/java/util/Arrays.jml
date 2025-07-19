@@ -1583,7 +1583,6 @@ public final class Arrays {
     //@       ensures \result.size() == a.length;
     //-RAC@  ensures (\forall int i; 0 <= i < a.length; \result.values[i] == a[i]);
     //        ensures \nonnullelements(a) ==> \nonnullelements(\result.values);
-
     //@ also public exceptional_behavior
     //@   requires a == null;
     //@   signals_only NullPointerException;

@@ -8,27 +8,19 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
    
     //@ axiom \forall seq<T> s, ss;; s == ss <==> (s.length == ss.length && \forall int i; 0<=i<s.length; s[i] == ss[i]);
 
-    //@ model public final \bigint length;
-    //@ public final invariant length >= 0;
+    //@ spec_public
+    private final String value;
+    
+    public final bigint length;
+    //@ public final invariant length >= bigint.zero;
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == length;
-    //@ no_state
-    public bigint size();
-    
-    //@ public normal_behavior
-    //@   requires true;
-    //-RAC@   ensures \result == length;
+    //-RAC@   ensures \result >= bigint.zero;
     //@ no_state 
     public bigint length();
     
-    //@ public normal_behavior
-    //@   requires true;
-    //-RAC@  ensures \result == this[i];
-    //@ no_state
-    public T get(bigint i);
-
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == (length == 0);
@@ -40,12 +32,6 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //-RAC@   ensures \result.length == 0;
     //@ no_state
     static public <T> seq<T> empty();
-    
-//    //@ public normal_behavior
-//    //@   ensures \result.length == 1;
-//    //@  ensures \result[0] == t;
-//    //@ no_state
-//    static public <T> seq<T> of(T t);
     
     //@ public normal_behavior
     //@   requires true;
@@ -63,10 +49,29 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     static public <T> seq<T> of(T ... t);
     
     //@ public normal_behavior
-    //@   requires true;
-    //-RAC@   ensures \result == (s.length == ss.length && (\forall \bigint i;; (0 <= i < s.length) ==> (s[i] == ss[i]) ));
+    //@   requires 0 <= i < length;
+    //-RAC@  ensures \result == this[i];
     //@ no_state
-    public static <T> boolean equals(seq<T> s, seq<T> ss);
+    public T get(bigint i);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \result == eq(s);
+    //@ no_state
+    public boolean equals(seq<T> s);
+    
+    //@ public normal_behavior
+    //@   requires false;
+    public boolean equals(Object o);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \forall \seq<T> a;; a == this ==> hashCode() == a.hashCode();
+    public int hashCode();
+    
+    //@ public normal_behavior
+    //@   requires true;
+    public String toString();
     
     //@ public normal_behavior
     //@   requires true;
@@ -77,12 +82,18 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result == (this == s);
+    //-RAC@   ensures \result == (this.length == s.length && (\forall \bigint i;; (0 <= i < this.length) ==> (this[i] == s[i])));
     //@ no_state
     public boolean eq(seq<T> s);
     
     //@ public normal_behavior
     //@   requires true;
+    //-RAC@   ensures \result == !eq(s);
+    //@ no_state
+    public boolean ne(seq<T> s);
+    
+    //@ public normal_behavior
+    //@   requires 0 <= j <= length;
     //-RAC@   requires 0 <= j <= this.length;
     //-RAC@   ensures \result.length == 1 + this.length;
     //-RAC@   ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
@@ -93,15 +104,13 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@  ensures \result.length == 1 + this.length; // FIXME - needed to prove valuetypes Seq.addBumpsSize, but why?
-    //-RAC@  ensures (\forall \bigint i; 0 <= i < this.length; \result[i] == this[i]);
-    //-RAC@  ensures \result[\result.length-1] == v;
+    //-RAC@  ensures \result == insert(length, v);
     //@ no_state
-    public seq<T> add(T v);
+    public seq<T> append(T v);
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result.length == this.length + s.length;
+    //-RAC@   ensures \result.length == this.length + s.length & \result.length() == this.length() + s.length();
     //-RAC@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
     //-RAC@   ensures (\forall \bigint i;; (this.length <= i && i < \result.length) ==> (\result[i] == s[i-this.length]));
     //@ no_state
@@ -109,23 +118,30 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result.length == this.length + 1;
-    //-RAC@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i+1] == this[i]));
-    //-RAC@   ensures \result[0] == t;
+    //-RAC@   ensures \result == insert(bigint.zero, t);
     //@ no_state
     public seq<T> prepend(T t);
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   requires 0 <= j && j < this.length;
-    //-RAC@   ensures \result.size() == this.length - 1;
-    //-RAC@   ensures \forall \bigint i; 0 <= i < j; \result[i] == this[i];
-    //-RAC@   ensures \forall \bigint i; j <= i < \result.length; \result[i] == this[i+1];
+    //-RAC@   ensures \result.length == this.length + s.length;
+    //-RAC@   ensures (\forall \bigint i;; (0 <= i < s.length) ==> (\result[i] == s[i]));
+    //-RAC@   ensures (\forall \bigint i;; (s.length <= i < \result.length) ==> (\result[i] == this[i-s.length]));
+    //-RAC@   ensures \result == s.append(this);
     //@ no_state
-    public seq<T> remove(long j);
+    public seq<T> prepend(seq<T> s);
 
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires 0 <= j < this.length;
+    //-RAC@   ensures \result.length == this.length - 1;
+    //-RAC@   ensures \forall \bigint i; 0 <= i < j; \result[i] == this[i];
+    //-RAC@   ensures \forall \bigint i; j <= i < \result.length; \result[i] == this[i+1];
+    //-RAC@   ensures \forall \bigint i; 0 <= i < \result.length-j; \result[i+j] == this[i+j+1];
+    //@ no_state
+    public seq<T> remove(bigint j);
+
+    //@ public normal_behavior
+    //@   requires 0 <= i < this.length;
     //-RAC@   ensures \result.length == this.length;
     //-RAC@   ensures \result[i] == c;
     //-RAC@   ensures \forall \bigint j; j != i; \result[j] == this[j];
@@ -134,27 +150,41 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     public seq<T> put(bigint i, T c);
 
     //@ public normal_behavior
-    //@   requires true;
+    //@   requires 0 <= i <= j <= this.length;
     //-RAC@   ensures \result.length == j-i;
     //-RAC@   ensures \forall \bigint k; 0<=k<j-i; \result[k] == this[k+i];
     //@ no_state
-    public seq<T> sub(bigint i, bigint j);
+    public seq<T> subseq(bigint i, bigint j);
 
     //@ public normal_behavior
-    //@   requires true;
-    //-RAC@   requires 0 <= i <= this.length;
-    //-RAC@   ensures i == 0 ==> \result == this;
-    //-RAC@   ensures \result.length == (0 <= i <= length ? i : length < i ? length : 0);
+    //@   requires 0 < this.length;
+    //-RAC@   ensures \result == this[0];
+    //@ no_state
+    public T head();
+
+    //@ public normal_behavior
+    //@   requires 0 <= i <= this.length;
+    //-RAC@   ensures i == this.length ==> \result == this;
+    //-RAC@   ensures \result.length == i;
     //-RAC@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k];
+    //-RAC@   ensures \result == subseq(0, i);
     //@ no_state
     public seq<T> head(bigint i);
 
     //@ public normal_behavior
-    //@   requires true;
-   //-RAC@   requires 0 <= i <= this.length;
+    //@   requires 0 < this.length;
+    //-RAC@   ensures \result.length == this.length - 1;
+    //-RAC@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k+1];
+    //-RAC@   ensures \result == subseq(1,length);
+    //@ no_state
+    public seq<T> tail();
+
+    //@ public normal_behavior
+    //@   requires 0 <= i <= this.length;
     //-RAC@   ensures i == 0 ==> \result == this;
     //-RAC@   ensures \result.length == this.length - i;
     //-RAC@   ensures \forall \bigint k; 0<=k<\result.length; \result[k] == this[k+i];
+    //-RAC@   ensures \result == subseq(i,length);
     //@ no_state
     public seq<T> tail(bigint i);
 }
