@@ -886,7 +886,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@ pure@*/ boolean equals(int /*@ nullable */ [] a, int /*@ nullable */ [] a2);
 
@@ -897,7 +897,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@ pure@*/ boolean equals(short /*@ nullable */ [] a, short /*@ nullable */[] a2);
 
@@ -908,7 +908,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
       @*/
     public static /*@ pure @*/ boolean equals(char /*@ nullable */ [] a, char /*@ nullable */ [] a2);
 
@@ -920,7 +920,7 @@ public final class Arrays {
       @   requires a != null && a2 != null;
       @   ensures \result <==> 
       @                 (a.length == a2.length && 
-      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]));
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]));
       @*/
     public static /*@ pure @*/ boolean equals(byte /*@ nullable */ [] a, byte /*@ nullable */[] a2);
 
@@ -931,7 +931,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
-      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]));
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]));
       @*/
     public static /*@ pure@*/ boolean equals(boolean /*@ nullable */ [] a, boolean /*@ nullable */[] a2);
 
@@ -943,7 +943,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
-      @                    (\forall \bigint i; 0 <= i < a.length;
+      @                    (\forall int i; 0 <= i < a.length;
       @                     Double.valueOf(a[i]).equals(Double.valueOf(a2[i]))));
       @*/
     public static /*@ pure@*/ boolean equals(double /*@ nullable */ [] a, double /*@ nullable */[] a2);
@@ -969,7 +969,7 @@ public final class Arrays {
       @  public normal_behavior
       @   requires a != null && a2 != null;
       @   ensures \result <==> (a.length == a2.length && 
-      @              (\forall \bigint i; 0 <= i < a.length;
+      @              (\forall int i; 0 <= i < a.length;
       @                a[i].equals(a2[i])));
       @*/
     public static /*@ pure helper@*/ boolean equals(Object /*@ nullable */ [] a, Object /*@ nullable */[] a2);
@@ -978,7 +978,7 @@ public final class Arrays {
       @ public normal_behavior
       @   ensures \result == ( o == oo ||
                  ( o != null && oo != null && o.length == oo.length &&
-                   (\forall \bigint i; 0<= i < o.length; o[i] == oo[i])));
+                   (\forall int i; 0<= i < o.length; o[i] == oo[i])));
       @
       @ public static pure model boolean equalElements(Object[] o, Object[] oo) {
           if (o == oo) return true;

@@ -18,16 +18,21 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
     //@ normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ spec_pure
     AbstractStringBuilder();
     //@ normal_behavior
     //@   ensures true;
-    //@ pure
+    //@ spec_pure
     AbstractStringBuilder(int size);
-//    public int length();
+
+    //@ also normal_behavior
+    //@   ensures \result == count;
+    //@ spec_pure
+    @Override
+    public int length();
     
     //-RAC@ ensures \result == capacity;
-    //@ pure
+    //@ spec_pure
     public int capacity();
 //    public void ensureCapacity(int);
 //    private void ensureCapacityInternal(int);
@@ -73,91 +78,104 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     public void setCharAt(int index, char ch);
     
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + o._value *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(/*@ nullable */Object o);
+
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(String s);
+
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(StringBuffer s);
-//    AbstractStringBuilder append(AbstractStringBuilder);
+
+    //@ normal_behavior
+    //-RAC@   assignable _value;
+    //@   ensures (* _value == \old(_value) + b.toString() *);
+    //@   ensures \result == this;
+    AbstractStringBuilder append(AbstractStringBuilder b);
 
     //@ also public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + c *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(CharSequence c);
 
     //@ private normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     private AbstractStringBuilder appendNull();
 
     //@ also public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     @Override
     public AbstractStringBuilder append(CharSequence c, int offset, int length);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(char[] ca);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(char[]ca, int offset, int length);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(boolean b);
     
     //@ also public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(char x);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(int x);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(long x);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(float f);
 
     //@ public normal_behavior
-    //@   assignable _value;
+    //-RAC@   assignable _value;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(double d);
     
 //    public AbstractStringBuilder delete(int, int);
-//    public AbstractStringBuilder appendCodePoint(int);
+
+
+    //@ public normal_behavior
+    //-RAC@   assignable _value, charArray;
+    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures \result == this;
+    public AbstractStringBuilder appendCodePoint(int s);
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= index < accumulatedString.length();

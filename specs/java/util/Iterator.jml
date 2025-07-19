@@ -60,8 +60,9 @@ public interface Iterator<E> {
     //@ public instance ghost boolean remove_called_since = false;
 
     /*@ public normal_behavior
+      @    requires true;
       @    // assignable objectState;
-      @    ensures \result <==> moreElements;
+      @    //-RAC@ ensures \result <==> moreElements;
       @*/
     //@ pure helper
     boolean hasNext();
@@ -72,7 +73,7 @@ public interface Iterator<E> {
       @                 has n+1 more elements to return *);
       public pure model boolean hasNext(int n);  @*/
 
-    /*@  public normal_behavior
+    /*-RAC@  public normal_behavior
       @     requires moreElements;
       @     assignable objectState, remove_called_since, moreElements;
       @     ensures !remove_called_since;
@@ -90,14 +91,14 @@ public interface Iterator<E> {
       @    ensures (* \result is the nth, counting from 0,
       @             next element that would be returned by this iterator *);
       @    ensures !returnsNull ==> \result != null;
-      @ for_example
+    *//*-RAC@ for_example
       @    public normal_example
       @      requires n == 0 && moreElements;
       @      ensures (* \result == the object that would be
-      @                 returned by calling next() *);
-      public pure model E nthNextElement(int n);  @*/
+      @                 returned by calling next() *);  @*/
+     //@ public pure model E nthNextElement(int n);
 
-    /*@ public behavior
+    /*-RAC@ public behavior
       @   assignable objectState, remove_called_since;
       @   ensures !\old(remove_called_since) && remove_called_since;
       @   signals_only RuntimeException;
