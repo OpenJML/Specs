@@ -8,32 +8,37 @@ import java.util.Map;
 //@ immutable no_state non_null_by_default
 public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
    
-    //@ spec_public
     private final HashMap<K,V> value;
 
     /** Constructs an empty map */
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures (\forall KK k; ; \result[k] == null && \result.has(k) == false);
-    //-RAC@   ensures \result.isEmpty();
+    //-RAC@   ensures \result.isEmpty() && \result.size() == 0;
     //@ no_state
     public static <KK,VV> map<KK,VV> empty();
     
     /**  Returns true iff the map is empty */
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result == (value.size() == 0);
     //-RAC@   ensures \result == (\forall K k;; !has(k));
+    //@ also private normal_behavior
+    //@   requires true;
+    //-RAC@   ensures \result == (size() == 0);
     public boolean isEmpty();
     
     /** Returns the number of entries in the map */
     //@ public normal_behavior
     //@   requires true;
-    //-RSC@ ensures \result == value.size();
+    //@ also private normal_behavior
+    //@   requires true;
+    //-RAC@ ensures \result == value.size();
     public bigint size();
     
     /** Returns true iff the value k is a key in the map */
     //@ public normal_behavior
+    //@   requires true;
+    //@ also private normal_behavior
     //@   requires true;
     //-RAC@   ensures this.value.keySet().contains(k);
     //@ no_state
@@ -45,6 +50,11 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures has(k) ==> \result == this[k];
     //@ no_state
     public V get(K k);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@ ensures \forall K k;; \result[k] == this.has(k);
+    public set<K> keys();
 
     /** Returns a new map that is a copy of the receiver, with an additional (or replacement) mapping */
     //@ public normal_behavior

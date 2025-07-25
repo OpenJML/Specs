@@ -169,7 +169,7 @@ public class bigint extends Number implements IJmlPrimitiveType {
     public String toString();
     
     //@ public normal_behavior
-    //@   ensures \result == value;
+    //-RAC@   ensures \result == value;
     //-RAC@   ensures \result.value == this;
     //@ helper
     public java.math.BigInteger bigValue();

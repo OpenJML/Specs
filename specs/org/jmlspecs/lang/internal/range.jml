@@ -1,7 +1,7 @@
 package org.jmlspecs.lang.internal;
 import org.jmlspecs.lang.IJmlPrimitiveType;
 
-//@ immutable no_state 
+//@ immutable no_state non_null_by_default
 public class range implements IJmlPrimitiveType {
 	
     public final bigint lo;
@@ -42,7 +42,9 @@ public class range implements IJmlPrimitiveType {
     
 	//@ public normal_behavior
 	//@   requires true;
-	//-RAC@   ensures \result == (lo == r.lo && hi == r.hi && hiIsExclusive == r.hiIsExclusive);
+    //-RAC@   ensures hiIsExclusive == r.hiIsExclusive ==> \result == (lo == r.lo && hi == r.hi);
+    //-RAC@   ensures hiIsExclusive && !r.hiIsExclusive ==> \result == (lo == r.lo && hi == 1+r.hi);
+    //-RAC@   ensures !hiIsExclusive && r.hiIsExclusive ==> \result == (lo == r.lo && 1+hi == r.hi);
 	public boolean eq(range r);
 	
 	//@ public normal_behavior
@@ -56,12 +58,17 @@ public class range implements IJmlPrimitiveType {
 	public String toString();
 	
     //@ public normal_behavior
-    //-RAC@   ensures \forall \range r; r == this; r.hashCode() == this.hashCode();
+    //-RAC@   ensures \forall \range r; eq(r); this.hashCode() == r.hashCode();
 	@Override 
 	public int hashCode();
-	
-	//@ public behavior
-	//@   requires false;
-	@Override
-	public boolean equals(Object o);
+    
+    //@ public behavior
+    //@   requires true;
+	//-RAC@ ensures \result == eq(r);
+    public boolean equals(range r);
+    
+    //@ public behavior
+    //@   requires false;
+    @Override
+    public boolean equals(Object o);
 }

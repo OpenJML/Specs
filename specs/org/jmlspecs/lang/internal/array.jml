@@ -10,7 +10,7 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     private final T /*@ nullable */ [] value;
 
     public final bigint length;
-    //@ public invariant value == null ? length == 0 : length == value.length;
+    //-RAC@ public invariant value == null ? length == 0 : length == value.length;
     
     //@ public normal_behavior
     //@   requires true;
@@ -63,9 +63,9 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     public boolean eq(array<T> a);
     
     //@ public normal_behavior
-    //@   ensures \result == !eq(ss);
+    //-RAC@   ensures \result == !eq(a);
     //@ no_state
-    public boolean ne(array<T> ss);
+    public boolean ne(array<T> a);
     
     //@ public normal_behavior
     //@   requires false; 
