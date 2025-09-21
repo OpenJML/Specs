@@ -2,78 +2,109 @@ package org.jmlspecs.lang.internal;
 
 // FIXME - should require and test non-null entries in the argument list
 
-//@ no_state non_null_by_default
+//@ immutable no_state non_null_by_default
 public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
-    //@ spec_public
     final private Class<?> base;
-    //@ spec_public
     final private TYPE[] args;
     
+    //-RAC@ model public final int numargs;
+    
     //@ public normal_behavior
-    //@   ensures true;
+    //@   ensures true; // Undefined (non-null) value
     public static TYPE empty();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \TYPEof(h);
     //-RAC@   ensures \erasure(\result) == h;
-    //-RAC@   ensures \result.args.length == 0;
-    //@ no_state
+    //-RAC@   ensures \result.numargs == 0;
     public static TYPE of(Class<?> h);
     
     //@ public normal_behavior
     //@  requires true;
-    //-RAC@   ensures \result == \TYPEof(h, args);
+    //-RAC@   ensures \result == \TYPEof(h, t1);
+    //-RAC@   ensures \erasure(\result) == h;
+    //-RAC@   ensures \result.numargs == 1;
+    public static TYPE of(Class<?> h, TYPE t1);
+    
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures \result == \TYPEof(h, t1, t2);
+    //-RAC@   ensures \erasure(\result) == h;
+    //-RAC@   ensures \result.numargs == 2;
+    public static TYPE of(Class<?> h, TYPE t1, TYPE t2);
+    
+    
+    //@ public normal_behavior
+    //@  requires true;
+    //-RAC@   ensures \result == \TYPEof(h, t1, t2, t3);
+    //-RAC@   ensures \erasure(\result) == h;
+    //-RAC@   ensures \result.numargs == 3;
+    public static TYPE of(Class<?> h, TYPE t1, TYPE t2, TYPE t3);
+    
+    //@ public normal_behavior
+    //@  requires true;
+    // -RAC@   ensures \result == \TYPEof(h, args);
+    //-RAC@   ensures \erasure(\result) == h;
+    //-RAC@   ensures \result.numargs == args.length;
+    //-RAC@   ensures args.length > 0 ==> \typearg1(\result) == args[0];
+    //-RAC@   ensures args.length > 1 ==> \typearg2(\result) == args[1];
+    //-RAC@   ensures args.length > 2 ==> \typearg3(\result) == args[2];
+    //-RAC@   ensures \forall int n; 0 < n <= args.length; \typearg(\result, n) == args[n-1];
+    //@ also private normal_behavior
+    //@  requires true;
     //-RAC@   ensures \result.base == h;
     //-RAC@   ensures \result.args == args;
-    //@ no_state
     public static TYPE of(Class<?> h, TYPE ... args);
+    
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //-RAC@ ensures \result == numargs;
+    //@ also private normal_behavior
+    //@   requires true;
+    //-RAC@  ensures \result == args.length;
+    public int numargs();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == (this == t);
-    //@ no_state
     public boolean eq(TYPE t);
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == (this != t);
-    //@ no_state
     public boolean ne(TYPE t);
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \erasure(this);
-    //@ no_state
     public Class<?> erasure();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \isarray(this);
-    //@ no_state
     public boolean isArray();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \arraytype(this);
-    //@ no_state
     public TYPE arraytype();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \elemtype(this);
-    //@ no_state
     public TYPE getComponentType();
     
     //@ public normal_behavior
     //@  requires true;
-    //-RAC@ // FIXME ensures \result == (this <:= t);
+    //-RAC@ ensures \result == (this <:= t);
     public boolean isSubtypeOf(TYPE t);
     
     //@ public normal_behavior
     //@  requires true;
-    //-RAC@ // FIXME ensures \result == (this <: t);
-    public boolean isSubtypeOfProper(TYPE t);
+    //-RAC@ ensures \result == (this <: t);
+    public boolean isProperSubtypeOf(TYPE t);
     
     //@ public normal_behavior
     //-RAC@   ensures true;
@@ -81,14 +112,17 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
 
     //@ public normal_behavior
     //@  requires true;
-    //-RAC@   ensures true;
+    //-RAC@   ensures \forall \TYPE t; eq(t); \result == t.hashCode();
     public int hashCode();
 
     //@ public behavior
     //@  requires true;
-    //-RAC@   requires false;
+    //-RAC@   ensures \result == eq(t);
+    public boolean equals(TYPE t);
+
+    //@ public behavior
+    //@  requires false; // Use eq(t) instead
+    @Override
     public boolean equals(Object o);
     
-    // FIXME - typeargs(). typearg0, typearg
-
 }
