@@ -463,23 +463,23 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //-RAC@ also
     //-RAC@ requires Integer.MIN_VALUE <= this.value <= Integer.MAX_VALUE;
     //-RAC@ ensures \result == this.value;
-    //@ pure helper
+    //@ spec_pure helper
     public int intValue();
 
     //-RAC@ also
     //-RAC@ requires Long.MIN_VALUE <= this.value <= Long.MAX_VALUE;
     //-RAC@ ensures \result == this.value;
-    //@ pure helper
+    //@ spec_pure helper
     public long longValue();
 
     //@ also
     //@ ensures_redundantly this.equals(\old(this));
-    //@ pure helper
+    //@ spec_pure helper
     public float floatValue();
 
     //@ also
     //@ ensures_redundantly this.equals(\old(this));
-    //@ pure helper
+    //@ spec_pure helper
     public double doubleValue();
 
 }

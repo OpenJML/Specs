@@ -170,24 +170,28 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     /*@ also
       @   public normal_behavior
       @     ensures \result == (byte) theFloat;
+      @ spec_pure
       @*/
     public byte byteValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (short) theFloat;
+      @ spec_pure
       @*/
     public short shortValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (int) theFloat;
+      @ spec_pure
       @*/
     public int intValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (long) theFloat;
+      @ spec_pure
       @*/
     public long longValue();
 
@@ -195,6 +199,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @   public normal_behavior
       @   ensures identical(theFloat, \result);
       @ helper // FIXME - should inherit from Number?
+      @ spec_pure
       @*/
     public float floatValue();
 
@@ -202,6 +207,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @   public normal_behavior
       @   ensures Double.identical((double)theFloat, \result);
       @ helper // FIXME - should inherit from Number?
+      @ spec_pure
       @*/
     public double doubleValue();
 

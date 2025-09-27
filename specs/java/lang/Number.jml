@@ -143,25 +143,25 @@ public abstract class Number implements java.io.Serializable {
       @   ensures (* \result is an int approximation
       @              to the value of this object *);
       @*/
-    public abstract /*@ pure helper @*/ int intValue();
+    public abstract /*@ spec_pure helper @*/ int intValue();
 
     /*@ public normal_behavior
       @   ensures (* \result is an long approximation
       @              to the value of this object *);
       @*/
-    public abstract /*@ pure helper @*/ long longValue();
+    public abstract /*@ spec_pure helper @*/ long longValue();
 
     /*@ public normal_behavior
       @   ensures (* \result is an float approximation
       @              to the value of this object *);
       @*/
-    public abstract /*@ pure helper @*/ float floatValue();
+    public abstract /*@ spec_pure helper @*/ float floatValue();
 
     /*@ public normal_behavior
       @   ensures (* \result is an double approximation
       @              to the value of this object *);
       @*/
-    public abstract /*@ pure helper @*/ double doubleValue();
+    public abstract /*@ spec_pure helper @*/ double doubleValue();
 
     /*@ public normal_behavior
       @   ensures (* \result is an byte approximation
