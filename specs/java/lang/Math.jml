@@ -1240,21 +1240,13 @@ public /*@ pure @*/ final class Math {
         }
     
         //+RAC@ inline
-        public static model no_state boolean isFiniteOdd(double a) {
-          if ((a - 2.0 * floor(a / 2.0)) == 1.0 && Double.isFinite(a)) {
-            return true;
-          } else {
-            return false;
-          }
+        model public static no_state boolean isFiniteOdd(double a) {
+          return Double.isFinite(a) && IEEEremainder(a, 2.0) == 1.0;
         }
      
         //+RAC@ inline
-        public static model no_state boolean isFiniteEven(double a) {
-          if (IEEEremainder(a, 2.0) == 0.0 && Double.isFinite(a)) {
-            return true;
-          } else {
-            return false;
-          }
+        model public static no_state boolean isFiniteEven(double a) {
+          return Double.isFinite(a) && IEEEremainder(a, 2.0) == 0.0;
         }
 
         //+RAC@ inline
