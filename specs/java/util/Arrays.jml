@@ -900,29 +900,28 @@ public final class Arrays {
     public static /*@ strictly_pure @*/ boolean equals(byte /*@ nullable */ [] a, byte /*@ nullable */[] a2);
 
     /*@  public normal_behavior
-      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
       @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
     public static /*@ strictly_pure @*/ boolean equals(boolean /*@ nullable */ [] a, boolean /*@ nullable */[] a2);
 
     /*@  public normal_behavior
-      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
       @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
     public static /*@ pure@*/ boolean equals(double /*@ nullable */ [] a, double /*@ nullable */[] a2);
 
 // FIXME - is this the correct comparision for float and double
     /*@  public normal_behavior
-      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
       @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
     public static /*@ strictly_pure @*/ boolean equals(float /*@ nullable */ [] a, float /*@ nullable */ [] a2);
 
 // FIXME - Object comparisons as well as equals comparison?
     /*@  public normal_behavior
-      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
-      @              (\forall int i; 0 <= i < a.length;
-      @                a[i].equals(a2[i])));
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
+      @              (\forall int i; 0 <= i < a.length; a[i].equals(a2[i]))));
       @*/
     public static /*@ pure helper @*/ boolean equals(/*@ nullable */Object /*@ nullable */ [] a, /*@ nullable */Object /*@ nullable */[] a2);
 
@@ -932,7 +931,7 @@ public final class Arrays {
                  ( o != null && oo != null && o.length == oo.length &&
                    (\forall int i; 0<= i < o.length; o[i] == oo[i])));
       @
-      @ public static pure model boolean equalElements(/*@ nullable */Object /*@ nullable */ [] o, /*@ nullable */Object /*@ nullable */ [] oo) {
+      @ public static pure model boolean equalElements( nullable Object nullable [] o, nullable Object nullable [] oo) {
           if (o == oo) return true;
           if (o == null || oo == null) return false;
           if (o.length != oo.length) return false;
