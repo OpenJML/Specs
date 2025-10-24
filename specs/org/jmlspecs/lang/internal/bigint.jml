@@ -24,8 +24,8 @@ public class bigint extends Number implements IJmlPrimitiveType {
 
     //@ public normal_behavior
     //@   requires i != null;
-    //-RAC@   ensures \result == i.value && \result.bigValue() == i;
-    //@ helper
+    //-RAC@   ensures \result == i.value && \result.value == i;
+    //@ helper spec_pure
     public static bigint of(java.math.BigInteger i);
     
     //@ public normal_behavior
@@ -171,7 +171,7 @@ public class bigint extends Number implements IJmlPrimitiveType {
     //@ public normal_behavior
     //-RAC@   ensures \result == value;
     //-RAC@   ensures \result.value == this;
-    //@ helper
+    //@ helper pure // not necessarily deterministic
     public java.math.BigInteger bigValue();
     
     //@ public normal_behavior

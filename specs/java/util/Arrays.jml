@@ -869,110 +869,62 @@ public final class Arrays {
 // FIXME - don't handle matching of generic methods yet
     
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall \bigint i; 0 <= i < a.length; a[i] == a2[i]);
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure@*/ boolean equals(long[] a, long[] a2);
+    public static /*@ strictly_pure @*/ boolean equals(long /*@ nullable */ [] a, long /*@ nullable */ [] a2);
+
 
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure@*/ boolean equals(int /*@ nullable */ [] a, int /*@ nullable */ [] a2);
+    public static /*@ strictly_pure @*/ boolean equals(int /*@ nullable */ [] a, int /*@ nullable */ [] a2);
 
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure@*/ boolean equals(short /*@ nullable */ [] a, short /*@ nullable */[] a2);
+    public static /*@ strictly_pure @*/ boolean equals(short /*@ nullable */ [] a, short /*@ nullable */[] a2);
 
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]);
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure @*/ boolean equals(char /*@ nullable */ [] a, char /*@ nullable */ [] a2);
+    public static /*@ strictly_pure @*/ boolean equals(char /*@ nullable */ [] a, char /*@ nullable */ [] a2);
 
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> 
-      @                 (a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]));
+      @    ensures \result <==> (a == a2 || (a != null && a2 != null && a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure @*/ boolean equals(byte /*@ nullable */ [] a, byte /*@ nullable */[] a2);
+    public static /*@ strictly_pure @*/ boolean equals(byte /*@ nullable */ [] a, byte /*@ nullable */[] a2);
 
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> (a.length == a2.length && 
-      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i]));
+      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure@*/ boolean equals(boolean /*@ nullable */ [] a, boolean /*@ nullable */[] a2);
+    public static /*@ strictly_pure @*/ boolean equals(boolean /*@ nullable */ [] a, boolean /*@ nullable */[] a2);
 
-// FIXME - better comparison
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> (a.length == a2.length && 
-      @                    (\forall int i; 0 <= i < a.length;
-      @                     Double.valueOf(a[i]).equals(Double.valueOf(a2[i]))));
+      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
     public static /*@ pure@*/ boolean equals(double /*@ nullable */ [] a, double /*@ nullable */[] a2);
 
-// FIXME - better comparison
+// FIXME - is this the correct comparision for float and double
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> (a.length == a2.length && 
-      @                    (\forall int i; 0 <= i < a.length;
-      @                     Float.valueOf(a[i]).equals(Float.valueOf(a2[i]))));
+      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
+      @                   (\forall int i; 0 <= i < a.length; a[i] == a2[i])));
       @*/
-    public static /*@ pure@*/ boolean equals(float /*@ nullable */ [] a, float /*@ nullable */ [] a2);
+    public static /*@ strictly_pure @*/ boolean equals(float /*@ nullable */ [] a, float /*@ nullable */ [] a2);
 
 // FIXME - Object comparisons as well as equals comparison?
     /*@  public normal_behavior
-      @   requires a == null || a2 == null;
-      @   ensures \result <==> a == a2;
-      @ also 
-      @  public normal_behavior
-      @   requires a != null && a2 != null;
-      @   ensures \result <==> (a.length == a2.length && 
+      @    ensures \result <==> (a == null || a2 == null ? a == a2 : (a.length == a2.length && 
       @              (\forall int i; 0 <= i < a.length;
       @                a[i].equals(a2[i])));
       @*/
-    public static /*@ pure helper@*/ boolean equals(Object /*@ nullable */ [] a, Object /*@ nullable */[] a2);
+    public static /*@ pure helper @*/ boolean equals(/*@ nullable */Object /*@ nullable */ [] a, /*@ nullable */Object /*@ nullable */[] a2);
 
     /*@
       @ public normal_behavior
@@ -980,7 +932,7 @@ public final class Arrays {
                  ( o != null && oo != null && o.length == oo.length &&
                    (\forall int i; 0<= i < o.length; o[i] == oo[i])));
       @
-      @ public static pure model boolean equalElements(Object[] o, Object[] oo) {
+      @ public static pure model boolean equalElements(/*@ nullable */Object /*@ nullable */ [] o, /*@ nullable */Object /*@ nullable */ [] oo) {
           if (o == oo) return true;
           if (o == null || oo == null) return false;
           if (o.length != oo.length) return false;
