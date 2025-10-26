@@ -196,7 +196,7 @@ public /*@ pure @*/ final
 
     /*@ also
       @   public normal_behavior
-      @     ensures \result == theShort;
+      @     //-RAC@ ensures \result == theShort;
       @*/
     //@ spec_pure helper
     public short shortValue() ;
@@ -228,6 +228,10 @@ public /*@ pure @*/ final
       @*/
     //@ spec_pure helper
     public double doubleValue() ;
+    
+    //@ public normal_behavior
+    //-RAC@  ensures \result.theShort == s;
+    public static Short valueOf(short s);
 
         // specification inherited from Object
     public /*@ non_null @*/ String toString();

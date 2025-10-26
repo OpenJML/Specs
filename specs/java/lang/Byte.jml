@@ -214,7 +214,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
 
     /*@ also
       @   public normal_behavior
-      @     ensures \result == theByte;
+      @     //-RAC@ ensures \result == theByte;
       @*/
     //@ spec_pure helper
     public byte byteValue();
@@ -258,6 +258,11 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @*/
     //@ spec_pure helper
     public double doubleValue();
+    
+    //@ public normal_behavior
+    //-RAC@  ensures \result.theByte == b;
+    //@ pure helper
+    public static Byte valueOf(byte b);
 
     // specification inherited from Object
     public /*@ non_null @*/ String toString();

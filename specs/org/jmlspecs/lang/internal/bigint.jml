@@ -30,27 +30,27 @@ public class bigint extends Number implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.longValue() == i & Long.MIN_VALUE <= \result <= Long.MAX_VALUE;
+    //-RAC@ ensures (Long.MIN_VALUE <= \result <= Long.MAX_VALUE) && (\result == i & \result.longValue() == i);
     //@ helper
     public static bigint of(long i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.intValue() == i & Integer.MIN_VALUE <= \result <= Integer.MAX_VALUE;
+    //-RAC@ ensures (Integer.MIN_VALUE <= \result <= Integer.MAX_VALUE) && (\result == i & \result.intValue() == i);
     //@ helper
     public static bigint of(int i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.shortValue() == i & Short.MIN_VALUE <= \result <= Short.MAX_VALUE;
+    //-RAC@ ensures (Short.MIN_VALUE <= \result <= Short.MAX_VALUE) && (\result == i & \result.shortValue() == i);
     //@ helper
     public static bigint of(short i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.charValue() == i & Character.MIN_VALUE <= \result <= Character.MAX_VALUE;
+    //-RAC@ ensures (Character.MIN_VALUE <= \result <= Character.MAX_VALUE) && (\result == i & \result.charValue() == i);
     //@ helper
     public static bigint of(char i);
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == i & \result.byteValue() == i & Byte.MIN_VALUE <= \result <= Byte.MAX_VALUE;
+    //-RAC@ ensures (Byte.MIN_VALUE <= \result <= Byte.MAX_VALUE) && (\result == i & \result.byteValue() == i);
     //@ helper
     public static bigint of(byte i);
 

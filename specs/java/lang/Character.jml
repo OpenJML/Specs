@@ -36,7 +36,7 @@ public /*@ pure @*/ final
     //@ public model final char theCharacter;
     //+RAC@ public represents theCharacter = charValue();
     
-    //@ public constraint theCharacter == \old(theCharacter);
+    //-RAC@ public constraint theCharacter == \old(theCharacter);
 
     public static final int SIZE; // = 16;
     public static final int BYTES; // = 2;
@@ -216,18 +216,24 @@ public /*@ pure @*/ final
     // Constructors
     //---------------------------------------------------------------------
 
-    /*-RAC@  public normal_behavior
-      @   ensures theCharacter == value;
+    /*@  public normal_behavior
+      @   //-RAC@ ensures theCharacter == value;
       @*/
     public Character(char value);
+
+    /*@ public normal_behavior
+      @   //-RAC@ ensures \result.theCharacter == c;
+      @ pure helper
+      @*/
+    public static java.lang.Character valueOf(char c);
 
     //---------------------------------------------------------------------
     // Character.java Methods
     //---------------------------------------------------------------------
     /*@  public normal_behavior
-      @   ensures \result == theCharacter;
+      @   //-RAC@ ensures \result == theCharacter;
       @*/
-    //@ pure helper
+    //@ spec_pure helper
     public char charValue();
 
     /*@ also
@@ -241,7 +247,7 @@ public /*@ pure @*/ final
       @  public normal_behavior
       @  {|
       @    requires (obj instanceof Character);
-      @    ensures \result <==> ((Character) obj).theCharacter == theCharacter;
+      @    //-RAC@ ensures \result <==> ((Character) obj).theCharacter == theCharacter;
       @  also
       @    requires !(obj instanceof Character);
       @    ensures \result <==> false;
@@ -254,7 +260,7 @@ public /*@ pure @*/ final
       @   ensures \result != null;
       @   //-RAC@ ensures \result.charArray != null;
       @   ensures \result.length() == 1;
-      @   ensures \result.charAt(0) == theCharacter;
+      @   //-RAC@ ensures \result.charAt(0) == theCharacter;
       @   //ensures String.equals(\result,String.valueOf(theCharacter));
       @*/
     public String toString();
