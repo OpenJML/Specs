@@ -48,7 +48,7 @@ public interface Iterator<E> {
 
     /** Do we ever return null as an element?
      **/
-    //@ instance ghost public boolean returnsNull;
+    //-RAC@ instance model public boolean returnsNull;
 
     // !FIXME! - the aspect of the spec that an iterator is no longer
     // valid if the underlying collection is modified, besides via remove,
@@ -57,7 +57,8 @@ public interface Iterator<E> {
     /** Has remove() been called since the last element was returned?
      *    It is initially false, since no element has yet been returned.
      **/
-    //@ public instance ghost boolean remove_called_since = false;
+    //-RAC@ public instance model boolean remove_called_since;
+    //-RAC@ public initially remove_called_since == false;
 
     /*@ public normal_behavior
       @    requires true;
@@ -90,7 +91,7 @@ public interface Iterator<E> {
       @    requires n >= 0 && hasNext(n);
       @    ensures (* \result is the nth, counting from 0,
       @             next element that would be returned by this iterator *);
-      @    ensures !returnsNull ==> \result != null;
+      @    //-RAC@ ensures !returnsNull ==> \result != null;
     *//*-RAC@ for_example
       @    public normal_example
       @      requires n == 0 && moreElements;

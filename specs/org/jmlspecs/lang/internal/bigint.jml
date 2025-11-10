@@ -3,7 +3,7 @@ package org.jmlspecs.lang.internal;
 import org.jmlspecs.lang.IJmlPrimitiveType;
 
 //@ no_state non_null_by_default
-public class bigint extends Number implements IJmlPrimitiveType {
+public class bigint extends Number implements org.jmlspecs.lang.IJmlPrimitiveType {
     //@ spec_public
     final private java.math.BigInteger value;
 

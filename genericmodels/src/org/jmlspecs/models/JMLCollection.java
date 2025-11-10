@@ -41,7 +41,7 @@ package org.jmlspecs.models;
 public interface JMLCollection<E> extends JMLType, Iterable<E> {
 
     /** The objectState of all elements is contained in elementState. */
-    //@ public model instance JMLDataGroup elementState;
+    //@ public model instance \datagroup elementState;
 
     /** The type of the elements in this collection.
      */
