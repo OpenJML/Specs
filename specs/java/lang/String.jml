@@ -605,13 +605,13 @@ public final class String
       @   requires prefix != null && toffset + prefix.length() >= length();
       @   ensures !\result;
       @*/
-    public /*@ pure @*/ boolean startsWith(String prefix, int toffset);
+    public /*@ spec_pure @*/ boolean startsWith(String prefix, int toffset);
 
     /*@  public normal_behavior
       @   requires prefix != null;
       @   ensures \result == startsWith(prefix, 0);
       @*/
-    public /*@ pure @*/ boolean startsWith(String prefix);
+    public /*@ spec_pure @*/ boolean startsWith(String prefix);
 
     /*@  public normal_behavior
       @   requires suffix != null && suffix.length() <= length();
