@@ -95,30 +95,15 @@ public final class System {
     //@ helper
     public static void setErr(PrintStream err);
 
+    static java.lang.ModuleLayer bootLayer;
+    
+    public static java.io.Console console();
+    
+    public static java.nio.channels.Channel inheritedChannel() throws java.io.IOException;
+    
+    public static String lineSeparator();
 
-// FIXME    //@ public model static nullable SecurityManager systemSecurityManager;
-
-// Deprecated
-//    /*@  public normal_behavior
-//      @    requires sm == null;
-//      @    assignable \nothing;
-//      @    ensures \not_modified(systemSecurityManager);
-//      @ also
-//      @  public behavior
-//      @    requires sm != null;
-//      @    assignable systemSecurityManager;
-//      @    ensures  systemSecurityManager == sm;
-//      @    signals (SecurityException) (* if the change is not permitted *);
-//      @*/
-//    //@ helper
-//    public static void setSecurityManager(/*@nullable*/ SecurityManager sm) throws SecurityException;
-
-// Deprecated
-//    //@ public normal_behavior
-//    //@   reads systemSecurityManager;
-//    //@   ensures \result == systemSecurityManager;
-//    //@ helper
-//    public /*@ pure @*/ static /*@nullable*/ SecurityManager getSecurityManager();
+    
 
     /** The last value of currentTimeMillis() that was returned */
 
@@ -391,10 +376,13 @@ t *);
     //@ helper // TODO - reads?
     public static /*@nullable*/ String setProperty(/*@non_null*/ String key, /*@nullable*/ String value) throws RuntimeException;
 
+    public static String clearProperty(String name);
 
     /** @deprecated use java.lang.System.getProperty. */
     @Deprecated
     public static /*@ pure nullable @*/ String getenv(/*@non_null*/ String name);
+    
+    public static java.util.Map<String,String> getenv();
 
     /*@ public behavior
       @    diverges true;
@@ -428,9 +416,18 @@ t *);
      @   requires true;
      @   reads nanoTime;
      @   assignable nanoTime;
-     @   ensures nanoTime - \old(nanoTime) >= 0; // Time increasees and never extends more than 2**63 nanoseconds.
+     @   ensures nanoTime - \old(nanoTime) >= 0; // Time increases and never extends more than 2**63 nanoseconds.
      @   ensures \result == nanoTime;
      @*/
     //@ helper
     public static long nanoTime();
+    
+    public static java.lang.System.Logger getLogger(java.lang.String name);
+    public static java.lang.System.Logger getLogger(java.lang.String name, java.util.ResourceBundle bundle);
+
+// Deprecated
+//  public static void setSecurityManager(/*@nullable*/ SecurityManager sm) throws SecurityException;
+//  public /*@ pure @*/ static /*@nullable*/ SecurityManager getSecurityManager();
+
+
 }

@@ -45,8 +45,8 @@ import java.lang.Double;
 */
 // nullable by default, because we don't know what the implementation
 // will do with its random number generator
-/*@ nullable_by_default @*/  
-public /*@ pure @*/ final class Math {
+/*@ nullable_by_default @*/  // CAUTION: Not quite all of the methods in this class are no_state
+public final class Math {
     /**
      * @design These axioms are used to connect the floating point domain
      * to the integer domain for static analysis tools that don't
@@ -82,7 +82,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result <= 1.0 && \result >= -1.0;
       @ |}
       @*/
-    public static /*@ pure @*/ double sin(double a);
+    public static /*@ no_state @*/ double sin(double a);
 
     /*@ public normal_behavior 
       @ {|
@@ -92,7 +92,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result <= 1.0 && \result >= -1.0;
       @ |}
       @*/
-    //@ model public static pure double sin(\real a);
+    //@ model public static no_state double sin(\real a);
 
     /*@ public normal_behavior
       @ {|
@@ -107,7 +107,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result <= 1.0 && \result >= -1.0;
       @ |}
       @*/
-    public static /*@ pure @*/ double cos(double a);
+    public static /*@ no_state @*/ double cos(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -127,7 +127,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double tan(double a);
+    public static /*@ no_state @*/ double tan(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -148,7 +148,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double asin(double a);
+    public static /*@ no_state @*/ double asin(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -160,7 +160,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double acos(double a);
+    public static /*@ no_state @*/ double acos(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -181,17 +181,17 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double atan(double a);
+    public static /*@ no_state @*/ double atan(double a);
 
     /*@ public normal_behavior
       @   ensures Double.isNaN(angdeg) <==> Double.isNaN(\result);
       @*/
-    public static /*@ pure @*/ double toRadians(double angdeg);
+    public static /*@ no_state @*/ double toRadians(double angdeg);
 
     /*@ public normal_behavior
       @   ensures Double.isNaN(angrad) <==> Double.isNaN(\result);
       @*/
-    public static /*@ pure @*/ double toDegrees(double angrad);
+    public static /*@ no_state @*/ double toDegrees(double angrad);
 
     /*@ public normal_behavior
       @ {|
@@ -208,7 +208,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double exp(double a);
+    public static /*@ no_state @*/ double exp(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -225,7 +225,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double log(double a);
+    public static /*@ no_state @*/ double log(double a);
 
     // new for Java 5
     // the calculation of log10 should be exact for integral powers of 10
@@ -250,7 +250,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double log10(double a);
+    public static /*@ no_state @*/ double log10(double a);
         
     /*@ public normal_behavior
       @ {|
@@ -271,7 +271,7 @@ public /*@ pure @*/ final class Math {
       @   ensures close(a, \result * \result, 2.0E-6);
       @ |}
       @*/
-    public static /*@ pure @*/ double sqrt(double a);
+    public static /*@ no_state @*/ double sqrt(double a);
 
     // new for Java 5
     /*@ public normal_behavior
@@ -295,7 +295,7 @@ public /*@ pure @*/ final class Math {
       @   ensures close(a, \result * \result * \result, 3.0E-16);
       @ |}
       @*/
-    public static /*@ pure @*/ double cbrt(double a);  // cube root
+    public static /*@ no_state @*/ double cbrt(double a);  // cube root
     
     /*@ public normal_behavior
       @ {|
@@ -320,7 +320,7 @@ public /*@ pure @*/ final class Math {
       @      then <i>n</i> is the integer that is even. *);
       @ |}
       @*/
-    public static /*@ pure @*/ double IEEEremainder(double f1, double f2);
+    public static /*@ no_state @*/ double IEEEremainder(double f1, double f2);
 
     /*@ public normal_behavior
       @ {|
@@ -344,7 +344,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == -floor(-a);
       @ |}
       @*/
-    public static /*@ pure @*/ double ceil(double a);
+    public static /*@ no_state @*/ double ceil(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -364,7 +364,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (\forall double d; \result < d && d < a; rint(d) != d);
       @ |}
       @*/
-    public static /*@ pure @*/ double floor(double a);
+    public static /*@ no_state @*/ double floor(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -379,7 +379,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* \result is mathematical integer closest to a *);
       @ |}
       @*/
-    public static /*@ pure @*/ double rint(double a);
+    public static /*@ no_state @*/ double rint(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -544,7 +544,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == (long) Math.floor(a + 0.5d);
       @ |}
       @*/ 
-    public static /*@ pure @*/ long round(double a);
+    public static /*@ no_state @*/ long round(double a);
 
     // lightweight spec case because we don't want or need to reason
     // about how Math generates random numbers
@@ -555,18 +555,18 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == ( 0 <= a ? a : a == Integer.MIN_VALUE ? Integer.MIN_VALUE: -a);
       @   ensures_redundantly (\result != Integer.MIN_VALUE) ==> 0 <= \result;
       @*/
-    public static /*@ pure @*/ int abs(int a);
+    public static /*@ no_state @*/ int abs(int a);
 
     /*@ public normal_behavior
       @   ensures \result == ( 0 <= a ? a : a == Long.MIN_VALUE ? Long.MIN_VALUE: -a);
       @   ensures_redundantly (\result != Long.MIN_VALUE) ==> 0 <= \result;
       @*/
-    public static /*@ pure @*/ long abs(long a);
+    public static /*@ no_state @*/ long abs(long a);
 
     /*@ public normal_behavior
       @   ensures \result == ( 0 <= a ? a : -a);
       @*/
-    //@ model public static pure long abs(\real a);
+    //@ model public static no_state long abs(\real a);
 
     /*@ public normal_behavior
       @ {|
@@ -591,7 +591,7 @@ public /*@ pure @*/ final class Math {
       @   //  \result == Float.intBitsToFloat(0x7fffffff & Float.floatToIntBits(a));
       @ |}
       @*/
-    public static /*@ pure @*/ float abs(float a);
+    public static /*@ no_state @*/ float abs(float a);
 
     /*@ public normal_behavior
       @ {|
@@ -616,7 +616,7 @@ public /*@ pure @*/ final class Math {
       @   //  \result == Double.longBitsToDouble((Double.doubleToLongBits(a)<<1)>>>1);
       @ |}
       @*/
-    public static /*@ pure @*/ double abs(double a);
+    public static /*@ no_state @*/ double abs(double a);
 
     /*@ public normal_behavior
       @ {|
@@ -630,7 +630,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    public static /*@ pure helper @*/ int max(int a, int b);
+    public static /*@ no_state helper @*/ int max(int a, int b);
 
     /*@ public normal_behavior
       @ {|
@@ -644,7 +644,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    public static /*@ pure helper @*/ long max(long a, long b);
+    public static /*@ no_state helper @*/ long max(long a, long b);
 
     /*@ public normal_behavior
       @ {|
@@ -661,7 +661,7 @@ public /*@ pure @*/ final class Math {
       @   |}
       @ |}
       @*/
-    public static /*@ pure helper @*/ float max(float a, float b);
+    public static /*@ no_state helper @*/ float max(float a, float b);
 
     /*@ public normal_behavior
       @ {|
@@ -678,7 +678,7 @@ public /*@ pure @*/ final class Math {
       @   |}
       @ |}
       @*/
-    public static /*@ pure helper @*/ double max(double a, double b);
+    public static /*@ no_state helper @*/ double max(double a, double b);
 
     /*@ public normal_behavior
       @ {|
@@ -692,7 +692,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    //@ model public static pure helper \bigint max(\bigint a, \bigint b);
+    //@ model public static no_state helper \bigint max(\bigint a, \bigint b);
 
     /*@ public normal_behavior
       @ {|
@@ -706,7 +706,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    //@ model public static pure helper \real max(\real a, \real b);
+    //@ model public static no_state helper \real max(\real a, \real b);
 
     /*@ public normal_behavior
       @ {|
@@ -720,7 +720,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    public static /*@ pure @*/ int min(int a, int b);
+    public static /*@ no_state @*/ int min(int a, int b);
 
     /*@ public normal_behavior
       @ {|
@@ -734,7 +734,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    public static /*@ pure @*/ long min(long a, long b);
+    public static /*@ no_state @*/ long min(long a, long b);
 
     /*@ public normal_behavior
       @ {|
@@ -751,7 +751,7 @@ public /*@ pure @*/ final class Math {
       @   |}
       @ |}
       @*/
-    public static /*@ pure @*/ float min(float a, float b);
+    public static /*@ no_state @*/ float min(float a, float b);
 
     /*@ public normal_behavior
       @ {|
@@ -768,7 +768,7 @@ public /*@ pure @*/ final class Math {
       @   |}
       @ |}
       @*/
-    public static /*@ pure @*/ double min(double a, double b);
+    public static /*@ no_state @*/ double min(double a, double b);
     
     /*@ public normal_behavior
       @ {|
@@ -782,7 +782,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    //@ model public static pure \bigint min(\bigint a, \bigint b);
+    //@ model public static no_state \bigint min(\bigint a, \bigint b);
     
     /*@ public normal_behavior
       @ {|
@@ -796,7 +796,7 @@ public /*@ pure @*/ final class Math {
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
-    //@ model public static pure \real min(\real a, \real b);
+    //@ model public static no_state \real min(\real a, \real b);
 
     /*@ public normal_behavior
       @   requires a != 0 && b != 0;
@@ -804,7 +804,7 @@ public /*@ pure @*/ final class Math {
       @   ensures a % \result == 0 && b % \result == 0; // TODO - needs more
       @   ensures \forall int c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
       @*/  
-    //@ model public static pure int gcd(int a, int b);
+    //@ model public static no_state int gcd(int a, int b);
 
     /*@ public normal_behavior
       @   requires a != 0 && b != 0;
@@ -812,7 +812,7 @@ public /*@ pure @*/ final class Math {
       @   ensures a % \result == 0 && b % \result == 0; // TODO - needs more
       @   ensures \forall \bigint c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
       @*/  
-    //@ model public static pure \bigint gcd(\bigint a, \bigint b);
+    //@ model public static no_state \bigint gcd(\bigint a, \bigint b);
 
     // new for Java 5
     /*@ public normal_behavior
@@ -833,7 +833,7 @@ public /*@ pure @*/ final class Math {
       @   ensures Double.MIN_VALUE <= \result && \result <= pow(2, 971);
       @ |}
       @*/
-    public static /*@ pure @*/ double ulp(double d);
+    public static /*@ no_state @*/ double ulp(double d);
     
     // new for Java 5
     /*@ public normal_behavior
@@ -854,7 +854,7 @@ public /*@ pure @*/ final class Math {
       @   ensures Float.MIN_VALUE <= \result && \result <= pow(2, 104);
       @ |}
       @*/
-    public static /*@ pure @*/ float ulp(float f);    
+    public static /*@ no_state @*/ float ulp(float f);    
     
     // new for Java 5
     /*@ public normal_behavior
@@ -872,7 +872,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == 1.0;
       @ |}
       @*/
-    public static /*@ pure @*/ double signum(double d);
+    public static /*@ no_state @*/ double signum(double d);
     
     // new for Java 5
     /*@ public normal_behavior
@@ -890,7 +890,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == 1.0;
       @ |}
       @*/
-    public static /*@ pure @*/ float signum(float f);
+    public static /*@ no_state @*/ float signum(float f);
         
     // new for Java 5
     /*@ public normal_behavior
@@ -905,7 +905,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 2.5 ulps of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double sinh(double x);
+    public static /*@ no_state @*/ double sinh(double x);
     
     // new for Java 5
     /*@ public normal_behavior
@@ -923,7 +923,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 2.5 ulps of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double cosh(double x);
+    public static /*@ no_state @*/ double cosh(double x);
     
      // new for Java 5
     /*@ public normal_behavior
@@ -945,7 +945,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 2.5 ulps of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double tanh(double x);
+    public static /*@ no_state @*/ double tanh(double x);
            
     // new for Java 5
     /*@ public normal_behavior
@@ -960,7 +960,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double hypot(double x, double y);
+    public static /*@ no_state @*/ double hypot(double x, double y);
     
     // new for Java 5
     /*@ public normal_behavior
@@ -982,7 +982,7 @@ public /*@ pure @*/ final class Math {
       @   ensures -1.0 <= \result;
       @ |}
       @*/
-    public static /*@ pure @*/ double expm1(double x);
+    public static /*@ no_state @*/ double expm1(double x);
     
     // new for Java 5
     /*@ public normal_behavior
@@ -1003,7 +1003,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
-    public static /*@ pure @*/ double log1p(double x);
+    public static /*@ no_state @*/ double log1p(double x);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1018,7 +1018,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
 //      @ |}
       @*/
-    public static /*@ pure @*/ double copySign(double magnitude, double sign);
+    public static /*@ no_state @*/ double copySign(double magnitude, double sign);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1033,7 +1033,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
       @ |}
       @*/
-    public static /*@ pure @*/ float copySign(float magnitude, float sign);
+    public static /*@ no_state @*/ float copySign(float magnitude, float sign);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1050,7 +1050,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result is the unbiased exponent of f *);
       @ |}
       @*/
-    public static /*@ pure @*/ int getExponent(float f);
+    public static /*@ no_state @*/ int getExponent(float f);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1067,7 +1067,7 @@ public /*@ pure @*/ final class Math {
       @   ensures (* result is the unbiased exponent of d *);
       @ |}
       @*/
-    public static /*@ pure @*/ int getExponent(double d);
+    public static /*@ no_state @*/ int getExponent(double d);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1113,7 +1113,7 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == start;
       @ |}
       @*/     
-    public static /*@ pure @*/ double nextAfter(double start, double direction);
+    public static /*@ no_state @*/ double nextAfter(double start, double direction);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1159,15 +1159,15 @@ public /*@ pure @*/ final class Math {
       @   ensures \result == start;
       @ |}
       @*/     
-    public static /*@ pure @*/ float nextAfter(float start, double direction);
+    public static /*@ no_state @*/ float nextAfter(float start, double direction);
     
     // new for Java 6
     //@ ensures \result == nextAfter(d, Double.POSITIVE_INFINITY);
-    public static /*@ pure @*/ double nextUp(double d);
+    public static /*@ no_state @*/ double nextUp(double d);
     
     // new for Java 6
     //@ ensures \result == nextAfter(f, Float.POSITIVE_INFINITY);
-    public static /*@ pure @*/ float nextUp(float f);
+    public static /*@ no_state @*/ float nextUp(float f);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1189,7 +1189,7 @@ public /*@ pure @*/ final class Math {
       @        floating-point multiply to a member of the double value set *);
       @ |}
       @*/
-    public static /*@ pure @*/ double scalb(double d, int scaleFactor);
+    public static /*@ no_state @*/ double scalb(double d, int scaleFactor);
     
     // new for Java 6
     /*@ public normal_behavior
@@ -1211,7 +1211,7 @@ public /*@ pure @*/ final class Math {
       @        floating-point multiply to a member of the float value set *);
       @ |}
       @*/
-    public static /*@ pure @*/ float scalb(float f, int scaleFactor);
+    public static /*@ no_state @*/ float scalb(float f, int scaleFactor);
     
     
     
