@@ -376,7 +376,7 @@ public final class String
 
     /*@  public normal_behavior
       @   requires  (* charset is a supporting encoding *);
-      @   ensures \fresh(\result);
+      @   //-RAC@ ensures \fresh(\result);
       @   ensures (\forall int i; 0 <= i && i < \result.length;
       @                    (* \result[i] is the byte at position i of the 
       @                       conversion of this string's chars using charset *));

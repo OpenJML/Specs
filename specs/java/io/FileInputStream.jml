@@ -14,21 +14,24 @@ public class FileInputStream extends InputStream {
     /*@
       @ public behavior
       @   requires file != null;
-      @   ensures initialInputStream();
+      @   //-RAC@ ensures initialInputStream();
+      @ pure
       @*/
     public FileInputStream(File file) throws FileNotFoundException;
 
     /*@
       @ public behavior
       @   requires fdObj != null;
-      @   ensures initialInputStream();
+      @   //-RAC@ ensures initialInputStream();
+      @ pure
       @*/
     public FileInputStream(FileDescriptor fdObj);
 
     /*@
       @ public behavior
       @   requires name != null;
-      @   ensures initialInputStream();
+      @   //-RAC@ ensures initialInputStream();
+      @ pure
       @*/
     public FileInputStream(String name) throws FileNotFoundException;
 
@@ -45,7 +48,7 @@ public class FileInputStream extends InputStream {
     public int read() throws IOException;  // No 'native' in 1.7.0_67; there is in 1.7.0_11
 
     /*@
-      @ 
+      @ pure  // FIXME - acutally assigns some internal data structure
       @*/
     public void close() throws IOException;
 

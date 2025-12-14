@@ -1,10 +1,8 @@
 package java.io;
 
 public interface Closeable extends java.lang.AutoCloseable {
-    // FIXME - Closeable is supposed to be idempotent
-    //@ also public behavior
-    //@   assignable autocloseableContent;
-    //@   ensures true;
-    //@   signals_only java.io.IOException;
+    // FIXME - Closeable is required to be idempotent
+    
+    // inherited specification
     public abstract void close() throws java.io.IOException;
 }

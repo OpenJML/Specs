@@ -117,13 +117,14 @@ public class ArrayList<E> extends AbstractList<E>
     //@  public normal_behavior
     //@   ensures \result != this;
     //@   ensures \result.equals(this);
-    //-RAC@   ensures ((List)\result).containsNull == this.containsNull;
-    //-RAC@   ensures ((ArrayList)\result).values.length == this.values.length;
-    //-RAC@   ensures ((List)\result).values == this.values;
+    //-RAC@   ensures ((List<E>)\result).containsNull == this.containsNull;
+    //-RAC@   ensures ((ArrayList<E>)\result).values.length == this.values.length;
+    //-RAC@   ensures ((List<E>)\result).values == this.values;
     /*-RAC@ also public normal_behavior
       @   // ensures ((ArrayList)\result).theHashCode == this.theHashCode;
-      @   ensures ((ArrayList)\result).theString == this.theString;
+      @   ensures ((ArrayList<E>)\result).theString == this.theString;
       @*/
+    @SuppressWarnings("unchecked")
     public /*@ pure @*/ Object clone();
 
     // specification inherited from List

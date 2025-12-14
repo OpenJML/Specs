@@ -1,14 +1,27 @@
-// $Id: ByteArrayInputStream.refines-spec 2211 2006-11-28 01:32:13Z chalin $
-
 package java.io;
 
+/** These specs differ from the implementation in a few ways
+ * -- In the implementation the arguments to methods are not generally checked for reasonableness (e.g. not null). 
+ * Rather some null dereference or out of bounds error will happen later. 
+ * The specs put preconditions on the actual argument values.
+ * -- The implementation of close() does nothing. The specs have a precondition for most methods that close() has not been called.
+ * -- There is a corner caes (read at EOF and the byte array into which data is being read has 0 length) for which the 
+ * implementation of InputStream and ByteArrayInputStream state different outcomes and the documentation is not correct.
+ */
+
+//@ nullable_by_default
 public class ByteArrayInputStream extends InputStream {
 
-    /*@ spec_public */ protected byte[] buf;
+    /*@ spec_public */ protected byte[] buf; // Input buffer
     /*@ spec_public */ protected int count;  // One more than the last readable position
-    /*@ spec_public */ protected int mark; //@ in markPosition;
-    /*@ spec_public */ protected int pos;  //@ in readPosition;
+    /*@ spec_public */ protected int mark; //-RAC@ in markPosition;
+    /*@ spec_public */ protected int pos;  //-RAC@ in readPosition;
+    
+    //-RAC@ represents markPosition = mark;
+    //-RAC@ represents readPosition = pos;
 
+    //-RAC@ public invariant count == inputBytes.length;
+    
     // In fact any derived class can change them as it wishes.
     // Hence all sorts of errors can occur in the various methods.
 
@@ -17,14 +30,15 @@ public class ByteArrayInputStream extends InputStream {
       @              buf != null && (0 <= pos <= count) && 
       @              count <= buf.length &&
       @              (0 <= mark <= count));
-      @ model pure public boolean valid();
+      @ model spec_pure public boolean valid();
       @*/
 
     // CONSTRUCTORS
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @    requires buf != null;
+      @    ensures _markSupported;
       @    ensures initialInputStream();
       @    ensures this.buf == buf;
       @    ensures pos == 0;
@@ -32,21 +46,28 @@ public class ByteArrayInputStream extends InputStream {
       @    ensures mark == 0;
       @    ensures markPosition == mark && markLimit == buf.length;
       @    ensures valid();
+      @    ensures inputBytes.length == buf.length;
+      @    ensures \forall int i; 0 <= i < buf.length; inputBytes[i] == buf[i];
       @ pure
       @*/
     public ByteArrayInputStream(byte[] buf);
 
-    /*@
+    /*-RAC@
       @ public normal_behavior
       @    requires buf != null;
+      @    requires offset >= 0 && length >= 0; 
+      @    ensures _markSupported;
       @    ensures initialInputStream();
       @    ensures this.buf == buf;
-      @    ensures pos == offset;
-      @    ensures count == Math.min(buf.length,offset+length);
-      @    ensures mark == offset;
+      @    ensures this.pos == offset;
+      @    ensures this.count == Math.min(buf.length,offset+length);
+      @    ensures this.mark == offset;
       @    ensures markPosition == mark && markLimit == buf.length;
       @    ensures valid();
+      @    ensures inputBytes.length == buf.length;
+      @    ensures \forall int i; 0 <= i < length; inputBytes[i] == buf[i+offset];
       @ pure
+      // FIXME - what if offset or length is negative? The actual implementation of the constructor is OK, but subsequent reads will throw ArrayIndexOutOfBounds
       @*/
     public ByteArrayInputStream(byte[] buf, int offset, int length);
 
@@ -55,50 +76,57 @@ public class ByteArrayInputStream extends InputStream {
     /*@
       @ also public normal_behavior
       @   ensures \result == count - pos;
+      @ pure
       @*/
+    @Override
     public synchronized int available();
 
-  //@ also public normal_behavior
-  //@   requires pos < count;
-  //@   modifies streamState;
-  //@   ensures \result == \old(buf[pos]);
-  //   ensures pos == \old(pos+1);
-  //@   ensures \result == buf[pos];
-  //-RAC@   ensures \not_modified(isOpen,wasClosed);
-  //@   ensures valid();
-  //@ also public normal_behavior
-  //@   requires pos >= count;
-  //@   modifies \nothing;
-  //@   ensures \result == -1;
-  public synchronized int read();
-
-    /*@
-      @ 
+    /*-RAC@ // CAUTION: RAC cannot support either Java-protected nor model fields
+      @ also public normal_behavior
+      @   requires pos < count;
+      @   assigns streamState;
+      @   ensures \result == \old(buf[pos]);
+      @   ensures pos == \old(pos+1);
+      @   ensures mark == \old(mark);
+      @   ensures isOpen;
+      @   ensures \not_modified(markPosition, markLimit);
+      @   ensures valid();
+      @ also public normal_behavior
+      @   requires pos >= count;
+      @   assigns \nothing;
+      @   ensures \result == -1;
       @*/
+    @Override
+    public synchronized int read();
+
+    // inherited spec
+    @Override
     public void close() throws IOException;
 
-    /*@
+    /*-RAC@
       @ also public normal_behavior
       @   modifies readPosition;
       @   ensures pos == mark;
       @   ensures pos == readPosition;
       @*/
+    @Override
     public synchronized void reset();
 
-    //@ public invariant _markSupported;
+    //-RAC@ public invariant _markSupported;
 
-    /*@
-      @*/
+    // inherited specs
+    @Override
     public boolean markSupported();
 
-    /*@
+    /*-RAC@
       @ also public normal_behavior
-      @   modifies markPosition,markLimit;
+      @   assigns markPosition,markLimit;
       @   ensures mark == pos;
       @   ensures mark == markPosition;
       @   ensures markLimit == buf.length;
       @*/
     // The argument is ignored
+    @Override
     public void mark(int limit);
 
     /*-RAC@
@@ -109,23 +137,34 @@ public class ByteArrayInputStream extends InputStream {
       @ also public normal_behavior
       @   requires n > 0;
       @   modifies streamState;
-      @   ensures \not_modified(isOpen,wasClosed);
+      @   ensures isOpen;
       @   ensures \result == \old(Math.min(n, count-pos));
       @   ensures pos == \old(pos) + \result;
       @   ensures valid();
       @*/
+    @Override
     public synchronized long skip(long n);
+    
+    
+    // FIXME - how much of the specs of read, skip, mark are simply inherited
 
+    /*-RAC@
+      @ also public code behavior // Special case when b.length == 0 and at EOF
+      @   requires isOpen & readPosition == inputBytes.length & (b != null && b.length == 0);
+      @   assigns \nothing;
+      @   ensures \result == -1; // is 0 for InputStream but -1 for ByteArrayInputStream
+      @   signals_only \nothing;
+      @*/
     /*-RAC@ also public behavior
       @   requires b != null;
       @   requires isOpen;
       @   requires len <= 0 && pos < count;
-      @   modifies \nothing;
+      @   assigns \nothing;
       @   ensures \result == 0;
       @ also public behavior
       @   requires isOpen;
       @   requires pos >= count; // at end of buffer
-      @   modifies \nothing;
+      @   assigns \nothing;
       @   ensures \result == -1;
       @ also public normal_behavior
       @   requires isOpen;
@@ -133,8 +172,8 @@ public class ByteArrayInputStream extends InputStream {
       @   requires off >= 0 && off + len <= b.length;
       @   requires len > 0;
       @   requires pos < count;
-      @   modifies streamState, b[off .. off+len-1];
-      @   ensures \not_modified(isOpen,wasClosed);
+      @   assigns streamState, b[off .. off+len-1];
+      @   ensures isOpen;
       @   ensures \result == \old(Math.min(len, count - pos));
       @   ensures pos == \old(pos) + \result;
                      // These quantified equalities work better if one of the
@@ -145,5 +184,11 @@ public class ByteArrayInputStream extends InputStream {
                         b[i] == \old(b[i]));
       @   ensures valid();
       @*/
+    @Override
     public synchronized int read(byte[] b, int off, int len);
+    
+    // inherited specs
+    @Override
+    public synchronized long transferTo(OutputStream out) throws IOException;
+
 }

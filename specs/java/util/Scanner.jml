@@ -10,8 +10,8 @@ public final class Scanner implements Iterator<java.lang.String>, java.io.Closea
     /*
   public Scanner(java.lang.Readable);
   */
-  //@ public normal_behavior
-  //@   assigns istream.streamState;
+  //-RAC@ public normal_behavior
+  //-RAC@   assigns istream.streamState;
   public Scanner(java.io.InputStream istream);
   /*
   public Scanner(java.io.InputStream, java.lang.String);

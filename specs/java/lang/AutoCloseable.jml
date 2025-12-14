@@ -2,7 +2,7 @@ package java.lang;
 
 public interface AutoCloseable {
     
-    //@ model public instance \datagroup autocloseableContent;
+    //@ model public instance \datagroup autocloseableContent; in objectState;
     
     //@ public behavior
     //@   assignable \everything;
