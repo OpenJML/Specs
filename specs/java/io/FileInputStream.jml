@@ -47,9 +47,7 @@ public class FileInputStream extends InputStream {
       @*/
     public int read() throws IOException;  // No 'native' in 1.7.0_67; there is in 1.7.0_11
 
-    /*@
-      @ pure  // FIXME - acutally assigns some internal data structure
-      @*/
+    // inherits specs
     public void close() throws IOException;
 
     /*@
@@ -57,15 +55,33 @@ public class FileInputStream extends InputStream {
       @*/
     public native long skip(long bytes) throws IOException;
 
-    /*@
-      @ 
+    /*-RAC@ 
+      @ also public exceptional_behavior
+      @    assigns \nothing;
+      @    signals_only IOException;
       @*/
     public int read(byte[] bytes) throws IOException;
+
+    /*-RAC@ 
+      @ also public exceptional_behavior
+      @    assigns \nothing;
+      @    signals_only IOException;
+      @*/
+    public int read(byte[] bytes, int off, int len) throws IOException;
+
+    /*-RAC@ 
+    @ also public exceptional_behavior
+    @    assigns \nothing;
+    @    signals_only IOException;
+    @*/
+    public byte[] readAllBytes() throws IOException;
 
     /*@
       @ 
       @*/
-    public int read(byte[] bytes, int off, int len) throws IOException;
+    public byte[] readNBytes(int len) throws IOException;
+
+    public long transferTo(java.io.OutputStream out) throws java.io.IOException;
 
     /*@
       @ 
