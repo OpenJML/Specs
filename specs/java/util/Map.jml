@@ -86,7 +86,7 @@ public interface Map<K,V> {
           @
           @ public normal_behavior
           @   ensures \result <==> equalsObjects(e.getKey(),e.getValue());
-          @ public pure model boolean equals(Entry e);
+          @ public pure model boolean equals(Entry<K,V> e);
           @*/
     }
 

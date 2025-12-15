@@ -333,7 +333,7 @@ public final class String
       @             && dst.length >= dstBegin + (srcEnd - srcBegin) + 1;
       @   modifies dst[dstBegin .. dstBegin+srcEnd-srcBegin-1];
       @   ensures (\forall int i; srcBegin <= i && i < srcEnd;
-      @                            dst[(int)(dstBegin + i - srcBegin)]
+      @                            dst[dstBegin + i - srcBegin]
       @                            == (byte) (charAt(i) & 0xff));
       @ also
       @  public exceptional_behavior
@@ -579,15 +579,15 @@ public final class String
       @   requires (0 <= toffset && (toffset + len) <= length())
       @             && (0 <= ooffset && (ooffset + len) <= other.length())
       @             && ignoreCase;
-      @   ensures \result == substring(toffset, (int)(toffset + len)).equalsIgnoreCase(
-      @                        other.substring(ooffset, (int)(ooffset + len)));
+      @   ensures \result == substring(toffset, toffset + len).equalsIgnoreCase(
+      @                        other.substring(ooffset, ooffset + len));
       @  also
       @   requires (0 <= toffset && (toffset + len) <= length())
       @             && (0 <= ooffset && (ooffset + len) <= other.length())
       @             && !ignoreCase;
       @   ensures \result == equals(
-                            substring(toffset, (int)(toffset + len)),
-      @                     other.substring(ooffset, (int)(ooffset + len)));
+                            substring(toffset, toffset + len),
+      @                     other.substring(ooffset, ooffset + len));
       @  also
       @   requires (toffset < 0 || (toffset + len) > length())
       @             || (toffset < 0 || (ooffset + len) > other.length());
@@ -616,7 +616,7 @@ public final class String
     /*@  public normal_behavior
       @   requires suffix != null && suffix.length() <= length();
       @   ensures \result == equals(
-                                substring((int)(length() - suffix.length())),
+                                substring(length() - suffix.length()),
       @                         suffix);
       @  also
       @   requires suffix != null && suffix.length() > length();
@@ -657,7 +657,7 @@ public final class String
     public /*@ pure @*/ int indexOf(int ch, int fromIndex);
 
     /*@  public normal_behavior
-      @   ensures \result == lastIndexOf(ch, (int)(length() - 1));
+      @   ensures \result == lastIndexOf(ch, length() - 1);
       @*/
     public /*@ pure @*/ int lastIndexOf(int ch);
 
@@ -666,7 +666,7 @@ public final class String
     /*@ public normal_behavior
       @ {|
       @   requires fromIndex >= length();
-      @   ensures \result == lastIndexOf(ch, (int)(length() - 1));
+      @   ensures \result == lastIndexOf(ch, length() - 1);
       @ also
       @   requires fromIndex < 0;
       @   ensures \result == -1;
@@ -730,7 +730,7 @@ public final class String
       
     /*@  public normal_behavior
       @   requires str != null;
-      @   ensures \result == lastIndexOf(str, (int)(length() - 1));
+      @   ensures \result == lastIndexOf(str, length() - 1);
       @*/
     public /*@ pure @*/ int lastIndexOf(String str);
 
@@ -740,7 +740,7 @@ public final class String
       @   requires str != null;
       @   {|
       @     requires length() <= fromIndex;
-      @     ensures \result == lastIndexOf(str, (int)(length() - 1));
+      @     ensures \result == lastIndexOf(str, length() - 1);
       @   also
       @     requires fromIndex < 0;
       @     ensures \result == -1;
@@ -947,7 +947,7 @@ public final class String
       @   ensures \result != null
       @            && \result.length() <= length()
       @            && \result.charAt(0) > ' '
-      @            && \result.charAt((int)(\result.length() - 1)) > ' ';
+      @            && \result.charAt(\result.length() - 1) > ' ';
       @*/
     // FIXME - be more precise about what is omitted; also avoid recursion
     public /*@ pure @*/ /*@ non_null @*/ String trim();

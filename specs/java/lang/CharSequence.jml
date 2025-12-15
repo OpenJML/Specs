@@ -71,7 +71,7 @@ public interface CharSequence {
 
     //@ public normal_behavior
     //@      ensures \result >= 0;
-    //-RAC@  ensures \result == (int)charArray.length;
+    //-RAC@  ensures \result == charArray.length;
     //@ spec_pure
     int length();
 

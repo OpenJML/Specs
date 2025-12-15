@@ -3,7 +3,7 @@ package java.lang.reflect;
 public final
 class Method extends Executable {
 
-    //@ public model Class returntype;
+    //@ public model Class<?> returntype;
 
 //    //@ ensures this.returntype == returnType;
 //    //@ pure

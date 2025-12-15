@@ -54,6 +54,7 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@ represents _stackTrace = getStackTrace();
 
     //@ spec_public
+    @SuppressWarnings("serial")
     private java.util.List<Throwable> suppressedExceptions;
     
     //  FIXME -RAC@ public invariant \nonnullelements(_stackTrace);

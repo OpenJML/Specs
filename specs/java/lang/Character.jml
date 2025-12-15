@@ -453,10 +453,10 @@ public /*@ pure @*/ final
       @    if (val <= 0x06F9 || val >= 0x0E50) {
       @      base = val & 0xFFF0;
       @    } else {
-      @      base = ((int)(val - 6) & 0xFFF0) | 0x0006;
+      @      base = ((val - 6) & 0xFFF0) | 0x0006;
       @    }
       @    // convert to a value between 0 and 9 inclusive
-      @    return (int)(val - base);
+      @    return (val - base);
       @   }
       @ }
       @*/
