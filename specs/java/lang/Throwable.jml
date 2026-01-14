@@ -182,11 +182,15 @@ public class Throwable extends Object implements java.io.Serializable
     public synchronized /*@ non_null*/ Throwable initCause(/*@ nullable*/Throwable cause);
 
     /*-RAC@ also public normal_behavior
+      @   //requires \typeof(this) == \type(Throwable);
+      @   requires _message == null;
+      @   reads _message;
+      @   ensures \result.equals(this.getClass().toString());
+      @ also public normal_behavior
       @   requires \typeof(this) == \type(Throwable);
-      @   reads _message, _message.*;
-      @   ensures _message == null ==> \result.equals(this.getClass().toString());
-      @   ensures _message != null ==> \result.equals(this.getClass().toString() + ": " + _message);
-      @ 
+      @   requires _message != null;
+      @   reads \everything; // _message, _message.*; // FIXME - cf. gitbug630
+      @   ensures \result.equals(this.getClass().toString() + ": " + _message);
       @*/
     public /*@ pure non_null @*/ String toString();
 

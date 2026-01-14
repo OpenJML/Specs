@@ -897,6 +897,7 @@ public final class String
           //                  Pattern.compile(regex).split(this, limit));
       @   ensures (* output strings correspond to input substrings *);
       @   ensures limit > 0 ==> \result.length == limit;
+      @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null && \invariant_for(\result[i]));
       @*/
     //@ pure helper
     public String[] split(/*@ non_null @*/ String regex, int limit);
@@ -905,7 +906,7 @@ public final class String
       @   ensures \fresh(\result);
       @   ensures \result.length >= 1;
       @   ensures \result.length == numsplit(this,regex);
-      @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null); // Including this avoids the needs for an instantiation, which is not always triggered
+      @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null && \invariant_for(\result[i])); // Including this avoids the needs for an instantiation, which is not always triggered
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] == split(this,regex,i));
       @*/
     //@ pure helper

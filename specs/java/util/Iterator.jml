@@ -33,7 +33,7 @@ package java.util;
 public interface Iterator<E> {
 
     //@ model public instance \bigint count;
-    //@ model public instance non_null E[] values;
+    //@ model public instance \seq<E> values;
 
     /** Do we have more elements?
      **/

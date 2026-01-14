@@ -6,40 +6,45 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.Aut
 
     //@ model public instance boolean _isParallel;
     //@ model public final instance \seq<T> values;
-    
-    
+
+
     //@ public normal_behavior
     //-RAC@   requires 0 <= i && i < values.length;
     //-RAC@   ensures \result == values[i];
     //@ pure
     //@ model public T get(int i);
-    
+
     // FIXME - would like to make the length a \bigint, but then problems arise with bitvector computations
 
-//      public abstract java.util.Iterator<T> iterator();
-//      public abstract java.util.Spliterator<T> spliterator();
-    
+    //      public abstract java.util.Iterator<T> iterator();
+    //      public abstract java.util.Spliterator<T> spliterator();
+
     //@ public normal_behavior
     //@   ensures \result == _isParallel;
     //@ pure
     public abstract boolean isParallel();
-    
+
     //@ public normal_behavior
     //@   ensures \result == this; // TODO: Not handling parallelism yet
     //@ pure
-      public abstract S sequential();
-      
-        //@ public normal_behavior
-        //@   ensures \result == this;  // FIXME - result is an arbitrary permutation of the input
-        //@ pure
-      public abstract S parallel();
-        //@ public normal_behavior
-        //@   ensures \fresh(\result);  // FIXME - result is an arbitrary permutation of the input
-      //@ pure
-      public abstract S unordered();
-//      public abstract S onClose(java.lang.Runnable);
-      
-      //@ also public normal_behavior
-      //@   assignable autocloseableContent;
-      public abstract void close();
-    }
+    public abstract S sequential();
+
+    //@ public normal_behavior
+    //@   ensures \result == this;  // FIXME - result is an arbitrary permutation of the input
+    //@ pure
+    public abstract S parallel();
+    //@ public normal_behavior
+    //@   ensures \fresh(\result);  // FIXME - result is an arbitrary permutation of the input
+    //@ pure
+    public abstract S unordered();
+    //      public abstract S onClose(java.lang.Runnable);
+
+    //@ also public normal_behavior
+    //@   assignable autocloseableContent;
+    public abstract void close();
+    
+    //@ public normal_behavior
+    //@   ensures \result.values == values;
+    //@ pure
+    public abstract java.util.Iterator<T> iterator();
+}

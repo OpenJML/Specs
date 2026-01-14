@@ -39,12 +39,13 @@ public interface Iterable<T> {
     //@ pure
     public Iterator<T> iterator();
     
-    /*@ public behavior
+    /*-RAC@ public behavior
       @ {
+          //@ decreases values.length - \count;
       @   for (T t: this) action.accept(t);
       @ }
       @*/
-    default void forEach(Consumer<? super T> action);
+    default void forEach(/*@ non_null */ Consumer<? super T> action);
     
     default Spliterator<T> spliterator();
 

@@ -7,13 +7,18 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   requires true;
     /*@   { 
-            //@ loop_invariant i == \count && 0 <= i <= values.length;
-            //@ decreases values.length - i;
-            for (\bigint i=0; i < values.length; i++) {
-                consumer.accept(values[i]); 
-            }
+//            //@ loop_invariant i == \count && 0 <= i <= values.length;
+//            //@ decreases values.length - i;
+//            for (int i=0; i < values.length; i++) {
+//                consumer.accept(values[i]); 
+//            }
+
+            java.util.Arrays.asList((T[])this.toArray()).forEach(consumer);
+
+//              for (T t: java.util.Arrays.asList(toArray(this))) consumer.accept(t);
           }
      */
+    @SuppressWarnings("unchecked")
     void forEachOrdered(Consumer<? super T> consumer);
     // The line above appears in error messages so we put it near the top of this file, so it does not change often
     
@@ -104,12 +109,11 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     // FIXME - clients should not be able to rely on the actions being ordered
     //@ public normal_behavior 
     //@  requires true;
-    /* FIXME @   { 
-            //@ loop_invariant 0 <= i && i <= values.length;
-            //@ decreases values.length - i;  // FIXME - allow the decreases to be a \bigint
-            for (int i=0; i < values.length; i++) consumer.accept(get(i)); 
-          }
+    /*@ { 
+            java.util.Arrays.asList((T[])this.toArray()).forEach(consumer);
+        }
      */
+    @SuppressWarnings("unchecked")
     void forEach(Consumer<? super T> consumer);
 
     //@ public normal_behavior
@@ -119,6 +123,11 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ pure
     Object[] toArray();
     
+//    //@ public normal_behavior
+//    //@   ensures \result == (T[])t.toArray();
+//    //@ pure
+//    //@ model public static <T> T[] toArray(Stream<T> t);
+//    
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \result.length == values.length;
