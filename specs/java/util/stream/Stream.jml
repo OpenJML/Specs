@@ -7,15 +7,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   requires true;
     /*@   { 
-//            //@ loop_invariant i == \count && 0 <= i <= values.length;
-//            //@ decreases values.length - i;
-//            for (int i=0; i < values.length; i++) {
-//                consumer.accept(values[i]); 
-//            }
-
             java.util.Arrays.asList((T[])this.toArray()).forEach(consumer);
-
-//              for (T t: java.util.Arrays.asList(toArray(this))) consumer.accept(t);
           }
      */
     @SuppressWarnings("unchecked")
@@ -123,11 +115,6 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ pure
     Object[] toArray();
     
-//    //@ public normal_behavior
-//    //@   ensures \result == (T[])t.toArray();
-//    //@ pure
-//    //@ model public static <T> T[] toArray(Stream<T> t);
-//    
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \result.length == values.length;
