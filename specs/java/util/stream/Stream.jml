@@ -111,6 +111,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     //@   ensures \result.length == values.length;
+    //@   ensures \typeof(\result) == \type(T[]);
     // @   ensures array.equals(array.<Object>of(\result),values); // FIXME
     //@ pure
     Object[] toArray();
