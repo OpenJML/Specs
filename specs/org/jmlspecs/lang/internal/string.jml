@@ -79,7 +79,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures 0 <= i < length() ==> \result == this[i];
+    //-RAC@   ensures 0 <= i < length ==> \result == this[i];
     //@ helper
     public char getUnchecked(bigint i);
     
@@ -163,11 +163,11 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     public string append(char v);
 
     //@ public normal_behavior
-    //@       requires true;
-    //-RAC@   ensures \result.length == this.length+s.length();
+    //@       requires s != null;
+    //-RAC@   ensures \result.length == this.length+s.chars.length;
     //-RAC@   ensures \forall \bigint i; 0 <= i < length; \result[i] == this[i];
-    // -RAC@   ensures \forall int i; 0 <= i < s.length(); \result[i+length] == s.charAt(i);
-    //-RAC@   ensures \forall int i; length <= i < length+s.length(); \result[i] == s.charAt(i-length.intValue());
+    // -RAC@   ensures \forall int i; 0 <= i < s.length(); \result[i+length] == s.chars[i];
+    //-RAC@   ensures \forall int i; length <= i < length+s.chars.length; \result[i] == s.chars[i-length.intValue()];
     public string append(String s);
 
     //@ public normal_behavior
@@ -216,6 +216,10 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@   ensures \result.length == length - start;
     //-RAC@   ensures \forall \bigint i; 0 <= i < length-start; \result[i] == this[i+start];
     public string substring(bigint start);
+    
+    //@ public normal_behavior
+    //-RAC@   ensures \result == (p.length <= this.length && \forall \bigint i; 0 <= i < p.length; p[i] == this[i]);
+    public boolean startsWith(string p);
     
     //@ requires false; // Not defined for JML primitive types. Use eq.
     public boolean equals(Object o);

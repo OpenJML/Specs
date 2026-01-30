@@ -47,5 +47,10 @@ public class Utils {
 
     //@ ensures \result == v;
     public static <T> @Nullable T nonNullCheck(@Nullable String message, @Nullable T v);
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@   ensures true;
+    public static void println(/*@ nullable */ Object ... objs);
 
 }

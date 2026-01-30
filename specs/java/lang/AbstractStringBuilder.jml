@@ -2,15 +2,10 @@ package java.lang;
 //@ non_null_by_default // NOTE: This is not publicly visible
 abstract class AbstractStringBuilder implements Appendable,CharSequence {
     /*@ spec_public */
-    byte[] value; //@ in _value;
+    byte[] value; //-RAC@ in _value, chars;
     /*@ spec_public */
-    int count; //@ in _value;
+    int count; //-RAC@ in _value, chars;
     
- // FIXME - should we use charArray instead of accumulatedString?
-    // FIXME - we don't need both
-
-    //-RAC@ model public non_null String accumulatedString;
-
     //-RAC@ model public \bigint capacity;
     
     // Present in some but not all Java builds
@@ -48,32 +43,31 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
     /*-RAC@ public normal_behavior
       @   requires 0 <= srcBegin && srcBegin <= srcEnd;
-      @   requires srcEnd <= accumulatedString.length();
+      @   requires srcEnd <= chars.length();
       @   requires 0 <= dstBegin && dstBegin + srcEnd - srcBegin <= dst.length;
       @   assignable dst[dstBegin .. dstBegin+srcEnd-srcBegin];
-      @   //-RAC@ ensures CharSequence.equal(accumulatedString.charArray,srcBegin,
+      @   //-RAC@ ensures CharSequence.equal(chars,srcBegin,
         //-RAC@                  dst,dstBegin,srcEnd-srcBegin);
       @*/
     public synchronized void getChars(int srcBegin, int srcEnd,
                                     char[] dst, int dstBegin);
     
     /*-RAC@ public normal_behavior
-    @   requires 0 <= index < accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString
-    @           .equals(\old(accumulatedString.substring(0,index)
-    @                        + ch + accumulatedString.substring(index+1)));
+    @   requires 0 <= index < chars.length;
+    @   assignable chars;
+    @   ensures chars == \old(chars.substring(0,index)
+    @                        + ch + chars.substring(index+1));
     @ implies_that
     @ public normal_behavior
-    @   requires 0 <= index < accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString.length()
-    @           == \old(accumulatedString.length())
-    @        && (\forall int i; 0 <= i < accumulatedString.length()
+    @   requires 0 <= index < chars.length();
+    @   assignable chars;
+    @   ensures chars.length
+    @           == \old(chars.length)
+    @        && (\forall int i; 0 <= i < chars.length
     @                                  && i != index;
-    @                           accumulatedString.charAt(i)
-    @                           == \old(accumulatedString.charAt(i)))
-    @        && accumulatedString.charAt(index) == ch;
+    @                           chars[i]
+    @                           == \old(chars[i]))
+    @        && chars.charAt(index) == ch;
     @*/
     public void setCharAt(int index, char ch);
     
@@ -172,116 +166,114 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
 
     //@ public normal_behavior
-    //-RAC@   assignable _value, charArray;
+    //-RAC@   assignable _value, chars;
     //@   ensures (* _value == \old(_value) + s *);
     //@   ensures \result == this;
     public AbstractStringBuilder appendCodePoint(int s);
     
     /*-RAC@ public normal_behavior
-      @   requires 0 <= index < accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.subSequence(0,index).equals(
-      @                  \old(accumulatedString.subSequence(0,index)));
+      @   requires 0 <= index < chars.length;
+      @   assignable chars;
+      @   ensures chars.substring(0,index) == 
+      @                  \old(chars.substring(0,index));
       @   ensures
-      @       accumulatedString.subSequence(index,accumulatedString.length()).equals(
-      @       \old(accumulatedString.subSequence(index+1,accumulatedString.length())));
-      @   ensures accumulatedString.length() == \old(accumulatedString.length()-1);
+      @       chars.substring(index,chars.length()) ==
+      @       \old(chars.substring(index+1,chars.length));
+      @   ensures chars.length == \old(chars.length-1);
       @   ensures \result == this;
       @*/
-
     public AbstractStringBuilder deleteCharAt(int index);
+    
 //    public AbstractStringBuilder replace(int, int, String);
 //    public String substring(int);
 //    public CharSequence subSequence(int, int);
 //    public String substring(int, int);
 
     /*-RAC@ public normal_behavior
-    @   requires 0 <= offset <= accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString
-    @           .equals(\old(accumulatedString.substring(0,offset)
-    @                        + c + accumulatedString.substring(offset)));
+    @   requires 0 <= offset <= chars.length;
+    @   assignable chars;
+    @   ensures chars == (\old(chars.substring(0,offset)
+    @                        + c + chars.substring(offset)));
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, char c);
 
-    /*-RAC@ public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + i + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + i + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, int i);
 
-    /*-RAC@ public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @             + String.valueOf(l) + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @             + String.valueOf(l) + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, long l);
 
-  /*-RAC@ public normal_behavior
-    @   requires 0 <= offset <= accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString
-    @           .equals(\old(accumulatedString.substring(0,offset)
+  /* FIXME -RAC@ public normal_behavior
+    @   requires 0 <= offset <= chars.length;
+    @   assignable chars;
+    @   ensures chars
+    @           .equals(\old(chars.substring(0,offset)
     @                        + String.valueOf(str)
-    @                        + accumulatedString.substring(offset)));
+    @                        + chars.substring(offset)));
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, char[] str);
 
-  /*-RAC@  public normal_behavior
-    @   requires 0 <= offset <= accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString
-    @           .equals(\old(accumulatedString.substring(0,offset)
-    @                        + b + accumulatedString.substring(offset)));
+  /* FIXME -RAC@  public normal_behavior
+    @   requires 0 <= offset <= chars.length;
+    @   assignable chars;
+    @   ensures chars
+    @           .equals(\old(chars.substring(0,offset)
+    @                        + b + chars.substring(offset)));
     @   ensures \result == this;   
     @*/
     public AbstractStringBuilder insert(int offset, boolean b);
 
-  /*-RAC@ public normal_behavior
-    @   requires 0 <= offset <= accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString
-    @           .equals(\old(accumulatedString.substring(0,offset)
-    @                        + obj + accumulatedString.substring(offset)));
+  /* FIXME -RAC@ public normal_behavior
+    @   requires 0 <= offset <= chars.length;
+    @   assignable chars;
+    @   ensures chars
+    @           .equals(\old(chars.substring(0,offset)
+    @                        + obj + chars.substring(offset)));
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, Object obj);
 
   /*-RAC@ public normal_behavior
-    @   requires 0 <= offset <= accumulatedString.length();
-    @   assignable accumulatedString;
-    @   ensures accumulatedString
-    @           .equals(\old(accumulatedString.substring(0,offset)
-    @                        + str + accumulatedString.substring(offset)));
+    @   requires 0 <= offset <= chars.length;
+    @   assignable chars;
+    @   ensures chars == \old(chars.substring(0,offset)
+    @                        + str.chars + chars.substring(offset));
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, String str);
 
-    /*-RAC@ public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + f + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + f + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, float f);
     
-    /*-RAC@ public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + d + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + d + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, double d);
@@ -292,11 +284,11 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 //    public int lastIndexOf(String, int);
     
     /*-RAC@ public normal_behavior
-      @    assignable accumulatedString;
+      @    assignable chars;
       @    ensures \result == this;
-      @    ensures accumulatedString.length() == \old( accumulatedString.length() );
-      @    ensures (\forall int i; 0<=i && i<accumulatedString.length();
-                          \old(charAt(i)) == charAt(length()-1-i));
+      @    ensures chars.length == \old( chars.length );
+      @    ensures (\forall int i; 0 <= i < chars.length;
+                          \old(chars[i]) == chars[chars.length-1-i]);
       @*/
     public AbstractStringBuilder reverse();
     

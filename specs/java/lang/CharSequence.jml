@@ -26,76 +26,60 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //-RAC@ public instance model char non_null [] charArray; 
-	//-RAC@ public invariant charArray != null; // FIXME - why this when there is a non_null declaration
+    //-RAC@ model public instance \string chars; 
     
-    //@ public normal_behavior ensures \result == c.__owner;
-    //@ model spec_pure public static Object owner(Object c);
-    
-    //-RAC@ public normal_behavior ensures \result == c.charArray;
-    //-RAC@ model spec_pure public static Object content(CharSequence c);
-    
-    // FIXME @ axiom (\forall CharSequence c; true; owner(content(c)) == c); 
-
-    /*@ public normal_behavior
-      @   //-RAC@ ensures \result <==> ( charArray != null && charArray.__owner == this);
-      @ public spec_pure helper model boolean initialCharSequence();
-      @*/
-
-    /*@ public normal_behavior
-        ensures \result == ( a == b || (a != null && b != null &&
-                      a.length == b.length && 
-                      equal(a,0,b,0,a.length) ));
-        public static spec_pure helper model boolean equal(char[] a, char[] b);
+    /*-RAC@ public normal_behavior
+        ensures \result == (b != null && a.length == b.length && \forall int i; 0 <= i < a.length; a[i] == b[i]);
+        public static spec_pure helper model boolean equal(\string a, char[] b);
      */
-    /*@ public normal_behavior
-        requires a != null && b!= null && astart >= 0 && bstart >= 0 &&
-                 len >= 0 &&
-                 astart+len <= a.length && bstart + len <= b.length;
-        ensures \result == ((a==b && astart == bstart) ||
-                      (\forall int i; 0<=i && i<len; a[i+astart] == b[i+bstart])); 
-        public static spec_pure helper model boolean equal(char[] a, \bigint astart, char[] b, \bigint bstart, \bigint len);
+    /*-RAC@ public normal_behavior
+        requires (b != null & astart >= 0 & bstart >= 0 & len >= 0) &&
+                 (astart+len <= a.length & bstart + len <= b.length);
+        ensures \result == (\forall int i; 0 <= i < len; a[i+astart] == b[i+bstart]); 
+        public static spec_pure helper model boolean equal(\string a, \bigint astart, char[] b, \bigint bstart, \bigint len);
      */
 
     /*@ public normal_behavior
     ensures \result == (a != null && b != null &&
-                  (\exists \bigint j; 0<=j<=a.length && j<=b.length; 
-                     ((\forall \bigint k; 0<=k<j; a[k]==b[k]) && ((j==a.length && j<b.length) || (j<a.length && j < b.length && a[j] < b[j])))
+                  (\exists \bigint j; 0 <= j <= a.length && j <= b.length; 
+                     ((\forall \bigint k; 0 <= k < j; a[k]==b[k]) && ((j==a.length && j<b.length) || (j<a.length && j < b.length && a[j] < b[j])))
                   ));
     public static spec_pure helper model boolean lessThan(char[] a, char[] b);
  */
 
-    //@ axiom (\forall char[] a; a!=null ; equal(a,a));
-    //@ axiom (\forall char[] a,b; a!=null && b !=null; equal(a,b) <==> equal(b,a));
-    //@ axiom (\forall char[] a,b,c; a!=null && b !=null && c != null; (equal(a,b) && equal(b,c))==>equal(a,c)); 
+    // @ axiom (\forall char[] a; a!=null ; equal(a,a));
+    // @ axiom (\forall char[] a,b; a!=null && b !=null; equal(a,b) <==> equal(b,a));
+    // @ axiom (\forall char[] a,b,c; a!=null && b !=null && c != null; (equal(a,b) && equal(b,c))==>equal(a,c)); 
 
     //@ public normal_behavior
     //@      ensures \result >= 0;
-    //-RAC@  ensures \result == charArray.length;
+    //-RAC@  ensures \result == chars.length;
     //@ spec_pure
     int length();
 
-    /*-RAC@   public normal_behavior
-      @      requires 0 <= index < charArray.length;
-      @      ensures  \result == charArray[index];
+    /*-RAC@   
+      @    public normal_behavior
+      @      requires 0 <= index < chars.length;
+      @      ensures  \result == chars[index];
       @  also
       @    public exceptional_behavior
-      @      requires !(0 <= index < charArray.length);
+      @      requires !(0 <= index < chars.length);
       @      signals_only IndexOutOfBoundsException;
       @*/
     //@ spec_pure helper
     char charAt(int index) throws IndexOutOfBoundsException;
 
-    /*-RAC@   public normal_behavior
-      @      requires 0 <= start <= end <= charArray.length;
+    /*-RAC@
+      @    public normal_behavior
+      @      requires 0 <= start <= end <= chars.length;
       @      ensures \result != null;
-      @      ensures \result.charArray.length == end-start;
-      @      ensures equal(\result.charArray,0,charArray,start,end-start);
+      @      ensures \result.chars.length == end-start;
+      @      ensures \result.chars == chars.substring(start,end-start);
       @      ensures start==0 && end == length() ==>
-      @                          equal(\result.charArray, this.charArray);
+      @                          \result.chars == this.chars;
       @  also
       @    public exceptional_behavior
-      @      requires start < 0 || end < start || end > charArray.length;
+      @      requires start < 0 || end < start || end > chars.length;
       @      signals_only IndexOutOfBoundsException;
       @*/
     //@ pure
@@ -105,10 +89,12 @@ public interface CharSequence {
     /*-RAC@ also
       @    public normal_behavior
       @      ensures \result != null
-      @           && equal(\result.charArray,charArray);
+      @           && \result.chars == chars;
       @*/
     public String toString();
     
+    //@ public normal_behavior
+    //-RAC@   ensures \result == (chars.length == 0);
     //@ spec_pure
     public default boolean isEmpty();
     
@@ -116,6 +102,7 @@ public interface CharSequence {
     
     public default java.util.stream.IntStream codePoints();
     
+    // FIXME - this will depend on the locale
     public static int compare(CharSequence csa, CharSequence csb);
     
 

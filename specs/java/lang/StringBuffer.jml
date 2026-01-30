@@ -29,169 +29,167 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
 
     //@ public normal_behavior
-    //-RAC@   ensures this.accumulatedString.equals("");
+    //-RAC@   ensures this.chars.length == 0;
     //+RAC@   ensures true;
     //@ pure
     public StringBuffer();
 
     //@ public normal_behavior
-    //-RAC@   ensures this.accumulatedString.equals("");
+    //-RAC@   ensures this.chars.length == 0;
     //+RAC@   ensures true;
     //@ pure
     public StringBuffer(int i);
 
     //@ public normal_behavior
-    //-RAC@   ensures this.accumulatedString.equals(str);
+    //-RAC@   ensures this.chars.equals(str);
     //+RAC@   ensures true;
     //@ pure
     public StringBuffer(/*@ non_null*/String str);
 
     /*-RAC@ also public normal_behavior
-      @   modifies accumulatedString;
-      @   ensures accumulatedString.equals(\old(accumulatedString + c));
+      @   assigns chars;
+      @   ensures chars == (\old(chars) + c);
       @   ensures \result == this;
       @*/
     // The following is needed because AbstractStringBuilder is not a public class
     /*+RAC@ also public normal_behavior
-      @   //-RAC@ assignable accumulatedString;
+      @   //-RAC@ assigns chars;
       @   ensures true;
       @*/
     public synchronized StringBuffer append(char c);
 
     /*-RAC@ also public normal_behavior
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(b))));
+      @   assigns chars;
+      @   ensures chars == \old(chars + String.valueOf(b).chars );
       @   ensures \result == this;
       @*/
     // The following is needed because AbstractStringBuilder is not a public class
     /*+RAC@ also public normal_behavior
-      @   //-RAC@ assignable accumulatedString;
+      @   //-RAC@ assignable chars;
       @   ensures true;
       @*/
     public synchronized StringBuffer append(boolean b);
 
-    /*-RAC@ also public normal_behavior
+    /* FIXME -RAC@ also public normal_behavior
       @   requires str != null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,str)));
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(String.concat(chars,str)));
       @   ensures \result == this;
       @ also
       @ public normal_behavior
       @   requires str == null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,"null")));
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(String.concat(chars,"null")));
       @   ensures \result == this;
       @*/
     // The following is needed because AbstractStringBuilder is not a public class
     /*+RAC@ also public normal_behavior
-      @   //-RAC@ assignable accumulatedString;
+      @   //-RAC@ assignable chars;
       @   ensures true;
       @*/
     public synchronized StringBuffer append(String str);
 
-    /*-RAC@ also public normal_behavior
+    /* FIXME -RAC@ also public normal_behavior
       @     requires obj != null;
-      @     assignable accumulatedString;
-      @     ensures accumulatedString
-      @            .equals(\old(String.concat(accumulatedString,obj.theString)));
+      @     assignable chars;
+      @     ensures chars
+      @            .equals(\old(String.concat(chars,obj.theString)));
       @     ensures \result == this;
       @ also
       @ public normal_behavior
       @   requires obj == null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,"null")));
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(String.concat(chars,"null")));
       @   ensures \result == this;
       @ implies_that
       @   public normal_behavior
       @     requires obj != null;
-      @     assignable accumulatedString;
-      @     ensures accumulatedString.equals(\old(String.concat(accumulatedString,obj.theString)));
+      @     assignable chars;
+      @     ensures chars.equals(\old(String.concat(chars,obj.theString)));
       @     ensures \result == this;
       @*/
     // The following is needed because AbstractStringBuilder is not a public class
     /*+RAC@ also public normal_behavior
-      @   //-RAC@ assignable accumulatedString;
+      @   //-RAC@ assignable chars;
       @   ensures true;
       @*/
     public synchronized StringBuffer append(Object obj);
 
     /*-RAC@ also public normal_behavior
       @   requires sb != null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,sb.accumulatedString)));
+      @   assignable chars;
+      @   ensures chars == \old(chars) + sb.chars;
       @   ensures \result == this;
       @ also
       @ public normal_behavior
       @   requires sb == null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,"null")));
+      @   assignable chars;
+      @   ensures chars == \old(chars) + "null".chars;
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(StringBuffer sb);
 
-    /*-RAC@ also public normal_behavior
+    /* FIXME -RAC@ also public normal_behavior
       @   requires str != null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(String.concat(accumulatedString,
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(String.concat(chars,
       @                        String.valueOf(str, offset, len))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(char[] str, int offset, int len);
 
-    /*-RAC@ also public normal_behavior
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(i))));
+    /* FIXME -RAC@ also public normal_behavior
+      @   assignable chars;
+      @   ensures chars.equals(\old(String.concat(chars,String.valueOf(i))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(int i);
 
-    /*-RAC@ also public normal_behavior
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(f))));
+    /* FIXME -RAC@ also public normal_behavior
+      @   assignable chars;
+      @   ensures chars.equals(\old(String.concat(chars,String.valueOf(f))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(float f);
 
-    /*-RAC@ also public normal_behavior
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(d))));
+    /* FIXME -RAC@ also public normal_behavior
+      @   assignable chars;
+      @   ensures chars.equals(\old(String.concat(chars,String.valueOf(d))));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(double d);
 
-    /*-RAC@ also public normal_behavior
+    /* FIXME -RAC@ also public normal_behavior
       @   requires str != null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(str))));
+      @   assignable chars;
+      @   ensures chars == \old(chars,String.valueOf(str))));
       @   ensures \result == this;
       @ also public normal_behavior
       @   requires str == null;
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(accumulatedString.concat("null")));
+      @   assignable chars;
+      @   ensures chars.equals(\old(chars.concat("null")));
       @   ensures \result == this;
       @
       @*/
     public synchronized StringBuffer append(char[] str);
 
-    /*-RAC@ also public normal_behavior
-      @   assignable accumulatedString;
-      @   ensures accumulatedString.equals(\old(String.concat(accumulatedString,String.valueOf(lng))));
+    /* FIXME -RAC@ also public normal_behavior
+      @   assignable chars;
+      @   ensures chars.equals(\old(String.concat(chars,String.valueOf(lng).chars)));
       @   ensures \result == this;
       @*/
     public synchronized StringBuffer append(long lng);
 
     /*-RAC@ also
       @ public normal_behavior
-      @   requires 0 <= index && index < accumulatedString.length();
-      @   ensures \result == accumulatedString.charAt(index);
+      @   requires 0 <= index && index < chars.length;
+      @   ensures \result == chars[index];
       @ also public exceptional_behavior
-      @   requires !(0<=index && index < accumulatedString.length());
+      @   requires !(0<=index && index < chars.length);
       @   signals_only StringIndexOutOfBoundsException;
       @*/
     public /*@ spec_pure @*/ synchronized char charAt(int index);
@@ -200,68 +198,68 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public synchronized void getChars(int srcBegin, int srcEnd,
                                       char[] dst, int dstBegin);
 
-    /*-RAC@ also public normal_behavior
+    /* FIXME -RAC@ also public normal_behavior
       @     ensures \result != -1 <==> (0 <= \result && \result <=
-      @                            accumulatedString.length()-str.length());
-      @     ensures  accumulatedString.startsWith(str, \result);
+      @                            chars.length-str.chars.length);
+      @     ensures  chars.startsWith(str, \result);
       @     ensures (\forall int i; 0<=i && i < \result;
-      @                     !accumulatedString.startsWith(str,i));
+      @                     !chars.startsWith(str,i));
       @ also
       @   public normal_behavior
-      @     requires !(\exists int k; 0 <= k && k < accumulatedString.length();
-      @                               accumulatedString.startsWith(str, k));
+      @     requires !(\exists int k; 0 <= k && k < chars.length;
+      @                               chars.startsWith(str, k));
       @     ensures \result == -1;
       @*/
     public /*@ spec_pure @*/ int indexOf(/*@ non_null*/String str);
 
-    /*-RAC@ also public normal_behavior
-      @    requires (\exists int k; 0 <= k && k < accumulatedString.length();
-      @                             accumulatedString.startsWith(str, k)
+    /* FIXME -RAC@ also public normal_behavior
+      @    requires (\exists int k; 0 <= k && k < chars.length;
+      @                             chars.startsWith(str, k)
       @                             && k >= Math.min(fromIndex, str.length()));
       @    ensures \result
-      @            == (\min int k; 0 <= k && k < accumulatedString.length()
-      @                            && accumulatedString.startsWith(str, k)
+      @            == (\min int k; 0 <= k && k < chars.length
+      @                            && chars.startsWith(str, k)
       @                            && k >= Math.min(fromIndex, str.length());
       @                            k);
       @ also
       @   public normal_behavior
-      @     requires !(\exists int k; 0 <= k && k < accumulatedString.length();
-      @                               accumulatedString.startsWith(str, k)
+      @     requires !(\exists int k; 0 <= k && k < chars.length;
+      @                               chars.startsWith(str, k)
       @                               && k >= Math.min(fromIndex, str.length()));
       @     ensures \result == -1;
       @*/
     public /*@ spec_pure @*/ synchronized int indexOf(/*@ non_null*/String str, int fromIndex);
 
-    /*-RAC@ also public normal_behavior
-      @     requires (\exists int k; 0 <= k && k < accumulatedString.length();
-      @                              accumulatedString.startsWith(str, k));
+    /* FIXME -RAC@ also public normal_behavior
+      @     requires (\exists int k; 0 <= k && k < chars.length;
+      @                              chars.startsWith(str, k));
       @     //assignable \nothing;
       @     ensures \result
-      @             == (\max int k; 0 <= k && k < accumulatedString.length()
-      @                             && accumulatedString.startsWith(str, k);
+      @             == (\max int k; 0 <= k && k < chars.length
+      @                             && chars.startsWith(str, k);
       @                             k);
       @ also
       @   public normal_behavior
-      @     requires !(\exists int k; 0 <= k && k < accumulatedString.length();
-      @                               accumulatedString.startsWith(str, k));
+      @     requires !(\exists int k; 0 <= k && k < chars.length;
+      @                               chars.startsWith(str, k));
       @     //assignable \nothing;
       @     ensures \result == -1;
       @*/
     public /*@ spec_pure @*/ synchronized int lastIndexOf(/*@ non_null*/String str);
 
-    /*-RAC@ also public normal_behavior
-      @     requires (\exists int k; 0 <= k && k < accumulatedString.length();
-      @                              accumulatedString.startsWith(str, k)
+    /* FIXME -RAC@ also public normal_behavior
+      @     requires (\exists int k; 0 <= k && k < chars.length;
+      @                              chars.startsWith(str, k)
       @                              && k <= Math.min(fromIndex, str.length()));
       @     ensures \result
-      @             == (\max int k; 0 <= k && k < accumulatedString.length()
-      @                             && accumulatedString.startsWith(str, k)
+      @             == (\max int k; 0 <= k && k < chars.length
+      @                             && chars.startsWith(str, k)
       @                             && k <= Math.min(fromIndex, str.length());
       @                             k);
       @ also
       @   public normal_behavior
-      @     requires !(\exists int k; 0 <= k && k < accumulatedString.length();
-      @                               accumulatedString.startsWith(str, k)
+      @     requires !(\exists int k; 0 <= k && k < chars.length;
+      @                               chars.startsWith(str, k)
       @                               && k <= Math.min(fromIndex, str.length()));
       @     //assignable \nothing;
       @     ensures \result == -1;
@@ -270,7 +268,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
     /*-RAC@ also
       @ public normal_behavior
-      @   ensures \result == accumulatedString.length();
+      @   ensures \result == chars.length;
       @*/
     public /*@ spec_pure @*/ synchronized int length();
 
@@ -298,72 +296,72 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     public StringBuffer insert(int offset, double d);
 
     /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + c + accumulatedString.substring(offset)));
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + c + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, char c);
 
-    /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + i + accumulatedString.substring(offset)));
+    /*- FIXME RAC@ also public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + i + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public StringBuffer insert(int offset, int i);
 
-    /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
+    /* FIXME -RAC@ also public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
       @                        + String.valueOf(str)
-      @                        + accumulatedString.substring(offset)));
+      @                        + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, char[] str);
 
-    /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + b + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ also public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + b + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public StringBuffer insert(int offset, boolean b);
 
-    /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + obj + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ also public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + obj + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, Object obj);
 
-    /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + str + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ also public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + str + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, String str);
 
-    /*-RAC@ also public normal_behavior
-      @   requires 0 <= offset <= accumulatedString.length();
-      @   assignable accumulatedString;
-      @   ensures accumulatedString
-      @           .equals(\old(accumulatedString.substring(0,offset)
-      @                        + f + accumulatedString.substring(offset)));
+    /* FIXME -RAC@ also public normal_behavior
+      @   requires 0 <= offset <= chars.length;
+      @   assignable chars;
+      @   ensures chars
+      @           .equals(\old(chars.substring(0,offset)
+      @                        + f + chars.substring(offset)));
       @   ensures \result == this;   
       @*/
     public StringBuffer insert(int offset, float f);
@@ -379,7 +377,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
     //@  public normal_behavior
     // !FIXME! not sure this is really pure, but CharSequence requires purity
     //@  assignable \nothing;
-    //-RAC@  ensures \result.equals(accumulatedString);
+    //-RAC@  ensures \result.chars == this.chars;
     public synchronized String toString();
 
     public synchronized void setLength(int i);

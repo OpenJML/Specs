@@ -29,7 +29,7 @@ import java.util.Locale;
 //@ non_null_by_default
 public class PrintStream extends FilterOutputStream implements Closeable, Appendable {
 
-    //-RAC@ model public String outputText; in outputBytes, _value;
+    //-RAC@ model public \string outputText; in outputBytes, _value;
     //-RAC@ model public boolean endsInNewLine; in outputText;
     //-RAC@ ghost public static final String eol;
     //-RAC@ public static invariant \invariant_for(eol) && eol.length() > 0;
@@ -39,12 +39,12 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     //-RAC@ public model boolean error;
     //-RAC@ represents error = trouble;
     
-    //-RAC@ public invariant outputText != null && \invariant_for(outputText);
+    //-RAC@ public invariant outputText.length >= 0;
     
     //@ static_initializer
 
     /*-RAC@ public normal_behavior
-    @   ensures outputText != null && outputText.isEmpty();
+    @   ensures outputText.isEmpty();
     @   ensures !endsInNewLine;
     @   ensures out.isOpen ==> isOpen;
     @   ensures underlyingStream == out;
@@ -54,7 +54,6 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ public normal_behavior
     @   ensures outputText.isEmpty();
-    @   ensures outputText.equals("");
     @   ensures !endsInNewLine;
     @   ensures out.isOpen ==> isOpen;
     @   ensures underlyingStream == out;
@@ -64,7 +63,6 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     /*-RAC@ public normal_behavior
     @   ensures outputText.isEmpty();
-    @   ensures outputText.equals("");
     @   ensures !endsInNewLine;
     @   ensures out.isOpen ==> isOpen;
     @   ensures underlyingStream == out;
@@ -78,7 +76,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures outputText.equals(\old(outputText) + eol);
+    @   ensures outputText == \old(outputText) + eol.chars;
     @*/
     public void println();
 
@@ -99,7 +97,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
-    @   ensures outputText.equals(\old(outputText) + c) && isOpen;
+    @   ensures (outputText == \old(outputText) + c) && isOpen;
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void print(char c);
@@ -108,7 +106,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures outputText.equals(\old(outputText) + x + eol); 
+    @   ensures outputText == \old(outputText) + x + eol.chars; 
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void println(char x); 
@@ -117,7 +115,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText;
     @   ensures endsInNewLine & isOpen;
-    @   ensures x != null ==> outputText == String.concat(String.concat(\old(outputText), x), eol);
+    @   ensures x != null ==> outputText == \old(outputText) + x.chars + eol.chars;
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void println(/*@ nullable */String x);
@@ -126,8 +124,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText;
     @   ensures isOpen;
-    @   ensures s != null ==> outputText == String.concat(\old(outputText),s);
-    @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s;
+    @   ensures s != null ==> outputText == \old(outputText) + s.chars;
+    @   ensures (s != null && \old(outputText).isEmpty()) ==> outputText == s.chars;
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void print(/*@ nullable */String s);
@@ -144,8 +142,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures (x!=null)==> outputText.equals(\old(outputText) + x.ptoString() + eol);
-    @   ensures (x==null)==> outputText.equals(\old(outputText)+"null"+eol);
+    @   ensures (x!=null)==> outputText == \old(outputText) + x.ptoString().chars + eol.chars;
+    @   ensures (x==null)==> outputText == \old(outputText)+"null".chars+eol.chars;
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void println(/*@ nullable */Object x);
@@ -154,8 +152,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures isOpen;
-    @   ensures (obj!=null)==> outputText.equals(\old(outputText) + obj.ptoString());
-    @   ensures (obj==null)==> outputText.equals(\old(outputText)+"null");
+    @   // FIXME ensures (obj!=null)==> outputText.equals(\old(outputText) + obj.ptoString();
+    @   // FIXME ensures (obj==null)==> outputText.equals(\old(outputText)+"null";
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void print(/*@ nullable */Object obj);
