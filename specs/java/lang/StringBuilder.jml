@@ -25,7 +25,7 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
  
     //@ public normal_behavior
     //@   requires str != null;
-    //@   ensures chars == str;
+    //-RAC@   ensures chars == str.chars;
     // @   ensures capacity == str.length() + extraCapacity;
     //-RAC@   ensures chars.length == str.chars.length;
     //@ also public exceptional_behavior

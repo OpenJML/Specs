@@ -9,7 +9,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
 
     private final String value; //-RAC@ in length;
     
-    //-RAC@ model public final \bigint length;
+    //-RAC@ model public final \bigint length; // FIXME - make into \bigint eventually
     //-RAC@ public final invariant \bigint.zero <= length;
     //-RAC-ESC+JMLSTRING@ private final invariant value != null && length == value.length();
 
@@ -167,7 +167,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@   ensures \result.length == this.length+s.chars.length;
     //-RAC@   ensures \forall \bigint i; 0 <= i < length; \result[i] == this[i];
     // -RAC@   ensures \forall int i; 0 <= i < s.length(); \result[i+length] == s.chars[i];
-    //-RAC@   ensures \forall int i; length <= i < length+s.chars.length; \result[i] == s.chars[i-length.intValue()];
+    //-RAC@   ensures \forall \bigint i; length <= i < length+s.chars.length; \result[i] == s.chars[i-length];
     public string append(String s);
 
     //@ public normal_behavior
