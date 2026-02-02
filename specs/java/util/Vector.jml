@@ -201,7 +201,7 @@ public class Vector<E> extends AbstractList<E>
 
 
     // specification inherited
-    public /*@ pure @*/ boolean contains(Object elem);
+    public /*@ spec_pure @*/ boolean contains(Object elem);
 
     // specification inherited
     public synchronized /*@ pure @*/ int indexOf(Object o);

@@ -42,7 +42,7 @@ public interface Set<E> extends Collection<E> {
     boolean isEmpty();
 
     // specification inherited 
-    /*@ pure */ boolean contains(/*@ nullable */ Object o);
+    /*@ spec_pure */ boolean contains(/*@ nullable */ Object o);
 
     // specification inherited
     Iterator<E> iterator();

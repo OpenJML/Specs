@@ -73,7 +73,6 @@ public final class String
     /*@  public normal_behavior
       @   requires value != null;
       @   //-RAC@ ensures this.chars.length == value.length;
-      @   //-RAC@ ensures this.chars.length == value.length;
       @   //-RAC@ ensures (\forall int i; 0 <= i < value.length; this.chars[i] == value[i]);
       @
       @ also public exceptional_behavior
@@ -274,9 +273,7 @@ public final class String
     // inherits specs from CharSequence - \result == chars.length
     public /*@ spec_pure helper @*/ int length();
     
-    /*@ also public normal_behavior
-      @   //-RAC@ ensures \result == (this.chars.length == 0);
-      @*/
+    // inherits specs from CharSequence - \result <==> (chars.length==0)
     @Override
     public /*@ spec_pure @*/ boolean isEmpty();
 
@@ -411,11 +408,11 @@ public final class String
     //-RAC@ axiom (\forall String s1,s2,s3; equals(s1,s2) ==> (equals(s1,s3) <==> equals(s2,s3)));
 
     //@ also public normal_behavior
-    //@   requires anObject != null && (anObject instanceof String);
-    //-RAC@   ensures \result == (this.chars == ((String)anObject).chars); // FIXME - still?? causes many straightforward proofs to be incomplete
+    //@       requires anObject != null && (anObject instanceof String);
+    //-RAC@   ensures \result <==> (this.chars == ((String)anObject).chars);
     //@ also public normal_behavior
-    //@   requires !(anObject instanceof String);
-    //@   ensures !\result;
+    //@       requires !(anObject instanceof String);
+    //@       ensures !\result;
     public /*@ pure @*/ boolean equals(/*@ nullable */ Object anObject);
 
     //@ public normal_behavior
@@ -608,7 +605,7 @@ public final class String
 
     /*-RAC@  public normal_behavior
       @   requires suffix != null && suffix.chars.length <= chars.length;
-      @   ensures \result == (chars.substring(length() - suffix.length()) == suffix.chars);
+      @   ensures \result == (chars.tail(length() - suffix.length()) == suffix.chars);
       @  also
       @   requires suffix != null && suffix.chars.length > chars.length;
       @   ensures !\result;
@@ -801,13 +798,10 @@ public final class String
 
 
     //@ public normal_behavior
-    //@   requires s1 != null && s2 != null;
-    //@   requires s1.length() + s2.length() <= Integer.MAX_VALUE;
-    //@   ensures \result.length() == s1.length() + s2.length();
-    //@   //  -RAC@ ensures java.util.Arrays.equalArrays(\result.chars,0,s1.chars,0,s1.length());
-    //@   //  -RAC@ ensures java.util.Arrays.equalArrays(\result.chars,s1.length(),s2.chars,0,s2.length());
-    //@ //-RAC@ also public normal_behavior
-    //@ //-RAC@   requires !(s1 != null && s2 != null && s1.chars.length + s2.chars.length <= Integer.MAX_VALUE);
+    //@       requires s1 != null && s2 != null;
+    // @       requires s1.length() + s2.length() <= Integer.MAX_VALUE; // FIXME - this is a nuisance to assume everywhere there is String concatenation
+    //@       ensures \result.length() == s1.length() + s2.length();
+    //-RAC@   ensures \result.chars == s1.chars.append(s2.chars);
     //@ public model static pure non_null String concat(nullable String s1, nullable String s2);
 
     /** This is the method version of the infix + operation */
@@ -817,9 +811,7 @@ public final class String
     //@ also public normal_behavior
     //@     requires str != null; 
     //-RAC@ ensures \result.chars.length == this.chars.length + str.chars.length;
-    //-RAC@ ensures \result.chars == this.chars + str.chars;
-    //-RAC@ ensures \result.startsWith(this);
-    //-RAC@ ensures \result.endsWith(str);
+    //-RAC@ ensures \result.chars == this.chars.append(str.chars);
     public /*@ pure @*/ /*@ non_null @*/ String concat(/*@ nullable */ String str);
 
     /*-RAC@  public normal_behavior

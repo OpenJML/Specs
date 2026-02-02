@@ -12,14 +12,16 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     //private static final int MAX_ARRAY_SIZE;
 
     //@ normal_behavior
-    //@   ensures true;
+    //-RAC@   ensures chars.length == 0;
     //@ spec_pure
     AbstractStringBuilder();
     //@ normal_behavior
-    //@   ensures true;
+    //-RAC@   ensures chars.length == 0;
+    //-RAC@   ensures capacity >= size;
     //@ spec_pure
     AbstractStringBuilder(int size);
 
+    // inherits \result == chars.length;
     //@ also normal_behavior
     //@   ensures \result == count;
     //@ spec_pure
@@ -29,6 +31,8 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     //-RAC@ ensures \result == capacity;
     //@ spec_pure
     public int capacity();
+    
+    
 //    public void ensureCapacity(int);
 //    private void ensureCapacityInternal(int);
 //    private int newCapacity(int);
@@ -46,8 +50,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @   requires srcEnd <= chars.length();
       @   requires 0 <= dstBegin && dstBegin + srcEnd - srcBegin <= dst.length;
       @   assignable dst[dstBegin .. dstBegin+srcEnd-srcBegin];
-      @   //-RAC@ ensures CharSequence.equal(chars,srcBegin,
-        //-RAC@                  dst,dstBegin,srcEnd-srcBegin);
+      @   //-RAC@ ensures CharSequence.equal(chars,srcBegin,dst,dstBegin,srcEnd-srcBegin);
       @*/
     public synchronized void getChars(int srcBegin, int srcEnd,
                                     char[] dst, int dstBegin);
@@ -55,110 +58,103 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     /*-RAC@ public normal_behavior
     @   requires 0 <= index < chars.length;
     @   assignable chars;
-    @   ensures chars == \old(chars.substring(0,index)
-    @                        + ch + chars.substring(index+1));
-    @ implies_that
-    @ public normal_behavior
-    @   requires 0 <= index < chars.length();
-    @   assignable chars;
-    @   ensures chars.length
-    @           == \old(chars.length)
-    @        && (\forall int i; 0 <= i < chars.length
-    @                                  && i != index;
-    @                           chars[i]
-    @                           == \old(chars[i]))
-    @        && chars.charAt(index) == ch;
+    @   ensures chars == chars.put(index, ch);
     @*/
     public void setCharAt(int index, char ch);
     
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + o._value *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + o._value *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(/*@ nullable */Object o);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+    //-RAC@   assignable _value, chars;
+    //-RAC@   ensures (* _value == \old(_value) + s *);
+    //-RAC@   ensures this.chars == \old(this.chars).append(s.chars);
+    //@       ensures \result == this;
     public AbstractStringBuilder append(String s);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
-    //@   ensures \result == this;
+    //-RAC@   assignable _value, chars;
+    //-RAC@   ensures (* _value == \old(_value) + s *);
+    //-RAC@   ensures this.chars == \old(this.chars).append(s.chars);
+    //@       ensures \result == this;
     public AbstractStringBuilder append(StringBuffer s);
 
     //@ normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + b.toString() *);
-    //@   ensures \result == this;
+    //-RAC@   assignable _value, chars;
+    //-RAC@   ensures (* _value == \old(_value) + b.toString() *);
+    //-RAC@   ensures this.chars == \old(this.chars).append(b.chars);
+    //@       ensures \result == this;
     AbstractStringBuilder append(AbstractStringBuilder b);
 
     //@ also public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + c *);
-    //@   ensures \result == this;
+    //-RAC@   assignable _value, chars;
+    //-RAC@   ensures (* _value == \old(_value) + c *);
+    //-RAC@   ensures this.chars == \old(this.chars).append(c.chars);
+    //@       ensures \result == this;
     public AbstractStringBuilder append(CharSequence c);
 
     //@ private normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     private AbstractStringBuilder appendNull();
 
     //@ also public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     @Override
     public AbstractStringBuilder append(CharSequence c, int offset, int length);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
+    //-RAC@   assignable _value, chars;
     //@   ensures (* _value == \old(_value) + x *);
     //@   ensures \result == this;
     public AbstractStringBuilder append(char[] ca);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(char[]ca, int offset, int length);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + s *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + s *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(boolean b);
     
     //@ also public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //-RAC@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   ensures this.chars == \old(this.chars).append(x);
     //@   ensures \result == this;
     public AbstractStringBuilder append(char x);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(int x);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(long x);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(float f);
 
     //@ public normal_behavior
-    //-RAC@   assignable _value;
-    //@   ensures (* _value == \old(_value) + x *);
+    //-RAC@   assignable _value, chars;
+    //@   ensures (* _value == \old(_value) + x *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder append(double d);
     
@@ -167,13 +163,13 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
     //@ public normal_behavior
     //-RAC@   assignable _value, chars;
-    //@   ensures (* _value == \old(_value) + s *);
+    //@   ensures (* _value == \old(_value) + s *); // FIXME - chars
     //@   ensures \result == this;
     public AbstractStringBuilder appendCodePoint(int s);
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= index < chars.length;
-      @   assignable chars;
+      @   assignable _value, chars;
       @   ensures chars.substring(0,index) == 
       @                  \old(chars.substring(0,index));
       @   ensures
@@ -191,19 +187,18 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
     /*-RAC@ public normal_behavior
     @   requires 0 <= offset <= chars.length;
-    @   assignable chars;
-    @   ensures chars == (\old(chars.substring(0,offset)
-    @                        + c + chars.substring(offset)));
+    @   assignable _value, chars;
+    @   ensures chars == \old(this.chars).insert(offset, c);
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, char c);
 
     /* FIXME -RAC@ public normal_behavior
       @   requires 0 <= offset <= chars.length;
-      @   assignable chars;
+      @   assignable _value, chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + i + chars.substring(offset)));
+      @                        + i + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, int i);
@@ -213,7 +208,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @             + String.valueOf(l) + chars.substring(offset)));
+      @             + String.valueOf(l) + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, long l);
@@ -224,7 +219,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @   ensures chars
     @           .equals(\old(chars.substring(0,offset)
     @                        + String.valueOf(str)
-    @                        + chars.substring(offset)));
+    @                        + chars.tail(offset)));
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, char[] str);
@@ -234,7 +229,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @   assignable chars;
     @   ensures chars
     @           .equals(\old(chars.substring(0,offset)
-    @                        + b + chars.substring(offset)));
+    @                        + b + chars.tail(offset)));
     @   ensures \result == this;   
     @*/
     public AbstractStringBuilder insert(int offset, boolean b);
@@ -253,7 +248,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
     @   requires 0 <= offset <= chars.length;
     @   assignable chars;
     @   ensures chars == \old(chars.substring(0,offset)
-    @                        + str.chars + chars.substring(offset));
+    @                        + str.chars + chars.tail(offset));
     @   ensures \result == this;   
     @*/
     public synchronized AbstractStringBuilder insert(int offset, String str);
@@ -263,7 +258,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + f + chars.substring(offset)));
+      @                        + f + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, float f);
@@ -273,7 +268,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + d + chars.substring(offset)));
+      @                        + d + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public AbstractStringBuilder insert(int offset, double d);

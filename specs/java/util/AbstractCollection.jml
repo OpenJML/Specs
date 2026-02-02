@@ -45,7 +45,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
     public /*@ pure @*/ boolean isEmpty();
 
     // specification inherited from Collection
-    public /*@ pure @*/ boolean contains(Object o);
+    public /*@ spec_pure @*/ boolean contains(Object o);
 
     // specification inherited from Collection
     public /*@ pure @*/ Object[] toArray();

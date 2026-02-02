@@ -82,7 +82,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
     public void addLast(/*@ nullable */ E o);
     
     // -- all other methods are specified by List --
-    //@ pure
+    //@ spec_pure
     public boolean contains(Object o);
     
     //@ pure

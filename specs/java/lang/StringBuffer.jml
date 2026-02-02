@@ -300,7 +300,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + c + chars.substring(offset)));
+      @                        + c + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, char c);
@@ -310,7 +310,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + i + chars.substring(offset)));
+      @                        + i + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public StringBuffer insert(int offset, int i);
@@ -321,7 +321,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
       @                        + String.valueOf(str)
-      @                        + chars.substring(offset)));
+      @                        + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, char[] str);
@@ -331,7 +331,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + b + chars.substring(offset)));
+      @                        + b + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public StringBuffer insert(int offset, boolean b);
@@ -341,7 +341,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + obj + chars.substring(offset)));
+      @                        + obj + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, Object obj);
@@ -351,7 +351,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + str + chars.substring(offset)));
+      @                        + str + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public synchronized StringBuffer insert(int offset, String str);
@@ -361,7 +361,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
       @   assignable chars;
       @   ensures chars
       @           .equals(\old(chars.substring(0,offset)
-      @                        + f + chars.substring(offset)));
+      @                        + f + chars.tail(offset)));
       @   ensures \result == this;   
       @*/
     public StringBuffer insert(int offset, float f);

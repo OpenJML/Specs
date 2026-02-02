@@ -50,7 +50,7 @@ public interface List<E> extends SequencedCollection<E> {
     //@ pure
     boolean isEmpty();
 
-    //@ pure // FIXME - this ought to be simply inherited
+    //@ spec_pure
     boolean contains(/*@nullable*/ Object o);
 
     /*@ also

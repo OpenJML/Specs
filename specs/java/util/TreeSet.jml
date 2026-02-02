@@ -33,7 +33,7 @@ public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.Na
   //@ pure
   public boolean isEmpty();
   
-  //@ pure
+  //@ spec_pure
   public boolean contains(java.lang.Object o);
   
   //@ pure

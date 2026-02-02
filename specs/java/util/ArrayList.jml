@@ -104,7 +104,7 @@ public class ArrayList<E> extends AbstractList<E>
     // specification inherited from List
     //@ also public normal_behavior ensures true;
     //@   //-RAC@ ensures \result == (\exists \bigint i; 0 <= i <= values.length; Objects.equals(elem, values[i]));
-    public /*@ pure @*/ boolean contains(Object elem);
+    public /*@ spec_pure @*/ boolean contains(Object elem);
 
     // specification inherited from List
     public /*@ pure @*/ int indexOf(Object elem);
