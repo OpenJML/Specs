@@ -1,5 +1,5 @@
 .DS_Store
-./genericmodels/**
+genericmodels/**/*.java
 *.json
 **/.DS_Store
 /bin/
