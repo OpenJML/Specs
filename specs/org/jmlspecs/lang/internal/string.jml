@@ -11,7 +11,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     
     //-RAC@ model public final \bigint length;
     //-RAC@ public final invariant \bigint.zero <= length;
-    //-RAC@ model public static final \string bg;
+    //-RAC@ public final invariant \forall \bigint i;; !(0 <= i < this.length) ==> this[i] == empty[i];
 
     //@ spec_public
     private final static String emptyString;
@@ -29,22 +29,21 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@ static_initializer
     
     //@ private normal_behavior
-    //@       requires true;
     //@       ensures value == s;
     //-RAC@   ensures length == s.chars.length;
-    // -RAC@   ensures eqspan(this, bigint.zero, s.chars, bigint.zero, s.chars.length);
-    //-RAC@   ensures \forall \bigint i;; this[i] == (i < 0 ? 0 : i < s.length() ? s.charAt(i.intValue()) : 0);
+    //-RAC@   ensures \forall \bigint i;; this[i] == (i < 0 ? empty[i] : i < s.length() ? s.charAt(i.intValue()) : empty[i]);
     private string(String s);  // s is non_null by default
 
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result.length == \bigint.zero;
-    //-RAC@   ensures \forall \bigint i;; \result[i] == 0;
+    //-RAC@   ensures \result == empty;
     public static string empty();
     
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result <==> this.length == \bigint.zero;
+    //-RAC@   ensures \result <==> this == empty;
     //@ helper
     public boolean isEmpty();
     
@@ -63,6 +62,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result == s.chars;
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (0 <= i < s.length() ? s.charAt((int)i) : empty[i]);
     //@ also private normal_behavior
     //@       requires true;
     //-RAC@   ensures \result.value == s;    
@@ -72,7 +72,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@       requires true;
     //-RAC@   ensures \result.length == 1;
     //-RAC@   ensures \result[0] == c;
-    //-RAC@   ensures \forall \bigint i;; i != 0 ==> \result[i] == 0;
+    //-RAC@   ensures \forall \bigint i;; i != 0 ==> \result[i] == empty[i];
     public static string of(char c);
     
     //@ public normal_behavior
@@ -100,7 +100,6 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
  
     //@ public normal_behavior
     //@       requires true;
-    // -RAC@   ensures \result == (this.length == s.length && eqspan(this, bigint.zero, s, bigint.zero, this.length));
     //-RAC@   ensures \result == (this.length == s.length && \forall \bigint i;; this[i] == s[i]);
     //@ helper
     public boolean eq(string s);
@@ -109,27 +108,31 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@       requires true;
     //-RAC@   ensures \result == !eq(s);
     //@ helper
-    public boolean ne(string s);  // s is non_null by default
+    public boolean ne(string s);
     
     //@ public normal_behavior
     //@       requires true;
-    //-RAC@   ensures \result == !(this < s);
-    public boolean ge(string s);  // s is non_null by default
+    //-RAC@   ensures \result == !this.lt(s);
+    public boolean ge(string s);
     
     //@ public normal_behavior
     //@       requires true;
-    //-RAC@   ensures \result == (s < this);
-    public boolean gt(string s);  // s is non_null by default
+    //-RAC@   ensures \result == s.lt(this);
+    public boolean gt(string s);
     
     //@ public normal_behavior
     //@       requires true;
-    //-RAC@   ensures \result == !(s < this);
-    public boolean le(string s);  // s is non_null by default
+    //-RAC@   ensures \result == !s.lt(this);
+    public boolean le(string s);
     
     //@ public normal_behavior
     //@       requires true;
-    //-RAC@   ensures \result == (this < s);
-    public boolean lt(string s);  // s is non_null by default
+    //-RAC@   ensures \result == lt(s, \bigint.zero);
+    public boolean lt(string s);
+    
+    //-RAC@ ensures \result == (k < s.length && ( k >= this.length || this[k] < s[k] || lt(s, k+1)));
+    //-RAC@ measured_by this.length - k;
+    //-RAC@ model public boolean lt(string s, \bigint k);
     
     //@ public normal_behavior
     //-ESC@   requires length() > 0;
@@ -142,51 +145,47 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-ESC@   requires 0 <= k <= length();
     //-RAC@   requires 0 <= k <= length;
     //-RAC@   ensures \result.length == k;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, bigint.zero, k);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == ( 0 <= i < k ? this[i] : empty[i] );
     public string head(bigint k);
     
     //@ public normal_behavior
     //-ESC@   requires length() > 0;
     //-RAC@   requires length > 0;
     //-RAC@   ensures \result.length == this.length-1;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, bigint.one, \result.length);
-    //-RAC@   ensures \forall \bigint i;; \result[i] == (0 <= i < \result.length ? this[i+\bigint.one] : 0);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (0 <= i < \result.length ? this[i+\bigint.one] : empty[i]);
     public string tail();
     
     //@ public normal_behavior
     //-ESC@   requires length() >= k;
     //-RAC@   requires length >= k;
     //-RAC@   ensures \result.length == this.length-k;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, k, \result.length);
-    //-RAC@   ensures \forall \bigint i;; \result[i] == (0 <= i < \result.length ? this[i+k] : 0);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (0 <= i < \result.length ? this[i+k] : empty[i]);
     public string tail(bigint k);
     
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result.length == this.length+1;
-    //-RAC@   ensures eqspan(\result, bigint.one, this, bigint.zero, this.length);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (i == empty[i] ? v : i <= this.length ? this[i+1] : this[i]);
     //-RAC@   ensures \result[bigint.zero] == v;
     public string prepend(char v);
 
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result.length == this.length+1;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, bigint.zero, this.length);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (i == this.length ? v : this[i]);
     //-RAC@   ensures \result[this.length] == v;
     public string append(char v);
 
     //@ public normal_behavior
     //@       requires s != null;
     //-RAC@   ensures \result.length == this.length + s.chars.length;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, bigint.zero, this.length);
-    //-RAC@   ensures eqspan(\result, this.length, s.chars, bigint.zero, s.chars.length);
-    //-RAC@   ensures \forall \bigint i;; \result[i] == (i < this.length ? this[i] : s.chars[i - this.length]);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (i < this.length ? this[i] : i < \result.length ? s.chars[i - this.length] : empty[i]);
     public string append(String s);
 
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result.length == this.length + s.length;
-    //-RAC@   ensures \forall \bigint i;; \result[i] == (i < this.length ? this[i] : s[i - this.length]);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (i < this.length ? this[i] : i < \result.length ? s[i - this.length] : empty[i]);
     public string append(string s);
 
     //@ public behavior
@@ -194,8 +193,6 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@   requires 0 <= i <= length;
     //-RAC@   ensures \result[i] == v;
     //-RAC@   ensures \result.length == this.length;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, bigint.zero, i);
-    //-RAC@   ensures eqspan(\result, i+1, this, i+1, this.length - i - 1);
     //-RAC@   ensures \forall \bigint k;; \result[k] == ( k == i ? v : this[k] ); 
     public string put(bigint i, char v);
     
@@ -204,32 +201,29 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@   requires 0 <= ii <= this.length;
     //-RAC@   ensures \result.length == this.length+1;
     //-RAC@   ensures \result[ii] == v;
-    // -RAC@   ensures eqspan(\result, bigint.zero, this, bigint.zero, ii);
-    // -RAC@   ensures eqspan(\result, ii+1, this, ii, this.length - ii);
-    //-RAC@   ensures \forall \bigint k;; \result[k] == ( k < ii ? this[k] : k == ii ? v : this[k+1] ); 
+    //-RAC@   ensures \forall \bigint k;; \result[k] == ( k < ii ? this[k] : k == ii ? v : k < \result.length ? this[k-1] : this[k]); 
     public string insert(bigint ii, char v);
 
     //@ public normal_behavior
     //-ESC@   requires 0 <= ii < this.length();
     //-RAC@   requires 0 <= ii < this.length;
     //-RAC@   ensures \result.length == this.length-1;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, bigint.zero, ii);
-    //-RAC@   ensures eqspan(\result, ii, this, ii+1, this.length - ii - 1);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == ( 0 <= i < ii ? this[i] : ii <= i < \result.length ? this[i+1] : empty[i]);
     public string remove(bigint ii);
 
     //@ public normal_behavior
     //-ESC@   requires 0 <= start <= end <= length();
     //-RAC@   requires 0 <= start <= end <= length;
     //-RAC@   ensures \result.length == end - start;
-    //-RAC@   ensures eqspan(\result, bigint.zero, this, start, end-start);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == ( i < 0 ? empty[i] : i < \result.length ? this[i+start] : empty[i] );
     public string substring(bigint start, bigint end);
     
     //@ public normal_behavior
-    //-RAC@   ensures \result == (p.length <= this.length && eqspan(this, bigint.zero, p, bigint.zero, p.length));
+    //-RAC@   ensures \result == (p.length <= this.length && \forall \bigint i; 0 <= i < p.length; p[i] == this[i]);
     public boolean startsWith(string p);
     
     //@ public normal_behavior
-    //-RAC@   ensures \result == (p.length <= this.length && eqspan(this, this.length - p.length, p, bigint.zero, p.length));
+    //-RAC@   ensures \result == (p.length <= this.length && \forall \bigint i; 0 <= i < p.length; p[i] == this[i + this.length-p.length]);
     public boolean endsWith(string p);
     
     //@ requires false; // Not defined for JML primitive types. Use eq.

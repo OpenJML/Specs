@@ -1,4 +1,5 @@
 .DS_Store
+./genericmodels/**
 *.json
 **/.DS_Store
 /bin/

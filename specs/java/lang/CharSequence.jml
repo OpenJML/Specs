@@ -29,6 +29,12 @@ public interface CharSequence {
     //-RAC@ model public instance \string chars; 
     //-RAC@ model public static \string bg;
     
+    //-RAC@ model public static final CharSequence eol;
+    
+    //-RAC@ ensures eol == "\n";
+    //@     ensures true;
+    //@ static_initializer
+    
     /*-RAC@ public normal_behavior
         ensures \result == (b != null && a.length == b.length && \forall int i; 0 <= i < a.length; a[i] == b[i]);
         public static spec_pure helper model boolean equal(\string a, char[] b);
@@ -48,8 +54,6 @@ public interface CharSequence {
     public static spec_pure helper model boolean lessThan(char[] a, char[] b);
  */
 
-    // @ axiom (\forall char[] a,b; a!=null && b !=null; equal(a,b) <==> equal(b,a));
-    // @ axiom (\forall char[] a,b,c; a!=null && b !=null && c != null; (equal(a,b) && equal(b,c))==>equal(a,c)); 
 
     //@ public normal_behavior
     //@      ensures \result >= 0;

@@ -31,8 +31,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
 
     //-RAC@ model public \string outputText; in outputBytes, _value;
     //-RAC@ model public boolean endsInNewLine; in outputText;
-    //-RAC@ ghost public static final String eol;
-    //-RAC@ public static invariant \invariant_for(eol) && eol.length() > 0;
+    // -RAC@ ghost public static final String eol;
+    // -RAC@ public static invariant \invariant_for(eol) && eol.length() > 0;
 
     //@ spec_public
     private boolean trouble; //-RAC@ in error;
@@ -76,7 +76,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures outputText == \old(outputText) + eol.chars;
+    @   ensures outputText == \old(outputText) + CharSequence.eol.chars;
     @*/
     public void println();
 
@@ -106,7 +106,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures outputText == \old(outputText) + x + eol.chars; 
+    @   ensures outputText == \old(outputText) + x + CharSequence.eol.chars; 
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void println(char x); 
@@ -115,7 +115,7 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText;
     @   ensures endsInNewLine & isOpen;
-    @   ensures x != null ==> outputText == \old(outputText) + x.chars + eol.chars;
+    @   ensures x != null ==> outputText == \old(outputText) + x.chars + CharSequence.eol.chars;
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void println(/*@ nullable */String x);
@@ -142,8 +142,8 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures (x!=null)==> outputText == \old(outputText) + x.ptoString().chars + eol.chars;
-    @   ensures (x==null)==> outputText == \old(outputText)+"null".chars+eol.chars;
+    @   ensures (x!=null)==> outputText == \old(outputText) + x.ptoString().chars + CharSequence.eol.chars;
+    @   ensures (x==null)==> outputText == \old(outputText)+"null".chars + CharSequence.eol.chars;
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void println(/*@ nullable */Object x);

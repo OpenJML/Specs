@@ -758,7 +758,7 @@ public final class String
     /*-RAC@  public normal_behavior
       @   requires 0 <= beginIndex <= chars.length;
       @   //-RAC@ ensures \result.chars.length == this.chars.length - beginIndex
-      @   //-RAC@      && (\result.chars == chars.substring(beginIndex, chars.length));
+      @   //-RAC@      && (\result.chars == chars.tail(beginIndex));
       @   ensures beginIndex == 0 ==> (this.chars == \result.chars);
       @ also
       @  public exceptional_behavior
