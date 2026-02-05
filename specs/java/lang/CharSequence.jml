@@ -26,8 +26,8 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //-RAC@ model public instance \string chars; 
-    //-RAC@ model public static \string bg;
+    //-RAC@ model public final instance \string chars; 
+
     
     //-RAC@ model public static final CharSequence eol;
     
@@ -78,7 +78,7 @@ public interface CharSequence {
       @      requires 0 <= start <= end <= chars.length;
       @      ensures \result != null;
       @      ensures \result.chars.length == end-start;
-      @      ensures \forall \bigint i;; \result.chars[i] == (i < 0 ? bg[i] : i < end-start ? this.chars[start+i] : bg[i]);
+      @      ensures \forall \bigint i;; \result.chars[i] == (i < 0 ? \string.empty[i] : i < end-start ? this.chars[start+i] : \string.empty[i]);
       @      ensures start==0 && end == length() ==>
       @                          \result.chars == this.chars;
       @  also

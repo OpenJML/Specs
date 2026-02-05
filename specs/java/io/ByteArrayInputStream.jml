@@ -13,14 +13,14 @@ package java.io;
 public class ByteArrayInputStream extends InputStream {
 
     /*@ spec_public */ protected byte[] buf; // Input buffer
-    /*@ spec_public */ protected int count;  // One more than the last readable position
-    /*@ spec_public */ protected int mark; //-RAC@ in markPosition;
-    /*@ spec_public */ protected int pos;  //-RAC@ in readPosition;
-    
-    //-RAC@ represents markPosition = mark;
-    //-RAC@ represents readPosition = pos;
+    /*@ spec_public */ protected int count;  // One more than the last readable position, measured from beginning of buf
+    /*@ spec_public */ protected int mark; //-RAC@ in markPosition;  // measured from beginning of buf
+    /*@ spec_public */ protected int pos;  //-RAC@ in readPosition; // measured from beginning of buf
+    //-RAC@ ghost public final int offset;  // measured from beginning of buf
+    //-RAC@ represents markPosition = mark - offset; // measured from offset
+    //-RAC@ represents readPosition = pos - offset; // measured from offset
 
-    //-RAC@ public invariant count == inputBytes.length;
+    //  -RAC@ public invariant count == offset + inputBytes.length;
     
     // In fact any derived class can change them as it wishes.
     // Hence all sorts of errors can occur in the various methods.
@@ -34,7 +34,7 @@ public class ByteArrayInputStream extends InputStream {
       @*/
 
     // CONSTRUCTORS
-
+    
     /*-RAC@
       @ public normal_behavior
       @    requires buf != null;
@@ -42,6 +42,7 @@ public class ByteArrayInputStream extends InputStream {
       @    ensures initialInputStream();
       @    ensures this.buf == buf;
       @    ensures pos == 0;
+      @    ensures offset == 0;
       @    ensures count == buf.length;
       @    ensures mark == 0;
       @    ensures markPosition == mark && markLimit == buf.length;
@@ -60,11 +61,12 @@ public class ByteArrayInputStream extends InputStream {
       @    ensures initialInputStream();
       @    ensures this.buf == buf;
       @    ensures this.pos == offset;
+      @    ensures this.offset == offset;
       @    ensures this.count == Math.min(buf.length,offset+length);
       @    ensures this.mark == offset;
-      @    ensures markPosition == mark && markLimit == buf.length;
+      @    ensures markPosition == mark - offset && markLimit == this.count - offset;
       @    ensures valid();
-      @    ensures inputBytes.length == buf.length;
+      @    ensures inputBytes.length == length;
       @    ensures \forall int i; 0 <= i < length; inputBytes[i] == buf[i+offset];
       @ pure
       // FIXME - what if offset or length is negative? The actual implementation of the constructor is OK, but subsequent reads will throw ArrayIndexOutOfBounds
@@ -73,26 +75,26 @@ public class ByteArrayInputStream extends InputStream {
 
     // METHODS
 
-    /*@
+    /*-RAC@
       @ also public normal_behavior
+      @   requires isOpen; 
       @   ensures \result == count - pos;
-      @ pure
+      @ spec_pure
       @*/
     @Override
     public synchronized int available();
 
     /*-RAC@ // CAUTION: RAC cannot support either Java-protected nor model fields
-      @ also public normal_behavior
-      @   requires pos < count;
+      @ also public behavior
+      @   requires isOpen && pos < count;
       @   assigns streamState;
       @   ensures \result == \old(buf[pos]);
       @   ensures pos == \old(pos+1);
-      @   ensures mark == \old(mark);
       @   ensures isOpen;
-      @   ensures \not_modified(markPosition, markLimit);
+      @   ensures \not_modified(mark, offset, markPosition, markLimit);
       @   ensures valid();
       @ also public normal_behavior
-      @   requires pos >= count;
+      @   requires isOpen && pos >= count;
       @   assigns \nothing;
       @   ensures \result == -1;
       @*/
@@ -105,9 +107,11 @@ public class ByteArrayInputStream extends InputStream {
 
     /*-RAC@
       @ also public normal_behavior
+      @   requires _markSupported;
       @   modifies readPosition;
       @   ensures pos == mark;
-      @   ensures pos == readPosition;
+      @   ensures pos == markPosition + offset;
+      @   ensures readPosition == markPosition;
       @*/
     @Override
     public synchronized void reset();
@@ -120,23 +124,24 @@ public class ByteArrayInputStream extends InputStream {
 
     /*-RAC@
       @ also public normal_behavior
-      @   assigns markPosition,markLimit;
-      @   ensures mark == pos;
-      @   ensures mark == markPosition;
-      @   ensures markLimit == buf.length;
+      @   requires _markSupported && isOpen;
+      @   assigns mark, markPosition, markLimit;
+      @   ensures mark == \old(pos);
+      @   ensures markPosition == \old(pos - offset);
+      @   ensures markLimit == markPosition + limit;
       @*/
-    // The argument is ignored
+    // The argument is ignored in RAC? -- FIXME - correct?
     @Override
     public void mark(int limit);
 
     /*-RAC@
       @ also public normal_behavior
-      @   requires n <= 0;
-      @   modifies \nothing;
+      @   requires isOpen && n <= 0;
+      @   assigns \nothing;
       @   ensures \result == 0;
       @ also public normal_behavior
-      @   requires n > 0;
-      @   modifies streamState;
+      @   requires isOpen && n > 0;
+      @   assigns streamState;
       @   ensures isOpen;
       @   ensures \result == \old(Math.min(n, count-pos));
       @   ensures pos == \old(pos) + \result;

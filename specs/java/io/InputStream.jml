@@ -58,22 +58,22 @@ public abstract class InputStream implements Closeable {
     //-RAC@ public invariant readPosition+availableBytes <= inputBytes.length;
     //-RAC@ public invariant \forall \bigint i;; inputBytes[i] != null;    // FIXME - should not need this given the declaration of inputBytes
 
-    //-RAC@ model public boolean _markSupported; // Not in streamState, because it should nevef be modified
+    //-RAC@ model public boolean _markSupported; // Not in streamState, because it should never be modified
     //-RAC@ model public \bigint markPosition; in streamState;
-    //-RAC@                      initially markPosition == -1;
+    //-RAC@                      initially markPosition == 0;
     //-RAC@ model public \bigint markLimit; in streamState;
 
-    //@ requires a != null && b != null;
-    //@ requires a.length >= length && b.length >= length;
+    //@ requires a != null & b != null;
+    //@ requires a.length >= length & b.length >= length;
     //@ ensures (\forall int i; 0 <= i < length; a[i] == b[i]);
     //@ public static model boolean equalBytes(byte[] a, byte[] b, \bigint length);
 
     /*-RAC@ public normal_behavior
-      @   ensures \result <==> (isOpen && availableBytes >= 0 && readPosition == 0);
+      @   ensures \result <==> (isOpen & availableBytes >= 0 & readPosition == 0);
       @ spec_pure helper public model boolean initialInputStream();
       @*/
 
-    /*-RAC@ public normal_behavior
+    /*-RAC@ public code normal_behavior
       @   ensures initialInputStream();
       @   ensures _markSupported == false;
       @*/
@@ -99,11 +99,12 @@ public abstract class InputStream implements Closeable {
     public void close() throws IOException;
 
     // FIXME - blocks until availableBytes > 0, if not at end of input
-    /*-RAC@ public normal_behavior // at EOF
+    /*-RAC@ 
+    @ public normal_behavior // at EOF
     @   requires isOpen && (readPosition == inputBytes.length);
     @   assigns \nothing;
     @   ensures \result == -1;
-    @ also
+    @ also public normal_behavior
     @   requires isOpen && (readPosition < inputBytes.length);
     @   assigns streamState;
     @   ensures \not_modified(markPosition,markLimit);
@@ -123,7 +124,7 @@ public abstract class InputStream implements Closeable {
       @*/
     /*-RAC@ public normal_behavior // End of File
     @   requires isOpen & (readPosition == inputBytes.length) & (b != null && b.length > 0);
-    @   modifies \nothing; // TODO - actually might modify the internal state in the process of reading to determine whether the stream is at EOF
+    @   assigns \nothing; // TODO - actually might modify the internal state in the process of reading to determine whether the stream is at EOF
     @   ensures \result == -1;
     @ also public behavior // Special case when b.length == 0 and at EOF
     @   requires isOpen & readPosition == inputBytes.length & (b != null && b.length == 0);
@@ -144,7 +145,7 @@ public abstract class InputStream implements Closeable {
     @   signals_only IOException; // Something happened during the read
     @ also public exceptional_behavior
     @   requires b == null || (b.length>0 && !isOpen);
-    @   modifies \nothing;
+    @   assigns \nothing;
     @   signals_only IOException, NullPointerException;
     @   signals (IOException) true; // Could be any reason, including !isOpen
     @   signals (NullPointerException) b == null;
@@ -208,6 +209,7 @@ public abstract class InputStream implements Closeable {
      @   signals_only IOException, OutOfMemoryError;  // For any reason, and may leave the state inconsistent
      @ also public exceptional_behavior
      @   requires isOpen && inputBytes.length - readPosition > Integer.MAX_VALUE;
+     @   assigns streamState;
      @   signals_only OutOfMemoryError;
      @ // Nothing specified if !isOpen
      @*/
@@ -259,7 +261,7 @@ public abstract class InputStream implements Closeable {
     @ also public code normal_behavior
     @   ensures \result == 0;
     @*/
-    //@ pure
+    //@ spec_pure
     public int available() throws IOException;
 
     // NOTE: For simplicity of specs we do not have the following modify
@@ -269,8 +271,8 @@ public abstract class InputStream implements Closeable {
     /*-RAC@ public normal_behavior
     @   requires _markSupported && isOpen;
     @   assigns markPosition, markLimit;
-    @   ensures markPosition == readPosition;
-    @   ensures markLimit == readPosition + readlimit;
+    @   ensures markPosition == \old(readPosition);
+    @   ensures markLimit == markPosition + readlimit;
     @ also public normal_behavior
     @   requires !_markSupported || !isOpen;
     @   assigns \nothing;
@@ -285,7 +287,7 @@ public abstract class InputStream implements Closeable {
     public boolean markSupported();
 
     /*-RAC@ public behavior
-    @   requires _markSupported & markPosition != -1;
+    @   requires _markSupported;
     @   assigns readPosition;
     @   ensures readPosition == markPosition;
     @   {|
@@ -295,11 +297,6 @@ public abstract class InputStream implements Closeable {
     @     requires readPosition > markLimit;
     @     signals_only IOException;
     @   |}
-    @ also public behavior
-    @   requires _markSupported & markPosition == -1;
-    @   assigns readPosition;
-    @   ensures readPosition == 0;
-    @   signals_only IOException;
     @ also public behavior
     @   requires !_markSupported;
     @   assigns streamState;

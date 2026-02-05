@@ -185,7 +185,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result.length == this.length + s.length;
-    //-RAC@   ensures \forall \bigint i;; \result[i] == (i < this.length ? this[i] : i < \result.length ? s[i - this.length] : empty[i]);
+    //-RAC@   ensures \forall \bigint i;; \result[i] == (i < 0 ? empty[i] : i < this.length ? this[i] : i < \result.length ? s[i - this.length] : empty[i]);
     public string append(string s);
 
     //@ public behavior
