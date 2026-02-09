@@ -3,18 +3,21 @@ package java.lang;
 //@ non_null_by_default
 public interface Appendable {
 
-    //@ model public instance \string _value;
+    // model public instance \string chars -- inherited from Object;
     
     //@ public behavior  // appends "null" if cs is null
-    //@   assignable _value;
+    //@       requires true;
+    //-RAC@   assignable chars; // FIXME - or objectState?
     public abstract Appendable append(/*@ nullable @*/ CharSequence cs) throws java.io.IOException;
 
     //@ public behavior // FIXME - precondition on offset and length?
-    //@   assignable _value;
+    //@       requires true;
+    //-RAC@   assignable chars;
     public abstract Appendable append(/*@ nullable @*/ CharSequence cs, int offset, int length) throws java.io.IOException;
 
     //@ public behavior
-    //@   assignable _value;
+    //@       requires true;
+    //-RAC@   assignable chars;
     public abstract Appendable append(char c) throws java.io.IOException;
 
 }

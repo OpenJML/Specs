@@ -34,7 +34,7 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends java.lang.Aut
     //@ pure
     public abstract S parallel();
     //@ public normal_behavior
-    //@   ensures \fresh(\result);  // FIXME - result is an arbitrary permutation of the input
+    //-RAC@   ensures \fresh(\result);  // FIXME - result is an arbitrary permutation of the input
     //@ pure
     public abstract S unordered();
     //      public abstract S onClose(java.lang.Runnable);

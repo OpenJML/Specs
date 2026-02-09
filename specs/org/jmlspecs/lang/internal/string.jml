@@ -239,4 +239,12 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@ public normal_behavior
     //@   requires true;
     public int hashCode();
+    
+    //@ requires radix >= 2;
+    //@ spec_pure
+    //@ model public static \string of(\bigint i, int radix);
+    
+    //@ requires radix >= 2;
+    //@ spec_pure
+    //@ model public static \string of(long i, int radix);
 }

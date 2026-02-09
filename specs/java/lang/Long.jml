@@ -83,7 +83,6 @@ public /*@ pure @*/ final
     /*-RAC@ public normal_behavior
       @   requires i >= 0;
       @   ensures \result != null;
-      @   ensures \fresh(\result);
       @   ensures parseable(\result,16);
       @   ensures \result.equals(toString(i,16));
       @   ensures parseLong(\result,16) == i;
@@ -91,7 +90,6 @@ public /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i < 0;
       @   ensures \result != null;
-      @   ensures \fresh(\result);
       @   ensures \result.length() >= 1;
       @   ensures parseable(\result,16,65);
       @   // FIXME ensures \result.equals(toString(i, 16));
@@ -102,7 +100,6 @@ public /*@ pure @*/ final
     /*-RAC@ public normal_behavior
       @   requires i >= 0;
       @   ensures \result != null;
-      @   ensures \fresh(\result);
       @   ensures parseable(\result,8);
       @   ensures \result.equals(toString(i,8));
       @   ensures parseLong(\result,8) == i;
@@ -110,7 +107,6 @@ public /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i < 0;
       @   ensures \result != null;
-      @   ensures \fresh(\result);
       @   ensures \result.length() >= 1;
       @   ensures parseable(\result,8);
       @   // FIXME ensures \result.equals(toString(i + (1<<64), 8, 65));
@@ -121,7 +117,6 @@ public /*@ pure @*/ final
     /*-RAC@ public normal_behavior
       @   requires i >= 0;
       @   ensures \result != null;
-      @   ensures \fresh(\result);
       @   ensures parseable(\result,2);
       @   ensures \result.equals(toString(i,2));
       @   ensures parseLong(\result,2) == i;
@@ -129,7 +124,6 @@ public /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i < 0;
       @   ensures \result != null;
-      @   ensures \fresh(\result);
       @   ensures \result.length() >= 1;
       @   ensures parseable(\result,2);
       @   // FIXME ensures \result.equals(toString(i, 2));
@@ -176,7 +170,6 @@ public /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   requires parseable(s, radix);
-      @   ensures \fresh(\result);
       @   ensures \result.longValue() == parseLong(s,radix);
       @ also
       @ public exceptional_behavior
@@ -189,7 +182,6 @@ public /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   requires parseable(s, 10);
-      @   ensures \fresh(\result);
       @   ensures \result.longValue() == parseLong(s,10);
       @ also
       @ public exceptional_behavior

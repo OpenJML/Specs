@@ -26,7 +26,7 @@ package java.lang;
  * @author David Cok
  */
 public interface CharSequence {
-    //-RAC@ model public final instance \string chars; 
+    // model public instance \string chars -- inherited from Object, so it can also be used by Appendable
 
     
     //-RAC@ model public static final CharSequence eol;

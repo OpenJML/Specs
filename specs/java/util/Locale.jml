@@ -47,6 +47,7 @@ public final class Locale implements Cloneable, Serializable {
     static public final /*@ non_null*/ Locale CANADA_FRENCH;
     static final long serialVersionUID;
     
+    //@ ensures defaultLocale != null;
     //@ static_initializer
     
     public Locale(/*@ non_null*/ String language,
@@ -57,11 +58,19 @@ public final class Locale implements Cloneable, Serializable {
 
     public Locale(/*@ non_null*/ String language);
 
+    //@ spec_public
+    private static volatile Locale defaultLocale;
+    //-RAC@ public static invariant defaultLocale != null;
+    
+    //@ public normal_behavior
+    //@       requires true;
+    //-RAC@   ensures \result == defaultLocale;
     public static /*@ pure*/ /*@ non_null*/ Locale getDefault();
 
     //@ public normal_behavior
-    //@ modifies \everything;
-    //@ ensures getDefault() == newLocale;
+    //@     requires true;
+    //-RAC@ modifies defaultLocale;
+    //-RAC@ ensures defaultLocale == newLocale;
     public static synchronized void setDefault( /*@ non_null*/ Locale newLocale);
 
     public static /*@ pure*/ Locale /*@ non_null*/ [] getAvailableLocales();

@@ -6,17 +6,19 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     //@ ghost public final static int extraCapacity = 16;
   
     //@ public normal_behavior
-    // @   ensures capacity() == extraCapacity;
-    //@   ensures length() == 0;
-    //-RAC@   ensures \invariant_for(_value);
+    //-RAC@   ensures capacity() == extraCapacity;
+    //-RAC@   ensures length() == 0;
+    //-RAC@   ensures \invariant_for(chars);
+    //-RAC@   ensures chars == \string.empty;
     //@ pure
     public StringBuilder();
 
     //@ public normal_behavior
     //@   requires k >= 0;
-    //-RAC@   ensures \invariant_for(_value);
-    //@   ensures length() == 0;
-    //@   ensures capacity() == k;
+    //-RAC@   ensures \invariant_for(chars);
+    //-RAC@   ensures length() == 0;
+    //-RAC@   ensures capacity >= k;
+    //-RAC@   ensures chars == \string.empty;
     //@ also public exceptional_behavior
     //@   requires k < 0;
     //@   signals_only NegativeArraySizeException;
@@ -26,8 +28,7 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     //@ public normal_behavior
     //@   requires str != null;
     //-RAC@   ensures chars == str.chars;
-    // @   ensures capacity == str.length() + extraCapacity;
-    //-RAC@   ensures chars.length == str.chars.length;
+    //-RAC@   ensures capacity >= str.chars.length;
     //@ also public exceptional_behavior
     //@   requires str == null;
     //@   signals_only NullPointerException;
@@ -36,8 +37,8 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
 
     //@ public normal_behavior
     //@   requires cs != null;
-    //@   ensures (* _value == cs *);
-    // @   ensures capacity == cs.length() + extraCapacity;
+    //-RAC@   ensures capacity >= cs.length();
+    //-RAC@   ensures chars == cs.chars;
     //-RAC@   ensures count == cs.chars.length;
     //@ also public exceptional_behavior
     //@   requires cs == null;
@@ -87,8 +88,8 @@ public final class StringBuilder extends AbstractStringBuilder implements java.i
     public StringBuilder append(double d);
 
     //@ also public normal_behavior
-    //-RAC@   assignable _value, chars;
-    //  FIXME @   ensures (* _value == \old(_value) + s *);
+    //-RAC@   assignable chars;
+    //  FIXME @   ensures (* chars == \old(chars) + s *);
     //@   ensures \result == this;
     @Override
     public StringBuilder appendCodePoint(int k);

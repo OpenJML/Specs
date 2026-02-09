@@ -892,7 +892,7 @@ public final class String
 
     /*-RAC@  public normal_behavior
       @   requires locale != null;
-      @   ensures \result != null && \fresh(\result) && \result.chars.length == chars.length;
+      @   ensures \result != null && \result.chars.length == chars.length;
       @   ensures (* \result == a lower case conversion of this using the 
       @                          rules of the given locale *);
       @*/
@@ -900,8 +900,10 @@ public final class String
         String toLowerCase(/*@ non_null @*/ Locale locale);
 
     /*-RAC@  public normal_behavior
-      @   ensures \result != null && \fresh(\result) && \result.chars.length == chars.length;
-      @   ensures \result == toLowerCase(Locale.getDefault());
+          {
+             return toLowerCase(Locale.getDefault());
+          }
+      @   ensures \result != null && \result.chars.length == chars.length;
       @*/
     public /*@ pure @*/ String toLowerCase();
 

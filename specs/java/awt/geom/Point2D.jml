@@ -97,7 +97,8 @@ public abstract class Point2D implements Cloneable {
     public double distance(/*@ non_null @*/ Point2D pt);
 
     //@ also
-    //@ ensures \fresh(\result) && \result instanceof Point2D;
+    //-RAC@ ensures \fresh(\result);
+    //@ ensures \result instanceof Point2D;
     //@ ensures java.lang.Double.isNaN(xCoordinate) ? java.lang.Double.isNaN(((Point2D)\result).xCoordinate) : ((Point2D)\result).xCoordinate == xCoordinate;
     //@ ensures java.lang.Double.isNaN(yCoordinate) ? java.lang.Double.isNaN(((Point2D)\result).yCoordinate) : ((Point2D)\result).yCoordinate == yCoordinate;
     //@ pure

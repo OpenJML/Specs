@@ -25,12 +25,12 @@ public final class Objects {
   public static int hash(Object... values);
   
   //@ public normal_behavior
-  //@   //-RAC@ ensures \result == (o == null ? "null" : o.ptoString());
+  //@   //-RAC@ ensures \result.chars == (o == null ? "null".chars : o.modelString);
   //@ pure
   public static String toString(/*@ nullable */Object o);
   
   //@ public normal_behavior
-  //@   //-RAC@ ensures \result == (o == null ? nullDefault : o.ptoString());
+  //@   //-RAC@ ensures \result.chars == (o == null ? nullDefault.chars : o.modelString);
   //@ pure
   public static /*@ nullable */ String toString(/*@ nullable */Object o, /*@ nullable */String nullDefault);
 

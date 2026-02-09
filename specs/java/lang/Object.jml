@@ -37,6 +37,15 @@ public class Object {
 
     /** Use this for the private state holding benevolent side effects */
     //@ model public final \datagroup privateState; in objectState;
+    
+    // This \string represents the value that will be produced by toString()
+    //-RAC@ model public instance \string modelString; in objectState;
+    
+    // This \string represents the value acucmulated by CharSequence and its derived classes, 
+    // and also by Appendable and its derived classes -- it would be nice if this could be the same
+    // as modelString but it is possible for derived classes to have these be different values
+    //-RAC@ model public instance \string chars; in objectState;
+
 
     /** The Object that has a field pointing to this Object.
      * Used to specify (among other things) injectivity (see
@@ -58,7 +67,7 @@ public class Object {
     
     
     // Note that returned Class objects are interned. They are not fresh,
-    // possibly unless they have never been peviously loaded by a ClassLoader.
+    // possibly unless they have never been previously loaded by a ClassLoader.
     /*+ESC@ public normal_behavior
       @   ensures \result == \erasure(\typeof(this));
       @   ensures \isarray(\typeof(this)) == \isarray(\result);
@@ -192,50 +201,27 @@ public class Object {
     //@ pure
     protected /*@ non_null */ Object clone() throws CloneNotSupportedException;
 
-    /** Use theString as the (pure) model value of toString() */
-    //-RAC@ public model non_null String theString; in objectState;
-
-    // @ public code normal_behavior
-    // @   ensures \result == true;
-    // @ pure
-    //@ model public boolean toStringDefined;
-    //@ represents toStringDefined = true;
-    
-    /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
-      @     requires toStringDefined;
-      @     ensures \result == theString;
-      @     ensures (* \result is a string representation of this object *);
-      @ also public code normal_behavior
-      @     requires toStringDefined;
-      @     assignable \nothing;
-      @ // Ignore the case of what an Object actually produces as a String
-      @*/
-    /*+RAC@ public normal_behavior requires true; */
-    //@ model pure public non_null String ptoString();
-    
-    /*-RAC@   public normal_behavior // FIXME - do we want this to be normal_behavior?
-    @     requires toStringDefined;
-    @     // frame condition must be set by derived classes
-    @     ensures \result == ptoString();
+    /*-RAC@   public normal_behavior
+    @     ensures \result != null && \result.chars == modelString; // FIXME - why the first conjunct when there return is marked cf gitbug630
     @     ensures (* \result is a string representation of this object *);
     @ also public code normal_behavior
-    @     requires toStringDefined;
     @     assignable \nothing;
     @ // Ignore the case of what an Object actually produces as a String
     @*/
-    /*+RAC@ public normal_behavior requires true; */
+    /*+RAC@ public code normal_behavior requires true; */
     public /*@ non_null @*/ String toString();
 
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure // Not specifying multi-threqaded behavior
+    //@ pure // Not specifying multi-threaded behavior
     public final void notify();
 
     //@ public normal_behavior
     //@   ensures true;
-    //@ pure // Not specifying multi-threqaded behavior
+    //@ pure // Not specifying multi-threaded behavior
     public final void notifyAll();
 
+    // Not specifying multi-threaded behavior
     //@ public behavior
     //@   requires timeoutMillis >= 0L;
           // FIXME also check thread ownership - IllegalMonitorStateException

@@ -105,13 +105,13 @@ public class Throwable extends Object implements java.io.Serializable
   //-RAC@   ensures \result == (_message == s & _cause == c & _causeSet == true
   //-RAC@                       & \nonnullelements(_stackTrace)
   //-RAC@                       & suppressedExceptions.size() == 0);
-      // TODO - say more about boolean arguments
+      // FIXME - say more about boolean arguments
        //@ public pure helper model boolean standardThrowable(nullable String s, nullable Throwable c, boolean enableSuppression, boolean writableStackTrace);
 
       //@ public normal_behavior
       //@   requires true;
       //-RAC@   ensures \result <==> (c == null ? _message == null : (_message != null 
-      //-RAC@                                   //-RAC@ && _message == c.theString
+      //-RAC@                                   //-RAC@ && _message.chars == c.modelString
       //-RAC@                                   ));
        //@ public pure helper model boolean initMessage(nullable Throwable c);
 
@@ -129,7 +129,6 @@ public class Throwable extends Object implements java.io.Serializable
     public Throwable(/*@ nullable*/String message, /*@ nullable*/Throwable cause);
 
     //@ public normal_behavior
-    //-RAC@   ensures initMessage(cause);
     //-RAC@   ensures _cause == cause;
     //-RAC@   ensures _causeSet;
     //-RAC@   ensures standardThrowable(cause);
@@ -141,7 +140,7 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   ensures _cause == cause;
     //-RAC@   ensures _causeSet;
     //-RAC@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
-    //@// TODO - say more about the boolean arguments
+    //@// FIXME - say more about the boolean arguments
     //@ pure
     protected Throwable(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
     
@@ -156,7 +155,7 @@ public class Throwable extends Object implements java.io.Serializable
     //@    requires true;
     //-RAC@   reads _message;
     //-RAC@   ensures  \result == _message;
-    public /*@ pure helper nullable*/ String getLocalizedMessage();
+    public /*@ pure helper nullable*/ String getLocalizedMessage(); // FIXME -- \result is some arbitrary message?
 
     //@ public normal_behavior
     //@    requires true;
@@ -179,17 +178,16 @@ public class Throwable extends Object implements java.io.Serializable
       @   signals (IllegalStateException e) _causeSet & !e._causeSet;
       @   signals (IllegalArgumentException e) cause == this & !e._causeSet;
       @*/
-    public synchronized /*@ non_null*/ Throwable initCause(/*@ nullable*/Throwable cause);
+    public synchronized /*@ non_null*/ Throwable initCause(/*@ nullable*/Throwable cause); // FIXME - does this change the message?
 
     /*-RAC@ also public normal_behavior
-      @   //requires \typeof(this) == \type(Throwable);
       @   requires _message == null;
-      @   reads _message;
+      @   reads this.*, _message;
       @   ensures \result.equals(this.getClass().toString());
       @ also public normal_behavior
       @   requires \typeof(this) == \type(Throwable);
       @   requires _message != null;
-      @   reads \everything; // _message, _message.*; // FIXME - cf. gitbug630
+      @   reads this.*, _message, _message.*;
       @   ensures \result.equals(this.getClass().toString() + ": " + _message);
       @*/
     public /*@ pure non_null @*/ String toString();
@@ -198,7 +196,7 @@ public class Throwable extends Object implements java.io.Serializable
     // other stuff
     // Prints to System.err
     //@ public normal_behavior
-    //@   assignable System.err.*;
+    //-RAC@   assignable System.err.outputText;
     public void printStackTrace();
 
     //-RAC@ public normal_behavior
@@ -208,22 +206,21 @@ public class Throwable extends Object implements java.io.Serializable
     public void printStackTrace(/*@ non_null*/PrintStream s);
 
     //-RAC@ public normal_behavior
-    //-RAC@   //requires s.isOpen;  // FIXME
+    //-RAC@   //requires s.isOpen; // FIXME - PrintWriter needs an isOpen
     //-RAC@   assignable s.outputText;
     //-RAC@   //ensures s.isOpen;
     public void printStackTrace(/*@ non_null*/PrintWriter s);
 
     //@ public normal_behavior
-    //-RAC@   assignable _stackTrace;
+    //-RAC@   assignable this._stackTrace;
     //@   ensures \result == this;
     public synchronized /*@ non_null*/ Throwable fillInStackTrace();
 
-    //@ public normal_behavior  // FIXME - this crashes Simplify
+    //@ public normal_behavior
     //-RAC@   reads _stackTrace, _stackTrace[*];
-    //@   ensures \result != null;
-    //-RAC@   ensures \result == _stackTrace;
-    //@   //ensures (\forall int i; 0 <= i && i < _stackTrace.length;
-    //@   //                        _stackTrace[i].equals(\result[i]));
+    //-RAC@   ensures \result != null && \result.length == _stackTrace.length;
+    //-RAC@   ensures \fresh(\result);
+    //-RAC@   ensures \forall int i; 0 <= i < _stackTrace.length; \result[i] == _stackTrace[i];
     public /*@ pure helper non_null*/ StackTraceElement /*@ non_null */ [] getStackTrace();
 
     //@ public normal_behavior

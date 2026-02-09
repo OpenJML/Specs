@@ -29,10 +29,11 @@ import java.util.Locale;
 //@ non_null_by_default
 public class PrintStream extends FilterOutputStream implements Closeable, Appendable {
 
-    //-RAC@ model public \string outputText; in outputBytes, _value;
+    //-RAC@ model public \string outputText; in outputBytes, chars;  // FIXME - unify outputText and chars; and outputBytes?
     //-RAC@ model public boolean endsInNewLine; in outputText;
     // -RAC@ ghost public static final String eol;
     // -RAC@ public static invariant \invariant_for(eol) && eol.length() > 0;
+    // -RAC@ represents outputText = chars;
 
     //@ spec_public
     private boolean trouble; //-RAC@ in error;
@@ -142,18 +143,18 @@ public class PrintStream extends FilterOutputStream implements Closeable, Append
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures endsInNewLine && isOpen;
-    @   ensures (x!=null)==> outputText == \old(outputText) + x.ptoString().chars + CharSequence.eol.chars;
-    @   ensures (x==null)==> outputText == \old(outputText)+"null".chars + CharSequence.eol.chars;
+    @   ensures outputText == (obj != null ? (\old(outputText) + obj.modelString + CharSequence.eol.chars)
+    @                                      : (\old(outputText) + "null".chars + CharSequence.eol.chars));
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
-    public void println(/*@ nullable */Object x);
+    public void println(/*@ nullable */Object obj);
 
     /*-RAC@ public normal_behavior
     @   requires true;
     @   modifies outputText, endsInNewLine;
     @   ensures isOpen;
-    @   // FIXME ensures (obj!=null)==> outputText.equals(\old(outputText) + obj.ptoString();
-    @   // FIXME ensures (obj==null)==> outputText.equals(\old(outputText)+"null";
+    @   ensures outputText == (obj != null ? (\old(outputText) + obj.modelString)
+    @                                      : (\old(outputText) + "null".chars));
     @*/
     //+RAC@ public normal_behavior assigns objectState; 
     public void print(/*@ nullable */Object obj);

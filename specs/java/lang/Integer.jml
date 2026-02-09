@@ -89,7 +89,7 @@ public  /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,16);
-      @   ensures \result == toString(i, 16);
+      @   ensures \result.chars == \string.of(i, 16);
       @   ensures parseInt(\result,16) == i;
       @ also public normal_behavior
           // toHexString produces a hex string of the unsigned argument
@@ -97,7 +97,7 @@ public  /*@ pure @*/ final
       @   old long pos_i = (1L<<32) + i;
       @   requires i < 0;
       @   ensures Long.parseable(\result,16);
-      @   ensures \result.equals(Long.toString(pos_i, 16));
+      @   // ensures \result.equals(Long.toString(pos_i, 16)); // FIXME -- toString is not spec-pure
       @   ensures (int)Long.parseLong(\result,16) == i;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toHexString(int i);
@@ -108,7 +108,7 @@ public  /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,8);
-      @   ensures \result == toString(i, 8);
+      @   ensures \result.chars == \string.of(i, 8);
       @   ensures parseInt(\result,8) == i;
       @ also public normal_behavior
           // toOctalString produces a octal string of the unsigned argument
@@ -116,7 +116,7 @@ public  /*@ pure @*/ final
       @   old long pos_i = (1L<<32) + i;
       @   requires i < 0;
       @   ensures Long.parseable(\result,8);
-      @   ensures \result.equals(Long.toString(pos_i, 8));
+      @   //ensures \result.equals(Long.toString(pos_i, 8)); // FIXME -- toString is not spec-pure
       @   ensures (int)Long.parseLong(\result,8) == i;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toOctalString(int i);
@@ -127,7 +127,7 @@ public  /*@ pure @*/ final
       @ also public normal_behavior
       @   requires i >= 0;
       @   ensures parseable(\result,2);
-      @   ensures \result == toString(i, 2);
+      @   ensures \result.chars == \string.of(i, 2);
       @   ensures parseInt(\result,2) == i;
       @ also public normal_behavior
           // toBinaryString produces a binary string of the unsigned argument
@@ -135,14 +135,14 @@ public  /*@ pure @*/ final
       @   old long pos_i = (1L<<32) + i;
       @   requires i < 0;
       @   ensures Long.parseable(\result,2);
-      @   ensures \result.equals(Long.toString(pos_i, 2));
+      @   // ensures \result.equals(Long.toString(pos_i, 2)); // FIXME -- toString is not spec-pure
       @   ensures (int)Long.parseLong(\result,2) == i;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toBinaryString(int i);
             
 
     /*-RAC@ public normal_behavior
-      @   ensures \result == toString(i, 10);
+      @   ensures \result.chars == \string.of(i, 10);
       @   //ensures parseable(\result, 10);
       @   //ensures i == parseInt(\result, 10);
       @   //ensures i == 0 ==> \result.length() == 1;
@@ -270,7 +270,7 @@ public  /*@ pure @*/ final
     //@ also public normal_behavior
     //-RAC@   ensures parseable(\result, 10);
     //@   ensures Integer.parseInt(\result,10) == intValue();
-    //@   ensures \result.equals(toString(intValue()));
+    //-RAC@   ensures \result.chars == \string.of(intValue(), 10);
     public /*@ non_null @*/ String toString();
             
     /*@ also

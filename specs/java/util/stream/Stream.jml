@@ -30,7 +30,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@// Does not specify preserving order
     //@   requires pred != null;
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
+    //-RAC@   ensures \fresh(\result);
     //@   ensures \forall int i; 0 <= i < \result.values.length; pred.test(\result.values[i]);
     //@   ensures \forall int i; 0 <= i < \result.values.length; (\exists int j; 0 <= j < this.values.length; \result.values[i] == this.values[j]);
     //@   ensures \forall int i; 0 <= i < values.length; pred.test(this.values[i]) ==> (\exists int j; 0 <= j < \result.values.length; \result.values[j] == this.values[i]);
@@ -65,7 +65,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   requires func != null;
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
+    //-RAC@   ensures \fresh(\result);
     //@   ensures \result.values.length == this.values.length;
     // FIXME @   ensures func instanceof Function.NoNulls ==> \forall int i; 0 <= i < values.length; \result.values[i] != null;
     //@   // ensures \forall int i; 0 <= i < values.length; \result.values[i] == func.apply(values[i]); // FIXME - not translated properly yet
@@ -136,7 +136,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@   requires collector != null;
     //@   assignable collector.content;
     //@   ensures \result != null;
-    //@   ensures \fresh(\result); // FIXME - not always true
+    //-RAC@   ensures \fresh(\result); // FIXME - not always true
     // -RAC@ also public normal_behavior
     // -RAC@   requires collector != null;
     // -RAC@   requires collector == Collectors.toList();
@@ -180,7 +180,6 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
     //@   ensures (\result.value == null) <==> (values.length == 0); 
     //@   ensures \result.value != null ==> (\result.value == values[0]);
     //@ pure
@@ -188,7 +187,6 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
     //@ public normal_behavior
     //@   ensures \result != null;
-    //-RAC@   ensures \fresh(\result);
     //-RAC@   ensures (\result.value == null) <==> (values.length == 0); 
     //-RAC@   ensures \result.value != null ==> (\exists int i; 0 <= i < values.length; \result.value == values[i]);
     //@ pure
@@ -198,20 +196,21 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
     //@   ensures \result.values.length == 0;
     //@ pure
     public static <T> Stream<T> empty();
+
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
+    //-RAC@   ensures \fresh(\result);
     //@   ensures \result.values.length == 1;
     //@   ensures \result.values[0] == t;
     //@ pure
     public static <T> Stream<T> of(T t);
+
     //@ public normal_behavior
     //@   ensures \result != null;
-    //@   ensures \fresh(\result);
+    //-RAC@   ensures \fresh(\result);
     //@   ensures \result.values.length == elements.length;
     //@   ensures (\forall int i; 0 <= i < elements.length; \result.values[i] == elements[i]);
     //@ pure
@@ -221,9 +220,11 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     //@ public normal_behavior
     //@   ensures \result != null;
     public static <T> Stream<T> iterate(T value, UnaryOperator<T> op);
+
     //@ public normal_behavior
     //@   ensures \result != null;
     public static <T> Stream<T> generate(Supplier<? extends T> supplier);
+
     //@ public normal_behavior
     //@   ensures \result != null;
     public static <T> Stream<T> concat(Stream<? extends T> first, Stream<? extends T> last);
