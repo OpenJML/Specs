@@ -1,0 +1,146 @@
+package java.util.random;
+public interface RandomGenerator {
+    
+    //@ model public instance long content;
+    
+    //@ public normal_behavior
+    //@   requires name != null;
+    //@ spec_pure
+    //@ model public static boolean isImplemented(String name);
+
+    //@ public normal_behavior
+    //@   requires name != null && isImplemented(name);
+    //@   ensures \result != null;
+    //@ also public exceptional_behavior
+    //@   requires name != null && !isImplemented(name);
+    //@   signals (IllegalArgumentException e) true;
+    //@ also public exceptional_behavior
+    //@   requires name == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public static java.util.random.RandomGenerator of(String name);
+    
+    //@ public normal_behavior
+    //@  ensures \result != null; // Returns a default kind of RandomGenerator, but not necessarily the same one
+    public static java.util.random.RandomGenerator getDefault();
+
+    //@ spec_pure
+    public default boolean isDeprecated();
+
+    //  public default java.util.stream.DoubleStream doubles();
+//  public default java.util.stream.DoubleStream doubles(double, double);
+//  public default java.util.stream.DoubleStream doubles(long);
+//  public default java.util.stream.DoubleStream doubles(long, double, double);
+//  public default java.util.stream.IntStream ints();
+//  public default java.util.stream.IntStream ints(int, int);
+//  public default java.util.stream.IntStream ints(long);
+//  public default java.util.stream.IntStream ints(long, int, int);
+//  public default java.util.stream.LongStream longs();
+//  public default java.util.stream.LongStream longs(long, long);
+//  public default java.util.stream.LongStream longs(long);
+//  public default java.util.stream.LongStream longs(long, long, long);
+
+  //@ public normal_behavior
+    //@   assignable this.content;
+    //@   reads this.content;
+  public default boolean nextBoolean();
+
+  //  public default void nextBytes(byte[]);
+
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < 1.0;
+  public default float nextFloat();
+
+  //@ public normal_behavior
+  //@   requires hi > 0 else IllegalArgumentException; // FIXME - also must be finite
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < hi;
+  public default float nextFloat(float hi);
+
+  //@ public normal_behavior
+  //@   requires lo < hi else IllegalArgumentException; // FIXM -- also must be finite
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures lo <= \result < hi;
+  public default float nextFloat(float lo, float hi);
+
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < 1.0;
+  public default double nextDouble();
+
+  //@ public normal_behavior
+  //@   requires hi > 0 else IllegalArgumentException; // FIXME - also must be finite
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < hi;
+  public default double nextDouble(double hi);
+
+  //@ public normal_behavior
+  //@   requires hi > 0 else IllegalArgumentException; // FIXME - also must be finite
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < hi;
+  public default double nextDouble(double lo, double hi);
+
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  public default int nextInt();
+  
+  //@ public normal_behavior
+  //@   requires n > 0 else IllegalArgumentException;
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < n;
+  public default int nextInt(int n);
+  
+  //@ public normal_behavior
+  //@   requires lo < hi else IllegalArgumentException;
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures lo <= \result < hi;
+  public default int nextInt(int lo, int hi);
+
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  public abstract long nextLong();
+
+  //@ public normal_behavior
+  //@   requires n > 0 else IllegalArgumentException;
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures 0 <= \result < n;
+  public default long nextLong(long n);
+  
+  //@ public normal_behavior
+  //@   requires lo < hi else IllegalArgumentException;
+  //@   assignable this.content;
+  //@   reads this.content;
+  //@   ensures lo <= \result < hi;
+  public default long nextLong(long lo, long hi);
+  
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  public default double nextGaussian();
+
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  public default double nextGaussian(double lo, double hi);
+
+  //@ public normal_behavior
+  //@   assignable this.content;
+  //@   reads this.content;
+  public default double nextExponential();
+
+//  private long lambda$longs$2(long, long);
+//  private int lambda$ints$1(int, int);
+//  private double lambda$doubles$0(double, double);
+}
