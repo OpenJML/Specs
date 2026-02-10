@@ -98,7 +98,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
 
     /*@ public normal_behavior
       @     requires s != null && parseable(s);
-      @     ensures  \result.equals(Double.valueOf(parseDouble(s)));
+      @     { return Double.valueOf(parseDouble(s)); }
       @ also
       @   public exceptional_behavior
       @     requires s != null && !parseable(s);
@@ -173,7 +173,8 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     //@ model helper public boolean isFinite();
     
     // specification inherited from java.lang.Object
-    //@ also ensures \result.equals(toString(doubleValue()));
+    //@ also public behavior
+    //@    { return toString(doubleValue()); }
     public String toString();
 
     /*@ also
@@ -391,7 +392,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     
     /*@ public normal_behavior
       @    assignable \nothing;
-      @    ensures \result == Double.valueOf(d1).compareTo(Double.valueOf(d2));
+      @    { return Double.valueOf(d1).compareTo(Double.valueOf(d2)); }
       @*/
     public static /*@ pure @*/ int compare(double d1, double d2);
 

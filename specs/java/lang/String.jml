@@ -380,9 +380,8 @@ public final class String
       throws UnsupportedEncodingException;
 
     /*@  public normal_behavior
-      @  ensures \fresh(\result)
-      @           && byteArraysEqual(\result, 
-      @                       getBytes(System.getProperty("file.encoding")));
+      @    { return getBytes(System.getProperty("file.encoding")); }
+      @    ensures \fresh(\result);
       @*/
     public /*@ pure @*/ byte /*@ non_null @*/ [] getBytes();
 
@@ -565,15 +564,14 @@ public final class String
       @   requires (0 <= toffset && (toffset + len) <= length())
       @             && (0 <= ooffset && (ooffset + len) <= other.length())
       @             && ignoreCase;
-      @   ensures \result == substring(toffset, toffset + len).equalsIgnoreCase(
-      @                        other.substring(ooffset, ooffset + len));
+      @   //{ return substring(toffset, toffset + len).equalsIgnoreCase(
+      @   //                     other.substring(ooffset, ooffset + len)); }
       @  also
       @   requires (0 <= toffset && (toffset + len) <= length())
       @             && (0 <= ooffset && (ooffset + len) <= other.length())
       @             && !ignoreCase;
-      @   ensures \result == equals(
-                            substring(toffset, toffset + len),
-      @                     other.substring(ooffset, ooffset + len));
+      @   //{ return substring(toffset, toffset + len),
+      @   //                  other.substring(ooffset, ooffset + len)); }
       @  also
       @   requires (toffset < 0 || (toffset + len) > length())
       @             || (toffset < 0 || (ooffset + len) > other.length());
@@ -861,7 +859,7 @@ public final class String
 
     /*@ public normal_behavior
            ensures !\fresh(\result); // TODO presuming interned for ease of proof
-        model public static pure helper non_null String split(String s, String regex, int position);
+        model public static spec_pure helper \string split(String s, String regex, int position);
      */
         
     /*@ public normal_behavior
@@ -870,9 +868,8 @@ public final class String
      */
         
     /*@ public normal_behavior
+      @   { return Pattern.compile(regex).split(this, limit); }
       @   ensures \fresh(\result);
-      @   //  ensures equals(\result,
-          //                  Pattern.compile(regex).split(this, limit));
       @   ensures (* output strings correspond to input substrings *);
       @   ensures limit > 0 ==> \result.length == limit;
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null && \invariant_for(\result[i]));
@@ -885,7 +882,7 @@ public final class String
       @   ensures \result.length >= 1;
       @   ensures \result.length == numsplit(this,regex);
       @   ensures (\forall int i; 0 <= i < \result.length; \result[i] != null && \invariant_for(\result[i])); // Including this avoids the needs for an instantiation, which is not always triggered
-      @   ensures (\forall int i; 0 <= i < \result.length; \result[i] == split(this,regex,i));
+      @   // FIXME ensures (\forall int i; 0 <= i < \result.length; \result[i].chars == split(this,regex,i));
       @*/
     //@ pure helper
     public String[] split(/*@ non_null @*/ String regex);
@@ -903,13 +900,12 @@ public final class String
           {
              return toLowerCase(Locale.getDefault());
           }
-      @   ensures \result != null && \result.chars.length == chars.length;
       @*/
     public /*@ pure @*/ String toLowerCase();
 
-    /* FIXME @  public normal_behavior
+    /*-RAC@  public normal_behavior
       @   requires locale != null;
-      @   ensures \fresh(\result) && \result.length() == length();
+      @   ensures \result != null && \result.length() == length();
       @   ensures (* \result == an upper case conversion of this using the 
       @                          rules of the given locale *);
       @*/
@@ -917,9 +913,7 @@ public final class String
         String toUpperCase(/*@ non_null @*/ Locale locale);
 
     /* FIXME @  public normal_behavior
-      @   ensures \fresh(\result) && \result.length() == length();
-      @   ensures \result != null
-      @            && equals(\result,toUpperCase(Locale.getDefault()));
+      @   { return toUpperCase(Locale.getDefault())); }
       @*/
     public /*@ pure @*/ /*@ non_null @*/ String toUpperCase();
 
@@ -1022,7 +1016,7 @@ public final class String
         /*@ non_null @*/ String copyValueOf(char[] data);
         
     /*@ public normal_behavior
-      @   ensures \result == Boolean.toString(b);
+      @   { return Boolean.canonicalString(b); }
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(boolean b);
 

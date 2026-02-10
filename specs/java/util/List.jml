@@ -184,7 +184,7 @@ public interface List<E> extends SequencedCollection<E> {
     //@   requires !(0 <= index && index < size());
     //@   signals_only IndexOutOfBoundsException;
     //@  // FIXME - other exceptions
-    /*@ pure @*/ E get(int index);
+    /*@ spec_pure @*/ E get(int index);
 
     /*-RAC@
       @ public behavior

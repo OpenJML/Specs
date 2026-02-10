@@ -49,24 +49,24 @@ public /*@ pure @*/ final
       @    public normal_behavior
       @     {|
       @       requires (nm.charAt(0) == 'O' && nm.charAt(1) == 'x');  // posititve hex
-      @       ensures \result == parseable(nm.substring(2), 16);
+      @       { return parseable(nm.substring(2), 16); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O' && nm.charAt(2) == 'x');  // negative hex
-      @       ensures \result == parseable(nm.substring(3), 16);
+      @       { return parseable(nm.substring(3), 16); }
       @      also
       @       requires (nm.charAt(0) == '#');              // positive hex
-      @       ensures \result == parseable(nm.substring(1), 16);
+      @      { return parseable(nm.substring(1), 16); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == '#');  // negetive hex
-      @       ensures \result == parseable(nm.substring(2), 16);
+      @       { return parseable(nm.substring(2), 16); }
       @      also
       @       requires (nm.charAt(0) == 'O');              //positive octal
-      @       ensures \result == parseable(nm.substring(1), 8);
+      @       { return parseable(nm.substring(1), 8); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O');  // negetive octal
-      @       ensures \result == parseable(nm.substring(2), 8);
+      @       { return parseable(nm.substring(2), 8); }
       @      also
-      @       ensures \result == parseable(nm, 10);  // positive or negetive short, radix 10
+      @       { return parseable(nm, 10); } // positive or negetive short, radix 10
       @     |}
       @   model public static pure boolean decodeable( String nm ) {
         try { decode(nm); return true; }

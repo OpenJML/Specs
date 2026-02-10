@@ -164,7 +164,8 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     public boolean isInfinite();
         
     // specification inherited from java.lang.Object
-    //@  also ensures \result.equals(toString(floatValue()));
+    //@  also public behavior
+    //@    { return toString(floatValue()); }
     public String toString();
 
     /*@ also
@@ -339,7 +340,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
 
     /*@ public normal_behavior
       @    assignable \nothing;
-      @    ensures \result == Float.valueOf(f1).compareTo(Float.valueOf(f2));
+      @    { return Float.valueOf(f1).compareTo(Float.valueOf(f2)); }
       @*/
     public static /*@ pure @*/ int compare(float f1, float f2);
 

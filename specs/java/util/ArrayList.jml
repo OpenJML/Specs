@@ -63,8 +63,8 @@ public class ArrayList<E> extends AbstractList<E>
     /*-RAC@  public normal_behavior
       @   requires c != null;
       @   ensures this.size() == c.size();
-      @   ensures (\forall int i; 0 <= i && i < c.size();
-      @                     this.get(i) == (c.iterator().nthNextElement(i)));
+      @   // FIXME ensures (\forall int i; 0 <= i && i < c.size();
+      @   // FIXME                  this.get(i) == (c.iterator().nthNextElement(i)));
       @   ensures (\forall int i; 0 <= i && i < c.size();
       @                     this.values[i] == c.values[i]);
       @   ensures (\forall E e;
@@ -134,7 +134,7 @@ public class ArrayList<E> extends AbstractList<E>
     // FIXME - when we can match generic methods public <T> T[] toArray(T[] a);
 
     // specification inherited from List
-    public /*@ pure @*/ E get(int index);
+    public /*@ spec_pure @*/ E get(int index);
 
     // specification inherited from List
     public E set(int index, E element);

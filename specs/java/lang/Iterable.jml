@@ -23,16 +23,22 @@ public interface Iterable<T> {
       @   requires 0 <= n < values.length;
       @   ensures \result == values[(int)n];
       @   ensures containsObject(\result);
-      @ model public pure T _get(\bigint n);
+      @ model public spec_pure T _get(\bigint n);
       @*/
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= n < values.length;
       @   ensures \result == values[n];
       @   ensures containsObject(\result);
-      @ model public pure T _get(int n);
+      @ model public spec_pure T _get(int n);
       @*/
-    
+
+    /*@ public normal_behavior
+    @    requires n >= 0;
+    @    { return this.iterator().nthNextElement(n); }
+    @*/
+   //@ model public spec_pure T nthNextElement(int n);
+
 
     //@ public normal_behavior
     //@   requires true;

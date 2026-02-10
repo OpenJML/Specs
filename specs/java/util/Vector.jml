@@ -422,7 +422,7 @@ public class Vector<E> extends AbstractList<E>
       @    requires !(0 <= index && index < size());
       @    signals_only ArrayIndexOutOfBoundsException;
       @*/
-    public /*@ pure @*/ synchronized E get(int index);
+    public /*@ spec_pure @*/ synchronized E get(int index);
 
      // FIXME - all inherited?
     /*-RAC@ also

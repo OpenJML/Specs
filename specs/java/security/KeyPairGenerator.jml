@@ -70,7 +70,7 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       //@ also public normal_behavior
       //@   ensures \fresh(\result);
       //@   ensures \result.getPublic() instanceof DHPublicKey ==> 0 <= ((DHPublicKey)\result.getPublic()).getY().value < java.math.BigInteger.pow256(this.n);
-      //@   ensures \result.getPublic().getEncoded() != null;
+      //@   // FIXME ensures \result.getPublic().getEncoded() != null;
       //@ pure
       public KeyPair generateKeyPair();
 }

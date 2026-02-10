@@ -40,12 +40,12 @@ public interface Map<K,V> {
         /*@  public normal_behavior
           @     ensures \result == abstractKey;
           @*/
-        /*@ pure @*/ K getKey();
+        /*@ spec_pure @*/ K getKey();
 
         /*@  public normal_behavior
           @     ensures \result == abstractValue;
           @*/
-        /*@ pure @*/ V getValue();
+        /*@ spec_pure @*/ V getValue();
         
         /*@ public behavior
           @     assignable this.abstractValue;
@@ -137,7 +137,7 @@ public interface Map<K,V> {
       @    ensures key != null ==> \result == ( keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);
            // FIXME - exceptions?
       @*/
-    /*@ pure nullable @*/ V get(/*@ nullable */ Object key);
+    /*@ spec_pure nullable @*/ V get(/*@ nullable */ Object key);
 
     /*-RAC@ public normal_behavior
       @    requires key != null;

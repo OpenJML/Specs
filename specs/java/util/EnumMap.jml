@@ -51,7 +51,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@    old int ord = ((Enum)key).ordinal();
     //@    ensures keys[ord] ==> \result == modelMap[ord];
     //@    ensures !keys[ord] ==> \result == null;
-    //@ pure
+    //@ spec_pure
     @Override
     @SuppressWarnings("unchecked")
     public /*@ nullable */ V get(/*@ nullable */ Object key);

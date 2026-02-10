@@ -41,7 +41,7 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
       @ public normal_behavior
       @   requires c != null && !c.contains(null);
       @   ensures (\forall int i; 0 <= i & i < c.values.length;
-      @               c.iterator().nthNextElement(i) == _get(i));
+      @               c.nthNextElement(i) == _get(i));
       @   ensures_redundantly (\forall Object o; true; c.contains(o) <==> contains(o));
       @*/
     public /*@ pure @*/ ArrayDeque(/*@ nullable @*/ Collection<? extends E> c) throws NullPointerException;

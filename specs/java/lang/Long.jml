@@ -82,9 +82,9 @@ public /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   requires i >= 0;
+      @   { return toString(i, 16); }
       @   ensures \result != null;
       @   ensures parseable(\result,16);
-      @   ensures \result.equals(toString(i,16));
       @   ensures parseLong(\result,16) == i;
       @   ensures \result.length() >= 1;
       @ also public normal_behavior
@@ -99,9 +99,9 @@ public /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   requires i >= 0;
+      @   { return toString(i, 8); }
       @   ensures \result != null;
       @   ensures parseable(\result,8);
-      @   ensures \result.equals(toString(i,8));
       @   ensures parseLong(\result,8) == i;
       @   ensures \result.length() >= 1;
       @ also public normal_behavior
@@ -116,9 +116,9 @@ public /*@ pure @*/ final
 
     /*-RAC@ public normal_behavior
       @   requires i >= 0;
+      @   { return toString(i, 2); }
       @   ensures \result != null;
       @   ensures parseable(\result,2);
-      @   ensures \result.equals(toString(i,2));
       @   ensures parseLong(\result,2) == i;
       @   ensures \result.length() >= 1;
       @ also public normal_behavior
@@ -133,9 +133,9 @@ public /*@ pure @*/ final
         String toBinaryString(long i);
 
     /*-RAC@ public normal_behavior
+      @   { return toString(i, 10); }
       @  ensures \result != null;
       @  ensures parseable(\result, 10);
-      @  ensures \result.equals(toString(i,10));
       @  ensures i == parseLong(\result, 10);
       @  ensures i == 0 ==> \result.length() == 1;
       @  ensures i >  0 ==> \result.length() >= 1;
@@ -305,13 +305,12 @@ public /*@ pure @*/ final
     public boolean equals(Object obj);
 
     /*@ public normal_behavior
-      @   ensures (\result == null && getLong(nm,null) == null) ||
-      @            \result.equals(getLong(nm, null));
+     @    { return getLong(nm, null); }
       @*/
     public static /*@ pure @*/ Long getLong(String nm);
 
     /*@ public normal_behavior
-      @   ensures \result.equals(getLong(nm, Long.valueOf(val)));
+      @   { return getLong(nm, Long.valueOf(val)); }
       @*/
     public static /*@ pure @*/ 
         Long getLong(String nm, long val);
@@ -320,7 +319,7 @@ public /*@ pure @*/ final
       @   requires nm != null && !nm.equals("")
       @         && System.getProperty(nm) != null
       @         && decodable(System.getProperty(nm));
-      @   ensures \result.equals(decode(System.getProperty(nm)));
+      @   { return decode(System.getProperty(nm)); }
       @ also
       @ public normal_behavior
       @   requires nm == null || nm.equals("")

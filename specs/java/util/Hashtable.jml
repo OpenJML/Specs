@@ -98,14 +98,14 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     //@ also public exceptional_behavior
     //@   requires key == null;
     //@   signals_only NullPointerException;
-    //@ pure
+    //@ spec_pure
     public synchronized boolean containsKey(Object key) throws RuntimeException;
 
     // specification inherited
     //@ also public exceptional_behavior
     //@   requires key == null;
     //@   signals_only NullPointerException;
-    public /*@ pure */ synchronized V get(Object key);
+    public /*@ spec_pure */ synchronized V get(Object key);
 
     // FIXME - need specs for these enumerators
     /*@ also

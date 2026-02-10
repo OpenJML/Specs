@@ -32,23 +32,23 @@ class Method extends Executable {
     /*@ public normal_behavior
       @   ensures \result == returntype;
       @*/
-    public /*@ pure non_null @*/ Class<?> getReturnType();
+    public /*@ spec_pure non_null @*/ Class<?> getReturnType();
 
     /*@ also public normal_behavior
       @   ensures \result != null;
       @*/
     @Override
-    public /*@ pure @*/ Class<?>[] getParameterTypes();
+    public /*@ spec_pure @*/ Class<?>[] getParameterTypes();
 
     /*@ also public normal_behavior
       @   ensures \result != null;
       @*/
     @Override
-    public /*@ pure @*/  Class<?>[] getExceptionTypes();
+    public /*@ spec_pure @*/  Class<?>[] getExceptionTypes();
 
-    public /*@ pure @*/ boolean equals(/* FIXME @\readonly*//*@nullable*/Object obj);
+    public /*@ spec_pure @*/ boolean equals(/* FIXME @\readonly*//*@nullable*/Object obj);
 
-    public /*@ pure @*/ int hashCode();
+    public /*@ spec_pure @*/ int hashCode();
 
     public /*@ pure @*/ String toString();
 

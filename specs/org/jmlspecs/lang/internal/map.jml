@@ -38,9 +38,9 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     /** Returns true iff the value k is a key in the map */
     //@ public normal_behavior
     //@   requires true;
-    //@ also private normal_behavior
-    //@   requires true;
-    //-RAC@   ensures this.value.keySet().contains(k);
+    // @ also private normal_behavior
+    // @   requires true;
+    // @  { return this.value.keySet().contains(k); } // FIXME - depend on \map rather than value?
     //@ no_state
     public boolean has(K k);
 

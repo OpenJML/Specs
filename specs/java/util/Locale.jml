@@ -65,7 +65,7 @@ public final class Locale implements Cloneable, Serializable {
     //@ public normal_behavior
     //@       requires true;
     //-RAC@   ensures \result == defaultLocale;
-    public static /*@ pure*/ /*@ non_null*/ Locale getDefault();
+    public static /*@ spec_pure */ /*@ non_null*/ Locale getDefault();
 
     //@ public normal_behavior
     //@     requires true;

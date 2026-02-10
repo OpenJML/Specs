@@ -97,7 +97,7 @@ public interface Iterator<E> {
       @      requires n == 0 && moreElements;
       @      ensures (* \result == the object that would be
       @                 returned by calling next() *);  @*/
-     //@ public pure model E nthNextElement(int n);
+     //@ model public spec_pure E nthNextElement(int n);
 
     /*-RAC@ public behavior
       @   assignable objectState, remove_called_since;

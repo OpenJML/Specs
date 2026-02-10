@@ -187,7 +187,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
     //-RAC@   ensures \result != null;
-    //-RAC@   ensures equals(\result.multiply(val).add(remainder(val)));
+    //-RAC@   ensures \result.value == \result.value * val.value + this.value % val.value;
     //-RAC@   ensures \result.value == this.value / val.value;
     //-RAC@ also public exceptional_behavior
     //-RAC@   requires val != null;
@@ -199,8 +199,8 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //-RAC@   requires val != null;
     //-RAC@   requires val.value != 0;
     //-RAC@   ensures \result != null;
-    //-RAC@ ensures \result[0].value == divide(val).value;
-    //-RAC@ ensures \result[1].value == remainder(val).value;
+    //-RAC@   ensures \result[0].value == this.value/val.value;
+    //-RAC@   ensures \result[1].value == this.value % val.value;
     //-RAC@ also public exceptional_behavior
     //-RAC@   requires val != null;
     //-RAC@   requires val.value == 0;
@@ -230,7 +230,6 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //@   ensures \result != null;
     //@   ensures signum() >= 0 ==> \result == this;
     //-RAC@ ensures signum() <  0 ==> \result.value == -this.value;
-    //+RAC@ ensures signum() <  0 ==> \result == this.negate();
     public BigInteger abs();
 
     //@ public normal_behavior

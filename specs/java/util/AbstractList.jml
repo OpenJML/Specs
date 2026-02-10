@@ -42,7 +42,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
     public boolean add(E o);
 
     // specification inherited from List
-    abstract public /*@ pure @*/ E get(int index);
+    abstract public /*@ spec_pure @*/ E get(int index);
 
     // specification inherited from List
     public E set(int index, E element) throws UnsupportedOperationException;

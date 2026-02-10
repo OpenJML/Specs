@@ -46,17 +46,13 @@ public class Properties extends Hashtable<Object,Object> {
       @*/
     /*  @ also public normal_behavior
       @   requires key != null;
-      @   ensures (!content.hasMap(name) && defaults == null) ==> 
-                                        \result == null;
-      @   ensures (!content.hasMap(key) && defaults != null) ==> 
-                                        \result == defaults.getProperty(key);
-      @   ensures content.hasMap(key) ==> \result == content.maps(key);
+      @   { return getProperty(key, null); }
       @*/
     /*@ also public exceptional_behavior
       @   requires key == null;
       @   signals_only NullPointerException;
       @*/
-    //@ pure
+    //@ spec_pure
     public String getProperty(String key) throws NullPointerException;
 
     /*@ public normal_behavior
@@ -84,11 +80,10 @@ public class Properties extends Hashtable<Object,Object> {
 
     //@ public normal_behavior
     //@   requires key != null;
-    //@   ensures !containsKey(key) ==> \result == defaultValue;
-    //@   ensures containsKey(key) ==> \result == get(key);
+    //@   { return containsKey(key) ? (String)get(key) : defaultValue; }
     //@ also public exceptional_behavior
     //@   requires key == null;
     //@   signals_only NullPointerException;
-    //@ pure
+    //@ spec_pure
     public String getProperty(String key, String defaultValue) throws NullPointerException;
 }

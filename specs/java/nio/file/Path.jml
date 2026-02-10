@@ -3,18 +3,59 @@ package java.nio.file;
 //@ non_null_by_default
 public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Path>, Watchable {
 //    public abstract FileSystem getFileSystem();
-//    public abstract boolean isAbsolute();
-//    public abstract Path getRoot();
-//    public abstract Path getFileName();
-//    public abstract Path getParent();
-//    public abstract int getNameCount();
+    
+    //@ public normal_behavior
+    //@   requires true;
+    //@ spec_pure
+    public abstract boolean isAbsolute();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public abstract Path getRoot();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public abstract Path getFileName();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public abstract Path getParent();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ spec_pure
+    public abstract int getNameCount();
+
 //    public abstract Path getName(int);
 //    public abstract Path subpath(int, int);
-//    public abstract boolean startsWith(Path);
-//    public abstract boolean startsWith(java.lang.String);
-//    public abstract boolean endsWith(Path);
-//    public abstract boolean endsWith(java.lang.String);
-//    public abstract Path normalize();
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ spec_pure
+    public abstract boolean startsWith(Path path);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ spec_pure
+    public abstract boolean startsWith(java.lang.String s);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ spec_pure
+    public abstract boolean endsWith(Path path);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ spec_pure
+    public abstract boolean endsWith(java.lang.String s);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ pure
+    public abstract Path normalize();
     
     //@ model public instance String[] canonicalPath;
     
@@ -31,6 +72,7 @@ public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Pat
     //@   ensures java.util.Arrays.equalArrays(\result.canonicalPath, this.canonicalPath.length, path.canonicalPath, 0, path.canonicalPath.length);
     //@ pure
     public abstract Path resolve(Path path);
+
     //@ public normal_behavior
     //@   requires true;
     //@   ensures true;
@@ -52,7 +94,7 @@ public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Pat
 //    public abstract int hashCode();
 
     //@ also public normal_behavior
-    //@   ensures \result != null;
+    //@   ensures \result.chars == modelString;
     public abstract java.lang.String toString();
     
 //    public int compareTo(java.lang.Object);

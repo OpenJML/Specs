@@ -64,7 +64,7 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @
       @ public normal_behavior
       @   ensures \result == ( b ? TRUE_S : FALSE_S );
-      @ model public static pure helper String canonicalString(boolean b);
+      @ model public static spec_pure helper String canonicalString(boolean b);
       @*/
 
     //@ axiom decode(canonicalString(true)) == true;
@@ -96,13 +96,12 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @   ensures \result != null && \result.booleanValue() == b;
       @   ensures \result == ( b ? TRUE : FALSE );
       @*/
-    public static /*@ pure helper @*/ Boolean valueOf(boolean b);
-
+    public static /*@ spec_pure helper @*/ Boolean valueOf(boolean b);
 
     /*@ public normal_behavior
       @   ensures \result == ( decode(s) ? TRUE : FALSE );
       @*/
-    public static /*@ pure helper @*/ Boolean valueOf(/*@ nullable */ String s);
+    public static /*@ spec_pure helper @*/ Boolean valueOf(/*@ nullable */ String s);
 
     // NOTE: The results are interned (not fresh) Strings.  // FIXME - is this actually certain to be the case
     /*@ public normal_behavior
@@ -110,14 +109,14 @@ public final /*@ pure @*/ class Boolean implements java.io.Serializable, Compara
       @   ensures \result == (canonicalString(b));
       @   ensures String.isInterned(\result);
       @*/
-    public static /*@ pure helper @*/ String toString(boolean b);
+    public static /*@ spec_pure helper @*/ String toString(boolean b);
 
     /*@ also
       @ public normal_behavior
       @   //-RAC@ ensures decode(\result) == theBoolean;
       @   //-RAC@ensures \result == canonicalString(theBoolean);
       @*/
-    //@ pure helper
+    //@ spec_pure helper
     public String toString();
     
     //@ public normal_behavior

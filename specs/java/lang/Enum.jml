@@ -7,11 +7,11 @@ public abstract class Enum<E  extends Enum<E>> implements Comparable<E>, java.io
       
       //@ public normal_behavior
       //-RAC@   ensures \result == name;
-      //@ pure
+      //@ spec_pure
       public final String name();
       //@ public normal_behavior
       //-RAC@   ensures \result == ordinal;
-      //@ pure
+      //@ spec_pure
       public final int ordinal();
       //@ protected normal_behavior
       //-RAC@   ensures this.name == name;
@@ -20,7 +20,7 @@ public abstract class Enum<E  extends Enum<E>> implements Comparable<E>, java.io
       protected Enum(String name, int ordinal);
       //@ also public code normal_behavior
       //-RAC@   ensures \result == name;
-      //@ pure
+      //@ spec_pure
       public String toString();
       
 //      public final boolean equals(Object);

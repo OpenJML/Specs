@@ -60,7 +60,7 @@ final public class StringBuffer extends AbstractStringBuilder implements java.io
 
     /*-RAC@ also public normal_behavior
       @   assigns chars;
-      @   ensures chars == \old(chars + String.valueOf(b).chars );
+      @   { ghost var x = \pre(chars + String.valueOf(b).chars ); assume chars == x; }
       @   ensures \result == this;
       @*/
     // The following is needed because AbstractStringBuilder is not a public class

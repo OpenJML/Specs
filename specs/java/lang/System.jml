@@ -350,12 +350,9 @@ t *);
 
 
     //@ public behavior
-    //@   ensures key != null && \result == getProperties().getProperty(key);
-    //@   signals_only SecurityException, NullPointerException;
-    //@   signals (SecurityException) (* if access is not permitted *);
-    //@   signals (NullPointerException) key == null;
+    //@   { return getProperties().getProperty(key, null); }
     //@ helper // TODO - reads?
-    public /*@ pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key) throws RuntimeException;
+    public /*@ spec_pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key) throws RuntimeException;
 
 
     //@ public behavior
@@ -364,7 +361,7 @@ t *);
     //@   signals (SecurityException) (* if access is not permitted *);
     //@   signals (NullPointerException) key == null;
     //@ helper // TODO - reads?
-    public /*@ pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key, /*@nullable*/ String def) throws RuntimeException;    
+    public /*@ spec_pure @*/ static /*@nullable*/ String getProperty(/*@non_null*/ String key, /*@nullable*/ String def) throws RuntimeException;    
 
 
     //@ public behavior

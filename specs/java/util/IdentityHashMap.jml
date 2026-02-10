@@ -42,7 +42,7 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@ also public normal_behavior
   //@   requires o == null || \typeof(o) <:= \type(K);
   //@   ensures \result == (_keyset.contains((K)o) ? _map.get((K)o) : null);
-  //@ pure nullable
+  //@ spec_pure nullable
   @SuppressWarnings("unchecked")
   public V get(Object o);
   

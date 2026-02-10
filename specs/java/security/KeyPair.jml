@@ -18,11 +18,11 @@ public final class KeyPair implements java.io.Serializable {
 
     //@ public normal_behavior
     //@   ensures this.publicKey == \result;
-    //@ pure helper
+    //@ spec_pure helper
     public PublicKey getPublic();
 
     //@ public normal_behavior
     //@   ensures this.privateKey == \result;
-    //@ pure helper
+    //@ spec_pure helper
     public PrivateKey getPrivate();
 }

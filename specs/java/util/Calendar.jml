@@ -126,8 +126,8 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
 
     /*@ protected normal_behavior
-       @        ensures_redundantly zone.equals(TimeZone.getDefault()) && 
-       @                            locale.equals(Locale.getDefault());
+       @        //ensures_redundantly zone.equals(TimeZone.getDefault()) && // FIXME
+       @        //                    locale.equals(Locale.getDefault());
        @ pure
        @*/
     protected Calendar();
@@ -158,14 +158,14 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
     /*@ public normal_behavior
        @        requires zone != null;
        @        assignable \nothing;
-       @        ensures \result != null && \result.zone.equals(zone);
+       @        ensures \result != null && \result.zone == zone;
        @*/
     public /*@ pure @*/ static Calendar getInstance(TimeZone zone);
 
     /*@ public normal_behavior
        @        requires aLocale != null;
        @        assignable \nothing;
-       @        ensures \result != null && \result.locale.equals(aLocale);
+       @        ensures \result != null && \result.locale == aLocale;
        @*/
     public /*@ pure @*/ static Calendar getInstance(Locale aLocale);
 
@@ -173,16 +173,16 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @        requires zone != null && aLocale != null;
        @        assignable \nothing;
        @        ensures \result != null
-       @             && \result.zone.equals(zone)
-       @             && \result.locale.equals(aLocale);
+       @             && \result.zone == zone
+       @             && \result.locale == aLocale;
        @*/
     public /*@ pure @*/ static Calendar getInstance(TimeZone zone,
                                        Locale aLocale);
                                            
     /*@ public normal_behavior
        @        assignable \nothing;
-       @        ensures \nonnullelements(\result) &&
-       @                \result.equals(DateFormat.getAvailableLocales());
+       @        { return DateFormat.getAvailableLocales(); }
+       @        ensures \nonnullelements(\result);
        @*/
     public static /*@ pure @*/ synchronized Locale[] getAvailableLocales();
 
@@ -216,7 +216,7 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @        assignable \nothing;
        @        ensures \result == time;
        @*/
-    public /*@ pure @*/ long getTimeInMillis();
+    public /*@ spec_pure @*/ long getTimeInMillis();
 
     /* This method has an error in its implementation.  areFieldsSet is set
      * to false, and then an if statement executes some extra code if allFieldsSet

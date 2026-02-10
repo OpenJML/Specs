@@ -34,11 +34,15 @@ public abstract class DateFormat extends Format {
 //      public final java.lang.StringBuffer format(java.lang.Object o, java.lang.StringBuffer sb, FieldPosition fp);
 //      public abstract java.lang.StringBuffer format(java.util.Date date, java.lang.StringBuffer sb, FieldPosition fp);
 
+    //@ public normal_behavior
+    //@   ensures \nonnullelements(\result);
+    //@ pure
+    public static java.util.Locale[] getAvailableLocales();
     
-      //@ public normal_behavior
-      //@   ensures true;
-      //@ pure
-      public final java.lang.String format(java.util.Date date);
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public final java.lang.String format(java.util.Date date);
 //      public java.util.Date parse(java.lang.String s) throws ParseException;
 //      public abstract java.util.Date parse(java.lang.String s, ParsePosition pp);
 //      public java.lang.Object parseObject(java.lang.String s, ParsePosition pp);

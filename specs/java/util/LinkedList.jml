@@ -98,7 +98,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
     
     public void clear();
     
-    //@ pure
+    //@ spec_pure
     public E get(int index);
     
     public E set(int index, E element);

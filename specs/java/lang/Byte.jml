@@ -64,29 +64,29 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @    public normal_behavior
       @     {|
       @       requires (nm.charAt(0) == 'O' && nm.charAt(1) == 'x'); // posititve hex
-      @       ensures \result == parseable(nm.substring(2), 16);
+      @       { return parseable(nm.substring(2), 16); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O' && nm.charAt(2) == 'x'); // negative hex
-      @       ensures \result == parseable(nm.substring(3), 16);
+      @       { return parseable(nm.substring(3), 16); }
       @      also
       @       requires (nm.charAt(0) == '#');              // positive hex
-      @       ensures \result == parseable(nm.substring(1), 16);
+      @       { return parseable(nm.substring(1), 16); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == '#');  // negative hex
-      @       ensures \result == parseable(nm.substring(2), 16);
+      @       { return parseable(nm.substring(2), 16); }
       @      also
       @       requires (nm.charAt(0) == 'O');              //positive octal
-      @       ensures \result == parseable(nm.substring(1), 8);
+      @       { return parseable(nm.substring(1), 8); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O');  // negative octal
-      @       ensures \result == parseable(nm.substring(2), 8);
+      @       { return parseable(nm.substring(2), 8); }
       @      also
-      @       ensures \result == parseable(nm);  // positive or negative byte, radix 10
+      @       { return parseable(nm); }  // positive or negative byte, radix 10
       @     |}
       @   model public static spec_pure boolean decodeable( String nm ) {
-      try { decode(nm); return true; }
-      catch (Exception e) { return false; }
-      }
+              try { decode(nm); return true; }
+              catch (Exception e) { return false; }
+              }
       @*/
 
     public static final byte MIN_VALUE;// = -128;

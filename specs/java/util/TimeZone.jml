@@ -4,8 +4,10 @@ public abstract class TimeZone implements java.io.Serializable,java.lang.Cloneab
   public static final int SHORT;
   public static final int LONG;
   static final long serialVersionUID;
-  static final java.util.TimeZone NO_TIMEZONE;
+  static final TimeZone NO_TIMEZONE;
   static final java.lang.String GMT_ID;
+  
+  //-RAC@ model public static TimeZone defaultTZ;
 
   public TimeZone();
   //public abstract int getOffset(int, int, int, int, int, int);
@@ -30,8 +32,11 @@ public abstract class TimeZone implements java.io.Serializable,java.lang.Cloneab
   //public static synchronized java.lang.String[] getAvailableIDs(int);
   public static synchronized java.lang.String[] getAvailableIDs();
 
-  //@ pure
+  //@ public normal_behavior
+  //-RAC@   ensures \result == defaultTZ;
+  //@ spec_pure
   public static java.util.TimeZone getDefault();
+  
   static java.util.TimeZone getDefaultRef();
   //public static void setDefault(java.util.TimeZone);
   //public boolean hasSameRules(java.util.TimeZone);

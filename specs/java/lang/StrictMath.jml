@@ -618,7 +618,7 @@ public /*@ pure @*/ final class StrictMath {
       @   also
       @     requires !(isPositiveZero(a) && b == 0)
       @              || (isPositiveZero(b) && a == 0);
-      @     ensures \result == ( Float.valueOf(a).compareTo(Float.valueOf(b)) >= 0 ? a : b);
+      @     ensures \result == ( Float.compare(a,b) >= 0 ? a : b);
       @   |}
       @ |}
       @*/
@@ -637,7 +637,7 @@ public /*@ pure @*/ final class StrictMath {
       @   also
       @     requires !(isPositiveZero(a) && b == 0)
       @              || (isPositiveZero(b) && a == 0);
-      @      ensures \result == (Double.valueOf(a).compareTo(Double.valueOf(b)) >= 0 ? a : b);
+      @      ensures \result == (Double.compare(a,b) >= 0 ? a : b);
       @   |}
       @ |}
       @*/
@@ -687,13 +687,13 @@ public /*@ pure @*/ final class StrictMath {
       @     requires (isNegativeZero(a) && b == 0) || (isNegativeZero(b) && a == 0);
       @     ensures isNegativeZero(\result);
       @   also
-      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) == 0;
+      @     requires Float.compare(a,b) == 0;
       @     ensures \result == a;
       @   also
-      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) <= 0;
+      @     requires Float.compare(a,b) <= 0;
       @     ensures \result == a;
       @   also
-      @     requires Float.valueOf(a).compareTo(Float.valueOf(b)) >= 0;
+      @     requires Float.compare(a,b) >= 0;
       @     ensures \result == b;
       @   |}
       @ |}
@@ -710,13 +710,13 @@ public /*@ pure @*/ final class StrictMath {
       @     requires (isNegativeZero(a) && b == 0) || (isNegativeZero(b) && a == 0);
       @     ensures isNegativeZero(\result);
       @   also
-      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) == 0;
+      @     requires Double.compare(a,b) == 0;
       @     ensures \result == a;
       @   also
-      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) <= 0;
+      @     requires Double.compare(a,b) <= 0;
       @     ensures \result == a;
       @   also
-      @     requires Double.valueOf(a).compareTo(Double.valueOf(b)) >= 0;
+      @     requires Double.compare(a,b) >= 0;
       @     ensures \result == b;
       @   |}
       @ |}

@@ -309,14 +309,13 @@ public  /*@ pure @*/ final
     public boolean equals(/*@ nullable*/Object obj);
   
     /*@ public normal_behavior
-      @   ensures (\result == null && getInteger(nm,null) == null) ||
-      @           \result.equals(getInteger(nm, null));
+      @   { return getInteger(nm, null); }
       @*/
     public static /*@ pure @*/
         Integer getInteger(String nm);
 
     /*@ public normal_behavior
-      @   ensures \result.equals(getInteger(nm, Integer.valueOf(val)));
+      @   { return getInteger(nm, Integer.valueOf(val)); }
       @*/
     public static /*@ pure @*/ 
         Integer getInteger(String nm, int val);
@@ -325,7 +324,7 @@ public  /*@ pure @*/ final
       @   requires nm != null && !nm.equals("") 
       @         && System.getProperty(nm) != null
       @         && decodable(System.getProperty(nm));
-      @   ensures \result.equals(decode(System.getProperty(nm)));
+      @   { return decode(System.getProperty(nm)); }
       @ also
       @ public normal_behavior
       @   requires nm == null || nm.equals("") 

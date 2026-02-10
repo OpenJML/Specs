@@ -51,7 +51,6 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@ public model boolean _causeSet;         in _cause;
 
     //-RAC@ public model non_null StackTraceElement[] _stackTrace; in objectState;
-    //-RAC@ represents _stackTrace = getStackTrace();
 
     //@ spec_public
     @SuppressWarnings("serial")
@@ -64,41 +63,41 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   ensures \result == (_message == null & _cause == null & _causeSet == false
     //-RAC@                        & \nonnullelements(_stackTrace)
     //-RAC@                        & suppressedExceptions.size() == 0);
-    //@ public pure helper model boolean standardThrowable();
+    //@ public spec_pure helper model boolean standardThrowable();
 
     //-RAC@ public normal_behavior
     //-RAC@   ensures \result == (_cause == null & _causeSet == false
     //-RAC@                      & \nonnullelements(_stackTrace)
     //-RAC@                      & suppressedExceptions.size() == 0);
-    //@ public pure model boolean standardThrowableUnspecifiedMessage();
+    //@ public spec_pure model boolean standardThrowableUnspecifiedMessage();
 
     //@ public normal_behavior
     //@   requires c != this;
     //-RAC@   ensures \result == (_cause == c & _causeSet == true
     //-RAC@                       & \nonnullelements(_stackTrace)
     //-RAC@                       & suppressedExceptions.size() == 0);
-    //@ public pure model boolean standardThrowableUnspecifiedMessage(nullable Throwable c);
+    //@ public spec_pure model boolean standardThrowableUnspecifiedMessage(nullable Throwable c);
 
     //@ public normal_behavior
     //@     requires true;
     //-RAC@   ensures \result == (_message == s & _cause == null & _causeSet == false
     //-RAC@                       & \nonnullelements(_stackTrace)
     //-RAC@                       & suppressedExceptions.size() == 0);
-    //@ public pure helper model boolean standardThrowable(nullable String s);
+    //@ public spec_pure helper model boolean standardThrowable(nullable String s);
 
     //@ public normal_behavior
     //@   requires c != this;
     //-RAC@   ensures \result == (initMessage(c) & _cause == c & _causeSet == true
     //-RAC@                       & \nonnullelements(_stackTrace)
     //-RAC@                       & suppressedExceptions.size() == 0);
-    //@ public pure helper model boolean standardThrowable(nullable Throwable c);
+    //@ public spec_pure helper model boolean standardThrowable(nullable Throwable c);
 
     //@ public normal_behavior
     //@   requires c != this;
     //-RAC@   ensures \result == (_message == s & _cause == c & _causeSet == true
     //-RAC@                       & \nonnullelements(_stackTrace)
     //-RAC@                       & suppressedExceptions.size() == 0);
-    //@ public pure helper model boolean standardThrowable(nullable String s, nullable Throwable c);
+    //@ public spec_pure helper model boolean standardThrowable(nullable String s, nullable Throwable c);
 
       //@ public normal_behavior
       //@   requires c != this;
@@ -106,7 +105,7 @@ public class Throwable extends Object implements java.io.Serializable
   //-RAC@                       & \nonnullelements(_stackTrace)
   //-RAC@                       & suppressedExceptions.size() == 0);
       // FIXME - say more about boolean arguments
-       //@ public pure helper model boolean standardThrowable(nullable String s, nullable Throwable c, boolean enableSuppression, boolean writableStackTrace);
+       //@ public spec_pure helper model boolean standardThrowable(nullable String s, nullable Throwable c, boolean enableSuppression, boolean writableStackTrace);
 
       //@ public normal_behavior
       //@   requires true;
@@ -161,7 +160,7 @@ public class Throwable extends Object implements java.io.Serializable
     //@    requires true;
     //-RAC@  reads _cause;
     //-RAC@  ensures \result == _cause;
-    synchronized public /*@ pure helper nullable*/ Throwable getCause();
+    synchronized public /*@ spec_pure helper nullable*/ Throwable getCause();
 
     /*-RAC@ public normal_behavior
       @   requires !_causeSet;
@@ -183,12 +182,12 @@ public class Throwable extends Object implements java.io.Serializable
     /*-RAC@ also public normal_behavior
       @   requires _message == null;
       @   reads this.*, _message;
-      @   ensures \result.equals(this.getClass().toString());
+      @   { return this.getClass().toString(); }
       @ also public normal_behavior
       @   requires \typeof(this) == \type(Throwable);
       @   requires _message != null;
       @   reads this.*, _message, _message.*;
-      @   ensures \result.equals(this.getClass().toString() + ": " + _message);
+      @   { return this.getClass().toString() + ": " + _message; }
       @*/
     public /*@ pure non_null @*/ String toString();
 
@@ -213,6 +212,7 @@ public class Throwable extends Object implements java.io.Serializable
 
     //@ public normal_behavior
     //-RAC@   assignable this._stackTrace;
+    //-RAC@   ensures this._stackTrace != null;
     //@   ensures \result == this;
     public synchronized /*@ non_null*/ Throwable fillInStackTrace();
 
