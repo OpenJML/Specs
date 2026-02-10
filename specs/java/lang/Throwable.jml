@@ -148,13 +148,14 @@ public class Throwable extends Object implements java.io.Serializable
     //@    requires true;
     //-RAC@   reads _message;
     //-RAC@   ensures \result == _message;
-    public /*@ pure helper nullable*/ String getMessage();
+    public /*@ spec_pure helper nullable*/ String getMessage();
 
-    //@ public normal_behavior
+    //@ public code normal_behavior
     //@    requires true;
-    //-RAC@   reads _message;
     //-RAC@   ensures  \result == _message;
-    public /*@ pure helper nullable*/ String getLocalizedMessage(); // FIXME -- \result is some arbitrary message?
+    //@ also public normal_behavior
+    //@    requires true;
+    public /*@ pure helper nullable*/ String getLocalizedMessage();
 
     //@ public normal_behavior
     //@    requires true;
