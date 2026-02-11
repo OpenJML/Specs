@@ -77,41 +77,40 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //@   requires true;
     //-RAC@   ensures \result == (\exists \bigint i; 0 <= i < this.length; this[i] == v);
     // -RAC@   ensures \result == (length == 0 ? false : (this[0] == v || this.tail(1).contains(v)));
-    //@ no_state
+    //@ no_state helper
     public <T> boolean contains(T v);
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == (\exists \bigint i; 0 <= i < this.length; java.util.Collection.nullequals(v, this[i]));
-    //@ no_state
+    //@ no_state helper
     //@ model public <T> boolean containsEquals(T v);
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == (this.length == s.length && (\forall \bigint i;; (0 <= i < this.length) ==> (this[i] == s[i])));
-    //@ no_state
+    //@ no_state helper
     public boolean eq(seq<T> s);
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == !eq(s);
-    //@ no_state
+    //@ no_state helper
     public boolean ne(seq<T> s);
     
     //@ public normal_behavior
     //@   requires 0 <= j <= length;
     //-RAC@   requires 0 <= j <= this.length;
     //-RAC@   ensures \result.length == 1 + this.length;
-    //-RAC@   ensures (\forall \bigint i;; (0 <= i < j) ==> (\result[i] == this[i]));
-    //-RAC@   ensures (\forall \bigint i;; (j < i <= this.length) ==> (\result[i] == this[i-1]));
+    //-RAC@   ensures (\forall \bigint i;; \result[i] == ( 0 <= i < j ? this[i] : i == j ? v : i <= this.length ? this[i-1] : this[i]));
     //-RAC@   ensures \result[j] == v;
-    //@ no_state
+    //@ no_state helper
     public seq<T> insert(bigint j, T v);
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@  ensures \result == insert(length, v);
-    //@ no_state
+    //@ no_state helper
     public seq<T> append(T v);
 
     //@ public normal_behavior
@@ -119,21 +118,18 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //-RAC@   ensures \result.length == this.length + s.length & \result.length() == this.length() + s.length();
     //-RAC@   ensures (\forall \bigint i;; (0 <= i < this.length) ==> (\result[i] == this[i]));
     //-RAC@   ensures (\forall \bigint i;; (this.length <= i && i < \result.length) ==> (\result[i] == s[i-this.length]));
-    //@ no_state
+    //@ no_state helper
     public seq<T> append(seq<T> s);
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == insert(bigint.zero, t);
-    //@ no_state
+    //@ no_state helper
     public seq<T> prepend(T t);
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result.length == this.length + s.length;
-    //-RAC@   ensures (\forall \bigint i;; (0 <= i < s.length) ==> (\result[i] == s[i]));
-    //-RAC@   ensures (\forall \bigint i;; (s.length <= i < \result.length) ==> (\result[i] == this[i-s.length]));
-    //-RAC@   ensures \result == s.append(this);
+    //-RAC@   { return s.append(this); }
     //@ no_state
     public seq<T> prepend(seq<T> s);
 
