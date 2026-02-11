@@ -183,36 +183,36 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (byte) theDouble;
-      @ spec_pure
       @*/
+    //@ spec_pure helper
     public byte byteValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (short) theDouble;
-      @ spec_pure
       @*/
+    //@ spec_pure helper
     public short shortValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (int) theDouble;
-      @ spec_pure
       @*/
+    //@ spec_pure helper
     public int intValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (long) theDouble;
-      @ spec_pure
       @*/
+    //@ spec_pure helper
     public long longValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures Float.identical(\result, (float) theDouble);
-      @ spec_pure
       @*/
+    //@ spec_pure helper
     public float floatValue();
 
     /*-RAC@ also

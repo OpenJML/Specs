@@ -152,13 +152,13 @@ public class bigint extends Number implements org.jmlspecs.lang.IJmlPrimitiveTyp
     
     // A negative shift is a positive shift in the other direction, at least in RAC
     //@ public normal_behavior
-    //@   requires true;
+    //@     requires true;
     //-RAC@ ensures \result == (this << v);
-    //@ helper
+    //@ helper pure
     public bigint shiftLeft(bigint v);
     
     //@ public normal_behavior
-    //@   requires true;
+    //@     requires true;
     //-RAC@ ensures \result == (this >> v);
     //@ helper
     public bigint shiftRight(bigint v);
