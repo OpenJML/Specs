@@ -96,14 +96,14 @@ public class ArrayList<E> extends AbstractList<E>
     public void ensureCapacity(int minCapacity);
 
     // specification inherited from List
-    public /*@ pure helper @*/ int size();
+    public /*@ strictly_pure helper @*/ int size();
 
     // specification inherited from List
-    public /*@ pure @*/ boolean isEmpty();
+    public /*@ strictly_pure @*/ boolean isEmpty();
 
     // specification inherited from List
     //@ also public normal_behavior ensures true;
-    //@   //-RAC@ ensures \result == (\exists \bigint i; 0 <= i <= values.length; Objects.equals(elem, values[i]));
+    //@   // -RAC@ ensures \result == (\exists \bigint i; 0 <= i <= values.length; Objects.equals(elem, values[i]));  // FIXME - purity
     public /*@ spec_pure @*/ boolean contains(Object elem);
 
     // specification inherited from List

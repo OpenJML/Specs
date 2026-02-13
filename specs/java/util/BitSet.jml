@@ -46,7 +46,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //-RAC@   ensures \result == cardinality(content);
     //@   // num_of not implemented for proofs, and causes inconsistencies - FIXME
     //@   // ensures \result == (\num_of int i; 0<=i; isSet(content,i));
-    //@ pure
+    //@ spec_pure
     public int cardinality();
 
     //@ pure
@@ -81,7 +81,7 @@ public class BitSet implements Cloneable, java.io.Serializable{
     //@ public normal_behavior
     //-RAC@   ensures \result <==> (\forall int i; 0<=i; !isSet(content,i));
     //@   ensures \result <==> cardinality() == 0;
-    //@ pure
+    //@ spec_pure
     public boolean isEmpty();
 
     // FIXME - review

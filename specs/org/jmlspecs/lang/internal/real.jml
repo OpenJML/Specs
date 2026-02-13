@@ -71,7 +71,7 @@ public abstract class real extends Number implements org.jmlspecs.lang.IJmlPrimi
     public static real of(byte v);
     //@ public normal_behavior requires true; //-RAC@ ensures \result == (\real)v & v == (\bigint)\result;
     public static real of(bigint v);
-    //@ public normal_behavior requires true; //-RAC@ ensures \result == (\real)v.value & v.value == (\bigint)\result;
+    //@ public normal_behavior requires true; //-RAC@ ensures \result == (\real)v.value & v.value == (\bigint)\result; strictly_pure
     public static real of(java.math.BigInteger v);
 
     // FIXME -- should these be visible?

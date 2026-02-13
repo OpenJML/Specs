@@ -112,7 +112,7 @@ public class Throwable extends Object implements java.io.Serializable
       //-RAC@   ensures \result <==> (c == null ? _message == null : (_message != null 
       //-RAC@                                   //-RAC@ && _message.chars == c.modelString
       //-RAC@                                   ));
-       //@ public pure helper model boolean initMessage(nullable Throwable c);
+       //@ public spec_pure helper model boolean initMessage(nullable Throwable c);
 
     //@ public normal_behavior
 	//-RAC@   ensures standardThrowable();

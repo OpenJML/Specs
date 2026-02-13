@@ -39,10 +39,10 @@ public abstract class AbstractCollection<E> implements Collection<E> {
     public abstract /*@ pure @*/ Iterator<E> iterator();
 
     // specification inherited from Collection
-    public abstract /*@ pure helper @*/ int size();
+    public abstract /*@ strictly_pure helper @*/ int size();
 
     // specification inherited from Collection
-    public /*@ pure @*/ boolean isEmpty();
+    public /*@ strictly_pure @*/ boolean isEmpty();
 
     // specification inherited from Collection
     public /*@ spec_pure @*/ boolean contains(Object o);

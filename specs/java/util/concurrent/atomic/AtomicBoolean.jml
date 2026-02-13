@@ -17,7 +17,7 @@ public class AtomicBoolean implements java.io.Serializable {
   //@ public normal_behavior
   //-RAC@   ensures \result == (value != 0);
   //+RAC@   ensures true;
-  //@ pure helper
+  //@ strictly_pure helper
   public final boolean get();
 
   //-RAC@ public normal_behavior

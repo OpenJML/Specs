@@ -35,7 +35,7 @@ public class Mac implements Cloneable {
       //@   requires 0 <= offa <= a.length - len;
       //@   requires 0 <= offb <= b.length - len;
       //@   ensures \result == (\forall int i; offa <= i < offa+len; a[i] == b[i-offa+offb]);
-      //@ pure helper
+      //@ strictly_pure helper
       /*@ model public static boolean equalArrays(byte[] a, \bigint offa, byte[] b, \bigint offb, \bigint len) {
           return (\forall int i; offa <= i < offa+len; a[i] == b[i-offa+offb]);
        }
@@ -44,13 +44,13 @@ public class Mac implements Cloneable {
       //@ public normal_behavior
       //@   requires len > 0;
       //@   ensures \result.length == len;
-      //@ helper no_state 
+      //@ helper pure 
       //@ model public static byte non_null [] hmacHash(byte[] input, int len); 
 
       //@ public normal_behavior
       //@   requires n >= 1;
       //@   ensures \result.length == SIZE;
-      //@ helper no_state 
+      //@ helper pure 
       //@ model public static byte non_null [] hmacIteratedHash(byte[] info, int n);
       
       //@ model public static final int MAXBL = 255;
@@ -59,9 +59,9 @@ public class Mac implements Cloneable {
       // the hash acting on the 'info' material, according to https://tools.ietf.org/html/rfc5869
       //@ public normal_behavior
       //@   ensures \result.length == MAXBL*SIZE;
-      //@   ensures (\forall int i; 1 <= i <= MAXBL; Mac.equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE));
-      //@   ensures (\forall int k; 0 <= k < MAXBL*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]);
-      //@ helper no_state
+      // @   ensures (\forall int i; 1 <= i <= MAXBL; Mac.equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE)); // FIXME - patch up purity
+      // @   ensures (\forall int k; 0 <= k < MAXBL*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]); // FIXME - patch up purity
+      //@ helper pure
       //@ model public static byte[] concatenatedIteratedHash(byte[] info);
       
 //      private java.security.Provider.Service firstService;
@@ -166,7 +166,7 @@ public class Mac implements Cloneable {
       //-H3@   requires this.savedInfo == null;
       //-H3@   assignable this.currentHash, this.isReset;
       //-H3@   ensures !this.isReset;
-      //-H3@   ensures this.currentHash == hmacHash(buf, SIZE);
+      // -H3@   ensures this.currentHash == hmacHash(buf, SIZE); // FIXME - purity problem
       //-H1@ also public normal_behavior
       //-H1@   requires offset >= 0 && len > 0 && offset <= buf.length - len;
       //-H1@   requires this.initialized;
@@ -176,7 +176,7 @@ public class Mac implements Cloneable {
       //-H1   @   requires Mac.equalArrays(this.savedInfo,0,buf,offset,len-1);
       //-H1@   assignable this.currentHash, this.isReset;
       //-H1@   ensures !this.isReset;
-      //-H1@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,(byte)1);
+      // -H1@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,(byte)1); // FIXME - purity problem
       //-H2@ also public normal_behavior
       //-H2@   requires len > 0;
       //-H2@   requires 0 <= offset <= buf.length - len;
@@ -184,11 +184,11 @@ public class Mac implements Cloneable {
       //-H2@   requires this.savedInfo != null && this.savedInfo.length == len - 1 - SIZE;
       //-H2@   old int n = Byte.toUnsignedInt(buf[offset+len-1]);
       //-H2@   requires n > 1;
-      //-H2@   requires Mac.equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,n-1),0,SIZE);
+      // -H2@   requires Mac.equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,n-1),0,SIZE); // FIXME - purity problem
       //-H2@   requires Mac.equalArrays(this.savedInfo, 0, buf, offset+SIZE, (int)this.savedInfo.length);
       //-H2@   assignable this.currentHash, this.isReset;
       //-H2@   ensures !this.isReset;
-      //-H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n);
+      // -H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n); // FIXME - purity problem
       
       public final void update(byte[] buf, int offset, int len) throws java.lang.IllegalStateException;
 

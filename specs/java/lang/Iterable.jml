@@ -22,20 +22,20 @@ public interface Iterable<T> {
     /*-RAC@ public normal_behavior
       @   requires 0 <= n < values.length;
       @   ensures \result == values[(int)n];
-      @   ensures containsObject(\result);
+      @   // ensures containsObject(\result);
       @ model public spec_pure T _get(\bigint n);
       @*/
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= n < values.length;
       @   ensures \result == values[n];
-      @   ensures containsObject(\result);
+      @   // ensures containsObject(\result);
       @ model public spec_pure T _get(int n);
       @*/
 
     /*@ public normal_behavior
     @    requires n >= 0;
-    @    { return this.iterator().nthNextElement(n); }
+    @    //-RAC@ { return this.values[n]; }  // FIXME - nth element or nth next element?
     @*/
    //@ model public spec_pure T nthNextElement(int n);
 

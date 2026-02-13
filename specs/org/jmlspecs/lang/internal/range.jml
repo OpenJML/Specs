@@ -3,72 +3,82 @@ import org.jmlspecs.lang.IJmlPrimitiveType;
 
 //@ immutable no_state non_null_by_default
 public class range implements IJmlPrimitiveType {
-	
+
     public final bigint lo;
     public final bigint hi;
     public final boolean hiIsExclusive;
-    
+
     //@ public invariant hiIsExclusive ? lo <= hi : lo <= hi+1;
-    
+
     //@ private normal_behavior
     //@   requires ex ? lo <= hi : lo <= hi+1;
     //-RAC@   ensures this.lo == lo;
     //-RAC@   ensures this.hi == hi;
     //-RAC@   ensures this.hiIsExclusive == ex;
-	private range(bigint lo, bigint hi, boolean ex);
-	
-	/** Used as an initial value, but with undefined values (from ESC perspective) */
+    private range(bigint lo, bigint hi, boolean ex);
+
+    /** Used as an initial value, but with undefined values (from ESC perspective) */
     //@ public normal_behavior
     //@   ensures \result.isEmpty();
-	public static range empty();
-	
+    //@ helper
+    public static range empty();
+
     //@ public normal_behavior
     //@   ensures \result == (hiIsExclusive ? (hi <= lo) : (hi < lo));
+    //@ helper
     public boolean isEmpty();
-	
+
     //@ public normal_behavior
     //@   requires lo <= hi+1;
     //-RAC@   ensures \result.lo == lo;
     //-RAC@   ensures \result.hi == hi;
     //-RAC@   ensures \result.hiIsExclusive == false;
+    //@ helper
     public static range of(bigint lo, bigint hi);
-    
+
     //@ public normal_behavior
     //@   requires isEx ? lo <= hi : lo <= hi+1;
     //-RAC@   ensures \result.lo == lo;
     //-RAC@   ensures \result.hi == hi;
     //-RAC@   ensures \result.hiIsExclusive == isEx;
+    //@ helper
     public static range of(bigint lo, bigint hi, boolean isEx);
-    
-	//@ public normal_behavior
-	//@   requires true;
+
+    //@ public normal_behavior
+    //@   requires true;
     //-RAC@   ensures hiIsExclusive == r.hiIsExclusive ==> \result == (lo == r.lo && hi == r.hi);
     //-RAC@   ensures hiIsExclusive && !r.hiIsExclusive ==> \result == (lo == r.lo && hi == 1+r.hi);
     //-RAC@   ensures !hiIsExclusive && r.hiIsExclusive ==> \result == (lo == r.lo && 1+hi == r.hi);
-	public boolean eq(range r);
-	
-	//@ public normal_behavior
-	//@   requires true;
-	//-RAC@   ensures \result == !eq(r);
-	public boolean ne(range r);
-	
+    //@ helper
+    public boolean eq(range r);
+
     //@ public normal_behavior
     //@   requires true;
-	@Override
-	public String toString();
-	
+    //-RAC@   ensures \result == !eq(r);
+    //@ helper
+    public boolean ne(range r);
+
+    //@ public normal_behavior
+    //@   requires true;
+    //@ helper
+    @Override
+    public String toString();
+
     //@ public normal_behavior
     //-RAC@   ensures \forall \range r; eq(r); this.hashCode() == r.hashCode();
-	@Override 
-	public int hashCode();
-    
+    //@ helper
+    @Override 
+    public int hashCode();
+
     //@ public behavior
     //@   requires true;
-	//-RAC@ ensures \result == eq(r);
+    //-RAC@ ensures \result == eq(r);
+    //@ helper
     public boolean equals(range r);
-    
+
     //@ public behavior
     //@   requires false;
+    //@ helper
     @Override
     public boolean equals(Object o);
 }

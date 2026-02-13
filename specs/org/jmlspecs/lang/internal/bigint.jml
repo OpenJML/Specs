@@ -153,15 +153,27 @@ public class bigint extends Number implements org.jmlspecs.lang.IJmlPrimitiveTyp
     // A negative shift is a positive shift in the other direction, at least in RAC
     //@ public normal_behavior
     //@     requires true;
-    //-RAC@ ensures \result == (this << v);
+    //-RAC@ { return (this << v); }
     //@ helper pure
     public bigint shiftLeft(bigint v);
     
     //@ public normal_behavior
     //@     requires true;
-    //-RAC@ ensures \result == (this >> v);
+    //-RAC@ { return (this << v); }
+    //@ helper pure //+RAC@ final inline
+    //@ model public bigint shiftLeft(int v) { return this << v; }
+    
+    //@ public normal_behavior
+    //@     requires true;
+    //-RAC@ { return (this >> v); }
     //@ helper
     public bigint shiftRight(bigint v);
+    
+    //@ public normal_behavior
+    //@     requires true;
+    //-RAC@ { return (this >> v); }
+    //@ helper //+RAC@ final inline
+    //@ model public bigint shiftRight(int v) { return this >> v; } 
     
     //@ public normal_behavior
     //@   requires true;
@@ -214,13 +226,13 @@ public class bigint extends Number implements org.jmlspecs.lang.IJmlPrimitiveTyp
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == this.value.doubleValue();
+    //-RAC@ ensures \result == (double)(\real)this;
     //@ helper
     public double doubleValue();
 
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@ ensures \result == this.value.floatValue();
+    //-RAC@ ensures \result == (float)(\real)this;
     //@ helper
     public float floatValue();
         

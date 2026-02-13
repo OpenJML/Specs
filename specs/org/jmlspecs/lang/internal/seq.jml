@@ -34,17 +34,17 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     static public <T> seq<T> empty();
     
     //@ public normal_behavior
-    //@   requires true;
+    //@   reads t[*], t.length;
     //-RAC@   ensures \result.length == t.length;
     //-RAC@   ensures \forall int k; 0 <= k < t.length; (int)\result[k] == t[k];
-    //@ no_state
+    //@ strictly_pure // reads a field of an array
     static public seq<Integer> of(int[] t);
     
     //@ public normal_behavior
-    //@   requires true;
+    //@   reads t[*], t.length;
     //-RAC@   ensures \result.length == t.length;
     //-RAC@   ensures \forall int i; 0<=i<t.length; \result[i] == t[i];
-    //@ no_state
+    //@ strictly_pure // reads a field of an array
     @SuppressWarnings("unchecked")
     static public <T> seq<T> of(T ... t);
     
@@ -82,7 +82,7 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures \result == (\exists \bigint i; 0 <= i < this.length; java.util.Collection.nullequals(v, this[i]));
+    // -RAC@   ensures \result == (\exists \bigint i; 0 <= i < this.length; java.util.Collection.nullequals(v, this[i]));  // FIXME - fix purity
     //@ no_state helper
     //@ model public <T> boolean containsEquals(T v);
     
@@ -99,7 +99,7 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     public boolean ne(seq<T> s);
     
     //@ public normal_behavior
-    //@   requires 0 <= j <= length;
+    //+RAC@   requires 0 <= j <= length();
     //-RAC@   requires 0 <= j <= this.length;
     //-RAC@   ensures \result.length == 1 + this.length;
     //-RAC@   ensures (\forall \bigint i;; \result[i] == ( 0 <= i < j ? this[i] : i == j ? v : i <= this.length ? this[i-1] : this[i]));

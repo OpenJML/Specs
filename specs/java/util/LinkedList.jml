@@ -85,7 +85,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
     //@ spec_pure
     public boolean contains(Object o);
     
-    //@ pure
+    // inherited spec
     public int size();
     
     public boolean add(/*@ nullable */ E o);

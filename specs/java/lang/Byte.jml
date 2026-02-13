@@ -32,62 +32,54 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
     //@ public model final byte theByte;
     //+RAC@ represents theByte = byteValue();
 
-    /*@ 
+    /*-RAC@   
       @     public normal_behavior
       @       assignable \nothing;
-      @      ensures \result == parseable( s, 10 );
-      @   model public static spec_pure boolean parseable( String s ) {
-      try { Byte ss = Byte.valueOf(s); return true; }   
-      catch (Exception e) { return false; }
-      }     
+      @      ensures \result == parseable( s, 0, 10 );
+      @   model public static strictly_pure boolean parseable( String s ); 
 
       @    public normal_behavior
       @      requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
       @       assignable \nothing;
       @      ensures \result <==>
-      @          s != null && !s.equals("") &&
-      @          (\forall int i; 0 <= i && i < s.length(); 
+      @          s != null && !s.chars.isEmpty() &&
+      @          (\forall int i; index <= i && i < s.length(); 
       @               Character.digit(s.charAt(i), r) != -1);
       @     also
       @    public normal_behavior
       @       requires Character.MIN_RADIX <= r && r <= Character.MAX_RADIX;
       @       assignable \nothing;
       @       ensures \result <==>
-      @               s != null && !s.equals("") &&
-      @               (\forall int i; 1 <= i && i < s.length() && s.charAt(0) == '-';
+      @               s != null && !s.chars.isEmpty() && s.charAt(index) == '-' &&
+      @               (\forall int i; index < i && i < s.length();
       @                        Character.digit(s.charAt(i), r) != -1);
-      @   model public static spec_pure boolean parseable( String s, int r ) {
-      try { Byte ss = Byte.valueOf(s,r); return true; } 
-      catch (Exception e) { return false; }     
-      @   }
+      @*/
+    //@ model public static strictly_pure boolean parseable( String s, int index, int r );
 
-      @    public normal_behavior
+    /*-RAC@    public normal_behavior
       @     {|
       @       requires (nm.charAt(0) == 'O' && nm.charAt(1) == 'x'); // posititve hex
-      @       { return parseable(nm.substring(2), 16); }
+      @       { return parseable(nm, 2, 16); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O' && nm.charAt(2) == 'x'); // negative hex
-      @       { return parseable(nm.substring(3), 16); }
+      @       { return parseable(nm, 3, 16); }
       @      also
       @       requires (nm.charAt(0) == '#');              // positive hex
-      @       { return parseable(nm.substring(1), 16); }
+      @       { return parseable(nm, 1, 16); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == '#');  // negative hex
-      @       { return parseable(nm.substring(2), 16); }
+      @       { return parseable(nm, 2, 16); }
       @      also
       @       requires (nm.charAt(0) == 'O');              //positive octal
-      @       { return parseable(nm.substring(1), 8); }
+      @       { return parseable(nm, 1, 8); }
       @      also
       @       requires (nm.charAt(0) == '-' && nm.charAt(1) == 'O');  // negative octal
-      @       { return parseable(nm.substring(2), 8); }
+      @       { return parseable(nm, 2, 8); }
       @      also
-      @       { return parseable(nm); }  // positive or negative byte, radix 10
+      @       { return parseable(nm, 0, 10); }  // positive or negative byte, radix 10
       @     |}
-      @   model public static spec_pure boolean decodeable( String nm ) {
-              try { decode(nm); return true; }
-              catch (Exception e) { return false; }
-              }
       @*/
+    //@ model public static spec_pure boolean decodeable( String nm );
 
     public static final byte MIN_VALUE;// = -128;
     public static final byte MAX_VALUE;// = 127;
@@ -105,11 +97,11 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @   {|
       @    requires b < 0;
       @    ensures \result != null && \result.length() >= 2 &&  \result.charAt(0) == '-' && \result.charAt(1) != '0'
-      @        && parseable(\result,10) && b == parseByte(\result);
+      @        && parseable(\result,0,10) && b == parseByte(\result);
       @   also
       @    requires b > 0;
       @    ensures \result != null && \result.length() >= 1 && \result.charAt(0) != '0'
-      @        && parseable(\result,10) && b == parseByte(\result);
+      @        && parseable(\result,0,10) && b == parseByte(\result);
       @   also
       @    requires b == 0;
       @    ensures \result != null && \result.length() == 1 && \result.charAt(0) == '0';
@@ -125,25 +117,25 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
     public static /*@ pure @*/ /*@ non_null @*/ String toString(byte b);
 
     /*@    public normal_behavior
-      @      requires parseable(s);
+      @      requires parseable(s, 0, 10);
       @      assignable \nothing;
       @      ensures \result == parseByte(s, 10);
       @ also
       @    public exceptional_behavior
-      @      requires !parseable(s);
+      @      requires !parseable(s, 0, 10);
       @      assignable \nothing;
       @      signals (NumberFormatException);
       @*/
-    public static /*@ spec_pure @*/ byte parseByte(String s)
+    public static /*@ strictly_pure @*/ byte parseByte(String s)
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   requires parseable(s, radix);
+      @   requires parseable(s, 0, radix);
       @   assignable \nothing;
       @   ensures (* the byte represented by string s with specified radix *);
       @ also 
       @ public exceptional_behavior
-      @   requires !parseable(s, radix);
+      @   requires !parseable(s, 0, radix);
       @   assignable \nothing;
       @   signals (NumberFormatException);
       @ for_example
@@ -151,16 +143,16 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @    requires s.equals("-34")  && radix == 10;
       @    ensures \result == -34;
       @*/
-    public static /*@ spec_pure @*/ byte parseByte(String s, int radix)
+    public static /*@ strictly_pure @*/ byte parseByte(String s, int radix)
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   requires parseable(s, radix);
+      @   requires parseable(s, 0, radix);
       @   assignable \nothing;
       @   ensures \result.byteValue() == parseByte(s, radix);
       @ also 
       @ public exceptional_behavior
-      @   requires !parseable(s, radix);
+      @   requires !parseable(s, 0, radix);
       @   assignable \nothing;
       @   signals (NumberFormatException);
       @*/
@@ -169,12 +161,12 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
         throws NumberFormatException;
 
     /*@ public normal_behavior
-      @   requires parseable(s);
+      @   requires parseable(s, 0, 10);
       @   assignable \nothing;
       @   ensures \result.byteValue() == parseByte(s);
       @ also
       @ public exceptional_behavior
-      @   requires !parseable(s);
+      @   requires !parseable(s, 0, 10);
       @   assignable \nothing;
       @   signals (NumberFormatException);
       @*/
@@ -200,11 +192,11 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
     public Byte(byte value);
 
     /*@ public normal_behavior
-      @   requires parseable(s);
+      @   requires parseable(s, 0, 10);
       @   ensures theByte == parseByte(s);
       @ also
       @ public exceptional_behavior
-      @   requires !parseable(s);
+      @   requires !parseable(s, 0, 10);
       @   assignable \nothing;
       @   signals(NumberFormatException);
       @*/
@@ -214,7 +206,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @   public normal_behavior
       @     //-RAC@ ensures \result == theByte;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public byte byteValue();
 
     /*@ also
@@ -222,7 +214,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @     assignable \nothing;
       @     ensures \result == (short) theByte;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public short shortValue();
 
     /*@ also
@@ -230,7 +222,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @     assignable \nothing;
       @     ensures \result == (int) theByte;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public int intValue();
 
     /*@ also
@@ -238,7 +230,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @     assignable \nothing;
       @     ensures \result == (long) theByte;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public long longValue();
 
     /*@ also
@@ -246,7 +238,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @     assignable \nothing;
       @     ensures \result == (float) theByte;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public float floatValue();
 
     /*@ also
@@ -254,7 +246,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @     assignable \nothing;
       @     ensures \result == (double) theByte;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public double doubleValue();
     
     //@ public normal_behavior

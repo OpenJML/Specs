@@ -24,7 +24,7 @@ public class AtomicLong extends Number implements java.io.Serializable {
   
   //-RAC@ public normal_behavior
   //-RAC@   ensures \result == value;
-  //@ pure
+  //@ strictly_pure
   public final long get();
 
   //@ public normal_behavior

@@ -35,9 +35,9 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     /** Returns true if the string is a parseable double value (but not
     an infinite or NaN value).
     */
-    /*@
-    @     public normal_behavior
-    @      requires s != null;
+    //@     public normal_behavior
+    //@      requires s != null;
+    /* @ // FIXME
     @      {|
     @        requires s.equals("NaN");
     @        ensures !\result;
@@ -59,11 +59,8 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     @                      by the IEEE 754 standards *);
     @        ensures !\result;
     @      |}
-    @  public static spec_pure model boolean parseable( String s ) {
-        try { Double d = Double.valueOf(s); return true; }
-        catch (Exception e) { return false; }
-    }
     @*/
+    //@  public static strictly_pure model boolean parseable( String s );
     
     //@ axiom \forall double d;; d == 0 <==> (isPositiveZero(d) || isNegativeZero(d));
 
@@ -162,7 +159,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     /*-RAC@ public normal_behavior
       @   ensures \result == Double.isNaN(theDouble);
       @*/
-    //@ helper no_state
+    //@ helper
     public boolean isNaN();
 
     /*-RAC@ public normal_behavior
@@ -184,42 +181,42 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @   public normal_behavior
       @     ensures \result == (byte) theDouble;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public byte byteValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (short) theDouble;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public short shortValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (int) theDouble;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public int intValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures \result == (long) theDouble;
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public long longValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures Float.identical(\result, (float) theDouble);
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public float floatValue();
 
     /*-RAC@ also
       @   public normal_behavior
       @     ensures identical(\result, theDouble);
       @*/
-    //@ spec_pure helper
+    //@ strictly_pure helper
     public double doubleValue();
 
     /*-RAC@ also
@@ -392,11 +389,11 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @*/
     public int compareTo(Object o);
     
-    /*-RAC@ public normal_behavior
+    /*@ public normal_behavior
       @    assignable \nothing;
-      @    { return Double.valueOf(d1).compareTo(Double.valueOf(d2)); }
+      @    // FIXME { return Double.valueOf(d1).compareTo(Double.valueOf(d2)); }
       @*/
-    public static /*@ pure @*/ int compare(double d1, double d2);
+    public static /*@ no_state @*/ int compare(double d1, double d2);
 
     /** Returns true if the argument is a negative (and not positive) zero;
         the usual == returns true for comparing positive and negative zero.
@@ -423,11 +420,8 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     /*-RAC@ public normal_behavior
           ensures \result == (Double.compare(a,b) == 0);  // FIXME - need to interpret this?
      */
-    //+RAC@ inline
-    /*@ public static model spec_pure helper boolean identical(double a, double b) {
-      return (Double.compare(a,b)==0);
-    }
-    */
+    //@ strictly_pure
+    //@ public static model helper boolean identical(double a, double b);
     
     //-RAC@ pure model public static boolean isFiniteOdd(double d);
     //-RAC@ pure model public static boolean isFiniteEven(double d);

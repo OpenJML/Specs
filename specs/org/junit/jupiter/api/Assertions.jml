@@ -5,22 +5,22 @@ import org.junit.jupiter.api.function.Executable;
 public class Assertions {
     
     //@ public normal_behavior
-    //@   requires (act == null && exp == null) || (act != null && act.equals(exp));
+    // @   requires (act == null && exp == null) || (act != null && act.equals(exp)); // FIXME - resolve purity problem for equals
     //@ pure
     public static void assertEquals(Object act, Object exp);
     
     //@ public normal_behavior
-    //@   requires !(act == null && exp == null) && !(act != null && act.equals(exp));
+    // @   requires !(act == null && exp == null) && !(act != null && act.equals(exp)); // FIXME - resolve purity problem for equals
     //@ pure
     public static void assertNotEquals(Object act, Object exp);
     
     //@ public normal_behavior
     //@   requires act == exp;
-    //@ pure
+    //@ spec_pure
     public static void assertSame(Object act, Object exp);
     
     //@ public normal_behavior  // FIXME - including this causes failures relating to org.opentest4j.MultipleFailuresError
-    //@   { try { exp.execute(); assert false; } catch (Exception e) { assert e.getClass() <: act; }}
+    // @   { try { exp.execute(); assert false; } catch (Exception e) { assert e.getClass() <: act; }}  // FIXME - resolve purity for exp.execute
     //@ pure
     public static <T extends Throwable> T assertThrows(Class<T> act, Executable exp);
 }

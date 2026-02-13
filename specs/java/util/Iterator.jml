@@ -65,14 +65,14 @@ public interface Iterator<E> {
       @    // assignable objectState;
       @    //-RAC@ ensures \result <==> moreElements;
       @*/
-    //@ pure helper
+    //@ strictly_pure helper
     boolean hasNext();
 
     /*@ public normal_behavior
       @     requires n >= 0;
       @     ensures (* \result is true when this iterator
       @                 has n+1 more elements to return *);
-      public pure model boolean hasNext(int n);  @*/
+      public strictly_pure model boolean hasNext(int n);  @*/
 
     /*-RAC@  public normal_behavior
       @     requires moreElements;

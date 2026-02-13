@@ -13,8 +13,8 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@ public final invariant \bigint.zero <= length;
     //-RAC@ public final invariant \forall \bigint i;; !(0 <= i < this.length) ==> this[i] == empty[i];
 
-    //@ spec_public
-    private final static String emptyString;
+//    //@ spec_public
+//    private final static String emptyString;
 
     public final static string empty;
     
@@ -24,14 +24,15 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@ no_state
     public static boolean eqspan(string a, bigint astart, string b, bigint bstart, bigint len);
     
-    //-RAC@ ensures emptyString.chars == empty;
+//    //-RAC@ ensures emptyString.chars == empty;
     //-RAC@ ensures empty.length == 0;
     //-RAC@ static_initializer
     
     //@ private normal_behavior
     //@       ensures value == s;
     //-RAC@   ensures length == s.chars.length;
-    //-RAC@   ensures \forall \bigint i;; this[i] == (i < 0 ? empty[i] : i < s.length() ? s.charAt(i.intValue()) : empty[i]);
+    //-RAC@   ensures \forall \bigint i;; this[i] == (i < 0 ? empty[i] : i < s.chars.length ? s.charAt(i.intValue()) : empty[i]);
+    //@ strictly_pure
     private string(String s);  // s is non_null by default
 
     //@ public normal_behavior
@@ -65,7 +66,8 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@   ensures \forall \bigint i;; \result[i] == (0 <= i < s.length() ? s.charAt((int)i) : empty[i]);
     //@ also private normal_behavior
     //@       requires true;
-    //-RAC@   ensures \result.value == s;    
+    //-RAC@   ensures \result.value == s;
+    //@ strictly_pure
     public static string of(String s);  // s is non_null by default
     
     //@ public normal_behavior
@@ -180,6 +182,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@       requires s != null;
     //-RAC@   ensures \result.length == this.length + s.chars.length;
     //-RAC@   ensures \forall \bigint i;; \result[i] == (i < this.length ? this[i] : i < \result.length ? s.chars[i - this.length] : empty[i]);
+    //@ strictly_pure
     public string append(String s);
 
     //@ public normal_behavior

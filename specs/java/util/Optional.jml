@@ -82,12 +82,11 @@ public final class Optional<T> {
 
   //@ public normal_behavior
   //@   { return isPresent() ? this.get() : other; }
-  //@ pure
+  //@ spec_pure
   public T orElse(T other);
 
   //@ public behavior
   //@   { return (value != null ? value : supplier.get() ); }
-  //@ pure
   public T orElseGet(Supplier<? extends T> supplier);
   
   //@ public normal_behavior 
@@ -102,7 +101,7 @@ public final class Optional<T> {
   /*-RAC@ public behavior 
     @    { if (value!=null) return value; else throw exceptionSupplier.get(); }
     @*/
-  //@ pure  // FIXME - really only pure if the lambda expression is pure
+  // @ pure  // FIXME - really only pure if the lambda expression is pure
   public <X extends java.lang.Throwable> T orElseThrow( Supplier<? extends X> exceptionSupplier) throws X;
 
   // inherited

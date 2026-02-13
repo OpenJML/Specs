@@ -36,32 +36,29 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     an infinite or NaN value).
     */
     /*@   public normal_behavior
-    @     requires s != null;
-    @     {|
-    @       requires s.equals("NaN");
-    @       ensures !\result;
-    @     also
-    @       requires s.equals("Infinity") || s.equals("-Infinity");
-    @       ensures !\result;
-    @     also
-    @        requires s.equals("");
-    @       ensures !\result;
-    @      also
-    @       requires s.equals("0.0") || s.equals("-0.0");
-    @       ensures \result;
-    @     also 
-    @       requires (* s is parseable to a float
-    @                     by the IEEE 754 standards *);
-    @       ensures \result;
-    @     also
-    @       requires !(* s is parseable to a float
-    @                      by the IEEE 754 standards *);
-    @       ensures !\result;
-    @     |}
-    @  public static model pure boolean parseable( String s ) {
-        try { Float d = Float.valueOf(s); return true; }
-        catch (Exception e) { return false; }
-    }
+      @     requires s != null;
+//    @     {|   // FIXME - improved purity
+//    @       requires s.equals("NaN");
+//    @       ensures !\result;
+//    @     also
+//    @       requires s.equals("Infinity") || s.equals("-Infinity");
+//    @       ensures !\result;
+//    @     also
+//    @        requires s.equals("");
+//    @       ensures !\result;
+//    @      also
+//    @       requires s.equals("0.0") || s.equals("-0.0");
+//    @       ensures \result;
+//    @     also 
+//    @       requires (* s is parseable to a float
+//    @                     by the IEEE 754 standards *);
+//    @       ensures \result;
+//    @     also
+//    @       requires !(* s is parseable to a float
+//    @                      by the IEEE 754 standards *);
+//    @       ensures !\result;
+//    @     |}
+    @  public static model strictly_pure boolean parseable( String s );
     @*/
         
     public static final float POSITIVE_INFINITY;
@@ -81,18 +78,18 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     //@ ensures TYPE == float.class;
     //@ static_initializer
 
-    /*@ public normal_behavior
-      @   ensures \result.length() < 100; // FIXME - make this tighter
+    /*-RAC@ public normal_behavior
+      @   ensures \result.chars.length < 100; // FIXME - make this tighter
       @   ensures !isNaN(f) && !isInfinite(f) ==> parseable(\result);
       @   ensures !isNaN(f) && !isInfinite(f) ==> 
       @                              identical(f, parseFloat(\result));
-      @   ensures isNaN(f) ==> \result.equals("NaN");
-      @   ensures (f == Float.POSITIVE_INFINITY) ==>\result.equals("Infinity");
-      @   ensures (f == Float.NEGATIVE_INFINITY) ==>\result.equals("-Infinity");
+      @   ensures isNaN(f) ==> \result.chars == "NaN".chars;
+      @   ensures (f == Float.POSITIVE_INFINITY) ==> \result.chars == "Infinity".chars;
+      @   ensures (f == Float.NEGATIVE_INFINITY) ==> \result.chars == "-Infinity".chars;
       @*/
     // Note - I don't know of any parseable representation for 
     // NaN or infinite values
-    public static /*@ non_null @*/ String toString(float f);
+    public static /*@ spec_pure @*/ String toString(float f);
 
     /*@ public normal_behavior
       @   requires s != null && parseable(s);
@@ -102,7 +99,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ no_state @*/ /*@ non_null @*/ Float valueOf(
+    public static /*@ spec_pure @*/ /*@ non_null @*/ Float valueOf(
         /*@ non_null @*/ String s)
         throws NumberFormatException;
 
@@ -114,23 +111,23 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ no_state @*/ float parseFloat(/*@ non_null @*/ String s)
+    public static /*@ strictly_pure @*/ float parseFloat(/*@ non_null @*/ String s)
         throws NumberFormatException;
 
     /*@ public normal_behavior
       @   ensures \result == (!isFinite(v) & !isFinite(v));
       @*/
-    public static /*@ helper @*/ boolean isNaN(float v);
+    public static /*@ helper no_state @*/ boolean isNaN(float v);
 
     /*@ public normal_behavior
       @   ensures \result == ( v == POSITIVE_INFINITY
       @                      | v == NEGATIVE_INFINITY );
       @*/
-    public static /*@ helper @*/ boolean isInfinite(float v);
+    public static /*@ helper no_state @*/ boolean isInfinite(float v);
 
     //@ public normal_behavior
     //@   ensures true;
-    //@ helper
+    //@ no_state helper
     public static boolean isFinite(float v);
     
     /*-RAC@ public normal_behavior
@@ -171,28 +168,28 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     /*@ also
       @   public normal_behavior
       @     ensures \result == (byte) theFloat;
-      @ spec_pure
+      @ strictly_pure
       @*/
     public byte byteValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (short) theFloat;
-      @ spec_pure
+      @ strictly_pure
       @*/
     public short shortValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (int) theFloat;
-      @ spec_pure
+      @ strictly_pure
       @*/
     public int intValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (long) theFloat;
-      @ spec_pure
+      @ strictly_pure
       @*/
     public long longValue();
 
@@ -200,7 +197,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @   public normal_behavior
       @   ensures identical(theFloat, \result);
       @ helper // FIXME - should inherit from Number?
-      @ spec_pure
+      @ strictly_pure
       @*/
     public float floatValue();
 
@@ -208,7 +205,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @   public normal_behavior
       @   ensures Double.identical((double)theFloat, \result);
       @ helper // FIXME - should inherit from Number?
-      @ spec_pure
+      @ strictly_pure
       @*/
     public double doubleValue();
 
@@ -385,29 +382,19 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     /** Returns true if the argument is a negative (and not positive) zero;
         the usual == returns true for comparing positive and negative zero. 
     */
-    //+RAC@ inline
-    /*@ public static model pure boolean isNegativeZero( float a) {
-          if (a != 0) return false;
-          return (java.lang.Float.valueOf(a)).equals(java.lang.Float.valueOf("-0.0f"));
-        } 
-      @*/          
+    //@ public static model no_state boolean isNegativeZero( float a);          
       
     /** Returns true if the argument is a positive (and not negative) zero;
         the usual == returns true for comparing positive and negative zero. 
     */
-    //+RAC@ inline
-    /*@ public static model pure boolean isPositiveZero( float a) {
-          if (a != 0) return false;
-          return (java.lang.Float.valueOf(a)).equals(java.lang.Float.valueOf("+0.0f"));
-        }    
-      @*/ 
+    //@ public static model no_state boolean isPositiveZero( float a); 
               
     /** Returns true if a and b represent the same double value;
         the usual == does not work to distinguish positive and negative
         zeros or to identify two NaN values as equal.
     */
-    //+RAC@ inline
-    /*@ public static model pure boolean identical(float a, float b) {
+    /*@ public static model no_state boolean identical(float a, float b);
+      @*//*  {
           return (isNaN(a) == isNaN(b)) &&
                  (isPositiveZero(a) == isPositiveZero(b)) &&
                  (isNegativeZero(a) == isNegativeZero(b)) &&

@@ -15,7 +15,7 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //@   requires true;
     //-RAC@   ensures (\forall KK k; ; \result[k] == null && \result.has(k) == false);
     //-RAC@   ensures \result.isEmpty() && \result.size() == 0;
-    //@ no_state
+    //@ helper
     public static <KK,VV> map<KK,VV> empty();
     
     /**  Returns true iff the map is empty */
@@ -25,14 +25,13 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //@ also private normal_behavior
     //@   requires true;
     //-RAC@   ensures \result == (size() == 0);
+    //@ helper
     public boolean isEmpty();
     
     /** Returns the number of entries in the map */
     //@ public normal_behavior
     //@   requires true;
-    //@ also private normal_behavior
-    //@   requires true;
-    //-RAC@ ensures \result == value.size();
+    //@ helper
     public bigint size();
     
     /** Returns true iff the value k is a key in the map */
@@ -42,6 +41,7 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     // @   requires true;
     // @  { return this.value.keySet().contains(k); } // FIXME - depend on \map rather than value?
     //@ no_state
+    //@ helper
     public boolean has(K k);
 
     /** Returns the value associated with the key k; result is undefined if k is not a key in the map. */
@@ -49,11 +49,13 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //@   requires true;
     //-RAC@   ensures has(k) ==> \result == this[k];
     //@ no_state
+    //@ helper
     public V get(K k);
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@ ensures \forall K k;; \result[k] == this.has(k);
+    //@ helper
     public set<K> keys();
 
     /** Returns a new map that is a copy of the receiver, with an additional (or replacement) mapping */
@@ -66,7 +68,7 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures this[k] == v ==> \result == this;
     //-RAC@   ensures this.has(k) ==> \result.size() == this.size();
     //-RAC@   ensures !this.has(k) ==> \result.size() == this.size()+bigint.one;
-    //@ no_state
+    //@ helper
     public map<K,V> put(K k, /*@ nullable */ V v);
 
     /** Returns a new map that is a copy of the receiver with the mapping for key k removed */
@@ -77,7 +79,7 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures \forall K m;; \result.has(m) ==> this.has(m) & \result[m] == this[m];
     //-RAC@   ensures !this.has(k) ==> \result.size() == this.size();
     //-RAC@   ensures this.has(k) ==> \result.size() == this.size()-bigint.one;
-    //@ no_state
+    //@ helper
     public map<K,V> remove(K k);
 
     /** Returns a new map that is a copy of the receiver with all of the mappings in the argument added in */
@@ -87,48 +89,47 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures \forall K k; s.has(k); \result.has(k) & \result[k] == s[k];
     //-RAC@   ensures \forall K k; this.has(k); !s.has(k) ==> \result.has(k) & \result[k] == this[k];
     //-RAC@   ensures \forall K k; \result.has(k); this.has(k) | s.has(k);
-    //@ no_state
+    //@ helper
     public map<K,V> putAll(map<K,V> s);
     
     /** Returns true iff the receiver and argument have all the same mappings */
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == (\forall K k;; has(k) == s.has(k) && has(k) ==> s[k] == this[k]);
-    //@ no_state
+    //@ helper
     public boolean eq(map<K,V> s);
     
     /** Negation of eq(m) */
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == !eq(s);
-    //@ no_state
+    //@ helper
     public boolean ne(map<K,V> s);
         
     /** Only meant to support using instances of this class in hashed sets and maps */
     //@ public normal_behavior
     //@  requires true;
     //-RAC@  ensures \forall \map<K,V> m;; this.eq(m) ==> this.hashCode() == m.hashCode();
-    //@ no_state
+    //@ helper
     public int hashCode();
     
     /** Same as eq(m) */
     //@ public normal_behavior
     //@  requires true;
     //-RAC@ ensures \result == eq(m);
-    //@ no_state
+    //@ helper
     public boolean equals(map<K,V> m);
     
     /** Only meant to support using instances of this class in hashed sets and maps */
     //@ public normal_behavior
     //@  requires false; // Use equals(\map) or eq(\map)
-    //@ no_state
+    //@ helper
     public boolean equals(Object o);
     
     /** Returns a String representation of the instance */
     //@ public normal_behavior
     //@  requires true;
-    //@ no_state
+    //@ helper
     public String toString();
-
 }
 

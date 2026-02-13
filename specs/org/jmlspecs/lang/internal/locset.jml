@@ -11,28 +11,28 @@ public class locset implements IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   requires true;
-    //@ no_state
+    //@ helper
     abstract public boolean contains(locset x);
 
     //@ public normal_behavior
     //@   ensures true;
-    //@ no_state
+    //@ helper
     public static locset empty();
 /*    
     //@ public normal_behavior
     //@  //ensures \result.size() == 0;
     //@  ensures true;//(\forall locset x; ; !\result.contains(x));
-    //@ no_state
+    //@ helper
     static public locset locset();
 */        
     //@ public normal_behavior
     //@   ensures true;//\result == (\forall locset t;; s.contains(t) == ss.contains(t));
-    //@ no_state
+    //@ helper
     public static boolean eq(locset s, locset ss);
     
     //@ public normal_behavior
     //@   ensures true;//\result == (this == s || equals(this,s));
-    //@ no_state
+    //@ helper
     abstract public boolean eq(locset s);
     
     //@ public normal_behavior // Specs are more successful when written without spec cases
@@ -41,7 +41,7 @@ public class locset implements IJmlPrimitiveType {
     //@  //ensures \result.contains(x);
     //@  // FIXME ensures (\forall locset t; t != x; \result.contains(t) == this.contains(t));
     //@   ensures true;
-    //@ no_state
+    //@ helper
     abstract public locset add(locset x);
     
     //@ public normal_behavior
@@ -51,7 +51,7 @@ public class locset implements IJmlPrimitiveType {
     // @   ensures \forall locset t;; x.contains(t) ==> !\result.contains(t);
     // @   ensures \forall locset t;; this.contains(t) && !x.contains(t) ==> \result.contains(t);
     //@   ensures true;
-    //@ no_state
+    //@ helper
     abstract public locset remove(locset x);
     
 

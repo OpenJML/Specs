@@ -33,7 +33,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     //@ public instance invariant 0 <= cursor_position;
 
-    /*@ pure @*/ boolean hasNext();
+    /*@ strictly_pure @*/ boolean hasNext();
 
     E next();
 

@@ -39,9 +39,7 @@ public class HashSet<E> extends AbstractSet<E> implements Set<E>, Cloneable, jav
     
     public boolean remove(Object o);
     
-    //@ also public normal_behavior 
-    //@   ensures true;
-    //@ spec_pure
+    // specification inherited
     public int size();
     
 }

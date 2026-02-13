@@ -271,11 +271,11 @@ public final class String
       @*/
     
     // inherits specs from CharSequence - \result == chars.length
-    public /*@ spec_pure helper @*/ int length();
+    public /*@ strictly_pure helper @*/ int length();
     
     // inherits specs from CharSequence - \result <==> (chars.length==0)
     @Override
-    public /*@ spec_pure @*/ boolean isEmpty();
+    public /*@ strictly_pure @*/ boolean isEmpty();
 
     /*@ // Inherits from CharSequence:
       @ //also public normal_behavior
@@ -285,7 +285,7 @@ public final class String
       @ //-RAC@  requires index < 0 || index >= chars.length;
       @ //-RAC@  signals_only StringIndexOutOfBoundsException;
       @*/
-    public /*@ spec_pure @*/ char charAt(int index)
+    public /*@ strictly_pure @*/ char charAt(int index)
         throws StringIndexOutOfBoundsException;
 
     /*@  public normal_behavior

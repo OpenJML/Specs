@@ -27,10 +27,10 @@ public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.Na
   //@ pure
   public java.util.NavigableSet<E> descendingSet();
   
-  //@ pure
+  //@ strictly_pure
   public int size();
   
-  //@ pure
+  //@ strictly_pure
   public boolean isEmpty();
   
   //@ spec_pure

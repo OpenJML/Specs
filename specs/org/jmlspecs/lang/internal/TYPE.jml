@@ -11,6 +11,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     
     //@ public normal_behavior
     //@   ensures true; // Undefined (non-null) value
+    //@ helper
     public static TYPE empty();
 
     //@ public normal_behavior
@@ -18,6 +19,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //-RAC@   ensures \result == \TYPEof(h);
     //-RAC@   ensures \erasure(\result) == h;
     //-RAC@   ensures \result.numargs == 0;
+    //@ helper
     public static TYPE of(Class<?> h);
     
     //@ public normal_behavior
@@ -25,6 +27,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //-RAC@   ensures \result == \TYPEof(h, t1);
     //-RAC@   ensures \erasure(\result) == h;
     //-RAC@   ensures \result.numargs == 1;
+    //@ helper
     public static TYPE of(Class<?> h, TYPE t1);
     
     //@ public normal_behavior
@@ -32,6 +35,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //-RAC@   ensures \result == \TYPEof(h, t1, t2);
     //-RAC@   ensures \erasure(\result) == h;
     //-RAC@   ensures \result.numargs == 2;
+    //@ helper
     public static TYPE of(Class<?> h, TYPE t1, TYPE t2);
     
     
@@ -40,6 +44,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //-RAC@   ensures \result == \TYPEof(h, t1, t2, t3);
     //-RAC@   ensures \erasure(\result) == h;
     //-RAC@   ensures \result.numargs == 3;
+    //@ helper
     public static TYPE of(Class<?> h, TYPE t1, TYPE t2, TYPE t3);
     
     //@ public normal_behavior
@@ -55,6 +60,7 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //@  requires true;
     //-RAC@   ensures \result.base == h;
     //-RAC@   ensures \result.args == args;
+    //@ helper strictly_pure
     public static TYPE of(Class<?> h, TYPE ... args);
     
     
@@ -64,64 +70,77 @@ public class TYPE implements org.jmlspecs.lang.IJmlPrimitiveType {
     //@ also private normal_behavior
     //@   requires true;
     //-RAC@  ensures \result == args.length;
+    //@ helper strictly_pure
     public int numargs();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == (this == t);
+    //@ helper
     public boolean eq(TYPE t);
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == (this != t);
+    //@ helper
     public boolean ne(TYPE t);
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \erasure(this);
+    //@ helper
     public Class<?> erasure();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \isarray(this);
+    //@ helper
     public boolean isArray();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \arraytype(this);
+    //@ helper
     public TYPE arraytype();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \result == \elemtype(this);
+    //@ helper
     public TYPE getComponentType();
     
     //@ public normal_behavior
     //@  requires true;
     //-RAC@ ensures \result == (this <:= t);
+    //@ helper
     public boolean isSubtypeOf(TYPE t);
     
     //@ public normal_behavior
     //@  requires true;
     //-RAC@ ensures \result == (this <: t);
+    //@ helper
     public boolean isProperSubtypeOf(TYPE t);
     
     //@ public normal_behavior
     //-RAC@   ensures true;
+    //@ pure
     public String toString();
 
     //@ public normal_behavior
     //@  requires true;
     //-RAC@   ensures \forall \TYPE t; eq(t); \result == t.hashCode();
+    //@ helper
     public int hashCode();
 
     //@ public behavior
     //@  requires true;
     //-RAC@   ensures \result == eq(t);
+    //@ helper
     public boolean equals(TYPE t);
 
     //@ public behavior
     //@  requires false; // Use eq(t) instead
+    //@ helper
     @Override
     public boolean equals(Object o);
     

@@ -184,12 +184,12 @@ public class Vector<E> extends AbstractList<E>
     /*@ also public normal_behavior
       @    //-RAC@ ensures \result == elementCount;
       @*/
-    public /*@ pure @*/ synchronized int size();
+    public /*@ strictly_pure @*/ synchronized int size();
 
     /*@ also public normal_behavior
       @    //-RAC@ ensures \result == (elementCount == 0);
       @*/
-    public /*@ pure @*/ synchronized boolean isEmpty();
+    public /*@ strictly_pure @*/ synchronized boolean isEmpty();
 
     // FIXME
     /*-RAC@  public normal_behavior

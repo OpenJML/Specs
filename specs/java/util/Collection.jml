@@ -59,12 +59,12 @@ public interface Collection<E> extends Iterable<E> {
     /*-RAC@ public normal_behavior
       @    ensures \result == values.length;
       @*/
-    /*@ pure helper @*/ int size();
+    /*@ strictly_pure helper @*/ int size();
 
     /*-RAC@ public normal_behavior
       @  ensures \result <==> (values.length == 0);
       @*/
-    /*@ pure @*/ boolean isEmpty();
+    /*@ strictly_pure @*/ boolean isEmpty();
     
     /*-RAC@ public behavior
       @   ensures values.length == 0 ==> !\result;

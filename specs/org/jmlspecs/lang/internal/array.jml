@@ -6,40 +6,34 @@ import org.jmlspecs.lang.IJmlIntArrayLike;
 
 //@ immutable no_state non_null_by_default
 public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
-    //@ spec_public 
-    private final T /*@ nullable */ [] value;
 
     public final bigint length;
-    //-RAC@ public invariant value == null ? length == 0 : length == value.length;
+    
+    
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result.length == \bigint.zero;
-    //-RAC@   ensures \result.value == null;
-    //@ no_state
+    //@ helper
     public static <TT> array<TT> empty();
 
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result.length == \bigint.of(a.length);
-    //-RAC@   ensures \result.value != null; // Even if length is 0
-    //  -RAC@   ensures (\forall int i; 0 <= i < a.length; \result[\bigint.of(i)] == a[i]);
-    //-RAC@   ensures (\forall \bigint i; 0 <= i < a.length; \result[i] == a[(int)i]);
-    //@ no_state
-//    @SafeVarargs
+    //-RAC@   ensures (\forall \bigint i; ; \result[i] == (0 <= i < a.length ? a[(int)i] : \array.<TT>empty()[i]));
+    //@ helper strictly_pure
     @SuppressWarnings({"varargs","unchecked"})
     public static <TT> array<TT> of(TT ... a);
     
     //@ public normal_behavior
-    //@   requires \bigint.zero <= i < length;
-    //-RAC@   ensures \result == this.value[i.intValue()];
-    //@ no_state
+    //@   requires \bigint.zero <= i < length; //-RAC@ ensures \result == this[i];
+    //@ helper
     public T get(bigint i);
     
     //@ public normal_behavior
     //@   requires true;
-    //-RAC@   ensures this.value == null || (0 <= i < this.value.length ==> \result == this.value[(int)i]);
-    //@ no_state
+    //-RAC@   ensures \result == this[i];
+    //@ helper
     public T getUnchecked(bigint i);
     
     //@ public normal_behavior
@@ -48,39 +42,40 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //-RAC@   ensures \result[i] == t;
     //-RAC@   ensures (\forall \bigint j; 0 <= j < length && j != i ; \result[j] == this[j]);
     //-RAC@   ensures this[i] == t ==> \result == this;
+    //@ helper
     public array<T> put(bigint i, T t);
 
     //@ public normal_behavior
     //@   requires \bigint.zero <= i <= j <= length;
     //-RAC@   ensures \result.length == j - i;
     //-RAC@   ensures (\forall \bigint k; 0 <= j < \result.length; \result[k] == this[k+i]);
+    //@ helper
     public array<T> subarray(bigint i, bigint j);
     
     //@ public normal_behavior
-    //@   requires true;
-    //-RAC@   ensures \result == (this.length == a.length && \forall int i; 0 <= i < this.length.intValue(); this.value[i] == a.value[i]);
-    //@ no_state
+    //@   ensures \result == ( this.length == a.length && \forall \bigint i; 0 <= i < this.length; this[i] == a[i]);
+    //@ helper
     public boolean eq(array<T> a);
     
     //@ public normal_behavior
     //-RAC@   ensures \result == !eq(a);
-    //@ no_state
+    //@ helper
     public boolean ne(array<T> a);
     
     //@ public normal_behavior
     //@   requires false; 
-    //@ no_state
+    //@ helper
     public boolean equals(Object o);
     
     //@ public normal_behavior
     //@   ensures \result == eq(a); 
-    //@ no_state
+    //@ helper
     public boolean equals(array<T> a);
     
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \forall \array<T> a;; a == this ==> hashCode() == a.hashCode();
+    //@ helper
     public int hashCode();
-
 }
 
