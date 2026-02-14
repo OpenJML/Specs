@@ -8,8 +8,8 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
    
     //@ axiom \forall seq<T> s, ss;; s == ss <==> (s.length == ss.length && \forall int i; 0<=i<s.length; s[i] == ss[i]);
 
-    //@ spec_public
-    private final String value;
+
+    
     
     public final bigint length;
     //@ public final invariant length >= bigint.zero;

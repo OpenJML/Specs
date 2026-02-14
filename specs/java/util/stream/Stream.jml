@@ -6,8 +6,9 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
     
     //@ public normal_behavior
     //@   requires true;
-    /*@   { 
-            java.util.Arrays.asList((T[])this.toArray()).forEach(consumer);
+    /*@   {   //@ maintaining 0 <= \count <= this.count(); maintaining w == \count;
+              for (int w = 0; w < this.count(); w++) consumer.accept(this.values[w]);
+//            for (T t: this.values) consumer.accept(t);
           }
      */
     @SuppressWarnings("unchecked")
