@@ -800,16 +800,16 @@ public final class Math {
 
     /*@ public normal_behavior
       @   requires a != 0 && b != 0;
-      @   ensures \result > 0 && \result <= a && \result <= b;
-      @   ensures a % \result == 0 && b % \result == 0; // TODO - needs more
+      @   ensures \result > 0 && \result <= (a>=0?a:-a) && \result <= (b>=0?b:-b);
+      @   ensures a % \result == 0 && b % \result == 0;
       @   ensures \forall int c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
       @*/  
     //@ model public static no_state int gcd(int a, int b);
 
     /*@ public normal_behavior
       @   requires a != 0 && b != 0;
-      @   ensures \result > 0 && \result <= a && \result <= b;
-      @   ensures a % \result == 0 && b % \result == 0; // TODO - needs more
+      @   ensures \result > 0 && \result <= (a>=0?a:-a) && \result <= (b>=0?b:-b);
+      @   ensures a % \result == 0 && b % \result == 0;
       @   ensures \forall \bigint c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
       @*/  
     //@ model public static no_state \bigint gcd(\bigint a, \bigint b);

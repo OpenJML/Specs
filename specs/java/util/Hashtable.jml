@@ -124,7 +124,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
       @   public behavior
       @     ensures value != null;
       @     signals (NullPointerException) value == null;
-      @*/ //@ pure
+      @*/ //@ spec_pure
     public boolean containsValue(Object value) throws NullPointerException;
 
     /*@ protected normal_behavior

@@ -27,12 +27,12 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
 
   //@ also public normal_behavior
   //@   ensures \result == size;
-  //@ pure
+  //@ spec_pure
   public int size();
 
   //@ also public normal_behavior
   //@   ensures \result == (size == 0);
-  //@ pure
+  //@ spec_pure
   public boolean isEmpty();
   
   //@ public normal_behavior
@@ -49,13 +49,13 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@ also public normal_behavior
   //@   requires o == null || \typeof(o) <:= \type(K);
   //@   ensures \result == _keyset.contains((K)o);
-  //@ pure
+  //@ spec_pure
   @SuppressWarnings("unchecked")
   public boolean containsKey(/*(@ nullable */ Object o);
 
   //@ also public normal_behavior
   //@   ensures \result == \exists K k; _keyset.contains(k); o == _map[k];
-  //@ pure
+  //@ spec_pure
   public boolean containsValue(/* nullable */ Object o);
 
   //@ also public normal_behavior

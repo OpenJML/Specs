@@ -94,23 +94,22 @@ public interface Map<K,V> {
     //-RAC@ model public instance \intset keys; in objectState;
     //-RAC@ model public instance V nullValue;
     //-RAC@ model public instance boolean nullPresent;
-    //-RAC@ model public instance int _size; in objectState; // FIXME - change to \bigint
-    //-RAC@ public represents _size = size();
+    //-RAC@ model public instance \bigint _size; in objectState;
 
     //@ public normal_behavior
     //-RAC@   ensures \result == _size;
-    /*@ pure helper @*/
+    /*@ spec_pure helper @*/
     int size();
 
     /*-RAC@ public normal_behavior
-      @    //ensures \result <==> (_size == 0 && !nullPresent && (\forall \bigint i;; keys[i] == false)); 
+      @    ensures \result <==> (\forall \bigint i;; keys[i] == false); 
       @    ensures \result <==> (_size == 0); 
       @*/
-    /*@ pure @*/ boolean isEmpty();
+    /*@ spec_pure @*/ boolean isEmpty();
     
     /*-RAC@ public behavior
       @    ensures _size==0 ==> !\result;
-      @    // ensures keys[key.uniqueHash] <==> \result;
+      @    ensures keys[key.uniqueHash] <==> \result;
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -118,11 +117,12 @@ public interface Map<K,V> {
       @    signals (NullPointerException) key == null
       @         && (* this type doesn't permit null values *);
       @*/
-    /*@ pure @*/ boolean containsKey(/*@nullable*/ Object key) throws RuntimeException;
+    /*@ spec_pure @*/ boolean containsKey(/*@nullable*/ Object key) throws RuntimeException;
 
     /*-RAC@ public behavior
-      @    ensures isEmpty() ==> !\result; // FIXME quantifier to \bigint eventually
-      @    ensures \result <==> ((nullPresent && nullValue.uniqueHash == value.uniqueHash) || \exists int i;; keys[i] && modelMap[i].uniqueHash == value.uniqueHash);
+      @    ensures isEmpty() ==> !\result;
+      @    ensures \result <==> ((nullPresent && nullValue.uniqueHash == value.uniqueHash) 
+      @                || \exists \bigint i;; keys[i] && modelMap[i].uniqueHash == value.uniqueHash);
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -130,7 +130,7 @@ public interface Map<K,V> {
       @    signals (NullPointerException) value == null
       @         && (* this type doesn't permit null values *);
       @*/
-    /*@ pure @*/ boolean containsValue(Object value);
+    /*@ spec_pure @*/ boolean containsValue(Object value);
 
     /*-RAC@ public normal_behavior
       @    ensures key == null ==> \result == ( nullPresent ? nullValue : null);
@@ -142,11 +142,13 @@ public interface Map<K,V> {
     /*-RAC@ public normal_behavior
       @    requires key != null;
       @    assignable objectState;
-      @    // ensures modelMap == \old(modelMap).put(key.uniqueHash,value); // FIXME - put not found in modelMap
+      @    ensures modelMap == \old(modelMap).put(key.uniqueHash,value);
+      @    ensures keys == \old(keys).add(key.uniqueHash);
       @    ensures keys[key.uniqueHash];
       @    ensures modelMap[key.uniqueHash] == value;
       @    ensures \result == \old(keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);
       @    ensures _size == \old(keys[key.uniqueHash] ? _size : _size+1 );
+      @    ensures _size > 0;
       @ also public normal_behavior
       @    requires key == null;
       @    // requires containsNull || (key != null && value != null);
@@ -231,14 +233,17 @@ public interface Map<K,V> {
       @*/
     void clear();
     
-    //@ model public instance Set<K> _keySet; in objectState; // For determinism
+    //@ public normal_behavior
+    //@   reads this.*;
+    //@ spec_pure
+    //@ model public Set<K> _keySet();
 
     //@ public normal_behavior 
     //@    ensures \result != null;
-    //@    ensures \result.size() >= 0; // FIXME - why needed?
-    //@    ensures \result == _keySet;
+    //@    ensures \result.size() == this.size();
+    //-RAC@    ensures \result == this._keySet();
     //-RAC@    ensures \forall K k;; \result.contains(k) <==> this.containsKey(k) ;
-    /*@ pure @*/ Set<K> keySet(); // FIXME - do two calls of keySet produce different objects or the same?
+    /*@ pure @*/ Set<K> keySet(); // Calls of keySet return the same back-by view of the Map's keys
 
     /*-RAC@ public normal_behavior 
       @    ensures \result != null;
