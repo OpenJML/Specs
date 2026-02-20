@@ -190,7 +190,7 @@ public class Throwable extends Object implements java.io.Serializable
       @   reads this.*, _message, _message.*;
       @   { return this.getClass().toString() + ": " + _message; }
       @*/
-    public /*@ pure non_null @*/ String toString();
+    public /*@ pure */ /*@ non_null @*/ String toString();
 
     // FIXME - need to indicate that the output streams are modified and not
     // other stuff
