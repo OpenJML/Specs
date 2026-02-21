@@ -31,7 +31,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V> implements 
     //@ pure
     public EnumMap(Map<K, ? extends V> map);
     
-    //@// Inherited
+    //@ helper // Inherited
     public int size();
     
     //@ also public normal_behavior

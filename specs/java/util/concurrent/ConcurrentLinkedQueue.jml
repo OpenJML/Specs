@@ -37,7 +37,7 @@ public class ConcurrentLinkedQueue<E> extends java.util.AbstractQueue<E> impleme
 
     //@ also public normal_behavior
     //@   ensures \result == this.values.length;
-    //@ strictly_pure
+    //@ strictly_pure helper
     public int size();
 //  public boolean contains(java.lang.Object);
 

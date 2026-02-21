@@ -7,8 +7,10 @@ public class WriteAbortedException extends ObjectStreamException {
 
     public Exception detail;
     
+    //@ helper
     public String getMessage();
     
+    //@ helper
     public Throwable getCause();
     
     /*@ public normal_behavior

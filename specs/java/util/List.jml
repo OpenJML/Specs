@@ -25,7 +25,7 @@ package java.util;
  * @author Brandon Shilling
  * @author Gary T. Leavens
  * @author Erik Poll
- */
+ */      @SuppressWarnings("unchecked")
 public interface List<E> extends SequencedCollection<E> {
 
     /*@ public normal_behavior

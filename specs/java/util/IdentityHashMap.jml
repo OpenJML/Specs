@@ -27,7 +27,7 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
 
   //@ also public normal_behavior
   //@   ensures \result == size;
-  //@ spec_pure
+  //@ spec_pure helper
   public int size();
 
   //@ also public normal_behavior

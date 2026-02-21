@@ -302,7 +302,7 @@ public interface Deque<E> extends Queue<E> , SequencedCollection<E> {
       @*/
     public boolean removeLastOccurrence(/*@ nullable @*/ Object o) throws ClassCastException, NullPointerException;
     
-    // specification inherited
+    //@ helper // specification inherited
     public int size(); 
     
 }
