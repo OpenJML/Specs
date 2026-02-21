@@ -22,7 +22,7 @@ public class InvocationTargetException extends ReflectiveOperationException {
     //@ pure
     public InvocationTargetException(Throwable target, String s);
 
-    //@ spec_pure
+    //@ spec_pure helper
     public Throwable getCause();
 
     //@ spec_pure

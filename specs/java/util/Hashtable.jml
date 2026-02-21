@@ -79,7 +79,7 @@ public class Hashtable<K,V> extends Dictionary<K,V>
     //@ pure
     public Hashtable(Map<? extends K,? extends V> t);
 
-    // specification inherited
+    //@ helper // specification inherited 
     public synchronized int size();
 
     // specification inherited

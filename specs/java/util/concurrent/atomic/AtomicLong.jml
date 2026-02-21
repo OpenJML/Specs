@@ -134,21 +134,21 @@ public class AtomicLong extends Number implements java.io.Serializable {
 
   //@ also public normal_behavior
   //@   ensures \result == (int)get();
-  //@ spec_pure
+  //@ spec_pure helper
   public int intValue();
 
   //@ also public normal_behavior
   //@   ensures \result == get();
-  //@ spec_pure
+  //@ spec_pure helper
   public long longValue();
 
   //@ also public normal_behavior
   //@   ensures \result == (float)get();
-  //@ spec_pure
+  //@ spec_pure helper
   public float floatValue();
 
   //@ also public normal_behavior
   //@   ensures \result == (double)get();
-  //@ spec_pure
+  //@ spec_pure helper
   public double doubleValue();
 }

@@ -36,7 +36,7 @@ public interface Set<E> extends Collection<E> {
       @*/
 
     // specification inherited
-    /*@ strictly_pure */ int size();
+    /*@ strictly_pure helper */ int size();
 
     // specification inherited
     boolean isEmpty();

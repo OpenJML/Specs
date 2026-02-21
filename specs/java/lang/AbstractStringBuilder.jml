@@ -13,18 +13,18 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
     //@ normal_behavior
     //-RAC@   ensures chars.length == 0;
-    //@ spec_pure
+    //@ pure
     AbstractStringBuilder();
     //@ normal_behavior
     //-RAC@   ensures chars.length == 0;
     //-RAC@   ensures capacity >= size;
-    //@ spec_pure
+    //@ pure
     AbstractStringBuilder(int size);
 
     // inherits \result == chars.length;
     //@ also normal_behavior
     //@   ensures \result == count;
-    //@ spec_pure
+    //@ spec_pure helper
     @Override
     public int length();
     

@@ -32,7 +32,7 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //@       ensures value == s;
     //-RAC@   ensures length == s.chars.length;
     //-RAC@   ensures \forall \bigint i;; this[i] == (i < 0 ? empty[i] : i < s.chars.length ? s.charAt(i.intValue()) : empty[i]);
-    //@ strictly_pure
+    //@ pure
     private string(String s);  // s is non_null by default
 
     //@ public normal_behavior

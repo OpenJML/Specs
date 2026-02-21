@@ -285,7 +285,7 @@ public final class String
       @ //-RAC@  requires index < 0 || index >= chars.length;
       @ //-RAC@  signals_only StringIndexOutOfBoundsException;
       @*/
-    public /*@ strictly_pure @*/ char charAt(int index)
+    public /*@ strictly_pure helper @*/ char charAt(int index)
         throws StringIndexOutOfBoundsException;
 
     /*@  public normal_behavior

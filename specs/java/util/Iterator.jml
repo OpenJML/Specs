@@ -65,7 +65,7 @@ public interface Iterator<E> {
       @    // assignable objectState;
       @    //-RAC@ ensures \result <==> moreElements;
       @*/
-    //@ strictly_pure helper
+    //@ strictly_pure
     boolean hasNext();
 
     /*@ public normal_behavior

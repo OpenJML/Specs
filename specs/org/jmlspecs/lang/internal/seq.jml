@@ -102,10 +102,10 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //+RAC@   requires 0 <= j <= length();
     //-RAC@   requires 0 <= j <= this.length;
     //-RAC@   ensures \result.length == 1 + this.length;
-    //-RAC@   ensures (\forall \bigint i;; \result[i] == ( 0 <= i < j ? this[i] : i == j ? v : i <= this.length ? this[i-1] : this[i]));
-    //-RAC@   ensures \result[j] == v;
+    //-RAC@   ensures (\forall \bigint i;; \result[i] == ( 0 <= i < j ? this[i] : i == j ? vvvv : i <= this.length ? this[i-1] : this[i]));
+    //-RAC@   ensures \result[j] == vvvv;
     //@ no_state helper
-    public seq<T> insert(bigint j, T v);
+    public seq<T> insert(bigint j, T vvvv);
 
     //@ public normal_behavior
     //@   requires true;

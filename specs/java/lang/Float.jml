@@ -168,28 +168,28 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     /*@ also
       @   public normal_behavior
       @     ensures \result == (byte) theFloat;
-      @ strictly_pure
+      @ strictly_pure helper
       @*/
     public byte byteValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (short) theFloat;
-      @ strictly_pure
+      @ strictly_pure helper
       @*/
     public short shortValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (int) theFloat;
-      @ strictly_pure
+      @ strictly_pure helper
       @*/
     public int intValue();
 
     /*@ also
       @   public normal_behavior
       @     ensures \result == (long) theFloat;
-      @ strictly_pure
+      @ strictly_pure helper
       @*/
     public long longValue();
 
