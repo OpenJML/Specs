@@ -275,7 +275,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     //@   signals_only BufferOverflowException, ReadOnlyBufferException;
     public final ByteBuffer put(byte[] buf);
 
-    @Override
+    @Override //@ helper
     public final boolean hasArray();
     
     //@ also public normal_behavior
@@ -285,7 +285,7 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     @Override
     public final byte[] array();
 
-    @Override
+    @Override //@ helper
     public final int arrayOffset();
     
     public abstract ByteBuffer compact();
