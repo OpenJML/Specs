@@ -99,7 +99,7 @@ public class ArrayList<E> extends AbstractList<E>
     public /*@ strictly_pure helper @*/ int size();
 
     // specification inherited from List
-    public /*@ strictly_pure @*/ boolean isEmpty();
+    public /*@ strictly_pure helper @*/ boolean isEmpty();
 
     // specification inherited from List
     //@ also public normal_behavior ensures true;

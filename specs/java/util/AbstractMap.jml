@@ -36,6 +36,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 
     // The specs for the following are all inherited
 
+    //@ helper
     public int size();
     public boolean isEmpty();
     public boolean containsValue(Object value);
