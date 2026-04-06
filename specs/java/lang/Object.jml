@@ -90,7 +90,7 @@ public class Object {
     /*@  public code normal_behavior
       @     requires obj != null;
       @     assignable \nothing;
-      @     ensures (* \result is true when obj is "equal to" this object *);
+      @     ensures (* result is true when obj is "equal to" this object *);
       @     //-RAC@ ensures \result <==> (uniqueHash == obj.uniqueHash);
       @  also
       @   public normal_behavior

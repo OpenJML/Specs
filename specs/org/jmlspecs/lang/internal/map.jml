@@ -65,7 +65,7 @@ public class map<K,V> implements IJmlPrimitiveType, IJmlArrayLike {
     //-RAC@   ensures \result.has(k);
     //-RAC@   ensures (\forall K kk;; k != kk ==> (\result.has(kk) == this.has(kk)));
     //-RAC@   ensures (\forall K kk;; k != kk ==> (\result[kk] == this[kk]));
-    //-RAC@   ensures this[k] == v ==> \result == this;
+    //-RAC@   ensures this[k] == v ==> \result.eq(this);
     //-RAC@   ensures this.has(k) ==> \result.size() == this.size();
     //-RAC@   ensures !this.has(k) ==> \result.size() == this.size()+bigint.one;
     //@ helper
