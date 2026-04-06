@@ -52,6 +52,11 @@ public final class Optional<T> {
   public T get();
   
   //@ public normal_behavior
+  //-RAC@   ensures \result == (value == null);
+  //@ spec_pure helper
+  public boolean isEmpty();
+  
+  //@ public normal_behavior
   //-RAC@   ensures \result == (value != null);
   //+RAC@   ensures \result == (get() != null);
   //@ spec_pure helper
@@ -61,6 +66,9 @@ public final class Optional<T> {
   //-RAC@ public model_program { if (value != null) action.accept(value); }
   //+RAC@ public model_program { if (get() != null) action.accept(value); }
   public void ifPresent(Consumer<? super T> action);
+
+  //-RAC@ public model_program { if (value != null) action.accept(value); else runnable.run(); }
+  public void ifPresentOrElse(Consumer<? super T> action, java.lang.Runnable runnable);
 
   /*@ public model_program 
   @   { if (predicate == null) throw new NullPointerException(); return Optional.ofNullable( value == null || !predicate.test(value) ? null : value); }
