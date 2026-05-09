@@ -796,10 +796,11 @@ public final class String
 
 
     //@ public normal_behavior
-    //@       requires s1 != null && s2 != null;
-    // @       requires s1.length() + s2.length() <= Integer.MAX_VALUE; // FIXME - this is a nuisance to assume everywhere there is String concatenation
-    //@       ensures \result.length() == s1.length() + s2.length();
-    //-RAC@   ensures \result.chars == s1.chars.append(s2.chars);
+    //@    old String n1 = s1 == null ? "null" : s1;
+    //@    old String n2 = s2 == null ? "null" : s2;
+    // @       requires n1.length() + n2.length() <= Integer.MAX_VALUE; // FIXME - this is a nuisance to assume everywhere there is String concatenation
+    //@       ensures \result.length() == n1.length() + n2.length();
+    //-RAC@   ensures \result.chars == n1.chars.append(n2.chars);
     //@ public model static pure non_null String concat(nullable String s1, nullable String s2);
 
     /** This is the method version of the infix + operation */
