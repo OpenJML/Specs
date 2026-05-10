@@ -81,7 +81,6 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
 
 // FIXME - record what was written
     /*-RAC@ public behavior
-      @   requires isOpen;
       @   assignable outputBytes;
       @   signals (IOException) (* an IO error occured *);
       @*/
@@ -90,7 +89,6 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
 // FIXME - record what was written
     /*-RAC@ public behavior
       @   old \bigint siz = outputBytes.length;
-      @   requires isOpen;
       @   assignable outputBytes;
       @   signals (IOException) (* an IO error occured *);
       @   signals (NullPointerException) b == null;
