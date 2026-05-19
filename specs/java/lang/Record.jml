@@ -1,0 +1,11 @@
+package java.lang;
+
+public abstract class Record {
+    //@ protected normal_behavior
+    //@   requires true;
+    //@ pure
+    protected Record();
+    public abstract boolean equals(java.lang.Object o);
+    public abstract int hashCode();
+    public abstract java.lang.String toString();
+}
