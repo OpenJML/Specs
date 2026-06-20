@@ -66,6 +66,9 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
       @   ensures wasClosed;
       @   ensures \not_modified(outputBytes);
       @   signals (IOException) (* an IO error occured *);
+      @ also public normal_behavior
+      @   requires !isOpen;
+      @   assignable \nothing;
       @*/
     public void close() throws IOException;
 

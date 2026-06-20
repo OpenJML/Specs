@@ -18,7 +18,10 @@ public class InputStreamReader extends Reader {
     public int read(char /*@non_null*/ [] Param0, int Param1, int Param2)
         throws IOException;
 
-    public InputStreamReader(/*@non_null*/ InputStream Param0);
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public InputStreamReader(/*@non_null*/ InputStream istream);
 
     public /*@ nullable */ String getEncoding();
 

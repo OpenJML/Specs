@@ -55,7 +55,7 @@ public abstract class InputStream implements Closeable {
 
     //-RAC@ public invariant availableBytes >= 0;
     //-RAC@ public invariant readPosition >= 0;
-    //-RAC@ public invariant readPosition+availableBytes <= inputBytes.length;
+    //-RAC@ public invariant readPosition <= inputBytes.length - availableBytes;
     //-RAC@ public invariant \forall \bigint i;; inputBytes[i] != null;    // FIXME - should not need this given the declaration of inputBytes
 
     //-RAC@ model public boolean _markSupported; // Not in streamState, because it should never be modified

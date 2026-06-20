@@ -14,6 +14,8 @@ public abstract class Reader extends Object implements Readable, Closeable {
 
     protected Reader();
 
+    //@ also public normal_behavior
+    //@   assignable autocloseableContent;
     public abstract void close()
         throws IOException;
 
