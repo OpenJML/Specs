@@ -40,9 +40,6 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
     //-RAC@ public model byte non_null [] outputBytes; in output; // FIXME - fix position of non_null
 
     
-    /** Is this file open? */
-    //-RAC@ public model boolean isOpen; in objectState;
-
     /** Was this file closed? */
     //-RAC@ public model boolean wasClosed; in objectState;
 
@@ -66,9 +63,6 @@ public abstract class OutputStream extends Object implements Closeable, Flushabl
       @   ensures wasClosed;
       @   ensures \not_modified(outputBytes);
       @   signals (IOException) (* an IO error occured *);
-      @ also public normal_behavior
-      @   requires !isOpen;
-      @   assignable \nothing;
       @*/
     public void close() throws IOException;
 

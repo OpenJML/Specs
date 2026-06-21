@@ -51,7 +51,6 @@ public abstract class InputStream implements Closeable {
     //-RAC@ public initially readPosition == 0;
 
     //-RAC@ model public \bigint availableBytes; in streamState;
-    //-RAC@ model public boolean isOpen; in streamState;
 
     //-RAC@ public invariant availableBytes >= 0;
     //-RAC@ public invariant readPosition >= 0;
@@ -90,10 +89,6 @@ public abstract class InputStream implements Closeable {
     /*-RAC@ also public behavior
       @   requires isOpen;
       @   assignable streamState;
-      @   ensures !isOpen;
-      @ also public normal_behavior
-      @   requires !isOpen;
-      @   assignable \nothing;
       @   ensures !isOpen;
       @*/
     public void close() throws IOException;

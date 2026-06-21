@@ -2,7 +2,18 @@ package java.io;
 
 public interface Closeable extends java.lang.AutoCloseable {
     // FIXME - Closeable is required to be idempotent
-    
+
+    //-RAC@ model instance public boolean isOpen; in autocloseableContent;
+
     // inherited specification
+    //-RAC@ also public normal_behavior
+    //-RAC@   requires !isOpen;
+    //-RAC@   assigns \nothing;
+    //-RAC@   ensures !isOpen;
+    //-RAC@ also public behavior
+    //-RAC@   requires isOpen;
+    //-RAC@   assigns autocloseableContent;
+    //-RAC@   ensures !isOpen;
+    //-RAC@   signals (Exception e) !isOpen;
     public abstract void close() throws java.io.IOException;
 }
