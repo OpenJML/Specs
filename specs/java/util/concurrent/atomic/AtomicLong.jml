@@ -13,12 +13,12 @@ public class AtomicLong extends Number implements java.io.Serializable {
   private static native boolean VMSupportsCS8();
 
   //@ public normal_behavior
-  //@   ensures value == v;
+  //@   ensures get() == v;
   //@ pure
   public AtomicLong(long v);
 
   //@ public normal_behavior
-  //@   ensures value == 0;
+  //@   ensures get() == 0;
   //@ pure
   public AtomicLong();
   

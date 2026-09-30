@@ -5,12 +5,14 @@ public class AtomicBoolean implements java.io.Serializable {
   /*@ spec_public */ private volatile int value;
 
   //@ public normal_behavior
-  //@   ensures value == (v ? 1:0);
+  //-RAC@   ensures value == (v ? 1:0);
+  //+RAC@   ensures get() == v;
   //@ pure
   public AtomicBoolean(boolean v);
 
   //@ public normal_behavior
-  //@   ensures value == 0;
+  //-RAC@   ensures value == 0;
+  //+RAC@   ensures !get();
   //@ pure
   public AtomicBoolean();
 

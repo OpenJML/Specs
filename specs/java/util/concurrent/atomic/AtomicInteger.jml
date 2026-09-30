@@ -7,12 +7,12 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
   /*@ spec_public */ private volatile int value;
 
   //@ public normal_behavior
-  //@   ensures value == initialValue;
+  //@   ensures get() == initialValue;
   //@ pure
   public AtomicInteger(int initialValue);
 
   //@ public normal_behavior
-  //@   ensures value == 0;
+  //@   ensures get() == 0;
   //@ pure
   public AtomicInteger();
 
