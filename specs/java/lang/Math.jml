@@ -814,6 +814,12 @@ public final class Math {
       @   requires c != 0;
       @   ensures \result == (a % c == 0);
       @*/
+    //@ model public static no_state boolean divides(long c, long a);
+
+    /*@ public normal_behavior
+      @   requires c != 0;
+      @   ensures \result == (a % c == 0);
+      @*/
     //@ model public static no_state boolean divides(\bigint c, \bigint a);
 
     /*@ public normal_behavior
@@ -823,6 +829,14 @@ public final class Math {
       @   ensures \forall int c; c > 0 && divides(c,a) && divides(c,b); c <= \result;
       @*/  
     //@ model public static no_state int gcd(int a, int b);
+
+    /*@ public normal_behavior
+      @   requires a != 0 && b != 0;
+      @   ensures \result > 0 && \result <= (a>=0?a:-a) && \result <= (b>=0?b:-b);
+      @   ensures a % \result == 0 && b % \result == 0;
+      @   ensures \forall long c; c > 0 && divides(c,a) && divides(c,b); c <= \result;
+      @*/  
+    //@ model public static no_state long gcd(long a, long b);
 
     /*@ public normal_behavior
       @   requires a != 0 && b != 0;
