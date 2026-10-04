@@ -37,14 +37,14 @@ public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //@   reads t[*], t.length;
     //-RAC@   ensures \result.length == t.length;
     //-RAC@   ensures \forall int k; 0 <= k < t.length; (int)\result[k] == t[k];
-    //@ strictly_pure // reads a field of an array
+    //@ strictly_pure helper // reads a field of an array
     static public seq<Integer> of(int[] t);
     
     //@ public normal_behavior
     //@   reads t[*], t.length;
     //-RAC@   ensures \result.length == t.length;
     //-RAC@   ensures \forall int i; 0<=i<t.length; \result[i] == t[i];
-    //@ strictly_pure // reads a field of an array
+    //@ strictly_pure helper // reads a field of an array
     @SuppressWarnings("unchecked")
     static public <T> seq<T> of(T ... t);
     
