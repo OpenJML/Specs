@@ -798,11 +798,29 @@ public final class Math {
       @*/
     //@ model public static no_state \real min(\real a, \real b);
 
+    // divides(c,a) says that c divides a. The \forall in gcd's specification is stated with it,
+    // not with %, so that the SMT solver instantiates that quantifier only for divides terms:
+    // with % (encoded with div and multiplication by -1) the solver picks an arithmetic trigger,
+    // (* -1 c), that matches the terms each instance creates -- a matching loop that never ends
+    // (OpenJML issue #997).
+
+    /*@ public normal_behavior
+      @   requires c != 0;
+      @   ensures \result == (a % c == 0);
+      @*/
+    //@ model public static no_state boolean divides(int c, int a);
+
+    /*@ public normal_behavior
+      @   requires c != 0;
+      @   ensures \result == (a % c == 0);
+      @*/
+    //@ model public static no_state boolean divides(\bigint c, \bigint a);
+
     /*@ public normal_behavior
       @   requires a != 0 && b != 0;
       @   ensures \result > 0 && \result <= (a>=0?a:-a) && \result <= (b>=0?b:-b);
       @   ensures a % \result == 0 && b % \result == 0;
-      @   ensures \forall int c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
+      @   ensures \forall int c; c > 0 && divides(c,a) && divides(c,b); c <= \result;
       @*/  
     //@ model public static no_state int gcd(int a, int b);
 
@@ -810,7 +828,7 @@ public final class Math {
       @   requires a != 0 && b != 0;
       @   ensures \result > 0 && \result <= (a>=0?a:-a) && \result <= (b>=0?b:-b);
       @   ensures a % \result == 0 && b % \result == 0;
-      @   ensures \forall \bigint c; c > 0 && a % c == 0 && b % c == 0; c <= \result;
+      @   ensures \forall \bigint c; c > 0 && divides(c,a) && divides(c,b); c <= \result;
       @*/  
     //@ model public static no_state \bigint gcd(\bigint a, \bigint b);
 
