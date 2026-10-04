@@ -33,16 +33,8 @@ public class AtomicBoolean implements java.io.Serializable {
   //-RAC@   ensures !\result;
   public final boolean compareAndSet(boolean v, boolean vv);
 
-  //-RAC@ public normal_behavior
-  //-RAC@   requires value == (v?1:0);
-  //-RAC@   assignable value;
-  //-RAC@   ensures \result;
-  //-RAC@   ensures value == (vv?1:0);
-  //-RAC@ also public normal_behavior
-  //-RAC@   requires value != (v?1:0);
-  //-RAC@   assignable \nothing;
-  //-RAC@   ensures !\result;
-  public boolean weakCompareAndSet(boolean v, boolean vv);
+  // weakCompareAndSet is omitted because it is deprecated (since Java 9);
+  // use compareAndSet or weakCompareAndSetPlain
 
   //@ public normal_behavior
   //@   assignable value;

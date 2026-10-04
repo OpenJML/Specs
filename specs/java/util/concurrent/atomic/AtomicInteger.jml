@@ -7,27 +7,32 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
   /*@ spec_public */ private volatile int value;
 
   //@ public normal_behavior
-  //@   ensures get() == initialValue;
+  //-RAC@   ensures value == initialValue;
+  //+RAC@   ensures get() == initialValue;
   //@ pure
   public AtomicInteger(int initialValue);
 
   //@ public normal_behavior
-  //@   ensures get() == 0;
+  //-RAC@   ensures value== 0;
+  //+RAC@   ensures get() == 0;
   //@ pure
   public AtomicInteger();
 
   //-RAC@ public normal_behavior
   //-RAC@   ensures \result == value;
-  //@ strictly_pure
+  //@ strictly_pure helper
   public final int get();
 
   //@ public normal_behavior
-  //@   assignable value;
-  //@   ensures get() == newValue;
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == newValue;
+  //+RAC@   ensures get() == newValue;
   public final void set(int newValue);
   
   //@ public normal_behavior
-  //@   ensures true; // FIXME - when is this set?
+  //-RAC@   assignable value;
+  //-RAC@   ensures value == newValue;
+  //+RAC@   ensures get() == newValue;
   public final void lazySet(int newValue);
 
   //-RAC@ public normal_behavior
@@ -47,17 +52,8 @@ public class AtomicInteger extends java.lang.Number implements java.io.Serializa
   //-RAC@   ensures !\result;
   public final boolean compareAndSet(int expectedValue, int newValue);
 
-  //-RAC@ public normal_behavior
-  //-RAC@   requires value == expectedValue;
-  //-RAC@   assignable value;
-  //-RAC@   ensures \result;
-  //-RAC@   ensures value == newValue;
-  //-RAC@ also public normal_behavior
-  //-RAC@   requires value != expectedValue;
-  //-RAC@   assignable \nothing;
-  //-RAC@   ensures !\result;
-  // FIXME - documentation is weak on this method - not sure of its behavior
-  public final boolean weakCompareAndSet(int expectedValue, int newValue);
+  // weakCompareAndSet is omitted because it is deprecated (since Java 9);
+  // use compareAndSet or weakCompareAndSetPlain
 
   //-RAC@ public normal_behavior
   //-RAC@   assignable value;
