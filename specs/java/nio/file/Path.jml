@@ -94,7 +94,7 @@ public interface Path extends java.lang.Comparable<Path>, java.lang.Iterable<Pat
 //    public abstract int hashCode();
 
     //@ also public normal_behavior
-    //@   ensures \result.chars == modelString;
+    //-RAC@   ensures \result.chars == modelString;
     public abstract java.lang.String toString();
     
 //    public int compareTo(java.lang.Object);

@@ -59,7 +59,7 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
   public java.math.BigDecimal(double, java.math.MathContext);
   */
   //@ public normal_behavior
-  //@   ensures this.value == i.value;
+  //-RAC@   ensures this.value == i.value;
   public BigDecimal(java.math.BigInteger i);
   /*
   public BigDecimal(java.math.BigInteger, MathContext);

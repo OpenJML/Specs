@@ -37,8 +37,8 @@ public class AlgorithmParameters {
       //@   requires supportedParameterSpec(clazz);
       //@   ensures \result instanceof DHParameterSpec ==> ((DHParameterSpec)\result).getP().signum() >= 0;
       //@   ensures \result instanceof DHParameterSpec ==> ((DHParameterSpec)\result).getG().signum() >= 0;
-      //@   ensures \result instanceof DHParameterSpec ==> ((DHParameterSpec)\result).getP().value < java.math.BigInteger.pow256(N/8);
-      //@   ensures \result instanceof DHParameterSpec ==> ((DHParameterSpec)\result).getG().value < java.math.BigInteger.pow256(N/8);
+      //-RAC@   ensures \result instanceof DHParameterSpec ==> ((DHParameterSpec)\result).getP().value < java.math.BigInteger.pow256(N/8);
+      //-RAC@   ensures \result instanceof DHParameterSpec ==> ((DHParameterSpec)\result).getG().value < java.math.BigInteger.pow256(N/8);
       //@ also public exceptional_behavior
       //@   requires !supportedParameterSpec(clazz);
       //@   signals_only java.security.spec.InvalidParameterSpecException;
