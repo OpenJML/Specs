@@ -1182,7 +1182,7 @@ public class GregorianCalendar extends Calendar {
 //      @     ensures \result == (getMinimum(field) <= value
 //      @                         && value <= getMaximum(field));
 //      @*/
-    //@ model public pure final boolean boundsCheck(int value, int field);
+    //@ model public pure helper final boolean boundsCheck(int value, int field);
     
     /*@ private normal_behavior
       @     requires isSet(ERA);
