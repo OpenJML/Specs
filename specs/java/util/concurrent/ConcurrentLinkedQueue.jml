@@ -10,8 +10,8 @@ public class ConcurrentLinkedQueue<E> extends java.util.AbstractQueue<E> impleme
 //  private static final long tailOffset;
     
     //@ public normal_behavior
-    //@   ensures this.values.length == 0;
-    //@   ensures \nonnullelements(this.values);
+    //-RAC@   ensures this.values.length == 0;
+    //-RAC@   ensures \nonnullelements(this.values);
     //@ pure
     public ConcurrentLinkedQueue();
     //@ public normal_behavior
@@ -19,9 +19,9 @@ public class ConcurrentLinkedQueue<E> extends java.util.AbstractQueue<E> impleme
     //@ pure
     public ConcurrentLinkedQueue(java.util.Collection<? extends E> collection);
     //@ also public normal_behavior
-    //@   requires !this.containsNull ==> element != null;
-    //@   assignable this.values;
-    //@   ensures this.values.length == \old(this.values.length) + 1;
+    //-RAC@   requires !this.containsNull ==> element != null;
+    //-RAC@   assignable this.values;
+    //-RAC@   ensures this.values.length == \old(this.values.length) + 1;
     public boolean add(/*@ nullable */ E element);
 //  final void updateHead(ConcurrentLinkedQueue$Node<E>, ConcurrentLinkedQueue$Node<E>);
 //  final ConcurrentLinkedQueue$Node<E> succ(ConcurrentLinkedQueue$Node<E>);
@@ -31,12 +31,12 @@ public class ConcurrentLinkedQueue<E> extends java.util.AbstractQueue<E> impleme
 //  ConcurrentLinkedQueue$Node<E> first();
 
     //@ also public normal_behavior
-    //@   ensures \result == (this.values.length == 0);
+    //-RAC@   ensures \result == (this.values.length == 0);
     //@ strictly_pure
     public boolean isEmpty();
 
     //@ also public normal_behavior
-    //@   ensures \result == this.values.length;
+    //-RAC@   ensures \result == this.values.length;
     //@ strictly_pure helper
     public int size();
 //  public boolean contains(java.lang.Object);

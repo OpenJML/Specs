@@ -113,8 +113,8 @@ public class Collections {
 
     //@ public normal_behavior
     //@   ensures \fresh(\result);
-    //@   ensures \result.values.length == 1;
-    //@   ensures \result.values[0] == item;
+    //-RAC@   ensures \result.values.length == 1;
+    //-RAC@   ensures \result.values[0] == item;
     //@ pure
     public static <T> java.util.List<T> singletonList(T item);
     
