@@ -21,7 +21,7 @@ public interface Iterable<T> {
     
     /*-RAC@ public normal_behavior
       @   requires 0 <= n < values.length;
-      @   ensures \result == values[(int)n];
+      @   ensures \result == values[n];
       @   // ensures containsObject(\result);
       @ model public spec_pure T _get(\bigint n);
       @*/

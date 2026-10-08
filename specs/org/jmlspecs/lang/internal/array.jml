@@ -20,7 +20,7 @@ public class array<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
     //@ public normal_behavior
     //@   requires true;
     //-RAC@   ensures \result.length == \bigint.of(a.length);
-    //-RAC@   ensures (\forall \bigint i; ; \result[i] == (0 <= i < a.length ? a[(int)i] : \array.<TT>empty()[i]));
+    //-RAC@   ensures (\forall int i; 0 <= i < a.length; \result[i] == a[i]) && (\forall \bigint i; !(0 <= i < a.length); \result[i] == \array.<TT>empty()[i]);
     //@ helper strictly_pure
     @SuppressWarnings({"varargs","unchecked"})
     public static <TT> array<TT> of(TT ... a);
