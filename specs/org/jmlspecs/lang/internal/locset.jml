@@ -12,7 +12,7 @@ public class locset implements IJmlPrimitiveType {
     //@ public normal_behavior
     //@   requires true;
     //@ helper
-    abstract public boolean contains(locset x);
+    public boolean contains(locset x);
 
     //@ public normal_behavior
     //@   ensures true;
@@ -33,7 +33,7 @@ public class locset implements IJmlPrimitiveType {
     //@ public normal_behavior
     //@   ensures true;//\result == (this == s || equals(this,s));
     //@ helper
-    abstract public boolean eq(locset s);
+    public boolean eq(locset s);
     
     //@ public normal_behavior // Specs are more successful when written without spec cases
     //@   //ensures this.contains(x) ==> \result == this;
@@ -42,7 +42,7 @@ public class locset implements IJmlPrimitiveType {
     //@  // FIXME ensures (\forall locset t; t != x; \result.contains(t) == this.contains(t));
     //@   ensures true;
     //@ helper
-    abstract public locset add(locset x);
+    public locset add(locset x);
     
     //@ public normal_behavior
     // @   ensures !this.contains(x) ==> \result == this;
@@ -52,7 +52,7 @@ public class locset implements IJmlPrimitiveType {
     // @   ensures \forall locset t;; this.contains(t) && !x.contains(t) ==> \result.contains(t);
     //@   ensures true;
     //@ helper
-    abstract public locset remove(locset x);
+    public locset remove(locset x);
     
 
 }

@@ -20,7 +20,7 @@ abstract public class TypeSafeMatcher<T> extends BaseMatcher<T> {
     //@ also public normal_behavior
     //@ pure
     @Override
-    public boolean matches(/*@ nullable */ Object item);
+    public final boolean matches(/*@ nullable */ Object item);
     
     //@ protected normal_behavior
     //@ pure
