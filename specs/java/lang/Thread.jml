@@ -47,11 +47,11 @@ public class Thread implements Runnable {
   //@ public normal_behavior
   //@   ensures true;
   //@ pure
-  public static native void yield();
+  public static void yield();
   //@ public behavior
   //@   ensures true;
   //@ pure
-  public static native void sleep(long t) throws InterruptedException;
+  public static void sleep(long t) throws InterruptedException;
   //@ public behavior
   //@   ensures true;
   //@ pure
@@ -122,7 +122,7 @@ public class Thread implements Runnable {
   //@   requires true;
   //@   ensures \result == !dead;
   //@ pure
-  public final native boolean isAlive();
+  public final boolean isAlive();
   public final void suspend();
   public final void resume();
   public final void setPriority(int p);
@@ -132,7 +132,7 @@ public class Thread implements Runnable {
   public final ThreadGroup getThreadGroup();
   public static int activeCount();
   public static int enumerate(Thread[] tt);
-  public native int countStackFrames();
+  public int countStackFrames();
   public final synchronized void join(long t) throws InterruptedException;
   public final synchronized void join(long t, int tt) throws InterruptedException;
   

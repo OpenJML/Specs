@@ -375,8 +375,6 @@ t *);
 
     public static String clearProperty(String name);
 
-    /** @deprecated use java.lang.System.getProperty. */
-    @Deprecated
     public static /*@ pure nullable @*/ String getenv(/*@non_null*/ String name);
     
     public static java.util.Map<String,String> getenv();

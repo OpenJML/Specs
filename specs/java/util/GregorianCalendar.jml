@@ -1117,7 +1117,7 @@ public class GregorianCalendar extends Calendar {
       @          ensures \result == MONTH_LENGTH[month];
       @     |}
       @*/ 
-    private /*@ spec_public pure */ final int monthLength(int month);
+    private /*@ spec_public pure */ int monthLength(int month);
 
 //    /*@ private normal_behavior
 //      @     requires (\forall int field; 0 <= field && field < FIELD_COUNT; 
@@ -1194,7 +1194,7 @@ public class GregorianCalendar extends Calendar {
       @     assignable \nothing;
       @     ensures \result == AD;
       @*/
-    private /*@ spec_public pure @*/ final int internalGetEra();
+    private /*@ spec_public pure @*/ int internalGetEra();
        
     /*@ private normal_behavior
       @     requires isLeapYear(get(YEAR));
@@ -1206,7 +1206,7 @@ public class GregorianCalendar extends Calendar {
       @     assignable \nothing;
       @     ensures \result == 365;
       @*/
-    private /*@ spec_public pure @*/ final int yearLength();
+    private /*@ spec_public pure @*/ int yearLength();
 
     static final long serialVersionUID;
 }
