@@ -423,6 +423,18 @@ public final class String
     //@   signals_only NullPointerException;
     public /*@ pure @*/ boolean contentEquals(StringBuffer sb);
 
+    // The JDK defines contains(s) as indexOf(s.toString()) >= 0; CharSequence.toString is not pure, so the
+    // result is stated for a String argument (Specs PR #26)
+    /*@  public normal_behavior
+      @   requires s != null;
+      @   ensures s instanceof String ==> \result == (indexOf((String)s) >= 0);
+      @ also public exceptional_behavior
+      @   requires s == null;
+      @   assignable \nothing;
+      @   signals_only NullPointerException;
+      @*/
+    public /*@ pure @*/ boolean contains(/*@ nullable */ CharSequence s);
+
     /*@  public normal_behavior
       @    ensures \result <==> (c1 == c2)
       @                        || (Character.toUpperCase(c1) 
