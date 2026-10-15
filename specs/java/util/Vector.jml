@@ -93,7 +93,7 @@ public class Vector<E> extends AbstractList<E>
     //-RAC@    ensures elementCount == c.size();
     //-RAC@    ensures this.containsNull == c.containsNull;
     //-RAC@    ensures this.values.length == c.values.length;
-    //@    ensures (\forall Object o; c.contains(o) <==> this.contains(o));
+    //@    ensures (\forall nullable Object o; c.contains(o) <==> this.contains(o));
                // FIXME - what about duplicate entries?
     public /*@ pure @*/ Vector(/*@non_null*/ Collection<? extends E> c);
 

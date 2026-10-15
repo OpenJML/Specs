@@ -64,7 +64,7 @@ public interface Deque<E> extends Queue<E> , SequencedCollection<E> {
       @   ensures containsNull == \result.returnsNull;
       @   ensures (\forall int i; 0 <= i && i < size();
       @                 contains(\result.nthNextElement(i)));
-      @   ensures (\forall Object o; contains(o) ==>
+      @   ensures (\forall nullable Object o; contains(o) ==>
       @              (\exists int i; 0 <= i && i < size(); 
       @                 o == \result.nthNextElement(i)));
       @   ensures size() > 0 ==> \result.hasNext((int)(size()-1));

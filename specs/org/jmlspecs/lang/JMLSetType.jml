@@ -73,7 +73,7 @@ public interface JMLSetType<E> extends JMLIterable<E>
      * @see #has(Object)
      */
     /*@   public normal_behavior
-      @     ensures \result == (\forall Object e; ; !this.has(e));
+      @     ensures \result == (\forall nullable Object e; ; !this.has(e));
       @*/  
     boolean isEmpty();
 
@@ -104,9 +104,9 @@ public interface JMLSetType<E> extends JMLIterable<E>
     /*@ 
       @  public normal_behavior
       @   requires int_size() < Integer.MAX_VALUE || has(elem);
-      @   ensures (\forall Object e; \result.has(e);
+      @   ensures (\forall nullable Object e; \result.has(e);
       @                  (this.has(e) || elem_equals(elem,e)));
-      @   ensures (\forall Object e; this.has(e); \result.has(e));
+      @   ensures (\forall nullable Object e; this.has(e); \result.has(e));
       @   ensures  this.has(elem) ==> (this.int_size() == \result.int_size());
       @   ensures  !this.has(elem) ==> (this.int_size()+1 == \result.int_size());
       @*/
@@ -117,7 +117,7 @@ public interface JMLSetType<E> extends JMLIterable<E>
     /*@ public normal_behavior
       @    ensures \result != null;
       @    ensures \result.length == this.int_size();
-      @    ensures (\forall Object o; has(o);
+      @    ensures (\forall nullable Object o; has(o);
       @              (\exists int i;
       @                   elem_equals(\result[i],o)));
       @*/

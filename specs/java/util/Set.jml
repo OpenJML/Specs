@@ -86,7 +86,7 @@ public interface Set<E> extends Collection<E> {
        @   requires c != null;
        @   assignable values;
        @   ensures \old(c.contains(null)) ==> !contains(null);
-       @   ensures (\forall Object o; c.contains(o) <==>
+       @   ensures (\forall nullable Object o; c.contains(o) <==>
                       (\old(contains(o)) && !\old(c.contains(o))));
        @   ensures size() <= \old(size());
        @   ensures \result <==> size() != \old(size());
@@ -102,7 +102,7 @@ public interface Set<E> extends Collection<E> {
     //@   requires o != null;
     //@   requires o instanceof Set;
     /*@   ensures \result <==>
-               ((\forall Object oo; contains(oo) <==> ((Set)o).contains(oo))
+               ((\forall nullable Object oo; contains(oo) <==> ((Set)o).contains(oo))
              && contains(null) <==> ((Set)o).contains(null)); */
     //-RAC@   ensures  \result ==> (values.length == ((Set)o).values.length);
     /*@ pure @*/ boolean equals(/*@ nullable*/ Object o);
