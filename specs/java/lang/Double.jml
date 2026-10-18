@@ -311,7 +311,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @*/
     public static /*@ pure @*/ long doubleToRawLongBits(double value);
 
-    /* @ public normal_behavior  // FIXME - I think this is inconsistent and also needs isFinite
+    /*-RAC@ public normal_behavior
       @  {|
       @     requires bits == 0x7ff0000000000000L;
       @     ensures \result == POSITIVE_INFINITY;
@@ -324,6 +324,9 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @              || ( 0xfff0000000000001L <= bits
       @                && bits <= 0xffffffffffffffffL );
       @     ensures isNaN(\result);
+      @   also
+      @     ensures (* \result is floating-point value with
+      @                the same bit pattern as bits *);
       @  |}
       @*/
     public static /*@ pure @*/ double longBitsToDouble(long bits);
