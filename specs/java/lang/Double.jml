@@ -32,11 +32,12 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     //@ public model final double theDouble;
     //+RAC@ represents theDouble = doubleValue();
 
-    /** Returns true if the string is a parseable double value (but not
-    an infinite or NaN value).
+    /** Returns true if parseDouble(s) does not throw: s, ignoring surrounding whitespace, is a decimal or hexadecimal
+    floating-point literal, NaN or Infinity, optionally signed.
     */
     //@     public normal_behavior
     //@      requires s != null;
+    //@      ensures isSpecial(s) ==> \result;
     /* @ // FIXME
     @      {|
     @        requires s.equals("NaN");
@@ -60,7 +61,15 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     @        ensures !\result;
     @      |}
     @*/
-    //@  public static strictly_pure model boolean parseable( String s );
+    //@  public static spec_pure model boolean parseable( String s );
+
+    /** True if s is exactly NaN or Infinity, optionally signed, with no surrounding whitespace. */
+    /*@ public normal_behavior
+      @   requires s != null;
+      @   ensures \result == (s.equals("NaN") || s.equals("+NaN") || s.equals("-NaN")
+      @                     || s.equals("Infinity") || s.equals("+Infinity") || s.equals("-Infinity"));
+      @ public static model spec_pure boolean isSpecial(String s);
+      @*/
     
     //@ axiom \forall double d;; d == 0 <==> (isPositiveZero(d) || isNegativeZero(d));
 
@@ -84,15 +93,28 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     //@ static_initializer
 
     /*-RAC@ public normal_behavior
-      @   ensures \result.length() < 100; // FIXME - make this tighter
-      @   ensures !isNaN(d) && !isInfinite(d) ==> parseable(\result);
-      @   ensures !isNaN(d) && !isInfinite(d) ==> 
-      @                                   identical(d, parseDouble(\result));
-      @   ensures isNaN(d) ==> \result.equals("NaN");
-      @   ensures (d == Double.POSITIVE_INFINITY)==>\result.equals("Infinity");
-      @   ensures (d == Double.NEGATIVE_INFINITY)==>\result.equals("-Infinity");
+      @   ensures \result.length() > 0 && \result.length() < 100;
+      @   ensures parseable(\result) && identical(d, parseDouble(\result));
+      @   ensures isNaN(d) <==> \result.equals("NaN");
+      @   ensures (d == POSITIVE_INFINITY) <==> \result.equals("Infinity");
+      @   ensures (d == NEGATIVE_INFINITY) <==> \result.equals("-Infinity");
+      @   ensures isPositiveZero(d) <==> \result.equals("0.0");
+      @   ensures isNegativeZero(d) <==> \result.equals("-0.0");
+      @   ensures (\result.charAt(0) == '-') <==> (d < 0 || isNegativeZero(d));
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String toString(double d);
+
+    /*-RAC@ public normal_behavior
+      @   ensures \result.length() > 0;
+      @   ensures parseable(\result) && identical(d, parseDouble(\result));
+      @   ensures isNaN(d) <==> \result.equals("NaN");
+      @   ensures (d == POSITIVE_INFINITY) <==> \result.equals("Infinity");
+      @   ensures (d == NEGATIVE_INFINITY) <==> \result.equals("-Infinity");
+      @   ensures isPositiveZero(d) <==> \result.equals("0x0.0p0");
+      @   ensures isNegativeZero(d) <==> \result.equals("-0x0.0p0");
+      @   ensures (\result.charAt(0) == '-') <==> (d < 0 || isNegativeZero(d));
+      @*/
+    public static /*@ pure @*/ /*@ non_null @*/ String toHexString(double d);
 
     /*-RAC@ public normal_behavior
       @     requires s != null && parseable(s);
@@ -113,7 +135,9 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
     
     /*-RAC@ public normal_behavior
       @    requires s != null && parseable(s);
-      @    ensures Double.isFinite(\result);
+      @    ensures (s.equals("NaN") || s.equals("+NaN") || s.equals("-NaN")) <==> isNaN(\result);
+      @    ensures (s.equals("Infinity") || s.equals("+Infinity")) ==> \result == POSITIVE_INFINITY;
+      @    ensures s.equals("-Infinity") ==> \result == NEGATIVE_INFINITY;
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
@@ -146,7 +170,6 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
 
     /*-RAC@ public normal_behavior
       @   requires parseable(s);
-      @   ensures isFinite();
       @   ensures identical(theDouble, parseDouble(s));
       @ also
       @ public exceptional_behavior
@@ -221,9 +244,14 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
 
     /*-RAC@ also
       @   public normal_behavior
-      @     ensures (* \result is a hashcode value for this object *);
+      @     ensures \result == hashCode(theDouble);
       @*/
     public int hashCode();
+
+    /*-RAC@ public normal_behavior
+      @   ensures \result == \java_math((int)(doubleToLongBits(value) ^ (doubleToLongBits(value) >>> 32)));
+      @*/
+    public static /*@ pure @*/ int hashCode(double value);
 
     /*-RAC@ also
       @   public normal_behavior
@@ -374,7 +402,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @*/
     public static /*@ pure @*/ double min(double a, double b);
     
-    //@ ensures \result == a + b;
+    //@ ensures identical(\result, a + b);
     public static /*@ pure @*/ double sum(double a, double b);
     
 

@@ -32,11 +32,12 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     //@ public model final float theFloat;
     //+RAC@ public represents theFloat = floatValue();
     
-    /** Returns true if the string is parseable as a float value (but not
-    an infinite or NaN value).
+    /** Returns true if parseFloat(s) does not throw: s, ignoring surrounding whitespace, is a decimal or hexadecimal
+    floating-point literal, NaN or Infinity, optionally signed.
     */
     /*@   public normal_behavior
       @     requires s != null;
+      @     ensures isSpecial(s) ==> \result;
 //    @     {|   // FIXME - improved purity
 //    @       requires s.equals("NaN");
 //    @       ensures !\result;
@@ -58,8 +59,16 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
 //    @                      by the IEEE 754 standards *);
 //    @       ensures !\result;
 //    @     |}
-    @  public static model strictly_pure boolean parseable( String s );
+    @  public static model spec_pure boolean parseable( String s );
     @*/
+
+    /** True if s is exactly NaN or Infinity, optionally signed, with no surrounding whitespace. */
+    /*@ public normal_behavior
+      @   requires s != null;
+      @   ensures \result == (s.equals("NaN") || s.equals("+NaN") || s.equals("-NaN")
+      @                     || s.equals("Infinity") || s.equals("+Infinity") || s.equals("-Infinity"));
+      @ public static model spec_pure boolean isSpecial(String s);
+      @*/
         
     public static final float POSITIVE_INFINITY;
     //@ axiom \forall float d;; !isNaN(d) ==> d <= POSITIVE_INFINITY;
@@ -79,21 +88,32 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     //@ static_initializer
 
     /*-RAC@ public normal_behavior
-      @   ensures \result.chars.length < 100; // FIXME - make this tighter
-      @   ensures !isNaN(f) && !isInfinite(f) ==> parseable(\result);
-      @   ensures !isNaN(f) && !isInfinite(f) ==> 
-      @                              identical(f, parseFloat(\result));
-      @   ensures isNaN(f) ==> \result.chars == "NaN".chars;
-      @   ensures (f == Float.POSITIVE_INFINITY) ==> \result.chars == "Infinity".chars;
-      @   ensures (f == Float.NEGATIVE_INFINITY) ==> \result.chars == "-Infinity".chars;
+      @   ensures \result.length() > 0 && \result.length() < 100;
+      @   ensures parseable(\result) && identical(f, parseFloat(\result));
+      @   ensures isNaN(f) <==> \result.equals("NaN");
+      @   ensures (f == POSITIVE_INFINITY) <==> \result.equals("Infinity");
+      @   ensures (f == NEGATIVE_INFINITY) <==> \result.equals("-Infinity");
+      @   ensures isPositiveZero(f) <==> \result.equals("0.0");
+      @   ensures isNegativeZero(f) <==> \result.equals("-0.0");
+      @   ensures (\result.charAt(0) == '-') <==> (f < 0 || isNegativeZero(f));
       @*/
-    // Note - I don't know of any parseable representation for 
-    // NaN or infinite values
-    public static /*@ spec_pure @*/ String toString(float f);
+    public static /*@ spec_pure @*/ /*@ non_null @*/ String toString(float f);
+
+    /*-RAC@ public normal_behavior
+      @   ensures \result.length() > 0;
+      @   ensures parseable(\result) && identical(f, parseFloat(\result));
+      @   ensures isNaN(f) <==> \result.equals("NaN");
+      @   ensures (f == POSITIVE_INFINITY) <==> \result.equals("Infinity");
+      @   ensures (f == NEGATIVE_INFINITY) <==> \result.equals("-Infinity");
+      @   ensures isPositiveZero(f) <==> \result.equals("0x0.0p0");
+      @   ensures isNegativeZero(f) <==> \result.equals("-0x0.0p0");
+      @   ensures (\result.charAt(0) == '-') <==> (f < 0 || isNegativeZero(f));
+      @*/
+    public static /*@ spec_pure @*/ /*@ non_null @*/ String toHexString(float f);
 
     /*@ public normal_behavior
       @   requires s != null && parseable(s);
-      @   ensures  \result == parseFloat(s);
+      @   ensures  identical(\result.theFloat, parseFloat(s));
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
@@ -105,17 +125,24 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
 
     /*@ public normal_behavior
       @    requires s != null && parseable(s);
-      @    ensures true;  // FIXME - put some conditions on the result
+      @    ensures (s.equals("NaN") || s.equals("+NaN") || s.equals("-NaN")) <==> isNaN(\result);
+      @    ensures (s.equals("Infinity") || s.equals("+Infinity")) ==> \result == POSITIVE_INFINITY;
+      @    ensures s.equals("-Infinity") ==> \result == NEGATIVE_INFINITY;
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
       @   signals(NumberFormatException);
       @*/
-    public static /*@ strictly_pure @*/ float parseFloat(/*@ non_null @*/ String s)
+    public static /*@ spec_pure @*/ float parseFloat(/*@ non_null @*/ String s)
         throws NumberFormatException;
 
+    /*-RAC@ public normal_behavior
+      @   ensures identical(\result.theFloat, f);
+      @*/
+    public static /*@ pure @*/ /*@ non_null @*/ Float valueOf(float f);
+
     /*@ public normal_behavior
-      @   ensures \result == (!isFinite(v) & !isFinite(v));
+      @   ensures \result ==> !isFinite(v) && !isInfinite(v);
       @*/
     public static /*@ helper no_state @*/ boolean isNaN(float v);
 
@@ -211,9 +238,14 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
 
     /*@ also
       @   public normal_behavior
-      @     ensures (* \result is a hashcode value for this object *);
+      @     ensures \result == floatToIntBits(theFloat);
       @*/
     public int hashCode();
+
+    /*@ public normal_behavior
+      @   ensures \result == floatToIntBits(value);
+      @*/
+    public static /*@ pure @*/ int hashCode(float value);
 
     /*@ also
       @   public normal_behavior
@@ -376,7 +408,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
     public static /*@ pure @*/ float min(float a, float b);
 
 
-    //@ ensures \result == a + b;
+    //@ ensures identical(\result, a + b);
     public static /*@ pure @*/ float sum(float a, float b);
 
     /** Returns true if the argument is a negative (and not positive) zero;
