@@ -1047,7 +1047,8 @@ public final class Math {
 //      @   ensures abs(\result) == abs(magnitude);
 //      @ also
       @   requires (Double.isFinite(magnitude) || Double.isInfinite(magnitude)) && !Double.isNaN(sign);
-      @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
+      @   ensures \result == ((sign < 0 || Double.isNegativeZero(sign)) ? -abs(magnitude) : abs(magnitude));
+      @   ensures (\result < 0 || Double.isNegativeZero(\result)) <==> (sign < 0 || Double.isNegativeZero(sign));
 //      @ |}
       @*/
     public static /*@ no_state @*/ double copySign(double magnitude, double sign);
@@ -1062,7 +1063,8 @@ public final class Math {
       @   ensures abs(\result) == abs(magnitude);
       @ also
       @   requires (Float.isFinite(magnitude) || Float.isInfinite(magnitude)) && !Float.isNaN(sign);
-      @   ensures \result == ((sign < 0 == magnitude < 0) ? magnitude : -magnitude);
+      @   ensures \result == ((sign < 0 || Float.isNegativeZero(sign)) ? -abs(magnitude) : abs(magnitude));
+      @   ensures (\result < 0 || Float.isNegativeZero(\result)) <==> (sign < 0 || Float.isNegativeZero(sign));
       @ |}
       @*/
     public static /*@ no_state @*/ float copySign(float magnitude, float sign);
