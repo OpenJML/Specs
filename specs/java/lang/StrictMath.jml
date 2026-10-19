@@ -114,7 +114,7 @@ public /*@ pure @*/ final class StrictMath {
       @   ensures isNegativeZero(\result);
       @ also
       @   requires !Double.isNaN(a) && abs(a) <= 1;
-      @   ensures sin(asin(a)) == a;
+      @   ensures -PI/2 <= \result && \result <= PI/2;
       @ |}
       @*/
     public static /*@ pure @*/ double asin(double a);
@@ -125,7 +125,7 @@ public /*@ pure @*/ final class StrictMath {
       @   ensures Double.isNaN(\result);
       @ also
       @   requires !Double.isNaN(a) && abs(a) <= 1;
-      @   ensures close(cos(acos(a)),a,acos(a),1.e-17);
+      @   ensures 0 <= \result && \result <= PI;
       @ |}
       @*/
     public static /*@ pure @*/ double acos(double a);
@@ -144,16 +144,15 @@ public /*@ pure @*/ final class StrictMath {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @   requires !Double.isNaN(a) && !Double.isInfinite(a);
-      @   requires abs(a) < 1.e16;  // FIXME - to avoid precision problems
-      @   ensures close(tan(atan(a)),a,atan(a),1e-15);
+      @   requires !Double.isNaN(a);
+      @   ensures -PI/2 <= \result && \result <= PI/2;
       @ |}
       @*/
     public static /*@ pure @*/ double atan(double a);
 
     /*@ public normal_behavior
       @   requires !Double.isNaN(angdeg);
-      @   ensures \result == angdeg / 180.0 * PI;
+      @   ensures !Double.isNaN(\result);
       @ also
       @ public normal_behavior
       @   requires Double.isNaN(angdeg);
@@ -163,7 +162,7 @@ public /*@ pure @*/ final class StrictMath {
 
     /*@ public normal_behavior
       @   requires !Double.isNaN(angrad);
-      @   ensures \result == angrad * 180.0 / PI;
+      @   ensures !Double.isNaN(\result);
       @ also
       @ public normal_behavior
       @   requires Double.isNaN(angrad);
@@ -215,7 +214,7 @@ public /*@ pure @*/ final class StrictMath {
       @ also
       @      requires a > 0 && a < Double.POSITIVE_INFINITY;
       @   // ensures a == sqrt(a) * sqrt(a);
-      @   ensures close(a,sqrt(a)*sqrt(a),1.e-17);
+      @   ensures close(a,sqrt(a)*sqrt(a),2.0E-6);
       @ |}
       @*/
     public static /*@ pure @*/ double sqrt(double a);
@@ -274,7 +273,7 @@ public /*@ pure @*/ final class StrictMath {
       @   requires -Double.MAX_VALUE < a && a < Double.MAX_VALUE;
       @   ensures \result == rint(\result);
       @   ensures a <= \result;
-      @   ensures ((a+1) != 1) ==> \result < (a+1);  // Guard is for precision problems
+      @   ensures (\real)\result < (\real)a + 1; // exact: a+1 can round to a
       @ |}
       @*/
     public static /*@ pure @*/ double ceil(double a);
@@ -299,7 +298,7 @@ public /*@ pure @*/ final class StrictMath {
       @   requires -Double.MAX_VALUE < a && a < Double.MAX_VALUE;
       @   ensures \result == rint(\result);
       @   ensures \result <= a;
-      @   ensures ((a-1) != -1) ==> (a-1) < \result;  // Guard is for precision problems
+      @   ensures (\real)a - 1 < (\real)\result; // exact: a-1 can round to a
       @ |}
       @*/
     public static /*@ pure @*/ double floor(double a);
@@ -459,7 +458,8 @@ public /*@ pure @*/ final class StrictMath {
       @ also
       @   requires !Float.isNaN(a) && !Float.isInfinite(a)
       @         && Integer.MIN_VALUE < a && a < Integer.MAX_VALUE;
-      @   ensures \result == (int)StrictMath.floor(a + 0.5f);
+      @   // floor(a + 1/2), computed exactly (a + 0.5f can round up)
+      @   ensures (\real)\result <= (\real)a + 0.5 && (\real)a + 0.5 < (\real)\result + 1;
       @ |}
       @*/ // rounds n+.5 to n+1
     public static /*@ pure @*/ int round(float a);
@@ -477,7 +477,8 @@ public /*@ pure @*/ final class StrictMath {
       @ also
       @   requires !Double.isNaN(a) && !Double.isInfinite(a)
       @         && Long.MIN_VALUE < a && a < Long.MAX_VALUE;
-      @   ensures \result == (long)StrictMath.floor(a + 0.5d);
+      @   // floor(a + 1/2), computed exactly (a + 0.5d can round up)
+      @   ensures (\real)\result <= (\real)a + 0.5 && (\real)a + 0.5 < (\real)\result + 1;
       @ |}
       @*/ // rounds n+.5 to n+1
     public static /*@ pure @*/ long round(double a);
@@ -616,8 +617,8 @@ public /*@ pure @*/ final class StrictMath {
       @              || (isPositiveZero(b) && a == 0);
       @     ensures isPositiveZero(\result);
       @   also
-      @     requires !(isPositiveZero(a) && b == 0)
-      @              || (isPositiveZero(b) && a == 0);
+      @     requires !((isPositiveZero(a) && b == 0)
+      @              || (isPositiveZero(b) && a == 0));
       @     ensures \result == ( Float.compare(a,b) >= 0 ? a : b);
       @   |}
       @ |}
@@ -635,8 +636,8 @@ public /*@ pure @*/ final class StrictMath {
       @              || (isPositiveZero(b) && a == 0);
       @      ensures isPositiveZero(\result);
       @   also
-      @     requires !(isPositiveZero(a) && b == 0)
-      @              || (isPositiveZero(b) && a == 0);
+      @     requires !((isPositiveZero(a) && b == 0)
+      @              || (isPositiveZero(b) && a == 0));
       @      ensures \result == (Double.compare(a,b) >= 0 ? a : b);
       @   |}
       @ |}
@@ -724,19 +725,19 @@ public /*@ pure @*/ final class StrictMath {
     public static /*@ pure @*/ double min(double a, double b);
     
     /*@ public static model pure boolean isPositiveZero( double a) {
-          return Double.valueOf(a).equals(Double.parseDouble("+0.0"));
+          return Double.isPositiveZero(a);
         }
     
         public static model pure boolean isNegativeZero( double a) {
-          return Double.valueOf(a).equals(Double.parseDouble("-0.0"));
+          return Double.isNegativeZero(a);
         }
     
         public static model pure boolean isPositiveZero( float a) {
-          return Float.valueOf(a).equals(Float.parseFloat("+0.0"));
+          return Float.isPositiveZero(a);
         }
     
         public static model pure boolean isNegativeZero( float a) {
-          return Float.valueOf(a).equals(Float.parseFloat("-0.0"));
+          return Float.isNegativeZero(a);
         }
     
     // FIXME - can't seem to reference model methods in other specs

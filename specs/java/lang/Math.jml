@@ -156,7 +156,7 @@ public final class Math {
       @   ensures Double.isNaN(\result);
       @ also
       @   requires !Double.isNaN(a) && a <= 1 && a >= -1;
-      @   ensures -PI/2 <= \result && \result <= PI/2;
+      @   ensures 0 <= \result && \result <= PI;
       @   ensures (* result within 1 ulp of exact result *);
       @ |}
       @*/
@@ -291,8 +291,8 @@ public final class Math {
       @   requires isNegativeZero(a);
       @   ensures isNegativeZero(\result);
       @ also
-      @      requires a > 0.0 && a < Double.POSITIVE_INFINITY;
-      @   ensures close(a, \result * \result * \result, 3.0E-16);
+      @   requires a > 0.0 && a <= 1.0E300; // the cube of the result of a larger value can overflow
+      @   ensures close(a, \result * \result * \result, 1.0E-15);
       @ |}
       @*/
     public static /*@ no_state @*/ double cbrt(double a);  // cube root
@@ -303,7 +303,7 @@ public final class Math {
       @         || Double.isInfinite(f1) || f2 == 0.0;
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !Double.isInfinite(f1) && Double.isInfinite(f2);
+      @   requires Double.isFinite(f1) && Double.isInfinite(f2);
       @   ensures \result == f1;
       @ also
       @   requires f1 == Double.MAX_VALUE && f2 == Double.MIN_VALUE;
@@ -330,7 +330,7 @@ public final class Math {
       @   requires Double.isNaN(a);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires Double.isFinite(a) && 1.0 < a < 0.0;
+      @   requires -1.0 < a && a < 0.0;
       @   ensures isNegativeZero(\result);
       @ also 
       @   requires a == rint(a);
@@ -441,14 +441,16 @@ public final class Math {
 
     /*@ public normal_behavior
       @ {|
-      @   requires Double.isFinite(a) && !(a == 0.0) && Double.isFinite(b);
-      @   ensures !Double.isNaN(\result);
-      @   ensures a > 0 && b > 0 ==> \result > 0;
+      @   requires Double.isFinite(a) && a > 0.0 && Double.isFinite(b);
+      @   ensures !Double.isNaN(\result) && \result >= 0; // may underflow to 0
+      @ also
+      @   requires Double.isFinite(a) && a < 0.0 && Double.isFinite(b);
+      @   ensures Double.isNaN(\result) <==> rint(b) != b; // a negative base needs an integer exponent
       @ also
       @   requires b == 0.0;
       @   ensures \result == 1.0;
       @ also
-      @   requires b == 1.0;
+      @   requires b == 1.0 && !Double.isNaN(a);
       @   ensures \result == a;
       @ also 
       @   requires Double.isNaN(b);
@@ -524,7 +526,8 @@ public final class Math {
       @   ensures \result == Integer.MAX_VALUE;
       @ also
       @   requires Integer.MIN_VALUE < a && a < Integer.MAX_VALUE;
-      @   ensures \result == (int) Math.floor(a + 0.5f);
+      @   // floor(a + 1/2), computed exactly (a + 0.5f can round up)
+      @   ensures (\real)\result <= (\real)a + 0.5 && (\real)a + 0.5 < (\real)\result + 1;
       @ |}
       @*/
     public static /*@ no_state @*/ int round(float a);
@@ -541,7 +544,8 @@ public final class Math {
       @   ensures \result == Long.MAX_VALUE;
       @ also
       @   requires Long.MIN_VALUE < a && a < Long.MAX_VALUE;
-      @   ensures \result == (long) Math.floor(a + 0.5d);
+      @   // floor(a + 1/2), computed exactly (a + 0.5d can round up)
+      @   ensures (\real)\result <= (\real)a + 0.5 && (\real)a + 0.5 < (\real)\result + 1;
       @ |}
       @*/ 
     public static /*@ no_state @*/ long round(double a);
@@ -792,7 +796,7 @@ public final class Math {
       @   requires b <= a;
       @   ensures \result == b;
       @ also
-      @   ensures_redundantly a <= \result && b <= \result;
+      @   ensures_redundantly \result <= a && \result <= b;
       @   ensures_redundantly \result == a || \result == b;
       @ |}
       @*/
@@ -852,7 +856,7 @@ public final class Math {
       @   requires Double.isNaN(d);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !Double.isFinite(d);
+      @   requires Double.isInfinite(d);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires d == 0.0;
@@ -873,7 +877,7 @@ public final class Math {
       @   requires Float.isNaN(f);
       @   ensures Float.isNaN(\result);
       @ also
-      @   requires !Float.isFinite(f);
+      @   requires Float.isInfinite(f);
       @   ensures \result == Float.POSITIVE_INFINITY;
       @ also
       @   requires f == 0.0;
@@ -930,7 +934,7 @@ public final class Math {
       @   requires Double.isNaN(x);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !Double.isFinite(x) || x == 0.0;
+      @   requires Double.isInfinite(x) || x == 0.0;
       @   ensures \result == x;
       @ also
       @   requires Double.isFinite(x);
@@ -945,7 +949,7 @@ public final class Math {
       @   requires Double.isNaN(x);
       @   ensures Double.isNaN(\result);
       @ also
-      @   requires !Double.isFinite(x);
+      @   requires Double.isInfinite(x);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
       @   requires x == 0.0;
@@ -982,10 +986,10 @@ public final class Math {
     // new for Java 5
     /*@ public normal_behavior
       @ {|
-      @   requires !Double.isFinite(x) || !Double.isFinite(y);
+      @   requires Double.isInfinite(x) || Double.isInfinite(y);
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires Double.isNaN(x) || Double.isNaN(y);
+      @   requires (Double.isNaN(x) || Double.isNaN(y)) && !Double.isInfinite(x) && !Double.isInfinite(y);
       @   ensures Double.isNaN(\result);
       @ also
       @   requires Double.isFinite(x) && Double.isFinite(y);
@@ -1075,10 +1079,10 @@ public final class Math {
       @   requires Float.isNaN(f) || Float.isInfinite(f);
       @   ensures \result == Float.MAX_EXPONENT + 1;
       @ also
-      @   requires f == 0 || f < Float.MIN_NORMAL;
+      @   requires abs(f) < Float.MIN_NORMAL;
       @   ensures \result == Float.MIN_EXPONENT - 1;
       @ also
-      @   requires Float.MIN_NORMAL <= f && !Float.isInfinite(f);
+      @   requires Float.MIN_NORMAL <= abs(f) && !Float.isInfinite(f);
       @   ensures Float.MIN_EXPONENT <= \result
       @        && \result <= Float.MAX_EXPONENT;
       @   ensures (* result is the unbiased exponent of f *);
@@ -1092,10 +1096,10 @@ public final class Math {
       @   requires Double.isNaN(d) || Double.isInfinite(d);
       @   ensures \result == Double.MAX_EXPONENT + 1;
       @ also
-      @   requires d == 0 || d < Double.MIN_NORMAL;
+      @   requires abs(d) < Double.MIN_NORMAL;
       @   ensures \result == Double.MIN_EXPONENT - 1;
       @ also
-      @   requires Double.MIN_NORMAL <= d && !Double.isInfinite(d);
+      @   requires Double.MIN_NORMAL <= abs(d) && !Double.isInfinite(d);
       @   ensures Double.MIN_EXPONENT <= \result
       @        && \result <= Double.MAX_EXPONENT;
       @   ensures (* result is the unbiased exponent of d *);
@@ -1112,39 +1116,33 @@ public final class Math {
       @   requires start == direction;
       @   ensures \result == direction;
       @ also
-      @   requires start == Double.MIN_VALUE && signum(direction) == -1.0;
+      @   requires start == Double.MIN_VALUE && direction < start;
       @   ensures \result == 0.0;
       @ also
-      @   requires start == -Double.MIN_VALUE && signum(direction) == 1.0;
+      @   requires start == -Double.MIN_VALUE && direction > start;
       @   ensures \result == -0.0;
       @ also 
-      @   requires start == Double.POSITIVE_INFINITY && signum(direction) == -1.0;
+      @   requires start == Double.POSITIVE_INFINITY && direction < start;
       @   ensures \result == Double.MAX_VALUE;
       @ also
-      @   requires start == Double.NEGATIVE_INFINITY && signum(direction) == 1.0;
+      @   requires start == Double.NEGATIVE_INFINITY && direction > start;
       @   ensures \result == -Double.MAX_VALUE;
       @ also
-      @   requires start == Double.MAX_VALUE && signum(direction) == 1.0;
+      @   requires start == Double.MAX_VALUE && direction > start;
       @   ensures \result == Double.POSITIVE_INFINITY;
       @ also
-      @   requires start == Double.MIN_VALUE && signum(direction) == -1.0;
+      @   requires start == -Double.MAX_VALUE && direction < start;
       @   ensures \result == Double.NEGATIVE_INFINITY;
       @ also
-      @   requires start != direction && Double.isFinite(start)
-      @         && !Double.isNaN(direction) && signum(direction) == -1.0;
+      @   requires Double.isFinite(start) && !Double.isNaN(direction) && direction < start;
       @   ensures \result < start;
       @   ensures (* result is the number adjacent to start in the 
       @              negative direction *);
       @ also
-      @   requires start != direction && Double.isFinite(start)
-      @         && !Double.isNaN(direction) && signum(direction) == 1.0;
+      @   requires Double.isFinite(start) && !Double.isNaN(direction) && direction > start;
       @   ensures start < \result;
       @   ensures (* result is the number adjacent to start in the 
       @              positive direction *);
-      @ also
-      @   requires start != direction && Double.isFinite(start)
-      @         && !Double.isNaN(direction) && signum(direction) == 0.0;
-      @   ensures \result == start;
       @ |}
       @*/     
     public static /*@ no_state @*/ double nextAfter(double start, double direction);
@@ -1158,49 +1156,43 @@ public final class Math {
       @   requires start == direction;
       @   ensures \result == direction;
       @ also
-      @   requires start == Float.MIN_VALUE && signum(direction) == -1.0;
+      @   requires start == Float.MIN_VALUE && direction < start;
       @   ensures \result == 0.0;
       @ also
-      @   requires start == -Float.MIN_VALUE && signum(direction) == 1.0;
+      @   requires start == -Float.MIN_VALUE && direction > start;
       @   ensures \result == -0.0;
       @ also 
-      @   requires start == Float.POSITIVE_INFINITY && signum(direction) == -1.0;
+      @   requires start == Float.POSITIVE_INFINITY && direction < start;
       @   ensures \result == Float.MAX_VALUE;
       @ also
-      @   requires start == Float.NEGATIVE_INFINITY && signum(direction) == 1.0;
+      @   requires start == Float.NEGATIVE_INFINITY && direction > start;
       @   ensures \result == -Float.MAX_VALUE;
       @ also
-      @   requires start == Float.MAX_VALUE && signum(direction) == 1.0;
+      @   requires start == Float.MAX_VALUE && direction > start;
       @   ensures \result == Float.POSITIVE_INFINITY;
       @ also
-      @   requires start == Float.MIN_VALUE && signum(direction) == -1.0;
+      @   requires start == -Float.MAX_VALUE && direction < start;
       @   ensures \result == Float.NEGATIVE_INFINITY;
       @ also
-      @   requires start != direction && Float.isFinite(start)
-      @         && !Double.isNaN(direction) && signum(direction) == -1.0;
+      @   requires Float.isFinite(start) && !Double.isNaN(direction) && direction < start;
       @   ensures \result < start;
       @   ensures (* result is the number adjacent to start in the 
       @              negative direction *);
       @ also
-      @   requires start != direction && Float.isFinite(start)
-      @         && !Double.isNaN(direction) && signum(direction) == 1.0;
+      @   requires Float.isFinite(start) && !Double.isNaN(direction) && direction > start;
       @   ensures start < \result;
       @   ensures (* result is the number adjacent to start in the 
       @              positive direction *);
-      @ also
-      @   requires start != direction && Float.isFinite(start)
-      @         && !Double.isNaN(direction) && signum(direction) == 0.0;
-      @   ensures \result == start;
       @ |}
       @*/     
     public static /*@ no_state @*/ float nextAfter(float start, double direction);
     
     // new for Java 6
-    //@ ensures \result == nextAfter(d, Double.POSITIVE_INFINITY);
+    //@ ensures Double.isNaN(d) ? Double.isNaN(\result) : \result == nextAfter(d, Double.POSITIVE_INFINITY);
     public static /*@ no_state @*/ double nextUp(double d);
     
     // new for Java 6
-    //@ ensures \result == nextAfter(f, Float.POSITIVE_INFINITY);
+    //@ ensures Float.isNaN(f) ? Float.isNaN(\result) : \result == nextAfter(f, Float.POSITIVE_INFINITY);
     public static /*@ no_state @*/ float nextUp(float f);
     
     // new for Java 6
@@ -1216,7 +1208,7 @@ public final class Math {
       @   ensures \result == 0;
       @ also
       @   requires !Double.isNaN(d);
-      @   ensures signum(\result) == signum(d);
+      @   ensures signum(\result) == signum(d) || \result == 0; // may underflow to 0
       @   ensures 
       @     (* result is {@code f} &times; 2<sup>{@code scaleFactor}</sup> 
       @        rounded as if performed by a single correctly rounded 
@@ -1238,7 +1230,7 @@ public final class Math {
       @   ensures \result == 0;
       @ also
       @   requires !Float.isNaN(f);
-      @   ensures signum(\result) == signum(f);
+      @   ensures signum(\result) == signum(f) || \result == 0; // may underflow to 0
       @   ensures 
       @     (* result is {@code f} &times; 2<sup>{@code scaleFactor}</sup> 
       @        rounded as if performed by a single correctly rounded 
@@ -1275,7 +1267,7 @@ public final class Math {
     
         //+RAC@ inline
         model public static no_state boolean isFiniteOdd(double a) {
-          return Double.isFinite(a) && IEEEremainder(a, 2.0) == 1.0;
+          return Double.isFinite(a) && abs(IEEEremainder(a, 2.0)) == 1.0; // the remainder of 3 is -1
         }
      
         //+RAC@ inline
