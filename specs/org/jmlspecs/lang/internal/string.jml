@@ -191,9 +191,9 @@ public final class string implements IJmlPrimitiveType, IJmlIntArrayLike, Compar
     //-RAC@   ensures \forall \bigint i;; \result[i] == (i < 0 ? empty[i] : i < this.length ? this[i] : i < \result.length ? s[i - this.length] : empty[i]);
     public string append(string s);
 
-    //@ public behavior
-    //-ESC@   requires 0 <= i <= length();
-    //-RAC@   requires 0 <= i <= length;
+    //@ public normal_behavior
+    //-ESC@   requires 0 <= i < length();
+    //-RAC@   requires 0 <= i < length;
     //-RAC@   ensures \result[i] == v;
     //-RAC@   ensures \result.length == this.length;
     //-RAC@   ensures \forall \bigint k;; \result[k] == ( k == i ? v : this[k] ); 
