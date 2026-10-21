@@ -961,7 +961,7 @@ public final class String
       @    ensures \result != null && equals(\result,"null");
       @  also public normal_behavior
       @    requires obj instanceof String;
-      @    ensures \result.equals(obj);   // \result == obj ??? FIXME
+      @    ensures \result == obj;
       @  also public normal_behavior
       @    requires obj instanceof Character;
       @    ensures \result.length() == 1;

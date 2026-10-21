@@ -12,7 +12,10 @@ public class AssertionError extends java.lang.Error {
     /*@ pure */ private AssertionError(String detailMessage);
 
     //@ public normal_behavior
-    //@   requires !(detailMessage instanceof Throwable);
+    //@   requires detailMessage instanceof String;
+    //-RAC@   ensures standardThrowable((String)detailMessage);
+    //@ also public normal_behavior
+    //@   requires !(detailMessage instanceof String) && !(detailMessage instanceof Throwable);
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
     //@ also public normal_behavior
     //@   requires detailMessage instanceof Throwable;
