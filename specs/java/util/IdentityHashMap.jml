@@ -17,6 +17,7 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@ model public \set<K> _keyset; //@ in content;
   //@ spec_public
   int size; //@ in content;
+  transient Object[] table; //@ in content;
 
   // Representation: keys at even indices of table (null key stored as NULL_KEY), each value just after its key;
   // empty slots are null
