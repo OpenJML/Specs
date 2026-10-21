@@ -2,6 +2,7 @@
 
 package java.awt.event;
 
+//@ non_null_by_default
 public abstract class FocusAdapter extends Object implements FocusListener {
     public FocusAdapter();
     public void focusGained(/*@non_null*/ FocusEvent Param0);

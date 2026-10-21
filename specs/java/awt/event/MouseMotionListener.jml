@@ -6,6 +6,7 @@
 
 package java.awt.event;
 
+//@ non_null_by_default
 public interface MouseMotionListener extends java.util.EventListener {
     public void mouseDragged(/*@non_null*/ java.awt.event.MouseEvent e);
     public void mouseMoved(/*@non_null*/ java.awt.event.MouseEvent e);

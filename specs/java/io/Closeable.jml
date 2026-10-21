@@ -1,5 +1,6 @@
 package java.io;
 
+//@ non_null_by_default
 public interface Closeable extends java.lang.AutoCloseable {
     // FIXME - Closeable is required to be idempotent
 

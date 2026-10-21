@@ -33,5 +33,14 @@ public abstract class VirtualMachineError extends Error {
     //-RAC@   ensures standardThrowable(message);
     //@ pure
     public VirtualMachineError(String message);
-}
 
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public VirtualMachineError(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public VirtualMachineError(Throwable cause);
+}

@@ -1,5 +1,6 @@
 package java.awt.event;
 
+//@ non_null_by_default
 public interface ActionListener extends java.util.EventListener {
     void actionPerformed(/*@ non_null @*/ ActionEvent e);
 }

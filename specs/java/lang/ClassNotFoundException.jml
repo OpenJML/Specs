@@ -1,16 +1,26 @@
 package java.lang;
 
-// FIXME - complete this
 //@ nullable_by_default 
 public class ClassNotFoundException extends ReflectiveOperationException {
-  
+    // The constructors set a null cause, so that initCause is not allowed
+
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowable();
+    //-RAC@   ensures standardThrowable((Throwable)null);
     //@ pure
     public ClassNotFoundException();
   
     //@ public normal_behavior
-    //-RAC@   ensures standardThrowable(s);
+    //-RAC@   ensures standardThrowable(s, null);
     //@ pure
     public ClassNotFoundException(String s);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s, ex);
+    //@ pure
+    public ClassNotFoundException(String s, Throwable ex);
+
+    //@ public normal_behavior
+    //-RAC@   reads _cause;
+    //-RAC@   ensures \result == _cause;
+    public /*@ pure helper */ Throwable getException();
 }

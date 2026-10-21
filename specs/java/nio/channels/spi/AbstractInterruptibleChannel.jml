@@ -1,5 +1,6 @@
 package java.nio.channels.spi;
 
+//@ non_null_by_default
 public abstract class AbstractInterruptibleChannel implements java.nio.channels.Channel,java.nio.channels.InterruptibleChannel {
 
     //@ model public instance \datagroup channelCloseContent;

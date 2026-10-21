@@ -1,4 +1,5 @@
 package java.util.random;
+//@ non_null_by_default
 public interface RandomGenerator {
     
     //@ model public instance long content;

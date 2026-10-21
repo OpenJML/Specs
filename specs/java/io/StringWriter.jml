@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public class StringWriter extends java.io.Writer {
 
     // private StringBuffer buf;

@@ -27,6 +27,7 @@ package java.util;
  * @version $Revision: 1299 $
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public interface ListIterator<E> extends Iterator<E> {
 
     //@ model instance int cursor_position; in objectState;

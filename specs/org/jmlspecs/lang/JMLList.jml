@@ -4,6 +4,7 @@ import org.jmlspecs.annotation.*;
 /** This class is used internally within OpenJML for the purpose of desugaring
  * enhanced for loops.
  */
+//@ non_null_by_default
 public class JMLList<E> {
 
     //@ public ghost instance Data state;

@@ -21,6 +21,7 @@
 
 package java.lang.reflect;
 
+//@ non_null_by_default
 public final class Array extends Object {
 
     //@ axiom (\forall Object o; \elemtype(\typeof(o)) == \type(int) ==> o instanceof int[]);

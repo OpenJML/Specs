@@ -14,4 +14,14 @@ public class ConcurrentModificationException extends RuntimeException {
       @*/
     //@ pure
     public ConcurrentModificationException(String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public ConcurrentModificationException(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public ConcurrentModificationException(Throwable cause);
 }

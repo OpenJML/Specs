@@ -22,24 +22,25 @@
 
 package java.lang;
 
-/** JML's specification of java.lang.Error */
+//@ nullable_by_default
 public class Error extends Throwable {
-
     //@ public normal_behavior
-    //@   ensures standardThrowable();
+    //-RAC@   ensures standardThrowable();
     public /*@ pure @*/ Error();
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(message);
+    //-RAC@   ensures standardThrowable(message);
     public /*@ pure @*/ Error(String message);
 
     //@ public normal_behavior
-    //@   ensures standardThrowable(message,cause);
-    public /*@ pure @*/ Error(String message, Throwable cause);
-
-    //@ public normal_behavior
-    //@   ensures standardThrowable(null,cause);
+    //-RAC@   ensures standardThrowable(cause);
     public /*@ pure @*/ Error(Throwable cause);
 
-}
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    public /*@ pure @*/ Error(String message, Throwable cause);
 
+    //@ protected normal_behavior
+    //-RAC@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
+    protected /*@ pure @*/ Error(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
+}

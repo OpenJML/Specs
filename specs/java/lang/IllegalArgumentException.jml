@@ -11,5 +11,14 @@ public class IllegalArgumentException extends RuntimeException {
     //-RAC@   ensures standardThrowable(s);
     //@ pure
     public IllegalArgumentException(String s);
-}
 
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public IllegalArgumentException(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public IllegalArgumentException(Throwable cause);
+}

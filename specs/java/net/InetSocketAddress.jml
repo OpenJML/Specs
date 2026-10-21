@@ -1,5 +1,6 @@
 package java.net;
 
+//@ non_null_by_default
 public class InetSocketAddress extends SocketAddress {
 //  private final transient InetSocketAddress$InetSocketAddressHolder holder;
 //  private static final long serialVersionUID;

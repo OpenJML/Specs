@@ -1,6 +1,7 @@
 package java.util.function;
 
 @FunctionalInterface
+//@ non_null_by_default
 public interface Supplier<T> {
 
     //-RAC@ model public instance nullable T valuex;

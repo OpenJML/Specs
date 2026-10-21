@@ -1,5 +1,6 @@
 package java.util;
 
+//@ non_null_by_default
 public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, java.io.Serializable {
 
     //@ public normal_behavior

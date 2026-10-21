@@ -1,6 +1,7 @@
 package org.jmlspecs.lang.internal;
 
 //@ no_state
+//@ non_null_by_default
 public abstract class real extends Number implements org.jmlspecs.lang.IJmlPrimitiveType, Comparable<real>  {
     
     //@ public normal_behavior

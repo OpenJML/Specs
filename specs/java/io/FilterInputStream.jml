@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public class FilterInputStream extends java.io.InputStream {
 
     // FIXME: The underlying stream is allowed to be null.

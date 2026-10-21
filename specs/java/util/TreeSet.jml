@@ -1,4 +1,5 @@
 package java.util;
+//@ non_null_by_default
 public class TreeSet<E> extends java.util.AbstractSet<E> implements java.util.NavigableSet<E>, java.lang.Cloneable, java.io.Serializable {
   private transient java.util.NavigableMap<E, java.lang.Object> m;
   private static final java.lang.Object PRESENT;

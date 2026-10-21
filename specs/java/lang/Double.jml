@@ -27,6 +27,7 @@ package java.lang;
  * @author Gary T. Leavens
  */
 //+OPENJML@ immutable
+//@ non_null_by_default
 public /*@ pure @*/ final class Double extends Number implements Comparable<Double> {
 
     //@ public model final double theDouble;

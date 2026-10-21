@@ -1,5 +1,6 @@
 package java.nio;
 
+//@ non_null_by_default
 public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer> {
     //@ model public instance boolean _isDirect;
     

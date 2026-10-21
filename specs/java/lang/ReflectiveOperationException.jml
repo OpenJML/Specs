@@ -1,0 +1,20 @@
+package java.lang;
+
+//@ nullable_by_default
+public class ReflectiveOperationException extends Exception {
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    public /*@ pure @*/ ReflectiveOperationException();
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
+    public /*@ pure @*/ ReflectiveOperationException(String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    public /*@ pure @*/ ReflectiveOperationException(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    public /*@ pure @*/ ReflectiveOperationException(Throwable cause);
+}

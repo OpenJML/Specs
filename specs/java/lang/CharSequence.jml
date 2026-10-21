@@ -25,6 +25,7 @@ package java.lang;
  * @author Gary T. Leavens
  * @author David Cok
  */
+//@ non_null_by_default
 public interface CharSequence {
     // model public instance \string chars -- inherited from Object, so it can also be used by Appendable
 

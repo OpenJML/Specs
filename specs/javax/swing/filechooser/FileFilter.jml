@@ -6,6 +6,7 @@
 
 package javax.swing.filechooser;
 
+//@ non_null_by_default
 public abstract class FileFilter extends Object {
 
     public FileFilter();

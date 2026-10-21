@@ -25,6 +25,7 @@ package java.lang;
  * @author David Cok
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 final public class StringBuffer extends AbstractStringBuilder implements java.io.Serializable, CharSequence, Appendable, Comparable<StringBuffer> {
 
 

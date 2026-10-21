@@ -1,0 +1,16 @@
+package java.lang;
+
+//@ nullable_by_default
+public class LinkageError extends Error {
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    public /*@ pure @*/ LinkageError();
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
+    public /*@ pure @*/ LinkageError(String s);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s,cause);
+    public /*@ pure @*/ LinkageError(String s, Throwable cause);
+}

@@ -24,6 +24,7 @@ package java.lang;
  * @version $Revision: 1287 $
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public interface Runnable {
 
     /*@ public behavior

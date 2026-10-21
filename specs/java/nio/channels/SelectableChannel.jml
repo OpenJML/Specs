@@ -1,5 +1,6 @@
 package java.nio.channels;
 
+//@ non_null_by_default
 public abstract class SelectableChannel extends java.nio.channels.spi.AbstractInterruptibleChannel implements Channel {
 
 

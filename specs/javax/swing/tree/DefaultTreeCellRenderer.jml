@@ -5,6 +5,7 @@
 
 package javax.swing.tree;
 
+//@ non_null_by_default
 public class DefaultTreeCellRenderer extends javax.swing.JLabel implements TreeCellRenderer {
 
     // protected java.awt.Color backgroundSelectionColor;

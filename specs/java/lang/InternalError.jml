@@ -31,5 +31,14 @@ public class InternalError extends VirtualMachineError {
     //@ public normal_behavior
     //-RAC@   ensures standardThrowable(message);
     public /*@ pure @*/ InternalError(String message);
-}
 
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public InternalError(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public InternalError(Throwable cause);
+}

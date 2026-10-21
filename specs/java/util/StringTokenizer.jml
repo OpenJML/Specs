@@ -2,6 +2,7 @@
 
 package java.util;
 
+//@ non_null_by_default
 public class StringTokenizer extends Object implements Enumeration {
 
     public StringTokenizer(/*@non_null*/String str, /*@non_null*/String delim, boolean returnDelims);

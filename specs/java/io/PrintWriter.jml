@@ -1,6 +1,7 @@
 // FIXME
 package java.io;
 
+//@ non_null_by_default
 public class PrintWriter extends Writer{
 
     //-RAC@ model public non_null String outputText; in outputBytes;

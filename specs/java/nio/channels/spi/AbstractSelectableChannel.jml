@@ -1,5 +1,6 @@
 package java.nio.channels.spi;
 
+//@ non_null_by_default
 public abstract class AbstractSelectableChannel extends java.nio.channels.SelectableChannel {
 
     //@ model public instance \datagroup state; //@ in channelCloseContent;

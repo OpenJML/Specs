@@ -1,5 +1,6 @@
 package java.util.concurrent;
 
+//@ non_null_by_default
 public class CountDownLatch {
     //@ model public int count;
     

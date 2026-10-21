@@ -6,6 +6,7 @@
 
 package java.awt.event;
 
+//@ non_null_by_default
 public interface FocusListener extends java.util.EventListener {
     public void focusGained(/*@non_null*/ FocusEvent e);
     public void focusLost(/*@non_null*/ FocusEvent e);

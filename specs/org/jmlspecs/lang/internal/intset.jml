@@ -3,6 +3,7 @@ import org.jmlspecs.lang.IJmlPrimitiveType;
 import org.jmlspecs.lang.IJmlIntArrayLike;
 
 //@ immutable no_state
+//@ non_null_by_default
 public class intset implements IJmlPrimitiveType, IJmlIntArrayLike {
 /* @    
     public normal_behavior

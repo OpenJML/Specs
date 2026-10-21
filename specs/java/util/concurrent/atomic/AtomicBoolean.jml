@@ -1,5 +1,6 @@
 package java.util.concurrent.atomic;
 
+//@ non_null_by_default
 public class AtomicBoolean implements java.io.Serializable {
 
   /*@ spec_public */ private volatile int value;

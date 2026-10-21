@@ -6,6 +6,7 @@ import org.jmlspecs.annotation.*;
  *
  * @param <E> the type of the element returned by iterators
  */
+//@ non_null_by_default
 public interface JMLIterable<E> {
 
     //@ ensures \fresh(\result);

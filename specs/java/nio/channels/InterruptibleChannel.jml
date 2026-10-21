@@ -1,5 +1,6 @@
 package java.nio.channels;
 
+//@ non_null_by_default
 public interface InterruptibleChannel extends Channel {
     public abstract void close() throws java.io.IOException;
 }

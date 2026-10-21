@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public class BufferedInputStream extends java.io.FilterInputStream {
 
     // CLASS SPECIFICATIONS

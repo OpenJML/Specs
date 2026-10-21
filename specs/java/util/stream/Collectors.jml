@@ -1,5 +1,6 @@
 package java.util.stream;
 import java.util.function.*;
+//@ non_null_by_default
 public final class Collectors {
 //    static final java.util.Set<Collector$Characteristics> CH_CONCURRENT_ID;
 //    static final java.util.Set<Collector$Characteristics> CH_CONCURRENT_NOID;

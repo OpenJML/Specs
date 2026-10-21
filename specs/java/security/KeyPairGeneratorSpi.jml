@@ -1,5 +1,6 @@
 package java.security;
 
+//@ non_null_by_default
 public abstract class KeyPairGeneratorSpi {
   public KeyPairGeneratorSpi();
   public abstract void initialize(int seed, SecureRandom random);

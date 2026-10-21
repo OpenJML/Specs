@@ -29,6 +29,7 @@ import java.text.DateFormat;
  * @author Kristina Boysen
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public abstract class Calendar implements Serializable, Cloneable, Comparable<Calendar> {
 
     public final static int ERA;

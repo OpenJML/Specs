@@ -20,6 +20,7 @@
 
 package java.util;
 
+//@ non_null_by_default
 public abstract class AbstractCollection<E> implements Collection<E> {
 
     /*-RAC@ public normal_behavior

@@ -24,6 +24,7 @@ package java.lang;
 /** JML's specification of StackTraceElement.
  *  @author Gary T. Leavens
  */
+//@ non_null_by_default
 public final class StackTraceElement implements java.io.Serializable {
 
     public /*@ pure @*/ String getFileName();

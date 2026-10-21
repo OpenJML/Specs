@@ -1,6 +1,5 @@
 package java.lang;
 
-// FIXME - what are the arguments of the constructors for?
 //@ nullable_by_default
 public class AssertionError extends java.lang.Error {
 
@@ -8,31 +7,46 @@ public class AssertionError extends java.lang.Error {
     //-RAC@   ensures standardThrowable();
     /*@ pure */ public AssertionError();
 
+    //@ private normal_behavior
+    //-RAC@   ensures standardThrowable(detailMessage);
+    /*@ pure */ private AssertionError(String detailMessage);
+
     //@ public normal_behavior
+    //@   requires detailMessage instanceof String;
+    //-RAC@   ensures standardThrowable((String)detailMessage);
+    //@ also public normal_behavior
+    //@   requires !(detailMessage instanceof String) && !(detailMessage instanceof Throwable);
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(java.lang.Object o);
+    //@ also public normal_behavior
+    //@   requires detailMessage instanceof Throwable;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage((Throwable)detailMessage);
+    /*@ pure */ public AssertionError(java.lang.Object detailMessage);
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(boolean b);
+    /*@ pure */ public AssertionError(boolean detailMessage);
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(char c);
+    /*@ pure */ public AssertionError(char detailMessage);
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(int i);
+    /*@ pure */ public AssertionError(int detailMessage);
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(long l);
+    /*@ pure */ public AssertionError(long detailMessage);
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(float f);
+    /*@ pure */ public AssertionError(float detailMessage);
 
     //@ public normal_behavior
     //-RAC@   ensures standardThrowableUnspecifiedMessage();
-    /*@ pure */ public AssertionError(double d);
+    /*@ pure */ public AssertionError(double detailMessage);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message, cause);
+    /*@ pure */ public AssertionError(String message, Throwable cause);
 }

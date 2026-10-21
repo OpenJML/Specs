@@ -38,6 +38,7 @@ import java.util.Random;
     - primitive comparisions (<, >, <=, >=) on doubles are not the same as
     .comparesTo on Doubles
 */
+//@ non_null_by_default
 public /*@ pure @*/ final class StrictMath {
 
     /*@ public static model boolean firstTimeCalledRandom;

@@ -1,5 +1,6 @@
 package org.hamcrest;
 
+//@ non_null_by_default
 public class CoreMatchers {
     
     //@ public normal_behavior

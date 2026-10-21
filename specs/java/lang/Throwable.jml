@@ -141,7 +141,7 @@ public class Throwable extends Object implements java.io.Serializable
     //-RAC@   ensures standardThrowable(message, cause, enableSuppression, writableStackTrace);
     //@// FIXME - say more about the boolean arguments
     //@ pure
-    protected Throwable(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace);
+    protected Throwable(/*@ nullable */ String message, /*@ nullable */ Throwable cause, boolean enableSuppression, boolean writableStackTrace);
     
 
     //@ public normal_behavior
@@ -236,17 +236,17 @@ public class Throwable extends Object implements java.io.Serializable
     public void setStackTrace(/*@ non_null*/ StackTraceElement /*@ non_null */ [] stackTrace);
 
     //@ public normal_behavior
-    //@  requires t != null & t != this;
+    //@  requires exception != null & exception != this;
     //@  assignable \everything; // _throwables;  // FIXME
     // @  ensures suppressedExceptions.length == \old(suppressedExceptions.length+1);
     //@ also public exceptional_behavior
-    //@  requires t == null | t == this;
+    //@  requires exception == null | exception == this;
     //@  assignable \nothing;
     //@  signals_only NullPointerException, IllegalArgumentException;
-    //@  signals (NullPointerException e) t == null;
-    //@  signals (IllegalArgumentException e) t == this;
+    //@  signals (NullPointerException e) exception == null;
+    //@  signals (IllegalArgumentException e) exception == this;
     //@  
-    public final synchronized void addSuppressed(/*@ nullable */ Throwable t);
+    public final synchronized void addSuppressed(/*@ nullable */ Throwable exception);
     
     //@ public normal_behavior
     //@    requires true;

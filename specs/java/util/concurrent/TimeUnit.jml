@@ -2,6 +2,7 @@ package java.util.concurrent;
 // SInce 1.5
 
 //@ immutable
+//@ non_null_by_default
 public enum TimeUnit {
      NANOSECONDS(1L),
      MICROSECONDS(1000L),

@@ -1,5 +1,6 @@
 package java.util;
 
+//@ non_null_by_default
 public abstract class TimeZone implements java.io.Serializable,java.lang.Cloneable {
   public static final int SHORT;
   public static final int LONG;

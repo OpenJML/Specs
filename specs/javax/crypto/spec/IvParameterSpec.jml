@@ -1,5 +1,6 @@
 package javax.crypto.spec;
 
+//@ non_null_by_default
 public class IvParameterSpec implements java.security.spec.AlgorithmParameterSpec {
     
       final private byte[] iv;

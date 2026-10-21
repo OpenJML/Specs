@@ -1,6 +1,7 @@
 package java.lang.reflect;
 
 public final
+//@ non_null_by_default
 class Field extends AccessibleObject implements Member {
 
 //    //@ pure
