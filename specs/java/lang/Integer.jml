@@ -438,4 +438,16 @@ public  /*@ pure @*/ final
     //@ public normal_behavior
     //@   ensures \result == (i>0? 1: i == 0? 0: -1);
     public static int signum(int i);
+
+    /*@ public normal_behavior
+      @   requires i > 0;
+      @   ensures 0 < \result && \result <= i && i < 2 * (long)\result;
+      @ also public normal_behavior
+      @   requires i == 0;
+      @   ensures \result == 0;
+      @ also public normal_behavior
+      @   requires i < 0;
+      @   ensures \result == Integer.MIN_VALUE;
+      @*/
+    public static /*@ pure @*/ int highestOneBit(int i);
 }

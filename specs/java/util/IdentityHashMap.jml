@@ -1,11 +1,15 @@
 package java.util;
 
-//@ non_null_by_default
+// IdentityHashMap permits null keys and values
+//@ nullable_by_default
 public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, java.io.Serializable, java.lang.Cloneable {
   private static final int DEFAULT_CAPACITY;
   private static final int MINIMUM_CAPACITY;
   private static final int MAXIMUM_CAPACITY;
-  static final java.lang.Object NULL_KEY;
+  static final /*@ non_null */ java.lang.Object NULL_KEY;
+  //@ normal_behavior
+  //@   ensures NULL_KEY != null;
+  //@ static_initializer
   private static final long serialVersionUID;
   
   //@ model public \datagroup content;
@@ -13,6 +17,48 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@ model public \set<K> _keyset; //@ in content;
   //@ spec_public
   int size; //@ in content;
+
+  // Representation: keys at even indices of table (null key stored as NULL_KEY), each value just after its key;
+  // empty slots are null
+  //@ invariant table != null && table.length % 2 == 0;
+  //@ invariant 8 <= table.length && table.length <= (1 << 30); // 2 * MINIMUM_CAPACITY, 2 * MAXIMUM_CAPACITY
+  //@ public invariant size >= 0;
+
+  //@ private normal_behavior
+  //@   ensures \result == (key == null ? NULL_KEY : key);
+  //@ pure non_null
+  private static Object maskNull(/*@ nullable */ Object key);
+
+  //@ normal_behavior
+  //@   ensures \result == (key == NULL_KEY ? null : key);
+  //@ pure nullable
+  static final Object unmaskNull(Object key);
+
+  //@ private normal_behavior
+  //@   requires expectedMaxSize >= 0;
+  //@   ensures MINIMUM_CAPACITY <= \result && \result <= MAXIMUM_CAPACITY;
+  //@ pure
+  private static int capacity(int expectedMaxSize);
+
+  //@ private normal_behavior
+  //@   requires MINIMUM_CAPACITY <= initCapacity && initCapacity <= MAXIMUM_CAPACITY;
+  //@   assigns table;
+  //@   ensures table.length == 2 * initCapacity;
+  //@ helper
+  private void init(int initCapacity);
+
+  // The index is even since the shifted hash is even; length need not be a power of two
+  //@ private normal_behavior
+  //@   requires length >= 2 && length % 2 == 0;
+  //@   ensures 0 <= \result && \result < length && \result % 2 == 0;
+  //@ pure code_java_math
+  private static int hash(Object x, int length);
+
+  //@ private normal_behavior
+  //@   requires 0 <= i && i < len && i % 2 == 0 && len % 2 == 0;
+  //@   ensures 0 <= \result && \result < len && \result % 2 == 0;
+  //@ pure
+  private static int nextKeyIndex(int i, int len);
   
   //@ public normal_behavior
   //@   ensures size == 0;
@@ -24,7 +70,7 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@   ensures size == 0;
   //@   ensures _keyset.isEmpty();
   //@ pure
-  public IdentityHashMap(int i);
+  public IdentityHashMap(int expectedMaxSize);
 
   //@ also public normal_behavior
   //@   ensures \result == size;
@@ -38,49 +84,49 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   
   //@ public normal_behavior
   //@ pure
-  public IdentityHashMap(Map<? extends K, ? extends V> m); // TODO
+  public IdentityHashMap(/*@ non_null */ Map<? extends K, ? extends V> m); // TODO
   
   //@ also public normal_behavior
-  //@   requires o == null || \typeof(o) <:= \type(K);
-  //@   ensures \result == (_keyset.contains((K)o) ? _map.get((K)o) : null);
+  //@   requires key == null || \typeof(key) <:= \type(K);
+  //@   ensures \result == (_keyset.contains((K)key) ? _map.get((K)key) : null);
   //@ spec_pure nullable
   @SuppressWarnings("unchecked")
-  public V get(Object o);
+  public V get(Object key);
   
   //@ also public normal_behavior
-  //@   requires o == null || \typeof(o) <:= \type(K);
-  //@   ensures \result == _keyset.contains((K)o);
+  //@   requires key == null || \typeof(key) <:= \type(K);
+  //@   ensures \result == _keyset.contains((K)key);
   //@ spec_pure
   @SuppressWarnings("unchecked")
-  public boolean containsKey(/*(@ nullable */ Object o);
+  public boolean containsKey(Object key);
 
   //@ also public normal_behavior
-  //@   ensures \result == \exists K k; _keyset.contains(k); o == _map[k];
+  //@   ensures \result == \exists K k; _keyset.contains(k); value == _map[k];
   //@ spec_pure
-  public boolean containsValue(/* nullable */ Object o);
+  public boolean containsValue(Object value);
 
   //@ also public normal_behavior
   //@   assigns content;
-  //@   ensures _map == \old(_map).put(k,v);
-  //@   ensures _keyset == \old(_keyset).add(k);
-  //@   ensures size == (\old(_keyset).contains(k) ? \old(size) : \old(size)+1);
-  public V put(/*@ nullable */K k, /*@ nullable */V v);
+  //@   ensures _map == \old(_map).put(key,value);
+  //@   ensures _keyset == \old(_keyset).add(key);
+  //@   ensures size == (\old(_keyset).contains(key) ? \old(size) : \old(size)+1);
+  public V put(/*@ nullable */K key, /*@ nullable */V value);
 
   //@ also public normal_behavior
   //@   assigns content;
-  public void putAll(Map<? extends K, ? extends V> m); // TODO
+  public void putAll(/*@ non_null */ Map<? extends K, ? extends V> m); // TODO
 
   //@ also public normal_behavior
-  //@   requires _keyset.contains((K)o);
+  //@   requires _keyset.contains((K)key);
   //@   assigns content;
   //@   ensures size == \old(size) - 1;
-  //@   ensures _keyset == \old(_keyset).remove((K)o);
+  //@   ensures _keyset == \old(_keyset).remove((K)key);
   //@   ensures _map == \old(_map);
   //@ also public normal_behavior
-  //@   requires !_keyset.contains((K)o);
+  //@   requires !_keyset.contains((K)key);
   //@   assigns \nothing;
   @SuppressWarnings("unchecked")
-  public V remove(Object o);
+  public V remove(Object key);
   
   //@ also public normal_behavior
   //@   assigns content;
@@ -103,27 +149,35 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@   ensures ((IdentityHashMap)\result).size == this.size;
   //@   ensures ((IdentityHashMap)\result)._keyset == this._keyset;
   //@   ensures ((IdentityHashMap)\result)._map == this._map;
-  public Object clone();
+  public /*@ non_null */ Object clone();
   
   //@ also public normal_behavior
   //@ pure
-  public Set<K> keySet();   // TODO
+  public /*@ non_null */ Set<K> keySet();   // TODO
   
   //@ also public normal_behavior
   //@ pure
-  public Collection<V> values(); // TODO
+  public /*@ non_null */ Collection<V> values(); // TODO
   
   //@ also public normal_behavior
   //@ pure
-  public Set<Map.Entry<K, V>> entrySet();  // TODO
+  public /*@ non_null */ Set<Map.Entry<K, V>> entrySet();  // TODO
 
   //@ also public normal_behavior
-  //@   assigns \everything; // Whatever f does to each of the pairs in the map
-  public void forEach(java.util.function.BiConsumer<? super K, ? super V> f);  // TODO
+  //@   assigns \everything; // Whatever action does to each of the pairs in the map
+  public void forEach(/*@ non_null */ java.util.function.BiConsumer<? super K, ? super V> action);  // TODO
 
   //@ also public normal_behavior
   //@   assigns content;
-  public void replaceAll(java.util.function.BiFunction<? super K, ? super V, ? extends V> f); // TODO
+  public void replaceAll(/*@ non_null */ java.util.function.BiFunction<? super K, ? super V, ? extends V> function); // TODO
+
+  //@ also public normal_behavior
+  //@   assigns content;
+  public boolean remove(/*@ nullable */ Object key, /*@ nullable */ Object value); // TODO
+
+  //@ also public normal_behavior
+  //@   assigns content;
+  public boolean replace(/*@ nullable */ K key, /*@ nullable */ V oldValue, /*@ nullable */ V newValue); // TODO
 
   //private void closeDeletion(int);
   //private boolean resize(int);
