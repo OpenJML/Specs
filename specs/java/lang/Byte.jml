@@ -125,7 +125,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @    public exceptional_behavior
       @      requires !parseable(s, 0, 10);
       @      assignable \nothing;
-      @      signals (NumberFormatException);
+      @      signals_only NumberFormatException;
       @*/
     public static /*@ strictly_pure @*/ byte parseByte(String s)
         throws NumberFormatException;
@@ -138,7 +138,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @ public exceptional_behavior
       @   requires !parseable(s, 0, radix);
       @   assignable \nothing;
-      @   signals (NumberFormatException);
+      @   signals_only NumberFormatException;
       @ for_example
       @   public normal_example
       @    requires s.equals("-34")  && radix == 10;
@@ -155,7 +155,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @ public exceptional_behavior
       @   requires !parseable(s, 0, radix);
       @   assignable \nothing;
-      @   signals (NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/
         Byte valueOf(String s, int radix)
@@ -169,7 +169,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @ public exceptional_behavior
       @   requires !parseable(s, 0, 10);
       @   assignable \nothing;
-      @   signals (NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ Byte valueOf(String s)
         throws NumberFormatException;
@@ -182,7 +182,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @ public exceptional_behavior
       @   requires !decodeable(nm);
       @   assignable \nothing;
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ Byte decode(String nm)
         throws NumberFormatException;
@@ -199,7 +199,7 @@ public /*@ pure @*/ final class Byte extends Number implements Comparable<Byte>
       @ public exceptional_behavior
       @   requires !parseable(s, 0, 10);
       @   assignable \nothing;
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public Byte(String s) throws NumberFormatException;
 

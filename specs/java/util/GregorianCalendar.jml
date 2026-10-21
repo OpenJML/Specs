@@ -757,14 +757,9 @@ public class GregorianCalendar extends Calendar {
       @ |}
       @ also
       @   public exceptional_behavior
-      @     requires field != WEEK_OF_YEAR || field != WEEK_OF_MONTH
-      @              || field != DAY_OF_WEEK_IN_MONTH || field != AM_PM
-      @              || field != DATE || field != DAY_OF_YEAR
-      @              || field != DAY_OF_WEEK || field != HOUR_OF_DAY
-      @              || field != HOUR || field != MINUTE || field != SECOND
-      @              || field != MILLISECOND;
+      @     requires amount != 0 && (field < 0 || field >= ZONE_OFFSET);
       @    assignable \nothing;
-      @    signals (IllegalArgumentException);
+      @    signals_only IllegalArgumentException;
       @*/
     public void add(int field, int amount)
     throws IllegalArgumentException;
@@ -914,15 +909,9 @@ public class GregorianCalendar extends Calendar {
       @     |}
       @ also
       @   public exceptional_behavior
-      @     requires field != ERA || field != YEAR || field != AM_PM
-      @              || field != MINUTE || field != SECOND 
-      @              || field != MILLISECOND || field != DAY_OF_MONTH 
-      @              || field != HOUR || field != HOUR_OF_DAY
-      @              || field != MONTH || field != WEEK_OF_YEAR
-      @              || field != WEEK_OF_MONTH || field != DAY_OF_YEAR 
-      @              || field != DAY_OF_WEEK || field != DAY_OF_WEEK_IN_MONTH;
+      @     requires amount != 0 && (field < 0 || field >= ZONE_OFFSET);
       @     assignable \nothing;
-      @     signals (IllegalArgumentException);
+      @     signals_only IllegalArgumentException;
       @ also
       @   public normal_behavior
       @     old int value = computeValue(field, amount);
@@ -1063,12 +1052,12 @@ public class GregorianCalendar extends Calendar {
       @   protected exceptional_behavior
       @     requires !isLenient() && !validateFields();
       @     assignable \nothing;
-      @     signals (IllegalArgumentException);
+      @     signals_only IllegalArgumentException;
       @ also
       @   protected exceptional_behavior
-      @     requires get(ERA) != BC || get(ERA) != AD;
+      @     requires !isLenient() && get(ERA) != BC && get(ERA) != AD;
       @     assignable \nothing;
-      @     signals (IllegalArgumentException);
+      @     signals_only IllegalArgumentException;
       @ also
       @   protected normal_behavior
       @     old long millis = computeMillis();

@@ -614,6 +614,7 @@ public final class Arrays {
       @  public exceptional_behavior
       @   requires a == null ;
       @   assignable \nothing;
+      @   signals_only NullPointerException;
       @*/
     public static int binarySearch(short[] a, short key);
 

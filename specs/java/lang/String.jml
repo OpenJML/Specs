@@ -328,13 +328,13 @@ public final class String
       @                            == (byte) (charAt(i) & 0xff));
       @ also
       @  public exceptional_behavior
-      @   requires (srcBegin <= 0
+      @   requires (srcBegin < 0
       @              || srcEnd > length()
       @              || srcBegin > srcEnd)
       @             && dst != null
       @             && dst.length >= dstBegin + (srcEnd - srcBegin) + 1;
       @   modifies \nothing;
-      @   signals (StringIndexOutOfBoundsException);
+      @   signals_only StringIndexOutOfBoundsException;
       @ also
       @  public exceptional_behavior
       @   requires dst == null;
