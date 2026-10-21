@@ -8,22 +8,26 @@ public class MissingResourceException extends RuntimeException {
 
     //@ model public non_null String theKey;
     //@ model public non_null String theClass;
+    private String className; //@ in theClass;
+    private String key; //@ in theKey;
+    //@ private represents theKey = key;
+    //@ private represents theClass = className;
     
     /*@ public normal_behavior
       @   ensures standardThrowable(s);
-      @   ensures theClass.equals(ss);
-      @   ensures theKey.equals(sss);
+      @   ensures theClass.equals(className);
+      @   ensures theKey.equals(key);
       @*/
     //@ pure
-    public MissingResourceException(/*@ non_null*/String s, /*@ non_null*/String ss, /*@ non_null*/String sss);
+    public MissingResourceException(/*@ non_null*/String s, /*@ non_null*/String className, /*@ non_null*/String key);
 
     /*@ normal_behavior
-      @   ensures standardThrowable(s,t);
-      @   ensures theClass.equals(ss);
-      @   ensures theKey.equals(sss);
+      @   ensures standardThrowable(message,cause);
+      @   ensures theClass.equals(className);
+      @   ensures theKey.equals(key);
       @*/
     //@ pure
-    MissingResourceException(/*@ non_null*/String s, /*@ non_null*/String ss, /*@ non_null*/String sss, Throwable t); // ADDED in 1.6
+    MissingResourceException(/*@ non_null*/String message, /*@ non_null*/String className, /*@ non_null*/String key, Throwable cause); // ADDED in 1.6
 
     //@ public normal_behavior
     //@ ensures theKey.equals(\result);

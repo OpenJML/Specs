@@ -13,14 +13,12 @@ public class IllegalStateException extends RuntimeException {
     public IllegalStateException(String s);
 
     //@ public normal_behavior
-    //-RAC@   ensures cause != null ==> standardThrowable(cause);
-    //-RAC@   ensures cause == null ==> standardThrowable();
+    //-RAC@   ensures standardThrowable(cause);
     //@ pure
     public IllegalStateException(/*@ nullable */ Throwable cause);
 
     //@ public normal_behavior
-    //-RAC@   ensures cause != null ==> standardThrowable(message,cause);
-    //-RAC@   ensures cause == null ==> standardThrowable(message);
+    //-RAC@   ensures standardThrowable(message,cause);
     //@ pure
     public IllegalStateException(String message, /*@ nullable */ Throwable cause);
 }

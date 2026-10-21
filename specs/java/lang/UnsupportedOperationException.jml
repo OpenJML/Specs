@@ -12,4 +12,14 @@ public class UnsupportedOperationException extends RuntimeException {
     //-RAC@   ensures standardThrowable(message);
     //@ pure
     public UnsupportedOperationException(String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public UnsupportedOperationException(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public UnsupportedOperationException(Throwable cause);
 }

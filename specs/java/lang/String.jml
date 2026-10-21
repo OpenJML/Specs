@@ -953,7 +953,7 @@ public final class String
       @*/
     public /*@ pure @*/ char /*@ non_null @*/ [] toCharArray();
 
-    /* FIXME@  public normal_behavior
+    /*@  public normal_behavior
       @    ensures \result != null;
       @    // FIXME ? \result is fresh?
       @  also public normal_behavior
@@ -966,9 +966,6 @@ public final class String
       @    requires obj instanceof Character;
       @    ensures \result.length() == 1;
       @    ensures \result.charAt(0) == (char)(Character)obj;
-      @*//* FIXME -RAC@  also public behavior
-      @    requires obj != null;
-      @    ensures equals(\result,obj.theString); 
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(/*@ nullable @*/Object obj);
 
@@ -1039,28 +1036,24 @@ public final class String
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(char c);
 
-    /* FIXME @  public normal_behavior
-      @   ensures \result == Integer.toString(i,10);
-      @   //ensures String.equals(\result, Integer.toString(i,10)); // FIXME - feasibility probloem with gitbug467
-      @   //-RAC@ ensures \result.chars.length <= 11;
+    /*@  public normal_behavior
+      @   ensures \result != null;
+      @   //-RAC@ ensures \result.chars == \string.of(i, 10);
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ String valueOf(int i);
     
-    /* FIXME @  public normal_behavior
-      @   ensures \result == Long.toString(l);
-      @   ensures \result.length() <= 22;
+    /*@  public normal_behavior
+      @   ensures \result != null;
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(long l);
     
-    /* FIXME @  public normal_behavior
-      @   ensures \result == Float.toString(f);
-      @   ensures \result.length() < 100; // FIXME - make this tighter
+    /*@  public normal_behavior
+      @   ensures \result != null;
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(float f);
     
-    /* FIXME @  public normal_behavior
-      @   ensures \result == Double.toString(d);
-      @   ensures \result.length() < 100; // FIXME - make this tighter
+    /*@  public normal_behavior
+      @   ensures \result != null;
       @*/
     public static /*@ pure helper non_null @*/ String valueOf(double d);
     

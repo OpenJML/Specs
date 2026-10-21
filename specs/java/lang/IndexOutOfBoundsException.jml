@@ -14,4 +14,14 @@ public class IndexOutOfBoundsException extends java.lang.RuntimeException {
     //-RAC@   ensures standardThrowable(s);
     //@ pure
     public IndexOutOfBoundsException(String s);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //@ pure
+    public IndexOutOfBoundsException(int index);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //@ pure
+    public IndexOutOfBoundsException(long index);
 }

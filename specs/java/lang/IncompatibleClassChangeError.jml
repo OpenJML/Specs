@@ -1,0 +1,12 @@
+package java.lang;
+
+//@ nullable_by_default
+public class IncompatibleClassChangeError extends LinkageError {
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    public /*@ pure @*/ IncompatibleClassChangeError();
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
+    public /*@ pure @*/ IncompatibleClassChangeError(String s);
+}

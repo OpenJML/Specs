@@ -13,5 +13,16 @@ public class NoSuchElementException extends RuntimeException {
       @*/
     //@ pure
     public NoSuchElementException(String s);
-}
 
+    /*@ public normal_behavior
+      @   ensures standardThrowable(s, cause);
+      @*/
+    //@ pure
+    public NoSuchElementException(String s, Throwable cause);
+
+    /*@ public normal_behavior
+      @   ensures standardThrowable(cause);
+      @*/
+    //@ pure
+    public NoSuchElementException(Throwable cause);
+}

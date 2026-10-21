@@ -12,4 +12,14 @@ public class SecurityException extends RuntimeException {
     //-RAC@   ensures standardThrowable(s);
     //@ pure
     public SecurityException(String s);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public SecurityException(String message, Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public SecurityException(Throwable cause);
 }
