@@ -123,7 +123,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @ also
       @   public exceptional_behavior
       @     requires s != null && !parseable(s);
-      @     signals(NumberFormatException);
+      @     signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/ Double valueOf(
         /*@ non_null @*/ String s)
@@ -142,7 +142,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ spec_pure @*/ double parseDouble(/*@ non_null @*/ String s)
         throws NumberFormatException;
@@ -175,7 +175,7 @@ public /*@ pure @*/ final class Double extends Number implements Comparable<Doub
       @ also
       @ public exceptional_behavior
       @   requires !parseable(s);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public Double(/*@ non_null @*/ String s)
         throws NumberFormatException;

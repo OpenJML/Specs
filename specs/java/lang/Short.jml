@@ -118,7 +118,7 @@ public /*@ pure @*/ final
       @ also
       @    public exceptional_behavior
       @      requires !parseable(s,10);
-      @      signals (NumberFormatException);
+      @      signals_only NumberFormatException;
       @*/
         public static /*@ spec_pure @*/ short parseShort(String s)
             throws NumberFormatException ;
@@ -129,7 +129,7 @@ public /*@ pure @*/ final
       @ also 
       @ public exceptional_behavior
       @   requires !parseable(s, radix);
-      @   signals (NumberFormatException);
+      @   signals_only NumberFormatException;
       @ for_example
       @   public normal_example
       @    requires s.equals("-34")  && radix == 10;
@@ -144,7 +144,7 @@ public /*@ pure @*/ final
       @ also 
       @ public exceptional_behavior
       @   requires !parseable(s, radix);
-      @   signals (NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/
             Short valueOf(String s, int radix)
@@ -156,7 +156,7 @@ public /*@ pure @*/ final
       @ also
       @ public exceptional_behavior
       @   requires !parseable(s,10);
-      @   signals (NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/
             Short valueOf(String s) throws NumberFormatException ;
@@ -167,7 +167,7 @@ public /*@ pure @*/ final
       @ also
       @ public exceptional_behavior
       @   requires !decodeable(nm);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ pure @*/ /*@ non_null @*/
             Short decode(/*@ non_null @*/ String nm)
@@ -184,7 +184,7 @@ public /*@ pure @*/ final
       @ also
       @ public exceptional_behavior
       @   requires !parseable(s,10);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public Short(String s) throws NumberFormatException ;
 
@@ -274,8 +274,12 @@ public /*@ pure @*/ final
       @       ensures \result == compareTo((Short) o);
       @   also
       @     public exceptional_behavior
-      @       requires o == null && !(o instanceof Short);
-      @       signals(ClassCastException);
+      @       requires o == null;
+      @       signals_only NullPointerException;
+      @   also
+      @     public exceptional_behavior
+      @       requires o != null && !(o instanceof Short);
+      @       signals_only ClassCastException;
       @*/
     public int compareTo(Object o) throws ClassCastException;
 

@@ -38,6 +38,7 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
     
     /*@ public exceptional_behavior
       @   requires c == null || c.contains(null);
+      @   signals_only NullPointerException;
     *//*-RAC@ also
       @ public normal_behavior
       @   requires c != null && !c.contains(null);

@@ -118,7 +118,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ spec_pure @*/ /*@ non_null @*/ Float valueOf(
         /*@ non_null @*/ String s)
@@ -132,7 +132,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @ also
       @ public exceptional_behavior
       @   requires s != null && !parseable(s);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public static /*@ spec_pure @*/ float parseFloat(/*@ non_null @*/ String s)
         throws NumberFormatException;
@@ -174,7 +174,7 @@ public /*@ pure @*/ final class Float extends Number implements Comparable<Float
       @ also
       @ public exceptional_behavior
       @   requires !parseable(s);
-      @   signals(NumberFormatException);
+      @   signals_only NumberFormatException;
       @*/
     public Float(String s) throws NumberFormatException;
 
