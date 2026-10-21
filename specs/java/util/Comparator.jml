@@ -1,5 +1,6 @@
 package java.util;
 
+//@ non_null_by_default
 public interface Comparator<T> {
 
     //@ pure

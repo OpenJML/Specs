@@ -12,6 +12,7 @@ import org.jmlspecs.annotation.*;
  * @author David Cok
  *
  */
+//@ non_null_by_default
 public class Utils {
 
     //@ public normal_behavior

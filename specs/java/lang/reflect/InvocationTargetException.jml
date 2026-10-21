@@ -2,6 +2,7 @@ package java.lang.reflect;
 
 // FIXME - needs completion
  
+//@ non_null_by_default
 public class InvocationTargetException extends ReflectiveOperationException {
   
     /*@ protected normal_behavior

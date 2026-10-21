@@ -26,6 +26,7 @@ package java.util;
  * @author Gary T. Leavens
  * @author David R. Cok
  */
+//@ non_null_by_default
 public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
 
     /*-RAC@ public normal_behavior

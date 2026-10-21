@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public interface FileFilter {
 
     // only a default specification - no exceptions though

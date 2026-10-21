@@ -1,4 +1,5 @@
 package java.lang.reflect;
+//@ non_null_by_default
 public class Modifier {
     
     //@ pure

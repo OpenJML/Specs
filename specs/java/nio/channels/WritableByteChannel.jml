@@ -1,5 +1,6 @@
 package java.nio.channels;
 
+//@ non_null_by_default
 public interface WritableByteChannel extends Channel {
     // FIXME - needs to model the buffer of content
     

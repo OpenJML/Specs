@@ -21,6 +21,7 @@ package java.util;
 /** JML's specification of java.util.AbstractSet.
  * @author Katie Becker
  */
+//@ non_null_by_default
 public abstract class AbstractSet<E>
   extends AbstractCollection<E>
   implements Set<E>

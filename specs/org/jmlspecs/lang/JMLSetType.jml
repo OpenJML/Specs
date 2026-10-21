@@ -35,6 +35,7 @@ import org.jmlspecs.annotation.*;
  * @see org.jmlspecs.models.JMLObjectSet
  */
 //@ pure
+//@ non_null_by_default
 public interface JMLSetType<E> extends JMLIterable<E>
 {
     

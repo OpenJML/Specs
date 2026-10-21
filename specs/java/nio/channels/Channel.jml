@@ -1,5 +1,6 @@
 package java.nio.channels;
 
+//@ non_null_by_default
 public interface Channel extends java.io.Closeable {
     
     //@ model public instance boolean _isOpen; in autocloseableContent;

@@ -1,5 +1,6 @@
 package java.util.function;
 
+//@ non_null_by_default
 public interface Consumer<T> {
     //@ model public instance \datagroup consumerState; //@ in objectState;
 

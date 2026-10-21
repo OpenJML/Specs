@@ -28,6 +28,7 @@ import java.lang.reflect.Member;
 import java.net.URL;
 
 
+//@ non_null_by_default
 public class SecurityManager {
 
     // CLASS SPECIFICATIONS

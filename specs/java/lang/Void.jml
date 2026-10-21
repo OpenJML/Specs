@@ -22,6 +22,7 @@ package java.lang;
 
 //This class changes from 1.4 in that TYPE is generic
 
+//@ non_null_by_default
 public final class Void extends java.lang.Object {
 
     public static final java.lang.Class<Void> TYPE;  // 1.5 DIFFERENCE

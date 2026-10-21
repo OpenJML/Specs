@@ -2,6 +2,7 @@
 
 package java.util;
 
+//@ non_null_by_default
 public abstract class AbstractSequentialList<E> extends java.util.AbstractList<E> {
 
     /*-RAC@ public normal_behavior

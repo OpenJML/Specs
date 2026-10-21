@@ -1,5 +1,6 @@
 package java.util.function;
 
+//@ non_null_by_default
 public interface ToIntFunction<T> {
     //@ pure  // FIXME - not necessarily pure // but see Stream.jml
     public abstract int applyAsInt(T t);

@@ -4,6 +4,7 @@ import org.jmlspecs.annotation.*;
 
 // FIXME - needs completion
  
+//@ non_null_by_default
 public class UndeclaredThrowableException extends RuntimeException {
 
     //@ public normal_behavior

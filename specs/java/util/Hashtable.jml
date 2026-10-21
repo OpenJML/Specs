@@ -23,6 +23,7 @@ package java.util;
  * @author Katie Becker
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public class Hashtable<K,V> extends Dictionary<K,V>
     implements Map<K,V>, Cloneable, java.io.Serializable
 {

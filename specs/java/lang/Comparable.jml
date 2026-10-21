@@ -25,6 +25,7 @@ package java.lang;
  * @version $Revision: 2240 $
  * @author Gary T. Leavens, et al.
  */
+//@ non_null_by_default
 public interface Comparable<T> {
     // If T is a subclass of Comparable<T>, then all T objects are comparable.
     // It is not quite defined what it means if U is a subclass of Comparable<T>

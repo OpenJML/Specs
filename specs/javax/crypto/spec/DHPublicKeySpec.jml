@@ -1,5 +1,6 @@
 package javax.crypto.spec;
 
+//@ non_null_by_default
 public class DHPublicKeySpec implements java.security.spec.KeySpec {
 //        private java.math.BigInteger y;
 //        private java.math.BigInteger p;

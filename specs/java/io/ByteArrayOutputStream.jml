@@ -5,6 +5,7 @@ package java.io;
 
 // 1.5 Changes: added additional synchronized modifiers
 
+//@ non_null_by_default
 public class ByteArrayOutputStream extends java.io.OutputStream {
 
     // FIELDS

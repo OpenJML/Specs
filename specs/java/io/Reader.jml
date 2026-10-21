@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public abstract class Reader extends Object implements Readable, Closeable {
 
     //private static final int maxSkipBufferSize;

@@ -1,5 +1,6 @@
 package java.nio.channels;
 
+//@ non_null_by_default
 public abstract class SocketChannel extends java.nio.channels.spi.AbstractSelectableChannel implements ByteChannel,ScatteringByteChannel,GatheringByteChannel,NetworkChannel {
 //  static final boolean $assertionsDisabled;
 //  protected SocketChannel(java.nio.channels.spi.SelectorProvider);

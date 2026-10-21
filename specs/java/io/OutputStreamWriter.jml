@@ -2,6 +2,7 @@ package java.io;
 
 // FIXME
 
+//@ non_null_by_default
 public class OutputStreamWriter extends Writer{
     public OutputStreamWriter(OutputStream o,java.lang.String s)
        throws UnsupportedEncodingException;

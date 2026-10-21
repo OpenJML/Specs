@@ -28,6 +28,7 @@ package java.util;
  * @version $Revision: 1388 $
  * @author Gary T. Leavens
  */
+//@ non_null_by_default
 public interface Enumeration<E> {
 
     /** Do we have more elements?

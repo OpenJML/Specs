@@ -2,6 +2,7 @@ package java.lang;
 
 import java.io.*;
 
+//@ non_null_by_default
 class StringCoding {
 
     public static boolean hasNegatives(byte[] ba, int off, int len);

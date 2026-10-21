@@ -1,5 +1,6 @@
 package java.nio;
 
+//@ non_null_by_default
 public abstract class Buffer {
     static final int SPLITERATOR_CHARACTERISTICS;
 

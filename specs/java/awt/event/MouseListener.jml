@@ -6,6 +6,7 @@
 
 package java.awt.event;
 
+//@ non_null_by_default
 public interface MouseListener extends java.util.EventListener {
 
     public void mouseClicked(/*@non_null*/ MouseEvent e);

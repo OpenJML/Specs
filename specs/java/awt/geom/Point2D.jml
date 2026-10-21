@@ -4,6 +4,7 @@ package java.awt.geom;
 
 import java.io.Serializable;
 
+//@ non_null_by_default
 public abstract class Point2D implements Cloneable {
 
     //@ public model double xCoordinate; in objectState;

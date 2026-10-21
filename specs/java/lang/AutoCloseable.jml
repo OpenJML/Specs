@@ -1,5 +1,6 @@
 package java.lang;
 
+//@ non_null_by_default
 public interface AutoCloseable {
     
     //@ model public instance \datagroup autocloseableContent; in objectState;

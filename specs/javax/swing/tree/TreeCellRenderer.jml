@@ -2,6 +2,7 @@
 
 package javax.swing.tree;
 
+//@ non_null_by_default
 public interface TreeCellRenderer {
 
     public /*@non_null*/ java.awt.Component 

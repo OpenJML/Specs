@@ -4,6 +4,7 @@ package java.util;
 // that are not non-null Strings.  These will cause other operations to fail,
 // but there is nothing in the specification to indicate that.
 
+//@ non_null_by_default
 public class Properties extends Hashtable<Object,Object> {
 
     /*@  public normal_behavior

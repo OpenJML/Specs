@@ -29,6 +29,7 @@ import org.jmlspecs.lang.IJmlPrimitiveType;
  * @version $Revision: 1.4 $
  * @author Gary T. Leavens, based on an idea of Rustan Leino
  */
+//@ non_null_by_default
 public /*@ spec_pure */ final class datagroup implements IJmlPrimitiveType {
 
     /** No objects of this type may be created

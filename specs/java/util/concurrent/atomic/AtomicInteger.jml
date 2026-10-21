@@ -1,5 +1,6 @@
 package java.util.concurrent.atomic;
 
+//@ non_null_by_default
 public class AtomicInteger extends java.lang.Number implements java.io.Serializable {
   //private static final long serialVersionUID;
   //private static final sun.misc.Unsafe unsafe;

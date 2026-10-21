@@ -23,6 +23,7 @@
 package java.util;
 import java.io.*;
 
+//@ non_null_by_default
 public abstract class ResourceBundle {
 
     protected ResourceBundle parent;

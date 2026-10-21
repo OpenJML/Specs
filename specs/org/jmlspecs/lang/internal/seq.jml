@@ -4,6 +4,7 @@ import org.jmlspecs.lang.IJmlPrimitiveType;
 import org.jmlspecs.lang.IJmlIntArrayLike;
 
 //@ immutable no_state 
+//@ non_null_by_default
 public class seq<T> implements IJmlPrimitiveType, IJmlIntArrayLike {
    
     //@ axiom \forall seq<T> s, ss;; s == ss <==> (s.length == ss.length && \forall int i; 0<=i<s.length; s[i] == ss[i]);

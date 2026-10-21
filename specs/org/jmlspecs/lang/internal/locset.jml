@@ -3,6 +3,7 @@ import org.jmlspecs.lang.IJmlPrimitiveType;
 
 
 //@ immutable no_state
+//@ non_null_by_default
 public class locset implements IJmlPrimitiveType {
    
 //    public normal_behavior

@@ -25,6 +25,7 @@ package java.util;
  * @author  Gary T. Leavens
  * @version $Revision: 1287 $
  */
+//@ non_null_by_default
 public interface Observer {
 
     //@ requires o != null;

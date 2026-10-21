@@ -1,4 +1,5 @@
 package java.util;
 
 // This is a marker interface with no members
+//@ non_null_by_default
 public interface RandomAccess {}

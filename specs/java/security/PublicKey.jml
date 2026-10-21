@@ -1,5 +1,6 @@
 package java.security;
 
+//@ non_null_by_default
 public interface PublicKey extends Key {
   //public static final long serialVersionUID;
 }

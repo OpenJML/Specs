@@ -26,6 +26,7 @@
 
 package java.util;
 
+//@ non_null_by_default
 public interface Deque<E> extends Queue<E> , SequencedCollection<E> {
  
     // specification inherited

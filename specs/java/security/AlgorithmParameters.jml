@@ -2,6 +2,7 @@ package java.security;
 
 //@ model import javax.crypto.spec.DHParameterSpec;
 
+//@ non_null_by_default
 public class AlgorithmParameters {
 
     //@ model public int N;

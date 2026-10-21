@@ -27,6 +27,7 @@ package java.lang;
  * @author David R. Cok
  */
 //+OPENJML@ immutable
+//@ non_null_by_default
 public /*@ pure @*/ final
     class Long extends Number implements Comparable<Long> {
 

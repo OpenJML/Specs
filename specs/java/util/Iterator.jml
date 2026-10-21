@@ -30,6 +30,7 @@ package java.util;
  * @author Joe Kiniry
  * @author David Cok
  */
+//@ non_null_by_default
 public interface Iterator<E> {
 
     //@ model public instance \bigint count;

@@ -1,5 +1,6 @@
 package java.net;
 
+//@ non_null_by_default
 public class ServerSocket implements java.io.Closeable {
 //      private boolean created;
 //      private boolean bound;

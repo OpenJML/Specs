@@ -26,6 +26,7 @@ package java.util;
  * @author Gary T. Leavens
  * @author Patrice Chalin
  */
+//@ non_null_by_default
 public class GregorianCalendar extends Calendar {
 
     public static final int BC;

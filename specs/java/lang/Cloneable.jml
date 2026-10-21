@@ -2,6 +2,7 @@
 
 package java.lang;
 
+//@ non_null_by_default
 public interface Cloneable {
    // A marker interface - used internally to decide whether something is
    // cloneable.  That is, a class must either implement this interface,

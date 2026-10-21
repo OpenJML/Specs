@@ -1,5 +1,6 @@
 package java.lang;
 
+//@ non_null_by_default
 public abstract class Record {
     //@ protected normal_behavior
     //@   requires true;

@@ -1,5 +1,6 @@
 package java.util;
 
+//@ non_null_by_default
 public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, java.io.Serializable, java.lang.Cloneable {
   private static final int DEFAULT_CAPACITY;
   private static final int MINIMUM_CAPACITY;

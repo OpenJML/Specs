@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public interface Serializable {
 
   // This is just a marker interface; it has no methods

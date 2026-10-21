@@ -1,5 +1,6 @@
 package java.lang;
 
+//@ non_null_by_default
 public @interface SuppressWarnings {
     
     String[] value();

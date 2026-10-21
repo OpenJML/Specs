@@ -2,6 +2,7 @@
 
 package java.io;
 
+//@ non_null_by_default
 public abstract class Writer extends Object implements Appendable, Closeable, Flushable {
 
     //-RAC@ model public non_null String outputBytes;

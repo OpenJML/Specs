@@ -1,5 +1,6 @@
 package java.io;
 
+//@ non_null_by_default
 public class BufferedReader extends Reader {
     //@ public normal_behavior
     //@   requires size > 0;

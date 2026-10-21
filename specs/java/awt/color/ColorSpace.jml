@@ -4,6 +4,7 @@ package java.awt.color;
 
 // FIXME - resolve commented out private fields
 
+//@ non_null_by_default
 public abstract class ColorSpace extends Object implements java.io.Serializable {
 
     // CLASS SPECIFICATIONS

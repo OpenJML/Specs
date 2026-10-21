@@ -25,6 +25,7 @@
 
 package java.util;
 
+//@ non_null_by_default
 public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cloneable, java.io.Serializable {
     
     //-RAC@ instance public invariant !containsNull;

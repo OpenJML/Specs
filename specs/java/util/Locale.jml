@@ -22,6 +22,7 @@
 package java.util;
 import java.io.*;
 
+//@ non_null_by_default
 public final class Locale implements Cloneable, Serializable {
 
     static public final /*@ non_null*/ Locale ENGLISH;

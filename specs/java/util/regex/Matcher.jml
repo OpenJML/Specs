@@ -20,6 +20,7 @@
 
 package java.util.regex;
 
+//@ non_null_by_default
 public final class Matcher implements MatchResult {
 
     //@ pure
