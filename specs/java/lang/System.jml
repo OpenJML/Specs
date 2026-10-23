@@ -380,7 +380,7 @@ t *);
     public static java.util.Map<String,String> getenv();
 
     /*@ public behavior
-      @    diverges true;
+      @    diverges true; // This method never returns to the caller (default behavior of a method is diverges false)
       @    assignable \nothing;
       @    ensures false;
       @    signals_only SecurityException;
