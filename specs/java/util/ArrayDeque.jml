@@ -57,4 +57,10 @@ public class ArrayDeque<E> extends AbstractCollection<E> implements Deque<E>, Cl
     public <T> T[] toArray(T[] a);
     
     // all other specifications inherited from java.util.Deque
+
+    @Override
+    public boolean isEmpty();
+
+    @Override
+    public boolean contains(/*@ nullable */ Object o);
 }
