@@ -87,4 +87,13 @@ public class Properties extends Hashtable<Object,Object> {
     //@   signals_only NullPointerException;
     //@ spec_pure
     public String getProperty(String key, String defaultValue) throws NullPointerException;
+
+    @Override
+    public boolean containsKey(Object key);
+
+    @Override
+    public Object get(Object key);
+
+    @Override
+    public synchronized boolean equals(Object o);
 }
