@@ -1245,37 +1245,37 @@ public final class Math {
     
     // model methods to help make some of the special cases
     // easier to deal with
-    /*@ //+RAC@ inline
+    /*@ inline
         public static model no_state boolean isPositiveZero(double a) {
           return java.lang.Double.isPositiveZero(a);
         }
     
-        //+RAC@ inline
+        inline
         public static model no_state boolean isNegativeZero(double a) {
           return java.lang.Double.isNegativeZero(a);
         }
     
-        //+RAC@ inline
+        inline
         public static model no_state boolean isPositiveZero(float a) {
           return java.lang.Float.isPositiveZero(a);
         }
     
-        //+RAC@ inline
+        inline
         public static model no_state boolean isNegativeZero(float a) {
           return java.lang.Float.isNegativeZero(a);
         }
     
-        //+RAC@ inline
+        inline
         model public static no_state boolean isFiniteOdd(double a) {
           return Double.isFinite(a) && abs(IEEEremainder(a, 2.0)) == 1.0; // the remainder of 3 is -1
         }
      
-        //+RAC@ inline
+        inline
         model public static no_state boolean isFiniteEven(double a) {
           return Double.isFinite(a) && IEEEremainder(a, 2.0) == 0.0;
         }
 
-        //+RAC@ inline
+        inline
         public static model no_state boolean close(double a, double b,
                                               double eps) {
          return abs(a - b) <= max(abs(a), abs(b)) * eps;

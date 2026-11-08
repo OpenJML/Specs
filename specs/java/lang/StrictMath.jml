@@ -725,42 +725,35 @@ public /*@ pure @*/ final class StrictMath {
       @*/
     public static /*@ pure @*/ double min(double a, double b);
     
-    /*@ public static model pure boolean isPositiveZero( double a) {
+    // inline, so that ESC uses the bodies
+    /*@ public static model inline pure boolean isPositiveZero( double a) {
           return Double.isPositiveZero(a);
         }
     
-        public static model pure boolean isNegativeZero( double a) {
+        public static model inline pure boolean isNegativeZero( double a) {
           return Double.isNegativeZero(a);
         }
     
-        public static model pure boolean isPositiveZero( float a) {
+        public static model inline pure boolean isPositiveZero( float a) {
           return Float.isPositiveZero(a);
         }
     
-        public static model pure boolean isNegativeZero( float a) {
+        public static model inline pure boolean isNegativeZero( float a) {
           return Float.isNegativeZero(a);
         }
-    
-    // FIXME - can't seem to reference model methods in other specs
     @*/
 
     /*@ 
-      @ public static model pure boolean isFiniteOdd( double a ) {
-      @   if( (a - 2*floor(a/2)) == 1.0
-      @      && Double.NEGATIVE_INFINITY < a && a <Double.POSITIVE_INFINITY ) {
-      @     return true;
-      @   }
-      @   return false;
+      @ public static model inline pure boolean isFiniteOdd( double a ) {
+      @   return (a - 2*floor(a/2)) == 1.0
+      @      && Double.NEGATIVE_INFINITY < a && a < Double.POSITIVE_INFINITY;
       @ }
       @*/
 
     /*@ 
-      @ public static model pure boolean isFiniteEven( double a ) {
-      @   if( IEEEremainder(a, 2.0) == 0.0
-      @      && Double.NEGATIVE_INFINITY < a && a <Double.POSITIVE_INFINITY ) {
-      @     return true;
-      @   }
-      @   return false;
+      @ public static model inline pure boolean isFiniteEven( double a ) {
+      @   return IEEEremainder(a, 2.0) == 0.0
+      @      && Double.NEGATIVE_INFINITY < a && a < Double.POSITIVE_INFINITY;
       @ }
       @*/
 
