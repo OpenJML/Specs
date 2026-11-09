@@ -1,231 +1,402 @@
 package java.math;
 
+/** JML's specification of java.math.BigDecimal.
+ *
+ * The abstract state is the unscaled value and the scale (model fields _unscaled and _scale); the number is
+ * _unscaled * 10^(-_scale), which is also the model field 'value'. The model fields are ESC-only (-RAC).
+ * Not yet specified: the MathContext overloads, rounding beyond the bounds stated here, and the string forms.
+ * Not modeled: the ArithmeticException thrown when a scale overflows an int.
+ */
 //@ immutable pure non_null_by_default
 public class BigDecimal extends Number implements Comparable<BigDecimal> {
-  //@ model public final \real value;
+    //-RAC@ model public \bigint _unscaled;
+    //-RAC@ model public int _scale;
+    //-RAC@ model public \real value;
 
-  //@ spec_public
-  private final BigInteger intVal;
-  //@ spec_public
-  private final int scale;
-/*
-  private transient int precision;
-  private transient java.lang.String stringCache;
-  static final long INFLATED;
-  private static final java.math.BigInteger INFLATED_BIGINT;
-  private final transient long intCompact;
-  private static final int MAX_COMPACT_DIGITS;
-  private static final long serialVersionUID;
-  private static final java.lang.ThreadLocal<java.math.BigDecimal$StringBuilderHelper> threadLocalStringBuilderHelper;
-  private static final java.math.BigDecimal[] zeroThroughTen;
-  private static final java.math.BigDecimal[] ZERO_SCALED_BY;
-  private static final long HALF_LONG_MAX_VALUE;
-  private static final long HALF_LONG_MIN_VALUE;
-  public static final java.math.BigDecimal ZERO;
-  public static final java.math.BigDecimal ONE;
-  public static final java.math.BigDecimal TEN;
-  public static final int ROUND_UP;
-  public static final int ROUND_DOWN;
-  public static final int ROUND_CEILING;
-  public static final int ROUND_FLOOR;
-  public static final int ROUND_HALF_UP;
-  public static final int ROUND_HALF_DOWN;
-  public static final int ROUND_HALF_EVEN;
-  public static final int ROUND_UNNECESSARY;
-  private static final double[] double10pow;
-  private static final float[] float10pow;
-  private static final long[] LONG_TEN_POWERS_TABLE;
-  private static volatile java.math.BigInteger[] BIG_TEN_POWERS_TABLE;
-  private static final int BIG_TEN_POWERS_TABLE_INITLEN;
-  private static final int BIG_TEN_POWERS_TABLE_MAX;
-  private static final long[] THRESHOLDS_TABLE;
-  private static final long DIV_NUM_BASE;
-  private static final long[][] LONGLONG_TEN_POWERS_TABLE;
-  static final boolean $assertionsDisabled;
-  java.math.BigDecimal(java.math.BigInteger, long, int, int);
-  public java.math.BigDecimal(char[], int, int);
-  public java.math.BigDecimal(char[], int, int, java.math.MathContext);
-  private int adjustScale(int, long);
-  private static long parseExp(char[], int, int);
-  public java.math.BigDecimal(char[]);
-  public java.math.BigDecimal(char[], java.math.MathContext);
-  public java.math.BigDecimal(java.lang.String);
-  public java.math.BigDecimal(java.lang.String, java.math.MathContext);
-  */
-  //@ public normal_behavior
-  //@   ensures this.value == d;
-  public BigDecimal(double d);
-  /*
-  public java.math.BigDecimal(double, java.math.MathContext);
-  */
-  //@ public normal_behavior
-  //-RAC@   ensures this.value == i.value;
-  public BigDecimal(java.math.BigInteger i);
-  /*
-  public BigDecimal(java.math.BigInteger, MathContext);
-  public BigDecimal(java.math.BigInteger, int);
-  public BigDecimal(java.math.BigInteger, int, MathContext);
-  */
-  //@ public normal_behavior
-  //@   ensures this.value == i;
-  public BigDecimal(int i);
-  /*
-  public java.math.BigDecimal(int, MathContext);
-  */
-  //@ public normal_behavior
-  //@   ensures this.value == i;
-  public BigDecimal(long i);
-  /*
-  public java.math.BigDecimal(long, MathContext);
-  */
-  //@ public normal_behavior
-  //@   ensures \result.value == i;
-  //@ model public static BigDecimal valueOf(\bigint i);
-  /*
-  public static java.math.BigDecimal valueOf(long, int);
-  public static java.math.BigDecimal valueOf(long);
-  static java.math.BigDecimal valueOf(long, int, int);
-  static java.math.BigDecimal valueOf(java.math.BigInteger, int, int);
-  static java.math.BigDecimal zeroValueOf(int);
-  public static java.math.BigDecimal valueOf(double);
-  public java.math.BigDecimal add(java.math.BigDecimal);
-  public java.math.BigDecimal add(java.math.BigDecimal, java.math.MathContext);
-  private java.math.BigDecimal[] preAlign(java.math.BigDecimal, java.math.BigDecimal, long, java.math.MathContext);
-  public java.math.BigDecimal subtract(java.math.BigDecimal);
-  public java.math.BigDecimal subtract(java.math.BigDecimal, java.math.MathContext);
-  public java.math.BigDecimal multiply(java.math.BigDecimal);
-  public java.math.BigDecimal multiply(java.math.BigDecimal, java.math.MathContext);
-  public java.math.BigDecimal divide(java.math.BigDecimal, int, int);
-  public java.math.BigDecimal divide(java.math.BigDecimal, int, java.math.RoundingMode);
-  public java.math.BigDecimal divide(java.math.BigDecimal, int);
-  public java.math.BigDecimal divide(java.math.BigDecimal, java.math.RoundingMode);
-  public java.math.BigDecimal divide(java.math.BigDecimal);
-  public java.math.BigDecimal divide(java.math.BigDecimal, java.math.MathContext);
-  public java.math.BigDecimal divideToIntegralValue(java.math.BigDecimal);
-  public java.math.BigDecimal divideToIntegralValue(java.math.BigDecimal, java.math.MathContext);
-  public java.math.BigDecimal remainder(java.math.BigDecimal);
-  public java.math.BigDecimal remainder(java.math.BigDecimal, java.math.MathContext);
-  public java.math.BigDecimal[] divideAndRemainder(java.math.BigDecimal);
-  public java.math.BigDecimal[] divideAndRemainder(java.math.BigDecimal, java.math.MathContext);
-  public java.math.BigDecimal pow(int);
-  public java.math.BigDecimal pow(int, java.math.MathContext);
-  public java.math.BigDecimal abs();
-  public java.math.BigDecimal abs(java.math.MathContext);
-  public java.math.BigDecimal negate();
-  public java.math.BigDecimal negate(java.math.MathContext);
-  public java.math.BigDecimal plus();
-  public java.math.BigDecimal plus(java.math.MathContext);
-  public int signum();
-  public int scale();
-  public int precision();
-  public java.math.BigInteger unscaledValue();
-  public java.math.BigDecimal round(java.math.MathContext);
-  public java.math.BigDecimal setScale(int, java.math.RoundingMode);
-  public java.math.BigDecimal setScale(int, int);
-  public java.math.BigDecimal setScale(int);
-  public java.math.BigDecimal movePointLeft(int);
-  public java.math.BigDecimal movePointRight(int);
-  public java.math.BigDecimal scaleByPowerOfTen(int);
-  public java.math.BigDecimal stripTrailingZeros();
-  public int compareTo(java.math.BigDecimal);
-  private int compareMagnitude(java.math.BigDecimal);
-  public boolean equals(java.lang.Object);
-  public java.math.BigDecimal min(java.math.BigDecimal);
-  public java.math.BigDecimal max(java.math.BigDecimal);
-  public int hashCode();
-  public java.lang.String toString();
-  public java.lang.String toEngineeringString();
-  public java.lang.String toPlainString();
-  private java.lang.String getValueString(int, java.lang.String, int);
-  public java.math.BigInteger toBigInteger();
-  public java.math.BigInteger toBigIntegerExact();
-  public long longValue();
-  private boolean fractionOnly();
-  public long longValueExact();
-  public int intValue();
-  public int intValueExact();
-  public short shortValueExact();
-  public byte byteValueExact();
-  public float floatValue();
-  public double doubleValue();
-  public java.math.BigDecimal ulp();
-  private java.lang.String layoutChars(boolean);
-  private static java.math.BigInteger bigTenToThe(int);
-  private static java.math.BigInteger expandBigIntegerTenPowers(int);
-  private static long longMultiplyPowerTen(long, int);
-  private java.math.BigInteger bigMultiplyPowerTen(int);
-  private java.math.BigInteger inflated();
-  private static void matchScale(java.math.BigDecimal[]);
-  private void readObject(java.io.ObjectInputStream) throws java.io.IOException, java.lang.ClassNotFoundException;
-  private void writeObject(java.io.ObjectOutputStream) throws java.io.IOException;
-  static int longDigitLength(long);
-  private static int bigDigitLength(java.math.BigInteger);
-  private int checkScale(long);
-  private static long compactValFor(java.math.BigInteger);
-  private static int longCompareMagnitude(long, long);
-  private static int saturateLong(long);
-  private static void print(java.lang.String, java.math.BigDecimal);
-  private java.math.BigDecimal audit();
-  private static int checkScaleNonZero(long);
-  private static int checkScale(long, long);
-  private static int checkScale(java.math.BigInteger, long);
-  private static java.math.BigDecimal doRound(java.math.BigDecimal, java.math.MathContext);
-  private static java.math.BigDecimal doRound(long, int, java.math.MathContext);
-  private static java.math.BigDecimal doRound(java.math.BigInteger, int, java.math.MathContext);
-  private static java.math.BigInteger divideAndRoundByTenPow(java.math.BigInteger, int, int);
-  private static java.math.BigDecimal divideAndRound(long, long, int, int, int);
-  private static long divideAndRound(long, long, int);
-  private static boolean commonNeedIncrement(int, int, int, boolean);
-  private static boolean needIncrement(long, int, int, long, long);
-  private static java.math.BigInteger divideAndRound(java.math.BigInteger, long, int);
-  private static java.math.BigDecimal divideAndRound(java.math.BigInteger, long, int, int, int);
-  private static boolean needIncrement(long, int, int, java.math.MutableBigInteger, long);
-  private static java.math.BigInteger divideAndRound(java.math.BigInteger, java.math.BigInteger, int);
-  private static java.math.BigDecimal divideAndRound(java.math.BigInteger, java.math.BigInteger, int, int, int);
-  private static boolean needIncrement(java.math.MutableBigInteger, int, int, java.math.MutableBigInteger, java.math.MutableBigInteger);
-  private static java.math.BigDecimal createAndStripZerosToMatchScale(java.math.BigInteger, int, long);
-  private static java.math.BigDecimal createAndStripZerosToMatchScale(long, int, long);
-  private static java.math.BigDecimal stripZerosToMatchScale(java.math.BigInteger, long, int, int);
-  private static long add(long, long);
-  private static java.math.BigDecimal add(long, long, int);
-  private static java.math.BigDecimal add(long, int, long, int);
-  private static java.math.BigDecimal add(long, int, java.math.BigInteger, int);
-  private static java.math.BigDecimal add(java.math.BigInteger, int, java.math.BigInteger, int);
-  private static java.math.BigInteger bigMultiplyPowerTen(long, int);
-  private static java.math.BigInteger bigMultiplyPowerTen(java.math.BigInteger, int);
-  private static java.math.BigDecimal divideSmallFastPath(long, int, long, int, long, java.math.MathContext);
-  private static java.math.BigDecimal divide(long, int, long, int, long, java.math.MathContext);
-  private static java.math.BigDecimal divide(java.math.BigInteger, int, long, int, long, java.math.MathContext);
-  private static java.math.BigDecimal divide(long, int, java.math.BigInteger, int, long, java.math.MathContext);
-  private static java.math.BigDecimal divide(java.math.BigInteger, int, java.math.BigInteger, int, long, java.math.MathContext);
-  private static java.math.BigDecimal multiplyDivideAndRound(long, long, long, int, int, int);
-  private static java.math.BigDecimal divideAndRound128(long, long, long, int, int, int, int);
-  private static java.math.BigDecimal roundedTenPower(int, int, int, int);
-  static java.math.BigDecimal scaledTenPow(int, int, int);
-  private static long[] divRemNegativeLong(long, long);
-  private static long make64(long, long);
-  private static long mulsub(long, long, long, long, long);
-  private static boolean unsignedLongCompare(long, long);
-  private static boolean unsignedLongCompareEq(long, long);
-  private static int compareMagnitudeNormalized(long, int, long, int);
-  private static int compareMagnitudeNormalized(long, int, java.math.BigInteger, int);
-  private static int compareMagnitudeNormalized(java.math.BigInteger, int, java.math.BigInteger, int);
-  private static long multiply(long, long);
-  private static java.math.BigDecimal multiply(long, long, int);
-  private static java.math.BigDecimal multiply(long, java.math.BigInteger, int);
-  private static java.math.BigDecimal multiply(java.math.BigInteger, java.math.BigInteger, int);
-  private static java.math.BigDecimal multiplyAndRound(long, long, int, java.math.MathContext);
-  private static java.math.BigDecimal multiplyAndRound(long, java.math.BigInteger, int, java.math.MathContext);
-  private static java.math.BigDecimal multiplyAndRound(java.math.BigInteger, java.math.BigInteger, int, java.math.MathContext);
-  private static java.math.BigDecimal doRound128(long, long, int, int, java.math.MathContext);
-  private static int precision(long, long);
-  private static boolean longLongCompareMagnitude(long, long, long, long);
-  private static java.math.BigDecimal divide(long, int, long, int, int, int);
-  private static java.math.BigDecimal divide(java.math.BigInteger, int, long, int, int, int);
-  private static java.math.BigDecimal divide(long, int, java.math.BigInteger, int, int, int);
-  private static java.math.BigDecimal divide(java.math.BigInteger, int, java.math.BigInteger, int, int, int);
-  public int compareTo(java.lang.Object);
-  static java.math.BigInteger access$000(java.math.BigDecimal);
-  static {};
-  */
+    //-RAC@ public invariant _scale >= 0 ? value * pow10(_scale) == _unscaled : value == _unscaled * pow10(-_scale);
+
+    //@ public normal_behavior
+    //@   requires n >= 0;
+    //@   ensures \result == (n == 0 ? 1 : 10 * pow10(n-1));
+    //@ model public static no_state helper \bigint pow10(int n);
+
+    public static final BigDecimal ZERO;
+    public static final BigDecimal ONE;
+    public static final BigDecimal TWO;
+    public static final BigDecimal TEN;
+
+    //@ public normal_behavior
+    //@   ensures ZERO != null && ONE != null && TWO != null && TEN != null;
+    //-RAC@   ensures ZERO != null && ZERO._unscaled == 0 && ZERO._scale == 0 && ZERO.value == 0;
+    //-RAC@   ensures ONE != null && ONE._unscaled == 1 && ONE._scale == 0 && ONE.value == 1;
+    //-RAC@   ensures TWO != null && TWO._unscaled == 2 && TWO._scale == 0 && TWO.value == 2;
+    //-RAC@   ensures TEN != null && TEN._unscaled == 10 && TEN._scale == 0 && TEN.value == 10;
+    //@ static_initializer
+
+    public static final int ROUND_UP;
+    public static final int ROUND_DOWN;
+    public static final int ROUND_CEILING;
+    public static final int ROUND_FLOOR;
+    public static final int ROUND_HALF_UP;
+    public static final int ROUND_HALF_DOWN;
+    public static final int ROUND_HALF_EVEN;
+    public static final int ROUND_UNNECESSARY;
+
+    // Constructors
+
+    //@ public behavior
+    //@   signals_only NumberFormatException;
+    public BigDecimal(String val);
+
+    // The exact value of the double; NaN and infinities throw
+    //@ public normal_behavior
+    //@   requires Double.isFinite(val);
+    //-RAC@   ensures this.value == val;
+    //@ also public exceptional_behavior
+    //@   requires !Double.isFinite(val);
+    //@   signals_only NumberFormatException;
+    public BigDecimal(double val);
+
+    //@ public normal_behavior
+    //-RAC@   ensures _unscaled == val.value && _scale == 0;
+    public BigDecimal(BigInteger val);
+
+    //@ public normal_behavior
+    //-RAC@   ensures _unscaled == unscaledVal.value && _scale == scale;
+    public BigDecimal(BigInteger unscaledVal, int scale);
+
+    //@ public normal_behavior
+    //-RAC@   ensures _unscaled == val && _scale == 0;
+    public BigDecimal(int val);
+
+    //@ public normal_behavior
+    //-RAC@   ensures _unscaled == val && _scale == 0;
+    public BigDecimal(long val);
+
+    // Static factories
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result._unscaled == unscaledVal && \result._scale == scale;
+    public static BigDecimal valueOf(long unscaledVal, int scale);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result._unscaled == val && \result._scale == 0;
+    public static BigDecimal valueOf(long val);
+
+    // The value of Double.toString(val), which need not be the exact value of the double
+    //@ public normal_behavior
+    //@   requires Double.isFinite(val);
+    //@ also public exceptional_behavior
+    //@   requires !Double.isFinite(val);
+    //@   signals_only NumberFormatException;
+    public static BigDecimal valueOf(double val);
+
+    // Exact arithmetic
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result.value == this.value + augend.value;
+    //-RAC@   ensures \result._scale == (this._scale >= augend._scale ? this._scale : augend._scale);
+    //-RAC@   ensures \result._unscaled == (this._scale >= augend._scale
+    //-RAC@                   ? this._unscaled + augend._unscaled * pow10(this._scale - augend._scale)
+    //-RAC@                   : this._unscaled * pow10(augend._scale - this._scale) + augend._unscaled);
+    public BigDecimal add(BigDecimal augend);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result.value == this.value - subtrahend.value;
+    //-RAC@   ensures \result._scale == (this._scale >= subtrahend._scale ? this._scale : subtrahend._scale);
+    //-RAC@   ensures \result._unscaled == (this._scale >= subtrahend._scale
+    //-RAC@                   ? this._unscaled - subtrahend._unscaled * pow10(this._scale - subtrahend._scale)
+    //-RAC@                   : this._unscaled * pow10(subtrahend._scale - this._scale) - subtrahend._unscaled);
+    public BigDecimal subtract(BigDecimal subtrahend);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result.value == this.value * multiplicand.value;
+    //-RAC@   ensures \result._unscaled == this._unscaled * multiplicand._unscaled;
+    //-RAC@   ensures \result._scale == this._scale + multiplicand._scale;
+    public BigDecimal multiply(BigDecimal multiplicand);
+
+    // Throws if the divisor is zero or the exact quotient has a nonterminating decimal expansion;
+    // the second condition is not stated, so a normal result is not promised
+    //@ public behavior
+    //@   requires divisor.signum() != 0;
+    //-RAC@   ensures \result.value * divisor.value == this.value;
+    //@   signals_only ArithmeticException;
+    //@ also public exceptional_behavior
+    //@   requires divisor.signum() == 0;
+    //@   signals_only ArithmeticException;
+    public BigDecimal divide(BigDecimal divisor);
+
+    // The quotient rounded to the given scale: within one unit in the last place of the exact quotient
+    //@ public behavior
+    //@   requires divisor.signum() != 0;
+    //-RAC@   ensures \result._scale == scale;
+    //-RAC@   ensures scale >= 0 ==> -1 < (\result.value - this.value / divisor.value) * pow10(scale) && (\result.value - this.value / divisor.value) * pow10(scale) < 1;
+    //@   signals_only ArithmeticException;
+    //@   signals (ArithmeticException) roundingMode == RoundingMode.UNNECESSARY;
+    //@ also public exceptional_behavior
+    //@   requires divisor.signum() == 0;
+    //@   signals_only ArithmeticException;
+    public BigDecimal divide(BigDecimal divisor, int scale, RoundingMode roundingMode);
+
+    //@ public behavior
+    //@   requires divisor.signum() != 0;
+    //-RAC@   ensures \result._scale == this._scale;
+    //-RAC@   ensures this._scale >= 0 ==> -1 < (\result.value - this.value / divisor.value) * pow10(this._scale) && (\result.value - this.value / divisor.value) * pow10(this._scale) < 1;
+    //@   signals_only ArithmeticException;
+    //@   signals (ArithmeticException) roundingMode == RoundingMode.UNNECESSARY;
+    //@ also public exceptional_behavior
+    //@   requires divisor.signum() == 0;
+    //@   signals_only ArithmeticException;
+    public BigDecimal divide(BigDecimal divisor, RoundingMode roundingMode);
+
+    // The integer part of the exact quotient, truncated toward zero
+    //@ public normal_behavior
+    //@   requires divisor.signum() != 0;
+    //-RAC@   ensures this._scale >= divisor._scale ==> \result._scale == this._scale - divisor._scale;
+    //-RAC@   ensures \result._scale <= 0 || \result._unscaled % pow10(\result._scale) == 0;
+    //-RAC@   ensures this.value >= 0 && divisor.value > 0 ==> \result.value * divisor.value <= this.value && this.value < (\result.value + 1) * divisor.value;
+    //-RAC@   ensures this.value >= 0 && divisor.value < 0 ==> \result.value * divisor.value <= this.value && this.value < (\result.value - 1) * divisor.value;
+    //-RAC@   ensures this.value < 0 && divisor.value > 0 ==> (\result.value - 1) * divisor.value < this.value && this.value <= \result.value * divisor.value;
+    //-RAC@   ensures this.value < 0 && divisor.value < 0 ==> (\result.value + 1) * divisor.value < this.value && this.value <= \result.value * divisor.value;
+    //@ also public exceptional_behavior
+    //@   requires divisor.signum() == 0;
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public BigDecimal divideToIntegralValue(BigDecimal divisor);
+
+    //@ public normal_behavior
+    //@   requires divisor.signum() != 0;
+    //-RAC@   ensures this._scale >= divisor._scale ==> \result._scale == this._scale;
+    //-RAC@   ensures \result.value == this.value - this.divideToIntegralValue(divisor).value * divisor.value;
+    //@ also public exceptional_behavior
+    //@   requires divisor.signum() == 0;
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public BigDecimal remainder(BigDecimal divisor);
+
+    //@ public normal_behavior
+    //@   requires divisor.signum() != 0;
+    //@   ensures \result.length == 2;
+    //-RAC@   ensures \fresh(\result);
+    //-RAC@   ensures \result[0].value == this.divideToIntegralValue(divisor).value;
+    //-RAC@   ensures \result[1].value == this.remainder(divisor).value;
+    //@ also public exceptional_behavior
+    //@   requires divisor.signum() == 0;
+    //@   signals_only ArithmeticException;
+    public BigDecimal[] divideAndRemainder(BigDecimal divisor);
+
+    //@ public normal_behavior
+    //@   requires 0 <= n && n <= 999999999;
+    //-RAC@   ensures \result._unscaled == BigInteger.ipow(this._unscaled, n);
+    //-RAC@   ensures \result._scale == this._scale * n;
+    //@ also public exceptional_behavior
+    //@   requires !(0 <= n && n <= 999999999);
+    //@   signals_only ArithmeticException;
+    public BigDecimal pow(int n);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result._unscaled == (this._unscaled >= 0 ? this._unscaled : -this._unscaled);
+    //-RAC@   ensures \result._scale == this._scale;
+    //@   ensures signum() >= 0 ==> \result == this;
+    public BigDecimal abs();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result._unscaled == -this._unscaled && \result._scale == this._scale;
+    public BigDecimal negate();
+
+    //@ public normal_behavior
+    //@   ensures \result == this;
+    public BigDecimal plus();
+
+    // Accessors
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == (_unscaled > 0 ? 1 : _unscaled < 0 ? -1 : 0);
+    //@   ensures -1 <= \result <= 1;
+    //@ spec_pure helper
+    public int signum();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _scale;
+    //@ spec_pure helper
+    public int scale();
+
+    // The number of decimal digits in the unscaled value (1 for zero)
+    //@ public normal_behavior
+    //@   ensures \result >= 1;
+    //-RAC@   ensures _unscaled < pow10(\result) && -_unscaled < pow10(\result);
+    //-RAC@   ensures \result == 1 || pow10(\result - 1) <= _unscaled || pow10(\result - 1) <= -_unscaled;
+    //@ spec_pure
+    public int precision();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result.value == _unscaled;
+    //@ spec_pure
+    public BigInteger unscaledValue();
+
+    // Scale changes
+
+    //@ public normal_behavior
+    //@   requires newScale >= scale();
+    //-RAC@   ensures \result._scale == newScale && \result.value == this.value;
+    //-RAC@   ensures \result._unscaled == this._unscaled * pow10(newScale - this._scale);
+    //@ also public behavior
+    //@   requires newScale < scale();
+    //-RAC@   ensures \result._scale == newScale;
+    //-RAC@   ensures -1 < (\result.value - this.value) * pow10(newScale) && (\result.value - this.value) * pow10(newScale) < 1;
+    //-RAC@   ensures roundingMode == RoundingMode.DOWN ==> \result._unscaled == this._unscaled / pow10(this._scale - newScale);
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) roundingMode == RoundingMode.UNNECESSARY && this._unscaled % pow10(this._scale - newScale) != 0;
+    //-RAC@   ensures roundingMode == RoundingMode.UNNECESSARY ==> this._unscaled % pow10(this._scale - newScale) == 0;
+    public BigDecimal setScale(int newScale, RoundingMode roundingMode);
+
+    // Same as setScale(newScale, RoundingMode.UNNECESSARY)
+    //@ public normal_behavior
+    //@   requires newScale >= scale();
+    //-RAC@   ensures \result._scale == newScale && \result.value == this.value;
+    //-RAC@   ensures \result._unscaled == this._unscaled * pow10(newScale - this._scale);
+    //@ also public behavior
+    //@   requires newScale < scale();
+    //-RAC@   ensures \result._scale == newScale && \result.value == this.value;
+    //-RAC@   ensures this._unscaled % pow10(this._scale - newScale) == 0;
+    //-RAC@   ensures \result._unscaled == this._unscaled / pow10(this._scale - newScale);
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) this._unscaled % pow10(this._scale - newScale) != 0;
+    public BigDecimal setScale(int newScale);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result._unscaled == this._unscaled && \result._scale == this._scale - n;
+    public BigDecimal scaleByPowerOfTen(int n);
+
+    // The value divided by 10^n, with scale max(scale + n, 0)
+    //@ public normal_behavior
+    //-RAC@   ensures this._scale + n >= 0 ==> \result._unscaled == this._unscaled && \result._scale == this._scale + n;
+    //-RAC@   ensures this._scale + n < 0 ==> \result._unscaled == this._unscaled * pow10(-(this._scale + n)) && \result._scale == 0;
+    public BigDecimal movePointLeft(int n);
+
+    // The value multiplied by 10^n, with scale max(scale - n, 0)
+    //@ public normal_behavior
+    //-RAC@   ensures this._scale - n >= 0 ==> \result._unscaled == this._unscaled && \result._scale == this._scale - n;
+    //-RAC@   ensures this._scale - n < 0 ==> \result._unscaled == this._unscaled * pow10(n - this._scale) && \result._scale == 0;
+    public BigDecimal movePointRight(int n);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result.value == this.value;
+    //-RAC@   ensures this._unscaled == 0 ==> \result._scale == 0;
+    //-RAC@   ensures this._unscaled != 0 ==> \result._unscaled % 10 != 0;
+    public BigDecimal stripTrailingZeros();
+
+    // Comparison: compareTo compares values; equals also compares scales
+
+    //@ also public normal_behavior
+    //-RAC@   ensures this.value < val.value <==> \result == -1;
+    //-RAC@   ensures this.value == val.value <==> \result == 0;
+    //-RAC@   ensures this.value > val.value <==> \result == 1;
+    //@   ensures -1 <= \result <= 1;
+    //@ spec_pure
+    public int compareTo(BigDecimal val);
+
+    //@ also public normal_behavior
+    //@   requires x instanceof BigDecimal;
+    //-RAC@   ensures \result == (this._unscaled == ((BigDecimal)x)._unscaled && this._scale == ((BigDecimal)x)._scale);
+    //@ also public normal_behavior
+    //@   requires !(x instanceof BigDecimal);
+    //@   ensures !\result;
+    //@ spec_pure helper
+    public boolean equals(/*@ nullable */ Object x);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == (this.value <= val.value ? this : val);
+    public BigDecimal min(BigDecimal val);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == (this.value >= val.value ? this : val);
+    public BigDecimal max(BigDecimal val);
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    public int hashCode();
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    public String toString();
+
+    //@ public normal_behavior
+    //@   ensures true;
+    public String toEngineeringString();
+
+    //@ public normal_behavior
+    //@   ensures true;
+    public String toPlainString();
+
+    // Conversions
+
+    // Truncates toward zero
+    //@ public normal_behavior
+    //-RAC@   ensures this._scale >= 0 ==> \result.value == this._unscaled / pow10(this._scale);
+    //-RAC@   ensures this._scale < 0 ==> \result.value == this._unscaled * pow10(-this._scale);
+    //@ spec_pure
+    public BigInteger toBigInteger();
+
+    //@ public behavior
+    //-RAC@   ensures this._scale >= 0 ==> \result.value * pow10(this._scale) == this._unscaled;
+    //-RAC@   ensures this._scale < 0 ==> \result.value == this._unscaled * pow10(-this._scale);
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) this._scale > 0 && this._unscaled % pow10(this._scale) != 0;
+    public BigInteger toBigIntegerExact();
+
+    //@ also public normal_behavior
+    //-RAC@   requires Long.MIN_VALUE <= this.toBigInteger().value <= Long.MAX_VALUE;
+    //-RAC@   ensures \result == this.toBigInteger().value;
+    //@ spec_pure
+    public long longValue();
+
+    //@ also public normal_behavior
+    //-RAC@   requires Integer.MIN_VALUE <= this.toBigInteger().value <= Integer.MAX_VALUE;
+    //-RAC@   ensures \result == this.toBigInteger().value;
+    //@ spec_pure
+    public int intValue();
+
+    //@ public behavior
+    //-RAC@   ensures \result == this.value;
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) this.toBigInteger().value != this.value || !(Long.MIN_VALUE <= this.value <= Long.MAX_VALUE);
+    //@ spec_pure
+    public long longValueExact();
+
+    //@ public behavior
+    //-RAC@   ensures \result == this.value;
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) this.toBigInteger().value != this.value || !(Integer.MIN_VALUE <= this.value <= Integer.MAX_VALUE);
+    //@ spec_pure
+    public int intValueExact();
+
+    //@ public behavior
+    //-RAC@   ensures \result == this.value;
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) this.toBigInteger().value != this.value || !(Short.MIN_VALUE <= this.value <= Short.MAX_VALUE);
+    //@ spec_pure
+    public short shortValueExact();
+
+    //@ public behavior
+    //-RAC@   ensures \result == this.value;
+    //@   signals_only ArithmeticException;
+    //-RAC@   signals (ArithmeticException) this.toBigInteger().value != this.value || !(Byte.MIN_VALUE <= this.value <= Byte.MAX_VALUE);
+    //@ spec_pure
+    public byte byteValueExact();
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    //@ spec_pure
+    public float floatValue();
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    //@ spec_pure
+    public double doubleValue();
+
+    // One unit in the last place: 1 with this scale
+    //@ public normal_behavior
+    //-RAC@   ensures \result._unscaled == 1 && \result._scale == this._scale;
+    public BigDecimal ulp();
 }
