@@ -92,8 +92,8 @@ public interface Map<K,V> {
 
     //-RAC@ model public instance \intmap<V> modelMap; in objectState;
     //-RAC@ model public instance \intset keys; in objectState;
-    //-RAC@ model public instance V nullValue;
-    //-RAC@ model public instance boolean nullPresent;
+    //-RAC@ model public instance nullable V nullValue; in objectState;
+    //-RAC@ model public instance boolean nullPresent; in objectState;
     //-RAC@ model public instance \bigint _size; in objectState;
 
     //@ public normal_behavior
@@ -102,14 +102,15 @@ public interface Map<K,V> {
     int size();
 
     /*-RAC@ public normal_behavior
-      @    ensures \result <==> (\forall \bigint i;; keys[i] == false); 
+      @    ensures \result <==> (!nullPresent && (\forall \bigint i;; keys[i] == false));
       @    ensures \result <==> (_size == 0); 
       @*/
     /*@ spec_pure @*/ boolean isEmpty();
     
     /*-RAC@ public behavior
       @    ensures _size==0 ==> !\result;
-      @    ensures keys[key.uniqueHash] <==> \result;
+      @    ensures key == null ==> (\result <==> nullPresent);
+      @    ensures key != null ==> (\result <==> keys[key.uniqueHash]);
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -121,8 +122,10 @@ public interface Map<K,V> {
 
     /*-RAC@ public behavior
       @    ensures isEmpty() ==> !\result;
-      @    ensures \result <==> ((nullPresent && nullValue.uniqueHash == value.uniqueHash) 
-      @                || \exists \bigint i;; keys[i] && modelMap[i].uniqueHash == value.uniqueHash);
+      @    ensures value == null ==> (\result <==> ((nullPresent && nullValue == null)
+      @                || \exists \bigint i;; keys[i] && modelMap[i] == null));
+      @    ensures value != null ==> (\result <==> ((nullPresent && nullValue != null && nullValue.uniqueHash == value.uniqueHash)
+      @                || \exists \bigint i;; keys[i] && modelMap[i] != null && modelMap[i].uniqueHash == value.uniqueHash));
       @
       @    signals_only ClassCastException, NullPointerException;
       @    signals (ClassCastException)
@@ -130,7 +133,7 @@ public interface Map<K,V> {
       @    signals (NullPointerException) value == null
       @         && (* this type doesn't permit null values *);
       @*/
-    /*@ spec_pure @*/ boolean containsValue(Object value);
+    /*@ spec_pure @*/ boolean containsValue(/*@ nullable */ Object value);
 
     /*-RAC@ public normal_behavior
       @    ensures key == null ==> \result == ( nullPresent ? nullValue : null);
@@ -142,12 +145,12 @@ public interface Map<K,V> {
     /*-RAC@ public normal_behavior
       @    requires key != null;
       @    assignable objectState;
-      @    ensures modelMap == \old(modelMap).put(key.uniqueHash,value);
-      @    ensures keys == \old(keys).add(key.uniqueHash);
       @    ensures keys[key.uniqueHash];
       @    ensures modelMap[key.uniqueHash] == value;
-      @    ensures \result == \old(keys[key.uniqueHash] ? modelMap[key.uniqueHash] : null);
-      @    ensures _size == \old(keys[key.uniqueHash] ? _size : _size+1 );
+      @    ensures (\forall \bigint i; i != key.uniqueHash; keys[i] == \old(keys[i]) && modelMap[i] == \old(modelMap[i]));
+      @    ensures nullPresent == \old(nullPresent) && nullValue == \old(nullValue);
+      @    ensures \result == (\old(keys[key.uniqueHash]) ? \old(modelMap[key.uniqueHash]) : null);
+      @    ensures _size == (\old(keys[key.uniqueHash]) ? \old(_size) : \old(_size)+1);
       @    ensures _size > 0;
       @ also public normal_behavior
       @    requires key == null;
@@ -155,8 +158,9 @@ public interface Map<K,V> {
       @    assignable objectState;
       @    ensures nullValue == value;
       @    ensures nullPresent;
-      @    ensures \result == \old(nullPresent ? nullValue : null);
-      @    ensures _size == \old(nullPresent ? _size : _size+1 );
+      @    ensures keys == \old(keys) && modelMap == \old(modelMap);
+      @    ensures \result == (\old(nullPresent) ? \old(nullValue) : null);
+      @    ensures _size == (\old(nullPresent) ? \old(_size) : \old(_size)+1);
       @*/
     /* FIXME @
       @ also exceptional_behavior
@@ -177,13 +181,18 @@ public interface Map<K,V> {
       @  public normal_behavior
       @    requires key != null;
       @    assignable objectState;
-      @    ensures \result != null ==> keys[key.uniqueHash] == false;
-      @    ensures \result != null ==> _size == \old(keys[key.uniqueHash] ? _size-1 : _size);
+      @    ensures !keys[key.uniqueHash];
+      @    ensures (\forall \bigint i; i != key.uniqueHash; keys[i] == \old(keys[i]) && modelMap[i] == \old(modelMap[i]));
+      @    ensures nullPresent == \old(nullPresent) && nullValue == \old(nullValue);
+      @    ensures \result == (\old(keys[key.uniqueHash]) ? \old(modelMap[key.uniqueHash]) : null);
+      @    ensures _size == (\old(keys[key.uniqueHash]) ? \old(_size)-1 : \old(_size));
       @  also public normal_behavior
       @    requires key == null;
       @    assignable objectState;
       @    ensures nullPresent == false;
-      @    ensures \result != null ==> _size == \old(nullPresent ? _size-1 : _size);
+      @    ensures keys == \old(keys) && modelMap == \old(modelMap);
+      @    ensures \result == (\old(nullPresent) ? \old(nullValue) : null);
+      @    ensures _size == (\old(nullPresent) ? \old(_size)-1 : \old(_size));
       @*/
     /* @ // FIXME
       @    signals_only ClassCastException, NullPointerException,
@@ -196,7 +205,7 @@ public interface Map<K,V> {
       @              && (* if this map doesn't support null keys *);
       @*/
     //@ nullable
-    V remove(Object key);
+    V remove(/*@ nullable */ Object key);
 
     /*-RAC@ public behavior
            requires t != null;
@@ -229,7 +238,7 @@ public interface Map<K,V> {
 
     /*-RAC@ public normal_behavior
       @    assignable objectState;
-      @    ensures isEmpty();
+      @    ensures _size == 0 && !nullPresent && (\forall \bigint i;; !keys[i]);
       @*/
     void clear();
     
