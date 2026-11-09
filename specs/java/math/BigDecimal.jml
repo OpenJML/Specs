@@ -7,13 +7,31 @@ package java.math;
  * Not yet specified: the MathContext overloads, rounding beyond the bounds stated here, and the string forms.
  * Not modeled: the ArithmeticException thrown when a scale overflows an int.
  */
-//@ immutable pure non_null_by_default
+// FIXME - not immutable: expandBigIntegerTenPowers updates the static BIG_TEN_POWERS_TABLE, and precision and
+//         stringCache are cached lazily after construction
+//@ pure non_null_by_default
 public class BigDecimal extends Number implements Comparable<BigDecimal> {
     //-RAC@ model public \bigint _unscaled;
     //-RAC@ model public int _scale;
     //-RAC@ model public \real value;
 
     //-RAC@ public invariant _scale >= 0 ? value * pow10(_scale) == _unscaled : value == _unscaled * pow10(-_scale);
+
+    // The implementation's representation: the unscaled value is intCompact, unless that is INFLATED
+    // (Long.MIN_VALUE), in which case it is intVal; intVal may be null otherwise
+    private final /*@ nullable */ BigInteger intVal;
+    private final int scale;
+    private final transient long intCompact;
+
+    //-RAC@ private invariant intCompact != Long.MIN_VALUE || intVal != null;
+    //-RAC@ private represents _scale = scale;
+    //-RAC@ private represents _unscaled = intCompact != Long.MIN_VALUE || intVal == null ? (\bigint)intCompact : intVal.value;
+
+    // The trusted constructor that most operations end with; the caller ensures the arguments are consistent
+    //@ private normal_behavior
+    //@   requires val != Long.MIN_VALUE || intVal != null;
+    //@   ensures this.intVal == intVal && this.intCompact == val && this.scale == scale;
+    BigDecimal(/*@ nullable */ BigInteger intVal, long val, int scale, int prec);
 
     //@ public normal_behavior
     //@   requires n >= 0;

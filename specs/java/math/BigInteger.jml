@@ -31,7 +31,9 @@ import java.util.Random;
  * @author David R. Cok
  * @author Gary T. Leavens
  */
-//@ immutable nullable_by_default
+// FIXME - not immutable: getRadixConversionCache updates the static powerCache, and lazily cached instance fields
+//         (bitCountPlusOne etc.) are written after construction
+//@ nullable_by_default
 public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInteger> {
 
     //-RAC@ public model \bigint value;
@@ -42,10 +44,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
         public normal_behavior
           requires Character.MIN_RADIX <= radix <= Character.MAX_RADIX;
           requires Number.parseable(val,radix);
-        public static model spec_pure \bigint parse(String val, int radix) {
-        // !FIXME! - should put in a non-circular computation for RAC
-            return new BigInteger(val,radix).value;
-        }
+        public static model spec_pure \bigint parse(String val, int radix);
         */
 
     /*@
@@ -54,10 +53,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
         //@   ensures (\result < 0) <==> (val.length >= 1 && val[0] < 0);
         //@   ensures (val.length >= 1 && val[0] >= 0) ==> (* \result.value == (\sum int i; 0<=i && i<val.length; -- sum over powers of 16 *); // FIXME
         //@ pure helper
-        public static model \bigint convert(byte non_null [] val) {
-        // !FIXME! - should put in a non-circular computation for RAC
-            return \bigint.of(new BigInteger(val));
-        }
+        public static model \bigint convert(byte non_null [] val);
     @*/
 
     //@ public normal_behavior
