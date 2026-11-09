@@ -208,7 +208,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     //@   signals_only ArithmeticException;
     public BigInteger nextProbablePrime();
 
-    boolean primeToCertainty(int certainty, java.util.Random r); // CHANGED in 1.6
+    boolean primeToCertainty(int certainty, java.util.Random random); // CHANGED in 1.6
 
     private static int jacobiSymbol(int p, BigInteger n);
 
