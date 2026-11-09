@@ -252,6 +252,12 @@ public final class Math {
       @*/
     public static /*@ no_state @*/ double log10(double a);
         
+    /* CAUTION: ESC translates calls of sqrt directly, so besides the clauses below it uses an implicit specification:
+     *  - with the SMT FloatingPoint theory (--no-fpreal), sqrt is the theory's fp.sqrt, which is correctly rounded as
+     *    Java's is: the result is exactly Java's;
+     *  - with --fpreal, sqrt is the exact real square root: for finite a > 0, \result >= 0 && \result * \result == a.
+     *    That is stronger than Java (whose result is rounded), as all --fpreal arithmetic is.
+     * (OpenJML: FpRealModel.sqrt and SMTTranslator.fpMath) */
     /*@ public normal_behavior
       @ {|
       @   requires Double.isNaN(a) || a < 0.0;
@@ -309,15 +315,16 @@ public final class Math {
       @   requires f1 == Double.MAX_VALUE && f2 == Double.MIN_VALUE;
       @   ensures \result == 0.0;
       @ also
-      @   ensures isPositiveZero(\result) ==> isPositiveZero(f1) || 0.0 < f1; 
-      @   ensures isNegativeZero(\result) ==> isNegativeZero(f1) || f1 < 0.0;
-      @   ensures 
-      @   (* The remainder value is mathematically equal to 
-      @      <code>f1&nbsp;-&nbsp;f2</code>&nbsp;&times;&nbsp;<i>n</i>,
-      @      where <i>n</i> is the mathematical integer closest to the exact 
-      @      mathematical value of the quotient <code>f1/f2</code>, and if two 
-      @      mathematical integers are equally close to <code>f1/f2</code>, 
-      @      then <i>n</i> is the integer that is even. *);
+      @   requires Double.isFinite(f1) && Double.isFinite(f2) && f2 != 0.0;
+      @   // exact (the remainder is always representable): f1 - f2*n, where n is the integer closest to the exact
+      @   // quotient f1/f2, the even one if two are equally close; so |\result| <= |f2|/2
+      @   ensures Double.isFinite(\result);
+      @   ensures (\real)(\bigint)(((\real)f1 - (\real)\result) / (\real)f2) == ((\real)f1 - (\real)\result) / (\real)f2;
+      @   ensures -(\real)abs(f2) <= 2 * (\real)\result && 2 * (\real)\result <= (\real)abs(f2);
+      @   ensures (2 * (\real)\result == (\real)abs(f2) || -2 * (\real)\result == (\real)abs(f2))
+      @               ==> (\bigint)(((\real)f1 - (\real)\result) / (\real)f2) % 2 == 0;
+      @   // a zero result has the sign of f1
+      @   ensures \result == 0.0 ==> (isNegativeZero(\result) <==> (isNegativeZero(f1) || f1 < 0.0));
       @ |}
       @*/
     public static /*@ no_state @*/ double IEEEremainder(double f1, double f2);
@@ -1245,37 +1252,40 @@ public final class Math {
     
     // model methods to help make some of the special cases
     // easier to deal with
-    /*@ //+RAC@ inline
+    /*@ inline
         public static model no_state boolean isPositiveZero(double a) {
           return java.lang.Double.isPositiveZero(a);
         }
     
-        //+RAC@ inline
+        inline
         public static model no_state boolean isNegativeZero(double a) {
           return java.lang.Double.isNegativeZero(a);
         }
     
-        //+RAC@ inline
+        inline
         public static model no_state boolean isPositiveZero(float a) {
           return java.lang.Float.isPositiveZero(a);
         }
     
-        //+RAC@ inline
+        inline
         public static model no_state boolean isNegativeZero(float a) {
           return java.lang.Float.isNegativeZero(a);
         }
     
-        //+RAC@ inline
+        inline
         model public static no_state boolean isFiniteOdd(double a) {
-          return Double.isFinite(a) && abs(IEEEremainder(a, 2.0)) == 1.0; // the remainder of 3 is -1
+          // an integer whose half is not; rint is native in ESC (IEEEremainder's spec is costly in pow's spec)
+          return Double.isFinite(a) && rint(a) == a && rint(a/2) != a/2;
+          // return Double.isFinite(a) && abs(IEEEremainder(a, 2.0)) == 1.0; // the remainder of 3 is -1
         }
      
-        //+RAC@ inline
+        inline
         model public static no_state boolean isFiniteEven(double a) {
-          return Double.isFinite(a) && IEEEremainder(a, 2.0) == 0.0;
+          return Double.isFinite(a) && rint(a) == a && rint(a/2) == a/2;
+          // return Double.isFinite(a) && IEEEremainder(a, 2.0) == 0.0;
         }
 
-        //+RAC@ inline
+        inline
         public static model no_state boolean close(double a, double b,
                                               double eps) {
          return abs(a - b) <= max(abs(a), abs(b)) * eps;
