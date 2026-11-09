@@ -7,11 +7,26 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     //@       requires m != null;
     //@       ensures size() == m.size();
     //-RAC@   ensures (\forall Object o; ; get(o) == m.get(o));
+    //-RAC@   ensures _size == m._size && keys == m.keys && modelMap == m.modelMap;
+    //-RAC@   ensures nullPresent == m.nullPresent && nullValue == m.nullValue;
     //@ pure
     public HashMap(Map<? extends K, ? extends V> m);
     
+    // Redeclared so that the nullness matches Map's, not this file's non_null_by_default
     @Override
-    public V get(Object key);
+    public /*@ nullable */ V get(/*@ nullable */ Object key);
+
+    @Override
+    public boolean containsKey(/*@ nullable */ Object key);
+
+    @Override
+    public boolean containsValue(/*@ nullable */ Object value);
+
+    @Override
+    public /*@ nullable */ V put(/*@ nullable */ K key, /*@ nullable */ V value);
+
+    @Override
+    public /*@ nullable */ V remove(/*@ nullable */ Object key);
 
     @Override
     public int size();
@@ -19,6 +34,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     //@ public normal_behavior
     //@       ensures size() == 0;
     //-RAC@   ensures (\forall Object o; ; get(o) == null);
+    //-RAC@   ensures _size == 0 && !nullPresent && (\forall \bigint i;; !keys[i]);
     //@ pure
     public HashMap();
 }

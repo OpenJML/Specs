@@ -39,8 +39,8 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
     //@ helper
     public int size();
     public boolean isEmpty();
-    public boolean containsValue(Object value);
-    public boolean containsKey(Object key);
+    public boolean containsValue(/*@ nullable */ Object value);
+    public boolean containsKey(/*@ nullable */ Object key);
     public /*@ nullable */ V get(/*@ nullable */ Object key);   // OPENJML FIXME: K key ?
     
     // specs inherited from Map
@@ -48,7 +48,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
     public /*@ nullable */ V put(/*@ nullable */ K key, /*@ nullable */ V value);
 
 
-    public /*@ nullable */ V remove(Object key);
+    public /*@ nullable */ V remove(/*@ nullable */ Object key);
     public void putAll(Map<? extends K,? extends V> t);
     public void clear();
     public Set<K> keySet();
