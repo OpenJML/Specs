@@ -1,0 +1,84 @@
+package java.math;
+
+// RAC cannot read the package-private fields of a JDK class, so clauses that name them are ESC-only (-RAC);
+// the rest use getPrecision() and getRoundingMode().
+// Not specified: the result of toString and the format accepted by MathContext(String) beyond its exceptions.
+//@ immutable
+//@ non_null_by_default
+public final class MathContext implements java.io.Serializable {
+
+    public static final MathContext UNLIMITED;
+    public static final MathContext DECIMAL32;
+    public static final MathContext DECIMAL64;
+    public static final MathContext DECIMAL128;
+
+    /*@ spec_public */ final int precision;
+    /*@ spec_public */ final RoundingMode roundingMode;
+
+    //@ public normal_behavior
+    //@   ensures UNLIMITED.getPrecision() == 0 && UNLIMITED.getRoundingMode() == RoundingMode.HALF_UP;
+    //@   ensures DECIMAL32.getPrecision() == 7 && DECIMAL32.getRoundingMode() == RoundingMode.HALF_EVEN;
+    //@   ensures DECIMAL64.getPrecision() == 16 && DECIMAL64.getRoundingMode() == RoundingMode.HALF_EVEN;
+    //@   ensures DECIMAL128.getPrecision() == 34 && DECIMAL128.getRoundingMode() == RoundingMode.HALF_EVEN;
+    //@ static_initializer
+
+    //@ public normal_behavior
+    //@   requires setPrecision >= 0;
+    //@   ensures getPrecision() == setPrecision && getRoundingMode() == RoundingMode.HALF_UP;
+    //@ also public exceptional_behavior
+    //@   requires setPrecision < 0;
+    //@   signals_only IllegalArgumentException;
+    //@ pure
+    public MathContext(int setPrecision);
+
+    //@ public normal_behavior
+    //@   requires setPrecision >= 0 && setRoundingMode != null;
+    //@   ensures getPrecision() == setPrecision && getRoundingMode() == setRoundingMode;
+    //@ also public exceptional_behavior
+    //@   requires setPrecision < 0;
+    //@   signals_only IllegalArgumentException;
+    //@ also public exceptional_behavior
+    //@   requires setPrecision >= 0 && setRoundingMode == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public MathContext(int setPrecision, /*@ nullable */ RoundingMode setRoundingMode);
+
+    //@ public behavior
+    //@   requires val != null;
+    //@   signals_only IllegalArgumentException;
+    //@ also public exceptional_behavior
+    //@   requires val != null && !val.startsWith("precision=");
+    //@   signals_only IllegalArgumentException;
+    //@ also public exceptional_behavior
+    //@   requires val == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public MathContext(/*@ nullable */ String val);
+
+    //@ public normal_behavior
+    //-RAC@ ensures \result == precision;
+    //@   ensures \result >= 0;
+    //@ pure
+    public int getPrecision();
+
+    //@ public normal_behavior
+    //-RAC@ ensures \result == roundingMode;
+    //@ spec_pure
+    public RoundingMode getRoundingMode();
+
+    //@ also public normal_behavior
+    //-RAC@ ensures \result == (x instanceof MathContext && ((MathContext)x).precision == precision
+    //-RAC@                                             && ((MathContext)x).roundingMode == roundingMode);
+    //@ pure
+    public boolean equals(/*@ nullable */ Object x);
+
+    //@ also public normal_behavior
+    //-RAC@ ensures \result == precision + roundingMode.hashCode() * 59;
+    //@ pure
+    public int hashCode();
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public String toString();
+}
