@@ -8,10 +8,11 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
     final byte[] hb; //@ in _hasBackingArray;  // FIXME _ perhaps this should be model?
     //@ public represents _hasBackingArray = (hb != null);
     
-    //@ public invariant 0 <= offset;
-    //@ public invariant offset <= hb.length;
-    //@ public invariant hb.length <= Integer.MAX_VALUE;
-    //@ public invariant hb.length-offset >= capacity;
+    // ESC only: RAC cannot read these package-private and private fields
+    //-RAC@ public invariant 0 <= offset;
+    //-RAC@ public invariant offset <= hb.length;
+    //-RAC@ public invariant hb.length <= Integer.MAX_VALUE;
+    //-RAC@ public invariant hb.length-offset >= capacity;
     
     //@ spec_public  
     final int offset; //@ in _offset;

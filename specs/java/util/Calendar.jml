@@ -123,7 +123,8 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @ public pure model boolean resultIsMaximum(); 
        @*/
 
-    /*@ public invariant zone != null;
+    // ESC only: RAC cannot read the private field
+    /*-RAC@ public invariant zone != null;
        @*/
 
     /*@ protected normal_behavior

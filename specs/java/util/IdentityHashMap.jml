@@ -23,7 +23,8 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   // empty slots are null
   //@ invariant table != null && table.length % 2 == 0;
   //@ invariant 8 <= table.length && table.length <= (1 << 30); // 2 * MINIMUM_CAPACITY, 2 * MAXIMUM_CAPACITY
-  //@ public invariant size >= 0;
+  //-RAC@ public invariant size >= 0;
+  //+RAC@ public invariant size() >= 0; // RAC cannot read the package-private field
 
   //@ private normal_behavior
   //@   ensures \result == (key == null ? NULL_KEY : key);

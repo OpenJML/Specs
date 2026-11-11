@@ -20,10 +20,14 @@ public abstract class Buffer {
     //@ model public boolean _hasBackingArray;
     //@ model public int _offset;
 
-    //@ public invariant 0 <= mark;
-    //@ public invariant mark <= position;
-    //@ public invariant position <= limit;
-    //@ public invariant limit <= capacity;
+    // RAC cannot read the private fields, so it uses the public getters
+    //-RAC@ public invariant 0 <= mark;
+    //-RAC@ public invariant mark <= position;
+    //-RAC@ public invariant position <= limit;
+    //-RAC@ public invariant limit <= capacity;
+    //+RAC@ public invariant 0 <= position();
+    //+RAC@ public invariant position() <= limit();
+    //+RAC@ public invariant limit() <= capacity();
 
     long address;
     //Buffer(int mark, int pos, int lim, int cap, MemorySegmentProxy segment);

@@ -112,7 +112,8 @@ public class GregorianCalendar extends Calendar {
     private transient /*@ spec_public*/ int gregorianCutoverYear;
     // FIXME //@ public represents gregorianCutoverYear = 1582;
     
-    /*@ public invariant zone != null;
+    // ESC only: RAC cannot read Calendar's private zone and protected fields
+    /*-RAC@ public invariant zone != null;
       @ public invariant locale != null;
       @ public invariant boundsCheck(fields[ERA], ERA);
       @ public invariant boundsCheck(fields[YEAR], YEAR);
@@ -459,11 +460,11 @@ public class GregorianCalendar extends Calendar {
     // Class Method Specifications
     //------------------------------------------------------------------------
 
-    /*@ public normal_behavior
-      @ assignable zone, locale;
-      @ ensures this.zone == TimeZone.getDefault()
-      @         && this.locale == Locale.getDefault();
-      @*/
+    // The ensures is ESC only: RAC cannot read Calendar's private zone (and TimeZone.getDefault() returns a copy)
+    //@ public normal_behavior
+    //@   assignable zone, locale;
+    //-RAC@ ensures this.zone == TimeZone.getDefault()
+    //-RAC@         && this.locale == Locale.getDefault();
     public GregorianCalendar();
 
     /*@ public normal_behavior
