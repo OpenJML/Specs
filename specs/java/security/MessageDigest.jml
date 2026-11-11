@@ -35,7 +35,7 @@ public abstract class MessageDigest extends MessageDigestSpi {
   //@ pure
   public static MessageDigest getInstance(java.lang.String s, Provider p) throws NoSuchAlgorithmException;
   //@ public normal_behavior
-  //@   ensures \result == provider;
+  //-RAC@   ensures \result == provider;
   //@ pure
   public final Provider getProvider();
   

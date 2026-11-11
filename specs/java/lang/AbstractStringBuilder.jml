@@ -23,7 +23,7 @@ abstract class AbstractStringBuilder implements Appendable,CharSequence {
 
     // inherits \result == chars.length;
     //@ also normal_behavior
-    //@   ensures \result == count;
+    //-RAC@   ensures \result == count;
     //@ spec_pure helper
     @Override
     public int length();

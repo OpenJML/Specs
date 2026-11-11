@@ -44,12 +44,11 @@ public class GregorianCalendar extends Calendar {
     /*@ spec_public*/ static final int MONTH_LENGTH[] ;//= {31,28,31,30,31,30,31,31,30,31,30,31};
     /*@ spec_public*/ static final int LEAP_MONTH_LENGTH[] ;//= {31,29,31,30,31,30,31,31,30,31,30,31};
 
-    /*@ public constraint 
-      @        \old(NUM_DAYS).equals(NUM_DAYS) &&
-      @        \old(LEAP_NUM_DAYS).equals(LEAP_NUM_DAYS) &&
-      @        \old(MONTH_LENGTH).equals(MONTH_LENGTH) &&
-      @        \old(LEAP_MONTH_LENGTH).equals(LEAP_MONTH_LENGTH);
-      @*/
+    //-RAC@ public constraint
+    //-RAC@         \old(NUM_DAYS).equals(NUM_DAYS) &&
+    //-RAC@         \old(LEAP_NUM_DAYS).equals(LEAP_NUM_DAYS) &&
+    //-RAC@         \old(MONTH_LENGTH).equals(MONTH_LENGTH) &&
+    //-RAC@         \old(LEAP_MONTH_LENGTH).equals(LEAP_MONTH_LENGTH);
 
     private /*@ spec_public */ final static int  ONE_SECOND; //public static represents ONE_SECOND = 1000;
     private /*@ spec_public */ final static int  ONE_MINUTE; //public static represents ONE_MINUTE = 60*ONE_SECOND;
@@ -108,7 +107,7 @@ public class GregorianCalendar extends Calendar {
     private /*@ spec_public*/ long gregorianCutover; //@ in normalizedGregorianCutover;
     // FIXME //@ public represents gregorianCutover = -12219292800000L;
     //@ public model long normalizedGregorianCutover;
-    //@ public represents normalizedGregorianCutover = gregorianCutover;
+    //-RAC@ public represents normalizedGregorianCutover = gregorianCutover;
     private transient /*@ spec_public*/ int gregorianCutoverYear;
     // FIXME //@ public represents gregorianCutoverYear = 1582;
     
@@ -462,34 +461,31 @@ public class GregorianCalendar extends Calendar {
 
     // The ensures is ESC only: RAC cannot read Calendar's private zone (and TimeZone.getDefault() returns a copy)
     //@ public normal_behavior
-    //@   assignable zone, locale;
+    //-RAC@   assignable zone, locale;
     //-RAC@ ensures this.zone == TimeZone.getDefault()
     //-RAC@         && this.locale == Locale.getDefault();
     public GregorianCalendar();
 
-    /*@ public normal_behavior
-      @ requires zone != null;
-      @ ensures this.zone == zone
-      @         && this.locale == Locale.getDefault();
-      @ pure
-      @*/
+    //@ public normal_behavior
+    //@  requires zone != null;
+    //-RAC@  ensures this.zone == zone
+    //-RAC@          && this.locale == Locale.getDefault();
+    //@  pure
     public GregorianCalendar(TimeZone zone);
 
-    /*@ public normal_behavior
-      @ requires aLocale != null;
-      @ assignable zone, locale;
-      @ ensures this.zone == TimeZone.getDefault()
-      @         && this.locale == aLocale;
-      @*/
+    //@ public normal_behavior
+    //@  requires aLocale != null;
+    //-RAC@  assignable zone, locale;
+    //-RAC@  ensures this.zone == TimeZone.getDefault()
+    //-RAC@          && this.locale == aLocale;
     public GregorianCalendar(Locale aLocale);
 
-    /*@ public normal_behavior
-      @ requires zone != null && aLocale != null;
-      @ ensures this.zone == zone
-      @         && this.locale == aLocale;
-      @ ensures_redundantly milliFieldsAreSet();
-      @ pure
-      @*/
+    //@ public normal_behavior
+    //@  requires zone != null && aLocale != null;
+    //-RAC@  ensures this.zone == zone
+    //-RAC@          && this.locale == aLocale;
+    //@  ensures_redundantly milliFieldsAreSet();
+    //@  pure
     public GregorianCalendar(TimeZone zone, Locale aLocale);
 
     /* FIXME @ public normal_behavior
@@ -506,44 +502,42 @@ public class GregorianCalendar extends Calendar {
       @*/
     public GregorianCalendar(int year, int month, int dayOfMonth);
 
-    /*@ public normal_behavior
-      @ assignable zone, locale;
-      @ assignable_redundantly fields[YEAR], fields[MONTH], fields[DATE],
-      @                        fields[HOUR_OF_DAY], fields[MINUTE], 
-      @                        isTimeSet, areFieldsSet, isSet[*];
-      @ ensures this.zone == TimeZone.getDefault() &&
-      @         this.locale == Locale.getDefault();
-      @ ensures_redundantly fields[YEAR] == year
-      @                     && fields[MONTH] == month
-      @                     && fields[DATE] == dayOfMonth
-      @                     && fields[HOUR_OF_DAY] == hourOfDay
-      @                     && fields[MINUTE] == minute
-      @                     && isSet[YEAR] && isSet[MONTH]
-      @                     && isSet[DATE] && isSet[HOUR_OF_DAY]
-      @                     && isSet[MINUTE] && calendarFieldsAreSet();
-      @*/
+    //@ public normal_behavior
+    //-RAC@  assignable zone, locale;
+    //@  assignable_redundantly fields[YEAR], fields[MONTH], fields[DATE],
+    //@                         fields[HOUR_OF_DAY], fields[MINUTE],
+    //@                         isTimeSet, areFieldsSet, isSet[*];
+    //-RAC@  ensures this.zone == TimeZone.getDefault() &&
+    //-RAC@          this.locale == Locale.getDefault();
+    //-RAC@  ensures_redundantly fields[YEAR] == year
+    //-RAC@                      && fields[MONTH] == month
+    //-RAC@                      && fields[DATE] == dayOfMonth
+    //-RAC@                      && fields[HOUR_OF_DAY] == hourOfDay
+    //-RAC@                      && fields[MINUTE] == minute
+    //-RAC@                      && isSet[YEAR] && isSet[MONTH]
+    //-RAC@                      && isSet[DATE] && isSet[HOUR_OF_DAY]
+    //-RAC@                      && isSet[MINUTE] && calendarFieldsAreSet();
     public GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay,
                              int minute);
 
-    /*@ public normal_behavior
-      @ assignable zone, locale;
-      @ assignable_redundantly fields[YEAR], fields[MONTH], fields[DATE],
-      @                        fields[HOUR_OF_DAY], fields[MINUTE],
-      @                        fields[SECOND], isTimeSet, areFieldsSet,
-      @                        isSet[*];
-      @ ensures this.zone == TimeZone.getDefault() &&
-      @         this.locale == Locale.getDefault();
-      @ ensures_redundantly fields[YEAR] == year
-      @                     && fields[MONTH] == month
-      @                     && fields[DATE] == dayOfMonth
-      @                     && fields[HOUR_OF_DAY] == hourOfDay
-      @                     && fields[MINUTE] == minute
-      @                     && fields[SECOND] == second
-      @                     && isSet[YEAR] && isSet[MONTH]
-      @                     && isSet[DATE] && isSet[HOUR_OF_DAY]
-      @                     && isSet[MINUTE] && isSet[SECOND]
-      @                     && calendarFieldsAreSet();
-      @*/
+    //@ public normal_behavior
+    //-RAC@  assignable zone, locale;
+    //@  assignable_redundantly fields[YEAR], fields[MONTH], fields[DATE],
+    //@                         fields[HOUR_OF_DAY], fields[MINUTE],
+    //@                         fields[SECOND], isTimeSet, areFieldsSet,
+    //@                         isSet[*];
+    //-RAC@  ensures this.zone == TimeZone.getDefault() &&
+    //-RAC@          this.locale == Locale.getDefault();
+    //-RAC@  ensures_redundantly fields[YEAR] == year
+    //-RAC@                      && fields[MONTH] == month
+    //-RAC@                      && fields[DATE] == dayOfMonth
+    //-RAC@                      && fields[HOUR_OF_DAY] == hourOfDay
+    //-RAC@                      && fields[MINUTE] == minute
+    //-RAC@                      && fields[SECOND] == second
+    //-RAC@                      && isSet[YEAR] && isSet[MONTH]
+    //-RAC@                      && isSet[DATE] && isSet[HOUR_OF_DAY]
+    //-RAC@                      && isSet[MINUTE] && isSet[SECOND]
+    //-RAC@                      && calendarFieldsAreSet();
     public GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay,
                              int minute, int second);
 
@@ -574,428 +568,424 @@ public class GregorianCalendar extends Calendar {
       @*/
     public void setGregorianChange(Date date);
 
-    /*@ public normal_behavior
-      @     assignable \nothing;
-      @     ensures \result.getTime() == gregorianCutover;
-      @*/
+    //@ public normal_behavior
+    //@      assignable \nothing;
+    //-RAC@      ensures \result.getTime() == gregorianCutover;
     public /*@ pure @*/ final Date getGregorianChange();
 
-    /*@  public normal_behavior
-      @     requires year >= gregorianCutoverYear;
-      @     assignable \nothing;
-      @     ensures \result == ((year%4 == 0) && ((year%100 != 0)
-      @                        || (year%400 == 0)));
-      @ also
-      @   public normal_behavior
-      @     requires year < gregorianCutoverYear;
-      @     assignable \nothing;
-      @     ensures \result == (year%4 == 0);
-      @*/
+    //-RAC@ public normal_behavior
+    //-RAC@      requires year >= gregorianCutoverYear;
+    //-RAC@      assignable \nothing;
+    //-RAC@      ensures \result == ((year%4 == 0) && ((year%100 != 0)
+    //-RAC@                         || (year%400 == 0)));
+    //+RAC@ public behavior
+    //@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      requires year < gregorianCutoverYear;
+    //-RAC@      assignable \nothing;
+    //-RAC@      ensures \result == (year%4 == 0);
+    //+RAC@ public behavior
     public /*@ pure @*/ boolean isLeapYear(int year);
 
-    /*@ also
-      @   public normal_behavior
-      @     old GregorianCalendar gcal = (GregorianCalendar)obj;
-      @     requires obj != null;
-      @     assignable \nothing;
-      @     ensures obj instanceof GregorianCalendar
-      @             && gregorianCutover == gcal.gregorianCutover;
-      @*/
+    //@ also
+    //@    public normal_behavior
+    //@      old GregorianCalendar gcal = (GregorianCalendar)obj;
+    //@      requires obj != null;
+    //@      assignable \nothing;
+    //-RAC@      ensures obj instanceof GregorianCalendar
+    //-RAC@              && gregorianCutover == gcal.gregorianCutover;
     public boolean equals(Object obj);
     
     // Specification is inherited
     public int hashCode();
 
-    /*@ also
-      @   public normal_behavior
-      @     requires amount == 0;
-      @     assignable \nothing;
-      @ also
-      @   public normal_behavior
-      @     old int year = get(YEAR);
-      @     {|
-      @         ensures isComplete();
-      @     also
-      @       {|
-      @         requires field == YEAR;
-      @         assignable_redundantly fields[YEAR], fields[ERA], isTimeSet,
-      @                                areFieldsSet, isSet[*];
-      @         ensures pinDayOfMonthIsSet(\old(fields[DAY_OF_MONTH]),
-      @                                    fields[DAY_OF_MONTH]);
-      @         ensures_redundantly isSet[YEAR] && isSet[ERA] 
-      @                             && calendarFieldsAreSet();
-      @       also
-      @         requires year > 0;
-      @         assignable_redundantly fields[YEAR], isTimeSet, areFieldsSet,
-      @                                isSet[YEAR];
-      @         ensures_redundantly fields[YEAR] == \old(fields[YEAR]) + amount
-      @                             && isSet[YEAR] && calendarFieldsAreSet();
-      @       also
-      @         {|
-      @                 requires year <= 0;
-      @                 assignable_redundantly fields[YEAR], fields[ERA],
-      @                                        isTimeSet, areFieldsSet,
-      @                                        isSet[*];
-      @                 ensures_redundantly fields[YEAR]
-      @                                     == 1 - \old(fields[YEAR])
-      @                                     && isSet[YEAR] && isSet[ERA] 
-      @                                     && calendarFieldsAreSet();
-      @         also
-      @                 requires this.internalGetEra() == AD;
-      @                 assignable_redundantly fields[ERA], isTimeSet, 
-      @                                        areFieldsSet, isSet[ERA];
-      @                 ensures_redundantly fields[ERA] == BC && isSet[ERA]
-      @                                     && calendarFieldsAreSet();
-      @         also
-      @                 requires this.internalGetEra() == BC;
-      @                 assignable_redundantly fields[ERA], isTimeSet, 
-      @                                        areFieldsSet, isSet[ERA];
-      @                 ensures_redundantly fields[ERA] == AD && isSet[ERA]
-      @                                     && calendarFieldsAreSet();
-      @         |}
-      @      |}
-      @    also
-      @      old int month = (int)(get(MONTH) + amount);
-      @      {|
-      @         requires field == MONTH;
-      @         assignable_redundantly fields[YEAR], fields[ERA], fields[MONTH],
-      @                                isTimeSet, areFieldsSet, isSet[*];
-      @         ensures pinDayOfMonthIsSet(\old(fields[DAY_OF_MONTH]), 
-      @                                    fields[DAY_OF_MONTH]);
-      @         ensures_redundantly isSet[YEAR] && isSet[ERA] && isSet[MONTH] 
-      @                             && calendarFieldsAreSet();
-      @      also
-      @         {|
-      @                 requires isYAmountNotZero((int)(get(MONTH) + amount));
-      @         also
-      @                 requires year > 0;
-      @                 assignable_redundantly fields[YEAR], isTimeSet, 
-      @                                        areFieldsSet, isSet[YEAR];
-      @                 ensures_redundantly fields[YEAR]
-      @                                     == \old(fields[YEAR]) + amount
-      @                                     && isSet[YEAR]
-      @                                     && calendarFieldsAreSet();
-      @         also
-      @             {|
-      @                 requires year <= 0;
-      @                 assignable_redundantly fields[YEAR], fields[ERA], 
-      @                                        isTimeSet, areFieldsSet, 
-      @                                        isSet[*];
-      @                 ensures_redundantly fields[YEAR] 
-      @                                     == 1 - \old(fields[YEAR]) 
-      @                                     && isSet[YEAR] && isSet[ERA] 
-      @                                     && calendarFieldsAreSet();
-      @             also
-      @                 requires this.internalGetEra() == AD;
-      @                 assignable_redundantly fields[ERA], isTimeSet, 
-      @                                        areFieldsSet, isSet[ERA];
-      @                 ensures_redundantly fields[ERA] == BC && isSet[ERA]
-      @                                     && calendarFieldsAreSet();
-      @             also        
-      @                 requires this.internalGetEra() == BC;
-      @                 assignable_redundantly fields[ERA], isTimeSet, 
-      @                                        areFieldsSet, isSet[ERA];
-      @                 ensures_redundantly fields[ERA] == AD && isSet[ERA]
-      @                                     && calendarFieldsAreSet();
-      @             |}
-      @         also
-      @             requires month >= 0;
-      @             assignable_redundantly fields[MONTH], isTimeSet, 
-      @                                    areFieldsSet, isSet[MONTH];
-      @             ensures_redundantly fields[MONTH] == (int) (month % 12) 
-      @                                 && isSet[MONTH] 
-      @                                 && calendarFieldsAreSet();
-      @         also
-      @                 requires month < 0;
-      @                 assignable_redundantly fields[MONTH], isTimeSet, 
-      @                                        areFieldsSet, isSet[MONTH];
-      @                 ensures_redundantly fields[MONTH] == JANUARY + month
-      @                                     && isSet[MONTH]
-      @                                     && calendarFieldsAreSet();
-      @         |}
-      @     |}
-      @     also
-      @         old int era = get(ERA);
-      @         requires field == ERA;
-      @         assignable_redundantly fields[ERA], isTimeSet, areFieldsSet, 
-      @                                isSet[ERA];
-      @         ensures_redundantly fields[ERA] == era && isSet[ERA]
-      @                             && calendarFieldsAreSet();
-      @     also
-      @         requires field == WEEK_OF_YEAR || field == WEEK_OF_MONTH
-      @                  || field == DAY_OF_WEEK_IN_MONTH || field == AM_PM
-      @                  || field == DATE || field == DAY_OF_YEAR 
-      @                  || field== DAY_OF_WEEK || field == HOUR_OF_DAY 
-      @                  || field == HOUR || field == MINUTE 
-      @                  || field == SECOND || field == MILLISECOND;
-      @         assignable \nothing;
-      @     also
-      @         {|
-      @             assignable_redundantly time, isTimeSet, areFieldsSet, 
-      @                                    areAllFieldsSet;
-      @             ensures getTimeInMillis() 
-      @                     == time + computeDelta(field, amount);
-      @             ensures_redundantly milliFieldsAreSet();
-      @         also
-      @             old boolean adjustDST = (field == WEEK_OF_YEAR
-      @                                      || field == WEEK_OF_MONTH
-      @                                      || field == DAY_OF_WEEK_IN_MONTH
-      @                                      || field == AM_PM
-      @                                      || field == DATE
-      @                                      || field == DAY_OF_YEAR
-      @                                      || field == DAY_OF_WEEK);
-      @             old int oldDSTOffset = get(DST_OFFSET);
-      @             requires adjustDST && computeDST(adjustDST, oldDSTOffset, 
-      @                                              get(DST_OFFSET)) != 0;
-      @             assignable_redundantly time, isTimeSet, 
-      @                                    areFieldsSet, areAllFieldsSet;
-      @             ensures getTimeInMillis() == time 
-      @                                          + computeDST(adjustDST, 
-      @                                                       oldDSTOffset, 
-      @                                                       get(DST_OFFSET));
-      @             ensures_redundantly milliFieldsAreSet();
-      @     |}
-      @ |}
-      @ also
-      @   public exceptional_behavior
-      @     requires amount != 0 && (field < 0 || field >= ZONE_OFFSET);
-      @    assignable \nothing;
-      @    signals_only IllegalArgumentException;
-      @*/
+    //@ also
+    //@    public normal_behavior
+    //@      requires amount == 0;
+    //@      assignable \nothing;
+    //@  also
+    //@    public normal_behavior
+    //@      old int year = get(YEAR);
+    //@      {|
+    //@          ensures isComplete();
+    //@      also
+    //@        {|
+    //@          requires field == YEAR;
+    //@          assignable_redundantly fields[YEAR], fields[ERA], isTimeSet,
+    //@                                 areFieldsSet, isSet[*];
+    //-RAC@          ensures pinDayOfMonthIsSet(\old(fields[DAY_OF_MONTH]),
+    //-RAC@                                     fields[DAY_OF_MONTH]);
+    //-RAC@          ensures_redundantly isSet[YEAR] && isSet[ERA]
+    //-RAC@                              && calendarFieldsAreSet();
+    //@        also
+    //@          requires year > 0;
+    //@          assignable_redundantly fields[YEAR], isTimeSet, areFieldsSet,
+    //@                                 isSet[YEAR];
+    //-RAC@          ensures_redundantly fields[YEAR] == \old(fields[YEAR]) + amount
+    //-RAC@                              && isSet[YEAR] && calendarFieldsAreSet();
+    //@        also
+    //@          {|
+    //@                  requires year <= 0;
+    //@                  assignable_redundantly fields[YEAR], fields[ERA],
+    //@                                         isTimeSet, areFieldsSet,
+    //@                                         isSet[*];
+    //-RAC@                  ensures_redundantly fields[YEAR]
+    //-RAC@                                      == 1 - \old(fields[YEAR])
+    //-RAC@                                      && isSet[YEAR] && isSet[ERA]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@          also
+    //-RAC@                  requires this.internalGetEra() == AD;
+    //@                  assignable_redundantly fields[ERA], isTimeSet,
+    //@                                         areFieldsSet, isSet[ERA];
+    //-RAC@                  ensures_redundantly fields[ERA] == BC && isSet[ERA]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@          also
+    //-RAC@                  requires this.internalGetEra() == BC;
+    //@                  assignable_redundantly fields[ERA], isTimeSet,
+    //@                                         areFieldsSet, isSet[ERA];
+    //-RAC@                  ensures_redundantly fields[ERA] == AD && isSet[ERA]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@          |}
+    //@       |}
+    //@     also
+    //@       old int month = (int)(get(MONTH) + amount);
+    //@       {|
+    //@          requires field == MONTH;
+    //@          assignable_redundantly fields[YEAR], fields[ERA], fields[MONTH],
+    //@                                 isTimeSet, areFieldsSet, isSet[*];
+    //-RAC@          ensures pinDayOfMonthIsSet(\old(fields[DAY_OF_MONTH]),
+    //-RAC@                                     fields[DAY_OF_MONTH]);
+    //-RAC@          ensures_redundantly isSet[YEAR] && isSet[ERA] && isSet[MONTH]
+    //-RAC@                              && calendarFieldsAreSet();
+    //@       also
+    //@          {|
+    //@                  requires isYAmountNotZero((int)(get(MONTH) + amount));
+    //@          also
+    //@                  requires year > 0;
+    //@                  assignable_redundantly fields[YEAR], isTimeSet,
+    //@                                         areFieldsSet, isSet[YEAR];
+    //-RAC@                  ensures_redundantly fields[YEAR]
+    //-RAC@                                      == \old(fields[YEAR]) + amount
+    //-RAC@                                      && isSet[YEAR]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@          also
+    //@              {|
+    //@                  requires year <= 0;
+    //@                  assignable_redundantly fields[YEAR], fields[ERA],
+    //@                                         isTimeSet, areFieldsSet,
+    //@                                         isSet[*];
+    //-RAC@                  ensures_redundantly fields[YEAR]
+    //-RAC@                                      == 1 - \old(fields[YEAR])
+    //-RAC@                                      && isSet[YEAR] && isSet[ERA]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@              also
+    //-RAC@                  requires this.internalGetEra() == AD;
+    //@                  assignable_redundantly fields[ERA], isTimeSet,
+    //@                                         areFieldsSet, isSet[ERA];
+    //-RAC@                  ensures_redundantly fields[ERA] == BC && isSet[ERA]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@              also
+    //-RAC@                  requires this.internalGetEra() == BC;
+    //@                  assignable_redundantly fields[ERA], isTimeSet,
+    //@                                         areFieldsSet, isSet[ERA];
+    //-RAC@                  ensures_redundantly fields[ERA] == AD && isSet[ERA]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@              |}
+    //@          also
+    //@              requires month >= 0;
+    //@              assignable_redundantly fields[MONTH], isTimeSet,
+    //@                                     areFieldsSet, isSet[MONTH];
+    //-RAC@              ensures_redundantly fields[MONTH] == (int) (month % 12)
+    //-RAC@                                  && isSet[MONTH]
+    //-RAC@                                  && calendarFieldsAreSet();
+    //@          also
+    //@                  requires month < 0;
+    //@                  assignable_redundantly fields[MONTH], isTimeSet,
+    //@                                         areFieldsSet, isSet[MONTH];
+    //-RAC@                  ensures_redundantly fields[MONTH] == JANUARY + month
+    //-RAC@                                      && isSet[MONTH]
+    //-RAC@                                      && calendarFieldsAreSet();
+    //@          |}
+    //@      |}
+    //@      also
+    //@          old int era = get(ERA);
+    //@          requires field == ERA;
+    //@          assignable_redundantly fields[ERA], isTimeSet, areFieldsSet,
+    //@                                 isSet[ERA];
+    //-RAC@          ensures_redundantly fields[ERA] == era && isSet[ERA]
+    //-RAC@                              && calendarFieldsAreSet();
+    //@      also
+    //@          requires field == WEEK_OF_YEAR || field == WEEK_OF_MONTH
+    //@                   || field == DAY_OF_WEEK_IN_MONTH || field == AM_PM
+    //@                   || field == DATE || field == DAY_OF_YEAR
+    //@                   || field== DAY_OF_WEEK || field == HOUR_OF_DAY
+    //@                   || field == HOUR || field == MINUTE
+    //@                   || field == SECOND || field == MILLISECOND;
+    //@          assignable \nothing;
+    //@      also
+    //@          {|
+    //@              assignable_redundantly time, isTimeSet, areFieldsSet,
+    //@                                     areAllFieldsSet;
+    //-RAC@              ensures getTimeInMillis()
+    //-RAC@                      == time + computeDelta(field, amount);
+    //@              ensures_redundantly milliFieldsAreSet();
+    //@          also
+    //@              old boolean adjustDST = (field == WEEK_OF_YEAR
+    //@                                       || field == WEEK_OF_MONTH
+    //@                                       || field == DAY_OF_WEEK_IN_MONTH
+    //@                                       || field == AM_PM
+    //@                                       || field == DATE
+    //@                                       || field == DAY_OF_YEAR
+    //@                                       || field == DAY_OF_WEEK);
+    //@              old int oldDSTOffset = get(DST_OFFSET);
+    //@              requires adjustDST && computeDST(adjustDST, oldDSTOffset,
+    //@                                               get(DST_OFFSET)) != 0;
+    //@              assignable_redundantly time, isTimeSet,
+    //@                                     areFieldsSet, areAllFieldsSet;
+    //-RAC@              ensures getTimeInMillis() == time
+    //-RAC@                                           + computeDST(adjustDST,
+    //-RAC@                                                        oldDSTOffset,
+    //-RAC@                                                        get(DST_OFFSET));
+    //@              ensures_redundantly milliFieldsAreSet();
+    //@      |}
+    //@  |}
+    //@  also
+    //@    public exceptional_behavior
+    //@      requires amount != 0 && (field < 0 || field >= ZONE_OFFSET);
+    //@     assignable \nothing;
+    //@     signals_only IllegalArgumentException;
     public void add(int field, int amount)
     throws IllegalArgumentException;
 
-    /*@ also
-      @   public normal_behavior
-      @    requires up;
-      @    assignable fields[*];
-      @ also
-      @   public normal_behavior
-      @    requires !up;
-      @    assignable fields[*];
-      @ also
-      @  public model_program {
-      @      if (up) { roll(field, 1); }
-      @      else { roll(field, -1); }
-      @  }
-      @*/
+    //@ also
+    //@    public normal_behavior
+    //@     requires up;
+    //-RAC@     assignable fields[*];
+    //@  also
+    //@    public normal_behavior
+    //@     requires !up;
+    //-RAC@     assignable fields[*];
+    //@  also
+    //@   public model_program {
+    //@       if (up) { roll(field, 1); }
+    //@       else { roll(field, -1); }
+    //@   }
     public void roll(int field, boolean up);
 
-    /*@ also
-      @   public normal_behavior
-      @     requires amount == 0;
-      @     assignable \nothing;
-      @ also
-      @   public normal_behavior
-      @     requires field == ERA || field == YEAR || field == AM_PM
-      @              || field == MINUTE || field == SECOND 
-      @              || field == MILLISECOND || field == DAY_OF_MONTH;
-      @     assignable \nothing;
-      @     ensures isComplete();
-      @ also
-      @   public normal_behavior  // FIXME
-      @     requires field == HOUR || field == HOUR_OF_DAY;
-      @     assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
-      @     {  ghost Date start = getTime();
-      @        ghost int oldHour = get(field);
-      @        ghost int newHour = computeNewHour(field, amount, start, oldHour);
-      @        assume getTimeInMillis() == start.getTime()
-      @                                  + ONE_HOUR * (newHour - oldHour);
-      @     }
-      @     ensures_redundantly milliFieldsAreSet();
-      @ also
-      @   public normal_behavior
-      @     old int mon = computeMonth(amount);
-      @     old int monthLen = monthLength(mon);
-      @     old int dom = get(DAY_OF_MONTH);
-      @     {|
-      @         requires field == MONTH;
-      @         assignable fields[MONTH], fields[DAY_OF_MONTH], 
-      @                    isTimeSet, areFieldsSet, isSet[*];
-      @         ensures fields[MONTH] == mon && isSet[MONTH]
-      @                 && isSet[DAY_OF_MONTH] && calendarFieldsAreSet();
-      @     also
-      @         requires dom > monthLen;
-      @         assignable fields[DAY_OF_MONTH], isTimeSet, 
-      @                    areFieldsSet, isSet[DAY_OF_MONTH];
-      @         ensures fields[DAY_OF_MONTH] == monthLen
-      @                 && isSet[DAY_OF_MONTH] && calendarFieldsAreSet();
-      @     |}
-      @ also
-      @   public normal_behavior
-      @     old int woy = computeWoy(amount);
-      @     old int isoYear = computeIsoYear();
-      @     requires field == WEEK_OF_YEAR;
-      @     assignable fields[WEEK_OF_YEAR], fields[YEAR], isTimeSet,
-      @                areFieldsSet, isSet[*];
-      @     ensures fields[WEEK_OF_YEAR] == woy
-      @             && fields[YEAR] == isoYear && isSet[WEEK_OF_YEAR]
-      @             && isSet[YEAR] && calendarFieldsAreSet();
-      @ also
-      @   public normal_behavior
-      @     old int day_of_month = computeDayOfMonth(amount);
-      @     requires field == WEEK_OF_MONTH;
-      @     assignable fields[DAY_OF_MONTH], isTimeSet, areFieldsSet,
-      @                isSet[DAY_OF_MONTH];
-      @     ensures fields[DAY_OF_MONTH] == day_of_month
-      @             && isSet[DAY_OF_MONTH] && calendarFieldsAreSet();
-      @ also
-      @   public normal_behavior
-      @     old long oldTime = time;
-      @     old long delta = (long)(amount * ONE_DAY);
-      @     old long min2 = (long)(oldTime - (get(DAY_OF_YEAR) - 1) * ONE_DAY);
-      @     old int yearLength = yearLength();
-      @     {|
-      @         requires field == DAY_OF_YEAR;
-      @         assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
-      @         ensures getTimeInMillis() <= time + min2;
-      @         ensures_redundantly milliFieldsAreSet();
-      @     also
-      @         {|
-      @                 requires oldTime >= 0;
-      @                 assignable time;
-      @                 ensures time == (oldTime + delta - min2)
-      @                                  % (yearLength*ONE_DAY);
-      @         also
-      @                 requires oldTime < 0;
-      @                 assignable time;
-      @                 ensures time == ((oldTime + delta - min2)
-      @                                   % (yearLength*ONE_DAY))
-      @                                  + yearLength*ONE_DAY;
-      @         |}
-      @     |}
-      @ also
-      @   public normal_behavior
-      @     old long min2 = computeMin2();
-      @     old long delta = (long)(amount * ONE_DAY);
-      @     {| 
-      @         requires field == DAY_OF_WEEK;
-      @         assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
-      @         ensures getTimeInMillis() == time + min2;
-      @         ensures_redundantly milliFieldsAreSet();
-      @     also
-      @         requires time >= 0;
-      @         assignable time;
-      @         ensures time == (time + delta - min2) % ONE_WEEK;
-      @     also
-      @         requires time < 0;
-      @         assignable time;
-      @         ensures time == ((time + delta - min2) % ONE_WEEK) + ONE_WEEK;
-      @     |}
-      @ also
-      @   public normal_behavior
-      @     old long oldTime = time;
-      @     old long delta = (long)(amount * ONE_WEEK);
-      @     old int preWeeks = (int)((get(DAY_OF_MONTH) - 1) / 7);
-      @     old int postWeeks = (int)((monthLength(get(MONTH)) -
-      @                         get(DAY_OF_MONTH)) / 7);
-      @     old long min2 = (long)(oldTime - preWeeks * ONE_WEEK);
-      @     old long gap2 = (long)(ONE_WEEK * (preWeeks + postWeeks + 1));
-      @     {|
-      @         requires field == DAY_OF_WEEK_IN_MONTH;
-      @         assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
-      @         ensures getTimeInMillis() <= time + min2;
-      @         ensures_redundantly milliFieldsAreSet();
-      @     also
-      @         {|
-      @                 requires time >= 0;
-      @                 assignable time;
-      @                 ensures time == (oldTime + delta - min2) % gap2;
-      @         also
-      @                 requires time < 0;
-      @                 assignable time;
-      @                 ensures time == ((oldTime + delta - min2) % gap2)
-      @                                 + gap2;
-      @         |}
-      @     |}
-      @ also
-      @   public exceptional_behavior
-      @     requires amount != 0 && (field < 0 || field >= ZONE_OFFSET);
-      @     assignable \nothing;
-      @     signals_only IllegalArgumentException;
-      @ also
-      @   public normal_behavior
-      @     old int value = computeValue(field, amount);
-      @     assignable fields[field], isTimeSet, areFieldsSet, isSet[field];
-      @     ensures fields[field] == value && isSet[field]
-      @             && calendarFieldsAreSet();
-      @*/
+    // ESC only: RAC cannot evaluate this specification (internal state, model methods without bodies)
+    //-RAC@ also
+    //-RAC@    public normal_behavior
+    //-RAC@      requires amount == 0;
+    //-RAC@      assignable \nothing;
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      requires field == ERA || field == YEAR || field == AM_PM
+    //-RAC@               || field == MINUTE || field == SECOND
+    //-RAC@               || field == MILLISECOND || field == DAY_OF_MONTH;
+    //-RAC@      assignable \nothing;
+    //-RAC@      ensures isComplete();
+    //-RAC@  also
+    //-RAC@    public normal_behavior  // FIXME
+    //-RAC@      requires field == HOUR || field == HOUR_OF_DAY;
+    //-RAC@      assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
+    //-RAC@      {  ghost Date start = getTime();
+    //-RAC@         ghost int oldHour = get(field);
+    //-RAC@         ghost int newHour = computeNewHour(field, amount, start, oldHour);
+    //-RAC@         assume getTimeInMillis() == start.getTime()
+    //-RAC@                                   + ONE_HOUR * (newHour - oldHour);
+    //-RAC@      }
+    //-RAC@      ensures_redundantly milliFieldsAreSet();
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old int mon = computeMonth(amount);
+    //-RAC@      old int monthLen = monthLength(mon);
+    //-RAC@      old int dom = get(DAY_OF_MONTH);
+    //-RAC@      {|
+    //-RAC@          requires field == MONTH;
+    //-RAC@          assignable fields[MONTH], fields[DAY_OF_MONTH],
+    //-RAC@                     isTimeSet, areFieldsSet, isSet[*];
+    //-RAC@          ensures fields[MONTH] == mon && isSet[MONTH]
+    //-RAC@                  && isSet[DAY_OF_MONTH] && calendarFieldsAreSet();
+    //-RAC@      also
+    //-RAC@          requires dom > monthLen;
+    //-RAC@          assignable fields[DAY_OF_MONTH], isTimeSet,
+    //-RAC@                     areFieldsSet, isSet[DAY_OF_MONTH];
+    //-RAC@          ensures fields[DAY_OF_MONTH] == monthLen
+    //-RAC@                  && isSet[DAY_OF_MONTH] && calendarFieldsAreSet();
+    //-RAC@      |}
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old int woy = computeWoy(amount);
+    //-RAC@      old int isoYear = computeIsoYear();
+    //-RAC@      requires field == WEEK_OF_YEAR;
+    //-RAC@      assignable fields[WEEK_OF_YEAR], fields[YEAR], isTimeSet,
+    //-RAC@                 areFieldsSet, isSet[*];
+    //-RAC@      ensures fields[WEEK_OF_YEAR] == woy
+    //-RAC@              && fields[YEAR] == isoYear && isSet[WEEK_OF_YEAR]
+    //-RAC@              && isSet[YEAR] && calendarFieldsAreSet();
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old int day_of_month = computeDayOfMonth(amount);
+    //-RAC@      requires field == WEEK_OF_MONTH;
+    //-RAC@      assignable fields[DAY_OF_MONTH], isTimeSet, areFieldsSet,
+    //-RAC@                 isSet[DAY_OF_MONTH];
+    //-RAC@      ensures fields[DAY_OF_MONTH] == day_of_month
+    //-RAC@              && isSet[DAY_OF_MONTH] && calendarFieldsAreSet();
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old long oldTime = time;
+    //-RAC@      old long delta = (long)(amount * ONE_DAY);
+    //-RAC@      old long min2 = (long)(oldTime - (get(DAY_OF_YEAR) - 1) * ONE_DAY);
+    //-RAC@      old int yearLength = yearLength();
+    //-RAC@      {|
+    //-RAC@          requires field == DAY_OF_YEAR;
+    //-RAC@          assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
+    //-RAC@          ensures getTimeInMillis() <= time + min2;
+    //-RAC@          ensures_redundantly milliFieldsAreSet();
+    //-RAC@      also
+    //-RAC@          {|
+    //-RAC@                  requires oldTime >= 0;
+    //-RAC@                  assignable time;
+    //-RAC@                  ensures time == (oldTime + delta - min2)
+    //-RAC@                                   % (yearLength*ONE_DAY);
+    //-RAC@          also
+    //-RAC@                  requires oldTime < 0;
+    //-RAC@                  assignable time;
+    //-RAC@                  ensures time == ((oldTime + delta - min2)
+    //-RAC@                                    % (yearLength*ONE_DAY))
+    //-RAC@                                   + yearLength*ONE_DAY;
+    //-RAC@          |}
+    //-RAC@      |}
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old long min2 = computeMin2();
+    //-RAC@      old long delta = (long)(amount * ONE_DAY);
+    //-RAC@      {|
+    //-RAC@          requires field == DAY_OF_WEEK;
+    //-RAC@          assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
+    //-RAC@          ensures getTimeInMillis() == time + min2;
+    //-RAC@          ensures_redundantly milliFieldsAreSet();
+    //-RAC@      also
+    //-RAC@          requires time >= 0;
+    //-RAC@          assignable time;
+    //-RAC@          ensures time == (time + delta - min2) % ONE_WEEK;
+    //-RAC@      also
+    //-RAC@          requires time < 0;
+    //-RAC@          assignable time;
+    //-RAC@          ensures time == ((time + delta - min2) % ONE_WEEK) + ONE_WEEK;
+    //-RAC@      |}
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old long oldTime = time;
+    //-RAC@      old long delta = (long)(amount * ONE_WEEK);
+    //-RAC@      old int preWeeks = (int)((get(DAY_OF_MONTH) - 1) / 7);
+    //-RAC@      old int postWeeks = (int)((monthLength(get(MONTH)) -
+    //-RAC@                          get(DAY_OF_MONTH)) / 7);
+    //-RAC@      old long min2 = (long)(oldTime - preWeeks * ONE_WEEK);
+    //-RAC@      old long gap2 = (long)(ONE_WEEK * (preWeeks + postWeeks + 1));
+    //-RAC@      {|
+    //-RAC@          requires field == DAY_OF_WEEK_IN_MONTH;
+    //-RAC@          assignable time, isTimeSet, areFieldsSet, areAllFieldsSet;
+    //-RAC@          ensures getTimeInMillis() <= time + min2;
+    //-RAC@          ensures_redundantly milliFieldsAreSet();
+    //-RAC@      also
+    //-RAC@          {|
+    //-RAC@                  requires time >= 0;
+    //-RAC@                  assignable time;
+    //-RAC@                  ensures time == (oldTime + delta - min2) % gap2;
+    //-RAC@          also
+    //-RAC@                  requires time < 0;
+    //-RAC@                  assignable time;
+    //-RAC@                  ensures time == ((oldTime + delta - min2) % gap2)
+    //-RAC@                                  + gap2;
+    //-RAC@          |}
+    //-RAC@      |}
+    //-RAC@  also
+    //-RAC@    public exceptional_behavior
+    //-RAC@      requires amount != 0 && (field < 0 || field >= ZONE_OFFSET);
+    //-RAC@      assignable \nothing;
+    //-RAC@      signals_only IllegalArgumentException;
+    //-RAC@  also
+    //-RAC@    public normal_behavior
+    //-RAC@      old int value = computeValue(field, amount);
+    //-RAC@      assignable fields[field], isTimeSet, areFieldsSet, isSet[field];
+    //-RAC@      ensures fields[field] == value && isSet[field]
+    //-RAC@              && calendarFieldsAreSet();
     public void roll(int field, int amount)
     throws IllegalArgumentException;
 
-    /*@ also
-      @ public normal_behavior
-      @ requires 0 <= field && field <= MIN_VALUES.length;
-      @ assignable \nothing;
-      @ ensures \result == MIN_VALUES[field];
-      @*/
+    //@ also
+    //-RAC@  public normal_behavior
+    //-RAC@  requires 0 <= field && field <= MIN_VALUES.length;
+    //-RAC@  assignable \nothing;
+    //-RAC@  ensures \result == MIN_VALUES[field];
+    //+RAC@ public behavior
     public /*@ pure @*/ int getMinimum(int field);
 
-    /*@ also
-      @ public normal_behavior
-      @ requires 0 <= field && field <= MAX_VALUES.length;
-      @ assignable \nothing;
-      @ ensures \result == MAX_VALUES[field];
-      @*/
+    //@ also
+    //-RAC@  public normal_behavior
+    //-RAC@  requires 0 <= field && field <= MAX_VALUES.length;
+    //-RAC@  assignable \nothing;
+    //-RAC@  ensures \result == MAX_VALUES[field];
+    //+RAC@ public behavior
     public /*@ pure @*/ int getMaximum(int field);
 
-    /*@ also
-      @ public normal_behavior
-      @ requires 0 <= field && field <= MIN_VALUES.length;
-      @ assignable \nothing;
-      @ ensures \result == getMinimum(field);
-      @*/
+    //@ also
+    //-RAC@  public normal_behavior
+    //-RAC@  requires 0 <= field && field <= MIN_VALUES.length;
+    //-RAC@  assignable \nothing;
+    //-RAC@  ensures \result == getMinimum(field);
+    //+RAC@ public behavior
     public /*@ pure @*/ int getGreatestMinimum(int field);
 
-    /*@ also
-      @ public normal_behavior
-      @ requires 0 <= field && field <= LEAST_MAX_VALUES.length;
-      @ assignable \nothing;
-      @ ensures \result == LEAST_MAX_VALUES[field];
-      @*/
+    //@ also
+    //-RAC@  public normal_behavior
+    //-RAC@  requires 0 <= field && field <= LEAST_MAX_VALUES.length;
+    //-RAC@  assignable \nothing;
+    //-RAC@  ensures \result == LEAST_MAX_VALUES[field];
+    //+RAC@ public behavior
     public /*@ pure @*/ int getLeastMaximum(int field);
     
-    /*@ also
-      @ public normal_behavior
-      @     requires 0 <= field && field <= MIN_VALUES.length;
-      @     assignable \nothing;
-      @     ensures \result == MIN_VALUES[field];
-      @*/
+    //@ also
+    //-RAC@  public normal_behavior
+    //-RAC@      requires 0 <= field && field <= MIN_VALUES.length;
+    //-RAC@      assignable \nothing;
+    //-RAC@      ensures \result == MIN_VALUES[field];
+    //+RAC@ public behavior
     public /*@ pure @*/ int getActualMinimum(int field);
 
-    /*@ also
-      @   public normal_behavior
-      @    requires field == DAY_OF_MONTH;
-      @    assignable \nothing;
-      @    ensures \result == monthLength(get(MONTH));
-      @ also
-      @   public normal_behavior
-      @     requires field == DAY_OF_YEAR;
-      @     assignable \nothing;
-      @     ensures \result == yearLength();
-      @ also
-      @   public normal_behavior 
-      @     requires field == WEEK_OF_YEAR
-      @              || field == WEEK_OF_MONTH
-      @              || field == DAY_OF_WEEK_IN_MONTH;
-      @     assignable \nothing;
-      @     ensures \result == super.getActualMaximum(field);
-      @ also
-      @   public normal_behavior
-      @     requires field == YEAR;
-      @     assignable \nothing;
-      @     ensures \result == computeLowGood();
-      @ also
-      @   public normal_behavior
-      @     requires field != DAY_OF_MONTH
-      @              && field != DAY_OF_YEAR
-      @              && field != WEEK_OF_YEAR
-      @              && field != WEEK_OF_MONTH
-      @              && field != DAY_OF_WEEK_IN_MONTH
-      @              && field != YEAR;
-      @     assignable \nothing;
-      @     ensures \result == getMaximum(field);
-      @*/
+    //@ also
+    //@    public normal_behavior
+    //@     requires field == DAY_OF_MONTH;
+    //@     assignable \nothing;
+    //-RAC@     ensures \result == monthLength(get(MONTH));
+    //@  also
+    //@    public normal_behavior
+    //@      requires field == DAY_OF_YEAR;
+    //@      assignable \nothing;
+    //-RAC@      ensures \result == yearLength();
+    //@  also
+    //@    public normal_behavior
+    //@      requires field == WEEK_OF_YEAR
+    //@               || field == WEEK_OF_MONTH
+    //@               || field == DAY_OF_WEEK_IN_MONTH;
+    //@      assignable \nothing;
+    //@      ensures \result == super.getActualMaximum(field);
+    //@  also
+    //@    public normal_behavior
+    //@      requires field == YEAR;
+    //@      assignable \nothing;
+    //@      ensures \result == computeLowGood();
+    //@  also
+    //@    public normal_behavior
+    //@      requires field != DAY_OF_MONTH
+    //@               && field != DAY_OF_YEAR
+    //@               && field != WEEK_OF_YEAR
+    //@               && field != WEEK_OF_MONTH
+    //@               && field != DAY_OF_WEEK_IN_MONTH
+    //@               && field != YEAR;
+    //@      assignable \nothing;
+    //@      ensures \result == getMaximum(field);
     public /*@ pure @*/ int getActualMaximum(int field);
 
 //    /*@  normal_behavior
@@ -1049,30 +1039,30 @@ public class GregorianCalendar extends Calendar {
       @*/
     protected void computeFields() ;
 
-    /*@ also
-      @   protected exceptional_behavior
-      @     requires !isLenient() && !validateFields();
-      @     assignable \nothing;
-      @     signals_only IllegalArgumentException;
-      @ also
-      @   protected exceptional_behavior
-      @     requires !isLenient() && get(ERA) != BC && get(ERA) != AD;
-      @     assignable \nothing;
-      @     signals_only IllegalArgumentException;
-      @ also
-      @   protected normal_behavior
-      @     old long millis = computeMillis();
-      @     old int zoneOffset = computeZoneOffset(millis);
-      @     {|
-      @         requires stamp[DST_OFFSET] < MINIMUM_USER_STAMP;
-      @         assignable time;
-      @         ensures time == millis - zoneOffset;
-      @     also
-      @         requires stamp[DST_OFFSET] >= MINIMUM_USER_STAMP;
-      @         assignable time;
-      @         ensures time == millis - zoneOffset - get(DST_OFFSET);
-      @     |}
-      @*/
+    //@ also
+    //@    protected exceptional_behavior
+    //@      requires !isLenient() && !validateFields();
+    //@      assignable \nothing;
+    //@      signals_only IllegalArgumentException;
+    //@  also
+    //@    protected exceptional_behavior
+    //@      requires !isLenient() && get(ERA) != BC && get(ERA) != AD;
+    //@      assignable \nothing;
+    //@      signals_only IllegalArgumentException;
+    //@  also
+    //-RAC@    protected normal_behavior
+    //-RAC@      old long millis = computeMillis();
+    //-RAC@      old int zoneOffset = computeZoneOffset(millis);
+    //-RAC@      {|
+    //-RAC@          requires stamp[DST_OFFSET] < MINIMUM_USER_STAMP;
+    //-RAC@          assignable time;
+    //-RAC@          ensures time == millis - zoneOffset;
+    //-RAC@      also
+    //-RAC@          requires stamp[DST_OFFSET] >= MINIMUM_USER_STAMP;
+    //-RAC@          assignable time;
+    //-RAC@          ensures time == millis - zoneOffset - get(DST_OFFSET);
+    //-RAC@      |}
+    //+RAC@ protected behavior
     protected void computeTime()
     throws IllegalArgumentException;
     
@@ -1096,18 +1086,17 @@ public class GregorianCalendar extends Calendar {
       @*/  
     //@ public model pure static final long floorDivide(long numerator, long denominator);
 
-    /*@ private normal_behavior
-      @     old int year = internalGet(YEAR);
-      @     {|
-      @          requires isLeapYear(year);
-      @          assignable \nothing;
-      @          ensures \result == LEAP_MONTH_LENGTH[month];
-      @     also
-      @          requires !isLeapYear(year);
-      @          assignable \nothing;
-      @          ensures \result == MONTH_LENGTH[month];
-      @     |}
-      @*/ 
+    //@ private normal_behavior
+    //@      old int year = internalGet(YEAR);
+    //@      {|
+    //@           requires isLeapYear(year);
+    //@           assignable \nothing;
+    //-RAC@           ensures \result == LEAP_MONTH_LENGTH[month];
+    //@      also
+    //@           requires !isLeapYear(year);
+    //@           assignable \nothing;
+    //-RAC@           ensures \result == MONTH_LENGTH[month];
+    //@      |}
     private /*@ spec_public pure */ int monthLength(int month);
 
 //    /*@ private normal_behavior

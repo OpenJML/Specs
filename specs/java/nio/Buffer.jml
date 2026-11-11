@@ -33,69 +33,78 @@ public abstract class Buffer {
     //Buffer(int mark, int pos, int lim, int cap, MemorySegmentProxy segment);
 
     //@ public normal_behavior
-    //@   ensures \result == capacity;
+    //-RAC@   ensures \result == capacity;
     //@ pure helper
     public final int capacity();
 
     //@ public normal_behavior
-    //@   ensures \result == position;
+    //-RAC@   ensures \result == position;
     //@ pure helper
     public final int position();
 
     //@ public normal_behavior
-    //@   requires 0 <= i && i <= limit;
-    //@   assignable position;
-    //@   ensures position == i;
+    //-RAC@   requires 0 <= i && i <= limit;
+    //+RAC@   requires 0 <= i && i <= limit();
+    //-RAC@   assignable position;
+    //-RAC@   ensures position == i;
     public Buffer position(int i);
 
     //@ public normal_behavior
-    //@   ensures \result == limit;
+    //-RAC@   ensures \result == limit;
     //@ pure helper
     public final int limit();
 
     //@ public normal_behavior
-    //@   requires this.position <= i && i <= this.capacity;
-    //@   assignable this.limit;
-    //@   ensures this.limit == i;
+    //-RAC@   requires this.position <= i && i <= this.capacity;
+    //+RAC@   requires this.position() <= i && i <= this.capacity();
+    //-RAC@   assignable this.limit;
+    //-RAC@   ensures this.limit == i;
     public Buffer limit(int i);
 
     //@ public normal_behavior
-    //@   assignable this.mark;
-    //@   ensures this.mark == this.position;
+    //-RAC@   assignable this.mark;
+    //-RAC@   ensures this.mark == this.position;
     public Buffer mark();
 
     //@ public normal_behavior
-    //@   assignable this.position;
-    //@   ensures this.position == this.mark;
+    //-RAC@   assignable this.position;
+    //-RAC@   ensures this.position == this.mark;
     public Buffer reset();
 
     //@ public normal_behavior
-    //@   assignable this.position, this.mark, this.limit;
-    //@   ensures this.mark == 0;
-    //@   ensures this.position == 0;
-    //@   ensures this.limit == this.capacity;
+    //-RAC@   assignable this.position, this.mark, this.limit;
+    //-RAC@   ensures this.mark == 0;
+    //-RAC@   ensures this.position == 0;
+    //+RAC@   ensures this.position() == 0;
+    //-RAC@   ensures this.limit == this.capacity;
+    //+RAC@   ensures this.limit() == this.capacity();
     public Buffer clear();
 
     //@ public normal_behavior
-    //@   assignable this.position, this.limit, this.mark;
-    //@   ensures this.limit == \old(this.position);
-    //@   ensures this.position == 0;
+    //-RAC@   assignable this.position, this.limit, this.mark;
+    //-RAC@   ensures this.limit == \old(this.position);
+    //+RAC@   ensures this.limit() == \old(this.position());
+    //-RAC@   ensures this.position == 0;
+    //+RAC@   ensures this.position() == 0;
     //@   ensures \result == this;
     public Buffer flip();
 
     //@ public normal_behavior
-    //@   assignable this.mark, this.position;
-    //@   ensures this.mark == 0;
-    //@   ensures this.position == 0;
+    //-RAC@   assignable this.mark, this.position;
+    //-RAC@   ensures this.mark == 0;
+    //-RAC@   ensures this.position == 0;
+    //+RAC@   ensures this.position() == 0;
     public Buffer rewind();
 
     //@ public normal_behavior
-    //@   ensures \result == (limit - position);
+    //-RAC@   ensures \result == (limit - position);
+    //+RAC@   ensures \result == (limit() - position());
     //@ pure
     public final int remaining();
 
     //@ public normal_behavior
-    //@   ensures \result == (position < limit);
+    //-RAC@   ensures \result == (position < limit);
+    //+RAC@   ensures \result == (position() < limit());
     //@ pure
     public final boolean hasRemaining();
 

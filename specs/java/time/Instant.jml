@@ -54,17 +54,18 @@ public final class Instant implements java.time.temporal.Temporal, java.time.tem
   public java.time.ZonedDateTime atZone(java.time.ZoneId);
   */
   //@ public normal_behavior
-  //@   ensures \result == (Long.MIN_VALUE <= 1000*seconds <= (Long.MAX_VALUE-1000));
+  //-RAC@   ensures \result == (Long.MIN_VALUE <= 1000*seconds <= (Long.MAX_VALUE-1000));
   //@ pure
   //@ model public static boolean okEpochMilliForLong(\bigint seconds, \bigint nanos);
  
   //@ public normal_behavior
-  //@   ensures \result == okEpochMilliForLong(instant.seconds, instant.nanos);
+  //-RAC@   ensures \result == okEpochMilliForLong(instant.seconds, instant.nanos);
   //@ model public static boolean okEpochMilliForLong(Instant instant);
   
-  //@ public normal_behavior
-  //@   requires okEpochMilliForLong(seconds,nanos);
-  //@   ensures \result == (nanos/1000000) + 1000*seconds; // TODO: Not sure this matches the implementation
+  //-RAC@ public normal_behavior
+  //-RAC@   requires okEpochMilliForLong(seconds,nanos);
+  //-RAC@   ensures \result == (nanos/1000000) + 1000*seconds; // TODO: Not sure this matches the implementation
+  //+RAC@ public behavior
   public long toEpochMilli();
   /*
   public int compareTo(java.time.Instant);

@@ -38,12 +38,12 @@ public class AtomicBoolean implements java.io.Serializable {
   // use compareAndSet or weakCompareAndSetPlain
 
   //@ public normal_behavior
-  //@   assignable value;
+  //-RAC@   assignable value;
   //@   ensures get() == v;
   public final void set(boolean v);
 
   //@ public normal_behavior
-  //@   assignable value;
+  //-RAC@   assignable value;
   //@   ensures get() == v;
   public final void lazySet(boolean v);
 

@@ -102,10 +102,9 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
     /** For use with computeTime() and computeFields(), which are opposite methods
       * of each other.  Each method ensures that the boolean below is true.
       */
-    /*@ public normal_behavior 
-       @ ensures (* fields[*] is now a representation of time and vice versa *);        
-       @ public pure model boolean correspondsTimeAndFields(); 
-       @*/
+    //@ public normal_behavior
+    //@  ensures (* fields[*] is now a representation of time and vice versa *);
+    //@  public pure model boolean correspondsTimeAndFields();
         
     /** For use with getMinimum(), getGreatestMinimum(), and getActualMinimum(),
       * since these all ensure basically the same thing.
@@ -127,11 +126,10 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
     /*-RAC@ public invariant zone != null;
        @*/
 
-    /*@ protected normal_behavior
-       @        //ensures_redundantly zone.equals(TimeZone.getDefault()) && // FIXME
-       @        //                    locale.equals(Locale.getDefault());
-       @ pure
-       @*/
+    //@ protected normal_behavior
+    //@         //ensures_redundantly zone.equals(TimeZone.getDefault()) && // FIXME
+    //@         //                    locale.equals(Locale.getDefault());
+    //@  pure
     protected Calendar();
 
     /** firstDayOfWeek and minimalDaysInFirstWeek are both set in private
@@ -140,15 +138,16 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
       * the Hashtable cachedLocaleData, and this data is needed to check
       * correct assignment to firstDayOfWeek and minimalDaysInFirstWeek.
       */
-    /*@ protected normal_behavior
-       @        old int[] data = (int[]) cachedLocaleData.get(aLocale);
-       @        requires zone != null && aLocale != null;
-       @        ensures this.zone.equals(zone)
-       @             && this.locale.equals(aLocale)
-       @             && firstDayOfWeek == data[0]
-       @             && minimalDaysInFirstWeek == data[1];
-       @ pure
-       @*/
+    //-RAC@ protected normal_behavior
+    //-RAC@         old int[] data = (int[]) cachedLocaleData.get(aLocale);
+    //-RAC@         requires zone != null && aLocale != null;
+    //-RAC@         ensures this.zone.equals(zone)
+    //-RAC@              && this.locale.equals(aLocale)
+    //-RAC@              && firstDayOfWeek == data[0]
+    //-RAC@              && minimalDaysInFirstWeek == data[1];
+    //+RAC@ protected behavior
+    //+RAC@         requires zone != null && aLocale != null;
+    //@  pure
     protected Calendar(TimeZone zone, Locale aLocale);
 
     /*@ public normal_behavior
@@ -157,11 +156,10 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
     public /*@ pure @*/ static Calendar getInstance();
 
-    /*@ public normal_behavior
-       @        requires zone != null;
-       @        assignable \nothing;
-       @        ensures \result != null && \result.zone == zone;
-       @*/
+    //@ public normal_behavior
+    //@         requires zone != null;
+    //@         assignable \nothing;
+    //-RAC@         ensures \result != null && \result.zone == zone;
     public /*@ pure @*/ static Calendar getInstance(TimeZone zone);
 
     /*@ public normal_behavior
@@ -171,13 +169,12 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
     public /*@ pure @*/ static Calendar getInstance(Locale aLocale);
 
-    /*@ public normal_behavior
-       @        requires zone != null && aLocale != null;
-       @        assignable \nothing;
-       @        ensures \result != null
-       @             && \result.zone == zone
-       @             && \result.locale == aLocale;
-       @*/
+    //@ public normal_behavior
+    //@         requires zone != null && aLocale != null;
+    //@         assignable \nothing;
+    //-RAC@         ensures \result != null
+    //-RAC@              && \result.zone == zone
+    //-RAC@              && \result.locale == aLocale;
     public /*@ pure @*/ static Calendar getInstance(TimeZone zone,
                                        Locale aLocale);
                                            
@@ -188,16 +185,14 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
     public static /*@ pure @*/ synchronized Locale[] getAvailableLocales();
 
-    /*@ protected normal_behavior
-       @     assignable time;
-       @     ensures correspondsTimeAndFields();
-       @*/
+    //@ protected normal_behavior
+    //-RAC@      assignable time;
+    //@      ensures correspondsTimeAndFields();
     protected abstract void computeTime();
 
-    /*@ protected normal_behavior
-       @      assignable fields[*];
-       @      ensures correspondsTimeAndFields();
-       @*/
+    //@ protected normal_behavior
+    //-RAC@       assignable fields[*];
+    //@       ensures correspondsTimeAndFields();
     protected abstract void computeFields();
 
     /*@ public normal_behavior
@@ -214,10 +209,9 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
     public final void setTime(Date date);
 
-    /*@ public normal_behavior
-       @        assignable \nothing;
-       @        ensures \result == time;
-       @*/
+    //@ public normal_behavior
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == time;
     public /*@ spec_pure @*/ long getTimeInMillis();
 
     /* This method has an error in its implementation.  areFieldsSet is set
@@ -227,120 +221,107 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
      * specification for this method, I assumed the latter and assumed the code in
      * the if statement would always execute.
      */
-    /*@ public normal_behavior
-       @        assignable isTimeSet, areFieldsSet, areAllFieldsSet;
-       @        ensures time == millis && isTimeSet &&
-       @                areFieldsSet && areAllFieldsSet;
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable isTimeSet, areFieldsSet, areAllFieldsSet;
+    //-RAC@         ensures time == millis && isTimeSet &&
+    //-RAC@                 areFieldsSet && areAllFieldsSet;
     public void setTimeInMillis(long millis);
 
-    /*@ public normal_behavior
-       @        requires 0 <= field && field < FIELD_COUNT;
-       @        assignable \nothing;
-       @        ensures \result == fields[field];
-       @*/
+    //@ public normal_behavior
+    //@         requires 0 <= field && field < FIELD_COUNT;
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == fields[field];
     public /*@ pure @*/ int get(int field);
 
-    /*@ protected normal_behavior
-       @        requires_redundantly 0 <= field && field < FIELD_COUNT;
-       @        assignable \nothing;
-       @        ensures \result == fields[field];
-       @*/
+    //@ protected normal_behavior
+    //@         requires_redundantly 0 <= field && field < FIELD_COUNT;
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == fields[field];
     protected /*@ pure @*/ final int internalGet(int field);
 
-    /*@ normal_behavior
-       @        requires_redundantly 0 <= field && field < FIELD_COUNT;
-       @        assignable fields[field];
-       @        ensures fields[field] == value;
-       @*/
+    //@ normal_behavior
+    //@         requires_redundantly 0 <= field && field < FIELD_COUNT;
+    //-RAC@         assignable fields[field];
+    //-RAC@         ensures fields[field] == value;
     final void internalSet(int field, int value);
 
-    /*@ public normal_behavior
-       @        requires 0 <= field && field < FIELD_COUNT;
-       @        assignable isTimeSet, areFieldsSet, stamp[*], isSet[*];
-       @        ensures !isTimeSet && !areFieldsSet && isSet[field];
-       @*/
+    //@ public normal_behavior
+    //@         requires 0 <= field && field < FIELD_COUNT;
+    //-RAC@         assignable isTimeSet, areFieldsSet, stamp[*], isSet[*];
+    //-RAC@         ensures !isTimeSet && !areFieldsSet && isSet[field];
     public void set(int field, int value);
 
-    /*@ public normal_behavior
-       @        requires 0 <= year && 0 <= month && 1 <= date;
-       @        assignable \nothing;
-       @        ensures_redundantly fields[YEAR] == year && 
-       @                            fields[MONTH] == month && 
-       @                            fields[DATE] == date;
-       @*/
+    //@ public normal_behavior
+    //@         requires 0 <= year && 0 <= month && 1 <= date;
+    //@         assignable \nothing;
+    //-RAC@         ensures_redundantly fields[YEAR] == year &&
+    //-RAC@                             fields[MONTH] == month &&
+    //-RAC@                             fields[DATE] == date;
     public /*@ pure @*/ final void set(int year, int month, int date);
 
-   /*@ public normal_behavior
-      @         requires 0 <= year && 0 <= month && 1 <= date &&
-      @                  0 <= hourOfDay && 0 <= minute;
-      @         assignable \nothing;
-      @         ensures_redundantly fields[YEAR] == year && 
-      @                 fields[MONTH] == month && 
-      @                 fields[DATE] == date &&
-      @                 fields[HOUR_OF_DAY] == hourOfDay && 
-      @                 fields[MINUTE] == minute;
-      @*/
+   //@ public normal_behavior
+   //@          requires 0 <= year && 0 <= month && 1 <= date &&
+   //@                   0 <= hourOfDay && 0 <= minute;
+   //@          assignable \nothing;
+   //-RAC@          ensures_redundantly fields[YEAR] == year &&
+   //-RAC@                  fields[MONTH] == month &&
+   //-RAC@                  fields[DATE] == date &&
+   //-RAC@                  fields[HOUR_OF_DAY] == hourOfDay &&
+   //-RAC@                  fields[MINUTE] == minute;
     public /*@ pure @*/ final void set(int year, int month, int date, int hourOfDay, int minute);
 
-   /*@ public normal_behavior
-      @         requires 0 <= year && 0 <= month && 1 <= date &&
-      @                  0 <= hourOfDay && 0 <= minute && 0 <= second;
-      @         assignable \nothing;
-      @         ensures_redundantly fields[YEAR] == year && 
-      @                 fields[MONTH] == month && 
-      @                 fields[DATE] == date &&
-      @                 fields[HOUR_OF_DAY] == hourOfDay && 
-      @                 fields[MINUTE] == minute &&
-      @                 fields[SECOND] == second;
-      @*/
+   //@ public normal_behavior
+   //@          requires 0 <= year && 0 <= month && 1 <= date &&
+   //@                   0 <= hourOfDay && 0 <= minute && 0 <= second;
+   //@          assignable \nothing;
+   //-RAC@          ensures_redundantly fields[YEAR] == year &&
+   //-RAC@                  fields[MONTH] == month &&
+   //-RAC@                  fields[DATE] == date &&
+   //-RAC@                  fields[HOUR_OF_DAY] == hourOfDay &&
+   //-RAC@                  fields[MINUTE] == minute &&
+   //-RAC@                  fields[SECOND] == second;
     public /*@ pure @*/ final void set(int year, int month, int date, int hourOfDay, int minute,
                           int second);
 
-    /*@ public normal_behavior
-       @        assignable fields[*], stamp[*], areFieldsSet, 
-       @                   areAllFieldsSet, isSet[*], isTimeSet;
-       @        ensures !areFieldsSet && !areAllFieldsSet && !isTimeSet &&
-       @                fields != null && stamp != null && isSet != null;
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable fields[*], stamp[*], areFieldsSet,
+    //-RAC@                    areAllFieldsSet, isSet[*], isTimeSet;
+    //-RAC@         ensures !areFieldsSet && !areAllFieldsSet && !isTimeSet &&
+    //-RAC@                 fields != null && stamp != null && isSet != null;
     public final void clear();
 
-    /*@ public normal_behavior
-       @        requires 0 <= field && field < FIELD_COUNT;
-       @        assignable fields[*], stamp[*], areFieldsSet,
-       @                   areAllFieldsSet, isSet[*], isTimeSet;
-       @        ensures fields[field] == 0 &&
-       @                stamp[field] == UNSET &&
-       @                !areFieldsSet && !areAllFieldsSet &&
-       @                !isSet[field] && !isTimeSet;
-       @*/
+    //@ public normal_behavior
+    //@         requires 0 <= field && field < FIELD_COUNT;
+    //-RAC@         assignable fields[*], stamp[*], areFieldsSet,
+    //-RAC@                    areAllFieldsSet, isSet[*], isTimeSet;
+    //-RAC@         ensures fields[field] == 0 &&
+    //-RAC@                 stamp[field] == UNSET &&
+    //-RAC@                 !areFieldsSet && !areAllFieldsSet &&
+    //-RAC@                 !isSet[field] && !isTimeSet;
     public final void clear(int field);
 
-    /*@ public normal_behavior
-       @        requires 0 <= field && field < FIELD_COUNT;
-       @        assignable \nothing;
-       @        ensures \result == (stamp[field] != UNSET);
-       @*/
+    //@ public normal_behavior
+    //@         requires 0 <= field && field < FIELD_COUNT;
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == (stamp[field] != UNSET);
     public /*@ pure @*/ final boolean isSet(int field);
 
-    /*@ protected normal_behavior
-       @        assignable areFieldsSet, areAllFieldsSet;
-       @        ensures areFieldsSet && areAllFieldsSet;
-       @*/
+    //@ protected normal_behavior
+    //-RAC@         assignable areFieldsSet, areAllFieldsSet;
+    //-RAC@         ensures areFieldsSet && areAllFieldsSet;
     protected void complete();
 
-    /*@ also
-       @ public normal_behavior
-       @        old Calendar calendar = (Calendar)obj;
-       @        requires obj != null;
-       @        assignable \nothing;
-       @        ensures obj instanceof Calendar &&
-       @                this.getTimeInMillis() == calendar.getTimeInMillis() &&
-       @                this.lenient == calendar.lenient &&
-       @                this.firstDayOfWeek == calendar.firstDayOfWeek &&
-       @                this.minimalDaysInFirstWeek == calendar.minimalDaysInFirstWeek &&
-       @                zone.equals(calendar.zone);
-       @*/
+    //@ also
+    //@  public normal_behavior
+    //@         old Calendar calendar = (Calendar)obj;
+    //@         requires obj != null;
+    //@         assignable \nothing;
+    //-RAC@         ensures obj instanceof Calendar &&
+    //-RAC@                 this.getTimeInMillis() == calendar.getTimeInMillis() &&
+    //-RAC@                 this.lenient == calendar.lenient &&
+    //-RAC@                 this.firstDayOfWeek == calendar.firstDayOfWeek &&
+    //-RAC@                 this.minimalDaysInFirstWeek == calendar.minimalDaysInFirstWeek &&
+    //-RAC@                 zone.equals(calendar.zone);
     public /*@ pure @*/ boolean equals(Object obj);
 
     // Specification is inherited
@@ -362,82 +343,69 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
        @*/
     public /*@ pure @*/ boolean after(Object when);
 
-    /*@ public normal_behavior
-       @        assignable fields[*];
-       @        ensures (* fields[field] has been increased by amount 
-       @                   and all appropriate corresponding fields 
-       @                   have been updated *);
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable fields[*];
+    //@         ensures (* fields[field] has been increased by amount and all appropriate corresponding fields have been updated *);
     abstract public void add(int field, int amount);
 
-    /*@ public normal_behavior
-       @        requires up;
-       @        assignable fields[*];
-       @        ensures (* fields[field] has been increased by one based on 
-       @                   its restraints without changing larger fields *);
-       @ also
-       @ public normal_behavior
-       @        requires !up;
-       @        assignable fields[*];
-       @        ensures (* fields[field] has been decreased by one based on 
-       @                   its restraints without changing larger fields *);
-       @*/
+    //@ public normal_behavior
+    //@         requires up;
+    //-RAC@         assignable fields[*];
+    //@         ensures (* fields[field] has been increased by one based on its restraints without changing larger fields *);
+    //@  also
+    //@  public normal_behavior
+    //@         requires !up;
+    //-RAC@         assignable fields[*];
+    //@         ensures (* fields[field] has been decreased by one based on its restraints without changing larger fields *);
     abstract public void roll(int field, boolean up);
 
-    /*@ public normal_behavior
-       @        assignable fields[*];
-       @        ensures (* fields[field] has been incremented by amount based
-       @                   on its restraints without changing larger fields *);
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable fields[*];
+    //@         ensures (* fields[field] has been incremented by amount based on its restraints without changing larger fields *);
     public void roll(int field, int amount);
 
-    /*@ public normal_behavior
-       @        requires value != null;
-       @        assignable this.zone, areFieldsSet;
-       @        ensures this.zone.equals(value) && !areFieldsSet;
-       @*/
+    //@ public normal_behavior
+    //@         requires value != null;
+    //-RAC@         assignable this.zone, areFieldsSet;
+    //-RAC@         ensures this.zone.equals(value) && !areFieldsSet;
     public void setTimeZone(TimeZone value);
 
-    /*@ public normal_behavior
-       @        assignable \nothing;
-       @        ensures \result.equals(this.zone);
-       @*/
+    //@ public normal_behavior
+    //@         assignable \nothing;
+    //-RAC@         ensures \result.equals(this.zone);
     public /*@ pure @*/ TimeZone getTimeZone();
 
-    /*@ public normal_behavior
-       @        assignable this.lenient;
-       @        ensures this.lenient == lenient;
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable this.lenient;
+    //-RAC@         ensures this.lenient == lenient;
+    //+RAC@         ensures this.isLenient() == lenient;
     public void setLenient(boolean lenient);
 
-    /*@ public normal_behavior
-       @        assignable \nothing;
-       @        ensures \result == lenient;
-       @*/
+    //@ public normal_behavior
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == lenient;
     public /*@ pure @*/ boolean isLenient();
 
-    /*@ public normal_behavior
-       @        assignable firstDayOfWeek;
-       @        ensures firstDayOfWeek == value;
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable firstDayOfWeek;
+    //-RAC@         ensures firstDayOfWeek == value;
+    //+RAC@         ensures getFirstDayOfWeek() == value;
     public void setFirstDayOfWeek(int value);
 
-    /*@ public normal_behavior
-       @        assignable \nothing;
-       @        ensures \result == firstDayOfWeek;
-       @*/
+    //@ public normal_behavior
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == firstDayOfWeek;
     public /*@ pure @*/ int getFirstDayOfWeek();
 
-    /*@ public normal_behavior
-       @        assignable minimalDaysInFirstWeek;
-       @        ensures minimalDaysInFirstWeek == value;
-       @*/
+    //@ public normal_behavior
+    //-RAC@         assignable minimalDaysInFirstWeek;
+    //-RAC@         ensures minimalDaysInFirstWeek == value;
+    //+RAC@         ensures getMinimalDaysInFirstWeek() == value;
     public void setMinimalDaysInFirstWeek(int value);
 
-    /*@ public normal_behavior
-       @        assignable \nothing;
-       @        ensures \result == minimalDaysInFirstWeek;
-       @*/
+    //@ public normal_behavior
+    //@         assignable \nothing;
+    //-RAC@         ensures \result == minimalDaysInFirstWeek;
     public /*@ pure @*/ int getMinimalDaysInFirstWeek();
 
     /*@ public normal_behavior

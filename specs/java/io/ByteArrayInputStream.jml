@@ -25,13 +25,13 @@ public class ByteArrayInputStream extends InputStream {
     // In fact any derived class can change them as it wishes.
     // Hence all sorts of errors can occur in the various methods.
 
-    /*@ public normal_behavior
-      @   ensures \result == (
-      @              buf != null && (0 <= pos <= count) && 
-      @              count <= buf.length &&
-      @              (0 <= mark <= count));
-      @ model spec_pure public boolean valid();
-      @*/
+    // ESC only: RAC cannot read the protected fields
+    //@ public normal_behavior
+    //-RAC@    ensures \result == (
+    //-RAC@               buf != null && (0 <= pos <= count) &&
+    //-RAC@               count <= buf.length &&
+    //-RAC@               (0 <= mark <= count));
+    //@  model spec_pure public boolean valid();
 
     // CONSTRUCTORS
     
