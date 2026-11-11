@@ -17,7 +17,7 @@ public final class Optional<T> {
 
   //@ private normal_behavior
   //@   requires value != null;
-  //@   ensures this.value == value;
+  //-RAC@   ensures this.value == value;
   //@ also private exceptional_behavior
   //@   requires value == null;
   //@   signals_only NullPointerException;
@@ -38,7 +38,8 @@ public final class Optional<T> {
   //@ public normal_behavior
   //-RAC@   ensures \fresh(\result);
   //-RAC@   ensures \result.value == value;
-  //+RAC@   ensures \result.get() == value;
+  //+RAC@   ensures \result.isPresent() == (value != null);
+  //+RAC@   ensures value != null ==> \result.get() == value;
   //@ pure helper
   public static <T> Optional<T> ofNullable(/*@ nullable */ T value);
   
@@ -58,13 +59,12 @@ public final class Optional<T> {
   
   //@ public normal_behavior
   //-RAC@   ensures \result == (value != null);
-  //+RAC@   ensures \result == (get() != null);
+  //+RAC@   ensures \result == !isEmpty();
   //@ spec_pure helper
   public boolean isPresent();
   
   
   //-RAC@ public model_program { if (value != null) action.accept(value); }
-  //+RAC@ public model_program { if (get() != null) action.accept(value); }
   public void ifPresent(Consumer<? super T> action);
 
   //-RAC@ public model_program { if (value != null) action.accept(value); else runnable.run(); }
@@ -97,12 +97,14 @@ public final class Optional<T> {
   //@   { return (value != null ? value : supplier.get() ); }
   public T orElseGet(Supplier<? extends T> supplier);
   
-  //@ public normal_behavior 
-  //@   requires value != null;
-  //@   ensures \result == value;
-  //@ also public exceptional_behavior
-  //@   requires value == null;
-  //@   signals_only NoSuchElementException;
+  //-RAC@ public normal_behavior 
+  //-RAC@   requires value != null;
+  //-RAC@   ensures \result == value;
+  //+RAC@ public behavior
+  //-RAC@ also public exceptional_behavior
+  //-RAC@   requires value == null;
+  //-RAC@   signals_only NoSuchElementException;
+  //+RAC@ also public behavior
   //@ pure
   public T orElseThrow() throws NoSuchElementException;
   

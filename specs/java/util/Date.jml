@@ -45,10 +45,9 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
        @*/
     public Date();
     
-    /*@ public normal_behavior
-       @   ensures fastTime == date;
-       @ pure
-       @*/
+    //@ public normal_behavior
+    //-RAC@    ensures fastTime == date;
+    //@  pure
     public Date(long date);
 
     /** @deprecated as of JDK 1.1 */
@@ -135,26 +134,24 @@ public class Date implements java.io.Serializable, Cloneable, Comparable {
     @Deprecated
     public void setSeconds(int seconds);
 
-    /*@ public normal_behavior
-       @   requires cal == null;
-       @   ensures \result == fastTime;
-       @ also
-       @ public normal_behavior
-       @   requires cal != null;
-       @   ensures \result == cal.getTimeInMillis();
-       @*/
+    //@ public normal_behavior
+    //@    requires cal == null;
+    //-RAC@    ensures \result == fastTime;
+    //@  also
+    //@  public normal_behavior
+    //@    requires cal != null;
+    //@    ensures \result == cal.getTimeInMillis();
     public /*@ pure @*/ long getTime();
     
-    /*@ public normal_behavior
-       @   requires cal == null;
-       @   assignable fastTime;
-       @   ensures fastTime == time;
-       @ also
-       @ public normal_behavior
-       @   requires cal != null;
-       @   assignable cal.*;
-       @   ensures time == cal.getTimeInMillis();
-       @*/
+    //@ public normal_behavior
+    //@    requires cal == null;
+    //-RAC@    assignable fastTime;
+    //-RAC@    ensures fastTime == time;
+    //@  also
+    //@  public normal_behavior
+    //@    requires cal != null;
+    //@    assignable cal.*;
+    //@    ensures time == cal.getTimeInMillis();
     public void setTime(long time);
 
     /*@ public normal_behavior

@@ -15,12 +15,13 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       Provider provider;
       
       //@ protected normal_behavior
-      //@   ensures this.algorithm == algorithm;
+      //-RAC@   ensures this.algorithm == algorithm;
+      //+RAC@   ensures this.getAlgorithm() == algorithm;
       //@ pure
       protected KeyPairGenerator(java.lang.String algorithm);
       
       //@ public normal_behavior
-      //@   ensures \result == algorithm;
+      //-RAC@   ensures \result == algorithm;
       //@ spec_pure
       public java.lang.String getAlgorithm();
       
@@ -35,13 +36,17 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       //@ pure
       private static KeyPairGenerator getInstance(sun.security.jca.GetInstance.Instance inst, java.lang.String s);
  */     
-      //@ public normal_behavior
-      //@   requires algorithmIsSupported(algorithm);
-      //@   ensures \fresh(\result);
-      //@   ensures \result.algorithm == algorithm;
-      //@ also public exceptional_behavior
-      //@   requires !algorithmIsSupported(algorithm);
-      //@   signals_only NoSuchAlgorithmException;
+      // RAC form: the model method algorithmIsSupported cannot be evaluated at run time
+      //-RAC@ public normal_behavior
+      //-RAC@   requires algorithmIsSupported(algorithm);
+      //-RAC@   ensures \fresh(\result);
+      //-RAC@   ensures \result.algorithm == algorithm;
+      //-RAC@ also public exceptional_behavior
+      //-RAC@   requires !algorithmIsSupported(algorithm);
+      //-RAC@   signals_only NoSuchAlgorithmException;
+      //+RAC@ public behavior
+      //+RAC@   ensures \result.getAlgorithm() == algorithm;
+      //+RAC@   signals_only NoSuchAlgorithmException;
       //@ pure
       public static KeyPairGenerator getInstance(java.lang.String algorithm) throws NoSuchAlgorithmException;
       public static KeyPairGenerator getInstance(java.lang.String algorithm, java.lang.String ss) throws NoSuchAlgorithmException, NoSuchProviderException;
@@ -58,7 +63,8 @@ public abstract class KeyPairGenerator extends KeyPairGeneratorSpi {
       //@ public normal_behavior
       //@   requires validParameterSpec(alg, alg.n);
       //@   assignable this.*;
-      //@   ensures this.algorithm == \old(this.algorithm);
+      //-RAC@   ensures this.algorithm == \old(this.algorithm);
+      //+RAC@   ensures this.getAlgorithm() == \old(this.getAlgorithm());
       //@   ensures this.n == alg.n;
       //@ also public exceptional_behavior
       //@   requires !validParameterSpec(alg, alg.n);

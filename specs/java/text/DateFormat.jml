@@ -72,7 +72,7 @@ public abstract class DateFormat extends Format {
       //private static DateFormat get(sun.util.locale.provider.LocaleProviderAdapter adapter, int a, int b, java.util.Locale locale);
 
       //@ protected normal_behavior
-      //@   ensures calendar == null;
+      //-RAC@   ensures calendar == null;
       //@ pure
       protected DateFormat();
 }

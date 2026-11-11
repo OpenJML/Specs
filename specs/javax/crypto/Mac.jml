@@ -8,8 +8,8 @@ public class Mac implements Cloneable {
 
     //@ model public \datagroup macContent;
     
-    //@ model public final static int MINSIZE = 16; // Minimum Mac size across all algorithms
-    //@ model public final static int SIZE = 32; // TODO: Actually only true for specific algorithms
+    //-RAC@ model public final static int MINSIZE = 16; // Minimum Mac size across all algorithms
+    //-RAC@ model public final static int SIZE = 32; // TODO: Actually only true for specific algorithms
     
 //      private static final sun.security.util.Debug debug;
 //      private static final sun.security.util.Debug pdebug;
@@ -28,7 +28,7 @@ public class Mac implements Cloneable {
       
       //@ model public byte nullable[] savedInfo; //@ in macContent;
       //@ model public byte[] currentHash; //@ in macContent;
-      //@ public invariant currentHash.length >= MINSIZE;
+      //-RAC@ public invariant currentHash.length >= MINSIZE;
       
       //@ public normal_behavior
       //@   requires len >= 0;
@@ -49,16 +49,16 @@ public class Mac implements Cloneable {
 
       //@ public normal_behavior
       //@   requires n >= 1;
-      //@   ensures \result.length == SIZE;
+      //-RAC@   ensures \result.length == SIZE;
       //@ helper pure 
       //@ model public static byte non_null [] hmacIteratedHash(byte[] info, int n);
       
-      //@ model public static final int MAXBL = 255;
+      //-RAC@ model public static final int MAXBL = 255;
       
       // Returns the concatenation of n blocks (each of length SIZE) of repeated iteration of
       // the hash acting on the 'info' material, according to https://tools.ietf.org/html/rfc5869
       //@ public normal_behavior
-      //@   ensures \result.length == MAXBL*SIZE;
+      //-RAC@   ensures \result.length == MAXBL*SIZE;
       // @   ensures (\forall int i; 1 <= i <= MAXBL; Mac.equalArrays(\result, (i-1)*SIZE, hmacIteratedHash(info,i), 0, SIZE)); // FIXME - patch up purity
       // @   ensures (\forall int k; 0 <= k < MAXBL*SIZE; \result[k] == hmacIteratedHash(info,1+k/SIZE)[k-(k/SIZE)*SIZE]); // FIXME - patch up purity
       //@ helper pure
@@ -70,53 +70,62 @@ public class Mac implements Cloneable {
 //      private static int warnCount;
       
       //@ protected normal_behavior
-      //@   ensures this.initialized == false;
-      //@   ensures this.algorithm == algorithm;
+      //-RAC@   ensures this.initialized == false;
+      //-RAC@   ensures this.algorithm == algorithm;
       //@ pure
       protected Mac(MacSpi spi, java.security.Provider provider, java.lang.String algorithm);
 
       //@ private normal_behavior
-      //@   ensures initialized == false;
-      //@   ensures this.algorithm == algorithm;
+      //-RAC@   ensures initialized == false;
+      //-RAC@   ensures this.algorithm == algorithm;
       //@ pure
       private Mac(java.security.Provider.Service service, java.util.Iterator<java.security.Provider.Service> iter, java.lang.String algorithm);
 
       
       //@ public normal_behavior
-      //@   ensures \result == this.algorithm;
+      //-RAC@   ensures \result == this.algorithm;
       //@ pure helper
       public final java.lang.String getAlgorithm();
 
       //@ public normal_behavior
       //@ model public static no_state boolean validAlgorithm(String algorithm);
       
-      //@ public normal_behavior
-      //@   requires validAlgorithm(algorithm);
-      //@   ensures \fresh(\result);
-      //@   ensures \result.algorithm == algorithm;
-      //@ also public exceptional_behavior
-      //@   requires !validAlgorithm(algorithm);
-      //@   signals_only java.security.NoSuchAlgorithmException;
+      // RAC form: the model method validAlgorithm cannot be evaluated at run time
+      //-RAC@ public normal_behavior
+      //-RAC@   requires validAlgorithm(algorithm);
+      //-RAC@   ensures \fresh(\result);
+      //-RAC@   ensures \result.algorithm == algorithm;
+      //-RAC@ also public exceptional_behavior
+      //-RAC@   requires !validAlgorithm(algorithm);
+      //-RAC@   signals_only java.security.NoSuchAlgorithmException;
+      //+RAC@ public behavior
+      //+RAC@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure
       public static final Mac getInstance(java.lang.String algorithm) throws java.security.NoSuchAlgorithmException;
 
-      //@ public normal_behavior
-      //@   requires validAlgorithm(algorithm);
-      //@   ensures \fresh(\result);
-      //@   ensures \result.algorithm == algorithm;
-      //@ also public exceptional_behavior
-      //@   requires !validAlgorithm(algorithm);
-      //@   signals_only java.security.NoSuchAlgorithmException;
+      // RAC form: the model method validAlgorithm cannot be evaluated at run time
+      //-RAC@ public normal_behavior
+      //-RAC@   requires validAlgorithm(algorithm);
+      //-RAC@   ensures \fresh(\result);
+      //-RAC@   ensures \result.algorithm == algorithm;
+      //-RAC@ also public exceptional_behavior
+      //-RAC@   requires !validAlgorithm(algorithm);
+      //-RAC@   signals_only java.security.NoSuchAlgorithmException;
+      //+RAC@ public behavior
+      //+RAC@   signals_only java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
       //@ pure helper
       public static final Mac getInstance(java.lang.String algorithm, java.lang.String provider) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
 
-      //@ public normal_behavior
-      //@   requires validAlgorithm(algorithm);
-      //@   ensures \fresh(\result);
-      //@   ensures \result.algorithm == algorithm;
-      //@ also public exceptional_behavior
-      //@   requires !validAlgorithm(algorithm);
-      //@   signals_only java.security.NoSuchAlgorithmException;
+      // RAC form: the model method validAlgorithm cannot be evaluated at run time
+      //-RAC@ public normal_behavior
+      //-RAC@   requires validAlgorithm(algorithm);
+      //-RAC@   ensures \fresh(\result);
+      //-RAC@   ensures \result.algorithm == algorithm;
+      //-RAC@ also public exceptional_behavior
+      //-RAC@   requires !validAlgorithm(algorithm);
+      //-RAC@   signals_only java.security.NoSuchAlgorithmException;
+      //+RAC@ public behavior
+      //+RAC@   signals_only java.security.NoSuchAlgorithmException;
       //@ pure helper
       public static final Mac getInstance(java.lang.String algorithm, java.security.Provider provider) throws java.security.NoSuchAlgorithmException;
 
@@ -126,13 +135,13 @@ public class Mac implements Cloneable {
       
       
       //@ public normal_behavior
-      //@   ensures \result == SIZE;
+      //-RAC@   ensures \result == SIZE;
       //@ pure helper // TODO: Length depends on algorithm
       public final int getMacLength();
 
       //@ public normal_behavior
       //@   assignable this.*;
-      //@   ensures this.initialized == true;
+      //-RAC@   ensures this.initialized == true;
       //@   ensures this.isReset == true;
       //@   ensures this.savedInfo == null;
       //@// TODO: Model InvalidKeyException
@@ -140,16 +149,17 @@ public class Mac implements Cloneable {
 
       //@ public normal_behavior
       //@   assignable this.*;
-      //@   ensures this.initialized == true;
+      //-RAC@   ensures this.initialized == true;
       //@   ensures this.isReset == true;
       //@   ensures this.savedInfo == null;
       //@// TODO: Model InvalidKeyException
       public final void init(java.security.Key key, java.security.spec.AlgorithmParameterSpec spec) throws java.security.InvalidKeyException, java.security.InvalidAlgorithmParameterException;
 
-      //@ public normal_behavior
-      //@   requires this.initialized;
-      //@   assignable this.currentHash, this.isReset;
-      //@   ensures this.isReset == false;
+      //-RAC@ public normal_behavior
+      //-RAC@   requires this.initialized;
+      //-RAC@   assignable this.currentHash, this.isReset;
+      //-RAC@   ensures this.isReset == false;
+      //+RAC@ public behavior
       public final void update(byte b) throws java.lang.IllegalStateException;
 
       //@ public normal_behavior
@@ -181,50 +191,54 @@ public class Mac implements Cloneable {
       //-H2@   requires len > 0;
       //-H2@   requires 0 <= offset <= buf.length - len;
       //-H2@   requires this.initialized;
-      //-H2@   requires this.savedInfo != null && this.savedInfo.length == len - 1 - SIZE;
+      //-H2-RAC@   requires this.savedInfo != null && this.savedInfo.length == len - 1 - SIZE;
       //-H2@   old int n = Byte.toUnsignedInt(buf[offset+len-1]);
       //-H2@   requires n > 1;
       // -H2@   requires Mac.equalArrays(buf,offset,hmacIteratedHash(this.savedInfo,n-1),0,SIZE); // FIXME - purity problem
-      //-H2@   requires Mac.equalArrays(this.savedInfo, 0, buf, offset+SIZE, (int)this.savedInfo.length);
+      //-H2-RAC@   requires Mac.equalArrays(this.savedInfo, 0, buf, offset+SIZE, (int)this.savedInfo.length);
       //-H2@   assignable this.currentHash, this.isReset;
       //-H2@   ensures !this.isReset;
       // -H2@   ensures this.currentHash == hmacIteratedHash(this.savedInfo,n); // FIXME - purity problem
       
       public final void update(byte[] buf, int offset, int len) throws java.lang.IllegalStateException;
 
-      //@ public normal_behavior
-      //@   requires this.initialized;
-      //@   assignable this.currentHash, this.isReset;
-      //@   ensures !this.isReset;
+      //-RAC@ public normal_behavior
+      //-RAC@   requires this.initialized;
+      //-RAC@   assignable this.currentHash, this.isReset;
+      //-RAC@   ensures !this.isReset;
+      //+RAC@ public behavior
       public final void update(java.nio.ByteBuffer buffer);
       
-      //@ public normal_behavior
-      //@   requires this.initialized;
-      //@   assignable this.isReset;
-      //@   ensures \fresh(\result);
-      //@   ensures this.isReset;
-      //@   ensures \result.length >= MINSIZE;
-      //@   ensures \result.length == this.currentHash.length;
-      //@   ensures Mac.equalArrays(\result,0,this.currentHash,0,(int)\result.length);
+      //-RAC@ public normal_behavior
+      //-RAC@   requires this.initialized;
+      //-RAC@   assignable this.isReset;
+      //-RAC@   ensures \fresh(\result);
+      //-RAC@   ensures this.isReset;
+      //-RAC@   ensures \result.length >= MINSIZE;
+      //-RAC@   ensures \result.length == this.currentHash.length;
+      //-RAC@   ensures Mac.equalArrays(\result,0,this.currentHash,0,(int)\result.length);
+      //+RAC@ public behavior
       public final byte[] doFinal() throws java.lang.IllegalStateException;
 
-      //@ public normal_behavior
-      //@   requires !isReset;
-      //@   requires outOffset >= 0 && outOffset + SIZE <= out.length;
-      //@   assignable this.isReset, out[outOffset .. outOffset + SIZE -1];
-      //@   ensures this.isReset;
-      //@   ensures Mac.equalArrays(out,outOffset,currentHash,0,SIZE);
+      //-RAC@ public normal_behavior
+      //-RAC@   requires !isReset;
+      //-RAC@   requires outOffset >= 0 && outOffset + SIZE <= out.length;
+      //-RAC@   assignable this.isReset, out[outOffset .. outOffset + SIZE -1];
+      //-RAC@   ensures this.isReset;
+      //-RAC@   ensures Mac.equalArrays(out,outOffset,currentHash,0,SIZE);
+      //+RAC@ public behavior
       public final void doFinal(byte[] out, int outOffset) throws ShortBufferException, java.lang.IllegalStateException;
 
       //@ public normal_behavior
       //@   { update(input,0,(int)input.length); return doFinal(); }
       public final byte[] doFinal(byte[] input) throws java.lang.IllegalStateException;
 
-      //@ public normal_behavior
-      //@   requires this.initialized;
-      //@   assignable this.isReset, this.savedInfo;
-      //@   ensures this.isReset;
-      //@   ensures this.savedInfo == null;
+      //-RAC@ public normal_behavior
+      //-RAC@   requires this.initialized;
+      //-RAC@   assignable this.isReset, this.savedInfo;
+      //-RAC@   ensures this.isReset;
+      //-RAC@   ensures this.savedInfo == null;
+      //+RAC@ public behavior
       public final void reset();
 
       //@ also public normal_behavior

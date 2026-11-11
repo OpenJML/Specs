@@ -18,15 +18,15 @@ public class DHParameterSpec implements java.security.spec.AlgorithmParameterSpe
       //@ pure
       public DHParameterSpec(java.math.BigInteger p, java.math.BigInteger q, int n);
       //@ public normal_behavior
-      //@   ensures \result == p;
+      //-RAC@   ensures \result == p;
       //@ spec_pure
       public java.math.BigInteger getP();
       //@ public normal_behavior
-      //@   ensures \result == g;
+      //-RAC@   ensures \result == g;
       //@ spec_pure
       public java.math.BigInteger getG();
       //@ public normal_behavior
-      //@   ensures \result == l;
+      //-RAC@   ensures \result == l;
       //@ spec_pure
       public int getL();
       

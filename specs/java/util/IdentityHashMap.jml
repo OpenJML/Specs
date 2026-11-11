@@ -23,7 +23,8 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   // empty slots are null
   //@ invariant table != null && table.length % 2 == 0;
   //@ invariant 8 <= table.length && table.length <= (1 << 30); // 2 * MINIMUM_CAPACITY, 2 * MAXIMUM_CAPACITY
-  //@ public invariant size >= 0;
+  //-RAC@ public invariant size >= 0;
+  //+RAC@ public invariant size() >= 0; // RAC cannot read the package-private field
 
   //@ private normal_behavior
   //@   ensures \result == (key == null ? NULL_KEY : key);
@@ -62,24 +63,27 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   private static int nextKeyIndex(int i, int len);
   
   //@ public normal_behavior
-  //@   ensures size == 0;
+  //-RAC@   ensures size == 0;
+  //+RAC@   ensures size() == 0;
   //@   ensures _keyset.isEmpty();
   //@ pure
   public IdentityHashMap();
   
   //@ public normal_behavior
-  //@   ensures size == 0;
+  //-RAC@   ensures size == 0;
+  //+RAC@   ensures size() == 0;
   //@   ensures _keyset.isEmpty();
   //@ pure
   public IdentityHashMap(int expectedMaxSize);
 
   //@ also public normal_behavior
-  //@   ensures \result == size;
+  //-RAC@   ensures \result == size;
   //@ spec_pure helper
   public int size();
 
   //@ also public normal_behavior
-  //@   ensures \result == (size == 0);
+  //-RAC@   ensures \result == (size == 0);
+  //+RAC@   ensures \result == (size() == 0);
   //@ spec_pure
   public boolean isEmpty();
   
@@ -110,8 +114,8 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@   assigns content;
   //@   ensures _map == \old(_map).put(key,value);
   //@   ensures _keyset == \old(_keyset).add(key);
-  //@   ensures size == (\old(_keyset).contains(key) ? \old(size) : \old(size)+1);
-  public V put(/*@ nullable */K key, /*@ nullable */V value);
+  //-RAC@   ensures size == (\old(_keyset).contains(key) ? \old(size) : \old(size)+1);
+  public /*@ nullable */ V put(/*@ nullable */K key, /*@ nullable */V value);
 
   //@ also public normal_behavior
   //@   assigns content;
@@ -120,23 +124,24 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   //@ also public normal_behavior
   //@   requires _keyset.contains((K)key);
   //@   assigns content;
-  //@   ensures size == \old(size) - 1;
+  //-RAC@   ensures size == \old(size) - 1;
+  //+RAC@   ensures size() == \old(size()) - 1;
   //@   ensures _keyset == \old(_keyset).remove((K)key);
   //@   ensures _map == \old(_map);
   //@ also public normal_behavior
   //@   requires !_keyset.contains((K)key);
   //@   assigns \nothing;
   @SuppressWarnings("unchecked")
-  public V remove(Object key);
+  public /*@ nullable */ V remove(Object key);
   
   //@ also public normal_behavior
   //@   assigns content;
-  //@   ensures size == 0 && _keyset.isEmpty();
+  //-RAC@   ensures size == 0 && _keyset.isEmpty();
   public void clear();
   
   //@ also public normal_behavior
   //@   old IdentityHashMap<K,V> m = (IdentityHashMap)o;
-  //@   ensures \result == (this.size == m.size && this._keyset == m._keyset && (\forall K k; _keyset.contains(k); this._map.get(k) == m._map.get(k)));
+  //-RAC@   ensures \result == (this.size == m.size && this._keyset == m._keyset && (\forall K k; _keyset.contains(k); this._map.get(k) == m._map.get(k)));
   //@ pure
   @SuppressWarnings("unchecked")
   public boolean equals(Object o); // TODO
@@ -147,7 +152,8 @@ public class IdentityHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V
   
   //@ also public normal_behavior
   //@   ensures \result instanceof IdentityHashMap;
-  //@   ensures ((IdentityHashMap)\result).size == this.size;
+  //-RAC@   ensures ((IdentityHashMap)\result).size == this.size;
+  //+RAC@   ensures ((IdentityHashMap)\result).size() == this.size();
   //@   ensures ((IdentityHashMap)\result)._keyset == this._keyset;
   //@   ensures ((IdentityHashMap)\result)._map == this._map;
   public /*@ non_null */ Object clone();

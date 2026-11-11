@@ -19,7 +19,8 @@ public class KeyFactory {
       
       //@ public normal_behavior
       //@   requires validAlgorithm(s);
-      //@   ensures \result.algorithm == s;
+      //-RAC@   ensures \result.algorithm == s;
+      //+RAC@   ensures \result.getAlgorithm() == s;
       //@   ensures s == "DH" ==> \result instanceof javax.crypto.interfaces.DHPublicKey;
       //@ also public exceptional_behavior
       //@   requires !validAlgorithm(s);
@@ -31,7 +32,7 @@ public class KeyFactory {
       public final Provider getProvider();
       
       //@ public normal_behavior
-      //@   ensures \result == algorithm;
+      //-RAC@   ensures \result == algorithm;
       //@ pure
       public final java.lang.String getAlgorithm();
       private KeyFactorySpi nextSpi(KeyFactorySpi spi);
