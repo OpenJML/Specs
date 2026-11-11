@@ -1,7 +1,6 @@
 package java.math;
 
-// RAC cannot read the package-private fields of a JDK class, so clauses that name them are ESC-only (-RAC);
-// the rest use getPrecision() and getRoundingMode().
+// Specified through getPrecision() and getRoundingMode(); RAC cannot read the package-private fields.
 // Not specified: the result of toString and the format accepted by MathContext(String) beyond its exceptions.
 //@ immutable
 //@ non_null_by_default
@@ -11,9 +10,6 @@ public final class MathContext implements java.io.Serializable {
     public static final MathContext DECIMAL32;
     public static final MathContext DECIMAL64;
     public static final MathContext DECIMAL128;
-
-    /*@ spec_public */ final int precision;
-    /*@ spec_public */ final RoundingMode roundingMode;
 
     //@ public normal_behavior
     //@   ensures UNLIMITED.getPrecision() == 0 && UNLIMITED.getRoundingMode() == RoundingMode.HALF_UP;
@@ -56,24 +52,23 @@ public final class MathContext implements java.io.Serializable {
     public MathContext(/*@ nullable */ String val);
 
     //@ public normal_behavior
-    //-RAC@ ensures \result == precision;
     //@   ensures \result >= 0;
     //@ pure
     public int getPrecision();
 
     //@ public normal_behavior
-    //-RAC@ ensures \result == roundingMode;
+    //@   ensures true;
     //@ spec_pure
     public RoundingMode getRoundingMode();
 
     //@ also public normal_behavior
-    //-RAC@ ensures \result == (x instanceof MathContext && ((MathContext)x).precision == precision
-    //-RAC@                                             && ((MathContext)x).roundingMode == roundingMode);
+    //@   ensures \result == (x instanceof MathContext && ((MathContext)x).getPrecision() == getPrecision()
+    //@                                              && ((MathContext)x).getRoundingMode() == getRoundingMode());
     //@ pure
     public boolean equals(/*@ nullable */ Object x);
 
     //@ also public normal_behavior
-    //-RAC@ ensures \result == precision + roundingMode.hashCode() * 59;
+    //@   ensures \result == getPrecision() + getRoundingMode().hashCode() * 59;
     //@ pure
     public int hashCode();
 
