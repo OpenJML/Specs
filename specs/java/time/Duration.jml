@@ -27,7 +27,18 @@ public final class Duration implements java.time.temporal.TemporalAmount, Compar
     // Connects Object.hashCode's specification to this class's hashCode
     //-RAC@ public represents theHashCode = ((int) (seconds ^ (seconds >>> 32))) + (51 * nanos);
 
+    //-RAC@ private normal_behavior
+    //-RAC@   requires 0 <= nanos && nanos < 1000000000;
+    //-RAC@   ensures this.seconds == seconds && this.nanos == nanos;
+    //@ pure
     private Duration(long seconds, int nanos);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires 0 <= nanoAdjustment && nanoAdjustment < 1000000000;
+    //-RAC@   ensures \result.seconds == seconds && \result.nanos == nanoAdjustment;
+    //@ spec_pure
+    private static Duration create(long seconds, int nanoAdjustment);
+
 
     //@ public normal_behavior
     //@   requires Long.MIN_VALUE <= (\bigint)days * 86400 && (\bigint)days * 86400 <= Long.MAX_VALUE;
@@ -131,6 +142,15 @@ public final class Duration implements java.time.temporal.TemporalAmount, Compar
     //@   signals_only DateTimeException;
     //@ spec_pure
     public Duration withNanos(int nanoOfSecond);
+
+    //@ private normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd;
+    //@ also private exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    private Duration plus(long secondsToAdd, long nanosToAdd);
 
     //@ public normal_behavior
     //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
@@ -364,4 +384,20 @@ public final class Duration implements java.time.temporal.TemporalAmount, Compar
     //@   ensures \result == ((int) (getSeconds() ^ (getSeconds() >>> 32))) + (51 * getNano());
     //@ pure code_java_math spec_java_math
     public int hashCode();
+
+    private static class Lazy {
+        static final java.util.regex.Pattern PATTERN;
+
+        //@ public normal_behavior
+        //@   ensures true;
+        //@ static_initializer
+    }
+
+    private static class DurationUnits {
+        static final java.util.List<TemporalUnit> UNITS;
+
+        //@ public normal_behavior
+        //@   ensures true;
+        //@ static_initializer
+    }
 }
