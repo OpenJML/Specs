@@ -34,7 +34,23 @@ public final class LocalTime implements java.time.temporal.Temporal, java.time.t
     //@   ensures MAX.getHour() == 23 && MAX.getMinute() == 59 && MAX.getSecond() == 59 && MAX.getNano() == 999999999;
     //@ static_initializer
 
+    private static final LocalTime[] HOURS;
+    //-RAC@ private static invariant HOURS.length == 24 && (\forall int i; 0 <= i && i < 24; HOURS[i] != null
+    //-RAC@         && HOURS[i].hour == i && HOURS[i].minute == 0 && HOURS[i].second == 0 && HOURS[i].nano == 0);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59;
+    //-RAC@   requires 0 <= nanoOfSecond && nanoOfSecond <= 999999999;
+    //-RAC@   ensures this.hour == hour && this.minute == minute && this.second == second && this.nano == nanoOfSecond;
+    //@ pure
     private LocalTime(int hour, int minute, int second, int nanoOfSecond);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59;
+    //-RAC@   requires 0 <= nanoOfSecond && nanoOfSecond <= 999999999;
+    //-RAC@   ensures \result.hour == hour && \result.minute == minute && \result.second == second && \result.nano == nanoOfSecond;
+    //@ spec_pure
+    private static LocalTime create(int hour, int minute, int second, int nanoOfSecond);
 
     //@ public normal_behavior
     //@   requires 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59;
@@ -168,7 +184,9 @@ public final class LocalTime implements java.time.temporal.Temporal, java.time.t
     public boolean isBefore(LocalTime other);
 
     //@ also public normal_behavior
-    //@   ensures \result == (obj instanceof LocalTime && ((LocalTime)obj).toNanoOfDay() == toNanoOfDay());
+    //@   ensures \result == (obj instanceof LocalTime && ((LocalTime)obj).getHour() == getHour()
+    //@                      && ((LocalTime)obj).getMinute() == getMinute() && ((LocalTime)obj).getSecond() == getSecond()
+    //@                      && ((LocalTime)obj).getNano() == getNano());
     //@ pure
     public boolean equals(/*@ nullable */ Object obj);
 
