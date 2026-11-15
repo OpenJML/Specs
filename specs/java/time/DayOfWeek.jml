@@ -1,0 +1,80 @@
+package java.time;
+
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+
+// Not specified: getDisplayName, range, query, adjustInto, and fields other than ChronoField.DAY_OF_WEEK.
+//@ non_null_by_default
+public enum DayOfWeek implements TemporalAccessor, java.time.temporal.TemporalAdjuster {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY;
+
+    //@ public normal_behavior
+    //@   requires 1 <= dayOfWeek <= 7;
+    //@   ensures \result.getValue() == dayOfWeek;
+    //@ also public exceptional_behavior
+    //@   requires dayOfWeek < 1 || dayOfWeek > 7;
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static DayOfWeek of(int dayOfWeek);
+
+    //@ public normal_behavior
+    //@   requires temporal instanceof DayOfWeek;
+    //@   ensures \result == temporal;
+    //@ also public behavior
+    //@   requires !(temporal instanceof DayOfWeek);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static DayOfWeek from(TemporalAccessor temporal);
+
+    //@ public normal_behavior
+    //@   ensures \result == ordinal() + 1;
+    //@   ensures 1 <= \result <= 7;
+    //@ pure
+    public int getValue();
+
+    //@ also public normal_behavior
+    //@   requires field == ChronoField.DAY_OF_WEEK;
+    //@   ensures \result;
+    //@ also public normal_behavior
+    //@   requires field instanceof ChronoField && field != ChronoField.DAY_OF_WEEK;
+    //@   ensures !\result;
+    //@ also public normal_behavior
+    //@   requires field == null;
+    //@   ensures !\result;
+    //@ pure
+    public boolean isSupported(/*@ nullable */ TemporalField field);
+
+    //@ also public normal_behavior
+    //@   requires field == ChronoField.DAY_OF_WEEK;
+    //@   ensures \result == getValue();
+    //@ pure
+    public int get(TemporalField field);
+
+    //@ also public normal_behavior
+    //@   requires field == ChronoField.DAY_OF_WEEK;
+    //@   ensures \result == getValue();
+    //@ also public exceptional_behavior
+    //@   requires field instanceof ChronoField && field != ChronoField.DAY_OF_WEEK;
+    //@   signals_only java.time.temporal.UnsupportedTemporalTypeException;
+    //@ pure
+    public long getLong(TemporalField field);
+
+    // The result is the day 'days' days later, wrapping around the week.
+    //@ public normal_behavior
+    //@   ensures \result.ordinal() == (ordinal() + days % 7 + 7) % 7;
+    //@ spec_pure
+    public DayOfWeek plus(long days);
+
+    // The result is the day 'days' days earlier, wrapping around the week.
+    //@ public normal_behavior
+    //@   ensures \result.ordinal() == (ordinal() - days % 7 + 7) % 7;
+    //@ spec_pure
+    public DayOfWeek minus(long days);
+}

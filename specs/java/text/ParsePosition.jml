@@ -1,0 +1,55 @@
+package java.text;
+
+// Not specified: the text of toString.
+//@ non_null_by_default
+public class ParsePosition {
+
+    //@ spec_public
+    int index;
+    //@ spec_public
+    int errorIndex;
+
+    //@ public normal_behavior
+    //-RAC@   ensures this.index == index && this.errorIndex == -1;
+    //+RAC@   ensures getIndex() == index && getErrorIndex() == -1;
+    //@ pure
+    public ParsePosition(int index);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == index;
+    //@ pure helper
+    public int getIndex();
+
+    //@ public normal_behavior
+    //-RAC@   assignable this.index;
+    //-RAC@   ensures this.index == index;
+    //+RAC@   ensures getIndex() == index;
+    public void setIndex(int index);
+
+    //@ public normal_behavior
+    //-RAC@   assignable errorIndex;
+    //-RAC@   ensures errorIndex == ei;
+    //+RAC@   ensures getErrorIndex() == ei;
+    public void setErrorIndex(int ei);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == errorIndex;
+    //@ pure helper
+    public int getErrorIndex();
+
+    //@ also public normal_behavior
+    //@   ensures \result == (obj instanceof ParsePosition && ((ParsePosition)obj).getIndex() == getIndex()
+    //@                                                  && ((ParsePosition)obj).getErrorIndex() == getErrorIndex());
+    //@ pure
+    public boolean equals(/*@ nullable */ Object obj);
+
+    //@ also public normal_behavior
+    //@   ensures \result == ((getErrorIndex() << 16) | getIndex());
+    //@ pure
+    public int hashCode();
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public String toString();
+}
