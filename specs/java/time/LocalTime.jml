@@ -1,0 +1,179 @@
+package java.time;
+
+// A LocalTime is a time of day: getHour(), getMinute(), getSecond() and getNano() in their ranges, equivalently its
+// toNanoOfDay() in [0, 86400 * 10^9). Arithmetic wraps around midnight; the specifications state results by the
+// nano-of-day, reduced modulo one day.
+// Not specified: now, ofInstant, from, parse, the TemporalAccessor and Temporal methods (isSupported, range, get,
+// getLong, with, truncatedTo, plus/minus with a TemporalAmount or TemporalUnit, query, adjustInto, until), withHour
+// etc., ofSecondOfDay/ofNanoOfDay beyond their ranges, format, atDate, atOffset, toEpochSecond, toString.
+//@ non_null_by_default
+public final class LocalTime implements java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster,
+                                        Comparable<LocalTime>, java.io.Serializable {
+
+    public static final LocalTime MIN;
+    public static final LocalTime MAX;
+    public static final LocalTime MIDNIGHT;
+    public static final LocalTime NOON;
+
+    //@ spec_public
+    private final byte hour;
+    //@ spec_public
+    private final byte minute;
+    //@ spec_public
+    private final byte second;
+    //@ spec_public
+    private final int nano;
+
+    //-RAC@ public invariant 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59;
+    //-RAC@ public invariant 0 <= nano && nano <= 999999999;
+
+    //@ public normal_behavior
+    //@   ensures MIN.getHour() == 0 && MIN.getMinute() == 0 && MIN.getSecond() == 0 && MIN.getNano() == 0;
+    //@   ensures MIDNIGHT.getHour() == 0 && MIDNIGHT.getMinute() == 0 && MIDNIGHT.getSecond() == 0 && MIDNIGHT.getNano() == 0;
+    //@   ensures NOON.getHour() == 12 && NOON.getMinute() == 0 && NOON.getSecond() == 0 && NOON.getNano() == 0;
+    //@   ensures MAX.getHour() == 23 && MAX.getMinute() == 59 && MAX.getSecond() == 59 && MAX.getNano() == 999999999;
+    //@ static_initializer
+
+    private LocalTime(int hour, int minute, int second, int nanoOfSecond);
+
+    //@ public normal_behavior
+    //@   requires 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59;
+    //@   ensures \result.getHour() == hour && \result.getMinute() == minute && \result.getSecond() == 0 && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires !(0 <= hour && hour <= 23 && 0 <= minute && minute <= 59);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalTime of(int hour, int minute);
+
+    //@ public normal_behavior
+    //@   requires 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59;
+    //@   ensures \result.getHour() == hour && \result.getMinute() == minute && \result.getSecond() == second && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires !(0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalTime of(int hour, int minute, int second);
+
+    //@ public normal_behavior
+    //@   requires 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59 && 0 <= nanoOfSecond && nanoOfSecond <= 999999999;
+    //@   ensures \result.getHour() == hour && \result.getMinute() == minute && \result.getSecond() == second && \result.getNano() == nanoOfSecond;
+    //@ also public exceptional_behavior
+    //@   requires !(0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59 && 0 <= nanoOfSecond && nanoOfSecond <= 999999999);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalTime of(int hour, int minute, int second, int nanoOfSecond);
+
+    //@ public normal_behavior
+    //@   requires 0 <= secondOfDay && secondOfDay < 86400;
+    //@   ensures \result.toSecondOfDay() == secondOfDay && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires secondOfDay < 0 || secondOfDay >= 86400;
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalTime ofSecondOfDay(long secondOfDay);
+
+    //@ public normal_behavior
+    //@   requires 0 <= nanoOfDay && nanoOfDay < 86400000000000L;
+    //@   ensures \result.toNanoOfDay() == nanoOfDay;
+    //@ also public exceptional_behavior
+    //@   requires nanoOfDay < 0 || nanoOfDay >= 86400000000000L;
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalTime ofNanoOfDay(long nanoOfDay);
+
+    // 0 <= getHour() <= 23, by the invariant; likewise for the other getters
+    //@ public normal_behavior
+    //-RAC@   ensures \result == hour;
+    //@ pure helper
+    public int getHour();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == minute;
+    //@ pure helper
+    public int getMinute();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == second;
+    //@ pure helper
+    public int getSecond();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == nano;
+    //@ pure helper
+    public int getNano();
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() + (\bigint)hoursToAdd * 3600000000000L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime plusHours(long hoursToAdd);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() + (\bigint)minutesToAdd * 60000000000L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime plusMinutes(long minutesToAdd);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() + (\bigint)secondstoAdd * 1000000000L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime plusSeconds(long secondstoAdd);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() + (\bigint)nanosToAdd * 1L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime plusNanos(long nanosToAdd);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() - (\bigint)hoursToSubtract * 3600000000000L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime minusHours(long hoursToSubtract);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() - (\bigint)minutesToSubtract * 60000000000L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime minusMinutes(long minutesToSubtract);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() - (\bigint)secondsToSubtract * 1000000000L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime minusSeconds(long secondsToSubtract);
+
+    //@ public normal_behavior
+    //@   ensures \result.toNanoOfDay() == ((((\bigint)toNanoOfDay() - (\bigint)nanosToSubtract * 1L) % 86400000000000L + 86400000000000L) % 86400000000000L);
+    //@ spec_pure
+    public LocalTime minusNanos(long nanosToSubtract);
+
+    //@ public normal_behavior
+    //@   ensures \result == getHour() * 3600 + getMinute() * 60 + getSecond();
+    //@ pure helper
+    public int toSecondOfDay();
+
+    //@ public normal_behavior
+    //@   ensures \result == toSecondOfDay() * 1000000000L + getNano();
+    //@ pure helper
+    public long toNanoOfDay();
+
+    //@ also public normal_behavior
+    //@   ensures \result == (toNanoOfDay() < other.toNanoOfDay() ? -1 : toNanoOfDay() == other.toNanoOfDay() ? 0 : 1);
+    //@ pure
+    public int compareTo(LocalTime other);
+
+    //@ public normal_behavior
+    //@   ensures \result == (toNanoOfDay() > other.toNanoOfDay());
+    //@ pure
+    public boolean isAfter(LocalTime other);
+
+    //@ public normal_behavior
+    //@   ensures \result == (toNanoOfDay() < other.toNanoOfDay());
+    //@ pure
+    public boolean isBefore(LocalTime other);
+
+    //@ also public normal_behavior
+    //@   ensures \result == (obj instanceof LocalTime && ((LocalTime)obj).toNanoOfDay() == toNanoOfDay());
+    //@ pure
+    public boolean equals(/*@ nullable */ Object obj);
+
+    //@ also public normal_behavior
+    //@   ensures \result == (int) (toNanoOfDay() ^ (toNanoOfDay() >>> 32));
+    //@ pure code_java_math spec_java_math
+    public int hashCode();
+}
