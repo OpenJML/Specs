@@ -156,6 +156,6 @@ public final class Instant implements java.time.temporal.Temporal, java.time.tem
 
     //@ also public normal_behavior
     //@   ensures \result == ((int) (getEpochSecond() ^ (getEpochSecond() >>> 32))) + (51 * getNano());
-    //@ pure
+    //@ pure code_java_math spec_java_math
     public int hashCode();
 }

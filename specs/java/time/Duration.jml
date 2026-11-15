@@ -362,6 +362,6 @@ public final class Duration implements java.time.temporal.TemporalAmount, Compar
 
     //@ also public normal_behavior
     //@   ensures \result == ((int) (getSeconds() ^ (getSeconds() >>> 32))) + (51 * getNano());
-    //@ pure
+    //@ pure code_java_math spec_java_math
     public int hashCode();
 }
