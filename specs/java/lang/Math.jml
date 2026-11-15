@@ -574,6 +574,203 @@ public final class Math {
       @*/
     public static /*@ no_state @*/ long abs(long a);
 
+    // The *Exact methods: the exact (\bigint) result, or ArithmeticException when it does not fit the type
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= ((\bigint)x + y) && ((\bigint)x + y) <= Integer.MAX_VALUE;
+      @   ensures \result == ((\bigint)x + y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x + y) < Integer.MIN_VALUE || ((\bigint)x + y) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int addExact(int x, int y);
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= ((\bigint)x - y) && ((\bigint)x - y) <= Integer.MAX_VALUE;
+      @   ensures \result == ((\bigint)x - y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x - y) < Integer.MIN_VALUE || ((\bigint)x - y) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int subtractExact(int x, int y);
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= ((\bigint)x * y) && ((\bigint)x * y) <= Integer.MAX_VALUE;
+      @   ensures \result == ((\bigint)x * y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x * y) < Integer.MIN_VALUE || ((\bigint)x * y) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int multiplyExact(int x, int y);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= ((\bigint)x + y) && ((\bigint)x + y) <= Long.MAX_VALUE;
+      @   ensures \result == ((\bigint)x + y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x + y) < Long.MIN_VALUE || ((\bigint)x + y) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long addExact(long x, long y);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= ((\bigint)x - y) && ((\bigint)x - y) <= Long.MAX_VALUE;
+      @   ensures \result == ((\bigint)x - y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x - y) < Long.MIN_VALUE || ((\bigint)x - y) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long subtractExact(long x, long y);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= ((\bigint)x * y) && ((\bigint)x * y) <= Long.MAX_VALUE;
+      @   ensures \result == ((\bigint)x * y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x * y) < Long.MIN_VALUE || ((\bigint)x * y) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long multiplyExact(long x, long y);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= ((\bigint)x * y) && ((\bigint)x * y) <= Long.MAX_VALUE;
+      @   ensures \result == ((\bigint)x * y);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)x * y) < Long.MIN_VALUE || ((\bigint)x * y) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long multiplyExact(long x, int y);
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= ((\bigint)a + 1) && ((\bigint)a + 1) <= Integer.MAX_VALUE;
+      @   ensures \result == ((\bigint)a + 1);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)a + 1) < Integer.MIN_VALUE || ((\bigint)a + 1) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int incrementExact(int a);
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= ((\bigint)a - 1) && ((\bigint)a - 1) <= Integer.MAX_VALUE;
+      @   ensures \result == ((\bigint)a - 1);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)a - 1) < Integer.MIN_VALUE || ((\bigint)a - 1) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int decrementExact(int a);
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= (-(\bigint)a) && (-(\bigint)a) <= Integer.MAX_VALUE;
+      @   ensures \result == (-(\bigint)a);
+      @ also public exceptional_behavior
+      @   requires (-(\bigint)a) < Integer.MIN_VALUE || (-(\bigint)a) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int negateExact(int a);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= ((\bigint)a + 1) && ((\bigint)a + 1) <= Long.MAX_VALUE;
+      @   ensures \result == ((\bigint)a + 1);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)a + 1) < Long.MIN_VALUE || ((\bigint)a + 1) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long incrementExact(long a);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= ((\bigint)a - 1) && ((\bigint)a - 1) <= Long.MAX_VALUE;
+      @   ensures \result == ((\bigint)a - 1);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)a - 1) < Long.MIN_VALUE || ((\bigint)a - 1) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long decrementExact(long a);
+
+    /*@ public normal_behavior
+      @   requires Long.MIN_VALUE <= (-(\bigint)a) && (-(\bigint)a) <= Long.MAX_VALUE;
+      @   ensures \result == (-(\bigint)a);
+      @ also public exceptional_behavior
+      @   requires (-(\bigint)a) < Long.MIN_VALUE || (-(\bigint)a) > Long.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long negateExact(long a);
+
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= ((\bigint)value) && ((\bigint)value) <= Integer.MAX_VALUE;
+      @   ensures \result == ((\bigint)value);
+      @ also public exceptional_behavior
+      @   requires ((\bigint)value) < Integer.MIN_VALUE || ((\bigint)value) > Integer.MAX_VALUE;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int toIntExact(long value);
+
+    // The largest value not greater than x/y (exact), except that floorDiv(Integer.MIN_VALUE, -1) overflows to Integer.MIN_VALUE
+    /*@ public normal_behavior
+      @   requires y != 0 && !(x == Integer.MIN_VALUE && y == -1);
+      @   ensures \result == ((x % y != 0 && ((x < 0) != (y < 0))) ? x / y - 1 : x / y);
+      @ also public normal_behavior
+      @   requires x == Integer.MIN_VALUE && y == -1;
+      @   ensures \result == Integer.MIN_VALUE;
+      @ also public exceptional_behavior
+      @   requires y == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int floorDiv(int x, int y);
+
+    // The largest value not greater than x/y (exact), except that floorDiv(Long.MIN_VALUE, -1) overflows to Long.MIN_VALUE
+    /*@ public normal_behavior
+      @   requires y != 0 && !(x == Long.MIN_VALUE && y == -1);
+      @   ensures \result == ((x % y != 0 && ((x < 0) != (y < 0))) ? x / y - 1 : x / y);
+      @ also public normal_behavior
+      @   requires x == Long.MIN_VALUE && y == -1;
+      @   ensures \result == Long.MIN_VALUE;
+      @ also public exceptional_behavior
+      @   requires y == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long floorDiv(long x, int y);
+
+    // The largest value not greater than x/y (exact), except that floorDiv(Long.MIN_VALUE, -1) overflows to Long.MIN_VALUE
+    /*@ public normal_behavior
+      @   requires y != 0 && !(x == Long.MIN_VALUE && y == -1);
+      @   ensures \result == ((x % y != 0 && ((x < 0) != (y < 0))) ? x / y - 1 : x / y);
+      @ also public normal_behavior
+      @   requires x == Long.MIN_VALUE && y == -1;
+      @   ensures \result == Long.MIN_VALUE;
+      @ also public exceptional_behavior
+      @   requires y == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long floorDiv(long x, long y);
+
+    // x - floorDiv(x, y) * y: zero or of the sign of y, with magnitude less than |y|
+    /*@ public normal_behavior
+      @   requires y != 0;
+      @   ensures \result == ((x % y != 0 && ((x < 0) != (y < 0))) ? x % y + y : x % y);
+      @ also public exceptional_behavior
+      @   requires y == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int floorMod(int x, int y);
+
+    // x - floorDiv(x, y) * y: zero or of the sign of y, with magnitude less than |y|
+    /*@ public normal_behavior
+      @   requires y != 0;
+      @   ensures \result == ((x % y != 0 && ((x < 0) != (y < 0))) ? x % y + y : x % y);
+      @ also public exceptional_behavior
+      @   requires y == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ int floorMod(long x, int y);
+
+    // x - floorDiv(x, y) * y: zero or of the sign of y, with magnitude less than |y|
+    /*@ public normal_behavior
+      @   requires y != 0;
+      @   ensures \result == ((x % y != 0 && ((x < 0) != (y < 0))) ? x % y + y : x % y);
+      @ also public exceptional_behavior
+      @   requires y == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static /*@ pure @*/ long floorMod(long x, long y);
+
     /*@ public normal_behavior
       @   ensures \result == ( 0 <= a ? a : -a);
       @*/
