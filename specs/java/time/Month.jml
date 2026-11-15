@@ -20,6 +20,9 @@ public enum Month implements TemporalAccessor, java.time.temporal.TemporalAdjust
     NOVEMBER,
     DECEMBER;
 
+    private static final Month[] ENUMS;
+    //-RAC@ private static invariant ENUMS.length == 12 && (\forall int i; 0 <= i < 12; ENUMS[i] != null && ENUMS[i].ordinal() == i);
+
     //@ public normal_behavior
     //@   requires 1 <= month <= 12;
     //@   ensures \result.getValue() == month;
@@ -41,7 +44,7 @@ public enum Month implements TemporalAccessor, java.time.temporal.TemporalAdjust
     //@ public normal_behavior
     //@   ensures \result == ordinal() + 1;
     //@   ensures 1 <= \result <= 12;
-    //@ pure
+    //@ pure helper
     public int getValue();
 
     //@ also public normal_behavior

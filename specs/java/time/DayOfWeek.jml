@@ -15,6 +15,9 @@ public enum DayOfWeek implements TemporalAccessor, java.time.temporal.TemporalAd
     SATURDAY,
     SUNDAY;
 
+    private static final DayOfWeek[] ENUMS;
+    //-RAC@ private static invariant ENUMS.length == 7 && (\forall int i; 0 <= i < 7; ENUMS[i] != null && ENUMS[i].ordinal() == i);
+
     //@ public normal_behavior
     //@   requires 1 <= dayOfWeek <= 7;
     //@   ensures \result.getValue() == dayOfWeek;
@@ -36,7 +39,7 @@ public enum DayOfWeek implements TemporalAccessor, java.time.temporal.TemporalAd
     //@ public normal_behavior
     //@   ensures \result == ordinal() + 1;
     //@   ensures 1 <= \result <= 7;
-    //@ pure
+    //@ pure helper
     public int getValue();
 
     //@ also public normal_behavior
