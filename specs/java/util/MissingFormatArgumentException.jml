@@ -1,0 +1,27 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class MissingFormatArgumentException extends IllegalFormatException {
+
+    //-RAC@ public model non_null String _formatSpecifier;
+    private /*@ non_null */ String s; //-RAC@ in _formatSpecifier;
+    //-RAC@ private represents _formatSpecifier = s;
+
+    //@ public normal_behavior
+    //@   requires s != null;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _formatSpecifier == s;
+    //@ also public exceptional_behavior
+    //@   requires s == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public MissingFormatArgumentException(String s);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _formatSpecifier;
+    public /*@ spec_pure non_null */ String getFormatSpecifier();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

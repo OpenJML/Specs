@@ -1,0 +1,34 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class IllegalFormatConversionException extends IllegalFormatException {
+
+    //-RAC@ public model char _conversion;
+    //-RAC@ public model non_null Class _argumentClass;
+    private char c; //-RAC@ in _conversion;
+    private /*@ non_null */ Class<?> arg; //-RAC@ in _argumentClass;
+    //-RAC@ private represents _conversion = c;
+    //-RAC@ private represents _argumentClass = arg;
+
+    //@ public normal_behavior
+    //@   requires arg != null;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _conversion == c && _argumentClass == arg;
+    //@ also public exceptional_behavior
+    //@   requires arg == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public IllegalFormatConversionException(char c, Class<?> arg);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _conversion;
+    public /*@ pure */ char getConversion();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _argumentClass;
+    public /*@ spec_pure non_null */ Class<?> getArgumentClass();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

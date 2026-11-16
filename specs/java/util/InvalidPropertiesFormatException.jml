@@ -1,0 +1,17 @@
+package java.util;
+
+import java.io.IOException;
+
+//@ nullable_by_default
+public class InvalidPropertiesFormatException extends IOException {
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(cause);
+    //@ pure
+    public InvalidPropertiesFormatException(Throwable cause);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
+    //@ pure
+    public InvalidPropertiesFormatException(String message);
+}

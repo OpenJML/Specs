@@ -1,0 +1,31 @@
+package java.util;
+
+//@ nullable_by_default
+public class IllformedLocaleException extends RuntimeException {
+
+    //-RAC@ public model int _errorIndex;
+    private int _errIdx; //-RAC@ in _errorIndex;
+    //-RAC@ private represents _errorIndex = _errIdx;
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    //-RAC@   ensures _errorIndex == -1;
+    //@ pure
+    public IllformedLocaleException();
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
+    //-RAC@   ensures _errorIndex == -1;
+    //@ pure
+    public IllformedLocaleException(String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _errorIndex == errorIndex;
+    //@ pure
+    public IllformedLocaleException(String message, int errorIndex);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _errorIndex;
+    public /*@ pure */ int getErrorIndex();
+}

@@ -1,0 +1,15 @@
+package java.util;
+
+//@ nullable_by_default
+public class InputMismatchException extends NoSuchElementException {
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    //@ pure
+    public InputMismatchException();
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(s);
+    //@ pure
+    public InputMismatchException(String s);
+}

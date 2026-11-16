@@ -1,0 +1,23 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class IllegalFormatPrecisionException extends IllegalFormatException {
+
+    //-RAC@ public model int _precision;
+    private int p; //-RAC@ in _precision;
+    //-RAC@ private represents _precision = p;
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _precision == p;
+    //@ pure
+    public IllegalFormatPrecisionException(int p);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _precision;
+    public /*@ pure */ int getPrecision();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

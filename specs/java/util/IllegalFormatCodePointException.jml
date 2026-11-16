@@ -1,0 +1,23 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class IllegalFormatCodePointException extends IllegalFormatException {
+
+    //-RAC@ public model int _codePoint;
+    private int c; //-RAC@ in _codePoint;
+    //-RAC@ private represents _codePoint = c;
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _codePoint == c;
+    //@ pure
+    public IllegalFormatCodePointException(int c);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _codePoint;
+    public /*@ pure */ int getCodePoint();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

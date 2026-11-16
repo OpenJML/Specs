@@ -1,0 +1,15 @@
+package java.util;
+
+//@ nullable_by_default
+public class ServiceConfigurationError extends Error {
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(msg);
+    //@ pure
+    public ServiceConfigurationError(String msg);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(msg, cause);
+    //@ pure
+    public ServiceConfigurationError(String msg, Throwable cause);
+}
