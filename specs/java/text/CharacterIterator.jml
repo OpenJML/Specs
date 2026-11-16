@@ -1,0 +1,70 @@
+package java.text;
+
+// Specified through getBeginIndex, getEndIndex, getIndex and current; only the position changes.
+// Not specified: clone.
+//@ non_null_by_default
+public interface CharacterIterator extends Cloneable {
+
+    public static final char DONE = '￿';
+
+    //@ public normal_behavior
+    //@   assignable objectState;
+    //@   ensures getBeginIndex() == \old(getBeginIndex()) && getEndIndex() == \old(getEndIndex());
+    //@   ensures getIndex() == getBeginIndex();
+    //@   ensures \result == current();
+    public char first();
+
+    //@ public normal_behavior
+    //@   assignable objectState;
+    //@   ensures getBeginIndex() == \old(getBeginIndex()) && getEndIndex() == \old(getEndIndex());
+    //@   ensures getIndex() == (getEndIndex() != getBeginIndex() ? getEndIndex() - 1 : getEndIndex());
+    //@   ensures \result == current();
+    public char last();
+
+    // DONE when the position is getEndIndex(); a character of the text may also equal DONE.
+    //@ public normal_behavior
+    //@   ensures getIndex() == getEndIndex() ==> \result == DONE;
+    //@ pure
+    public char current();
+
+    //@ public normal_behavior
+    //@   assignable objectState;
+    //@   ensures getBeginIndex() == \old(getBeginIndex()) && getEndIndex() == \old(getEndIndex());
+    //@   ensures \old(getIndex()) < getEndIndex() - 1 ==> getIndex() == \old(getIndex()) + 1 && \result == current();
+    //@   ensures \old(getIndex()) >= getEndIndex() - 1 ==> getIndex() == getEndIndex() && \result == DONE;
+    public char next();
+
+    //@ public normal_behavior
+    //@   assignable objectState;
+    //@   ensures getBeginIndex() == \old(getBeginIndex()) && getEndIndex() == \old(getEndIndex());
+    //@   ensures \old(getIndex()) > getBeginIndex() ==> getIndex() == \old(getIndex()) - 1 && \result == current();
+    //@   ensures \old(getIndex()) == getBeginIndex() ==> getIndex() == \old(getIndex()) && \result == DONE;
+    public char previous();
+
+    //@ public normal_behavior
+    //@   requires getBeginIndex() <= position <= getEndIndex();
+    //@   assignable objectState;
+    //@   ensures getBeginIndex() == \old(getBeginIndex()) && getEndIndex() == \old(getEndIndex());
+    //@   ensures getIndex() == position;
+    //@   ensures \result == current();
+    //@ also public exceptional_behavior
+    //@   requires position < getBeginIndex() || position > getEndIndex();
+    //@   assignable \nothing;
+    //@   signals_only IllegalArgumentException;
+    public char setIndex(int position);
+
+    //@ public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public int getBeginIndex();
+
+    //@ public normal_behavior
+    //@   ensures \result >= getBeginIndex();
+    //@ pure
+    public int getEndIndex();
+
+    //@ public normal_behavior
+    //@   ensures getBeginIndex() <= \result <= getEndIndex();
+    //@ pure
+    public int getIndex();
+}

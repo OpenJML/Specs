@@ -1,0 +1,403 @@
+package java.time;
+
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+
+// A Duration is a whole number of nanoseconds, getSeconds() * 10^9 + getNano(), with 0 <= getNano() < 10^9;
+// the specifications state results by that exact (\bigint) value. Arithmetic throws ArithmeticException when the
+// result does not fit, and also when the implementation's multiplication by a unit length overflows (plusDays etc.).
+// Not specified: of(long,TemporalUnit), from, parse, between, plus/minus(long,TemporalUnit), multipliedBy, dividedBy,
+// addTo, subtractFrom, truncatedTo, getUnits, toString.
+//@ non_null_by_default
+public final class Duration implements java.time.temporal.TemporalAmount, Comparable<Duration>, java.io.Serializable {
+
+    public static final Duration ZERO;
+
+    //@ spec_public
+    private final long seconds; //-RAC@ in theHashCode;
+    //@ spec_public
+    private final int nanos; //-RAC@ in theHashCode;
+
+    //-RAC@ public invariant 0 <= nanos && nanos < 1000000000;
+
+    //@ public normal_behavior
+    //@   ensures ZERO.getSeconds() == 0 && ZERO.getNano() == 0;
+    //@ static_initializer
+
+    // Connects Object.hashCode's specification to this class's hashCode
+    //-RAC@ public represents theHashCode = ((int) (seconds ^ (seconds >>> 32))) + (51 * nanos);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires 0 <= nanos && nanos < 1000000000;
+    //-RAC@   ensures this.seconds == seconds && this.nanos == nanos;
+    //@ pure
+    private Duration(long seconds, int nanos);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires 0 <= nanoAdjustment && nanoAdjustment < 1000000000;
+    //-RAC@   ensures \result.seconds == seconds && \result.nanos == nanoAdjustment;
+    //@ spec_pure
+    private static Duration create(long seconds, int nanoAdjustment);
+
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)days * 86400 && (\bigint)days * 86400 <= Long.MAX_VALUE;
+    //@   ensures \result.getSeconds() == days * 86400 && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)days * 86400 && (\bigint)days * 86400 <= Long.MAX_VALUE);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public static Duration ofDays(long days);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)hours * 3600 && (\bigint)hours * 3600 <= Long.MAX_VALUE;
+    //@   ensures \result.getSeconds() == hours * 3600 && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)hours * 3600 && (\bigint)hours * 3600 <= Long.MAX_VALUE);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public static Duration ofHours(long hours);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)minutes * 60 && (\bigint)minutes * 60 <= Long.MAX_VALUE;
+    //@   ensures \result.getSeconds() == minutes * 60 && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)minutes * 60 && (\bigint)minutes * 60 <= Long.MAX_VALUE);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public static Duration ofMinutes(long minutes);
+
+    //@ public normal_behavior
+    //@   ensures \result.getSeconds() == seconds && \result.getNano() == 0;
+    //@ spec_pure
+    public static Duration ofSeconds(long seconds);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)seconds * 1000000000 + nanoAdjustment) && ((\bigint)seconds * 1000000000 + nanoAdjustment) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)seconds * 1000000000 + nanoAdjustment);
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)seconds * 1000000000 + nanoAdjustment) && ((\bigint)seconds * 1000000000 + nanoAdjustment) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public static Duration ofSeconds(long seconds, long nanoAdjustment);
+
+    //@ public normal_behavior
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == (\bigint)millis * 1000000;
+    //@ spec_pure
+    public static Duration ofMillis(long millis);
+
+    //@ public normal_behavior
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == nanos;
+    //@ spec_pure
+    public static Duration ofNanos(long nanos);
+
+    //@ also public normal_behavior
+    //@   requires unit == ChronoUnit.SECONDS;
+    //@   ensures \result == getSeconds();
+    //@ also public normal_behavior
+    //@   requires unit == ChronoUnit.NANOS;
+    //@   ensures \result == getNano();
+    //@ also public exceptional_behavior
+    //@   requires unit != ChronoUnit.SECONDS && unit != ChronoUnit.NANOS;
+    //@   signals_only java.time.temporal.UnsupportedTemporalTypeException;
+    //@ pure
+    public long get(/*@ nullable */ TemporalUnit unit);
+
+    //@ public normal_behavior
+    //@   ensures \result == (getSeconds() > 0 || (getSeconds() == 0 && getNano() > 0));
+    //@ pure
+    public boolean isPositive();
+
+    //@ public normal_behavior
+    //@   ensures \result == (getSeconds() == 0 && getNano() == 0);
+    //@ pure
+    public boolean isZero();
+
+    //@ public normal_behavior
+    //@   ensures \result == (getSeconds() < 0);
+    //@ pure
+    public boolean isNegative();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == seconds;
+    //@ pure helper
+    public long getSeconds();
+
+    // 0 <= getNano() < 10^9, by the invariant
+    //@ public normal_behavior
+    //-RAC@   ensures \result == nanos;
+    //@ pure helper
+    public int getNano();
+
+    //@ public normal_behavior
+    //@   ensures \result.getSeconds() == seconds && \result.getNano() == getNano();
+    //@ spec_pure
+    public Duration withSeconds(long seconds);
+
+    //@ public normal_behavior
+    //@   requires 0 <= nanoOfSecond && nanoOfSecond < 1000000000;
+    //@   ensures \result.getSeconds() == getSeconds() && \result.getNano() == nanoOfSecond;
+    //@ also public exceptional_behavior
+    //@   requires nanoOfSecond < 0 || nanoOfSecond >= 1000000000;
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public Duration withNanos(int nanoOfSecond);
+
+    //@ private normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd;
+    //@ also private exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    private Duration plus(long secondsToAdd, long nanosToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano());
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) + ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plus(Duration duration);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)daysToAdd * 86400 && (\bigint)daysToAdd * 86400 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)daysToAdd * 86400 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)daysToAdd * 86400 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)daysToAdd * 86400 * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)daysToAdd * 86400 && (\bigint)daysToAdd * 86400 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)daysToAdd * 86400 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)daysToAdd * 86400 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plusDays(long daysToAdd);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)hoursToAdd * 3600 && (\bigint)hoursToAdd * 3600 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)hoursToAdd * 3600 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)hoursToAdd * 3600 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)hoursToAdd * 3600 * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)hoursToAdd * 3600 && (\bigint)hoursToAdd * 3600 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)hoursToAdd * 3600 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)hoursToAdd * 3600 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plusHours(long hoursToAdd);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)minutesToAdd * 60 && (\bigint)minutesToAdd * 60 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)minutesToAdd * 60 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)minutesToAdd * 60 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)minutesToAdd * 60 * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)minutesToAdd * 60 && (\bigint)minutesToAdd * 60 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)minutesToAdd * 60 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)minutesToAdd * 60 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plusMinutes(long minutesToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plusSeconds(long secondsToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plusMillis(long millisToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + nanosToAdd && ((\bigint)getSeconds() * 1000000000 + getNano()) + nanosToAdd <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) + nanosToAdd;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) + nanosToAdd && ((\bigint)getSeconds() * 1000000000 + getNano()) + nanosToAdd <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration plusNanos(long nanosToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) - ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano());
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) - ((\bigint)duration.getSeconds() * 1000000000 + duration.getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minus(Duration duration);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= -(\bigint)daysToSubtract * 86400 && -(\bigint)daysToSubtract * 86400 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)daysToSubtract * 86400 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)daysToSubtract * 86400 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)daysToSubtract * 86400 * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= -(\bigint)daysToSubtract * 86400 && -(\bigint)daysToSubtract * 86400 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)daysToSubtract * 86400 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)daysToSubtract * 86400 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minusDays(long daysToSubtract);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= -(\bigint)hoursToSubtract * 3600 && -(\bigint)hoursToSubtract * 3600 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)hoursToSubtract * 3600 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)hoursToSubtract * 3600 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)hoursToSubtract * 3600 * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= -(\bigint)hoursToSubtract * 3600 && -(\bigint)hoursToSubtract * 3600 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)hoursToSubtract * 3600 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)hoursToSubtract * 3600 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minusHours(long hoursToSubtract);
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= -(\bigint)minutesToSubtract * 60 && -(\bigint)minutesToSubtract * 60 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)minutesToSubtract * 60 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)minutesToSubtract * 60 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)minutesToSubtract * 60 * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= -(\bigint)minutesToSubtract * 60 && -(\bigint)minutesToSubtract * 60 <= Long.MAX_VALUE && (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)minutesToSubtract * 60 * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)minutesToSubtract * 60 * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minusMinutes(long minutesToSubtract);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minusSeconds(long secondsToSubtract);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minusMillis(long millisToSubtract);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - nanosToSubtract && ((\bigint)getSeconds() * 1000000000 + getNano()) - nanosToSubtract <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == ((\bigint)getSeconds() * 1000000000 + getNano()) - nanosToSubtract;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= ((\bigint)getSeconds() * 1000000000 + getNano()) - nanosToSubtract && ((\bigint)getSeconds() * 1000000000 + getNano()) - nanosToSubtract <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration minusNanos(long nanosToSubtract);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)Long.MIN_VALUE * 1000000000 <= -((\bigint)getSeconds() * 1000000000 + getNano()) && -((\bigint)getSeconds() * 1000000000 + getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == -((\bigint)getSeconds() * 1000000000 + getNano());
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Long.MIN_VALUE * 1000000000 <= -((\bigint)getSeconds() * 1000000000 + getNano()) && -((\bigint)getSeconds() * 1000000000 + getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration negated();
+
+    //@ public normal_behavior
+    //@   requires !isNegative();
+    //@   ensures \result == this;
+    //@ also public normal_behavior
+    //@   requires isNegative() && (\bigint)Long.MIN_VALUE * 1000000000 <= -((\bigint)getSeconds() * 1000000000 + getNano()) && -((\bigint)getSeconds() * 1000000000 + getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getSeconds() * 1000000000 + \result.getNano()) == -((\bigint)getSeconds() * 1000000000 + getNano());
+    //@ also public exceptional_behavior
+    //@   requires isNegative() && !((\bigint)Long.MIN_VALUE * 1000000000 <= -((\bigint)getSeconds() * 1000000000 + getNano()) && -((\bigint)getSeconds() * 1000000000 + getNano()) <= (\bigint)Long.MAX_VALUE * 1000000000 + 999999999);
+    //@   signals_only ArithmeticException;
+    //@ spec_pure
+    public Duration abs();
+
+    //@ public normal_behavior
+    //@   ensures \result == getSeconds() / 86400;
+    //@ pure
+    public long toDays();
+
+    //@ public normal_behavior
+    //@   ensures \result == getSeconds() / 3600;
+    //@ pure
+    public long toHours();
+
+    //@ public normal_behavior
+    //@   ensures \result == getSeconds() / 60;
+    //@ pure
+    public long toMinutes();
+
+    //@ public normal_behavior
+    //@   ensures \result == getSeconds();
+    //@ pure
+    public long toSeconds();
+
+    // The total number of milliseconds, truncated toward zero
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= ((\bigint)getSeconds() * 1000000000 + getNano()) / 1000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) / 1000000 <= Long.MAX_VALUE;
+    //@   ensures \result == ((\bigint)getSeconds() * 1000000000 + getNano()) / 1000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= ((\bigint)getSeconds() * 1000000000 + getNano()) / 1000000 && ((\bigint)getSeconds() * 1000000000 + getNano()) / 1000000 <= Long.MAX_VALUE);
+    //@   signals_only ArithmeticException;
+    //@ pure
+    public long toMillis();
+
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= ((\bigint)getSeconds() * 1000000000 + getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) <= Long.MAX_VALUE;
+    //@   ensures \result == ((\bigint)getSeconds() * 1000000000 + getNano());
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= ((\bigint)getSeconds() * 1000000000 + getNano()) && ((\bigint)getSeconds() * 1000000000 + getNano()) <= Long.MAX_VALUE);
+    //@   signals_only ArithmeticException;
+    //@ pure
+    public long toNanos();
+
+    //@ public normal_behavior
+    //@   ensures \result == getSeconds() / 86400;
+    //@ pure
+    public long toDaysPart();
+
+    //@ public normal_behavior
+    //@   ensures \result == (getSeconds() / 3600) % 24;
+    //@ pure
+    public int toHoursPart();
+
+    //@ public normal_behavior
+    //@   ensures \result == (getSeconds() / 60) % 60;
+    //@ pure
+    public int toMinutesPart();
+
+    //@ public normal_behavior
+    //@   ensures \result == getSeconds() % 60;
+    //@ pure
+    public int toSecondsPart();
+
+    //@ public normal_behavior
+    //@   ensures \result == getNano() / 1000000;
+    //@ pure
+    public int toMillisPart();
+
+    //@ public normal_behavior
+    //@   ensures \result == getNano();
+    //@ pure
+    public int toNanosPart();
+
+    //@ also public normal_behavior
+    //@   ensures (\result < 0) == (((\bigint)getSeconds() * 1000000000 + getNano()) < ((\bigint)otherDuration.getSeconds() * 1000000000 + otherDuration.getNano()));
+    //@   ensures (\result == 0) == (((\bigint)getSeconds() * 1000000000 + getNano()) == ((\bigint)otherDuration.getSeconds() * 1000000000 + otherDuration.getNano()));
+    //@ pure
+    public int compareTo(Duration otherDuration);
+
+    //@ also public normal_behavior
+    //@   ensures \result == (other instanceof Duration && ((Duration)other).getSeconds() == getSeconds()
+    //@                                                 && ((Duration)other).getNano() == getNano());
+    //@ pure
+    public boolean equals(/*@ nullable */ Object other);
+
+    //@ also public normal_behavior
+    //@   ensures \result == ((int) (getSeconds() ^ (getSeconds() >>> 32))) + (51 * getNano());
+    //@ pure code_java_math spec_java_math
+    public int hashCode();
+
+    private static class Lazy {
+        static final java.util.regex.Pattern PATTERN;
+
+        //@ public normal_behavior
+        //@   ensures true;
+        //@ static_initializer
+    }
+
+    private static class DurationUnits {
+        static final java.util.List<TemporalUnit> UNITS;
+
+        //@ public normal_behavior
+        //@   ensures true;
+        //@ static_initializer
+    }
+}

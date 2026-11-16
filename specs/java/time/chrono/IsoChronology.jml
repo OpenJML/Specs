@@ -1,0 +1,18 @@
+package java.time.chrono;
+
+// Not specified: everything except INSTANCE and isLeapYear.
+//@ non_null_by_default
+public final class IsoChronology extends AbstractChronology implements java.io.Serializable {
+
+    public static final IsoChronology INSTANCE;
+
+    //@ public normal_behavior
+    //@   ensures INSTANCE != null;
+    //@ static_initializer
+
+    // The ISO proleptic leap-year rule
+    //@ also public normal_behavior
+    //@   ensures \result == java.time.Year.isLeap(prolepticYear);
+    //@ pure
+    public boolean isLeapYear(long prolepticYear);
+}

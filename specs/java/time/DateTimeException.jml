@@ -1,0 +1,13 @@
+package java.time;
+
+public class DateTimeException extends RuntimeException {
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
+    //@ pure
+    public DateTimeException(String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public DateTimeException(String message, /*@ nullable */ Throwable cause);
+}
