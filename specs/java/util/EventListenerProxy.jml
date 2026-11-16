@@ -1,0 +1,17 @@
+package java.util;
+
+//@ nullable_by_default
+public abstract class EventListenerProxy<T extends EventListener> implements EventListener {
+
+    //@ spec_public
+    private final T listener;
+
+    //@ public normal_behavior
+    //@   ensures this.listener == listener;
+    //@ pure
+    public EventListenerProxy(T listener);
+
+    //@ public normal_behavior
+    //@   ensures \result == listener;
+    public /*@ spec_pure */ T getListener();
+}

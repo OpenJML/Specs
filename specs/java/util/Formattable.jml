@@ -1,0 +1,9 @@
+package java.util;
+
+public interface Formattable {
+
+    //@ public behavior
+    //@   requires formatter != null;
+    //@   signals_only IllegalFormatException;
+    void formatTo(Formatter formatter, int flags, int width, int precision);
+}
