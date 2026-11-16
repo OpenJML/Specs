@@ -1,0 +1,10 @@
+package java.util;
+
+//@ nullable_by_default
+public class FormatterClosedException extends IllegalStateException {
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable();
+    //@ pure
+    public FormatterClosedException();
+}

@@ -1,0 +1,23 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class IllegalFormatWidthException extends IllegalFormatException {
+
+    //-RAC@ public model int _width;
+    private int w; //-RAC@ in _width;
+    //-RAC@ private represents _width = w;
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _width == w;
+    //@ pure
+    public IllegalFormatWidthException(int w);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _width;
+    public /*@ pure */ int getWidth();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

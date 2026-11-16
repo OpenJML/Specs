@@ -1,0 +1,27 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class UnknownFormatFlagsException extends IllegalFormatException {
+
+    //-RAC@ public model non_null String _flags;
+    private /*@ non_null */ String flags; //-RAC@ in _flags;
+    //-RAC@ private represents _flags = flags;
+
+    //@ public normal_behavior
+    //@   requires f != null;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _flags == f;
+    //@ also public exceptional_behavior
+    //@   requires f == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public UnknownFormatFlagsException(String f);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _flags;
+    public /*@ spec_pure non_null */ String getFlags();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

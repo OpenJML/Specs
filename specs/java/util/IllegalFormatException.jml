@@ -1,0 +1,22 @@
+package java.util;
+
+//@ nullable_by_default
+public sealed class IllegalFormatException extends IllegalArgumentException
+    permits DuplicateFormatFlagsException,
+            FormatFlagsConversionMismatchException,
+            IllegalFormatArgumentIndexException,
+            IllegalFormatCodePointException,
+            IllegalFormatConversionException,
+            IllegalFormatFlagsException,
+            IllegalFormatPrecisionException,
+            IllegalFormatWidthException,
+            MissingFormatArgumentException,
+            MissingFormatWidthException,
+            UnknownFormatConversionException,
+            UnknownFormatFlagsException {
+
+    //@ normal_behavior
+    //-RAC@   ensures standardThrowable();
+    //@ pure
+    IllegalFormatException();
+}

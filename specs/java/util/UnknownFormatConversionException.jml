@@ -1,0 +1,27 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class UnknownFormatConversionException extends IllegalFormatException {
+
+    //-RAC@ public model non_null String _conversion;
+    private /*@ non_null */ String s; //-RAC@ in _conversion;
+    //-RAC@ private represents _conversion = s;
+
+    //@ public normal_behavior
+    //@   requires s != null;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _conversion == s;
+    //@ also public exceptional_behavior
+    //@   requires s == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public UnknownFormatConversionException(String s);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _conversion;
+    public /*@ spec_pure non_null */ String getConversion();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}

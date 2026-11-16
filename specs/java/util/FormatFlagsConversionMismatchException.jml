@@ -1,0 +1,34 @@
+package java.util;
+
+//@ nullable_by_default
+public non-sealed class FormatFlagsConversionMismatchException extends IllegalFormatException {
+
+    //-RAC@ public model non_null String _flags;
+    //-RAC@ public model char _conversion;
+    private /*@ non_null */ String f; //-RAC@ in _flags;
+    private char c; //-RAC@ in _conversion;
+    //-RAC@ private represents _flags = f;
+    //-RAC@ private represents _conversion = c;
+
+    //@ public normal_behavior
+    //@   requires f != null;
+    //-RAC@   ensures standardThrowableUnspecifiedMessage();
+    //-RAC@   ensures _flags == f && _conversion == c;
+    //@ also public exceptional_behavior
+    //@   requires f == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public FormatFlagsConversionMismatchException(String f, char c);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _flags;
+    public /*@ spec_pure non_null */ String getFlags();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == _conversion;
+    public /*@ pure */ char getConversion();
+
+    //@ also public normal_behavior
+    //@   ensures \result != null;
+    public /*@ spec_pure non_null */ String getMessage();
+}
