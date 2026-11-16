@@ -1,0 +1,121 @@
+package java.text;
+
+// The fields are named only in -RAC clauses: RAC cannot read private fields of JDK classes.
+// Not specified: hashCode beyond Object's, clone.
+//@ non_null_by_default
+public final class StringCharacterIterator implements CharacterIterator {
+
+    //@ spec_public
+    private String text; //@ in objectState;
+    //@ spec_public
+    private int begin; //@ in objectState;
+    //@ spec_public
+    private int end; //@ in objectState;
+    //@ spec_public
+    private int pos; //@ in objectState;
+
+    //-RAC@ public invariant 0 <= begin && begin <= pos && pos <= end && end <= text.chars.length;
+
+    //@ public normal_behavior
+    //@   ensures getBeginIndex() == 0 && getEndIndex() == text.length() && getIndex() == 0;
+    //-RAC@   ensures this.text == text;
+    //@ pure
+    public StringCharacterIterator(String text);
+
+    //@ public normal_behavior
+    //@   requires 0 <= pos <= text.length();
+    //@   ensures getBeginIndex() == 0 && getEndIndex() == text.length() && getIndex() == pos;
+    //-RAC@   ensures this.text == text;
+    //@ also public exceptional_behavior
+    //@   requires pos < 0 || pos > text.length();
+    //@   signals_only IllegalArgumentException;
+    //@ pure
+    public StringCharacterIterator(String text, int pos);
+
+    //@ public normal_behavior
+    //@   requires text != null && 0 <= begin && begin <= end && end <= text.length() && begin <= pos && pos <= end;
+    //@   ensures getBeginIndex() == begin && getEndIndex() == end && getIndex() == pos;
+    //-RAC@   ensures this.text == text;
+    //@ also public exceptional_behavior
+    //@   requires text == null;
+    //@   signals_only NullPointerException;
+    //@ also public exceptional_behavior
+    //@   requires text != null && (begin < 0 || begin > end || end > text.length() || pos < begin || pos > end);
+    //@   signals_only IllegalArgumentException;
+    //@ pure
+    public StringCharacterIterator(/*@ nullable */ String text, int begin, int end, int pos);
+
+    //@ public normal_behavior
+    //@   requires text != null;
+    //@   assignable objectState;
+    //@   ensures getBeginIndex() == 0 && getEndIndex() == text.length() && getIndex() == 0;
+    //-RAC@   ensures this.text == text;
+    //@ also public exceptional_behavior
+    //@   requires text == null;
+    //@   assignable \nothing;
+    //@   signals_only NullPointerException;
+    public void setText(/*@ nullable */ String text);
+
+    //-RAC@ also public normal_behavior
+    //-RAC@   assignable pos;
+    //-RAC@   ensures text == \old(text);
+    public char first();
+
+    //-RAC@ also public normal_behavior
+    //-RAC@   assignable pos;
+    //-RAC@   ensures text == \old(text);
+    public char last();
+
+    //-RAC@ also public normal_behavior
+    //-RAC@   assignable pos;
+    //-RAC@   ensures text == \old(text);
+    public char next();
+
+    //-RAC@ also public normal_behavior
+    //-RAC@   assignable pos;
+    //-RAC@   ensures text == \old(text);
+    public char previous();
+
+    //-RAC@ also public normal_behavior
+    //-RAC@   requires begin <= p && p <= end;
+    //-RAC@   assignable pos;
+    //-RAC@   ensures text == \old(text);
+    public char setIndex(int p);
+
+    //-RAC@ also public normal_behavior
+    //-RAC@   requires pos < end;
+    //-RAC@   ensures \result == text.charAt(pos);
+    //-RAC@ also public normal_behavior
+    //-RAC@   requires pos == end;
+    //-RAC@   ensures \result == DONE;
+    //@ pure
+    public char current();
+
+    //@ also public normal_behavior
+    //-RAC@   ensures \result == begin;
+    //@ pure
+    public int getBeginIndex();
+
+    //@ also public normal_behavior
+    //-RAC@   ensures \result == end;
+    //@ pure
+    public int getEndIndex();
+
+    //@ also public normal_behavior
+    //-RAC@   ensures \result == pos;
+    //@ pure
+    public int getIndex();
+
+    //@ also public normal_behavior
+    //@   requires obj == this;
+    //@   ensures \result;
+    //@ also public normal_behavior
+    //@   requires !(obj instanceof StringCharacterIterator);
+    //@   ensures !\result;
+    //-RAC@ also public normal_behavior
+    //-RAC@   requires obj instanceof StringCharacterIterator;
+    //-RAC@   ensures \result ==> (((StringCharacterIterator)obj).pos == pos && ((StringCharacterIterator)obj).begin == begin
+    //-RAC@                        && ((StringCharacterIterator)obj).end == end && ((StringCharacterIterator)obj).text.equals(text));
+    //@ pure
+    public boolean equals(/*@ nullable */ Object obj);
+}

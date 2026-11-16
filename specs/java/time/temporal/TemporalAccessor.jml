@@ -1,0 +1,23 @@
+package java.time.temporal;
+
+// Implementations are read-only views of date-time values: the queries have no side effects.
+// Not specified: range and query.
+//@ non_null_by_default
+public interface TemporalAccessor {
+
+    // For a null field the result is false or a NullPointerException.
+    //@ public behavior
+    //@   signals_only NullPointerException;
+    //@ pure
+    boolean isSupported(/*@ nullable */ TemporalField field);
+
+    //@ public behavior
+    //@   signals_only java.time.DateTimeException, ArithmeticException;
+    //@ pure
+    int get(TemporalField field);
+
+    //@ public behavior
+    //@   signals_only java.time.DateTimeException, ArithmeticException;
+    //@ pure
+    long getLong(TemporalField field);
+}

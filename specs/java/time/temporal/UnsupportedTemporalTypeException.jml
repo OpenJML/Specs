@@ -1,0 +1,13 @@
+package java.time.temporal;
+
+public class UnsupportedTemporalTypeException extends java.time.DateTimeException {
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message);
+    //@ pure
+    public UnsupportedTemporalTypeException(String message);
+
+    //@ public normal_behavior
+    //-RAC@   ensures standardThrowable(message,cause);
+    //@ pure
+    public UnsupportedTemporalTypeException(String message, /*@ nullable */ Throwable cause);
+}

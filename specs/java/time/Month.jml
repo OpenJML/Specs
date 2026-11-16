@@ -1,0 +1,118 @@
+package java.time;
+
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+
+// Not specified: getDisplayName, range, query, adjustInto, and fields other than ChronoField.MONTH_OF_YEAR.
+//@ non_null_by_default
+public enum Month implements TemporalAccessor, java.time.temporal.TemporalAdjuster {
+    JANUARY,
+    FEBRUARY,
+    MARCH,
+    APRIL,
+    MAY,
+    JUNE,
+    JULY,
+    AUGUST,
+    SEPTEMBER,
+    OCTOBER,
+    NOVEMBER,
+    DECEMBER;
+
+    private static final Month[] ENUMS;
+    //-RAC@ private static invariant ENUMS.length == 12 && (\forall int i; 0 <= i < 12; ENUMS[i] != null && ENUMS[i].ordinal() == i);
+
+    //@ public normal_behavior
+    //@   requires 1 <= month <= 12;
+    //@   ensures \result.getValue() == month;
+    //@ also public exceptional_behavior
+    //@   requires month < 1 || month > 12;
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static Month of(int month);
+
+    //@ public normal_behavior
+    //@   requires temporal instanceof Month;
+    //@   ensures \result == temporal;
+    //@ also public behavior
+    //@   requires !(temporal instanceof Month);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static Month from(TemporalAccessor temporal);
+
+    //@ public normal_behavior
+    //@   ensures \result == ordinal() + 1;
+    //@   ensures 1 <= \result <= 12;
+    //@ pure helper
+    public int getValue();
+
+    //@ also public normal_behavior
+    //@   requires field == ChronoField.MONTH_OF_YEAR;
+    //@   ensures \result;
+    //@ also public normal_behavior
+    //@   requires field instanceof ChronoField && field != ChronoField.MONTH_OF_YEAR;
+    //@   ensures !\result;
+    //@ also public normal_behavior
+    //@   requires field == null;
+    //@   ensures !\result;
+    //@ pure
+    public boolean isSupported(/*@ nullable */ TemporalField field);
+
+    //@ also public normal_behavior
+    //@   requires field == ChronoField.MONTH_OF_YEAR;
+    //@   ensures \result == getValue();
+    //@ pure
+    public int get(TemporalField field);
+
+    //@ also public normal_behavior
+    //@   requires field == ChronoField.MONTH_OF_YEAR;
+    //@   ensures \result == getValue();
+    //@ also public exceptional_behavior
+    //@   requires field instanceof ChronoField && field != ChronoField.MONTH_OF_YEAR;
+    //@   signals_only java.time.temporal.UnsupportedTemporalTypeException;
+    //@ pure
+    public long getLong(TemporalField field);
+
+    // The result is the month 'months' months later, wrapping around the year.
+    //@ public normal_behavior
+    //@   ensures \result.ordinal() == (ordinal() + months % 12 + 12) % 12;
+    //@ spec_pure
+    public Month plus(long months);
+
+    // The result is the month 'months' months earlier, wrapping around the year.
+    //@ public normal_behavior
+    //@   ensures \result.ordinal() == (ordinal() - months % 12 + 12) % 12;
+    //@ spec_pure
+    public Month minus(long months);
+
+    //@ public normal_behavior
+    //@   ensures \result == (this == FEBRUARY ? (leapYear ? 29 : 28)
+    //@                      : this == APRIL || this == JUNE || this == SEPTEMBER || this == NOVEMBER ? 30 : 31);
+    //@ pure
+    public int length(boolean leapYear);
+
+    //@ public normal_behavior
+    //@   ensures \result == length(false);
+    //@ pure
+    public int minLength();
+
+    //@ public normal_behavior
+    //@   ensures \result == length(true);
+    //@ pure
+    public int maxLength();
+
+    // The day of the year, 1-based, on which this month starts.
+    //@ public normal_behavior
+    //@   ensures \result == (this == JANUARY ? 1 : this == FEBRUARY ? 32 : (leapYear ? 1 : 0) + (
+    //@                         this == MARCH ? 60 : this == APRIL ? 91 : this == MAY ? 121 : this == JUNE ? 152
+    //@                       : this == JULY ? 182 : this == AUGUST ? 213 : this == SEPTEMBER ? 244
+    //@                       : this == OCTOBER ? 274 : this == NOVEMBER ? 305 : 335));
+    //@ pure
+    public int firstDayOfYear(boolean leapYear);
+
+    //@ public normal_behavior
+    //@   ensures \result.ordinal() == (ordinal() / 3) * 3;
+    //@ spec_pure
+    public Month firstMonthOfQuarter();
+}

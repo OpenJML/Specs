@@ -1,0 +1,89 @@
+package java.text;
+
+// Not specified: the text of toString.
+//@ non_null_by_default
+public class FieldPosition {
+
+    //@ spec_public
+    int field; //-RAC@ in theHashCode;
+    //@ spec_public
+    int endIndex; //-RAC@ in theHashCode;
+    //@ spec_public
+    int beginIndex; //-RAC@ in theHashCode;
+    //@ spec_public
+    private /*@ nullable */ Format.Field attribute;
+
+    // Connects Object.hashCode's specification to this class's hashCode
+    //-RAC@ public represents theHashCode = (field << 24) | (beginIndex << 16) | endIndex;
+
+    //@ public normal_behavior
+    //@   ensures getField() == field && getFieldAttribute() == null && getBeginIndex() == 0 && getEndIndex() == 0;
+    //@ pure
+    public FieldPosition(int field);
+
+    //@ public normal_behavior
+    //@   ensures getField() == -1 && getFieldAttribute() == attribute && getBeginIndex() == 0 && getEndIndex() == 0;
+    //@ pure
+    public FieldPosition(/*@ nullable */ Format.Field attribute);
+
+    //@ public normal_behavior
+    //@   ensures getField() == fieldID && getFieldAttribute() == attribute && getBeginIndex() == 0 && getEndIndex() == 0;
+    //@ pure
+    public FieldPosition(/*@ nullable */ Format.Field attribute, int fieldID);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == attribute;
+    //@ spec_pure
+    public /*@ nullable */ Format.Field getFieldAttribute();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == field;
+    //@ pure
+    public int getField();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == beginIndex;
+    //@ pure
+    public int getBeginIndex();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == endIndex;
+    //@ pure
+    public int getEndIndex();
+
+    //@ public normal_behavior
+    //-RAC@   assignable beginIndex;
+    //@   ensures getBeginIndex() == bi;
+    //@   ensures getEndIndex() == \old(getEndIndex()) && getField() == \old(getField());
+    //@   ensures getFieldAttribute() == \old(getFieldAttribute());
+    public void setBeginIndex(int bi);
+
+    //@ public normal_behavior
+    //-RAC@   assignable endIndex;
+    //@   ensures getEndIndex() == ei;
+    //@   ensures getBeginIndex() == \old(getBeginIndex()) && getField() == \old(getField());
+    //@   ensures getFieldAttribute() == \old(getFieldAttribute());
+    public void setEndIndex(int ei);
+
+    //@ also public normal_behavior
+    //@   requires !(obj instanceof FieldPosition);
+    //@   ensures !\result;
+    //@ also public normal_behavior
+    //@   requires obj instanceof FieldPosition && getFieldAttribute() == null;
+    //@   ensures \result == (((FieldPosition)obj).getFieldAttribute() == null
+    //@                       && ((FieldPosition)obj).getBeginIndex() == getBeginIndex()
+    //@                       && ((FieldPosition)obj).getEndIndex() == getEndIndex()
+    //@                       && ((FieldPosition)obj).getField() == getField());
+    //@ pure
+    public boolean equals(/*@ nullable */ Object obj);
+
+    //@ also public normal_behavior
+    //@   ensures \result == ((getField() << 24) | (getBeginIndex() << 16) | getEndIndex());
+    //@ pure
+    public int hashCode();
+
+    //@ also public normal_behavior
+    //@   ensures true;
+    //@ pure
+    public String toString();
+}

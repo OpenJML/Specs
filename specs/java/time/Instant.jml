@@ -1,90 +1,184 @@
 package java.time;
 
-//@ immutable non_null_by_default
-public final class Instant implements java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster, Comparable<Instant>, java.io.Serializable {
- /*
-  public static final java.time.Instant EPOCH;
-  private static final long MIN_SECOND;
-  private static final long MAX_SECOND;
-  public static final java.time.Instant MIN;
-  public static final java.time.Instant MAX;
-  private static final long serialVersionUID;
-  */
-  //@ spec_public
-  private final long seconds;
-  //@ spec_public
-  private final int nanos;
-  /*
-  public static java.time.Instant now();
-  public static java.time.Instant now(java.time.Clock);
-  public static java.time.Instant ofEpochSecond(long);
-  public static java.time.Instant ofEpochSecond(long, long);
-  public static java.time.Instant ofEpochMilli(long);
-  public static java.time.Instant from(java.time.temporal.TemporalAccessor);
-  public static java.time.Instant parse(java.lang.CharSequence);
-  private static java.time.Instant create(long, int);
-  private java.time.Instant(long, int);
-  public boolean isSupported(java.time.temporal.TemporalField);
-  public boolean isSupported(java.time.temporal.TemporalUnit);
-  public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
-  public int get(java.time.temporal.TemporalField);
-  public long getLong(java.time.temporal.TemporalField);
-  public long getEpochSecond();
-  public int getNano();
-  public java.time.Instant with(java.time.temporal.TemporalAdjuster);
-  public java.time.Instant with(java.time.temporal.TemporalField, long);
-  public java.time.Instant truncatedTo(java.time.temporal.TemporalUnit);
-  public java.time.Instant plus(java.time.temporal.TemporalAmount);
-  public java.time.Instant plus(long, java.time.temporal.TemporalUnit);
-  public java.time.Instant plusSeconds(long);
-  public java.time.Instant plusMillis(long);
-  public java.time.Instant plusNanos(long);
-  private java.time.Instant plus(long, long);
-  public java.time.Instant minus(java.time.temporal.TemporalAmount);
-  public java.time.Instant minus(long, java.time.temporal.TemporalUnit);
-  public java.time.Instant minusSeconds(long);
-  public java.time.Instant minusMillis(long);
-  public java.time.Instant minusNanos(long);
-  public <R> R query(java.time.temporal.TemporalQuery<R>);
-  public java.time.temporal.Temporal adjustInto(java.time.temporal.Temporal);
-  public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
-  private long nanosUntil(java.time.Instant);
-  private long secondsUntil(java.time.Instant);
-  public java.time.OffsetDateTime atOffset(java.time.ZoneOffset);
-  public java.time.ZonedDateTime atZone(java.time.ZoneId);
-  */
-  //@ public normal_behavior
-  //-RAC@   ensures \result == (Long.MIN_VALUE <= 1000*seconds <= (Long.MAX_VALUE-1000));
-  //@ pure
-  //@ model public static boolean okEpochMilliForLong(\bigint seconds, \bigint nanos);
- 
-  //@ public normal_behavior
-  //-RAC@   ensures \result == okEpochMilliForLong(instant.seconds, instant.nanos);
-  //@ model public static boolean okEpochMilliForLong(Instant instant);
-  
-  //-RAC@ public normal_behavior
-  //-RAC@   requires okEpochMilliForLong(seconds,nanos);
-  //-RAC@   ensures \result == (nanos/1000000) + 1000*seconds; // TODO: Not sure this matches the implementation
-  //+RAC@ public behavior
-  public long toEpochMilli();
-  /*
-  public int compareTo(java.time.Instant);
-  public boolean isAfter(java.time.Instant);
-  public boolean isBefore(java.time.Instant);
-  public boolean equals(java.lang.Object);
-  public int hashCode();
-  public java.lang.String toString();
-  private java.lang.Object writeReplace();
-  private void readObject(java.io.ObjectInputStream) throws java.io.InvalidObjectException;
-  void writeExternal(java.io.DataOutput) throws java.io.IOException;
-  static java.time.Instant readExternal(java.io.DataInput) throws java.io.IOException;
-  public java.time.temporal.Temporal minus(long, java.time.temporal.TemporalUnit);
-  public java.time.temporal.Temporal minus(java.time.temporal.TemporalAmount);
-  public java.time.temporal.Temporal plus(long, java.time.temporal.TemporalUnit);
-  public java.time.temporal.Temporal plus(java.time.temporal.TemporalAmount);
-  public java.time.temporal.Temporal with(java.time.temporal.TemporalField, long);
-  public java.time.temporal.Temporal with(java.time.temporal.TemporalAdjuster);
-  public int compareTo(java.lang.Object);
-  static {};
-  */
-  }
+// An Instant is a whole number of nanoseconds from the epoch, getEpochSecond() * 10^9 + getNano(), with
+// 0 <= getNano() < 10^9 and getEpochSecond() between Instant.MIN and Instant.MAX (-31557014167219200 and
+// 31556889864403199). The specifications state results by that exact (\bigint) value. A result outside that range
+// throws DateTimeException, or ArithmeticException where the implementation's long arithmetic overflows first.
+// Not specified: now, from, parse, the TemporalAccessor and Temporal methods (isSupported, range, get, getLong, with,
+// truncatedTo, plus/minus with a TemporalAmount or TemporalUnit, query, adjustInto, until), atOffset, atZone, toString.
+//@ non_null_by_default
+public final class Instant implements java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster,
+                                      Comparable<Instant>, java.io.Serializable {
+
+    public static final Instant EPOCH;
+    public static final Instant MIN;
+    public static final Instant MAX;
+
+    //@ spec_public
+    private final long seconds; //-RAC@ in theHashCode;
+    //@ spec_public
+    private final int nanos; //-RAC@ in theHashCode;
+
+    //-RAC@ public invariant 0 <= nanos && nanos < 1000000000;
+    //-RAC@ public invariant -31557014167219200L <= seconds && seconds <= 31556889864403199L;
+
+    //@ public normal_behavior
+    //@   ensures EPOCH.getEpochSecond() == 0 && EPOCH.getNano() == 0;
+    //@   ensures MIN.getEpochSecond() == -31557014167219200L && MIN.getNano() == 0;
+    //@   ensures MAX.getEpochSecond() == 31556889864403199L && MAX.getNano() == 999999999;
+    //@ static_initializer
+
+    // Connects Object.hashCode's specification to this class's hashCode
+    //-RAC@ public represents theHashCode = ((int) (seconds ^ (seconds >>> 32))) + (51 * nanos);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires -31557014167219200L <= epochSecond && epochSecond <= 31556889864403199L && 0 <= nanos && nanos < 1000000000;
+    //-RAC@   ensures this.seconds == epochSecond && this.nanos == nanos;
+    //@ pure
+    private Instant(long epochSecond, int nanos);
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires -31557014167219200L <= seconds && seconds <= 31556889864403199L && 0 <= nanoOfSecond && nanoOfSecond < 1000000000;
+    //-RAC@   ensures \result.seconds == seconds && \result.nanos == nanoOfSecond;
+    //-RAC@ also private exceptional_behavior
+    //-RAC@   requires (seconds < -31557014167219200L || seconds > 31556889864403199L) && 0 <= nanoOfSecond && nanoOfSecond < 1000000000;
+    //-RAC@   signals_only DateTimeException;
+    //@ spec_pure
+    private static Instant create(long seconds, int nanoOfSecond);
+
+
+    //@ public normal_behavior
+    //@   requires -31557014167219200L <= epochSecond && epochSecond <= 31556889864403199L;
+    //@   ensures \result.getEpochSecond() == epochSecond && \result.getNano() == 0;
+    //@ also public exceptional_behavior
+    //@   requires epochSecond < -31557014167219200L || epochSecond > 31556889864403199L;
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static Instant ofEpochSecond(long epochSecond);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)epochSecond * 1000000000 + nanoAdjustment) && ((\bigint)epochSecond * 1000000000 + nanoAdjustment) <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)epochSecond * 1000000000 + nanoAdjustment);
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)epochSecond * 1000000000 + nanoAdjustment) && ((\bigint)epochSecond * 1000000000 + nanoAdjustment) <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public static Instant ofEpochSecond(long epochSecond, long nanoAdjustment);
+
+    // Every long number of milliseconds is within the Instant range
+    //@ public normal_behavior
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == (\bigint)epochMilli * 1000000;
+    //@ spec_pure
+    public static Instant ofEpochMilli(long epochMilli);
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == seconds;
+    //@ pure helper
+    public long getEpochSecond();
+
+    // 0 <= getNano() < 10^9, by the invariant
+    //@ public normal_behavior
+    //-RAC@   ensures \result == nanos;
+    //@ pure helper
+    public int getNano();
+
+    //@ private normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd;
+    //@ also private exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 + nanosToAdd <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    private Instant plus(long secondsToAdd, long nanosToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)secondsToAdd * 1000000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public Instant plusSeconds(long secondsToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + (\bigint)millisToAdd * 1000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public Instant plusMillis(long millisToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + nanosToAdd && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + nanosToAdd <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) + nanosToAdd;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) + nanosToAdd && ((\bigint)getEpochSecond() * 1000000000 + getNano()) + nanosToAdd <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public Instant plusNanos(long nanosToAdd);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)secondsToSubtract * 1000000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public Instant minusSeconds(long secondsToSubtract);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 && ((\bigint)getEpochSecond() * 1000000000 + getNano()) - (\bigint)millisToSubtract * 1000000 <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public Instant minusMillis(long millisToSubtract);
+
+    //@ public normal_behavior
+    //@   requires (\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) - nanosToSubtract && ((\bigint)getEpochSecond() * 1000000000 + getNano()) - nanosToSubtract <= (\bigint)31556889864403199L * 1000000000 + 999999999;
+    //@   ensures ((\bigint)\result.getEpochSecond() * 1000000000 + \result.getNano()) == ((\bigint)getEpochSecond() * 1000000000 + getNano()) - nanosToSubtract;
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)-31557014167219200L * 1000000000 <= ((\bigint)getEpochSecond() * 1000000000 + getNano()) - nanosToSubtract && ((\bigint)getEpochSecond() * 1000000000 + getNano()) - nanosToSubtract <= (\bigint)31556889864403199L * 1000000000 + 999999999);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public Instant minusNanos(long nanosToSubtract);
+
+    // The number of milliseconds from the epoch, rounded toward negative infinity
+    //@ public normal_behavior
+    //@   requires Long.MIN_VALUE <= (\bigint)getEpochSecond() * 1000 + getNano() / 1000000 && (\bigint)getEpochSecond() * 1000 + getNano() / 1000000 <= Long.MAX_VALUE;
+    //@   ensures \result == (\bigint)getEpochSecond() * 1000 + getNano() / 1000000;
+    //@ also public exceptional_behavior
+    //@   requires !(Long.MIN_VALUE <= (\bigint)getEpochSecond() * 1000 + getNano() / 1000000 && (\bigint)getEpochSecond() * 1000 + getNano() / 1000000 <= Long.MAX_VALUE);
+    //@   signals_only ArithmeticException;
+    //@ pure
+    public long toEpochMilli();
+
+    //@ also public normal_behavior
+    //@   ensures (\result < 0) == (((\bigint)getEpochSecond() * 1000000000 + getNano()) < ((\bigint)otherInstant.getEpochSecond() * 1000000000 + otherInstant.getNano()));
+    //@   ensures (\result == 0) == (((\bigint)getEpochSecond() * 1000000000 + getNano()) == ((\bigint)otherInstant.getEpochSecond() * 1000000000 + otherInstant.getNano()));
+    //@ pure
+    public int compareTo(Instant otherInstant);
+
+    //@ public normal_behavior
+    //@   ensures \result == (((\bigint)getEpochSecond() * 1000000000 + getNano()) > ((\bigint)otherInstant.getEpochSecond() * 1000000000 + otherInstant.getNano()));
+    //@ pure
+    public boolean isAfter(Instant otherInstant);
+
+    //@ public normal_behavior
+    //@   ensures \result == (((\bigint)getEpochSecond() * 1000000000 + getNano()) < ((\bigint)otherInstant.getEpochSecond() * 1000000000 + otherInstant.getNano()));
+    //@ pure
+    public boolean isBefore(Instant otherInstant);
+
+    //@ also public normal_behavior
+    //@   ensures \result == (other instanceof Instant && ((Instant)other).getEpochSecond() == getEpochSecond()
+    //@                                                && ((Instant)other).getNano() == getNano());
+    //@ pure
+    public boolean equals(/*@ nullable */ Object other);
+
+    //@ also public normal_behavior
+    //@   ensures \result == ((int) (getEpochSecond() ^ (getEpochSecond() >>> 32))) + (51 * getNano());
+    //@ pure code_java_math spec_java_math
+    public int hashCode();
+}

@@ -1,0 +1,270 @@
+package java.time;
+
+import java.time.chrono.ChronoLocalDate;
+
+// A LocalDate is a valid ISO date: getYear() in the Year range, 1 <= getMonthValue() <= 12 and
+// 1 <= getDayOfMonth() <= the month's length. toEpochDay() numbers the days consecutively (day 0 is 1970-01-01);
+// the relation between the epoch day and year/month/day (the calendar) is not specified, so plusDays etc. are
+// specified only through toEpochDay(), except within a month.
+// Not specified: now, ofInstant, ofYearDay, from, parse, getChronology, getEra, the TemporalAccessor and Temporal
+// methods (isSupported, range, get, getLong, with, plus/minus with a TemporalAmount or TemporalUnit, query,
+// adjustInto, until), withDayOfYear, datesUntil, format, atTime, atStartOfDay, toEpochSecond, toString, and
+// compareTo etc. with a ChronoLocalDate that is not a LocalDate.
+//@ non_null_by_default
+public final class LocalDate implements java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster,
+                                        ChronoLocalDate, java.io.Serializable {
+
+    public static final LocalDate MIN;
+    public static final LocalDate MAX;
+    public static final LocalDate EPOCH;
+
+    //@ spec_public
+    private final int year; //-RAC@ in theHashCode;
+    //@ spec_public
+    private final short month; //-RAC@ in theHashCode;
+    //@ spec_public
+    private final short day; //-RAC@ in theHashCode;
+
+    // Connects Object.hashCode's specification to this class's hashCode
+    //-RAC@ public represents theHashCode = (year & 0xFFFFF800) ^ ((year << 11) + (month << 6) + day);
+
+    //-RAC@ public invariant Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month && month <= 12 && 1 <= day && day <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31);
+
+    //@ public normal_behavior
+    //@   ensures MIN.getYear() == Year.MIN_VALUE && MIN.getMonthValue() == 1 && MIN.getDayOfMonth() == 1 && MIN.toEpochDay() == -365243219162L;
+    //@   ensures MAX.getYear() == Year.MAX_VALUE && MAX.getMonthValue() == 12 && MAX.getDayOfMonth() == 31 && MAX.toEpochDay() == 365241780471L;
+    //@   ensures EPOCH.getYear() == 1970 && EPOCH.getMonthValue() == 1 && EPOCH.getDayOfMonth() == 1 && EPOCH.toEpochDay() == 0;
+    //@ static_initializer
+
+    //-RAC@ private normal_behavior
+    //-RAC@   requires Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month && month <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31);
+    //-RAC@   ensures this.year == year && this.month == month && this.day == dayOfMonth;
+    //@ pure
+    private LocalDate(int year, int month, int dayOfMonth);
+
+    //@ normal_behavior
+    //@   ensures (\result < 0) == (getYear() < otherDate.getYear() || (getYear() == otherDate.getYear() && (getMonthValue() < otherDate.getMonthValue() || (getMonthValue() == otherDate.getMonthValue() && getDayOfMonth() < otherDate.getDayOfMonth()))));
+    //@   ensures (\result == 0) == (getYear() == otherDate.getYear() && getMonthValue() == otherDate.getMonthValue() && getDayOfMonth() == otherDate.getDayOfMonth());
+    //@ pure
+    int compareTo0(LocalDate otherDate);
+
+    //@ public normal_behavior
+    //@   requires Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month && month <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31);
+    //@   ensures \result.getYear() == year && \result.getMonthValue() == month && \result.getDayOfMonth() == dayOfMonth;
+    //@ also public exceptional_behavior
+    //@   requires !(Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month && month <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31));
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalDate of(int year, int month, int dayOfMonth);
+
+    //@ public normal_behavior
+    //@   requires Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month.getValue() && month.getValue() <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month.getValue() == 2 ? (Year.isLeap(year) ? 29 : 28) : (month.getValue() == 4 || month.getValue() == 6 || month.getValue() == 9 || month.getValue() == 11) ? 30 : 31);
+    //@   ensures \result.getYear() == year && \result.getMonthValue() == month.getValue() && \result.getDayOfMonth() == dayOfMonth;
+    //@ also public exceptional_behavior
+    //@   requires !(Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month.getValue() && month.getValue() <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month.getValue() == 2 ? (Year.isLeap(year) ? 29 : 28) : (month.getValue() == 4 || month.getValue() == 6 || month.getValue() == 9 || month.getValue() == 11) ? 30 : 31));
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalDate of(int year, Month month, int dayOfMonth);
+
+    //@ public normal_behavior
+    //@   requires -365243219162L <= epochDay && epochDay <= 365241780471L;
+    //@   ensures \result.toEpochDay() == epochDay;
+    //@ also public exceptional_behavior
+    //@   requires !(-365243219162L <= epochDay && epochDay <= 365241780471L);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public static LocalDate ofEpochDay(long epochDay);
+
+    // Year.MIN_VALUE <= getYear() <= Year.MAX_VALUE, by the invariant; likewise for month and day
+    //@ public normal_behavior
+    //-RAC@   ensures \result == year;
+    //@ pure helper
+    public int getYear();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == month;
+    //@ pure helper
+    public int getMonthValue();
+
+    //@ public normal_behavior
+    //-RAC@   ensures \result == day;
+    //@ pure helper
+    public int getDayOfMonth();
+
+    //@ public normal_behavior
+    //@   ensures \result.getValue() == getMonthValue();
+    //@ spec_pure
+    public Month getMonth();
+
+    //@ public normal_behavior
+    //@   ensures \result == Month.of(getMonthValue()).firstDayOfYear(Year.isLeap(getYear())) + getDayOfMonth() - 1;
+    //@ pure
+    public int getDayOfYear();
+
+    //@ public normal_behavior
+    //@   ensures \result.getValue() == ((toEpochDay() + 3) % 7 + 7) % 7 + 1;
+    //@ spec_pure
+    public DayOfWeek getDayOfWeek();
+
+    //@ also public normal_behavior
+    //@   ensures \result == Year.isLeap(getYear());
+    //@ pure
+    public boolean isLeapYear();
+
+    //@ also public normal_behavior
+    //@   ensures \result == (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
+    //@ pure
+    public int lengthOfMonth();
+
+    //@ also public normal_behavior
+    //@   ensures \result == (Year.isLeap(getYear()) ? 366 : 365);
+    //@ pure
+    public int lengthOfYear();
+
+    //@ public normal_behavior
+    //@   requires Year.MIN_VALUE <= year && year <= Year.MAX_VALUE;
+    //@   ensures \result.getYear() == year && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == (getDayOfMonth() < (getMonthValue() == 2 ? (Year.isLeap(year) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31) ? getDayOfMonth() : (getMonthValue() == 2 ? (Year.isLeap(year) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31));
+    //@ also public exceptional_behavior
+    //@   requires !(Year.MIN_VALUE <= year && year <= Year.MAX_VALUE);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate withYear(int year);
+
+    //@ public normal_behavior
+    //@   requires 1 <= month && month <= 12;
+    //@   ensures \result.getYear() == getYear() && \result.getMonthValue() == month && \result.getDayOfMonth() == (getDayOfMonth() < (month == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31) ? getDayOfMonth() : (month == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31));
+    //@ also public exceptional_behavior
+    //@   requires !(1 <= month && month <= 12);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate withMonth(int month);
+
+    //@ public normal_behavior
+    //@   requires 1 <= dayOfMonth && dayOfMonth <= (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
+    //@   ensures \result.getYear() == getYear() && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == dayOfMonth;
+    //@ also public exceptional_behavior
+    //@   requires !(1 <= dayOfMonth && dayOfMonth <= (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31));
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate withDayOfMonth(int dayOfMonth);
+
+    //@ public normal_behavior
+    //@   requires Year.MIN_VALUE <= (\bigint)getYear() + yearsToAdd && (\bigint)getYear() + yearsToAdd <= Year.MAX_VALUE;
+    //@   ensures \result.getYear() == getYear() + yearsToAdd && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == (getDayOfMonth() < (getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31) ? getDayOfMonth() : (getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31));
+    //@ also public exceptional_behavior
+    //@   requires !(Year.MIN_VALUE <= (\bigint)getYear() + yearsToAdd && (\bigint)getYear() + yearsToAdd <= Year.MAX_VALUE);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate plusYears(long yearsToAdd);
+
+    //@ public normal_behavior
+    //@   requires Year.MIN_VALUE <= (\bigint)getYear() - yearsToSubtract && (\bigint)getYear() - yearsToSubtract <= Year.MAX_VALUE;
+    //@   ensures \result.getYear() == getYear() - yearsToSubtract && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == (getDayOfMonth() < (getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31) ? getDayOfMonth() : (getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31));
+    //@ also public exceptional_behavior
+    //@   requires !(Year.MIN_VALUE <= (\bigint)getYear() - yearsToSubtract && (\bigint)getYear() - yearsToSubtract <= Year.MAX_VALUE);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate minusYears(long yearsToSubtract);
+
+    // The year and month are those of the month number getYear() * 12 + getMonthValue() - 1 + monthsToAdd; the day is clamped to the month's length
+    //@ public normal_behavior
+    //@   requires (\bigint)Year.MIN_VALUE * 12 <= ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) && ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) <= (\bigint)Year.MAX_VALUE * 12 + 11;
+    //@   ensures (\bigint)\result.getYear() * 12 + \result.getMonthValue() - 1 == ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) && \result.getDayOfMonth() == (getDayOfMonth() < (\result.getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (\result.getMonthValue() == 4 || \result.getMonthValue() == 6 || \result.getMonthValue() == 9 || \result.getMonthValue() == 11) ? 30 : 31) ? getDayOfMonth() : (\result.getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (\result.getMonthValue() == 4 || \result.getMonthValue() == 6 || \result.getMonthValue() == 9 || \result.getMonthValue() == 11) ? 30 : 31));
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Year.MIN_VALUE * 12 <= ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) && ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) <= (\bigint)Year.MAX_VALUE * 12 + 11);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate plusMonths(long monthsToAdd);
+
+    // The year and month are those of the month number getYear() * 12 + getMonthValue() - 1 - monthsToSubtract; the day is clamped to the month's length
+    //@ public normal_behavior
+    //@   requires (\bigint)Year.MIN_VALUE * 12 <= ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) && ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) <= (\bigint)Year.MAX_VALUE * 12 + 11;
+    //@   ensures (\bigint)\result.getYear() * 12 + \result.getMonthValue() - 1 == ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) && \result.getDayOfMonth() == (getDayOfMonth() < (\result.getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (\result.getMonthValue() == 4 || \result.getMonthValue() == 6 || \result.getMonthValue() == 9 || \result.getMonthValue() == 11) ? 30 : 31) ? getDayOfMonth() : (\result.getMonthValue() == 2 ? (Year.isLeap(\result.getYear()) ? 29 : 28) : (\result.getMonthValue() == 4 || \result.getMonthValue() == 6 || \result.getMonthValue() == 9 || \result.getMonthValue() == 11) ? 30 : 31));
+    //@ also public exceptional_behavior
+    //@   requires !((\bigint)Year.MIN_VALUE * 12 <= ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) && ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) <= (\bigint)Year.MAX_VALUE * 12 + 11);
+    //@   signals_only DateTimeException;
+    //@ spec_pure
+    public LocalDate minusMonths(long monthsToSubtract);
+
+    //@ public normal_behavior
+    //@   requires -365243219162L <= (\bigint)toEpochDay() + (\bigint)daysToAdd && (\bigint)toEpochDay() + (\bigint)daysToAdd <= 365241780471L;
+    //@   ensures \result.toEpochDay() == (\bigint)toEpochDay() + (\bigint)daysToAdd;
+    //@ also public normal_behavior
+    //@   requires 1 <= (\bigint)getDayOfMonth() + daysToAdd && (\bigint)getDayOfMonth() + daysToAdd <= (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
+    //@   ensures \result.getYear() == getYear() && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == getDayOfMonth() + daysToAdd;
+    //@ also public exceptional_behavior
+    //@   requires !(-365243219162L <= (\bigint)toEpochDay() + (\bigint)daysToAdd && (\bigint)toEpochDay() + (\bigint)daysToAdd <= 365241780471L);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public LocalDate plusDays(long daysToAdd);
+
+    //@ public normal_behavior
+    //@   requires -365243219162L <= (\bigint)toEpochDay() - (\bigint)daysToSubtract && (\bigint)toEpochDay() - (\bigint)daysToSubtract <= 365241780471L;
+    //@   ensures \result.toEpochDay() == (\bigint)toEpochDay() - (\bigint)daysToSubtract;
+    //@ also public normal_behavior
+    //@   requires 1 <= (\bigint)getDayOfMonth() - daysToSubtract && (\bigint)getDayOfMonth() - daysToSubtract <= (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
+    //@   ensures \result.getYear() == getYear() && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == getDayOfMonth() - daysToSubtract;
+    //@ also public exceptional_behavior
+    //@   requires !(-365243219162L <= (\bigint)toEpochDay() - (\bigint)daysToSubtract && (\bigint)toEpochDay() - (\bigint)daysToSubtract <= 365241780471L);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public LocalDate minusDays(long daysToSubtract);
+
+    //@ public normal_behavior
+    //@   requires -365243219162L <= (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7 && (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7 <= 365241780471L;
+    //@   ensures \result.toEpochDay() == (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7;
+    //@ also public exceptional_behavior
+    //@   requires !(-365243219162L <= (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7 && (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7 <= 365241780471L);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public LocalDate plusWeeks(long weeksToAdd);
+
+    //@ public normal_behavior
+    //@   requires -365243219162L <= (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7 && (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7 <= 365241780471L;
+    //@   ensures \result.toEpochDay() == (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7;
+    //@ also public exceptional_behavior
+    //@   requires !(-365243219162L <= (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7 && (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7 <= 365241780471L);
+    //@   signals_only DateTimeException, ArithmeticException;
+    //@ spec_pure
+    public LocalDate minusWeeks(long weeksToSubtract);
+
+    //@ also public normal_behavior
+    //@   ensures -365243219162L <= \result && \result <= 365241780471L;
+    //@ pure
+    public long toEpochDay();
+
+    //@ also public normal_behavior
+    //@   requires other instanceof LocalDate;
+    //@   ensures (\result < 0) == (getYear() < ((LocalDate)other).getYear() || (getYear() == ((LocalDate)other).getYear() && (getMonthValue() < ((LocalDate)other).getMonthValue() || (getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() < ((LocalDate)other).getDayOfMonth()))));
+    //@   ensures (\result == 0) == (getYear() == ((LocalDate)other).getYear() && getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() == ((LocalDate)other).getDayOfMonth());
+    //@ pure
+    public int compareTo(ChronoLocalDate other);
+
+    //@ also public normal_behavior
+    //@   requires other instanceof LocalDate;
+    //@   ensures \result == (getYear() > ((LocalDate)other).getYear() || (getYear() == ((LocalDate)other).getYear() && (getMonthValue() > ((LocalDate)other).getMonthValue() || (getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() > ((LocalDate)other).getDayOfMonth()))));
+    //@ pure
+    public boolean isAfter(ChronoLocalDate other);
+
+    //@ also public normal_behavior
+    //@   requires other instanceof LocalDate;
+    //@   ensures \result == (getYear() < ((LocalDate)other).getYear() || (getYear() == ((LocalDate)other).getYear() && (getMonthValue() < ((LocalDate)other).getMonthValue() || (getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() < ((LocalDate)other).getDayOfMonth()))));
+    //@ pure
+    public boolean isBefore(ChronoLocalDate other);
+
+    //@ also public normal_behavior
+    //@   requires other instanceof LocalDate;
+    //@   ensures \result == (getYear() == ((LocalDate)other).getYear() && getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() == ((LocalDate)other).getDayOfMonth());
+    //@ pure
+    public boolean isEqual(ChronoLocalDate other);
+
+    //@ also public normal_behavior
+    //@   ensures \result == (obj instanceof LocalDate && getYear() == ((LocalDate)obj).getYear() && getMonthValue() == ((LocalDate)obj).getMonthValue() && getDayOfMonth() == ((LocalDate)obj).getDayOfMonth());
+    //@ pure
+    public boolean equals(/*@ nullable */ Object obj);
+
+    //@ also public normal_behavior
+    //@   ensures \result == ((getYear() & 0xFFFFF800) ^ ((getYear() << 11) + (getMonthValue() << 6) + getDayOfMonth()));
+    //@ pure code_java_math spec_java_math
+    public int hashCode();
+}

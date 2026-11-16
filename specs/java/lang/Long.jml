@@ -351,6 +351,11 @@ public /*@ pure @*/ final
       @*/
     public int compareTo(Long anotherLong);
 
+    //@ public normal_behavior
+    //@   ensures \result == (x < y ? -1 : x == y ? 0 : 1);
+    //@ pure
+    public static int compare(long x, long y);
+
     /*@ 
       @   public normal_behavior
       @     requires o != null && (o instanceof Long);
