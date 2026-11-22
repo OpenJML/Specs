@@ -23,6 +23,7 @@ public class ObjectStreamField implements Comparable<Object> {
     public ObjectStreamField(/*@ nullable */ String name, /*@ nullable */ Class<?> type, boolean unshared);
 
     //@ public normal_behavior
+    //@   requires true;
     //@ spec_pure helper
     public String getName();
 
@@ -43,6 +44,7 @@ public class ObjectStreamField implements Comparable<Object> {
     public /*@ nullable */ String getTypeString();
 
     //@ public normal_behavior
+    //@   requires true;
     //@ pure
     public int getOffset();
 
@@ -56,6 +58,7 @@ public class ObjectStreamField implements Comparable<Object> {
     public boolean isPrimitive();
 
     //@ public normal_behavior
+    //@   requires true;
     //@ spec_pure helper
     public boolean isUnshared();
 
