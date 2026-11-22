@@ -1,0 +1,67 @@
+package java.time.chrono;
+
+// A date in some calendar system. The epoch day (day 0 is 1970-01-01 ISO) is the same in all chronologies;
+// isAfter, isBefore and isEqual compare epoch days, and compareTo orders first by epoch day (then by chronology).
+// Not specified: timeLineOrder, from, getEra, isSupported, with, plus, minus, query, adjustInto, both until, format,
+// atTime, the chronology tie-break of compareTo, and the values of isLeapYear, lengthOfMonth and toString.
+//@ non_null_by_default
+public interface ChronoLocalDate extends java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster,
+                                         Comparable<ChronoLocalDate> {
+
+    //@ public normal_behavior
+    //@ pure
+    Chronology getChronology();
+
+    //@ public normal_behavior
+    //@ pure
+    boolean isLeapYear();
+
+    //@ public normal_behavior
+    //@   ensures \result > 0;
+    //@ pure
+    int lengthOfMonth();
+
+    //@ public normal_behavior
+    //@   ensures \result > 0;
+    //@ pure
+    int lengthOfYear();
+
+    //@ public normal_behavior
+    //@ pure
+    long toEpochDay();
+
+    //@ also public normal_behavior
+    //@   ensures toEpochDay() < other.toEpochDay() ==> \result < 0;
+    //@   ensures toEpochDay() > other.toEpochDay() ==> \result > 0;
+    //@ pure
+    int compareTo(ChronoLocalDate other);
+
+    //@ public normal_behavior
+    //@   ensures \result == (toEpochDay() > other.toEpochDay());
+    //@ pure
+    boolean isAfter(ChronoLocalDate other);
+
+    //@ public normal_behavior
+    //@   ensures \result == (toEpochDay() < other.toEpochDay());
+    //@ pure
+    boolean isBefore(ChronoLocalDate other);
+
+    //@ public normal_behavior
+    //@   ensures \result == (toEpochDay() == other.toEpochDay());
+    //@ pure
+    boolean isEqual(ChronoLocalDate other);
+
+    // Equal dates have the same epoch day (and the same chronology)
+    //@ also public normal_behavior
+    //@   ensures \result ==> obj instanceof ChronoLocalDate && toEpochDay() == ((ChronoLocalDate)obj).toEpochDay();
+    //@ pure
+    boolean equals(/*@ nullable */ Object obj);
+
+    //@ also public normal_behavior
+    //@ pure
+    int hashCode();
+
+    //@ also public normal_behavior
+    //@ pure
+    String toString();
+}
