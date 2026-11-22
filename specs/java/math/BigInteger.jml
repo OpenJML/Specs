@@ -220,6 +220,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     public static final BigInteger TWO;
     public static final BigInteger TEN;
 
+    //-RAC@ public static invariant ZERO != null && ONE != null && TWO != null && TEN != null;
+    //-RAC@ public static invariant ZERO.value == 0 && ONE.value == 1 && TWO.value == 2 && TEN.value == 10;
+
     //@ public normal_behavior
     //@   ensures ZERO != null && ONE != null && TWO != null && TEN != null;
     //@   ensures ZERO.signum() == 0 && ONE.intValue() == 1 && TWO.intValue() == 2 && TEN.longValue() == 10L;

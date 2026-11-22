@@ -21,6 +21,9 @@ public final class Instant implements java.time.temporal.Temporal, java.time.tem
 
     //-RAC@ public invariant 0 <= nanos && nanos < 1000000000;
     //-RAC@ public invariant -31557014167219200L <= seconds && seconds <= 31556889864403199L;
+    //-RAC@ public static invariant EPOCH.seconds == 0 && EPOCH.nanos == 0;
+    //-RAC@ public static invariant MIN.seconds == -31557014167219200L && MIN.nanos == 0;
+    //-RAC@ public static invariant MAX.seconds == 31556889864403199L && MAX.nanos == 999999999;
 
     //@ public normal_behavior
     //@   ensures EPOCH.getEpochSecond() == 0 && EPOCH.getNano() == 0;

@@ -26,6 +26,10 @@ public final class LocalTime implements java.time.temporal.Temporal, java.time.t
 
     //-RAC@ public invariant 0 <= hour && hour <= 23 && 0 <= minute && minute <= 59 && 0 <= second && second <= 59;
     //-RAC@ public invariant 0 <= nano && nano <= 999999999;
+    //-RAC@ public static invariant MIN.hour == 0 && MIN.minute == 0 && MIN.second == 0 && MIN.nano == 0;
+    //-RAC@ public static invariant MIDNIGHT.hour == 0 && MIDNIGHT.minute == 0 && MIDNIGHT.second == 0 && MIDNIGHT.nano == 0;
+    //-RAC@ public static invariant NOON.hour == 12 && NOON.minute == 0 && NOON.second == 0 && NOON.nano == 0;
+    //-RAC@ public static invariant MAX.hour == 23 && MAX.minute == 59 && MAX.second == 59 && MAX.nano == 999999999;
 
     //@ public normal_behavior
     //@   ensures MIN.getHour() == 0 && MIN.getMinute() == 0 && MIN.getSecond() == 0 && MIN.getNano() == 0;
