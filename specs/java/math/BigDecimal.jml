@@ -36,6 +36,7 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
     //@ public normal_behavior
     //@   requires n >= 0;
     //@   ensures \result == (n == 0 ? 1 : 10 * pow10(n-1));
+    //@   ensures \result >= 1;
     //@ model public static no_state helper \bigint pow10(int n);
 
     public static final BigDecimal ZERO;
@@ -365,14 +366,14 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
     public BigInteger toBigIntegerExact();
 
     //@ also public normal_behavior
-    //-RAC@   requires Long.MIN_VALUE <= this.toBigInteger().value <= Long.MAX_VALUE;
-    //-RAC@   ensures \result == this.toBigInteger().value;
+    //-RAC@   requires Long.MIN_VALUE <= (_scale >= 0 ? _unscaled / pow10(_scale) : _unscaled * pow10(-_scale)) <= Long.MAX_VALUE;
+    //-RAC@   ensures \result == (_scale >= 0 ? _unscaled / pow10(_scale) : _unscaled * pow10(-_scale));
     //@ spec_pure helper
     public long longValue();
 
     //@ also public normal_behavior
-    //-RAC@   requires Integer.MIN_VALUE <= this.toBigInteger().value <= Integer.MAX_VALUE;
-    //-RAC@   ensures \result == this.toBigInteger().value;
+    //-RAC@   requires Integer.MIN_VALUE <= (_scale >= 0 ? _unscaled / pow10(_scale) : _unscaled * pow10(-_scale)) <= Integer.MAX_VALUE;
+    //-RAC@   ensures \result == (_scale >= 0 ? _unscaled / pow10(_scale) : _unscaled * pow10(-_scale));
     //@ spec_pure helper
     public int intValue();
 
