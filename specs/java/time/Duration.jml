@@ -19,6 +19,7 @@ public final class Duration implements java.time.temporal.TemporalAmount, Compar
     private final int nanos; //-RAC@ in theHashCode;
 
     //-RAC@ public invariant 0 <= nanos && nanos < 1000000000;
+    //-RAC@ public static invariant ZERO.seconds == 0 && ZERO.nanos == 0;
 
     //@ public normal_behavior
     //@   ensures ZERO.getSeconds() == 0 && ZERO.getNano() == 0;
