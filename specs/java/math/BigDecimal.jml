@@ -45,6 +45,7 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
 
     //@ public normal_behavior
     //@   ensures ZERO != null && ONE != null && TWO != null && TEN != null;
+    //@   ensures ZERO.signum() == 0 && ZERO.scale() == 0 && ONE.intValue() == 1 && TWO.intValue() == 2 && TEN.longValue() == 10L;
     //-RAC@   ensures ZERO != null && ZERO._unscaled == 0 && ZERO._scale == 0 && ZERO.value == 0;
     //-RAC@   ensures ONE != null && ONE._unscaled == 1 && ONE._scale == 0 && ONE.value == 1;
     //-RAC@   ensures TWO != null && TWO._unscaled == 2 && TWO._scale == 0 && TWO.value == 2;
@@ -366,13 +367,13 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
     //@ also public normal_behavior
     //-RAC@   requires Long.MIN_VALUE <= this.toBigInteger().value <= Long.MAX_VALUE;
     //-RAC@   ensures \result == this.toBigInteger().value;
-    //@ spec_pure
+    //@ spec_pure helper
     public long longValue();
 
     //@ also public normal_behavior
     //-RAC@   requires Integer.MIN_VALUE <= this.toBigInteger().value <= Integer.MAX_VALUE;
     //-RAC@   ensures \result == this.toBigInteger().value;
-    //@ spec_pure
+    //@ spec_pure helper
     public int intValue();
 
     //@ public behavior
