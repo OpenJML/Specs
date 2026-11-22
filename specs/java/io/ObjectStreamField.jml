@@ -1,0 +1,71 @@
+package java.io;
+
+// A serializable field: its name, its declared type and whether it is unshared. The type code, type string,
+// primitiveness and string form derive from the type's signature, which needs a non-null type.
+public class ObjectStreamField implements Comparable<Object> {
+
+    //@ public normal_behavior
+    //@   requires name != null;
+    //@   ensures getName() == name && !isUnshared();
+    //@ also public exceptional_behavior
+    //@   requires name == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public ObjectStreamField(/*@ nullable */ String name, /*@ nullable */ Class<?> type);
+
+    //@ public normal_behavior
+    //@   requires name != null;
+    //@   ensures getName() == name && isUnshared() == unshared;
+    //@ also public exceptional_behavior
+    //@   requires name == null;
+    //@   signals_only NullPointerException;
+    //@ pure
+    public ObjectStreamField(/*@ nullable */ String name, /*@ nullable */ Class<?> type, boolean unshared);
+
+    //@ public normal_behavior
+    //@ spec_pure helper
+    public String getName();
+
+    // With a security manager, a package access check may fail
+    //@ public behavior
+    //@   signals_only SecurityException;
+    //@ pure
+    public /*@ nullable */ Class<?> getType();
+
+    //@ public behavior
+    //@   signals_only NullPointerException;
+    //@ pure
+    public char getTypeCode();
+
+    //@ public behavior
+    //@   signals_only NullPointerException;
+    //@ pure
+    public /*@ nullable */ String getTypeString();
+
+    //@ public normal_behavior
+    //@ pure
+    public int getOffset();
+
+    //@ protected normal_behavior
+    //@   ensures getOffset() == offset;
+    protected void setOffset(int offset);
+
+    //@ public behavior
+    //@   signals_only NullPointerException;
+    //@ pure
+    public boolean isPrimitive();
+
+    //@ public normal_behavior
+    //@ spec_pure helper
+    public boolean isUnshared();
+
+    //@ also public behavior
+    //@   signals_only NullPointerException, ClassCastException;
+    //@ pure
+    public int compareTo(/*@ nullable */ Object obj);
+
+    //@ also public behavior
+    //@   signals_only NullPointerException;
+    //@ pure
+    public String toString();
+}
