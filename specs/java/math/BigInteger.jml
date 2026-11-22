@@ -222,6 +222,7 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
 
     //@ public normal_behavior
     //@   ensures ZERO != null && ONE != null && TWO != null && TEN != null;
+    //@   ensures ZERO.signum() == 0 && ONE.intValue() == 1 && TWO.intValue() == 2 && TEN.longValue() == 10L;
     //-RAC@   ensures ZERO != null && ZERO.value == 0;
     //-RAC@   ensures ONE != null && ONE.value == 1;
     //-RAC@   ensures TWO != null && TWO.value == 2;

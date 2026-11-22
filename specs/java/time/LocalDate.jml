@@ -230,7 +230,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
 
     //@ also public normal_behavior
     //@   ensures -365243219162L <= \result && \result <= 365241780471L;
-    //@ pure
+    //@ pure helper
     public long toEpochDay();
 
     //@ also public normal_behavior

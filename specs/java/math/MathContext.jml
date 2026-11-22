@@ -53,12 +53,12 @@ public final class MathContext implements java.io.Serializable {
 
     //@ public normal_behavior
     //@   ensures \result >= 0;
-    //@ pure
+    //@ pure helper
     public int getPrecision();
 
     //@ public normal_behavior
     //@   ensures true;
-    //@ spec_pure
+    //@ spec_pure helper
     public RoundingMode getRoundingMode();
 
     //@ also public normal_behavior
