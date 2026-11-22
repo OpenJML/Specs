@@ -36,7 +36,7 @@ import java.util.Random;
 //@ nullable_by_default
 public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInteger> {
 
-    //-RAC@ public model \bigint value;
+    //-RAC@ public final model \bigint value;
 
     // See also Number.parseable()
 
@@ -219,6 +219,9 @@ public /*@ pure @*/ class BigInteger extends Number implements Comparable<BigInt
     public static final BigInteger ONE;
     public static final BigInteger TWO;
     public static final BigInteger TEN;
+
+    //-RAC@ public static invariant ZERO != null && ONE != null && TWO != null && TEN != null;
+    //-RAC@ public static invariant ZERO.value == 0 && ONE.value == 1 && TWO.value == 2 && TEN.value == 10;
 
     //@ public normal_behavior
     //@   ensures ZERO != null && ONE != null && TWO != null && TEN != null;
