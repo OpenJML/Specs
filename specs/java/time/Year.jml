@@ -8,8 +8,8 @@ package java.time;
 public final class Year implements java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster,
                                    Comparable<Year>, java.io.Serializable {
 
-    public static final int MIN_VALUE;
-    public static final int MAX_VALUE;
+    public static final int MIN_VALUE = -999999999;
+    public static final int MAX_VALUE =  999999999;
 
     //@ spec_public
     private final int year; //-RAC@ in theHashCode;
@@ -39,17 +39,17 @@ public final class Year implements java.time.temporal.Temporal, java.time.tempor
     // MIN_VALUE <= getValue() <= MAX_VALUE, by the invariant
     //@ public normal_behavior
     //-RAC@   ensures \result == year;
-    //@ pure helper
+    //@ spec_pure helper
     public int getValue();
 
     //@ public normal_behavior
     //@   ensures \result == isLeap(getValue());
-    //@ pure
+    //@ spec_pure helper
     public boolean isLeap();
 
     //@ public normal_behavior
     //@   ensures \result == (isLeap(getValue()) ? 366 : 365);
-    //@ pure
+    //@ spec_pure helper
     public int length();
 
     //@ public normal_behavior
@@ -58,7 +58,7 @@ public final class Year implements java.time.temporal.Temporal, java.time.tempor
     //@ also public exceptional_behavior
     //@   requires !(MIN_VALUE <= (\bigint)getValue() + yearsToAdd && (\bigint)getValue() + yearsToAdd <= MAX_VALUE);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public Year plusYears(long yearsToAdd);
 
     //@ public normal_behavior
@@ -67,31 +67,28 @@ public final class Year implements java.time.temporal.Temporal, java.time.tempor
     //@ also public exceptional_behavior
     //@   requires !(MIN_VALUE <= (\bigint)getValue() - yearsToSubtract && (\bigint)getValue() - yearsToSubtract <= MAX_VALUE);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public Year minusYears(long yearsToSubtract);
 
     //@ also public normal_behavior
     //@   ensures \result == getValue() - other.getValue();
-    //@ pure
     public int compareTo(Year other);
 
     //@ public normal_behavior
     //@   ensures \result == (getValue() > other.getValue());
-    //@ pure
+    //@ spec_pure
     public boolean isAfter(Year other);
 
     //@ public normal_behavior
     //@   ensures \result == (getValue() < other.getValue());
-    //@ pure
+    //@ spec_pure
     public boolean isBefore(Year other);
 
     //@ also public normal_behavior
     //@   ensures \result == (obj instanceof Year && ((Year)obj).getValue() == getValue());
-    //@ pure
     public boolean equals(/*@ nullable */ Object obj);
 
     //@ also public normal_behavior
     //@   ensures \result == getValue();
-    //@ pure
     public int hashCode();
 }

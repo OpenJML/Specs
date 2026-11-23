@@ -9,59 +9,66 @@ public interface ChronoLocalDate extends java.time.temporal.Temporal, java.time.
                                          Comparable<ChronoLocalDate> {
 
     //@ public normal_behavior
+    //@   reads this.*;
     //@ pure
     Chronology getChronology();
 
     //@ public normal_behavior
-    //@ pure
+    //@   reads this.*;
+    //@ spec_pure helper
     boolean isLeapYear();
 
     //@ public normal_behavior
+    //@   reads this.*;
     //@   ensures \result > 0;
-    //@ pure
+    //@ spec_pure helper
     int lengthOfMonth();
 
     //@ public normal_behavior
+    //@   reads this.*;
     //@   ensures \result > 0;
-    //@ pure
+    //@ spec_pure helper
     int lengthOfYear();
 
     //@ public normal_behavior
-    //@ pure
+    //@   reads this.*;
+    //@ spec_pure helper
     long toEpochDay();
 
     //@ also public normal_behavior
+    //@   reads this.*;
     //@   ensures toEpochDay() < other.toEpochDay() ==> \result < 0;
     //@   ensures toEpochDay() > other.toEpochDay() ==> \result > 0;
-    //@ pure
+    //@ spec_pure helper
     int compareTo(ChronoLocalDate other);
 
     //@ public normal_behavior
+    //@   reads this.*;
     //@   ensures \result == (toEpochDay() > other.toEpochDay());
-    //@ pure
+    //@ spec_pure helper
     boolean isAfter(ChronoLocalDate other);
 
     //@ public normal_behavior
+    //@   reads this.*;
     //@   ensures \result == (toEpochDay() < other.toEpochDay());
-    //@ pure
+    //@ spec_pure helper
     boolean isBefore(ChronoLocalDate other);
 
     //@ public normal_behavior
+    //@   reads this.*;
     //@   ensures \result == (toEpochDay() == other.toEpochDay());
-    //@ pure
+    //@ spec_pure helper
     boolean isEqual(ChronoLocalDate other);
 
     // Equal dates have the same epoch day (and the same chronology)
     //@ also public normal_behavior
+    //@   reads this.*;
     //@   ensures \result ==> obj instanceof ChronoLocalDate && toEpochDay() == ((ChronoLocalDate)obj).toEpochDay();
-    //@ pure
     boolean equals(/*@ nullable */ Object obj);
 
-    //@ also public normal_behavior
-    //@ pure
+    // inherited specs
     int hashCode();
 
-    //@ also public normal_behavior
-    //@ pure
+    // inherited specs
     String toString();
 }
