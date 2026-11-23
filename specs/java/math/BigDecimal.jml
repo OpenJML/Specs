@@ -11,9 +11,9 @@ package java.math;
 //         stringCache are cached lazily after construction
 //@ pure non_null_by_default
 public class BigDecimal extends Number implements Comparable<BigDecimal> {
-    //-RAC@ model public \bigint _unscaled;
-    //-RAC@ model public int _scale;
-    //-RAC@ model public \real value;
+    //-RAC@ public final model \bigint _unscaled;
+    //-RAC@ public final model int _scale;
+    //-RAC@ public final model \real value;
 
     //-RAC@ public invariant _scale >= 0 ? value * pow10(_scale) == _unscaled : value == _unscaled * pow10(-_scale);
 
@@ -43,6 +43,11 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
     public static final BigDecimal ONE;
     public static final BigDecimal TWO;
     public static final BigDecimal TEN;
+    //-RAC@ public static invariant ZERO != null && ONE != null && TWO != null && TEN != null;
+    //-RAC@ public static invariant ZERO._unscaled == 0 && ZERO._scale == 0 && ZERO.value == 0;
+    //-RAC@ public static invariant ONE._unscaled == 1 && ONE._scale == 0 && ONE.value == 1;
+    //-RAC@ public static invariant TWO._unscaled == 2 && TWO._scale == 0 && TWO.value == 2;
+    //-RAC@ public static invariant TEN._unscaled == 10 && TEN._scale == 0 && TEN.value == 10;
 
     //@ public normal_behavior
     //@   ensures ZERO != null && ONE != null && TWO != null && TEN != null;
