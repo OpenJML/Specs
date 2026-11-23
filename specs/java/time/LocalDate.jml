@@ -24,16 +24,22 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     private final short month; //-RAC@ in theHashCode;
     //@ spec_public
     private final short day; //-RAC@ in theHashCode;
+    
+    //-RAC@ no_state helper
+    //-RAC@ public static model long epochDay(int y, short m, short d);
 
     // Connects Object.hashCode's specification to this class's hashCode
     //-RAC@ public represents theHashCode = (year & 0xFFFFF800) ^ ((year << 11) + (month << 6) + day);
 
-    //-RAC@ public invariant Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month && month <= 12 && 1 <= day && day <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31);
-
+    //-RAC@ public invariant Year.MIN_VALUE <= year <= Year.MAX_VALUE;
+    //-RAC@ public invariant 1 <= month <= 12;
+    //-RAC@ public invariant 1 <= day <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31);
+    //-RAC@ public static invariant MIN.year == Year.MIN_VALUE & MIN.month == 1 & MIN.day == 1 ;
+    //-RAC@ public static invariant MAX.year == Year.MAX_VALUE & MAX.month == 12 & MAX.day == 31 ;
+    //-RAC@ public static invariant EPOCH.year == 1970 & EPOCH.month == 1 & EPOCH.day == 1 & EPOCH.toEpochDay() == 0;
+    //-RAC@ public static invariant MAX.toEpochDay() == 365241780471L & MIN.toEpochDay() == -365243219162L;
     //@ public normal_behavior
-    //@   ensures MIN.getYear() == Year.MIN_VALUE && MIN.getMonthValue() == 1 && MIN.getDayOfMonth() == 1 && MIN.toEpochDay() == -365243219162L;
-    //@   ensures MAX.getYear() == Year.MAX_VALUE && MAX.getMonthValue() == 12 && MAX.getDayOfMonth() == 31 && MAX.toEpochDay() == 365241780471L;
-    //@   ensures EPOCH.getYear() == 1970 && EPOCH.getMonthValue() == 1 && EPOCH.getDayOfMonth() == 1 && EPOCH.toEpochDay() == 0;
+    //@   ensures true;
     //@ static_initializer
 
     //-RAC@ private normal_behavior
@@ -54,7 +60,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month && month <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month == 2 ? (Year.isLeap(year) ? 29 : 28) : (month == 4 || month == 6 || month == 9 || month == 11) ? 30 : 31));
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public static LocalDate of(int year, int month, int dayOfMonth);
 
     //@ public normal_behavior
@@ -63,7 +69,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(Year.MIN_VALUE <= year && year <= Year.MAX_VALUE && 1 <= month.getValue() && month.getValue() <= 12 && 1 <= dayOfMonth && dayOfMonth <= (month.getValue() == 2 ? (Year.isLeap(year) ? 29 : 28) : (month.getValue() == 4 || month.getValue() == 6 || month.getValue() == 9 || month.getValue() == 11) ? 30 : 31));
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public static LocalDate of(int year, Month month, int dayOfMonth);
 
     //@ public normal_behavior
@@ -72,53 +78,55 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(-365243219162L <= epochDay && epochDay <= 365241780471L);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public static LocalDate ofEpochDay(long epochDay);
 
-    // Year.MIN_VALUE <= getYear() <= Year.MAX_VALUE, by the invariant; likewise for month and day
+    // Year.MIN_VALUE <= getYear() <= Year.MAX_VALUE, by the invariant; likewise for month and day-- FIXME - not so because of 'helper'
     //@ public normal_behavior
     //-RAC@   ensures \result == year;
-    //@ pure helper
+    //@ spec_pure helper
     public int getYear();
 
     //@ public normal_behavior
+    //@   requires true;
     //-RAC@   ensures \result == month;
-    //@ pure helper
+    //@ spec_pure helper
     public int getMonthValue();
 
     //@ public normal_behavior
+    //@   requires true;
     //-RAC@   ensures \result == day;
-    //@ pure helper
+    //@ spec_pure helper
     public int getDayOfMonth();
 
     //@ public normal_behavior
     //@   ensures \result.getValue() == getMonthValue();
-    //@ spec_pure
+    //@ spec_pure helper
     public Month getMonth();
 
     //@ public normal_behavior
     //@   ensures \result == Month.of(getMonthValue()).firstDayOfYear(Year.isLeap(getYear())) + getDayOfMonth() - 1;
-    //@ pure
+    //@ spec_pure helper
     public int getDayOfYear();
 
     //@ public normal_behavior
     //@   ensures \result.getValue() == ((toEpochDay() + 3) % 7 + 7) % 7 + 1;
-    //@ spec_pure
+    //@ spec_pure helper
     public DayOfWeek getDayOfWeek();
 
     //@ also public normal_behavior
     //@   ensures \result == Year.isLeap(getYear());
-    //@ pure
+    //@ spec_pure helper
     public boolean isLeapYear();
 
     //@ also public normal_behavior
     //@   ensures \result == (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
-    //@ pure
+    //@ spec_pure helper
     public int lengthOfMonth();
 
     //@ also public normal_behavior
     //@   ensures \result == (Year.isLeap(getYear()) ? 366 : 365);
-    //@ pure
+    //@ spec_pure helper
     public int lengthOfYear();
 
     //@ public normal_behavior
@@ -127,7 +135,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(Year.MIN_VALUE <= year && year <= Year.MAX_VALUE);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure helper
     public LocalDate withYear(int year);
 
     //@ public normal_behavior
@@ -136,7 +144,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(1 <= month && month <= 12);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public LocalDate withMonth(int month);
 
     //@ public normal_behavior
@@ -145,7 +153,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(1 <= dayOfMonth && dayOfMonth <= (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31));
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public LocalDate withDayOfMonth(int dayOfMonth);
 
     //@ public normal_behavior
@@ -154,7 +162,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(Year.MIN_VALUE <= (\bigint)getYear() + yearsToAdd && (\bigint)getYear() + yearsToAdd <= Year.MAX_VALUE);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public LocalDate plusYears(long yearsToAdd);
 
     //@ public normal_behavior
@@ -163,7 +171,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(Year.MIN_VALUE <= (\bigint)getYear() - yearsToSubtract && (\bigint)getYear() - yearsToSubtract <= Year.MAX_VALUE);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public LocalDate minusYears(long yearsToSubtract);
 
     // The year and month are those of the month number getYear() * 12 + getMonthValue() - 1 + monthsToAdd; the day is clamped to the month's length
@@ -173,7 +181,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !((\bigint)Year.MIN_VALUE * 12 <= ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) && ((\bigint)getYear() * 12 + getMonthValue() - 1 + monthsToAdd) <= (\bigint)Year.MAX_VALUE * 12 + 11);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public LocalDate plusMonths(long monthsToAdd);
 
     // The year and month are those of the month number getYear() * 12 + getMonthValue() - 1 - monthsToSubtract; the day is clamped to the month's length
@@ -183,19 +191,22 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !((\bigint)Year.MIN_VALUE * 12 <= ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) && ((\bigint)getYear() * 12 + getMonthValue() - 1 - monthsToSubtract) <= (\bigint)Year.MAX_VALUE * 12 + 11);
     //@   signals_only DateTimeException;
-    //@ spec_pure
+    //@ pure
     public LocalDate minusMonths(long monthsToSubtract);
 
     //@ public normal_behavior
-    //@   requires -365243219162L <= (\bigint)toEpochDay() + (\bigint)daysToAdd && (\bigint)toEpochDay() + (\bigint)daysToAdd <= 365241780471L;
+    //@   requires -365243219162L <= (\bigint)toEpochDay() + (\bigint)daysToAdd  <= 365241780471L;
+    //@   reads this.*;
     //@   ensures \result.toEpochDay() == (\bigint)toEpochDay() + (\bigint)daysToAdd;
     //@ also public normal_behavior
-    //@   requires 1 <= (\bigint)getDayOfMonth() + daysToAdd && (\bigint)getDayOfMonth() + daysToAdd <= (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
+    //@   requires 1 <= (\bigint)getDayOfMonth() + daysToAdd  <= lengthOfMonth();
+    //@   reads this.*;
     //@   ensures \result.getYear() == getYear() && \result.getMonthValue() == getMonthValue() && \result.getDayOfMonth() == getDayOfMonth() + daysToAdd;
     //@ also public exceptional_behavior
-    //@   requires !(-365243219162L <= (\bigint)toEpochDay() + (\bigint)daysToAdd && (\bigint)toEpochDay() + (\bigint)daysToAdd <= 365241780471L);
+    //@   requires !(-365243219162L <= (\bigint)toEpochDay() + (\bigint)daysToAdd <= 365241780471L);
+    //@   reads this.*;
     //@   signals_only DateTimeException, ArithmeticException;
-    //@ spec_pure
+    //@ pure helper
     public LocalDate plusDays(long daysToAdd);
 
     //@ public normal_behavior
@@ -207,7 +218,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(-365243219162L <= (\bigint)toEpochDay() - (\bigint)daysToSubtract && (\bigint)toEpochDay() - (\bigint)daysToSubtract <= 365241780471L);
     //@   signals_only DateTimeException, ArithmeticException;
-    //@ spec_pure
+    //@ pure
     public LocalDate minusDays(long daysToSubtract);
 
     //@ public normal_behavior
@@ -216,7 +227,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(-365243219162L <= (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7 && (\bigint)toEpochDay() + (\bigint)weeksToAdd * 7 <= 365241780471L);
     //@   signals_only DateTimeException, ArithmeticException;
-    //@ spec_pure
+    //@ pure
     public LocalDate plusWeeks(long weeksToAdd);
 
     //@ public normal_behavior
@@ -225,46 +236,47 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ also public exceptional_behavior
     //@   requires !(-365243219162L <= (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7 && (\bigint)toEpochDay() - (\bigint)weeksToSubtract * 7 <= 365241780471L);
     //@   signals_only DateTimeException, ArithmeticException;
-    //@ spec_pure
+    //@ pure
     public LocalDate minusWeeks(long weeksToSubtract);
 
     //@ also public normal_behavior
-    //@   ensures -365243219162L <= \result && \result <= 365241780471L;
-    //@ pure helper
+    //@   reads \nothing; // Just final
+    //@   ensures -365243219162L <= \result <= 365241780471L;
+    //-RAC@   ensures \result == epochDay(year, month, day);
+    //@ spec_pure helper
     public long toEpochDay();
 
     //@ also public normal_behavior
     //@   requires other instanceof LocalDate;
     //@   ensures (\result < 0) == (getYear() < ((LocalDate)other).getYear() || (getYear() == ((LocalDate)other).getYear() && (getMonthValue() < ((LocalDate)other).getMonthValue() || (getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() < ((LocalDate)other).getDayOfMonth()))));
     //@   ensures (\result == 0) == (getYear() == ((LocalDate)other).getYear() && getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() == ((LocalDate)other).getDayOfMonth());
-    //@ pure
+    //@ spec_pure
     public int compareTo(ChronoLocalDate other);
 
     //@ also public normal_behavior
     //@   requires other instanceof LocalDate;
     //@   ensures \result == (getYear() > ((LocalDate)other).getYear() || (getYear() == ((LocalDate)other).getYear() && (getMonthValue() > ((LocalDate)other).getMonthValue() || (getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() > ((LocalDate)other).getDayOfMonth()))));
-    //@ pure
+    //@ spec_pure
     public boolean isAfter(ChronoLocalDate other);
 
     //@ also public normal_behavior
     //@   requires other instanceof LocalDate;
     //@   ensures \result == (getYear() < ((LocalDate)other).getYear() || (getYear() == ((LocalDate)other).getYear() && (getMonthValue() < ((LocalDate)other).getMonthValue() || (getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() < ((LocalDate)other).getDayOfMonth()))));
-    //@ pure
+    //@ spec_pure
     public boolean isBefore(ChronoLocalDate other);
 
     //@ also public normal_behavior
     //@   requires other instanceof LocalDate;
     //@   ensures \result == (getYear() == ((LocalDate)other).getYear() && getMonthValue() == ((LocalDate)other).getMonthValue() && getDayOfMonth() == ((LocalDate)other).getDayOfMonth());
-    //@ pure
+    //@ spec_pure
     public boolean isEqual(ChronoLocalDate other);
 
     //@ also public normal_behavior
     //@   ensures \result == (obj instanceof LocalDate && getYear() == ((LocalDate)obj).getYear() && getMonthValue() == ((LocalDate)obj).getMonthValue() && getDayOfMonth() == ((LocalDate)obj).getDayOfMonth());
-    //@ pure
     public boolean equals(/*@ nullable */ Object obj);
 
     //@ also public normal_behavior
     //@   ensures \result == ((getYear() & 0xFFFFF800) ^ ((getYear() << 11) + (getMonthValue() << 6) + getDayOfMonth()));
-    //@ pure code_java_math spec_java_math
+    //@ code_java_math spec_java_math
     public int hashCode();
 }
