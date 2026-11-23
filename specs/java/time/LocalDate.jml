@@ -99,7 +99,9 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ spec_pure helper
     public int getDayOfMonth();
 
+    // As a helper, getMonth does not assume the invariant, so the month's range is a precondition
     //@ public normal_behavior
+    //@   requires 1 <= getMonthValue() <= 12;
     //@   ensures \result.getValue() == getMonthValue();
     //@ spec_pure helper
     public Month getMonth();
@@ -114,17 +116,22 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ spec_pure helper
     public DayOfWeek getDayOfWeek();
 
+    // FIXME - IsoChronology.INSTANCE, a static final field, is listed in these reads clauses only because the tool
+    // currently requires it (#1159); it may not be needed in the future
     //@ also public normal_behavior
+    //@   reads year, java.time.chrono.IsoChronology.INSTANCE;
     //@   ensures \result == Year.isLeap(getYear());
     //@ spec_pure helper
     public boolean isLeapYear();
 
     //@ also public normal_behavior
+    //@   reads month, year, java.time.chrono.IsoChronology.INSTANCE;
     //@   ensures \result == (getMonthValue() == 2 ? (Year.isLeap(getYear()) ? 29 : 28) : (getMonthValue() == 4 || getMonthValue() == 6 || getMonthValue() == 9 || getMonthValue() == 11) ? 30 : 31);
     //@ spec_pure helper
     public int lengthOfMonth();
 
     //@ also public normal_behavior
+    //@   reads year, java.time.chrono.IsoChronology.INSTANCE;
     //@   ensures \result == (Year.isLeap(getYear()) ? 366 : 365);
     //@ spec_pure helper
     public int lengthOfYear();

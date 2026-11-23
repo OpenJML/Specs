@@ -4,65 +4,57 @@ package java.time.chrono;
 // isAfter, isBefore and isEqual compare epoch days, and compareTo orders first by epoch day (then by chronology).
 // Not specified: timeLineOrder, from, getEra, isSupported, with, plus, minus, query, adjustInto, both until, format,
 // atTime, the chronology tie-break of compareTo, and the values of isLeapYear, lengthOfMonth and toString.
+// No reads clauses: an interface cannot name its implementations' fields, and a callee's reads this.* is not
+// contained in any caller's reads clause other than \everything (#1159).
 //@ non_null_by_default
 public interface ChronoLocalDate extends java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster,
                                          Comparable<ChronoLocalDate> {
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@ pure
     Chronology getChronology();
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@ spec_pure helper
     boolean isLeapYear();
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@   ensures \result > 0;
     //@ spec_pure helper
     int lengthOfMonth();
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@   ensures \result > 0;
     //@ spec_pure helper
     int lengthOfYear();
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@ spec_pure helper
     long toEpochDay();
 
     //@ also public normal_behavior
-    //@   reads this.*;
     //@   ensures toEpochDay() < other.toEpochDay() ==> \result < 0;
     //@   ensures toEpochDay() > other.toEpochDay() ==> \result > 0;
     //@ spec_pure helper
     int compareTo(ChronoLocalDate other);
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@   ensures \result == (toEpochDay() > other.toEpochDay());
     //@ spec_pure helper
     boolean isAfter(ChronoLocalDate other);
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@   ensures \result == (toEpochDay() < other.toEpochDay());
     //@ spec_pure helper
     boolean isBefore(ChronoLocalDate other);
 
     //@ public normal_behavior
-    //@   reads this.*;
     //@   ensures \result == (toEpochDay() == other.toEpochDay());
     //@ spec_pure helper
     boolean isEqual(ChronoLocalDate other);
 
     // Equal dates have the same epoch day (and the same chronology)
     //@ also public normal_behavior
-    //@   reads this.*;
     //@   ensures \result ==> obj instanceof ChronoLocalDate && toEpochDay() == ((ChronoLocalDate)obj).toEpochDay();
     boolean equals(/*@ nullable */ Object obj);
 

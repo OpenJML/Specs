@@ -12,6 +12,7 @@ public final class IsoChronology extends AbstractChronology implements java.io.S
 
     // The ISO proleptic leap-year rule
     //@ also public normal_behavior
+    //@   reads \nothing;
     //@   ensures \result == java.time.Year.isLeap(prolepticYear);
     //@ pure
     public boolean isLeapYear(long prolepticYear);
