@@ -99,7 +99,9 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     //@ spec_pure helper
     public int getDayOfMonth();
 
+    // As a helper, getMonth does not assume the invariant, so the month's range is a precondition
     //@ public normal_behavior
+    //@   requires 1 <= getMonthValue() <= 12;
     //@   ensures \result.getValue() == getMonthValue();
     //@ spec_pure helper
     public Month getMonth();
@@ -115,6 +117,7 @@ public final class LocalDate implements java.time.temporal.Temporal, java.time.t
     public DayOfWeek getDayOfWeek();
 
     //@ also public normal_behavior
+    //@   reads this.*, java.time.chrono.IsoChronology.INSTANCE;
     //@   ensures \result == Year.isLeap(getYear());
     //@ spec_pure helper
     public boolean isLeapYear();

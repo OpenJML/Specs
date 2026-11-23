@@ -14,18 +14,18 @@ public interface ChronoLocalDate extends java.time.temporal.Temporal, java.time.
     Chronology getChronology();
 
     //@ public normal_behavior
-    //@   reads this.*;
+    //@   reads this.*, IsoChronology.INSTANCE;
     //@ spec_pure helper
     boolean isLeapYear();
 
     //@ public normal_behavior
-    //@   reads this.*;
+    //@   reads this.*, IsoChronology.INSTANCE;
     //@   ensures \result > 0;
     //@ spec_pure helper
     int lengthOfMonth();
 
     //@ public normal_behavior
-    //@   reads this.*;
+    //@   reads this.*, IsoChronology.INSTANCE;
     //@   ensures \result > 0;
     //@ spec_pure helper
     int lengthOfYear();
